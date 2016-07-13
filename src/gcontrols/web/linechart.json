@@ -1,23 +1,11 @@
 {
 	"template": 			{ "value": "default" },
-	"name": {
-		"value": "lineChart1"
-	},
-	"flex": {
-	  	"value": 50
-	},
-	"binding": {
-	  	"value": ""
-	},
-	"title": {
-	  	"value": "'Line Chart'"
-	},
-  	"chartType": {
-	  "value": "lineChart"
-	},
-	"display": {
-		"value": "true"
-	},
+	"name": 					{ "value": "lineChart1" },
+	"flex": 					{ "value": 50 },
+	"binding": 				{ "value": "" },
+	"title": 					{ "value": "'Line Chart'" },
+	"chartType": 			{ "value": "lineChart" },
+	"display": 				{ "value": "true" },
 	"options": {
 		"xAxisLabel": "'X Axis'",
 		"yAxisLabel": "'Y Axis'",
@@ -29,31 +17,13 @@
 		"showLegend": "true",
 		"useInteractiveGuideline": "true"
 	},
-	"dynamicOptions": {
-	  	"value": ""
-	},
-	"style": {
-	  	"value": ""
-	},
-	"classes": {
-		"value": ""
-	},
-	"dynamicClasses": {
-		"value": ""
-	},
-	"onclick": {
-		"value": ""
-	},
-	"onmouseover": {
-	  	"value": ""
-	},
-	"onmouseleave": {
-	  	"value": ""
-	},
-	"onstatechange": {
-	  	"value": ""
-	},
-	"onrenderend": {
-	  	"value": ""
-	}
+	"dynamicOptions": { "value": "" },
+	"style": 					{ "value": "" },
+	"classes": 				{ "value": "" },
+	"dynamicClasses": { "value": "" },
+	"onclick": 				{ "value": "" },
+	"onmouseover": 		{ "value": "" },
+	"onmouseleave": 	{ "value": "" },
+	"onstatechange": 	{ "value": "" },
+	"onrenderend": 		{ "value": "" }
 }

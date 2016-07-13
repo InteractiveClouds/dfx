@@ -2,7 +2,7 @@
     <div class="gc-true-checkbox-label-preview"><span ng-bind="$eval(attributes.label.value)"></span></div>
     <div ng-if="attributes.dynamicPresent.value=== true" ng-repeat="item in $gcscope[attributes.source.value] track by $index" ng-style="{'margin-top' : $index > 0 && attributes.direction.value ==='column' ? '21px' : '4px', 'display': attributes.direction.value ==='column' ? 'block' : 'inline-block', 'margin-right':'15px'}">
         <div style="display: inline-block;">
-            <md-checkbox ng-model="attributes.bindingBoolean.value[$index]" style="margin: 0 0 0 5px" ng-class="attributes.buttonClass.value" ng-disabled="$eval(attributes.disabled.value)"
+            <md-checkbox ng-model="attributes.bindingBoolean.value[$index]" style="margin: 0 0 0 5px" class="md-primary" ng-class="attributes.buttonClass.value" ng-disabled="$eval(attributes.disabled.value)"
                          ng-click="ngClickFunc();sendId(component_id)"
                          ng-change="$eval(attributes.onchange.value)"
                          ng-focus="$eval(attributes.onfocus.value)"
@@ -29,7 +29,7 @@
 
     <div ng-if="attributes.dynamicPresent.value=== false" ng-repeat="item in attributes.staticArray.value track by $index" ng-style="{'margin-top' : $index > 0 && attributes.direction.value ==='column' ? '21px' : '4px', 'display': attributes.direction.value ==='column' ? 'block' : 'inline-block', 'margin-right':'15px'}">
         <div style="display: inline-block;">
-            <md-checkbox ng-model="attributes.bindingBoolean.value[$index]" style="margin: 0 0 0 5px" ng-class="attributes.buttonClass.value" ng-disabled="$eval(attributes.disabled.value)"
+            <md-checkbox ng-model="attributes.bindingBoolean.value[$index]" style="margin: 0 0 0 5px" class="md-primary" ng-class="attributes.buttonClass.value" ng-disabled="$eval(attributes.disabled.value)"
                          ng-click="ngClickFunc();sendId(component_id)"
                          ng-change="$eval(attributes.onchange.value)"
                          ng-focus="$eval(attributes.onfocus.value)"
@@ -59,7 +59,7 @@
     <div class="gc-true-checkbox-label-preview"><span ng-bind="$eval(attributes.label.value)"></span></div>
     <div ng-if="attributes.dynamicPresent.value=== true" ng-repeat="item in $gcscope[attributes.source.value] track by $index" ng-style="{'margin-top' : $index > 0 && attributes.direction.value ==='column' ? '21px' : '4px', 'display': attributes.direction.value ==='column' ? 'block' : 'inline-block', 'margin-right':'15px'}">
         <div style="display: inline-block;">
-            <md-checkbox ng-model="attributes.bindingBoolean.value[$index]" style="margin: 0 0 0 5px" ng-class="attributes.buttonClass.value" ng-disabled="$eval(attributes.disabled.value)"
+            <md-checkbox ng-model="attributes.bindingBoolean.value[$index]" style="margin: 0 0 0 5px" class="md-primary" ng-class="attributes.buttonClass.value" ng-disabled="$eval(attributes.disabled.value)"
                          ng-click="ngClickFunc()"
                          ng-change="$eval(attributes.onchange.value)"
                          ng-focus="$eval(attributes.onfocus.value)"
@@ -84,7 +84,7 @@
     </div>
     <div ng-if="attributes.dynamicPresent.value=== false" ng-repeat="item in attributes.staticArray.value track by $index" ng-style="{'margin-top' : $index > 0 && attributes.direction.value ==='column' ? '21px' : '4px', 'display': attributes.direction.value ==='column' ? 'block' : 'inline-block', 'margin-right':'15px'}">
         <div style="display: inline-block;">
-            <md-checkbox ng-model="item.isChecked" style="margin: 0 0 0 5px" ng-class="attributes.buttonClass.value" ng-disabled="$eval(attributes.disabled.value)"
+            <md-checkbox ng-model="item.isChecked" style="margin: 0 0 0 5px" class="md-primary" ng-class="attributes.buttonClass.value" ng-disabled="$eval(attributes.disabled.value)"
                          ng-click="ngClickFunc()"
                          ng-change="$eval(attributes.onchange.value)"
                          ng-focus="$eval(attributes.onfocus.value)"
