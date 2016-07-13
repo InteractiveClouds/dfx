@@ -1,0 +1,84 @@
+table.table.table-bordered
+    tbody
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4
+                label.dfx_visual_editor_property_label Name:
+            td
+                input#gc_tree_attr_name.form-control(type="text")
+        tr
+            td.field-label.dfx_visual_editor_property
+                label.dfx_visual_editor_property_label Collection:
+            td
+                input#gc_tree_attr_modelCollection.form-control(type="text")
+        tr
+            td.field-label.dfx_visual_editor_property
+                label.dfx_visual_editor_property_label Tree Control:
+            td
+                input#gc_tree_attr_treeControl.form-control(type="text")
+        tr
+            td.field-label.dfx_visual_editor_property
+                label.dfx_visual_editor_property_label Init Selection:
+            td
+                input#gc_tree_attr_initSelection.form-control(type="text")
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4
+                label.dfx_visual_editor_property_label Icons:
+            td
+                ul#listIcons.list-unstyled
+                    li
+                        label Icon Leaf
+                        input#gc_tree_attr_iconLeaf.form-control(type="text")
+                    li
+                        label Icon Expand
+                        input#gc_tree_attr_iconExpand.form-control(type="text")
+                    li
+                        label Icon Collapse
+                        input#gc_tree_attr_iconCollapse.form-control(type="text")
+        //tr
+            td.field-label.dfx_visual_editor_property.col-md-4
+                label.dfx_visual_editor_property_label Type:
+            td
+                div.col-lg-12
+                    label.radio.col-lg-6
+                        input#gc_tree_attr_useMR(type="radio", name="treeUseMD", checked)
+                        span Dynamic
+                    button#btnSelectFields.btn.btn-link(type="button", data-toggle="collapse", data-target="#listFieldsName", style="margin-left:10px;")
+                        span.icon-edit
+                    ul#listFieldsName.list-unstyled.collapse(style="margin:10px 0")
+                        li
+                            label Collection
+                            input#gc_tree_attr_modelCollection.form-control(type="text")
+                        li
+                            label Label
+                            input#gc_tree_attr_labelName.form-control(type="text")
+                        li
+                            label Children
+                            input#gc_tree_attr_childrenName.form-control(type="text")
+                div.col-lg-12
+                    label.radio.col-lg-6
+                        input#gc_tree_attr_useSR(type="radio", name="treeUseMD")
+                        span Static
+                    button.btn.btn.btn-link(href="#", style="margin-left:10px;")
+                        span.icon-edit
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4
+                label.dfx_visual_editor_property_label Display:
+            td
+                input#gc_tree_attr_display.form-control(type="text", placeholder="true / false / expression")
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4
+                label.dfx_visual_editor_property_label Classes:
+            td
+                input#gc_tree_attr_classes.form-control(type="text")
+        tr
+            td.field-label.dfx_visual_editor_property
+                label.dfx_visual_editor_property_label Style:
+            td
+                input#gc_tree_attr_style.form-control(type="text")
+        tr
+            td.field-label.dfx_visual_editor_property
+                label.dfx_visual_editor_property_label On Select:
+            td
+                input#gc_tree_attr_onSelect.form-control(type="text")
+input#gc_tree_attr_id(type="hidden")
+a.btn.btn-success.dfx_visual_editor_property_button(href="javascript:gc_web_tree.savePropertyPanel();") Apply

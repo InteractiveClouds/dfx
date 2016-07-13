@@ -1,0 +1,13 @@
+doctype html
+html(ng-app="dfxPageEditorApp")
+    head
+        meta(http-equiv="content-type", content="text/HTML;charset=UTF-8")
+        meta(name="viewport", content="width=device-width,initial-scale=1, maximum-scale=1, user-scalable=no")
+        title DreamFace Studio
+        link(rel="stylesheet", href="/css/studio/dfx_editors.min.css", media="screen")
+        script(src="/js/studio/dfx.js")
+
+        script(src="/socket.io/socket.io.js")
+    body#dfx-page-editor-body(data-tenantid="#{tenantid}", data-username="#{username}", data-application="#{applicationName}", data-page="#{pageName}", data-platform="#{pagePlatform}" ng-controller="dfx_main_controller")
+        div(style="height:100%;", layout="row", layout-align="space-between center")
+            md-content.dfx_content(ng-include="loadPage()", style="height:100%;width:100%;overflow: hidden;")

@@ -1,0 +1,38 @@
+<div class="second-dialog" style="display: none">
+    <div class="second-dialog-inner">
+        <div class="dfx-second-dialog-icons">
+            <md-toolbar>
+                <div class="dfx-icons-search-toolbar md-toolbar-tools">
+                    <h2>DreamFace Icons <span ng-bind="iconsCategory"></span></h2>
+                    <div class="dfx-icons-search-field">
+                        <h3>Search:</h3>
+                        <input type="text" ng-model="icon" ng-change="searchIcons(icon)" ng-model-options="{ updateOn: 'default', debounce: { 'default': 1000 } }" placeholder="Icon name"/>
+                    </div>
+                </div>
+            </md-toolbar>
+            <md-dialog-content style="max-width:1100px;max-height:810px;width:1100px;height:500px;padding:0;">
+                <md-content class="dfx-ve-icons-content">
+                    <div class="dfx-ve-icons-categories">
+                        <ul class="clearfix">
+                            <li><span ng-click="chooseIconsCategory('svg-icons', $event)" class="dfx-ve-icons-types">SVG Icons</span></li>
+                            <li ng-repeat="category in svgCategories" class="col-md-12">
+                                <span ng-click="chooseIconsCategory(category, $event)">{{category}}</span>
+                            </li>
+                        </ul>
+                        <ul class="clearfix">
+                            <li><span ng-click="chooseIconsCategory('fa-icons', $event)" class="dfx-ve-icons-types">Font Awesome Icons</span></li>            
+                        </ul>
+                    </div>
+                    <div class="dfx-ve-icons-list">
+                        <div ng-repeat="dfxIcon in dfxIconsList | filter:search:strict track by $index" ng-click="setDfxIcon(dfxIcon.value, dfxIcon.type)" class="dfx-ve-icon-item">
+                            <ng-md-icon ng-if="dfxIcon.type === 'svg-icon'" icon="{{dfxIcon.value}}" size="16"></ng-md-icon>
+                            <md-icon ng-if="dfxIcon.type === 'fa-icon'" class="fa {{dfxIcon.value}}"></md-icon>
+                            <span>{{dfxIcon.value}}</span>
+                        </div>
+                    </div>
+                </md-content>
+            </md-dialog-content>
+            <div class="md-actions"><md-button ng-click="closeMenuIcon()" class="md-primary">Cancel</md-button></div>
+        </div>
+    </div>
+</div>

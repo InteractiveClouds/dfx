@@ -1,0 +1,49 @@
+{
+  "template": 			{ "value": "default" },
+  "name":           { "value": "crsCarousel1" },
+  "autoSlide":      { "value": "false" },
+  "slideInterval":  { "value": "3000" },
+  "dynamicClasses": { "value": "" },
+  "classes":        { "value": "" },
+  "flex":           { "value": 100 },
+  "style":          { "value": "" },
+  "maxWidth":       { "value": "1200" },
+  "maxHeight":      { "value": "600" },
+  "dynamic":        { "value": "" },
+  "static":         { "value": [
+                      {
+                        "name": "slide1",
+                        "title": "<h2>Sample Title 1</h2>",
+                        "description": "<h4>Sample Description 1</h4>",
+                        "src": "'https://www.travelexcellence.com/images/movil/La_Paz_Waterfall.jpg'",
+                        "onclick": ""
+                      },
+                      {
+                        "name": "slide2",
+                        "title": "<h2>Sample Title 2</h2>",
+                        "description": "<h4>Sample Description 2</h4>",
+                        "src": "'http://images.kuoni.co.uk/73/indonesia-34834203-1451484722-ImageGalleryLightbox.jpg'",
+                        "onclick": ""
+                      },
+                      {
+                        "name": "slide3",
+                        "title": "<h2>Sample Title 3</h2>",
+                        "description": "<h4>Sample Description 3</h4>",
+                        "src": "'https://www.travcoa.com/sites/default/files/styles/flexslider_full/public/tours/images/imperialvietnam-halong-bay-14214576.jpg'",
+                        "onclick": ""
+                      }
+                    ]},
+  "display":        { "value": "true" },
+  "onclick":        { "value": "" },
+  "ondblclick":     { "value": "" },
+  "onfocus":        { "value": "" },
+  "onblur":         { "value": "" },
+  "onkeypress":     { "value": "" },
+  "onkeydown":      { "value": "" },
+  "onkeyup":        { "value": "" },
+  "onmouseover":    { "value": "" },
+  "onmouseenter":   { "value": "" },
+  "onmousemove":    { "value": "" },
+  "onmouseleave":   { "value": "" },
+  "onmouseup":      { "value": "" }
+}

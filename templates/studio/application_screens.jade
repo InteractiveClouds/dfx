@@ -1,0 +1,164 @@
+div(style="overflow-x:hidden")
+    ol.breadcrumb
+        li
+            a(href="javascript:DfxStudio.Dispatcher.run('#!/home/');")
+                span.fa.fa-lg.fa-home
+        li
+            a(href="javascript:DfxStudio.Dispatcher.run('#!/catalog/');") Catalog
+        li
+            a(href="javascript:DfxStudio.Dispatcher.run('#!/catalog/application/#{application.name}');") Application: #{application.name}
+        li.active Application Screens
+div.row(style="margin-top:10px; min-height: 100%;")
+    div.col-lg-4
+        div.panel.panel-primary
+            div.panel-heading
+                h4 Screens Categories List
+            div.panel-body#screens_categories
+                ul.nav
+                    li
+                        a.tree-toggle.dfx_dbs_database(href="javascript:void(0);", onclick="DfxStudio.Screens.showAllCategories();")
+                            span.fa.fa-lg.fa-tags
+                            span(style="padding-left: 10px;") All
+                    each category in categories
+                        li
+                            a.tree-toggle.dfx_dbs_database(href="javascript:void(0);", onclick="DfxStudio.Screens.filterByCategory('#{category.name}');")
+                                span.fa.fa-lg.fa-tag
+                                span(style="padding-left: 10px;") #{category.name}
+                                div.fa.fa-lg.fa-trash-o.btn.btn-danger.pull-right(onclick="DfxStudio.Screens.deleteCategory({applicationName:'#{application.name}',screenCategoryName:'#{category.name}'});", style="display: none;")
+                    li
+                        a.tree-toggle.dfx_dbs_database(href="javascript:void(0);", onclick="DfxStudio.Screens.showNoCategoryScreen();")
+                            span.fa.fa-lg.fa-tag
+                            span(style="padding-left: 10px;") No category
+                    li
+                        div.dbx_dbs_divider
+                div(style="margin-top: 20px;")
+                    button.btn.btn-info(type="button", onclick="DfxStudio.Screens.addCategory({application:'#{application.name}'});")
+                        span.fa.fa-lg.fa-plus
+                        span(style="padding-left: 5px;") Screens Category
+    div.col-lg-8
+        div.panel.panel-primary
+            div.panel-heading
+                div.panel-title
+                    | Application Screens List
+                    div.pull-right
+                        a(href="javascript:DfxStudio.switchCollapsible('screens_list');")
+                            span#dfx_collapsible_icon_screens_list.fa.fa-lg.fa-angle-down
+            div.panel-body#dfx_collapsible_screens_list
+                form(action="javascript:void(0);", id='applicationMenuForm')
+                    fieldset
+                        div#searchScreens.form-group.col-lg-12
+                            label(for="fldName") Search or Create a Screen:
+                            div.input-group(style="margin-bottom:10px")
+                                input#fldScreen.form-control(type="text", data-inputname='searchScreens', placeholder="Search a screen")
+                                span.input-group-btn
+                                    div.dropdown
+                                        a#search-screens.btn.btn-info.dropdown-toggle(type="button", onclick="DfxStudio.Dashboard.searchScreens()")
+                                            span.fa.fa-lg.fa-search
+                                span.input-group-btn
+                                    button.btn.btn-info(type="button", onclick="DfxStudio.Screens.createScreen({application:'#{application.name}'})")
+                                        span.fa.fa-lg.fa-plus
+                table#screensTable.table.table-condensed.table-thick-bordered(style="margin-bottom: 0;")
+                    col(width="30%")
+                    col(width="40%")
+                    col(width="20%")
+                    col(width="10%")
+                    thead
+                        tr
+                            th Name
+                            th Title
+                            th Category
+                            th Action
+                    tbody
+                        each screen in screens
+                            tr(style="display: table-row;")
+                                td.screen-name
+                                    a.dfx_table_text.btn.btn-link(href="javascript:DfxStudio.Screens.selectScreen({applicationName:'#{application.name}', screenName:'#{screen.name}'});", data-screen-name="#{screen.name}") #{screen.name}
+                                td #{screen.title}
+                                td.screens-category #{screen.category}
+                                td
+                                    a.dfx_table_text.btn.btn-link(href="javascript:DfxStudio.Screens.deleteScreen({applicationName:'#{application.name}', screenName:'#{screen.name}'});")
+                                        span.fa.fa-lg.fa-trash-o
+        div.panel.panel-primary
+            div.panel-heading
+                div.panel-title
+                    | Page Details
+                    div.pull-right
+                        a(href="javascript:DfxStudio.switchCollapsible('screen_details');")
+                            span#dfx_collapsible_icon_screen_details.fa.fa-lg.fa-angle-down
+            div.panel-body#dfx_collapsible_screen_details
+                span#screen_detail_intro(style="display: block;")
+                    div Select a screen from list.
+                span#screen_detail_form(style="display: none;")
+                    form#applicationScreenForm(action="javascript:void(0);")
+                        h4
+                            span.dfs_content_title_2 Properties
+                        fieldset
+                            div.form-group.col-lg-3
+                                label(for="fldScreenName") Name:
+                                input#fldScreenName.form-control(type="text", data-inputname='name')
+                            div.form-group.col-lg-6
+                                label(for="fldScreenTitle") Title:
+                                input#fldScreenTitle.form-control(type="text", data-inputname='title')
+                            div.form-group.col-lg-3
+                                label(for="fldScreenCategory") Category:
+                                select#fldScreenCategory.form-control(data-inputname='categoryName')
+                                    option(value="") No category
+                                    each category in categories
+                                        option(value="#{category.name}") #{category.name}
+                    h4
+                        span.dfs_content_title_2 Layout
+                    div#dfx_screen_detail_layout
+                        div(style="margin:10px")
+                            a.btn.btn-info(href="javascript:DfxStudio.layoutEditor.addRow();")
+                                span.fa.fa-lg.fa-plus
+                                span(style="padding-left:5px") Add Row
+                            a.btn.btn-info(href="javascript:DfxStudio.layoutEditor.removeRow();", style="margin-left:32px")
+                                span.fa.fa-lg.fa-trash-o
+                                span(style="padding-left:5px") Remove Row
+                        div.row
+                            div#editLayoutPanel.col-md-8
+                            div#dfx_edit_content_panel.col-md-4
+                                div.input-group(style="margin-bottom:10px")
+                                    input#fldSearchWidget.form-control(type="text", size="20", placeholder="Search a widget")
+                                    span.input-group-btn
+                                        button.btn.btn-info(type="button", onclick="DfxStudio.layoutEditor.searchWidgets()")
+                                            span.fa.fa-lg.fa-search
+                                    span.input-group-btn
+                                        button.btn.btn-info(type="button", onclick="DfxStudio.layoutEditor.createPredefinedWidget()")
+                                            span.fa.fa-lg.fa-plus
+                                div#dfx_edit_content_cat_panel.panel.pull-left
+                                    ul.dfx_edit_content_cat
+                                        li(style="background: none; color: white; font-weight: 600;") The result list is empty.
+                        div.clearfix
+                        div#lytedt_col_size(style="margin:10px;display:none")
+                            div.row
+                                div#lytedt_nbcol.form-group.col-lg-3(style="width:100px")
+                                    label(for="fldNbCol") Nb.Col:
+                                    select#fldNbCol.form-control
+                                        option 1
+                                        option 2
+                                        option 3
+                                        option 4
+                                div#lytedt_col1.form-group.col-lg-3.dfx_lytedt_col_field(style="width: 100px;")
+                                    label(for="fldCol1") Column 1:
+                                    input#fldCol1.form-control(type="text", data-inputname='col1')
+                                div#lytedt_col2.form-group.col-lg-3.dfx_lytedt_col_field(style="width: 100px;")
+                                    label(for="fldCol2") Column 2:
+                                    input#fldCol2.form-control(type="text", data-inputname='col2')
+                                div#lytedt_col3.form-group.col-lg-3.dfx_lytedt_col_field(style="width: 100px;")
+                                    label(for="fldCol3") Column 3:
+                                    input#fldCol3.form-control(type="text", data-inputname='col3')
+                                div#lytedt_col4.form-group.col-lg-3.dfx_lytedt_col_field(style="width: 100px;")
+                                    label(for="fldCol4") Column 4:
+                                    input#fldCol4.form-control(type="text", data-inputname='col4')
+                                div.form-group.col-lg-3(style="margin-top: 25px;")
+                                    a.btn.btn-info(href="javascript:DfxStudio.layoutEditor.saveColumnsChanges();")
+                                        span.fa.fa-lg.fa-check
+                    div(style="margin-top: 30px;")
+                        a.btn.btn-info.save-now-submitter(href="javascript:DfxStudio.layoutEditor.saveChanges({applicationName:'#{application.name}', formId:'applicationScreenForm'});")
+                            span.fa.fa-lg.fa-floppy-o
+                            span(style="padding-left: 5px;") Save
+                        a.btn.btn-default(href="javascript:DfxStudio.layoutEditor.discardChanges();", style="margin-left: 10px;")
+                            span.fa.fa-lg.fa-undo
+                            span(style="padding-left: 5px;") Cancel
+                        span#dfx_screen_detail_warning.label.label-warning.pull-right(style="font-size: 12px; margin-top: 7px; display: none;") Your changes have not been saved

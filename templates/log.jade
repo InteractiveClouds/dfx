@@ -1,0 +1,80 @@
+doctype html
+html
+    head
+        meta(http-equiv="content-type", content="text/HTML;charset=UTF-8")
+        meta(name="viewport", content="width=device-width,initial-scale=1")
+        title log
+        link(rel="stylesheet", href="/styles/log/index.css", media="all")
+        link(rel="stylesheet", href="/styles/log/schemas/solarized_dark.css", media="all")#colorSchema
+        script(src="/socket.io/socket.io.js")
+        script(src="/all/commons/js/jquery-1.9.1.js")
+    body
+        #menu_cont
+            ul#menu
+                lh show
+                    ul
+                        li
+                            label
+                                input(type="checkbox")#showstack
+                                span stack trace
+                        li
+                            label
+                                input(type="checkbox")#showtime
+                                span time
+                        li
+                            label
+                                input(type="checkbox")#shownumber
+                                span number
+                        li
+                            label
+                                input(type="checkbox")#showlevel
+                                span level
+                        li
+                            label
+                                input(type="checkbox")#showlabel
+                                span label
+                lh filters:
+                    ul#filters
+                        lh
+                            label
+                                input(type="checkbox", checked="checked")#allbylevel
+                                span by level
+                            ul#bylevel
+                        lh
+                            label
+                                input(type="checkbox", checked="checked")#allbylabel
+                                span by label
+                            ul#bylabel
+                lh files:
+                    ul#files
+        #log_cont
+            ul#log
+
+
+
+        script#MESSAGE_TEMPL(type="text/template").
+            <li class="LEVEL_%%level%% LABEL_%%label%%">
+                <span class="number">%%number%%</span>
+                <span class="level width3 inlineBlock">%%level%%</span>
+                <span class="label dim widthLabel inlineBlock">%%label%%</span>
+                <span class="time">%%time%%</span>
+                <pre class="inline messageText">%%text%%</pre>
+                <pre class="stacktrace">%%stack%%</pre>
+            </li>
+        script#LABEL_TEMPL(type="text/template").
+            <li>
+                <label>
+                    <input type="checkbox" checked="checked">
+                    <span>%%name%%</span>
+                </label>
+            </li>
+        script#FILESLIST_TEMPL(type="text/template").
+            <li class="filesList %%class%%">
+                <a href="%%path%%">%%logName%%</a>
+            </li>
+        script#NOSUCHFILE_ERROR_TEMPL(type="text/template").
+            <p class="LEVEL_FATAL">&nbsp;&gt; can not find the file "%%file%%"</p>
+
+
+
+        script(src="/js/log/index.js")

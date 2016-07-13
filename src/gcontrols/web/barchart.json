@@ -1,0 +1,64 @@
+{
+	"template": 			{ "value": "default" },
+	"name": {
+		"value": "barChart1"
+	},
+  	"flex": {
+	  	"value": 50
+	},
+	"binding": {
+	  	"value": ""
+	},
+	"title": {
+	  	"value": "'Bar Chart'"
+	},
+  	"chartType": {
+	  	"value": "discreteBarChart"
+	},
+	"display": {
+		"value": "true"
+	},
+	"options": {
+	  	"xAxisLabel": "'X Axis'",
+	  	"yAxisLabel": "'Y Axis'",
+	  	"xAxisLabelDistance": -5,
+	  	"yAxisLabelDistance": -5,
+	  	"showValues": "true",
+	  	"duration": 500,
+	  	"showXAxis": "true",
+	  	"showYAxis": "true"
+	},
+	"dynamicOptions": {
+	  	"value": ""
+	},
+	"style": {
+	  	"value": ""
+	},
+	"classes": {
+		"value": ""
+	},
+	"dynamicClasses": {
+		"value": ""
+	},
+	"onclick": {
+		"value": ""
+	},
+	"ondblclick": {
+	  	"value": ""
+	},
+	"onmouseover": {
+	  	"value": ""
+	},
+	"onmouseleave": {
+	  	"value": ""
+	},
+	"onmousemove": {
+	  	"value": ""
+	},
+	"onbeforeupdate": {
+	  	"value": ""
+	},
+	"onrenderend": {
+	  	"value": ""
+	}
+}

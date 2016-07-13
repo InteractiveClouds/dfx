@@ -1,0 +1,35 @@
+<div class="dfx-ve-property-treeview hover">
+	<ul>
+		<li>
+			<input class="dfx-ve-property-treeview-button" type="checkbox" id="item-0" />
+			<label for="item-0">Main Properties</label>
+			<ul class="dfx-ve-property-treeview-content">
+				<li class="col-md-12">
+					<label class="col-md-4">Title:</label>
+					<div class="col-md-8" layout="row">
+						<input class="col-md-12" type="text" ng-model="attributes.title.value" style="margin-left:-15px;"/>
+						<dfx-ve-expression-editor></dfx-ve-expression-editor>
+					</div>
+				</li>
+				<li class="col-md-12">
+					<label class="col-md-4">Classes:</label>
+					<input class="col-md-8" type="text" ng-model="attributes.classes.value" />
+				</li>
+			</ul>
+		</li>
+		<li>
+			<input class="dfx-ve-property-treeview-button" type="checkbox" id="item-1" />
+			<label for="item-1">Data Binding</label>
+			<ul class="dfx-ve-property-treeview-content">
+				<li class="col-md-12">
+					<label class="col-md-4">Repeat for all:</label>
+					<input class="col-md-8" type="text" ng-model="attributes.repeat_all.value" />
+				</li>
+				<li class="col-md-12">
+					<label class="col-md-4">In:</label>
+					<input class="col-md-8" type="text" ng-model="attributes.repeat_in.value" />
+				</li>
+			</ul>
+		</li>
+	</ul>
+</div>

@@ -1,0 +1,127 @@
+div(style="overflow-x:hidden")
+    ol.breadcrumb
+        li
+            a(href="javascript:DfxStudio.Dispatcher.run('#!/home/');")
+                span.fa.fa-lg.fa-home
+        li.active Catalog
+    div#accordion.row
+        div.col-md-6
+            div.panel.panel-default
+                div.panel-heading
+                    h3
+                        span.badge.badge-primary #{applications.length}
+                        | &nbsp;Applications&nbsp;
+                        a.panel-collapse-link.pull-right(data-toggle="collapse", data-parent="#accordion", href="#collapseApplications")
+                            span.fa.fa-lg.fa-angle-down
+                if applications.length > 0
+                    div.panel-collapse.collapse.in(id="collapseApplications")
+                        div.panel-body
+                            p.hint The list below shows all applications hosted on your platform.
+                            table.table.table-condensed.table-thick-bordered(style="margin-bottom: 0;")
+                                col(width="30%")
+                                col(width="10%")
+                                col(width="50%")
+                                col(width="10%")
+                                thead
+                                    tr
+                                        th Name
+                                        th Type
+                                        th Title
+                                        th Action
+                            div.app-table(style="overflow: hidden;")
+                                table.table.table-condensed.table-thick-bordered
+                                    col(width="30%")
+                                    col(width="10%")
+                                    col(width="50%")
+                                    col(width="10%")
+                                    tbody
+                                        each application, i in applications
+                                            tr
+                                                td
+                                                    a.dfx_table_text.btn.btn-link(href="javascript:DfxStudio.Dispatcher.run('#!/catalog/application/'+encodeURIComponent('#{application.name}')+'/');") #{application.name}
+                                                td
+                                                    div.dfx_table_text #{application.platform}
+                                                td
+                                                    div.dfx_table_text #{application.title}
+                                                td
+                                                    //a.dfx_table_text.btn.btn-link(href="javascript:DfxStudio.Dashboard.deleteApplication({applicationName:'#{application.name}'});")
+                                                    //    span.fa.fa-lg.fa-trash-o
+                                                    a.dfx_table_text.btn.btn-link(href="javascript:DfxStudio.Dispatcher.run('#!/catalog/application/'+encodeURIComponent('#{application.name}')+'/');")
+                                                        span.fa.fa-lg.fa-pencil-square-o
+                else
+                    div.panel-body
+                        p.hint There is no application on your cloud platform.
+                div.panel-body(style="padding-top: 15px;")
+                    a.btn.btn-info(href="javascript:DfxStudio.Dispatcher.run('#!/catalog/application/create/');")
+                        span.fa.fa-lg.fa-plus
+                        | &nbsp;Application
+            div#dfxWidgetsPanel.panel.panel-default.collapsed
+                div.panel-heading
+                    div.col-sm-6
+                        h3
+                            span.badge.badge-primary #{nbwidgets}
+                            | &nbsp;Widget Catalog&nbsp;
+                            span.fa.fa-lg.fa-angle-right
+                    div.col-sm-6
+                        form.form-inline(method="get", role="form", onsubmit="return false;")
+                            div.form-group.col-xxl-9.col-xl-9.col-lg-8.col-md-7
+                                input#fldWidgetName.form-control(name="fldWidgetName",type="text", placeholder="Search a widget")
+                            div.form-group.pull-right
+                                span.fa.fa-2x.fa-search(type="button", title="Search widget", data-toggle="tooltip", data-placement="right", onclick="DfxStudio.Dashboard.searchWidget();")
+                                span.fa.fa-2x.fa-plus(type="button", title="Create widget", data-toggle="tooltip", data-placement="right", onclick="DfxStudio.Dispatcher.run('#!/catalog/widget/create/');")
+                    div.clearfix
+            div#dfxQueriesPanel.panel.panel-default.collapsed
+                div.panel-heading
+                    div.col-sm-6
+                        h3
+                            span.badge.badge-primary #{nbqueries}
+                            | &nbsp;Query Catalog&nbsp;
+                            span.fa.fa-lg.fa-angle-right
+                    div.pull-right.col-sm-6
+                        form.form-inline(method="get", role="form", onsubmit="return false;")
+                            div.form-group.col-xxl-9.col-xl-9.col-lg-8.col-md-7
+                                input#fldQueryName.form-control(name="fldQueryName",type="text", placeholder="Search a query")
+                            div.form-group.pull-right
+                                span.fa.fa-2x.fa-search(type="button", onclick="DfxStudio.Dashboard.searchQuery();")
+                                span.fa.fa-2x.fa-plus(type="button", onclick="DfxStudio.Dispatcher.run('#!/catalog/query/create/');")
+                    div.clearfix
+        div.col-md-6
+            div#collapseWidgets.panel-collapse.collapse.clearfix
+                div#dfx_widget_search_result.panel-body(style="padding-top:0")
+                    h3(style="margin-top:0") Widget Search Result
+                    table.table.table-condensed.table-thick-bordered(style="margin-bottom: 0;")
+                        col(width="30%")
+                        col(width="10%")
+                        col(width="50%")
+                        col(width="10%")
+                        thead
+                            tr
+                                th(style="padding-left:20px") Name
+                                th Type
+                                th Description
+                                th Action
+                    div.widgets-table(style="overflow: hidden;")
+                        table.table.table-condensed.table-thick-bordered
+                            col(width="30%")
+                            col(width="10%")
+                            col(width="50%")
+                            col(width="10%")
+                            tbody#dfx_widget_search_result_body
+            div#collapseQueries.panel-collapse.collapse.clearfix
+                div#dfx_query_search_result.panel-body(style="padding-top:0")
+                    h3(style="margin-top:0") Query Search Result
+                    table.table.table-condensed.table-thick-bordered(style="margin-bottom: 0;")
+                        col(width="30%")
+                        col(width="60%")
+                        col(width="10%")
+                        thead
+                            tr
+                                th(style="padding-left:20px") Name
+                                th Description
+                                th Action
+                    div.queries-table(style="overflow: hidden;")
+                        table.table.table-condensed.table-thick-bordered
+                            col(width="30%")
+                            col(width="60%")
+                            col(width="10%")
+                            tbody#dfx_query_search_result_body

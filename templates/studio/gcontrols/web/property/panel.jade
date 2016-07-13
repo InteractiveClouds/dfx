@@ -1,0 +1,181 @@
+div.panel(style="position:fixed;top:203px;right:0;height:35px;width:349px;z-index:3;padding:5px")
+    a#dfx_visual_editor_property_panel_apply.pull-left.btn.btn-xs.btn-info(href="javascript:gc_web_panel.savePropertyPanel();", gc-type="panel")
+        span.fa.fa-lg.fa-check
+        span(style="padding-left:5px") Apply
+    a.pull-right(href="javascript:DfxVisualBuilder.propertyPanelExpandAll();", style="margin-left:10px") Expand
+    a.pull-right(href="javascript:DfxVisualBuilder.propertyPanelCollapseAll();") Collapse
+div.panel(style="position: fixed;top: 233px;right: 0;width: 349px;padding: 5px;bottom: 20px;overflow-y: auto;")
+    form.form-horizontal
+        legend
+            a.dfx_visual_editor_property_collapsible_btn(data-toggle="collapse", data-target="#main_props") Main Properties
+        div#main_props.collapse.in
+            div.form-group
+                label.col-xs-4.control-label Name:
+                div.col-xs-8
+                    input#gc_panel_attr_name.input-xs.dfx_visual_editor_property_input(type="text")
+            div.form-group
+                label.col-xs-4.control-label Controller:
+                div.col-xs-8
+                    input#gc_panel_attr_controller.input-xs.dfx_visual_editor_property_input(type="text")
+            div.form-group
+                label.col-xs-4.control-label Form Name:
+                div.col-xs-8
+                    input#gc_panel_attr_form.input-xs.dfx_visual_editor_property_input(type="text")
+        legend
+            a.dfx_visual_editor_property_collapsible_btn.collapsed(data-toggle="collapse", data-target="#data_props") Data & Binding Options
+        div#data_props.collapse
+            div.form-group
+                label.col-xs-4.control-label Repeatable:
+                div.col-xs-8
+                    div.radio
+                        label
+                            input#gc_panel_attr_useM(type="radio", name="panelUseM")
+                            | Yes
+                    div.radio
+                        label
+                            input#gc_panel_attr_useS(type="radio", name="panelUseM", checked)
+                            | No
+            div.form-group
+                label.col-xs-4.control-label Variable:
+                div.col-xs-8
+                    div.input-group
+                        input#gc_panel_attr_model.form-control.input-xs.dfx_visual_editor_property_input(type="text")
+                        span.input-group-btn
+                            a#btnPickModel.btn.btn-default(href="#", data-toggle="modal", data-target="#pickerValueModal", data-vb-picker="bind", data-vb-picker-target="gc_panel_attr_model") ...
+        legend
+            a.dfx_visual_editor_property_collapsible_btn.collapsed(data-toggle="collapse", data-target="#layout_props") Layout & Presentation Rules
+        div#layout_props.collapse
+            div.form-group
+                label.col-xs-4.control-label Layout:
+                div.col-xs-8(style="padding-top: 3px;")
+                    a#gc_panel_attr_layout_link(href="javascript:void(0);") Edit...
+            div.form-group
+                label.col-xs-4.control-label Display rule:
+                div.col-xs-8
+                    div.input-group
+                        input#gc_panel_attr_display.form-control.input-xs.dfx_visual_editor_property_input(type="text")
+                        span.input-group-btn
+                            a#btnPickDisplay.btn.btn-default(href="#", data-toggle="modal", data-target="#pickerValueModal", data-vb-picker="exp", data-vb-picker-target="gc_panel_attr_display") ...
+            div.form-group
+                label.col-xs-4.control-label Title:
+                div.col-xs-8
+                    div.input-group
+                        input#gc_panel_attr_title.form-control.input-xs.dfx_visual_editor_property_input(type="text")
+                        span.input-group-btn
+                            a#btnPickTitle.btn.btn-default(href="#", data-toggle="modal", data-target="#pickerValueModal", data-vb-picker="exptext", data-vb-picker-target="gc_panel_attr_title") ...
+            div.form-group
+                label.col-xs-4.control-label Display Title:
+                div.col-xs-8
+                    select#gc_panel_attr_titleVisible.form-control.dfx_visual_editor_property_input(style="width:80px")
+                        option(value="yes") yes
+                        option(value="no") no
+            div.form-group
+                label.col-xs-4.control-label Collapsible:
+                div.col-xs-8
+                    select#gc_panel_attr_collapse.form-control.dfx_visual_editor_property_input(style="width:80px")
+                        option(value="yes") yes
+                        option(value="no") no
+        legend
+            a.dfx_visual_editor_property_collapsible_btn.collapsed(data-toggle="collapse", data-target="#container_css_props") Panel CSS
+        div#container_css_props.collapse
+            div.form-group
+                label.col-xs-4.control-label Panel Classes:
+                div.col-xs-8
+                    div.input-group
+                        input#gc_panel_attr_classes.form-control.input-xs.dfx_visual_editor_property_input(type="text")
+                        span.input-group-btn
+                            a#btnPickClasses.btn.btn-default(href="#", data-toggle="modal", data-target="#pickerValueModal", data-vb-picker="class", data-vb-picker-target="gc_panel_attr_classes") ...
+            div.form-group
+                label.col-xs-4.control-label Width:
+                div.col-xs-8
+                    input#gc_panel_attr_css_width.input-xs.dfx_visual_editor_property_input(type="text", style="width:80px")
+            div.form-group
+                label.col-xs-4.control-label Height:
+                div.col-xs-8
+                    input#gc_panel_attr_css_height.input-xs.dfx_visual_editor_property_input(type="text", style="width:80px")
+            div.form-group
+                label.col-xs-4.control-label Color:
+                div.col-xs-8
+                    .input-group#panelCssColorPicker.fgcolor
+                        span.input-group-addon.color-picker(style="padding:3px")
+                            i(style="border:1px solid #b0b0b0")
+                        input#gc_panel_attr_css_color.input-xs.dfx_visual_editor_property_input(type="text", style="width:80px")
+            div.form-group
+                label.col-xs-4.control-label Background:
+                div.col-xs-8
+                    .input-group#panelCssBgcolorPicker.fgcolor
+                        span.input-group-addon.color-picker(style="padding:3px")
+                            i(style="border:1px solid #b0b0b0")
+                        input#gc_panel_attr_css_background.input-xs.dfx_visual_editor_property_input(type="text", style="width:80px")
+            div.form-group
+                label.col-xs-4.control-label Padding:
+                div.col-xs-8
+                    input#gc_panel_attr_css_padding.input-xs.dfx_visual_editor_property_input(type="text", placeholder="0px")
+            div.form-group
+                label.col-xs-4.control-label Margin:
+                div.col-xs-8
+                    input#gc_panel_attr_css_margin.input-xs.dfx_visual_editor_property_input(type="text", placeholder="0px")
+            div.form-group
+                label.col-xs-4.control-label Text-Alignment:
+                div.col-xs-8
+                    input#gc_panel_attr_css_alignment.input-xs.dfx_visual_editor_property_input(type="text", placeholder="left/right/center")
+        legend
+            a.dfx_visual_editor_property_collapsible_btn.collapsed(data-toggle="collapse", data-target="#style_props") Panel Body CSS
+        div#style_props.collapse
+            div.form-group
+                label.col-xs-4.control-label Body Classes:
+                div.col-xs-8
+                    div.input-group
+                        input#gc_panel_body_attr_classes.form-control.input-xs.dfx_visual_editor_property_input(type="text")
+                        span.input-group-btn
+                            a#btnPickBodyClasses.btn.btn-default(href="#", data-toggle="modal", data-target="#pickerValueModal", data-vb-picker="class", data-vb-picker-target="gc_panel_body_attr_classes") ...
+            div.form-group
+                label.col-xs-4.control-label Dynamic Classes:
+                div.col-xs-8
+                    div.input-group
+                        input#gc_panel_body_attr_dynamicClasses.form-control.input-xs.dfx_visual_editor_property_input(type="text")
+                        span.input-group-btn
+                            a#btnPickPropertyDynClasses.btn.btn-default(href="#",data-toggle="modal", data-target="#pickerValueModal", data-vb-picker="exp", data-vb-picker-target="gc_panel_attr_dynamicClasses") ...
+            div.form-group
+                label.col-xs-4.control-label Width:
+                div.col-xs-8
+                    input#gc_panel_body_attr_css_width.input-xs.dfx_visual_editor_property_input(type="text", style="width:80px")
+            div.form-group
+                label.col-xs-4.control-label Height:
+                div.col-xs-8
+                    input#gc_panel_body_attr_css_height.input-xs.dfx_visual_editor_property_input(type="text", style="width:80px")
+            div.form-group
+                label.col-xs-4.control-label Color:
+                div.col-xs-8
+                    .input-group#panelBodyCssColorPicker.fgcolor
+                        span.input-group-addon.color-picker(style="padding:3px")
+                            i(style="border:1px solid #b0b0b0")
+                        input#gc_panel_body_attr_css_color.input-xs.dfx_visual_editor_property_input(type="text", style="width:80px")
+            div.form-group
+                label.col-xs-4.control-label Background:
+                div.col-xs-8
+                    .input-group#panelBodyCssBgcolorPicker.fgcolor
+                        span.input-group-addon.color-picker(style="padding:3px")
+                            i(style="border:1px solid #b0b0b0")
+                        input#gc_panel_body_attr_css_background.input-xs.dfx_visual_editor_property_input(type="text", style="width:80px")
+            div.form-group
+                label.col-xs-4.control-label Padding:
+                div.col-xs-8
+                    input#gc_panel_body_attr_css_padding.input-xs.dfx_visual_editor_property_input(type="text", placeholder="0px")
+            div.form-group
+                label.col-xs-4.control-label Margin:
+                div.col-xs-8
+                    input#gc_panel_body_attr_css_margin.input-xs.dfx_visual_editor_property_input(type="text", placeholder="0px")
+            div.form-group
+                label.col-xs-4.control-label Text-Alignment:
+                div.col-xs-8
+                    input#gc_panel_body_attr_css_alignment.input-xs.dfx_visual_editor_property_input(type="text", placeholder="left/right/center")
+            div.form-group
+                label.col-xs-4.control-label Custom CSS:
+                div.col-xs-8
+                    input#gc_panel_attr_style.input-xs.dfx_visual_editor_property_input(type="text")
+
+
+
+    input#gc_panel_attr_id(type="hidden")
+    input#gc_panel_attr_layout(type="hidden")

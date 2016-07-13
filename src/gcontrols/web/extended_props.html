@@ -1,0 +1,14 @@
+<li>
+	<input class="dfx-ve-property-treeview-button" type="checkbox" id="item-extended-directives" />
+	<label for="item-extended-directives">Extended Directives</label>
+	<ul class="dfx-ve-property-treeview-content">
+		<li class="col-md-12" ng-repeat="ext_directive in $parent.gc_selected.attributes.ext_directives">
+			<input class="col-md-5" type="text" ng-model="ext_directive.directive" />
+			<span class="col-md-2 text-center">=</span>
+			<input class="col-md-5" type="text" ng-model="ext_directive.value" />
+		</li>
+		<li class="col-md-12" style="padding-top:5px;font-size:12px">
+			<a href="#" ng-click="addExtendedDirective()">Add Directive</a>
+		</li>
+	</ul>
+</li>

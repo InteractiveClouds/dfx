@@ -1,0 +1,54 @@
+{
+	"type": "button",
+	"title": "Predefined Button Styles",
+	"definitions": [
+		{
+			"id": "btn_ok",
+			"name": "OK Button",
+			"description": "Standard OK Button",
+			"attributes": {
+				"label": {
+					"value": "OK"
+				},
+				"name": {
+					"value": "btnOK"
+				},
+				"icon": {
+					"value": "ok"
+				},
+				"iconPosition": {
+					"value": "left"
+				},
+				"classes": {
+					"value": "btn-success"
+				},
+				"css": {},
+				"containerCss": {}
+			}
+		},
+		{
+			"id": "btn_cancel",
+			"name": "Cancel Button",
+			"description": "Standard Cancel Button",
+			"attributes": {
+				"label": {
+					"value": "Cancel"
+				},
+				"name": {
+					"value": "btnCancel"
+				},
+				"icon": {
+					"value": "remove"
+				},
+				"iconPosition": {
+					"value": "left"
+				},
+				"classes": {
+					"value": "btn-danger"
+				},
+				"css": {},
+				"containerCss": {}
+			}
+		}
+	]
+}

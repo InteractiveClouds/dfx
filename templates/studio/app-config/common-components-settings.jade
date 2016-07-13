@@ -1,0 +1,39 @@
+form#applicationForm(action="javascript:void(0);")
+    div.panel.panel-primary(style="position: relative; height: 99%; margin-bottom: 1%;")
+        div.panel-heading
+            h4 GitHub Repository
+        div.panel-body
+            form(action="javascript:void(0);", style="margin-top:10px")
+                fieldset
+                    input#dfx_github_settings_provider_type(type="hidden", name="dfx_github_settings_provider_type", value='github')
+                    div.form-group.col-md-12
+                        label(for="dfx_github_settings_access_token") Access token:
+                        input#dfx_github_settings_access_token.form-control(type="text", name="dfx_github_settings_access_token", placeholder="Github personal access token", value='#{access_token}')
+                    div.form-group.col-md-6
+                        label(for="dfx_github_settings_repository_name") Name:
+                        input#dfx_github_settings_repository_name.form-control(type="text", name="dfx_github_settings_repository_name", placeholder="Repository name", size="50", value="#{reponame}")
+                    div.form-group.col-md-6
+                        label(for="dfx_github_settings_repository_user") Owner's Name:
+                        input#dfx_github_settings_repository_user.form-control(type="text", name="dfx_github_settings_repository_user", placeholder="Repository owner name", size="50", value="#{username}")
+            div.col-md-12
+                button.btn.btn-info(type='button', onclick="DfxStudio.Home.Settings.importAll('#{application.name}');")
+                    span.fa.fa-lg.fa-cloud-download
+                    span(style="padding-left:5px") Git Pull
+                button.btn.btn-info(type='button', onclick="DfxStudio.Home.Settings.exportAll('#{application.name}');", style="margin-left:10px")
+                    span.fa.fa-lg.fa-cloud-upload
+                    span(style="padding-left:5px") Git Push
+                button.btn.btn-info(type='button', onclick="DfxStudio.Home.Settings.status('#{application.name}');", style="margin-left:10px")
+                    span.fa.fa-lg.fa-info
+                    span(style="padding-left:5px") Git Status
+                button#clearGithubRepository.btn.btn-danger.pull-right(type='button', onclick="DfxStudio.Home.Settings.clearRep({applicationName: '#{application.name}', reponame: '#{reponame}'});", style="margin-left:10px")
+                    span.fa.fa-lg.fa-trash-o
+                    span(style="padding-left:5px") Empty Remote Repository
+                div#git-status-block.panel.panel-primary(style="display: none; margin-top: 15px;")
+                    div.panel-heading(style="background-color: #7F9AA8;")
+                        h4 Local Repository Changes
+                    div.panel-body(style="background-color: #F5F5F5;")
+                        div.components
+    div
+        a.btn.btn-info.save-now-submitter(href="javascript:void(0);", onclick="javascript:DfxStudio.Home.Settings.update({applicationName: '#{application.name}', formId: 'applicationForm'});")
+            span.fa.fa-lg.fa-floppy-o
+            span(style="padding-left:5px") Save

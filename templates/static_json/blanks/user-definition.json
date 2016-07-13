@@ -1,0 +1,69 @@
+{
+  "document": "userDefinition",
+  "metadata": {
+    "roles": {
+      "type": "subdocument",
+      "pass": "true",
+      "mandatory": "true",
+      "structure": {
+        "list": {
+          "title": "Roles list",
+          "mandatory": "true",
+          "type": "array",
+          "defaults": []
+        },
+        "default": {
+          "title": "Default role",
+          "mandatory": "true",
+          "type": "string",
+          "defaults": ""
+        }
+      }
+    },
+    "email": {
+      "title": "E-Mail",
+      "type": "string",
+      "pass": "true",
+      "mandatory": "true",
+      "defaults": ""
+    },
+    "name": {
+      "type": "subdocument",
+      "pass": "true",
+      "mandatory": "true",
+      "structure": {
+        "last": {
+          "title": "Last name",
+          "mandatory": "true",
+          "type": "string",
+          "defaults": ""
+        },
+        "first": {
+          "title": "First name",
+          "mandatory": "true",
+          "type": "string",
+          "defaults": ""
+        }
+      }
+    },
+    "credentials": {
+      "type": "subdocument",
+      "pass": "false",
+      "mandatory": "true",
+      "structure": {
+        "login": {
+          "title": "User login",
+          "mandatory": "true",
+          "type": "string",
+          "defaults": ""
+        },
+        "pass": {
+          "title": "User password",
+          "mandatory": "true",
+          "type": "string",
+          "defaults": ""
+        }
+      }
+    }
+  }
+}

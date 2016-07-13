@@ -1,0 +1,64 @@
+- var labelPosition = gcitem.attributes.labelPosition && gcitem.attributes.labelPosition.value ? 'text-align:'+gcitem.attributes.labelPosition.value: '';
+- var containerCss = '';
+if (gcitem.attributes.containerCss)
+    each val, key in gcitem.attributes.containerCss
+        - if (val!='') containerCss += key + ':' + val + ';'
+- var css = '';
+if (gcitem.attributes.css)
+    each val, key in gcitem.attributes.css
+        - if (val!='') css += key + ':' + val + ';'
+- var divStyle = '';
+- var orientationStyle = '';
+- var style = '';
+- var width = gcitem.attributes.css.width || '100%';
+- var height = gcitem.attributes.css.height || '200px';
+- if (gcitem.attributes.orientation.value == 'horizontal') {
+    - style = gcitem.attributes.style.value+';width:'+width+';margin:0 auto';
+    - divStyle = 'min-height:50px;height:auto;width:'+width+';';
+- } else {
+    - style = gcitem.attributes.style.value+';height:'+height+';margin:20px auto;';
+    - divStyle = 'min-height:50px;height:auto;width:50px;display:inline-block;';
+    - orientationStyle = 'display: inline-block;';
+- }
+div(
+    id="#{gcitem.id}_{{$index}}",
+    ng-show = (gcitem.attributes.display.value == '' ? undefined : "#{gcitem.attributes.display.value}"),
+    style=('position:relative;#{orientationStyle}' + (gcitem.attributes.containerStyle ? gcitem.attributes.containerStyle.value : '') + ';' + containerCss),
+    class="#{gcitem.attributes.containerClasses.value}",
+    ng-class = (gcitem.attributes.containerDynamicClasses.value == '' ? undefined : "#{gcitem.attributes.containerDynamicClasses.value}")
+    )
+    div(
+        id = "#{gcitem.id}_field_{{$index}}_slider",
+        style="#{divStyle}"
+        )
+            label(
+                for="#{gcitem.id}_field_{{$index}}",
+                ng-show = ((!gcitem.attributes.labelVisible.value) || (gcitem.attributes.labelVisible.value == 'no') ? 'false' : 'true'),
+                style=((!gcitem.attributes.labelVisible.value) || (gcitem.attributes.labelVisible.value == 'no') ? 'font-weight:400;display:none' : 'font-weight:400;display:block;#{labelPosition};')
+                ) #{gcitem.attributes.label.value}
+            div(
+                id = "#{gcitem.id}_field_{{$index}}",
+                name = (gcitem.attributes.name.value == '' ? undefined : "#{gcitem.attributes.name.value}"),
+                class = (!gcitem.attributes.classes || gcitem.attributes.classes.value == '' ? 'rating' : 'rating ' + "#{gcitem.attributes.classes.value}"),
+                dfx-slider,
+                dfx-tool-tip,
+                tooltip-title = (gcitem.attributes.tooltip && gcitem.attributes.tooltip.value ? "#{gcitem.attributes.tooltip.value}" : undefined),
+                data-placement = (gcitem.attributes.tooltipPosition && gcitem.attributes.tooltipPosition.value ? "#{gcitem.attributes.tooltipPosition.value}" : undefined),
+                ng-model = (gcitem.attributes.property.value == '' ? undefined : "#{gcitem.attributes.property.value}"),
+                ng-init = (gcitem.attributes.propertyInit.value == '' ? undefined : "#{gcitem.attributes.propertyInit.value}"),
+                ng-disabled = (gcitem.attributes.disabled && gcitem.attributes.disabled.value ? "#{gcitem.attributes.disabled.value}" : undefined),
+                min = (gcitem.attributes.min.value == '' ? undefined : "#{gcitem.attributes.min.value}"),
+                max = (gcitem.attributes.max.value == '' ? undefined : "#{gcitem.attributes.max.value}"),
+                step = (gcitem.attributes.step.value == '' ? undefined : "#{gcitem.attributes.step.value}"),
+                start-min = (gcitem.attributes.startMin.value === '' ? undefined : "#{gcitem.attributes.startMin.value}"),
+                start-max = (gcitem.attributes.startMax.value === '' ? undefined : "#{gcitem.attributes.startMax.value}"),
+                orientation = (gcitem.attributes.orientation.value == '' ? undefined : "#{gcitem.attributes.orientation.value}"),
+                connect = (gcitem.attributes.connect && gcitem.attributes.connect.value ? "#{gcitem.attributes.connect.value}" : undefined),
+                direction = (gcitem.attributes.direction.value == '' ? undefined : "#{gcitem.attributes.direction.value}"),
+                behaviour = (gcitem.attributes.behaviour.value == '' ? undefined : "#{gcitem.attributes.behaviour.value}"),
+                fgcolor = (gcitem.attributes.css.color ? "#{gcitem.attributes.css.color}" : undefined),
+                bgcolor = (gcitem.attributes.css.background ? "#{gcitem.attributes.css.background}" : undefined),
+                handlecolor = (gcitem.attributes.css.handleColor ? "#{gcitem.attributes.css.handleColor}" : undefined),
+                onslide = (gcitem.attributes.onslide && gcitem.attributes.onslide.value ? "#{gcitem.attributes.onslide.value}" : undefined),
+                onset = (gcitem.attributes.onset && gcitem.attributes.onset.value ? "#{gcitem.attributes.onset.value}" : undefined),
+                style = "#{style}")

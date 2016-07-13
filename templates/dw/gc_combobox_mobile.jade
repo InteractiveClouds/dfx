@@ -1,0 +1,44 @@
+- var attr = gcitem.attributes;
+- var type = attr.type ? attr.type.value : '';
+- var typeAttr = attr.propertyByType && attr.propertyByType[type] ? attr.propertyByType[type] : '';
+- var containerCss = attr.propertyByType && attr.propertyByType[type] ? attr.propertyByType[type] : '';
+if (gcitem.attributes.containerCss)
+    each val, key in gcitem.attributes.containerCss
+        - if (val!='') containerCss += key + ':' + val + ';'
+- var css = '';
+if (gcitem.attributes.css)
+    each val, key in gcitem.attributes.css
+        - if (val!='') css += key + ':' + val + ';'
+
+div(
+    id="#{gcitem.id}_{{$index}}",
+    ng-show = (gcitem.attributes.display.value == '' ? undefined : "#{gcitem.attributes.display.value}"),
+    style=('position:relative;' + (gcitem.attributes.containerStyle ? gcitem.attributes.containerStyle.value : '') + ';' + containerCss),
+    class="#{gcitem.attributes.containerClasses.value}",
+    ng-class = (gcitem.attributes.containerDynamicClasses.value == '' ? undefined : "#{gcitem.attributes.containerDynamicClasses.value}"),
+    )
+    div(
+        id="#{gcitem.id}_form_group_{{$index}}",
+        style="width:100%")
+        if (gcitem.attributes.labelVisible.value=='yes')
+            - var is_label_expression = (attr.label.value.indexOf('{{')>-1 && attr.label.value.indexOf('}}')>-1) ? true : false;
+            label(for="#{gcitem.id}_field_{{$index}}") #{attr.label.value}
+        select(
+            id = "#{gcitem.id}_field_{{$index}}",
+            name = (gcitem.attributes.name.value ? "#{gcitem.attributes.name.value}" : undefined ),
+            class="#{gcitem.attributes.classes.value}",
+            style=(gcitem.attributes.style.value + ';' + css),
+            required = (gcitem.attributes.required.value ? 'true' : undefined),
+            ng-model = (gcitem.attributes.property.value == '' ? 'mdl#{gcitem.id}' : '#{gcitem.attributes.property.value}'),
+            ng-init = (gcitem.attributes.propertyInit.value == '' ? undefined : "#{gcitem.attributes.propertyInit.value}"),
+            ng-class = (gcitem.attributes.dynamicClasses && gcitem.attributes.dynamicClasses.value!='' ? "#{gcitem.attributes.dynamicClasses.value}" : undefined),
+            ng-disabled = (!gcitem.attributes.disabled || gcitem.attributes.disabled.value == '' ? undefined : "#{gcitem.attributes.disabled.value}"),
+            dfx-tool-tip,
+            tooltip-title = (gcitem.attributes.tooltip.value == '' ? undefined : "#{gcitem.attributes.tooltip.value}"),
+            data-placement = (gcitem.attributes.tooltipPosition.value ? "#{gcitem.attributes.tooltipPosition.value}" : undefined)
+            ng-change = (gcitem.attributes.onchange.value == '' ? undefined : "#{gcitem.attributes.onchange.value}"),
+            ng-options = (gcitem.attributes.propertyOptions.value == '' ? undefined : "item.#{gcitem.attributes.dataValue.value} as item.#{gcitem.attributes.displayValue.value} for item in #{gcitem.attributes.propertyOptions.value}")
+            )
+            option(value="") -- choose --
+    if (gcitem.attributes.required.value=='yes')
+        span.help-block(ng-show="#{gcformname}.#{gcitem.attributes.name.value}.$error.required && #{gcformname}.#{gcitem.attributes.name.value}.$dirty") #{(gcitem.attributes.errorRequired.value=='' ? "Thid field is required" : gcitem.attributes.errorRequired.value)}

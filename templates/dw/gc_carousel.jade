@@ -1,0 +1,84 @@
+- var width = gcitem.attributes.css.width ? gcitem.attributes.css.width : '200px'
+- var height = gcitem.attributes.css.height ? gcitem.attributes.css.height : '200px'
+- var fgcolor = gcitem.attributes.css.fgcolor ? 'color:'+gcitem.attributes.css.fgcolor+';' : ''
+- var captionFontSize = gcitem.attributes.css.captionFontSize ? 'font-size:'+gcitem.attributes.css.captionFontSize+';line-height:'+gcitem.attributes.css.captionFontSize+';' : ''
+- var styleCaptionPos = gcitem.attributes.styleCaptionPos && gcitem.attributes.styleCaptionPos.value ? gcitem.attributes.styleCaptionPos.value : ''
+- var styleCaption = fgcolor + captionFontSize + styleCaptionPos
+- var styleDotsPos = gcitem.attributes.styleDotsPos && gcitem.attributes.styleDotsPos.value ? gcitem.attributes.styleDotsPos.value : ''
+- var curIndex = gcitem.attributes.property.value ? gcitem.attributes.property.value : 0
+- var containerCss = '';
+if (gcitem.attributes.containerCss)
+    each val, key in gcitem.attributes.containerCss
+        - if (val!='') containerCss += key + ':' + val + ';'
+div.form-group(
+    id="#{gcitem.id}_{{$index}}",
+    ng-show = (gcitem.attributes.display.value == '' ? undefined : "#{gcitem.attributes.display.value}"),
+    style=('display:inline-block;position:relative;' + (gcitem.attributes.containerStyle ? gcitem.attributes.containerStyle.value : '') + ';' + containerCss),
+    class="#{gcitem.attributes.containerClasses.value}",
+    ng-class = (gcitem.attributes.containerDynamicClasses.value == '' ? undefined : "#{gcitem.attributes.containerDynamicClasses.value}")
+    )
+    if(gcitem.attributes.dynamicOptions.value)
+        - var collection = gcitem.attributes.propertyOptions.value ? gcitem.attributes.propertyOptions.value : 'cr#{gcitem.id}'
+        div.carousel.slide(
+            id = "#{gcitem.id}_{{$index}}_carousel",
+            dfx-tool-tip,
+            tooltip-title = (gcitem.attributes.tooltip && gcitem.attributes.tooltip.value ? "#{gcitem.attributes.tooltip.value}" : undefined),
+            data-placement = (gcitem.attributes.tooltipPosition ? "#{gcitem.attributes.tooltipPosition.value}" : undefined),
+            data-ride = "carousel",
+            data-interval = (gcitem.attributes.interval && gcitem.attributes.interval.value ? "#{gcitem.attributes.interval.value}" : undefined),
+            data-wrap = (gcitem.attributes.wrap && gcitem.attributes.wrap.value == 'yes' ? "true" : "false"),
+            data-pause = (gcitem.attributes.pause && gcitem.attributes.pause.value == 'no' ? "false" : "hover"),
+            onslide = (gcitem.attributes.onslide && gcitem.attributes.onslide.value ? "#{gcitem.attributes.onslide.value}" : undefined),
+            onslid = (gcitem.attributes.onslid && gcitem.attributes.onslid.value ? "#{gcitem.attributes.onslid.value}" : undefined),
+            dfx-carousel-change,
+            currindex = "#{curIndex}",
+            style="width:#{width};height:#{height};#{gcitem.attributes.style.value}",
+            ng-model = (gcitem.attributes.property.value == '' ? undefined : "#{gcitem.attributes.property.value}"),
+            class = (gcitem.attributes.classes.value == '' ? undefined : "#{gcitem.attributes.classes.value}"),
+            ng-class = (gcitem.attributes.dynamicClasses.value ? "#{gcitem.attributes.dynamicClasses.value}" : undefined))
+            ol.carousel-indicators(style="#{styleDotsPos}")
+                li(ng-repeat="item in #{collection}", data-target="##{gcitem.id}_carousel", data-slide-to="{{$index}}", ng-class="{active: $index == #{curIndex}}")
+            div.carousel-inner(role="listbox", style="width:#{width};height:#{height};")
+                div.item(ng-repeat="item in #{collection}", ng-class="{active: $index == #{curIndex}}", style="width:100%;height:100%;")
+                    - var imgValue = gcitem.attributes.propertyOptionsFields.imgValue !== '' ? gcitem.attributes.propertyOptionsFields.imgValue.replace(/[\.]/, "']['") : ''
+                    - var captionValue = gcitem.attributes.propertyOptionsFields.captionValue !== '' ? gcitem.attributes.propertyOptionsFields.captionValue.replace(/[\.]/, "']['") : ''
+                    img(src = "{{ imgValue !== '' && item['#{imgValue}'] ? item['#{imgValue}'] : ''}}", alt="{{item['#{imgValue}'] ? item['#{gcitem.attributes.propertyOptionsFields.imgValue}'] : ''}}", style="width:100%;background-color: #777;", ng-click = (gcitem.attributes.onclick.value ? "#{gcitem.attributes.onclick.value}" : undefined))
+                    div.carousel-caption(style="#{styleCaption}") {{ captionValue !== '' && item['#{captionValue}'] ? item['#{captionValue}'] : '' }}
+            a.left.carousel-control(href="##{gcitem.id}_{{$index}}_carousel", role="button", data-slide="prev", style="z-index:100")
+                span.glyphicon.glyphicon-chevron-left(aria-hidden="true")
+                span.sr-only Previous
+            a.right.carousel-control(href="##{gcitem.id}_{{$index}}_carousel", role="button", data-slide="next", style="z-index:100")
+                span.glyphicon.glyphicon-chevron-right(aria-hidden="true")
+                span.sr-only Next
+    else
+        div.carousel.slide(
+            id = "#{gcitem.id}_{{$index}}_carousel",
+            dfx-tool-tip,
+            tooltip-title = (gcitem.attributes.tooltip && gcitem.attributes.tooltip.value ? "#{gcitem.attributes.tooltip.value}" : undefined),
+            data-placement = (gcitem.attributes.tooltipPosition ? "#{gcitem.attributes.tooltipPosition.value}" : undefined),
+            data-ride = "carousel",
+            data-interval = (gcitem.attributes.interval && gcitem.attributes.interval.value ? "#{gcitem.attributes.interval.value}" : undefined),
+            data-wrap = (gcitem.attributes.wrap && gcitem.attributes.wrap.value == 'yes' ? "true" : "false"),
+            data-pause = (gcitem.attributes.pause && gcitem.attributes.pause.value == 'no' ? "false" : "hover"),
+            onslide = (gcitem.attributes.onslide && gcitem.attributes.onslide.value ? "#{gcitem.attributes.onslide.value}" : undefined),
+            onslid = (gcitem.attributes.onslid && gcitem.attributes.onslid.value ? "#{gcitem.attributes.onslid.value}" : undefined),
+            dfx-carousel-change,
+            currindex = "#{curIndex}",
+            style="width:#{width};height:#{height};#{gcitem.attributes.style.value}",
+            ng-model = (gcitem.attributes.property.value == '' ? undefined : "#{gcitem.attributes.property.value}"),
+            class = (gcitem.attributes.classes.value == '' ? undefined : "#{gcitem.attributes.classes.value}"),
+            ng-class = (gcitem.attributes.dynamicClasses.value ? "#{gcitem.attributes.dynamicClasses.value}" : undefined))
+            ol.carousel-indicators(style="#{styleDotsPos}")
+                each item, i in gcitem.attributes.staticOptions
+                    li(data-target="##{gcitem.id}_carousel", data-slide-to="#{i}", ng-class="{active: #{i} == #{curIndex}}")
+            div.carousel-inner(role="listbox", style="width:#{width};height:#{height};")
+                each item, i in gcitem.attributes.staticOptions
+                    div.item(ng-class="{active: #{i} == #{curIndex}}", style="width:100%;height:100%;")
+                        img(src = (item.imgSrc ? "#{item.imgSrc}" : ''), alt=(item.imgSrc ? "#{item.imgSrc}" : ''), style="background-color: #777;width:100%", ng-click = (gcitem.attributes.onclick.value ? "#{gcitem.attributes.onclick.value}" : undefined))
+                        div.carousel-caption(style="#{styleCaption}") !{item.caption}
+            a.left.carousel-control(href="##{gcitem.id}_{{$index}}_carousel", role="button", data-slide="prev", style="z-index:100")
+                span.glyphicon.glyphicon-chevron-left(aria-hidden="true")
+                span.sr-only Previous
+            a.right.carousel-control(href="##{gcitem.id}_{{$index}}_carousel", role="button", data-slide="next", style="z-index:100")
+                span.glyphicon.glyphicon-chevron-right(aria-hidden="true")
+                span.sr-only Next

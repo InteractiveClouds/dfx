@@ -1,0 +1,84 @@
+div(style="position:fixed;left:350px;top:90px;right:10px;bottom:30px;overflow-y:auto")
+    input#queryApp(type="hidden", name="queryApp", value="#{application}")
+    div.wizard-categories
+        H3(style="margin-left: 14px") Catalog
+        ui.flex-container(style="padding:0;list-style:none;display:flex;-webkit-flex-flow:row wrap;justify-content:flex-start;")
+            each category in categories
+                li.flex-item.form-group(style="background:#00C6FF;cursor:pointer;padding:5px;width:200px;height:150px;margin-top:10px;margin-left:15px;line-height:150px;color:black;font-weight:bold;font-size:2em;text-align:center", onclick="DfxStudio.Home.Dataqueries.showDataSources(this);") #{category}
+        div(align=center, style="margin-top:50px;")
+            button.btn.btn-default(type='button', onclick="javascript:DfxStudio.Dispatcher.run('#!/home/#{application}/queries/create');", style="margin-left:14px;")
+                span.fa.fa-lg.fa-undo
+                span(style="padding-left:5px") Back
+    div.wizard-datasources(style="margin-top:30px;display:none;")
+        div.wizard-datasources-cont
+        div(align=center, style="margin-top:50px;")
+            button.btn.btn-default(type='button', onclick="DfxStudio.Home.Dataqueries.showCategories('#{application}')", style="margin-left:14px;")
+                span.fa.fa-lg.fa-undo
+                span(style="padding-left:5px") Back
+    div.wizard-additional-datas(style="display:none;")
+        div.wizard-additional-datas-cont(style="margin-left: 14px")
+            div#wizardDataSourceInfomation
+            div.panel.panel-primary
+                div.panel-heading
+                    h4
+                        | Additional information
+                        div.pull-right
+                            a(href="javascript:DfxStudio.switchCollapsible('properties');")
+                                span#dfx_collapsible_icon_properties.fa.fa-lg.fa-angle-down
+                div.panel-body
+                    div#wizard_queryName.form-group.col-lg-6(style="display:none")
+                        label(for="queryName") API Service Name:
+                        input#wizard_queryName_cont.form-control(type="text", name="queryName", placeholder="API Service Name", required)
+                    div#wizard_app_consumer_key.form-group.col-lg-6(style="display:none")
+                        label(for="app consumer_key") Consumer Key:
+                        input#wizard_app_consumer_key_cont.form-control(type="text", name="app_consumer_key", placeholder="Consumer Key")
+                    div#wizard_app_consumer_secret.form-group.col-lg-6(style="display:none")
+                        label(for="app_consumer_secret") Consumer Secret:
+                        input#wizard_app_consumer_secret_cont.form-control(type="text", name="app_consumer_secret", placeholder="Consumer Secret")
+                    div#wizard_apiKey.form-group.col-lg-6(style="display:none")
+                        label(for="apiKey") API Key:
+                        input#wizard_apiKey_cont.form-control(type="text", name="apiKey", placeholder="API Key")
+            div#auth_providers_panel.panel.panel-primary(style="display:none")
+                div.panel-heading
+                    h4
+                        | Auth Providers information
+                        div.pull-right
+                            a(href="javascript:DfxStudio.switchCollapsible('properties');")
+                                span#dfx_collapsible_icon_properties.fa.fa-lg.fa-angle-down
+                div.panel-body
+                    div#wizard_auth_provider_type.form-group.col-lg-6
+                        label(for="auth_provider_type") Select existing auth providers from list or add new:
+                        select#auth_provider_type.form-control(onchange='DfxStudio.Home.Dataqueries.wizardSelectBoxAction(this)')
+                            option(value="___new___" selected) Add new Provider
+                            each provider in providers
+                                option(value="#{provider}") #{provider}
+                    div#wizard_auth_provider_name.form-group.col-lg-6(style="display:none")
+                        label(for="auth_provider_name") Auth Provider Name:
+                        input#wizard_auth_provider_name_cont.form-control(type="text", name="auth_provider_name", placeholder="Auth Provider Name")
+                    div#wizard_consumer_key.form-group.col-lg-6(style="display:none")
+                        label(for="consumer_key") Consumer Key:
+                        input#wizard_consumer_key_cont.form-control(type="text", name="consumer_key", placeholder="Consumer Key")
+                    div#wizard_consumer_secret.form-group.col-lg-6(style="display:none")
+                        label(for="consumer_secret") Consumer Secret:
+                        input#wizard_consumer_secret_cont.form-control(type="text", name="consumer_secret", placeholder="Consumer Secret")
+                    div#wizard_access_token.form-group.col-lg-6(style="display:none")
+                        label(for="access_token") Access Token:
+                        input#wizard_access_token_cont.form-control(type="text", name="access_token", placeholder="Access Token")
+                    div#wizard_access_secret.form-group.col-lg-6(style="display:none")
+                        label(for="access_secret") Access Secret:
+                        input#wizard_access_secret_cont.form-control(type="text", name="access_secret", placeholder="Access Secret")
+                    div#wizard_username.form-group.col-lg-6(style="display:none")
+                        label(for="username") Username:
+                        input#wizard_username_cont.form-control(type="text", name="username", placeholder="Username")
+                    div#wizard_password.form-group.col-lg-6(style="display:none")
+                        label(for="password") Password:
+                        input#wizard_password_cont.form-control(type="text", name="password", placeholder="Password")
+        div(align=center, style="margin-top:50px;")
+            button.btn.btn-default(type='button', onclick="DfxStudio.Home.Dataqueries.showDataSources()", style="margin-left:14px;")
+                span.fa.fa-lg.fa-undo
+                span(style="padding-left:5px") Back
+            button.btn.btn-info(type='button', onclick="DfxStudio.Home.Dataqueries.saveWizardDatas()", style="margin-left:14px;")
+                span.fa.fa-lg.fa-undo
+                span(style="padding-left:5px") Save
+
+

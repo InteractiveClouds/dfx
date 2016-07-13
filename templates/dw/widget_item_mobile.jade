@@ -1,0 +1,30 @@
+mixin displayPanel()
+    include gc_panel_mobile
+
+mixin displayButton()
+    include gc_button_mobile
+
+mixin displayInputfield()
+    include gc_inputfield_mobile
+
+mixin displayList()
+    include gc_list_mobile
+
+mixin displayImage()
+    include gc_image_mobile
+
+
+if gcitem.type=="panel"
+    mixin displayPanel()
+
+if gcitem.type=="button"
+    mixin displayButton()
+
+if gcitem.type=='inputfield'
+    mixin displayInputfield()
+
+if gcitem.type=='list'
+    mixin displayList()
+
+if gcitem.type=='image'
+    mixin displayImage()

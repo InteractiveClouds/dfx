@@ -1,0 +1,165 @@
+.s-select_block {
+    position: relative;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.s-select_root {
+    position: relative;
+    width: 100%;
+    box-sizing: content-box;
+    background-color: white;
+}
+
+.s-select_root:hover {
+    box-shadow: 0 0 15px #d0d0d0;
+}
+
+.s-select-search {
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0.1em 1em;
+    border: none;
+    background-color: transparent;
+    font-size: large;
+}
+
+.s-select-search:focus {
+    outline: 0;
+}
+
+.s-select_root input[data-knob] {
+    display: none;
+}
+
+.s-select_knobs,
+.s-select_list {
+    position: relative;
+    max-height: 10em;
+    min-height: 1.3em;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.s-select_root[data-isactive=true] .s-select_list {
+    max-height: 15em;
+    height: 15em;
+}
+
+.s-select_knobs {
+    border-top: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+}
+
+.s-select_list > li {
+    white-space: nowrap;
+}
+
+.s-select_list > li > label {
+    font-weight: 400;
+}
+
+.s-select_root[data-isactive=false] .s-select_knobs {
+    display: none;
+}
+
+.s-select_root[data-isactive=false] li[data-checked=true] {
+    display: inline-block;
+    margin-left: 0.5em;
+}
+
+.s-select_root[data-isactive=false] li[data-checked=true] span:after {
+    content: ",";
+}
+
+.s-select_root[data-isactive=false] .s-select_list {
+    padding: 0.3em;
+    overflow: hidden;
+}
+
+.s-select_list-screen {
+    display: none;
+}
+
+.s-select_root[data-isactive=false] .s-select_list-screen {
+    position: absolute;
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+}
+
+.s-select_root[data-isactive=false] .s-select_list-screen:hover {
+    cursor: pointer;
+}
+
+.s-select_root[data-isactive=false] li[data-checked=true] input {
+    display: none;
+}
+
+.s-select_root[data-isactive=false] li[data-checked=false] {
+    display: none;
+}
+
+.s-select_list > li > label > input {
+    margin-right: 1em;
+    margin-left: 1em;
+}
+
+.s-select_list > li > label {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    border: 1px solid transparent;
+}
+
+.s-select_list > li > label:hover {
+    border: 1px solid lightgray;
+}
+
+.s-select_list > li[data-show=false],
+.s-select_knobs[data-knob-checkness=unchecked] + .s-select_list > li[data-checked=true][data-show=true],
+.s-select_knobs[data-knob-checkness=checked] + .s-select_list > li[data-checked=false][data-show=true] {
+    display: none;
+}
+
+.s-select_knobs[data-knob-checkness=checked] + .s-select_list > li[data-checked=true][data-show=true],
+.s-select_knobs[data-knob-checkness=unchecked] + .s-select_list > li[data-checked=false][data-show=true] {
+    display: block;
+}
+
+.s-select_knob-buttons,
+.s-select_knob-switches {
+    padding: 0.5em;
+    font-size: small;
+    color: lightgray;
+    background-color: #f9f9f9;
+    border-top: 1px solid lightgray;
+}
+
+.s-select_knob-button {
+    margin: 0 0.5em;
+}
+
+.s-select_knob-switch + span {
+    margin-left: 1em;
+    border-bottom: 1px dotted lightgray;
+    cursor: pointer;
+}
+
+.s-select_knob-switch:checked + span {
+    color: black;
+    border-bottom: 1px dotted black;
+}
+
+.s-select_knob-switches-header {
+    color: gray;
+}

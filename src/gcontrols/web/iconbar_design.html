@@ -1,0 +1,8 @@
+<div layout="column" style="{{attributes.style.value}}" class="{{attributes.classes.value}}">
+  <md-menu-bar ng-if="attributes.menuItems.value.length === 0">
+    <md-button class="md-button md-icon-button" style="{{attributes.buttonStyle.value}}" aria-label="md-icon-buton">
+      <ng-md-icon icon="home" size="24" style="{{attributes.iconStyle.value}}"></ng-md-icon>
+    </md-button>
+  </md-menu-bar>
+  <div id="{{component_id}}_menu_bar" ng-if="attributes.menuItems.value.length > 0"></div>
+</div>

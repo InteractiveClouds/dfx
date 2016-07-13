@@ -1,0 +1,45 @@
+div.panel.panel-primary(style="position: relative; height: 99%; margin-bottom: 1%;")
+    div.panel-heading
+        h4 DB Driver Details
+    div.panel-body#dbs_databases
+        form#provider_info
+            fieldset
+                div.form-group
+                    label Application:
+                    input.form-control(readonly="readonly", name="application", value="#{applicationName}")
+                div.form-group
+                    label(for="dfx_github_settings_username") Driver Name:
+                    input.form-control(readonly="readonly", name="nameDriver", value="#{provider.nameDriver}")
+                div.form-group
+                    label(for="dfx_github_settings_access_token") Dialect:
+                    select#db-driver-dialect.form-control(name="dialect")
+                        option(disabled="disabled", selected="selected", value="0") choose db provider
+                        option(value="mysql") mysql
+                        option(value="mssql") mssql
+                div.form-group
+                    label Host:
+                    input#db-driver-host.form-control(name="host", value="#{provider.host}", autocomplete="off")
+                div.form-group
+                    label Port:
+                    input#db-driver-port.form-control(name="port", value="#{provider.port}", autocomplete="off")
+                div.form-group
+                    label Database:
+                    input.form-control(name="database", value="#{provider.database}")
+                div.form-group
+                    label User:
+                    input#db-driver-user.form-control(name="user", value="#{provider.user}", autocomplete="off")
+                div.form-group
+                    label Password:
+                    input.form-control(name="password", type="password", value="#{provider.password}", autocomplete="off")
+                div.form-group
+                    label Min Connections:
+                    input.form-control(name="min", value="#{provider.min}")
+                div.form-group
+                    label Max Connections:
+                    input.form-control(name="max", value="#{provider.max}")
+                div.form-group
+                    label Timeout:
+                    input.form-control(name="idleTimeoutMillis", value="#{provider.idleTimeoutMillis}")
+button.btn.btn-info.save-now-submitter(onclick="DfxStudio.Home.DatabaseProviders.update();", type='button')
+    span.fa.fa-lg.fa-floppy-o
+    span(style="padding-left:5px") Save

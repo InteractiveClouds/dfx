@@ -1,0 +1,24 @@
+div.panel.panel-primary(style="position: relative; height: 99%; margin-bottom: 1%;")
+    div.panel-heading
+        h4 LDAP Provider Settings
+    div.panel-body#dbs_databases
+        form(action="javascript:void(0);", style="margin-top:10px")
+            fieldset
+                div.form-group
+                    label(for="dfx_github_settings_username") LDAP Provider:
+                    input.form-control(type="text", name="id", value="#{id}", data-container="ldap-id", disabled)
+                div.form-group
+                    label(for="dfx_github_settings_access_token") URI:
+                    input.form-control(type="text", name="uri", value="#{uri}", data-container="ldap-uri")
+                div.form-group
+                    label(for="dfx_github_settings_repository") DN:
+                    input.form-control(type="text", name="dn", value="#{dn}", data-container="ldap-dn")
+                div.form-group
+                    label(for="dfx_github_settings_tenant_name") Password:
+                    input.form-control(type="password", name="pass", value="", data-container="ldap-pass")
+                div.form-group
+                    label(for="dfx_github_settings_tenant_name") Confirm Password:
+                    input.form-control(type="password", name="conf", value="", data-container="ldap-conf")
+                button#save-provider-settings.btn.btn-info.save-now-submitter(type='submit')
+                    span.fa.fa-lg.fa-floppy-o
+                    span(style="padding-left:5px") Save

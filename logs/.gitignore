@@ -1,0 +1,5 @@
+# we need this directory at git, and need nothing inside it
+# but it is imposiible to add an empty directory to git
+# so it is the reason of existing this file
+*
+!.gitignore

@@ -1,0 +1,91 @@
+- var containerCss = '';
+if (gcitem.attributes.containerCss)
+    each val, key in gcitem.attributes.containerCss
+        - if (val!='') containerCss += key + ':' + val + ';'
+- var css = '';
+if (gcitem.attributes.css)
+    each val, key in gcitem.attributes.css
+        - if (val!='') css += key + ':' + val + ';'
+div(id="#{gcitem.id}_{{$index}}",
+    ng-show = (gcitem.attributes.display.value == '' ? undefined : "#{gcitem.attributes.display.value}"),
+    style=((gcitem.attributes.containerStyle ? gcitem.attributes.containerStyle.value : '') + ';' + containerCss),
+    class="#{gcitem.attributes.containerClasses.value}",
+    ng-class = (gcitem.attributes.containerDynamicClasses.value == '' ? undefined : "#{gcitem.attributes.containerDynamicClasses.value}"))
+    div.panel-group(id="#{gcitem.id}_accordion")
+        if (gcitem.attributes.property!=null && gcitem.attributes.property.value!='')
+            each layout_item, i_layout in gcitem.attributes.layoutElements
+                div(ng-repeat="item in #{gcitem.attributes.property.value}",
+                    id="#{gcitem.id}_pane_{{$index}}",
+                    class="panel #{gcitem.attributes.classes.value}",
+                    style=((gcitem.attributes.style ? gcitem.attributes.style.value : '') + ';' + css))
+                    div.panel-heading
+                        h4.panel-title
+                            a(data-toggle="collapse",
+                                data-parent=('#'+gcitem.id+'_accordion'), href=('#' + gcitem.id + '_group_{{$index}}')) {{item}}
+                        div(style="margin:-25px 0 0 100px;")
+                            span.input-group-btn
+                                button#widgetRMCat.btn.btn-danger(type="button", rel="popover", ng-click='del(item)')
+                                    span.fa.fa-lg.fa-trash-o
+                    div(id="#{gcitem.id}_group_{{$index}}",
+                        class="panel-collapse collapse")
+                        each row, i_row in layout_item.layout.rows
+                            - var rowCss = '';
+                            if (row.css)
+                                each val, key in row.css
+                                    - if (val!='') rowCss += key + ':' + val + ';'
+                            div(class="row #{row.classes.value}", style="margin:0;#{row.style.value};#{rowCss}",
+                                ng-class=(row.dynamicClasses == undefined) ? undefined : row.dynamicClasses.value)
+                                - var columnClass = 'col-md-12'
+                                each column, i_column in row.cols
+                                    - columnClass = (column.width ? 'col-md-'+column.width.value : columnClass)+(column.classes.value != '' ? ' '+ column.classes.value : '')
+                                    - if (column.orientation) {
+                                    -     columnClass += ' gc_w_column_layout ' + 'gc_w_column_orientation_'+column.orientation.value;
+                                    -     columnClass += ' gc_w_column_align_'+column.alignment.value;
+                                    -     columnClass += ' gc_w_column_disposition_'+column.disposition.value;
+                                    - }
+                                    - var columnCss = '';
+                                    if (column.css)
+                                        each val, key in column.css
+                                            - if (val!='') columnCss += key + ':' + val + ';'
+                                    div(class="#{columnClass}" style="#{column.style.value};#{columnCss}",
+                                        ng-class=(column.dynamicClasses == undefined) ? undefined : column.dynamicClasses.value)
+                                        each gcitem_child, j in gcitem.children
+                                            - if (gcitem_child.container=='layout_'+i_layout+'_row_'+i_row+'_column_'+i_column) {
+                                                mixin displayItem(gcitem_child)
+                                            - }
+        else
+            each layout_item, i_layout in gcitem.attributes.layoutElements
+                div(id="#{gcitem.id}_{{$index}}_pane_#{i_layout}",
+                    class="panel #{gcitem.attributes.classes.value}",
+                    style=((gcitem.attributes.style ? gcitem.attributes.style.value : '') + ';' + css))
+                    div.panel-heading
+                        h4.panel-title
+                            a(data-toggle="collapse",
+                                data-parent=('#'+gcitem.id+'_accordion'), href=('#' + gcitem.id + '_{{$index}}_group_'+i_layout)) #{layout_item.header.value}
+                    div(id="#{gcitem.id}_{{$index}}_group_#{i_layout}",
+                        class=('panel-collapse collapse'+(layout_item.opened.value=='yes' ? ' in' : '')))
+                        each row, i_row in layout_item.layout.rows
+                            - var rowCss = '';
+                            if (row.css)
+                                each val, key in row.css
+                                    - if (val!='') rowCss += key + ':' + val + ';'
+                            div(class="row #{row.classes.value}", style="margin:0;#{row.style.value};#{rowCss}",
+                                ng-class=(row.dynamicClasses == undefined) ? undefined : row.dynamicClasses.value)
+                                - var columnClass = 'col-md-12'
+                                each column, i_column in row.cols
+                                    - columnClass = (column.width ? 'col-md-'+column.width.value : columnClass)+(column.classes.value != '' ? ' '+ column.classes.value : '')
+                                    - if (column.orientation) {
+                                    -     columnClass += ' gc_w_column_layout ' + 'gc_w_column_orientation_'+column.orientation.value;
+                                    -     columnClass += ' gc_w_column_align_'+column.alignment.value;
+                                    -     columnClass += ' gc_w_column_disposition_'+column.disposition.value;
+                                    - }
+                                    - var columnCss = '';
+                                    if (column.css)
+                                        each val, key in column.css
+                                            - if (val!='') columnCss += key + ':' + val + ';'
+                                    div(class="#{columnClass}" style="#{column.style.value};#{columnCss}",
+                                        ng-class=(column.dynamicClasses == undefined) ? undefined : column.dynamicClasses.value)
+                                        each gcitem_child, j in gcitem.children
+                                            - if (gcitem_child.container=='layout_'+i_layout+'_row_'+i_row+'_column_'+i_column) {
+                                                mixin displayItem(gcitem_child)
+                                            - }

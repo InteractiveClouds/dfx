@@ -1,0 +1,119 @@
+<li>
+	<input class="dfx-ve-property-treeview-button" type="checkbox" aria-label="item-extended-directives" id="item-extended-directives" />
+	<label for="item-extended-directives">Layout Properties</label>
+	<span class="pull-right"><a href="#" title="Add a new Row" ng-click="addLayoutRow()"><i class="fa fa-plus"></i></a></span>
+	<ul class="dfx-ve-property-treeview-content">
+		<li class="col-md-12" ng-repeat="row in $parent.gc_selected.attributes.layout.rows">
+			<ul>
+				<li>
+					<input class="dfx-ve-property-treeview-button" type="checkbox" aria-label="item-layout-row-{{$index}}" id="item-layout-row-{{$index}}" />
+					<label for="item-layout-row-{{$index}}">Row {{$index}}</label>
+					<span class="pull-right"><a href="#" ng-click="deleteLayoutRow($index)" title="Remove the row"><i class="fa fa-minus"></i></a></span>
+					<span class="pull-right"><a href="#" ng-click="addLayoutColumn($index)" title="Add a new column"><i class="fa fa-plus"></i></a></span>
+                    <span ng-if="$index < $parent.gc_selected.attributes.layout.rows.length - 1" class="pull-right"><a href="#" ng-click="moveDownRow($index)" title="Move down"><i class="fa fa-arrow-down"></i></a></span>
+                    <span ng-if="$index > 0" class="pull-right"><a href="#" ng-click="moveUpRow($index)" title="Move up"><i class="fa fa-arrow-up"></i></a></span>
+					<ul class="dfx-ve-property-treeview-content">
+						<li ng-repeat="column in row.cols track by $index">
+							<ul>
+								<li>
+									<input class="dfx-ve-property-treeview-button" type="checkbox" aria-label="item-layout-row-{{$parent.$index}}-{{$index}}" id="item-layout-row-{{$parent.$index}}-{{$index}}" />
+									<label for="item-layout-row-{{$parent.$index}}-{{$index}}">
+										Column {{$index}}
+									</label>
+                                    <span class="pull-right"><a href="#" ng-click="deleteLayoutColumn($parent.$index, $index)" title="Delete the column"><i class="fa fa-minus"></i></a></span>
+                                    <span ng-if="$index < $parent.gc_selected.attributes.layout.rows[$parent.$index].cols.length - 1" class="pull-right"><a href="#" ng-click="moveRightCol($parent.$parent.$index, $index)" title="Move right"><i class="fa fa-arrow-right"></i></a></span>
+                                    <span ng-if="$index > 0" class="pull-right"><a href="#" ng-click="moveLeftCol($parent.$parent.$index, $index)" title="Move left"><i class="fa fa-arrow-left"></i></a></span>
+									<ul class="dfx-ve-property-treeview-content">
+										<li class="col-md-12">
+											<div layout>
+												<md-slider class="md-primary" flex ng-model="column.width.value" step="5" min="0" max="100" aria-label="Flex width:">
+							  					</md-slider>
+												<div flex="20" layout layout-align="center center">
+													<input flex type="text" ng-model="column.width.value" aria-label="blue" aria-controls="column-width" style="margin-left:5px" ng-change="overrideAttribute('layout')">
+												</div>
+							  				</div>
+										</li>
+										<li class="col-md-12">
+											<span class="col-md-6">Auto width:</span>
+											<div class="col-md-6" layout="row">
+												<md-checkbox ng-model="column.autoWidth.value" class="md-primary" ng-change="overrideAttribute('layout')" aria-label="column.autoWidth.value"/>
+											</div>
+										</li>
+										<li class="col-md-12">
+											<span class="col-md-6">Display:</span>
+						                    <div class="col-md-6" layout="row">
+						                        <input class="col-md-12" type="text" ng-model="column.display.value" style="margin-left:-15px;" ng-change="overrideAttribute('display')"/>
+						                        <dfx-ve-expression-editor></dfx-ve-expression-editor>
+						                    </div>
+						                </li>
+										<li class="col-md-12">
+											<span class="col-md-6">Layout Direction:</span>
+											<md-input-container class="col-md-6" style="padding: 0 0 10px">
+						                        <md-select aria-label="Layout Direction:" ng-model="column.orientation.value" ng-change="overrideAttribute('layout')">
+						                            <md-option value="row">row</md-option>
+						                            <md-option value="column">column</md-option>
+						                        </md-select>
+                    						</md-input-container>
+										</li>
+										<li class="col-md-12">
+											<span class="col-md-6">Hor. Alignment:</span>
+											<md-input-container class="col-md-6" style="padding: 0 0 10px">
+						                        <md-select aria-label="Hor. Alignment:" ng-model="column.halignment.value" ng-change="overrideAttribute('layout')">
+						                            <md-option value="start">start</md-option>
+						                            <md-option value="center">center</md-option>
+						                            <md-option value="end">end</md-option>
+						                            <md-option value="space-around">space-around</md-option>
+						                            <md-option value="space-between">space-between</md-option>
+												</md-select>
+                    						</md-input-container>
+										</li>
+										<li class="col-md-12">
+											<span class="col-md-6">Ver. Alignment:</span>
+											<md-input-container class="col-md-6" style="padding: 0 0 10px">
+												<md-select aria-label="Ver. Alignment:" ng-model="column.valignment.value" ng-change="overrideAttribute('layout')">
+													<md-option value="start">start</md-option>
+						                            <md-option value="center">center</md-option>
+						                            <md-option value="end">end</md-option>
+												</md-select>
+                    						</md-input-container>
+										</li>
+										<li class="col-md-12">
+											<span class="col-md-6">Style:</span>
+											<div class="col-md-6" layout="row">
+												<input class="col-md-12" type="text" ng-model="column.style.value" style="margin-left:-15px;" ng-change="overrideAttribute('layout')"/>
+												<dfx-ve-css-style dfx-picker-property="style"></dfx-ve-css-style>
+											</div>
+										</li>
+										<li class="col-md-12">
+											<span class="col-md-6">Classes:</span>
+											<input class="col-md-6" type="text" ng-model="column.classes.value"  ng-change="overrideAttribute('layout')"/>
+										</li>
+										<li class="col-md-12">
+											<span class="col-md-6">Dynamic Classes:</span>
+											<input class="col-md-6" type="text" ng-model="column.dynamicClasses.value" ng-change="overrideAttribute('layout')"/>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+						<li class="col-md-12">
+							<span class="col-md-6">Style:</span>
+							<div class="col-md-6" layout="row">
+								<input class="col-md-12" type="text" ng-model="row.style.value" style="margin-left:-15px;" ng-change="overrideAttribute('layout')"/>
+								<dfx-ve-css-style dfx-picker-property="style"></dfx-ve-css-style>
+							</div>
+						</li>
+						<li class="col-md-12">
+							<span class="col-md-6">Classes:</span>
+							<input class="col-md-6" type="text" ng-model="row.classes.value" ng-change="overrideAttribute('layout')"/>
+						</li>
+						<li class="col-md-12">
+							<span class="col-md-6">Dynamic Classes:</span>
+							<input class="col-md-6" type="text" ng-model="row.dynamicClasses.value" ng-change="overrideAttribute('layout')"/>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+	</ul>
+</li>

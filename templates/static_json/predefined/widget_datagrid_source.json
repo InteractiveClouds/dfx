@@ -1,0 +1,284 @@
+{
+    "properties": {
+        "title": {
+            "label": "",
+            "visible": true,
+            "color": ""
+        },
+        "tools": {
+            "color": true,
+            "edit": true,
+            "collapse": true,
+            "fullscreen": true,
+            "delete": true
+        },
+        "sortable": true
+    },
+    "definition": [
+        {
+            "id": "root",
+            "type": "panel",
+            "attributes": {
+                "name": {
+                    "value": "pnlPanel1"
+                },
+                "controller": {
+                    "value": ""
+                },
+                "form": {
+                    "value": ""
+                },
+                "model": {
+                    "value": ""
+                },
+                "useModel": {
+                    "value": false
+                },
+                "collapsible": {
+                    "value": false
+                },
+                "classes": {
+                    "value": ""
+                },
+                "style": {
+                    "value": ""
+                },
+                "display": {
+                    "value": ""
+                },
+                "title": {
+                    "value": ""
+                },
+                "titleVisible": {
+                    "value": false
+                },
+                "layout": {
+                    "rows": [
+                        {
+                            "cols": [
+                                {
+                                    "width": {
+                                        "value": "12"
+                                    },
+                                    "classes": {
+                                        "value": ""
+                                    },
+                                    "dynamicClasses": {
+                                        "value": ""
+                                    },
+                                    "style": {
+                                        "value": ""
+                                    }
+                                }
+                            ],
+                            "classes": {
+                                "value": ""
+                            },
+                            "dynamicClasses": {
+                                "value": ""
+                            },
+                            "style": {
+                                "value": ""
+                            }
+                        }
+                    ],
+                    "classes": {
+                        "value": ""
+                    },
+                    "dynamicClasses": {
+                        "value": ""
+                    },
+                    "style": {
+                        "value": ""
+                    }
+                }
+            },
+            "children": [
+                {
+                    "id": 73003,
+                    "type": "datagrid",
+                    "attributes": {
+                        "name": {
+                            "value": "gridDataGrid1"
+                        },
+                        "property": {
+                            "value": "data.people"
+                        },
+                        "title": {
+                            "value": "People"
+                        },
+                        "titleVisible": {
+                            "value": "yes"
+                        },
+                        "display": {
+                            "value": "true"
+                        },
+                        "filter": {
+                            "value": "yes"
+                        },
+                        "paging": {
+                            "value": "yes"
+                        },
+                        "bordered": {
+                            "value": "yes"
+                        },
+                        "striped": {
+                            "value": "yes"
+                        },
+                        "condensed": {
+                            "value": "yes"
+                        },
+                        "containerClasses": {
+                            "value": ""
+                        },
+                        "containerDynamicClasses": {
+                            "value": ""
+                        },
+                        "containerCss": {
+                            "width": "",
+                            "height": "",
+                            "color": "",
+                            "background": "",
+                            "padding": "",
+                            "margin": "",
+                            "text-align": ""
+                        },
+                        "containerStyle": {
+                            "value": ""
+                        },
+                        "classes": {
+                            "value": "panel panel-default"
+                        },
+                        "dynamicClasses": {
+                            "value": ""
+                        },
+                        "css": {
+                            "width": "",
+                            "height": "",
+                            "color": "",
+                            "background": "",
+                            "padding": "",
+                            "margin": "",
+                            "text-align": ""
+                        },
+                        "style": {
+                            "value": ""
+                        },
+                        "ondataloaded": {
+                            "value": ""
+                        },
+                        "gridColumns": [
+                            {
+                                "header": {
+                                    "value": "First Name"
+                                },
+                                "width": {
+                                    "value": "4"
+                                },
+                                "property": {
+                                    "value": "firstName"
+                                },
+                                "type": {
+                                    "value": "text"
+                                },
+                                "html": {
+                                    "value": ""
+                                },
+                                "classes": {
+                                    "value": ""
+                                },
+                                "css": {
+                                    "width": "",
+                                    "height": "",
+                                    "color": "",
+                                    "background": "",
+                                    "padding": "",
+                                    "margin": "",
+                                    "text-align": ""
+                                },
+                                "style": {
+                                    "value": ""
+                                },
+                                "callbackFunction": {
+                                    "value": ""
+                                }
+                            },
+                            {
+                                "header": {
+                                    "value": "Last Name"
+                                },
+                                "width": {
+                                    "value": "4"
+                                },
+                                "property": {
+                                    "value": "lastName"
+                                },
+                                "type": {
+                                    "value": "text"
+                                },
+                                "html": {
+                                    "value": ""
+                                },
+                                "classes": {
+                                    "value": ""
+                                },
+                                "css": {
+                                    "width": "",
+                                    "height": "",
+                                    "color": "",
+                                    "background": "",
+                                    "padding": "",
+                                    "margin": "",
+                                    "text-align": ""
+                                },
+                                "style": {
+                                    "value": ""
+                                },
+                                "callbackFunction": {
+                                    "value": ""
+                                }
+                            },
+                            {
+                                "header": {
+                                    "value": "Country"
+                                },
+                                "width": {
+                                    "value": "4"
+                                },
+                                "property": {
+                                    "value": "country"
+                                },
+                                "type": {
+                                    "value": "text"
+                                },
+                                "html": {
+                                    "value": ""
+                                },
+                                "classes": {
+                                    "value": ""
+                                },
+                                "css": {
+                                    "width": "",
+                                    "height": "",
+                                    "color": "",
+                                    "background": "",
+                                    "padding": "",
+                                    "margin": "",
+                                    "text-align": ""
+                                },
+                                "style": {
+                                    "value": ""
+                                },
+                                "callbackFunction": {
+                                    "value": ""
+                                }
+                            }
+                        ]
+                    },
+                    "children": [],
+                    "container": "layout_0_row_0_column_0"
+                }
+            ]
+        }
+    ]
+}

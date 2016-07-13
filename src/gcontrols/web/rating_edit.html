@@ -1,0 +1,152 @@
+<div class="dfx-ve-property-treeview hover">
+	<ul>
+		<li>
+			<input class="dfx-ve-property-treeview-button" type="checkbox" id="item-0" />
+			<label for="item-0">Main Properties</label>
+			<ul class="dfx-ve-property-treeview-content">
+                <li class="col-md-12">
+                    <span class="col-md-4">Id:</span>
+                    <input class="col-md-8" type="text" ng-model="component_id" disabled/>
+                </li>
+				<li class="col-md-12" dfx-gc-property="template">
+					<span class="col-md-4">Template:</span>
+					<input class="col-md-8" type="text" ng-model="attributes.template.value" ng-change="overrideAttribute('template')" disabled/>
+				</li>
+				<li class="col-md-12" dfx-gc-property="name">
+					<span class="col-md-4">Name:</span>
+					<input class="col-md-8" type="text" ng-model="attributes.name.value" ng-change="overrideAttribute('name')"/>
+				</li>
+				<li class="col-md-12" dfx-gc-property="binding">
+					<span class="col-md-4">Binding:</span>
+					<div class="col-md-8" layout="row">
+						<input class="col-md-12" type="text" ng-model="attributes.binding.value" style="margin-left:-15px;" ng-change="overrideAttribute('binding')"/>
+						<dfx-ve-expression-editor></dfx-ve-expression-editor>
+					</div>
+				</li>
+				<li class="col-md-12" dfx-gc-property="label">
+					<span class="col-md-4">Label:</span>
+					<div class="col-md-8" layout="row">
+						<input class="col-md-12" type="text" ng-model="attributes.label.value" style="margin-left:-15px;" ng-change="overrideAttribute('label')"/>
+						<dfx-ve-expression-editor></dfx-ve-expression-editor>
+					</div>
+				</li>
+        <li class="col-md-12" dfx-gc-property="maxValue">
+            <span class="col-md-4">Maximum value:</span>
+            <div class="col-md-8" layout="row">
+                <input class="col-md-12" type="text" ng-model="attributes.maxValue.value" style="margin-left:-15px;" ng-change="overrideAttribute('maxValue')"/>
+                <dfx-ve-expression-editor></dfx-ve-expression-editor>
+            </div>
+        </li>
+				<li class="col-md-12" dfx-gc-property="range">
+					<span class="col-md-4">Range:</span>
+					<md-input-container class="col-md-8" style="padding: 0 0 4px 0">
+            <md-select aria-label="rating-range" ng-model="attributes.range.value" ng-change="overrideAttribute('range')">
+              <md-option ng-repeat="option in attributes.range.values" value="{{option}}">{{option}}</md-option>
+            </md-select>
+          </md-input-container>
+				</li>
+				<li class="col-md-12" dfx-gc-property="icon">
+					<span class="col-md-4">Icon:</span>
+					<div class="col-md-8" layout="row">
+						<input class="col-md-12" type="text" ng-model="attributes.icon.value" style="margin-left:-15px;" ng-change="overrideAttribute('icon');ifShowIconTypes(attributes.icon.value)"/>
+						<md-icon ng-click="showFontIcons($event, attributes.icon)" dfx-ve-picker-icon dfx-picker-property="icon" class="dfx-ve-picker-icon fa fa-ellipsis-h"></md-icon>
+					</div>
+				</li>
+        <li class="col-md-12" ng-show="showIconTypes">
+            <span class="col-md-4">Icon Type:</span>
+            <div class="col-md-8" layout="row" style="padding: 0 0 8px 0">
+                <md-radio-group ng-model="attributes.icon.type">
+                    <md-radio-button value="fa-icon" ngChange="overrideAttribute('icon')" style="margin: 0;" class="md-primary">Font Awesome Icon</md-radio-button>
+                    <md-radio-button value="svg-icon" ngChange="overrideAttribute('icon')" style="margin: 0;" class="md-primary">SVG Icon</md-radio-button>
+                </md-radio-group>
+            </div>
+        </li>
+				<li class="col-md-12" dfx-gc-property="display">
+					<span class="col-md-4">Display:</span>
+					<div class="col-md-8" layout="row">
+						<input class="col-md-12" type="text" ng-model="attributes.display.value" style="margin-left:-15px;" ng-change="overrideAttribute('display')"/>
+						<dfx-ve-expression-editor></dfx-ve-expression-editor>
+					</div>
+				</li>
+				<li class="col-md-12" dfx-gc-property="disabled">
+					<span class="col-md-4">Disabled:</span>
+					<div class="col-md-8" layout="row">
+						<input class="col-md-12" type="text" ng-model="attributes.disabled.value" style="margin-left:-15px;" ng-change="overrideAttribute('disabled')"/>
+						<dfx-ve-expression-editor></dfx-ve-expression-editor>
+					</div>
+				</li>
+			</ul>
+		</li>
+	</ul>
+	<ul>
+		<li>
+			<input class="dfx-ve-property-treeview-button" type="checkbox" id="item-3" />
+			<label for="item-3">Styling Attributes</label>
+			<ul class="dfx-ve-property-treeview-content">
+				<li class="col-md-12" dfx-gc-property="color">
+					<span class="col-md-4">Normal color:</span>
+					<input class="col-md-8" type="text" ng-model="attributes.color.value" ng-change="overrideAttribute('color')"/>
+				</li>
+				<li class="col-md-12" dfx-gc-property="highlighted">
+					<span class="col-md-4">Highlighted color:</span>
+					<input class="col-md-8" type="text" ng-model="attributes.highlighted.value" ng-change="overrideAttribute('highlighted')"/>
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-4">Icon Size:</span>
+					<input class="col-md-8" type="number" ng-model="attributes.icon.size" ng-change="overrideAttribute('icon')" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-4">Style:</span>
+					<div class="col-md-8" layout="row">
+						<input class="col-md-12" type="text" ng-model="attributes.style.value" style="margin-left:-15px;" ng-change="overrideAttribute('style')"/>
+						<dfx-ve-css-style></dfx-ve-css-style>
+					</div>
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-4">Class:</span>
+					<input class="col-md-8" type="text" ng-model="attributes.classes.value" ng-change="overrideAttribute('classes')"/>
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-4">Dynamic Class:</span>
+					<input class="col-md-8" type="text" ng-model="attributes.dynamicClasses.value" ng-change="overrideAttribute('dynamicClasses')"/>
+				</li>
+			</ul>
+		</li>
+	</ul>
+	<ul>
+		<li>
+			<input class="dfx-ve-property-treeview-button" type="checkbox" checked id="item-4" />
+			<label for="item-4">Events</label>
+			<ul class="dfx-ve-property-treeview-content">
+                <li class="col-md-12">
+                    <span class="col-md-4">On Click:</span>
+                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onclick.value" ng-change="overrideAttribute('onclick')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                </li>
+                <li class="col-md-12">
+                    <span class="col-md-4">On Mouse Over:</span>
+                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onmouseover.value" ng-change="overrideAttribute('onmouseover')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                </li>
+                <li class="col-md-12">
+                    <span class="col-md-4">On Mouse Enter:</span>
+                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onmouseenter.value" ng-change="overrideAttribute('onmouseenter')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                </li>
+                <li class="col-md-12">
+                    <span class="col-md-4">On Mouse Move:</span>
+                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onmousemove.value" ng-change="overrideAttribute('onmousemove')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                </li>
+                <li class="col-md-12">
+                    <span class="col-md-4">On Mouse Leave:</span>
+                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onmouseleave.value" ng-change="overrideAttribute('onmouseleave')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                </li>
+                <li class="col-md-12">
+                    <span class="col-md-4">On Mouse Down:</span>
+                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onmousedown.value" ng-change="overrideAttribute('onmousedown')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                </li>
+                <li class="col-md-12">
+                    <span class="col-md-4">On Mouse Up:</span>
+                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onmouseup.value" ng-change="overrideAttribute('onmouseup')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                </li>
+			</ul>
+		</li>
+	</ul>
+</div>

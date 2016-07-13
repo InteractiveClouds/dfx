@@ -1,0 +1,358 @@
+{
+	"type": "inputfield",
+	"title": "Predefined Input Field Styles",
+	"definitions": [
+		{
+			"id": "fld_text",
+			"name": "Text",
+			"description": "Simple Text Input Field",
+			"attributes": {
+				"name": {
+					"value": "fldText"
+				},
+				"type": {
+					"value": "text"
+				},
+				"labelVisible": {
+					"value": "no"
+				},
+				"textErrorMaxlength": {
+					"value": ""
+				},
+				"textErrorMinlength": {
+					"value": ""
+				},
+				"textErrorPattern": {
+					"value": ""
+				},
+				"textIcon": {
+					"value": ""
+				},
+				"textIconPosition": {
+					"value": "left"
+				},
+				"textMask": {
+					"value": ""
+				},
+				"textMaxlength": {
+					"value": ""
+				},
+				"textMinlength": {
+					"value": ""
+				},
+				"textPattern": {
+					"value": ""
+				},
+				"textPlaceholder": {
+					"value": ""
+				},
+				"css": {},
+				"containerCss": {
+					"width": "200px"
+				}
+			}
+		},
+		{
+			"id": "fld_password",
+			"name": "Password",
+			"description": "Password Input Field",
+			"attributes": {
+				"name": {
+					"value": "fldPassword"
+				},
+				"type": {
+					"value": "password"
+				},
+				"labelVisible": {
+					"value": "no"
+				},
+				"passwordErrorMaxlength": {
+					"value": ""
+				},
+				"passwordErrorMinlength": {
+					"value": ""
+				},
+				"passwordIcon": {
+					"value": "lock"
+				},
+				"passwordIconPosition": {
+					"value": "left"
+				},
+				"passwordMaxlength": {
+					"value": ""
+				},
+				"passwordMinlength": {
+					"value": ""
+				},
+				"textPlaceholder": {
+					"value": ""
+				},
+				"css": {},
+				"containerCss": {
+					"width": "200px"
+				}
+			}
+		},
+		{
+			"id": "fld_date",
+			"name": "Date",
+			"description": "Date Input Field",
+			"attributes": {
+				"name": {
+					"value": "fldDate"
+				},
+				"type": {
+					"value": "date"
+				},
+				"labelVisible": {
+					"value": "no"
+				},
+				"dateErrorFormat": {
+					"value": ""
+				},
+				"dateFormat": {
+					"value": "mm/dd/yyyy"
+				},
+				"dateMax": {
+					"value": ""
+				},
+				"dateMin": {
+					"value": ""
+				},
+				"textPlaceholder": {
+					"value": ""
+				},
+				"css": {},
+				"containerCss": {
+					"width": "200px"
+				}
+			}
+		},
+		{
+			"id": "fld_number",
+			"name": "Number",
+			"description": "Number Input Field",
+			"attributes": {
+				"name": {
+					"value": "fldNumber"
+				},
+				"type": {
+					"value": "number"
+				},
+				"labelVisible": {
+					"value": "no"
+				},
+				"numberMax": {
+					"value": "10"
+				},
+				"numberMin": {
+					"value": "0"
+				},
+				"numberStep": {
+					"value": "1"
+				},
+				"numberIcon": {
+					"value": ""
+				},
+				"numberIconPosition": {
+					"value": "left"
+				},
+				"textPlaceholder": {
+					"value": ""
+				},
+				"css": {},
+				"containerCss": {
+					"width": "200px"
+				}
+			}
+		},
+		{
+			"id": "fld_money",
+			"name": "Money",
+			"description": "Money Input Field",
+			"attributes": {
+				"name": {
+					"value": "fldMoney"
+				},
+				"type": {
+					"value": "money"
+				},
+				"labelVisible": {
+					"value": "no"
+				},
+				"moneyDecimalSeparator": {
+					"value": "."
+				},
+				"moneyIcon": {
+					"value": "usd"
+				},
+				"moneyIconPosition": {
+					"value": "left"
+				},
+				"moneyNumberDigits": {
+					"value": "2"
+				},
+				"moneyThousandSeparator": {
+					"value": ","
+				},
+				"textPlaceholder": {
+					"value": ""
+				},
+				"css": {},
+				"containerCss": {
+					"width": "200px"
+				}
+			}
+		},
+		{
+			"id": "fld_search",
+			"name": "Search",
+			"description": "Search Input Field",
+			"attributes": {
+				"name": {
+					"value": "fldSearch"
+				},
+				"type": {
+					"value": "text"
+				},
+				"labelVisible": {
+					"value": "no"
+				},
+				"textErrorMaxlength": {
+					"value": ""
+				},
+				"textErrorMinlength": {
+					"value": ""
+				},
+				"textErrorPattern": {
+					"value": ""
+				},
+				"textIcon": {
+					"value": "search"
+				},
+				"textIconPosition": {
+					"value": "left"
+				},
+				"textMask": {
+					"value": ""
+				},
+				"textMaxlength": {
+					"value": ""
+				},
+				"textMinlength": {
+					"value": ""
+				},
+				"textPattern": {
+					"value": ""
+				},
+				"textPlaceholder": {
+					"value": ""
+				},
+				"css": {},
+				"containerCss": {
+					"width": "200px"
+				}
+			}
+		},
+		{
+			"id": "fld_email",
+			"name": "Email",
+			"description": "Email Input Field",
+			"attributes": {
+				"name": {
+					"value": "fldEmail"
+				},
+				"type": {
+					"value": "text"
+				},
+				"labelVisible": {
+					"value": "no"
+				},
+				"textErrorMaxlength": {
+					"value": ""
+				},
+				"textErrorMinlength": {
+					"value": ""
+				},
+				"textErrorPattern": {
+					"value": ""
+				},
+				"textIcon": {
+					"value": "envelope"
+				},
+				"textIconPosition": {
+					"value": "left"
+				},
+				"textMask": {
+					"value": ""
+				},
+				"textMaxlength": {
+					"value": ""
+				},
+				"textMinlength": {
+					"value": ""
+				},
+				"textPattern": {
+					"value": "/^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$/"
+				},
+				"textPlaceholder": {
+					"value": ""
+				},
+				"css": {},
+				"containerCss": {
+					"width": "200px"
+				}
+			}
+		},
+		{
+			"id": "fld_phone",
+			"name": "Phone",
+			"description": "Phone Input Field",
+			"attributes": {
+				"name": {
+					"value": "fldPhone"
+				},
+				"type": {
+					"value": "text"
+				},
+				"labelVisible": {
+					"value": "no"
+				},
+				"textErrorMaxlength": {
+					"value": ""
+				},
+				"textErrorMinlength": {
+					"value": ""
+				},
+				"textErrorPattern": {
+					"value": ""
+				},
+				"textIcon": {
+					"value": "phone"
+				},
+				"textIconPosition": {
+					"value": "left"
+				},
+				"textMask": {
+					"value": ""
+				},
+				"textMaxlength": {
+					"value": ""
+				},
+				"textMinlength": {
+					"value": ""
+				},
+				"textPattern": {
+					"value": "/^(?:\\(([0-9]{3})\\)|([0-9]{3}))[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/"
+				},
+				"textPlaceholder": {
+					"value": "999-999-9999"
+				},
+				"css": {},
+				"containerCss": {
+					"width": "200px"
+				}
+			}
+		}
+	]
+}

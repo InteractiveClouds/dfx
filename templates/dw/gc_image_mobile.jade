@@ -1,0 +1,38 @@
+- var containerCss = '';
+if (gcitem.attributes.containerCss)
+    each val, key in gcitem.attributes.containerCss
+        - if (val!='') containerCss += key + ':' + val + ';'
+- var css = '';
+if (gcitem.attributes.css)
+    each val, key in gcitem.attributes.css
+        - if (val!='') css += key + ':' + val + ';'
+
+- var image_src = (gcitem.attributes.src_res && gcitem.attributes.src_res.value) ? gcitem.attributes.src_res.value : gcitem.attributes.src.value;
+
+- var semantic_classes = 'ui image';
+if (gcitem.attributes.avatar.value == 'yes')
+    - semantic_classes += ' avatar';
+if (gcitem.attributes.bordered.value == 'yes')
+    - semantic_classes += ' bordered';
+if (gcitem.attributes.rounded.value == 'yes')
+    - semantic_classes += ' rounded';
+if (gcitem.attributes.circular.value == 'yes')
+    - semantic_classes += ' circular';
+if (gcitem.attributes.size.value != '')
+    - semantic_classes += ' ' + gcitem.attributes.size.value;
+
+div(
+    id="#{gcitem.id}_{{$index}}",
+    ng-show = (gcitem.attributes.display.value == '' ? undefined : "#{gcitem.attributes.display.value}"),
+    style=('position:relative;' + (gcitem.attributes.containerStyle ? gcitem.attributes.containerStyle.value : '') + ';' + containerCss),
+    class="#{gcitem.attributes.containerClasses.value}",
+    ng-class = (gcitem.attributes.containerDynamicClasses.value == '' ? undefined : "#{gcitem.attributes.containerDynamicClasses.value}"),
+    ng-click = (gcitem.attributes.onclick && gcitem.attributes.onclick.value ? "#{gcitem.attributes.onclick.value}" : undefined)
+    )
+    img(
+        id="#{gcitem.id}_image_{{$index}}",
+        src=(image_src == '' ? "#" : "#{image_src}"),
+        ng-src = (image_src == '' ? undefined : "#{image_src}"),
+        style=((gcitem.attributes.style ? gcitem.attributes.style.value : '') + ';' + css),
+        class="#{semantic_classes} #{gcitem.attributes.classes.value}"
+        )

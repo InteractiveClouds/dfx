@@ -1,0 +1,15 @@
+div(
+    id = "#{gcitem.id}",
+    ng-show = (gcitem.attributes.display.value == '' ? undefined : "#{gcitem.attributes.display.value}"),
+    class = (gcitem.attributes.classes.value == '' ? undefined : "#{gcitem.attributes.classes.value}"),
+    style = (gcitem.attributes.style.value == '' ? 'width:250px;' : "#{gcitem.attributes.style.value}"))
+    abn-tree(
+        tree-data         = (gcitem.attributes.modelCollection.value == '' ? '{}' :gcitem.attributes.modelCollection.value),
+        expand-level      = "1",
+        tree-control      = (gcitem.attributes.treeControl.value == '' ? undefined :gcitem.attributes.treeControl.value),
+        icon-leaf         = (gcitem.attributes.icons.iconLeaf == '' ? '' : "#{gcitem.attributes.icons.iconLeaf}"),
+        icon-expand       = (gcitem.attributes.icons.iconExpand == '' ? '' : "#{gcitem.attributes.icons.iconExpand}"),
+        icon-collapse     = (gcitem.attributes.icons.iconCollapse == '' ? '' : "#{gcitem.attributes.icons.iconCollapse}"),
+        on-select         = (gcitem.attributes.onSelect.value == '' ? undefined : gcitem.attributes.onSelect.value+'(branch)'),
+        initial-selection = (gcitem.attributes.initSelection.value == '' ? undefined :gcitem.attributes.initSelection.value)
+    )

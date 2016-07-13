@@ -1,0 +1,16 @@
+doctype xml
+widget(
+    xmlns       = "http://www.w3.org/ns/widgets",
+    xmlns:gap   = "http://phonegap.com/ns/1.0",
+    id          = "com.#{appname}.app",
+    version     = "1.0.0")
+    name #{appname}
+    description #{apptitle}
+    author(href="http://interactive-clouds.com", email="support@interactive-clouds.com") #{appowner}
+    plugin(name="cordova-plugin-whitelist" spec="1")/
+    access(origin="*")/
+    allow-intent(href="http://*/*")/
+    allow-intent(href="https://*/*")/
+    preference(name="Fullscreen", value="true")/
+    preference(name="LoadUrlTimeoutValue", value="60000")/
+    content(src="login.html")

@@ -1,0 +1,26 @@
+div.panel.panel-primary
+    div.panel-heading
+        h4 Database Drivers
+    div.panel-body#dbs_databases
+        table#dbProvidersTable.table.table-condensed.table-thick-bordered(style="margin-bottom: 0;")
+            col(width="45%")
+            col(width="45%")
+            col(width="10%")
+            thead
+                tr
+                    th Name
+                    th Dialect
+                    th Action
+            tbody
+                each provider in providers
+                    tr(style="display: table-row;")
+                        td.provider-name
+                            a.dfx_table_text.btn.btn-link(href="javascript:DfxStudio.Dispatcher.run('#!/home/#{applicationName}/database-providers/#{provider.nameDriver}/edit');") #{provider.nameDriver}
+                        td #{provider.dialect}
+                        td
+                            a.dfx_table_text.btn.btn-link(href="javascript:DfxStudio.Home.DatabaseProviders.remove({applicationName:'#{applicationName}',nameDriver:'#{provider.nameDriver}'});")
+                                span.fa.fa-lg.fa-trash-o
+        div.clearfix(style="height: 15px;")
+        button.btn.btn-info.save-now-submitter(onclick="DfxStudio.Home.DatabaseProviders.create('#{applicationName}');", type='submit')
+            span.fa.fa-lg.fa-plus
+            span(style="padding-left: 5px;") Driver

@@ -1,0 +1,53 @@
+<md-dialog aria-label="textarea" ng-cloak>
+<form>
+<md-toolbar><div class="md-toolbar-tools">
+<h2>Expression editor</h2>
+</div></md-toolbar>
+<md-dialog-content id="{{component_id}}_md_dialog" layout-wrap layout-margin class="expression-editor">
+	<div class="expression-inner">
+		<textarea id="{{component_id}}_expression_textarea" class="expression-textarea" name="expression-edit"></textarea>
+	</div>
+	<div class="expression-variables">
+		<section id="{{component_id}}_panel_scope" class="md-whiteframe-1dp">
+			<h3>Scope variables</h3>
+			<md-content layout-padding flex>
+				<ul class="scope-variables">
+					<li ng-repeat="scopeVar in scopeVars"><a href ng-click="addVariable($event)">{{scopeVar}}</a></li>
+				</ul>
+			</md-content>
+		</section>
+		<section id="{{component_id}}_panel_angular" class="md-whiteframe-1dp">
+			<h3>Angular variables and functions</h3>
+			<md-content layout-padding flex class="angular-variables">
+				<ul>
+					<li><a href ng-click="addVariable($event)">angular.isArray</a></li>
+					<li><a href ng-click="addVariable($event)">angular.isDate</a></li>
+					<li><a href ng-click="addVariable($event)">angular.isElement</a></li>
+					<li><a href ng-click="addVariable($event)">angular.isFunction</a></li>
+					<li><a href ng-click="addVariable($event)">angular.isNumber</a></li>
+					<li><a href ng-click="addVariable($event)">angular.isObject</a></li>
+					<li><a href ng-click="addVariable($event)">angular.isString</a></li>
+					<li><a href ng-click="addVariable($event)">angular.lowercase</a></li>
+					<li><a href ng-click="addVariable($event)">angular.uppercase</a></li>
+				</ul>
+				<ul>
+					<li><a href ng-click="addVariable($event)">$eval</a></li>
+					<li><a href ng-click="addVariable($event)">$even</a></li>
+					<li><a href ng-click="addVariable($event)">$first</a></li>
+					<li><a href ng-click="addVariable($event)">$index</a></li>
+					<li><a href ng-click="addVariable($event)">$item</a></li>
+					<li><a href ng-click="addVariable($event)">$last</a></li>
+					<li><a href ng-click="addVariable($event)">$middle</a></li>
+					<li><a href ng-click="addVariable($event)">$odd</a></li>
+				</ul>
+			</md-content>
+		</section>
+	</div>
+</md-dialog-content>
+<div class="md-actions">
+    <md-button ng-click="clearLabel()" class="md-primary">Clear</md-button>
+    <md-button ng-click="setLabel()" class="md-primary">Save</md-button>
+	<md-button ng-click="closeDialog()" class="md-primary">Cancel</md-button>
+</div> 
+</form>
+</md-dialog>

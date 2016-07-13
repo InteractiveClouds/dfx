@@ -1,0 +1,186 @@
+{
+	"name": { "value": "myToolbar1" },
+	"controller": { "value": "" },
+	"form": { "value": "" },
+	"model": { "value": "" },
+	"useModel": { "value": false },
+	"collapsible": { "value": false },
+	"classes": { "value": "" },
+	"style": { "value": "" },
+	"display": { "value": "" },
+	"title": { "value": "This is a title" },
+	"titleVisible": { "value": false },
+	"layout": {
+		"rows": [
+			{
+				"cols": [
+					{
+						"width": { "value": "12" },
+						"classes": { "value": "" },
+						"dynamicClasses": { "value": "" },
+						"style": { "value": "" },
+						"orientation": { "value": "vertical" },
+						"alignment": { "value": "start" },
+						"disposition": { "value": "space_around" },
+						"css": {
+							"color": "",
+							"background": "",
+							"padding": "",
+							"text-align": ""
+						}
+					}
+				],
+				"classes": { "value": "" },
+				"dynamicClasses": { "value": "" },
+				"style": { "value": "" }
+			}
+		],
+		"classes": { "value": "" },
+		"dynamicClasses": { "value": "" },
+		"style": { "value": ""}
+	},
+	"children": [
+		{
+			"id": 10001,
+			"type": "button",
+			"attributes": {
+				"name": {
+					"value": "btnButton1"
+				},
+				"label": {
+					"value": "OK"
+				},
+				"icon": {
+					"value": ""
+				},
+				"iconPosition": {
+					"value": ""
+				},
+				"display": {
+					"value": "true"
+				},
+				"disabled": {
+					"value": "false"
+				},
+				"tooltip": {
+					"value": ""
+				},
+				"tooltipPosition": {
+					"value": "top"
+				},
+				"containerClasses": {
+					"value": ""
+				},
+				"containerDynamicClasses": {
+					"value": ""
+				},
+				"containerStyle": {
+					"value": ""
+				},
+				"containerCss": {
+					"width": "",
+					"height": "",
+					"color": "",
+					"background": "",
+					"padding": "",
+					"margin": "",
+					"text-align": ""
+				},
+				"css": {
+					"width": "",
+					"height": "",
+					"color": "",
+					"background": "",
+					"padding": "",
+					"margin": "",
+					"text-align": ""
+				},
+				"classes": {
+					"value": "btn btn-primary"
+				},
+				"dynamicClasses": {
+					"value": ""
+				},
+				"style": {
+					"value": ""
+				},
+				"onclick": {
+					"value": "test"
+				}
+			},
+			"children": [],
+			"container": "layout_0_row_0_column_0"
+		},
+		{
+			"id": 10002,
+			"type": "button",
+			"attributes": {
+				"name": {
+					"value": "btnButton1"
+				},
+				"label": {
+					"value": "Cancel"
+				},
+				"icon": {
+					"value": ""
+				},
+				"iconPosition": {
+					"value": ""
+				},
+				"display": {
+					"value": "true"
+				},
+				"disabled": {
+					"value": "false"
+				},
+				"tooltip": {
+					"value": ""
+				},
+				"tooltipPosition": {
+					"value": "top"
+				},
+				"containerClasses": {
+					"value": ""
+				},
+				"containerDynamicClasses": {
+					"value": ""
+				},
+				"containerStyle": {
+					"value": ""
+				},
+				"containerCss": {
+					"width": "",
+					"height": "",
+					"color": "",
+					"background": "",
+					"padding": "",
+					"margin": "",
+					"text-align": ""
+				},
+				"css": {
+					"width": "",
+					"height": "",
+					"color": "",
+					"background": "",
+					"padding": "",
+					"margin": "",
+					"text-align": ""
+				},
+				"classes": {
+					"value": "btn btn-danger"
+				},
+				"dynamicClasses": {
+					"value": ""
+				},
+				"style": {
+					"value": "margin-left:10px;"
+				},
+				"onclick": {
+					"value": "test"
+				}
+			},
+			"children": [],
+			"container": "layout_0_row_0_column_0"
+		}
+	]
+}

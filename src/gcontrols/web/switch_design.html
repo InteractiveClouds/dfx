@@ -1,0 +1,16 @@
+<div class="{{attributes.classes.value}}" style="{{attributes.style.value}}">
+    <div class="gc-checkbox-label-design">{{attributes.label.value | checkExpression}}</div>
+    <div layout="{{attributes.direction.value}}">
+        <div layout="row" ng-repeat="item in attributes.staticArray.value track by $index" ng-style="{'margin-top' : $index > 0 && attributes.direction.value ==='column' ? '11px' : '0', 'margin-right':'15px'}">
+            <md-switch aria-label="{{attributes.name.value}} switch" ng-model="item.isChecked" style="margin: 0 0 0 5px" ng-class="attributes.buttonClass.value"></md-switch>
+            <div style="padding-top: 3px;">
+                <div style="display: inline-block">{{ item.label | checkExpression }} </div>
+                <div style="display: inline-block" ng-if="$eval(attributes.displayValue.value)">
+                    <div ng-if="item.isChecked">{{item.checked}}</div>
+                    <div ng-if="!item.isChecked">{{item.unchecked}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

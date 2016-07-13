@@ -1,0 +1,12 @@
+div.panel.panel-primary
+   div.panel-heading
+      h4 Edit #{fileName}
+   div.panel-body
+       textarea(id="editResourceBox", name="editResourceBox")
+       div(style="margin-left:-20px")
+           button#save-resource-settings.btn.btn-info.save-now-submitter(onclick="DfxStudio.Home.Resources.updateResourceFile('#{fileName}', '#{type}', '#{applicationName}', function(){ javascript:DfxStudio.Dispatcher.run('#!/home/#{applicationName}/resources/#{type}') })" style="margin:20px 0 0 20px;")
+             span.fa.fa-lg.fa-floppy-o
+             span(style="padding-left:5px") Save
+           button#save-resource-settings.btn.btn-danger(onclick='javascript:DfxStudio.Dispatcher.run(\'#!/home/#{applicationName}/resources/#{type}\')' style="margin:20px 0 0 20px;")
+             span.fa.fa-lg.fa-undo
+             span(style="padding-left:5px") Cancel

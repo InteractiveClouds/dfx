@@ -1,0 +1,30 @@
+<md-dialog aria-label="create_build"  ng-cloak>
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h5>Enter the description for this build:</h5>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon class="fa fa-lg fa-times" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content layout-row layout-padding">
+                <md-input-container class="md-block flex" style="margin: 0;">
+                    <label>Enter description</label>
+                    <input id="build_description" ng-model="description.value" md-autofocus>
+                </md-input-container>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button class="md-primary" ng-click="hide()">
+                OK
+            </md-button>
+            <md-button class="md-primary" ng-click="cancel()">
+                Cancel
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

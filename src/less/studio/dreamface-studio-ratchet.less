@@ -1,0 +1,65 @@
+// Variables
+@import "../ratchet/variables";
+// Mixins
+@import "../ratchet/mixins.less";
+
+.ratchet {
+  // Normalize & Base CSS
+  //  @import "../ratchet/normalize.less";
+  @import "../ratchet/base.less";
+  @import "../ratchet/type";
+
+  // Components
+  @import "../ratchet/buttons.less";
+  @import "../ratchet/bars.less";
+  @import "../ratchet/badges.less";
+  @import "../ratchet/cards.less";
+  @import "../ratchet/table-views";
+  @import "../ratchet/forms.less";
+  @import "../ratchet/segmented-controls";
+  @import "../ratchet/popovers.less";
+
+  // Javascript components
+  @import "../ratchet/modals.less";
+  @import "../ratchet/sliders";
+  @import "../ratchet/toggles";
+  @import "../ratchet/push.less";
+
+  // Ratchicons
+  @import "../ratchet/ratchicons";
+
+  // Tab bar
+  // --------------------------------------------------
+  .bar {
+    // Bar docked to bottom and used for primary app navigation
+
+    &.bar-tab {
+      position: absolute;
+      left: 38px;
+      top: (118 + 567 - @bar-tab-height) !important;;
+      display: table;
+      bottom: auto;
+      width: 319px;
+      height: @bar-tab-height;
+      padding: 0;
+      table-layout: fixed;
+      border-top: @border-default;
+      border-bottom: 0;
+    }
+  }
+
+}
+
+#winModalTblBody .icon {
+  color: #000;
+  width: 50px;
+  height: 50px;
+  margin: 3px;
+  font-size: 24px;
+  line-height: 50px;
+  text-align: center;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 25px;
+}
+

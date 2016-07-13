@@ -1,0 +1,72 @@
+<div flex ng-show="$eval(attributes.display.value)" ng-if="attributes.isBindEmpty.value === false" style="{{attributes.style.value}}" ng-class="$eval(attributes.dynamicClasses.value)" class="{{attributes.classes.value}}">
+    <md-chips ng-if="attributes.selectedType.value==='standard' && attributes.selectedInput.value!=='number'"
+              ng-model="$gcscope[attributes.binding.value]" placeholder="{{$eval(attributes.addPlaceholder.value)}}" readonly="$eval(attributes.disabled.value)"
+              md-on-add="$eval(attributes.onAdd.value)" md-on-select="$eval(attributes.onSelect.value)" md-on-remove="$eval(attributes.onRemove.value)"
+              ng-click="$eval(attributes.onclick.value)"
+              ng-dblclick="$eval(attributes.ondblclick.value)"
+              ng-keypress="$eval(attributes.onkeypress.value)"
+              ng-keydown="$eval(attributes.onkeydown.value)"
+              ng-keyup="$eval(attributes.onkeyup.value)"
+              ng-mouseover="$eval(attributes.onmouseover.value)"
+              ng-mouseenter="$eval(attributes.onmouseenter.value)"
+              ng-mousemove="$eval(attributes.onmousemove.value)"
+              ng-mouseleave="$eval(attributes.onmouseleave.value)"
+              ng-mousedown="$eval(attributes.onmousedown.value)"
+              ng-mouseup="$eval(attributes.onmouseup.value)"
+              secondary-placeholder="{{$eval(attributes.basicPlaceholder.value)}}">
+    </md-chips>
+
+    <md-chips ng-if="attributes.selectedType.value==='standard' && attributes.selectedInput.value==='number'"
+              ng-model="$gcscope[attributes.binding.value]" placeholder="{{$eval(attributes.addPlaceholder.value)}}" readonly="$eval(attributes.disabled.value)"
+              md-on-add="$eval(attributes.onAdd.value)" md-on-select="$eval(attributes.onSelect.value)" md-on-remove="$eval(attributes.onRemove.value)"
+              ng-click="$eval(attributes.onclick.value)"
+              ng-dblclick="$eval(attributes.ondblclick.value)"
+              ng-keypress="$eval(attributes.onkeypress.value)"
+              ng-keydown="$eval(attributes.onkeydown.value)"
+              ng-keyup="$eval(attributes.onkeyup.value)"
+              ng-mouseover="$eval(attributes.onmouseover.value)"
+              ng-mouseenter="$eval(attributes.onmouseenter.value)"
+              ng-mousemove="$eval(attributes.onmousemove.value)"
+              ng-mouseleave="$eval(attributes.onmouseleave.value)"
+              ng-mousedown="$eval(attributes.onmousedown.value)"
+              ng-mouseup="$eval(attributes.onmouseup.value)"
+              secondary-placeholder="{{$eval(attributes.basicPlaceholder.value)}}">
+        <input type="number" placeholder="{{$eval(attributes.basicPlaceholder.value)}}">
+    </md-chips>
+</div>
+<div flex ng-show="$eval(attributes.display.value)" ng-if="attributes.isBindEmpty.value === true" style="{{attributes.style.value}}" ng-class="$eval(attributes.dynamicClasses.value)" class="{{attributes.classes.value}}">
+    <md-chips ng-if="attributes.selectedType.value==='standard' && attributes.selectedInput.value!=='number'"
+              ng-model="attributes.defaultArray.value" placeholder="{{$eval(attributes.addPlaceholder.value)}}" readonly="$eval(attributes.disabled.value)"
+              md-on-add="$eval(attributes.onAdd.value)" md-on-select="$eval(attributes.onSelect.value)" md-on-remove="$eval(attributes.onRemove.value)"
+              ng-click="$eval(attributes.onclick.value)"
+              ng-dblclick="$eval(attributes.ondblclick.value)"
+              ng-keypress="$eval(attributes.onkeypress.value)"
+              ng-keydown="$eval(attributes.onkeydown.value)"
+              ng-keyup="$eval(attributes.onkeyup.value)"
+              ng-mouseover="$eval(attributes.onmouseover.value)"
+              ng-mouseenter="$eval(attributes.onmouseenter.value)"
+              ng-mousemove="$eval(attributes.onmousemove.value)"
+              ng-mouseleave="$eval(attributes.onmouseleave.value)"
+              ng-mousedown="$eval(attributes.onmousedown.value)"
+              ng-mouseup="$eval(attributes.onmouseup.value)"
+              secondary-placeholder="{{$eval(attributes.basicPlaceholder.value)}}">
+    </md-chips>
+
+    <md-chips ng-if="attributes.selectedType.value==='standard' && attributes.selectedInput.value==='number'"
+              ng-model="attributes.defaultArray.value" placeholder="{{$eval(attributes.addPlaceholder.value)}}" readonly="$eval(attributes.disabled.value)"
+              md-on-add="$eval(attributes.onAdd.value)" md-on-select="$eval(attributes.onSelect.value)" md-on-remove="$eval(attributes.onRemove.value)"
+              ng-click="$eval(attributes.onclick.value)"
+              ng-dblclick="$eval(attributes.ondblclick.value)"
+              ng-keypress="$eval(attributes.onkeypress.value)"
+              ng-keydown="$eval(attributes.onkeydown.value)"
+              ng-keyup="$eval(attributes.onkeyup.value)"
+              ng-mouseover="$eval(attributes.onmouseover.value)"
+              ng-mouseenter="$eval(attributes.onmouseenter.value)"
+              ng-mousemove="$eval(attributes.onmousemove.value)"
+              ng-mouseleave="$eval(attributes.onmouseleave.value)"
+              ng-mousedown="$eval(attributes.onmousedown.value)"
+              ng-mouseup="$eval(attributes.onmouseup.value)"
+              secondary-placeholder="{{$eval(attributes.basicPlaceholder.value)}}">
+        <input type="number" placeholder="{{$eval(attributes.basicPlaceholder.value)}}">
+    </md-chips>
+</div>

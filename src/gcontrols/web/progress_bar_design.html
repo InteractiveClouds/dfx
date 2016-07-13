@@ -1,0 +1,4 @@
+<div style="{{attributes.style.value}}" class="dfx-core-gc-progressbar">
+    <div class="gc-checkbox-label-design">{{attributes.label.value | checkExpression}}</div>
+    <md-progress-linear class="{{attributes.classes.value}}" ng-class="$eval(attributes.dynamicClasses.value)" md-mode="{{attributes.selectedType.value}}" value="{{$gcscope[attributes.binding.value]}}"></md-progress-linear>
+</div>

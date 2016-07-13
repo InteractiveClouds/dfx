@@ -1,0 +1,13 @@
+<md-tabs md-dynamic-height md-stretch-tabs="never" md-border-bottom>
+    <md-tab label="Search">
+        <md-content class="md-padding">
+            <div layout="row" style="padding: 10px;"><md-icon class="fa fa-stack-overflow" style="margin: 0; font-size:20px;"></md-icon><span style="margin-top: 4px;">Please enter your search terms below and click GO to search on StackOverflow.</span></div>
+            <div layout="row">
+                <div flex>
+                    <md-chips ng-model="serch_parameters" placeholder="Input serch words"</md-chips>
+                </div>
+                <md-button class="md-raised" ng-click="serchOnStackoverflow()">Go</md-button>
+            </div>
+        </md-content>
+    </md-tab>
+</md-tabs>

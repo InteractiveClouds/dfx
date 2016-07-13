@@ -1,0 +1,28 @@
+.s-select_block
+    .s-select_root(data-isactive="false")
+        ul.s-select_knobs(data-knob-checkness="")
+            li
+                input.s-select-search(type="text")
+            li.s-select_knob-switches
+                span.s-select_knob-switches-header Show:
+                label
+                    input.s-select_knob-switch(data-knob="checked", type="checkbox", checked)
+                    span checked
+                label
+                    input.s-select_knob-switch(data-knob="unchecked", type="checkbox", checked)
+                    span unchecked
+            li.s-select_knob-buttons
+                span.s-select_knob-switches-header Check:
+                button.btn.btn-info.btn-sm(data-check="all", style="margin-left: 10px;")
+                    span.fa.fa-check-square-o
+                    span(style="padding-left:5px") all
+                button.btn.btn-info.btn-sm(data-check="none", style="margin-left: 10px;")
+                    span.fa.fa-square-o
+                    span(style="padding-left:5px") none
+        ul.s-select_list
+            li.s-select_list-screen
+            - each item, i in list
+                li.s-select_item(data-checked="#{item.checked}")
+                    label
+                        input(type="checkbox", checked=(item.checked))
+                        span= item.name

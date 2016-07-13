@@ -1,0 +1,222 @@
+{
+  "properties": {
+    "title": {
+      "visible": false,
+      "color": ""
+    },
+    "tools": {
+      "color": false,
+      "edit": false,
+      "collapse": false,
+      "fullscreen": false,
+      "delete": false
+    },
+    "sortable": false
+  },
+  "definition": [
+    {
+      "id": "root",
+      "type": "panel",
+      "attributes": {
+        "name": {
+          "value": "pnlPanel1"
+        },
+        "controller": {
+          "value": ""
+        },
+        "form": {
+          "value": ""
+        },
+        "classes": {
+          "value": ""
+        },
+        "style": {
+          "value": ""
+        },
+        "css": {
+          "width": "",
+          "height": "",
+          "color": "",
+          "background": "",
+          "padding": "",
+          "margin": "",
+          "text-align": ""
+        },
+        "bodyCss": {
+          "width": "",
+          "height": "",
+          "color": "",
+          "background": "",
+          "padding": "",
+          "margin": "",
+          "text-align": ""
+        },
+        "bodyClasses": {
+          "value": ""
+        },
+        "bodyDynamicClasses": {
+          "value": ""
+        },
+        "display": {
+          "value": ""
+        },
+        "layout": {
+          "rows": [
+            {
+              "classes": {
+                "value": ""
+              },
+              "dynamicClasses": {
+                "value": ""
+              },
+              "style": {
+                "value": ""
+              }
+            }
+          ],
+          "classes": {
+            "value": ""
+          },
+          "dynamicClasses": {
+            "value": ""
+          },
+          "style": {
+            "value": ""
+          }
+        }
+      },
+      "children": [
+        {
+          "id": 19113,
+          "type": "chart",
+          "attributes": {
+            "name": {
+              "value": "chChart1"
+            },
+            "label": {
+              "value": "Statistics"
+            },
+            "labelVisible": {
+              "value": "yes"
+            },
+            "tooltips": {
+              "value": "yes"
+            },
+            "type": {
+              "value": "bar"
+            },
+            "labelsDataPoints": {
+              "value": "no"
+            },
+            "innerRadius": {
+              "value": ""
+            },
+            "legendVisible": {
+              "value": "no"
+            },
+            "legendPosition": {
+              "value": "left"
+            },
+            "property": {
+              "value": "statistics"
+            },
+            "display": {
+              "value": "true"
+            },
+            "containerClasses": {
+              "value": ""
+            },
+            "containerDynamicClasses": {
+              "value": ""
+            },
+            "containerCss": {
+              "width": "",
+              "height": "",
+              "color": "",
+              "background": "",
+              "padding": "",
+              "margin": "",
+              "text-align": ""
+            },
+            "containerStyle": {
+              "value": ""
+            },
+            "classes": {
+              "value": ""
+            },
+            "dynamicClasses": {
+              "value": ""
+            },
+            "css": {
+              "width": "100%",
+              "height": "400px"
+            },
+            "style": {
+              "value": ""
+            },
+            "onclick": {
+              "value": ""
+            },
+            "onmouseover": {
+              "value": ""
+            },
+            "onmouseout": {
+              "value": ""
+            }
+          },
+          "children": [],
+          "container": "layout_0_row_0"
+        }
+      ]
+    },
+    {
+      "id": "root_tabbar",
+      "type": "tabbar",
+      "kind": "bar",
+      "attributes": {
+        "display": {
+          "value": "true"
+        },
+        "onclick": {
+          "value": "openAnotherWidget"
+        },
+        "tabs": [
+          {
+            "label": {
+              "value": "Home"
+            },
+            "value": {
+              "value": "Home"
+            },
+            "icon": {
+              "value": "home"
+            }
+          },
+          {
+            "label": {
+              "value": "Profile"
+            },
+            "value": {
+              "value": "Profile"
+            },
+            "icon": {
+              "value": "person"
+            }
+          },
+          {
+            "label": {
+              "value": "Settings"
+            },
+            "value": {
+              "value": "Settings"
+            },
+            "icon": {
+              "value": "gear"
+            }
+          }
+        ]
+      },
+      "children": []
+    }
+  ]
+}

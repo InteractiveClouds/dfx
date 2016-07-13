@@ -1,0 +1,62 @@
+<div class="dfx-ve-property-treeview hover">
+    <ul>
+        <li>
+            <input class="dfx-ve-property-treeview-button" type="checkbox" id="item-0" />
+            <label for="item-0">Main Properties</label>
+            <ul class="dfx-ve-property-treeview-content">
+                <li class="col-md-12">
+                    <span class="col-md-4">Id:</span>
+                    <input class="col-md-8" type="text" ng-model="component_id" disabled/>
+                </li>
+                <li class="col-md-12" dfx-gc-property="template">
+                    <span class="col-md-4">Template:</span>
+                    <input class="col-md-8" type="text" ng-model="attributes.template.value" ng-change="overrideAttribute('template')" disabled/>
+                </li>
+                <li class="col-md-12" dfx-gc-property="name">
+                    <span class="col-md-4">Name:</span>
+                    <input class="col-md-8" type="text" ng-model="attributes.name.value" ng-change="overrideAttribute('name')"/>
+                </li>
+                <li class="col-md-12">
+                    <span class="col-md-4">Binding:</span>
+                    <div class="col-md-8" layout="row">
+                        <input class="col-md-12" type="text" ng-model="attributes.binding.value" style="margin-left:-15px;" ng-change="overrideAttribute('binding')"/>
+                        <dfx-ve-expression-editor></dfx-ve-expression-editor>
+                    </div>
+                </li>
+                <li class="col-md-12">
+                    <span class="col-md-4">Display:</span>
+                    <div class="col-md-8" layout="row">
+                        <input class="col-md-12" type="text" ng-model="attributes.display.value" style="margin-left:-15px;" ng-change="overrideAttribute('display')"/>
+                        <dfx-ve-expression-editor></dfx-ve-expression-editor>
+                    </div>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <ul>
+        <li>
+            <input class="dfx-ve-property-treeview-button" type="checkbox" id="item-3" />
+            <label for="item-3">Styling Attributes</label>
+            <ul class="dfx-ve-property-treeview-content">
+                <li class="col-md-12">
+					<span class="col-md-12">
+						<div layout>
+                            <md-slider class="md-primary" flex ng-model="attributes.flex.value" step="5" min="0" max="100" aria-label="Flex width:" ng-change="overrideAttribute('flex');changeWidth()" ng-model-options="{ debounce: 500 }">
+                            </md-slider>
+                            <div flex="20" layout layout-align="center center">
+                                <input flex type="number" step="5" min="0" max="100" ng-model="attributes.flex.value" aria-label="blue" aria-controls="flex-width" style="margin-left:5px; text-align: center" ng-change="overrideAttribute('flex');changeWidth()">
+                            </div>
+                        </div>
+	  				</span>
+                </li>
+                <li class="col-md-12">
+                    <span class="col-md-4">Style:</span>
+                    <div class="col-md-8" layout="row">
+                        <input class="col-md-12" type="text" ng-model="attributes.style.value" ng-change="overrideAttribute('style')" style="margin-left:-15px;"/>
+                        <dfx-ve-css-style></dfx-ve-css-style>
+                    </div>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>

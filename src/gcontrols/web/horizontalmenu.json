@@ -1,0 +1,39 @@
+{
+	"template": 			{ "value": "default" },
+	"name": { "value": "hrztMenu1" },
+	"display": { "value": "true" },
+  "dynamicPresent": { "value": false },
+  "dynamic": { "value": "" },
+	"menuItems": {
+		"value": [
+			{
+				"label": "'Home'",
+				"icon": { "value": "'home'", "type": "svg-icon" },
+				"shortcut": "",
+				"divider": false,
+				"notification": "",
+				"display": "true",
+				"disabled": "false",
+				"onclick": "",
+				"menuItems": { "value": [] }			
+			}
+		]
+	},
+	"static": { "value": "" },
+	"dynamic": { "value": "" },
+  "layoutType": { "value": "none" },
+  "flex": {"value": 100},
+  "style": { "value": "" },
+  "classes": { "value": "" },
+  "dynamicClasses": { "value": "" },
+  "onclick": { "value": "" },
+  "ondblclick": { "value": "" },
+  "onkeypress": { "value": "" },
+  "onkeydown": { "value": "" },
+  "onkeyup": { "value": "" },
+  "onmouseover": { "value": "" },
+  "onmouseenter": { "value": "" },
+  "onmousemove": { "value": "" },
+  "onmouseleave": { "value": "" },
+  "onmouseup": { "value": "" }
+}

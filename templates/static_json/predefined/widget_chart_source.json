@@ -1,0 +1,181 @@
+{
+    "properties": {
+        "title": {
+            "label": "",
+            "visible": true,
+            "color": ""
+        },
+        "tools": {
+            "color": true,
+            "edit": true,
+            "collapse": true,
+            "fullscreen": true,
+            "delete": true
+        },
+        "sortable": true
+    },
+    "definition": [
+        {
+            "id": "root",
+            "type": "panel",
+            "attributes": {
+                "name": {
+                    "value": "pnlPanel1"
+                },
+                "controller": {
+                    "value": ""
+                },
+                "form": {
+                    "value": ""
+                },
+                "model": {
+                    "value": ""
+                },
+                "useModel": {
+                    "value": false
+                },
+                "collapsible": {
+                    "value": false
+                },
+                "classes": {
+                    "value": ""
+                },
+                "style": {
+                    "value": ""
+                },
+                "display": {
+                    "value": ""
+                },
+                "title": {
+                    "value": ""
+                },
+                "titleVisible": {
+                    "value": false
+                },
+                "layout": {
+                    "rows": [
+                        {
+                            "cols": [
+                                {
+                                    "width": {
+                                        "value": "12"
+                                    },
+                                    "classes": {
+                                        "value": ""
+                                    },
+                                    "dynamicClasses": {
+                                        "value": ""
+                                    },
+                                    "style": {
+                                        "value": ""
+                                    }
+                                }
+                            ],
+                            "classes": {
+                                "value": ""
+                            },
+                            "dynamicClasses": {
+                                "value": ""
+                            },
+                            "style": {
+                                "value": ""
+                            }
+                        }
+                    ],
+                    "classes": {
+                        "value": ""
+                    },
+                    "dynamicClasses": {
+                        "value": ""
+                    },
+                    "style": {
+                        "value": ""
+                    }
+                }
+            },
+            "children": [
+                {
+                    "id": 45689,
+                    "type": "chart",
+                    "attributes": {
+                        "name": {
+                            "value": "chChart1"
+                        },
+                        "label": {
+                            "value": "Statistics"
+                        },
+                        "labelVisible": {
+                            "value": "yes"
+                        },
+                        "tooltips": {
+                            "value": "yes"
+                        },
+                        "type": {
+                            "value": "line"
+                        },
+                        "labelsDataPoints": {
+                            "value": "no"
+                        },
+                        "innerRadius": {
+                            "value": ""
+                        },
+                        "legendVisible": {
+                            "value": "no"
+                        },
+                        "legendPosition": {
+                            "value": "left"
+                        },
+                        "property": {
+                            "value": "statistics"
+                        },
+                        "display": {
+                            "value": "true"
+                        },
+                        "containerClasses": {
+                            "value": ""
+                        },
+                        "containerDynamicClasses": {
+                            "value": ""
+                        },
+                        "containerCss": {
+                            "width": "",
+                            "height": "",
+                            "color": "",
+                            "background": "",
+                            "padding": "",
+                            "margin": "",
+                            "text-align": ""
+                        },
+                        "containerStyle": {
+                            "value": ""
+                        },
+                        "classes": {
+                            "value": ""
+                        },
+                        "dynamicClasses": {
+                            "value": ""
+                        },
+                        "css": {
+                            "width": "400px",
+                            "height": "200px"
+                        },
+                        "style": {
+                            "value": ""
+                        },
+                        "onclick": {
+                            "value": ""
+                        },
+                        "onmouseover": {
+                            "value": ""
+                        },
+                        "onmouseout": {
+                            "value": ""
+                        }
+                    },
+                    "children": [],
+                    "container": "layout_0_row_0_column_0"
+                }
+            ]
+        }
+    ]
+}

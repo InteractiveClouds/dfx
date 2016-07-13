@@ -1,0 +1,61 @@
+doctype html
+html(ng-app="dfxAppRuntime")
+    head
+        meta(http-equiv="content-type", content="text/HTML;charset=UTF-8")
+        meta(name="viewport", content="width=device-width,initial-scale=1")
+        title Login to #{apptitle}
+        link(rel="stylesheet", type="text/css", href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,700', rel='stylesheet'")
+        link(rel="stylesheet", type="text/css", href="css/mobile/runtime_mobile/dfx.min.css", media="screen")
+        link(rel="stylesheet", type="text/css", href="css/mobile/app.css", media="screen")
+        script(src="js/mobile/runtime_mobile/script.js")
+        script(src="js/mobile/app.js")
+        script(src="js/mobile/runtime_mobile/dfx.js")
+        script.
+            $( document ).bind( "mobileinit", function() {
+                try {
+                    $.support.cors = true;
+                    $.mobile.allowCrossDomainPages = true;
+                } catch (e) {
+                    alert('cratch failed');
+                }
+            });
+
+        each resource_item in resources
+            - if ( resource_item.type == 'JavaScript' ) {
+                script(src="#{resource_item.path}")
+            - } else if ( resource_item.type == 'CSS' ) {
+                link(rel="stylesheet", type="text/css", href="#{resource_item.path}", media="screen")
+            - }
+    body(ng-controller="dfx_login_controller", dfx-app="#{appname}", style="")
+        script(type="text/javascript").
+            DreamFace.initSession( {dfx_server: '#{server}', dfx_appname:'#{appname}', dfx_tenantid:'#{tenantid}', dfx_ispreview:false} );
+            DreamFace.successfulLoginRedirectUrl = 'index.html';
+        div(layout="column", style="height:100%")
+            div(style="height:55px;background:#E6E6E6")
+            div(flex, layout="column", layout-align="center center")
+                md-whiteframe.md-whiteframe-0dp(flex="45",layout, layout-align="center center", style="width:477px")
+                    md-card(style="width:477px")
+                        md-toolbar(style="background:#62bfab; height:50px")
+                            div(layout="row", layout-align="center center")
+                            div(layout="column", layout-align="center center", style="font-size:18px;color:#fff;font-face:HelveticaNeue")
+                                div.md-subhead(style="margin-top:10px") #{apptitle}
+                                div.md-subhead #{appowner}
+                                div(style="font-size:10px;font-style:italic") ({{_dfx_server}})
+                                div(style="border:1px #ccc solid") {{dfx_login_err}}
+                        md-card-content
+                            form#loginForm(name="loginForm", action="#")
+                                div(layout="column")
+                                    md-input-container(flex)
+                                        label User ID
+                                        input#username(type="text")
+                                    md-input-container(flex)
+                                        label Password
+                                        input#password(type="password", name="password")
+                                div(layout="row")
+                                    md-button.md-raised(style="color:#fff;background:#62bfab", type="submit", onclick="$(this).closest('form').submit()") Log in
+                            md-divider(style="margin-top:20px")
+                                div(layout="column", layout-align="center center", style="height:40px")
+                                    span.md-caption Powered By DreamFace
+            div(layout="row", layout-align="end center", style="padding-right:37px;height:55px;background:#e6e6e6;color:#586474;font-size:10px;font-face:HelveticaNeue") Copyright (c) Interactive Clouds. All rights reserved.
+            
+        script(src="js/mobile/login.js")

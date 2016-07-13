@@ -1,0 +1,62 @@
+div.panel(style="position:fixed;top:203px;right:0;height:35px;width:349px;z-index:3;padding:5px")
+    a#dfx_visual_editor_property_panel_apply.pull-left.btn.btn-xs.btn-info(href="javascript:gc_web_layout_row.savePropertyPanel();", gc-type="layout-row")
+        span.fa.fa-lg.fa-check
+        span(style="padding-left:5px") Apply
+    a.pull-right(href="javascript:DfxVisualBuilder.propertyPanelExpandAll();", style="margin-left:10px") Expand
+    a.pull-right(href="javascript:DfxVisualBuilder.propertyPanelCollapseAll();") Collapse
+div.panel(style="position: fixed;top: 233px;right: 0;width: 349px;padding: 5px;bottom: 20px;overflow-y: auto;")
+    form.form-horizontal
+        div.col-xs-12
+            a#layout_container_link(href="javascript:void(0)") Panel
+            span(style="padding-left:10px;padding-right:10px;") &gt;
+            a#layout_link(href="javascript:void(0)") Layout
+            span(style="padding-left:10px;padding-right:10px;") &gt;
+            a(href="javascript:void(0)") Row
+        legend
+            a.dfx_visual_editor_property_collapsible_btn(data-toggle="collapse", data-target="#main_props") Main Properties
+        div#main_props.collapse.in
+            label.col-xs-3.control-label Columns:
+            div.col-xs-9
+                div#layout_manager.col-md-12
+        legend
+            a.dfx_visual_editor_property_collapsible_btn.collapsed(data-toggle="collapse", data-target="#container_css_props") Layout Row CSS
+        div#container_css_props.collapse
+            div.form-group
+                label.col-xs-4.control-label Row Classes:
+                div.col-xs-8
+                    div.input-group
+                        input#gc_layout_row_attr_classes.form-control.input-xs.dfx_visual_editor_property_input(type="text")
+                        span.input-group-btn
+                            a#btnPickLayoutClasses.btn.btn-default(href="#", data-toggle="modal", data-target="#pickerValueModal", data-vb-picker="class", data-vb-picker-target="gc_layout_row_attr_classes") ...
+            div.form-group
+                label.col-xs-4.control-label Dynamic Classes:
+                div.col-xs-8
+                    div.input-group
+                        input#gc_layout_row_attr_dynamicClasses.form-control.input-xs.dfx_visual_editor_property_input(type="text")
+                        span.input-group-btn
+                            a#btnPickPropertyDynClasses.btn.btn-default(href="#",data-toggle="modal", data-target="#pickerValueModal", data-vb-picker="exp", data-vb-picker-target="gc_layout_row_dynamicClasses") ...
+            div.form-group
+                label.col-xs-4.control-label Height:
+                div.col-xs-8
+                    input#gc_layout_row_attr_css_height.input-xs.dfx_visual_editor_property_input(type="text", style="width:80px")
+            div.form-group
+                label.col-xs-4.control-label Color:
+                div.col-xs-8
+                    .input-group#layoutRowColorPicker.fgcolor
+                        span.input-group-addon.color-picker(style="padding:3px")
+                            i(style="border:1px solid #b0b0b0")
+                        input#gc_layout_row_attr_css_color.input-xs.dfx_visual_editor_property_input(type="text", style="width:80px")
+            div.form-group
+                label.col-xs-4.control-label Background:
+                div.col-xs-8
+                    .input-group#layoutRowBgcolorPicker.fgcolor
+                        span.input-group-addon.color-picker(style="padding:3px")
+                            i(style="border:1px solid #b0b0b0")
+                        input#gc_layout_row_attr_css_background.input-xs.dfx_visual_editor_property_input(type="text", style="width:80px")
+            div.form-group
+                label.col-xs-4.control-label Custom CSS:
+                div.col-xs-8
+                    input#gc_layout_row_attr_style.input-xs.dfx_visual_editor_property_input(type="text")
+input#gc_layout_row_attr_container_id(type="hidden")
+input#gc_layout_row_attr_layout_index(type="hidden")
+input#gc_layout_row_attr_index(type="hidden")

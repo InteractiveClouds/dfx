@@ -1,0 +1,172 @@
+doctype html
+html
+    head
+        meta(http-equiv="content-type", content="text/HTML;charset=UTF-8")
+        meta(name="viewport", content="width=device-width,initial-scale=1")
+        title DreamFace Studio
+        link(rel="stylesheet", href="/css/dfx/dfx-bootstrap.min.css", media="screen")
+        link(rel="stylesheet", href="/css/vendor/font-awesome.min.css", media="screen")
+        link(rel="stylesheet", href="/css/vendor/jquery-ui.min.css", media="screen")
+        link(rel="stylesheet", href="/css/vendor/jqtree.min.css", media="screen")
+        link(rel="stylesheet", href="/css/dfx/dfx.min.css", media="screen")
+        link(rel="stylesheet", href="/css/dfx/dfx-dropzone.min.css", media="screen")
+        link(rel="stylesheet", href="/css/dfx/dfx-tree.min.css", media="screen")
+        link(rel="stylesheet", href="/css/dfx/dfx-flexigrid.min.css", media="screen")
+        link(rel="stylesheet", href="/css/dfx/block_s-select.min.css", media="screen")
+
+        link(rel="stylesheet", href="/node_modules/codemirror/lib/codemirror.css", media="screen")
+        link(rel="stylesheet", href="/node_modules/codemirror/theme/abcdef.css", media="screen")
+        link(rel="stylesheet", href="/node_modules/codemirror/addon/dialog/dialog.css", media="screen")
+        link(rel="stylesheet", href="/node_modules/codemirror/addon/hint/show-hint.css", media="screen")
+
+        //
+            link(rel="stylesheet", href="/css/dfx/dfx-gcontrols.min.css", media="screen")
+        link(rel="stylesheet", href="/css/dfx/dreamface-studio-ratchet.min.css")
+
+        script(src="/node_modules/codemirror/lib/codemirror.js")
+        script(src="/node_modules/codemirror/mode/javascript/javascript.js")
+        script(src="/node_modules/codemirror/mode/css/css.js")
+        script(src="/node_modules/codemirror/addon/selection/active-line.js")
+        script(src="/node_modules/codemirror/addon/search/searchcursor.js")
+        script(src="/node_modules/codemirror/addon/search/match-highlighter.js")
+        script(src="/node_modules/codemirror/addon/search/search.js")
+        script(src="/node_modules/codemirror/addon/dialog/dialog.js")
+        script(src="/node_modules/codemirror/addon/hint/show-hint.js")
+        script(src="/node_modules/codemirror/addon/hint/javascript-hint.js")
+        script(src="/node_modules/codemirror/addon/edit/matchbrackets.js")
+
+        script(src="/socket.io/socket.io.js")
+        script(src="/js/vendor/angular.min.js")
+        script(src="/js/vendor/beautify.min.js")
+        script(src="/js/vendor/jade.min.js")
+        script(src="/js/vendor/jquery.min.js")
+        script(src="/js/vendor/jquery-ui.min.js")
+        script(src="/js/vendor/bootstrap.min.js")
+        script(src="/js/vendor/bootstrap-switch.min.js")
+        script(src="/js/vendor/d3.min.js")
+        script(src="/js/vendor/jquery-slimscroll.min.js")
+        script(src="/js/vendor/jquery-cookie.min.js")
+        script(src="/js/vendor/jquery-treeview.min.js")
+        script(src="/js/vendor/tree-jquery.min.js")
+        script(src="/js/vendor/jquery-mjs-nestedSortable.min.js")
+        script(src="/js/vendor/flexigrid.min.js")
+        script(src="/js/vendor/ace.min.js")
+        script(src="/js/vendor/mode-jade.js")
+        script(src="/js/vendor/mode-javascript.js")
+        script(src="/js/vendor/mode-css.js")
+        script(src="/js/vendor/theme-twilight.js")
+        script(src="/js/vendor/require.min.js")
+        script(src="/js/studio/jquery.dfxstudio.min.js")
+        script(src="/js/dellme/jquery.dfxstudio.dockerisation.js")
+    body#dfx-studio-body(data-tenantid="#{tenantid}", data-username="#{username}", data-sysusermanagment="#{sysUserManagmentUrl}", data-shared-catalog-name="#{sharedCatalogName}", data-deployment-url="#{deploymentUrl}")
+        nav#dfxStudioMainMenu.navbar.navbar-inverse.navbar-primary.navbar-fixed-top(role="navigation")
+            div.container-fluid
+                div.navbar-header
+                    a.navbar-brand.logo(href="javascript:DfxStudio.Dispatcher.run('#!/home/');")
+                        img(src="/images/df_LogoWhite.png")
+                    div.navbar-brand.version
+                        h4
+                            span.label.label-info #{tenantid}
+                            span.label.label-inverse v#{version}
+                div.collapse.navbar-collapse
+                    ul.nav.navbar-nav
+                        li.active(data-item="home")
+                            a(href="javascript:DfxStudio.Dispatcher.run('#!/home/');")
+                                span.fa.fa-lg.fa-home
+                        //li(data-item="catalog")
+                            a(href="javascript:DfxStudio.Dispatcher.run('#!/catalog/');") Catalog
+                        li(data-item="databases")
+                            a(href="javascript:DfxStudio.Dispatcher.run('#!/databases/');") Databases
+                        if dockerization === true
+                            li(data-item="dockerisation")
+                                a(href="javascript:DfxStudio.Dispatcher.run('#!/dockerisation/');") Dockerization
+                        //li(data-item="github")
+                            a(href="javascript:DfxStudio.Dispatcher.run('#!/github/');") Github
+                        li(data-item="settings")
+                            a(href="javascript:DfxStudio.Dispatcher.run('#!/settings/');") Settings
+                        li
+                            a(href="http://www.interactive-clouds.com/documentation", target="_blank") Help
+                        li
+                            a(href="#{logoutURL}") Logout
+                    ul.nav.navbar-nav.navbar-right
+                        li.marker-form-changed(style="display: none;")
+                            div
+                                a#save-now(href="")
+                                    span.fa.fa-lg.fa-exclamation-triangle
+                                    span(style="padding-left: 5px;") Save now
+        div.dfx_content
+        div#dfx_help_ctx
+            div#dfx_help_ctx_arrow
+            div#dfx_help_ctx_content
+                section.dfx_help_ctx_content_article
+                div#dfx_help_ctx_toolbar
+                    div#dfx_help_ctx_display
+                        a#dfx_help_ctx_hide(href="javascript:DfxStudio.hideHelpContext();") hide
+                    div#dfx_help_ctx_steps
+                        a#dfx_help_ctx_previous(href="javascript:DfxStudio.previousHelpContext();") previous
+                        span &nbsp;/&nbsp;
+                        a#dfx_help_ctx_previous(href="javascript:DfxStudio.nextHelpContext();") next
+        footer#dfx_studio_footer
+            div Copyright &copy; Interactive Clouds, all rights reserved.
+                div.pull-right(style="display:none;padding-top:2px")
+                    a(href="javascript:DfxStudio.toggleWorkbook();")
+                        span.fa.fa-file-text-o.pull-left(style="color:#ffffff")
+                            span(style="padding-left:5px;color:#1fbbd7") Workbook
+        div#dfx_studio_workbook(style="position:fixed;bottom:25px;right:5px;width:400px;height:400px;z-index:1000;background:rgb(255, 254, 230);border:1px rgb(221, 232, 236) solid;padding-left:10px;padding-right:10px;display:none")
+            h5(style='font-family: "Comic Sans MS", cursive, sans-serif;color:#6089A1;') Developer's Workbook
+            div
+                ul#dfx_studio_workbook_tree(style="list-style-type:square")
+                    li
+                        a(href="#")
+                            span wWelcome
+                        a.pull-right(href="#")
+                            span.fa.fa-minus-square
+                    li Test2
+        div#dfx_visual_editor_help.modal.fade(tabindex="-1", role="dialog", aria-labelledby="Help", aria-hidden="true")
+            div.modal-dialog
+                div.modal-content
+                    div.modal-header.modal-header-primary
+                        button.close(type="button", data-dismiss="modal", aria-hidden="true") ×
+                        span.icon.icon-question
+                        span(style="margin-left:5px") Help
+                    div.modal-body
+                        div.list-group
+                            a.list-group-item(href="javascript:DfxStudio.helpWidgetScript({item:'apiroute-get'});")
+                                h4.list-group-item-heading Get data from an API route
+                                p.list-group-item-text.
+                                    Get data resulting from an API route call
+                            a.list-group-item(href="javascript:DfxStudio.helpWidgetScript({item:'apiroute-post'});")
+                                h4.list-group-item-heading Send data to an API route
+                                p.list-group-item-text.
+                                    Post data to an API route call
+                            a.list-group-item(href="javascript:DfxStudio.helpWidgetScript({item:'function'});")
+                                h4.list-group-item-heading Add Function
+                                p.list-group-item-text.
+                                    Add to your script an Angular function declaration associated to your controller
+                            a.list-group-item(href="javascript:DfxStudio.helpWidgetScript({item:'barchart'});")
+                                h4.list-group-item-heading Add Bar Chart Configuration
+                                p.list-group-item-text.
+                                    Add to your script a data structure for Bar Chart Graphical Control
+                            a.list-group-item(href="javascript:DfxStudio.helpWidgetScript({item:'hzbarchart'});")
+                                h4.list-group-item-heading Add Horizontal Bar Chart Configuration
+                                p.list-group-item-text.
+                                    Add to your script a data structure for Horizontal Bar Chart Graphical Control
+                            a.list-group-item(href="javascript:DfxStudio.helpWidgetScript({item:'piechart'});")
+                                h4.list-group-item-heading Add Pie Chart Configuration
+                                p.list-group-item-text.
+                                    Add to your script a data structure for Pie Chart Graphical Control
+                                a.list-group-item(href="javascript:DfxStudio.helpWidgetScript({item:'donutchart'});")
+                            h4.list-group-item-heading Add Donut Chart Configuration
+                                p.list-group-item-text.
+                                    Add to your script a data structure for Donut Chart Graphical Control
+                            a.list-group-item(href="javascript:DfxStudio.helpWidgetScript({item:'linechart'});")
+                                h4.list-group-item-heading Add Line Chart Configuration
+                                p.list-group-item-text.
+                                    Add to your script a data structure for Line Chart Graphical Control
+                            a.list-group-item(href="javascript:DfxStudio.helpWidgetScript({item:'cmlinechart'});")
+                                h4.list-group-item-heading Add Cumulative Line Chart Configuration
+                                p.list-group-item-text.
+                                    Add to your script a data structure for Cumulative Line Chart Graphical Control
+                            
+                    div.modal-footer
+                        button#dfx_visual_editor_help_close.btn.btn-default.pull-left(type="button", data-dismiss="modal") Close

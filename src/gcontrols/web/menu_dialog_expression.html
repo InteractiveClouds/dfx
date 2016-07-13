@@ -1,0 +1,53 @@
+<div class="second-dialog" style="display: none">
+    <div class="second-dialog-inner">
+        <md-toolbar><div class="md-toolbar-tools"><h2>Expression editor</h2></div></md-toolbar>
+        <div class="second-dialog-content">
+            <md-dialog-content layout-wrap layout-margin class="expression-editor">
+                <div class="expression-inner">
+                    <textarea id="{{component_id}}_expression_textarea" class="expression-textarea" name="expression-edit"></textarea>
+                </div>
+                <div class="expression-variables">
+                    <section id="{{component_id}}_panel_scope" class="md-whiteframe-1dp">
+                        <h3>Scope variables</h3>
+                        <md-content layout-padding flex>
+                            <ul class="scope-variables">
+                                <li ng-repeat="scopeVar in scopeVars"><a href ng-click="addExpression($event)">{{scopeVar}}</a></li>
+                            </ul>
+                        </md-content>
+                    </section>
+                    <section id="{{component_id}}_panel_angular" class="md-whiteframe-1dp">
+                        <h3>Angular variables and functions</h3>
+                        <md-content layout-padding flex class="angular-variables">
+                            <ul>
+                                <li><a href ng-click="addExpression($event)">angular.isArray</a></li>
+                                <li><a href ng-click="addExpression($event)">angular.isDate</a></li>
+                                <li><a href ng-click="addExpression($event)">angular.isElement</a></li>
+                                <li><a href ng-click="addExpression($event)">angular.isFunction</a></li>
+                                <li><a href ng-click="addExpression($event)">angular.isNumber</a></li>
+                                <li><a href ng-click="addExpression($event)">angular.isObject</a></li>
+                                <li><a href ng-click="addExpression($event)">angular.isString</a></li>
+                                <li><a href ng-click="addExpression($event)">angular.lowercase</a></li>
+                                <li><a href ng-click="addExpression($event)">angular.uppercase</a></li>
+                            </ul>
+                            <ul>
+                                <li><a href ng-click="addExpression($event)">$eval</a></li>
+                                <li><a href ng-click="addExpression($event)">$even</a></li>
+                                <li><a href ng-click="addExpression($event)">$first</a></li>
+                                <li><a href ng-click="addExpression($event)">$index</a></li>
+                                <li><a href ng-click="addExpression($event)">$item</a></li>
+                                <li><a href ng-click="addExpression($event)">$last</a></li>
+                                <li><a href ng-click="addExpression($event)">$middle</a></li>
+                                <li><a href ng-click="addExpression($event)">$odd</a></li>
+                            </ul>
+                        </md-content>
+                    </section>
+                </div>
+            </md-dialog-content>
+        </div>
+        <div class="md-actions">
+            <md-button ng-click="clearMenuExpression()" class="md-primary">Clear</md-button>
+            <md-button ng-click="saveMenuExpression()" class="md-primary">Save</md-button>
+            <md-button ng-click="closeMenuExpression()" class="md-primary">Cancel</md-button>
+        </div>
+    </div>
+</div>

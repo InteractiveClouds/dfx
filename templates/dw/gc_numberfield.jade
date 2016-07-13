@@ -1,0 +1,19 @@
+div.form-group(ng-show = (gcitem.attributes.display.value == '' ? undefined : "#{gcitem.attributes.display.value}"), ng-class="{'has-error': #{gcformname}.#{gcitem.attributes.name.value}.$invalid && #{gcformname}.#{gcitem.attributes.name.value}.$dirty}")
+    label(for="#{gcitem.id}", ng-show = (gcitem.attributes.labelVisible.value ? 'true' : 'false')) #{gcitem.attributes.label.value}
+    input.form-control(
+        id = "#{gcitem.id}",
+        name = (gcitem.attributes.name.value == '' ? undefined : "#{gcitem.attributes.name.value}"),
+        type = "number",
+        class = (!gcitem.attributes.classes || gcitem.attributes.classes.value == '' ? undefined : "#{gcitem.attributes.classes.value}"),
+        required = (gcitem.attributes.required.value ? 'true' : undefined),
+        ng-model = (gcitem.attributes.property.value == '' ? undefined : "#{gcitem.attributes.property.value}"),
+        ng-init = (gcitem.attributes.propertyInit.value == '' ? undefined : "#{gcitem.attributes.propertyInit.value}"),
+        ng-disabled = (!gcitem.attributes.disabled || gcitem.attributes.disabled.value == '' ? undefined : "#{gcitem.attributes.disabled.value}"),
+        min = (gcitem.attributes.min.value == '' ? undefined : "#{gcitem.attributes.min.value}"),
+        max = (gcitem.attributes.max.value == '' ? undefined : "#{gcitem.attributes.max.value}"),
+        step = (gcitem.attributes.step.value == '' ? undefined : "#{gcitem.attributes.step.value}"),
+        value = (gcitem.attributes.defaultValue.value == '' ? undefined : "#{gcitem.attributes.defaultValue.value}"),
+        style = (gcitem.attributes.style.value == '' ? undefined : "#{gcitem.attributes.style.value}"),
+        ng-change = (gcitem.attributes.onchange.value == '' ? undefined : "#{gcitem.attributes.onchange.value}"))
+    if (gcitem.attributes.required.value)
+        span.help-block(ng-show="#{gcformname}.#{gcitem.attributes.name.value}.$error.required && #{gcformname}.#{gcitem.attributes.name.value}.$dirty") #{(gcitem.attributes.error.required.value=='' ? "Thid field is required" : gcitem.attributes.error.required.value)}

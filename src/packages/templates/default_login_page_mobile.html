@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html ng-app="dfxAppRuntime">
+<head>
+    <meta http-equiv="content-type" content="text/HTML;charset=UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Login to ##appName</title>
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,700', rel='stylesheet'">
+    <link rel="stylesheet" type="text/css" href="css/mobile/runtime_mobile/dfx.min.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="css/mobile/app.css" media="screen">
+    <script src="js/mobile/runtime_mobile/script.js"></script>
+    <script src="js/mobile/app.js"></script>
+    <script src="js/mobile/runtime_mobile/dfx.js"></script>
+    <script>
+        $( document ).bind( "mobileinit", function() {
+        try {
+            $.support.cors = true;
+            $.mobile.allowCrossDomainPages = true;
+        } catch (e) {
+            alert('cratch failed');
+        }
+    });
+    </script>
+    <script type="text/javascript">
+        DreamFace.initSession( {dfx_server: '##server', dfx_appname:'##appName', dfx_tenantid:'##tenant', dfx_ispreview:false} );
+        DreamFace.successfulLoginRedirectUrl = 'index.html';
+    </script>
+</head>
+<body ng-controller="dfx_login_controller" dfx-app="##appName" style="">
+<div layout="column" style="height:100%">
+    <div style="height:55px;background:#E6E6E6"></div>
+    <div flex layout="column" layout-align="center center">
+        <md-whiteframe flex="45" layout layout-align="center center" style="width:477px" class="md-whiteframe-0dp">
+            <md-card style="width:477px">
+                <md-toolbar style="background:#62bfab; height:50px">
+                    <div layout="row" layout-align="center center"></div>
+                    <div layout="column" layout-align="center center" style="font-size:18px;color:#fff;font-face:HelveticaNeue">
+                        <div style="margin-top:10px" class="md-subhead">##appName</div>
+                        <div class="md-subhead"></div>
+                        <div style="font-size:10px;font-style:italic">({{_dfx_server}})</div>
+                        <div style="border:1px #ccc solid">{{dfx_login_err}}</div>
+                    </div>
+                </md-toolbar>
+                <md-card-content>
+                    <form id="loginForm" name="loginForm" action="#">
+                        <div layout="column">
+                            <md-input-container flex><label>User ID</label><input id="username" type="text"></md-input-container>
+                            <md-input-container flex><label>Password</label><input id="password" type="password" name="password"></md-input-container>
+                        </div>
+                        <div layout="row">
+                            <md-button style="color:#fff;background:#62bfab" type="submit" onclick="$(this).closest('form').submit()" class="md-raised">Log in</md-button>
+                        </div>
+                    </form>
+                    <md-divider style="margin-top:20px">
+                        <div layout="column" layout-align="center center" style="height:40px"><span class="md-caption">Powered By DreamFace</span></div>
+                    </md-divider>
+                </md-card-content>
+            </md-card>
+        </md-whiteframe>
+    </div>
+    <div layout="row" layout-align="end center" style="padding-right:37px;height:55px;background:#e6e6e6;color:#586474;font-size:10px;font-face:HelveticaNeue">Copyright (c) Interactive Clouds. All rights reserved.</div>
+</div>
+<script src="js/mobile/login.js"></script>
+</body>
+</html>

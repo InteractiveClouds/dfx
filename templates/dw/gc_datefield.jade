@@ -1,0 +1,27 @@
+div.form-group(ng-show = (gcitem.attributes.display.value == '' ? undefined : "#{gcitem.attributes.display.value}"), ng-class="{'has-error': #{gcformname}.#{gcitem.attributes.name.value}.$invalid}")
+    label(for="#{gcitem.id}", ng-show = (gcitem.attributes.labelVisible.value ? 'true' : 'false')) #{gcitem.attributes.label.value}
+    div.input-group.input-append.date(
+        name = (gcitem.attributes.name.value == '' ? undefined : "#{gcitem.attributes.name.value}"),
+        class = (!gcitem.attributes.classes || gcitem.attributes.classes.value == '' ? undefined : "#{gcitem.attributes.classes.value}"),
+        data-date = "",
+        data-date-format = (gcitem.attributes.format.value == '' ? "dd/MM/yy" : "#{gcitem.attributes.format.value}"),
+        data-date-start = (gcitem.attributes.mindate.value == '' ? "" : "#{gcitem.attributes.mindate.value}"),
+        data-date-end = (gcitem.attributes.maxdate.value == '' ? "" : "#{gcitem.attributes.maxdate.value}"),
+        style = (gcitem.attributes.style.value == '' ? undefined : "#{gcitem.attributes.style.value}"),
+        ng-init = (gcitem.attributes.propertyInit.value == '' ? undefined : "#{gcitem.attributes.propertyInit.value}"),
+        ng-model = (gcitem.attributes.property.value == '' ? 'x' : "#{gcitem.attributes.property.value}"),
+        ng-change = (!gcitem.attributes.onchange || gcitem.attributes.onchange.value == '' ? undefined : "#{gcitem.attributes.onchange.value}"),
+        date-popup)
+        input.form-control(
+            id = "#{gcitem.id}",
+            ng-model = (gcitem.attributes.property.value == '' ? 'x' : "#{gcitem.attributes.property.value}"),
+            type = "text",
+            ng-disabled = (!gcitem.attributes.disabled || gcitem.attributes.disabled.value == '' ? undefined : "#{gcitem.attributes.disabled.value}"),
+            required = (gcitem.attributes.required.value ? 'true' : undefined),
+            min-date = (gcitem.attributes.mindate.value == '' ? undefined : "'#{gcitem.attributes.mindate.value}'"),
+            max-date = (gcitem.attributes.maxdate.value == '' ? undefined : "'#{gcitem.attributes.maxdate.value}'"))
+        div.input-group-btn
+            button.btn.btn-default(type="button", ng-model="$parent.entity.#{gcitem.attributes.name.value}", ng-disabled = (!gcitem.attributes.disabled || gcitem.attributes.disabled.value == '' ? undefined : "#{gcitem.attributes.disabled.value}"))
+                i.fa.fa-calendar
+    if(gcitem.attributes.error.date.value)
+        span.help-block(ng-show="#{gcformname}.#{gcitem.attributes.name.value}.$invalid") #{gcitem.attributes.error.date.value)

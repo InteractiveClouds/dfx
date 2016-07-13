@@ -1,0 +1,46 @@
+doctype html
+html#extr-page(ng-app="#{appname}")
+    head
+        meta(http-equiv="content-type", content="text/HTML;charset=UTF-8")
+        meta(name="viewport", content="width=device-width,initial-scale=1")
+        title Login to #{apptitle}
+        link(rel="stylesheet", type="text/css", href="css/vendor/bootstrap.min.css", media="screen")
+        link(rel="stylesheet", type="text/css", href="css/vendor/app_setup.min.css", media="screen")
+        link(rel="stylesheet", type="text/css", href="css/mobile/app.css", media="screen")
+        link(rel="stylesheet", type="text/css", href="css/mobile/ratchet.min.css", media="screen")
+        link(rel="stylesheet", type="text/css", href="css/mobile/theme-ios.min.css", media="screen")
+        script(src="js/vendor/des.min.js")
+        script(src="js/vendor/md5.js")
+        script(src="js/commons/authRequest.js")
+        script(src="js/vendor/angular.min.js")
+        script(src="js/vendor/angular-route.min.js")
+        script(src="js/vendor/d3.min.js")
+        script(src="js/vendor/jquery.min.js")
+        script(src="js/vendor/jquery-ui.min.js")
+        //script(src="js/vendor/bootstrap.min.js")
+        script(src="js/commons/dfx.utils.js")
+        script(src="js/vendor/nv-d3.min.js")
+        script(src="js/vendor/angular-nvd3.min.js")
+        script(src="js/vendor/jarvis.widget.min.js")
+        script(src="js/vendor/jquery-inputmask.min.js")
+        script(src="js/commons/dfx.directives.js")
+        script(src="js/commons/jquery.dreamface-1.0.js")
+        script(src="js/commons/jquery.dfxAjax.js")
+        script(src="js/mobile/dfx.mobile.js")
+        script(src="js/mobile/app.js")
+    body
+        script(type="text/javascript").
+            DreamFace.initSession({dfx_appname: '#{appname}', dfx_tenantid: '#{tenantid}', dfx_ispreview:false});
+            DreamFace.successfulLoginRedirectUrl = 'Home.html';
+        div.device.device-fixed(style="top: 221px;")
+            div.device-content
+                div#iwindow.content(style="text-align: center;")
+                    img(style="margin: 20px 0;",  src="img/locked.png")
+                    form#loginForm.input-group.smart-form.client-form(action="#", style="width: 100%; padding: 0 10px; background: none;")
+                        div.card
+                            input#username(type="text", name="username", value="", autocomplete="off", autofocus, placeholder="Please enter your user id")
+                        div.card
+                            input#password(type="password", name="password", value="", autocomplete="off", placeholder="Enter your password")
+                        div.card(style="border: none;")
+                            button.btn.btn-primary.btn-block(href="#", onclick="$(this).closest('form').submit()", data-role="button", type="submit", style="margin: 0;") Sign in
+        script(src="js/vendor/login.js")

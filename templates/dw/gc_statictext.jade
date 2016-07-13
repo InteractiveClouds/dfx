@@ -1,0 +1,38 @@
+- var containerCss = '';
+if (gcitem.attributes.containerCss)
+    each val, key in gcitem.attributes.containerCss
+        - if (val!='') containerCss += key + ':' + val + ';'
+- var css = '';
+if (gcitem.attributes.css)
+    each val, key in gcitem.attributes.css
+        - if (val!='') css += key + ':' + val + ';'
+div(
+    id="#{gcitem.id}_{{$index}}",
+    ng-show = (gcitem.attributes.display.value == '' ? undefined : "#{gcitem.attributes.display.value}"),
+    style=('display:inline-block;position:relative;' + (gcitem.attributes.containerStyle ? gcitem.attributes.containerStyle.value : '') + ';' + containerCss),
+    class="#{gcitem.attributes.containerClasses.value}",
+    ng-class = (gcitem.attributes.containerDynamicClasses.value == '' ? undefined : "#{gcitem.attributes.containerDynamicClasses.value}"),
+    ng-click = (gcitem.attributes.onclick && gcitem.attributes.onclick.value ? "#{gcitem.attributes.onclick.value}" : undefined)
+    )
+    div(
+        id="#{gcitem.id}_text_{{$index}}",
+        style=((gcitem.attributes.style ? gcitem.attributes.style.value : '') + ';' + css),
+        class="#{gcitem.attributes.classes.value}",
+        ng-class = (gcitem.attributes.dynamicClasses.value == '' ? undefined : "#{gcitem.attributes.dynamicClasses.value}"),
+        dfx-tool-tip="true",
+        tooltip-title = (gcitem.attributes.tooltip && gcitem.attributes.tooltip.value ? "#{gcitem.attributes.tooltip.value}" : undefined),
+        data-placement = (gcitem.attributes.tooltipPosition ? "#{gcitem.attributes.tooltipPosition.value}" : undefined)
+        )
+        if (gcitem.attributes.counter.bind.value!='' && gcitem.attributes.counter.position.value=='left')
+            span.badge(
+            id="#{gcitem.id}_counter_{{$index}}",
+            style=('cursor:pointer;margin-right:5px;'),
+            ng-bind="#{gcitem.attributes.counter.bind.value}",
+            ng-click="#{gcitem.attributes.counter.onclick.value}")
+        span(ng-bind=(gcitem.attributes.bind.value == '' ? undefined : gcitem.attributes.bind.value)) #{gcitem.attributes.text.value}
+        if (gcitem.attributes.counter.bind.value!='' && gcitem.attributes.counter.position.value=='right')
+            span.badge(
+                id="#{gcitem.id}_counter_{{$index}}",
+                style=('cursor:pointer;margin-left:5px;'),
+                ng-bind="#{gcitem.attributes.counter.bind.value}",
+                ng-click="#{gcitem.attributes.counter.onclick.value}")

@@ -1,0 +1,12 @@
+-var login = roles.length ? roles[0].login : '';
+    label(for="email") Email:
+    ul.role-select(data-login=(login), data-disabled=(disabled))
+        - if ( roles && roles.length ) {
+            - each role, i in roles
+                li
+                    input(type="checkbox", name="__assigned_#{role.id}", checked=(role.checked))
+                    input(type="radio", name="#{role.login}", value="#{role.id}", checked=(role.default))
+                    span= role.id
+        - } else {
+            li.roleselectWarning there is no roles
+        - }

@@ -1,0 +1,263 @@
+<md-dialog aria-label="textarea" ng-cloak style="overflow: visible">
+<form>
+<md-toolbar><div class="md-toolbar-tools">
+<h2>Menu editor</h2>
+</div></md-toolbar>
+<md-dialog-content id="{{component_id}}_md_dialog" layout="column" style="max-width:880px;max-height:810px;width:880px;margin:0px;padding:8px 8px 2px 8px;">
+	<div style="display:flex;flex-direction:row;flex-wrap:wrap;justify-content:space-between;">
+		<section id="{{component_id}}_menu_structure" class="md-whiteframe-1dp" style="width:49.5%;border-radius:4px;overflow:hidden;">
+			<md-toolbar style="min-height:36px;background:rgba(128,128,128,0.46);">
+				<div class="md-toolbar-tools" style="height:36px;max-height:36px">
+					<h3 style="font-size:16px;">Menu structure</h3>
+				</div>
+			</md-toolbar>
+			<md-toolbar style="min-height:30px;background:#ECECEC;font-size:14px;display:flex;flex-direction:row;align-items:center;padding:0 9px;">
+				<a href="#" class="fa fa-plus" ng-click="addMenuItem()" style="color:#676B6E;text-decoration:none;margin:auto 7px;" title="Add menu item"></a>
+				<a href="#" class="fa fa-minus" ng-click="deleteMenuItem()" style="color:#676B6E;text-decoration:none;margin:auto 7px;" title="Remove menu item"></a>
+				<a href="#" class="fa fa-arrow-up" ng-click="moveUpMenuItem()" style="color:#676B6E;text-decoration:none;margin:auto 7px;" title="Move up menu item"></a>
+				<a href="#" class="fa fa-arrow-down" ng-click="moveDownMenuItem()" style="color:#676B6E;text-decoration:none;margin:auto 7px;" title="Move down menu item"></a>
+				<a href="#" class="fa fa-indent" ng-click="indentMenuItem()" style="color:#676B6E;text-decoration:none;margin:auto 7px;" title="Indent menu item"></a>
+				<a href="#" class="fa fa-outdent" ng-click="outdentMenuItem()" style="color:#676B6E;text-decoration:none;margin:auto 7px;" title="Outdent menu item"></a>
+			</md-toolbar>
+      <md-content class="menu-structure" layout-padding flex style="">
+          <script type="text/ng-template" id="menuTree">
+              <a href="#" ng-click="selectMenuItem($event, menuItem)">{{ menuItem.label | checkExpression }}</a>
+              <ul ng-if="menuItem.menuItems.value">
+                  <li ng-repeat="menuItem in menuItem.menuItems.value track by $index"  class="menu-tree-item" parent-index="{{$parent.$parent.$index}}" self-index="{{$index}}" ng-include="'menuTree'"></li>
+              </ul>
+          </script>
+          <ul><li ng-repeat="menuItem in menuItems.value track by $index"  class="menu-tree-item" parent-index="{{$parent.$parent.$index}}" self-index="{{$parent.$index}}" ng-include="'menuTree'"></li></ul>
+      </md-content>
+		</section>
+		<section id="{{component_id}}_menu_item_properties" class="md-whiteframe-1dp" style="width:49.5%;border-radius:4px;overflow:hidden;">
+			<md-toolbar style="min-height:36px;background:rgba(128,128,128,0.46);">
+				<div class="md-toolbar-tools" style="height:36px;max-height:36px">
+					<h3 style="font-size:16px;">Menu item properties</h3>
+				</div>
+			</md-toolbar>
+			<md-content flex style="">
+                <md-tabs md-selected="menuEditorTabs.activeTab" md-dynamic-height md-center-tabs md-stretch-tabs="always" md-border-bottom style="min-height:500px;">
+                    <md-tab label="Main Properties">
+                        <div class="dfx-ve-property-treeview hover clearfix" style="border-bottom:1px solid #E5E5E5;padding:8px 16px 12px 12px;margin:0 -8px;">
+                            <ul class="dfx-ve-property-picker-content" style="margin:0;padding:0">
+                                <li class="col-md-12" ng-hide="menu.divider">
+                                    <span class="col-md-4">Label:</span>
+                                    <div class="col-md-8" layout="row">
+                                        <input class="col-md-12" type="text" ng-model="menu.label" style="margin-left:-15px;"/>
+                                        <dfx-ve-menu-expression></dfx-ve-menu-expression>
+                                    </div>
+                                </li>
+                                <li class="col-md-12" ng-if="!isFabToolbar.value">
+                                    <span class="col-md-4">Type:</span>
+                                    <md-input-container class="col-md-8" style="padding: 0 0 4px 0">
+                                        <md-select ng-model="menuEditorItem.type" ng-change="setMenuItemType(menuEditorItem.type)" aria-label="Menu item type">
+                                            <md-option value="standard">Standard</md-option>
+                                            <md-option value="title">Title</md-option>
+                                            <md-option value="divider">Divider</md-option>
+                                            <md-option value="selection" ng-if="statable.value" ng-click="menuEditorTabs.activeTab = !menu.state.value ? 1 : 0; checkMenuIconTypes();">Selection</md-option>
+                                        </md-select>
+                                  </md-input-container>
+                                </li>   
+                                <li class="col-md-12" ng-hide="menu.divider || menu.title || menu.state.value">
+                                    <span class="col-md-4">Icon:</span>
+                                    <div class="col-md-8" layout="row">
+                                        <input class="col-md-12" type="text" ng-model="menu.icon.value" ng-change="ifShowMenuIconTypes(menu.icon.value)" style="margin-left:-15px;"/>
+                                        <md-icon ng-click="showFontIcons($event, menu.icon)" dfx-ve-picker-icon class="dfx-ve-picker-icon fa fa-ellipsis-h"></md-icon>
+                                    </div>
+                                </li>
+                                <li class="col-md-12" ng-if="!menu.title && !menu.divider && !menu.state.value" ng-show="showIconTypes">
+                                    <span class="col-md-4">Icon Type:</span>
+                                    <div class="col-md-8" layout="row" style="padding: 0 0 8px 0">
+                                        <md-radio-group ng-model="menu.icon.type">
+                                            <md-radio-button value="svg-icon" style="margin: 0;" class="md-primary">SVG Icon</md-radio-button>
+                                            <md-radio-button value="fa-icon" style="margin: 0;" class="md-primary">Font Awesome Icon</md-radio-button>
+                                        </md-radio-group>
+                                    </div>
+                                </li>
+                                <li class="col-md-12" ng-if="!isFabToolbar.value" ng-hide="menu.divider || menu.title">
+                                    <span class="col-md-4">Shortcut:</span>
+                                    <input class="col-md-8" type="text" ng-model="menu.shortcut" />
+                                </li>                                
+                                <li class="col-md-12" ng-if="!isFabToolbar.value" ng-hide="menu.divider || menu.title">
+                                    <span class="col-md-4">Notification:</span>
+                                    <div class="col-md-8" layout="row">
+                                        <input class="col-md-12" type="text" ng-model="menu.notification" style="margin-left:-15px;"/>
+                                        <dfx-ve-menu-expression></dfx-ve-menu-expression>
+                                    </div>
+                                </li>
+                                <li class="col-md-12" ng-hide="menu.divider">
+                                    <span class="col-md-4">Display:</span>
+                                    <div class="col-md-8" layout="row">
+                                        <input class="col-md-12" type="text" ng-model="menu.display" ng-model-options="{ updateOn: 'blur'}" style="margin-left:-15px;"/>
+                                        <dfx-ve-menu-expression></dfx-ve-menu-expression>
+                                    </div>
+                                </li>
+                                <li class="col-md-12" ng-hide="menu.divider">
+                                    <span class="col-md-4">Disabled:</span>
+                                    <div class="col-md-8" layout="row">
+                                        <input class="col-md-12" type="text" ng-model="menu.disabled" ng-model-options="{ updateOn: 'blur'}" style="margin-left:-15px;"/>
+                                        <dfx-ve-menu-expression></dfx-ve-menu-expression>
+                                    </div>
+                                </li>
+                                <li class="col-md-12" ng-hide="menu.divider">
+                                    <span class="col-md-4">Action:</span>
+                                    <div class="col-md-8" layout="row">
+                                        <input class="col-md-12" type="text" ng-model="menu.onclick" ng-model-options="{ updateOn: 'blur'}"  style="margin-left:-15px;"/>
+                                        <dfx-ve-menu-expression></dfx-ve-menu-expression>
+                                    </div>                                    
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="menu-item-preview" style="padding:8px 0;margin: 16px 30px 12px;box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);">
+                            <md-menu-content class="md-menu-bar-menu md-dense md-altTheme-theme" width="5">
+                                <md-menu-divider ng-if="menu.divider === true && menu.title !== true" style="height:1px;"></md-menu-divider>
+                                <md-menu-item ng-if="menu.title === true && menu.divider !== true" class="tree-menu-title">
+                                    <div>{{menu.label}}</div>
+                                </md-menu-item>
+                                <md-menu-item ng-if="menu.divider !== true && menu.title !== true">
+                                    <button class="md-button md-ink-ripple md-focused" style="line-height:32px;">
+                                        <md-icon ng-if="menu.icon.value && menu.icon.type === 'fa-icon'" class="fa {{$eval(menu.icon.value) || 'fa-home'}}" style="display:flex;height:auto;width:16px;text-align:center;" aria-hidden="false"></md-icon>
+                                        <ng-md-icon ng-if="menu.icon.value && menu.icon.type === 'svg-icon'" icon="{{$eval(menu.icon.value) || 'home'}}" size="16" style="color: #757575;margin:auto 16px auto 0;"></ng-md-icon>
+                                        <span>{{menu.label}}</span>
+                                        <span ng-if="menu.shortcut" class="md-alt-text">{{menu.shortcut}}</span>
+                                        <small ng-if="menu.notification">{{menu.notification}}</small>
+                                        <div class="md-ripple-container"></div>
+                                    </button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </div>
+                    </md-tab>
+                    <md-tab label="State Properties" ng-if="statable.value && !waitable.value">
+                        <div class="dfx-ve-property-treeview hover clearfix" style="padding:8px 16px 12px 12px;margin:0 -8px;">
+                            <ul class="dfx-ve-property-picker-content" style="margin:0;padding:0">
+                                <li class="col-md-12" ng-if="menu.state.value">
+                                    <span class="col-md-5">Binding:</span>
+                                    <div class="col-md-7" layout="row">
+                                        <input class="col-md-12" type="text" ng-model="menu.state.binding" style="margin-left:-15px;"/>
+                                        <dfx-ve-menu-expression></dfx-ve-menu-expression>
+                                    </div>
+                                </li>
+                                <li class="col-md-12" ng-if="menu.state.value">
+                                    <span class="col-md-5">Checked Icon:</span>
+                                    <div class="col-md-7" layout="row">
+                                        <input class="col-md-12" type="text" ng-model="menu.state.checkedIcon.value" style="margin-left:-15px;" ng-change="ifShowMenuIconTypes(menu.state.checkedIcon.value, 'checked')"/>
+                                        <md-icon ng-click="showFontIcons($event, menu.state.checkedIcon)" dfx-ve-picker-icon class="dfx-ve-picker-icon fa fa-ellipsis-h"></md-icon>
+                                    </div>
+                                </li>
+                                <li class="col-md-12" ng-if="menu.state.value" ng-show="showCheckedIconTypes">
+                                    <span class="col-md-5">Icon Type:</span>
+                                    <div class="col-md-7" layout="row" style="padding: 0 0 8px 0">
+                                        <md-radio-group ng-model="menu.state.checkedIcon.type">
+                                            <md-radio-button value="svg-icon" style="margin: 0;" class="md-primary">SVG Icon</md-radio-button>
+                                            <md-radio-button value="fa-icon" style="margin: 0;" class="md-primary">Font Awesome Icon</md-radio-button>
+                                        </md-radio-group>
+                                    </div>
+                                </li>
+                                <li class="col-md-12" ng-if="menu.state.value">
+                                    <span class="col-md-5">Checked Icon Style:</span>
+                                    <div class="col-md-7" layout="row">
+                                        <input class="col-md-12" type="text" ng-model="menu.state.checkedIcon.style" style="margin-left:-15px;"/>
+                                        <dfx-ve-css-style></dfx-ve-css-style>
+                                    </div>
+                                </li>
+                                <li class="col-md-12" ng-if="menu.state.value">
+                                    <span class="col-md-5">Checked Icon Class:</span>
+                                    <div class="col-md-7" layout="row">
+                                        <input class="col-md-12" type="text" ng-model="menu.state.checkedIcon.class" ng-model-options="{ updateOn: 'blur'}" style="margin-left:-15px;"/>
+                                        <dfx-ve-menu-expression></dfx-ve-menu-expression>
+                                    </div>
+                                </li>
+                                <li class="col-md-12" ng-if="menu.state.value">
+                                    <span class="col-md-5">Unchecked Icon:</span>
+                                    <div class="col-md-7" layout="row">
+                                        <input class="col-md-12" type="text" ng-model="menu.state.uncheckedIcon.value" style="margin-left:-15px;" ng-change="ifShowMenuIconTypes(menu.state.uncheckedIcon.value, 'unchecked')"/>
+                                        <md-icon ng-click="showFontIcons($event, menu.state.uncheckedIcon)" dfx-ve-picker-icon class="dfx-ve-picker-icon fa fa-ellipsis-h"></md-icon>
+                                    </div>
+                                </li>
+                                <li class="col-md-12" ng-if="menu.state.value" ng-show="showUncheckedIconTypes">
+                                    <span class="col-md-5">Icon Type:</span>
+                                    <div class="col-md-7" layout="row" style="padding: 0 0 8px 0">
+                                        <md-radio-group ng-model="menu.state.uncheckedIcon.type">
+                                            <md-radio-button value="svg-icon" style="margin: 0;" class="md-primary">SVG Icon</md-radio-button>
+                                            <md-radio-button value="fa-icon" style="margin: 0;" class="md-primary">Font Awesome Icon</md-radio-button>
+                                        </md-radio-group>
+                                    </div>
+                                </li>
+                                <li class="col-md-12" ng-if="menu.state.value">
+                                    <span class="col-md-5">Unchecked Icon Style:</span>
+                                    <div class="col-md-7" layout="row">
+                                        <input class="col-md-12" type="text" ng-model="menu.state.uncheckedIcon.style" style="margin-left:-15px;"/>
+                                        <dfx-ve-css-style></dfx-ve-css-style>
+                                    </div>
+                                </li>
+                                <li class="col-md-12" ng-if="menu.state.value">
+                                    <span class="col-md-5">Unchecked Icon Class:</span>
+                                    <div class="col-md-7" layout="row">
+                                        <input class="col-md-12" type="text" ng-model="menu.state.uncheckedIcon.class" ng-model-options="{ updateOn: 'blur'}" style="margin-left:-15px;"/>
+                                        <dfx-ve-menu-expression></dfx-ve-menu-expression>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </md-tab>
+                    <md-tab label="Wait Properties" ng-if="waitable.value" ng-disabled="!waitableItem.value">
+                        <div class="dfx-ve-property-treeview hover clearfix" style="padding:8px 16px 12px 12px;margin:0 -8px;">
+                            <ul class="dfx-ve-property-picker-content" style="margin:0;padding:0">
+                                <li class="col-md-12">
+                                    <span class="col-md-4">Binding:</span>
+                                    <div class="col-md-8" layout="row">
+                                        <input class="col-md-12" type="text" ng-model="menu.waiting.value" style="margin-left:-15px;"/>
+                                        <dfx-ve-menu-expression></dfx-ve-menu-expression>
+                                    </div>
+                                </li>
+                                <li class="col-md-12">
+                                    <span class="col-md-4">Auto-disabled:</span>
+                                    <div class="col-md-8" layout="row">
+                                        <input class="col-md-12" type="text" ng-model="menu.waiting.autoDisabled" style="margin-left:-15px;"/>
+                                        <dfx-ve-menu-expression></dfx-ve-menu-expression>
+                                    </div>
+                                </li>                
+                                <li class="col-md-12">
+                                    <span class="col-md-4">Icon:</span>
+                                    <div class="col-md-8" layout="row">
+                                        <input class="col-md-12" type="text" ng-model="menu.waiting.icon.value" ng-change="ifShowMenuIconTypes(menu.waiting.icon.value, 'waiting')" style="margin-left:-15px;"/>
+                                        <md-icon ng-click="showFontIcons($event, menu.waiting.icon)" dfx-ve-picker-icon class="dfx-ve-picker-icon fa fa-ellipsis-h"></md-icon>                        
+                                    </div>
+                                </li>
+                                <li class="col-md-12" ng-if="showWaitingIconTypes">
+                                    <span class="col-md-4">Icon Type:</span>
+                                    <div class="col-md-8" layout="row" style="padding: 0 0 8px 0">
+                                        <md-radio-group ng-model="menu.waiting.icon.type">
+                                            <md-radio-button value="svg-icon" style="margin: 0;" class="md-primary">SVG Icon</md-radio-button>
+                                            <md-radio-button value="fa-icon" style="margin: 0;" class="md-primary">Font Awesome Icon</md-radio-button>
+                                        </md-radio-group>
+                                    </div>
+                                </li>
+                                <li class="col-md-12">
+                                    <span class="col-md-4">Icon Style:</span>
+                                    <div class="col-md-8" layout="row">
+                                        <input class="col-md-12" type="text" ng-model="menu.waiting.icon.style" style="margin-left:-15px;"/>
+                                        <dfx-ve-css-style></dfx-ve-css-style>
+                                    </div>
+                                </li>
+                                <li class="col-md-12">
+                                    <span class="col-md-4">Icon Class:</span>
+                                    <div class="col-md-8" layout="row">
+                                        <input class="col-md-12" type="text" ng-model="menu.waiting.icon.class" style="margin-left:-15px;"/>
+                                        <dfx-ve-menu-expression></dfx-ve-menu-expression>
+                                    </div>
+                                </li> 
+                            </ul>
+                        </div>
+                    </md-tab>
+                </md-tabs>
+			</md-content>
+		</section>
+	</div>
+	<div class="second-dialog-box"></div>	
+</md-dialog-content>
+<div class="md-actions"> 
+<md-button ng-click="closeDialog()" class="md-primary">Close</md-button> 
+</div> 
+</form>
+</md-dialog>

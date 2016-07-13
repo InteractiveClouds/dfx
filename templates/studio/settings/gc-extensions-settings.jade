@@ -1,0 +1,48 @@
+div.panel.panel-primary(style="position: relative; height: 99%; margin-bottom: 1%;")
+    div.panel-heading
+        h4 Graphical Control Extensions
+    div.panel-body
+        form(action="javascript:void(0);", style="margin-top:10px")
+            fieldset
+                div.form-group
+                    label Angular Directives:
+                    table.gcExtensionsTable.table-condensed.table-thick-bordered
+                        thead
+                            tr
+                                th Control
+                                th Attribute
+                                th Directive
+                                th Source
+                                th(width="1%")
+                                    button#createGCExtension.btn.btn-small.btn-info
+                                        span.fa.fa-lg.fa-plus
+                        tbody
+                            each extitem in gc_extensions
+                                tr
+                                    td
+                                        input(type="text", data-field="dfx_gc_extensions_settings_gcname", placeholder="Control", size="20", value='#{extitem.gcname}')
+                                    td
+                                        input(type="text", data-field="dfx_gc_extensions_settings_attribute", placeholder="Attribute", size="30", value='#{extitem.attribute}')
+                                    td
+                                        input(type="text", data-field="dfx_gc_extensions_settings_directive", placeholder="Directive", size="20", value='#{extitem.directive}')
+                                    td
+                                        input(type="hidden", data-field="dfx_gc_extensions_settings_source", value='#{extitem.source}')
+                                        button.btn.btn-small.btn-info(edit_gcext_btn="yes", data-toggle="modal", data-target="#pickerCodeModal")
+                                            span.fa.fa-lg.fa-code
+                                    td
+                                        button.btn.btn-small.btn-danger(remove_gcext_btn='yes')
+                                            span.fa.fa-lg.fa-trash-o
+                button#save-gcext-settings.btn.btn-info.save-now-submitter(type='submit')
+                    span.fa.fa-lg.fa-floppy-o
+                    span(style="padding-left:5px") Save
+    div#pickerCodeModal.modal.fade(tabindex="-1", role="dialog", style="z-index:9999")
+        div.modal-dialog.modal-dialog-center(style="height: 500px;width: 800px;")
+            div.modal-content(style="height: 500px;")
+                div.modal-body(style="margin-bottom:0;padding-bottom:0")
+                    h4.modal-title  Angular Directive
+                    div.modalBodyFixed(style="height: 380px;overflow-x: hidden")
+                        pre#dfx_picker_code_editor(style="border-radius: 0;height:370px;")
+                div.modal-footer(style="margin-top:0;")
+                    button#btnPickerCodeModalSave.btn.btn-info(type="button", data-toggle="modal", data-target="#pickerCodeModal")
+                        span.fa.fa-lg.fa-check
+                        span(style="padding-left:5px") OK

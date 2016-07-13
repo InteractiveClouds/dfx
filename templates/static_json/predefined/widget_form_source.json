@@ -1,0 +1,1300 @@
+{
+    "properties": {
+        "title": {
+            "label": "",
+            "visible": true,
+            "color": ""
+        },
+        "tools": {
+            "color": true,
+            "edit": true,
+            "collapse": true,
+            "fullscreen": true,
+            "delete": true
+        },
+        "sortable": true
+    },
+    "definition": [
+        {
+            "id": "root",
+            "type": "panel",
+            "attributes": {
+                "name": {
+                    "value": "pnlPanel1"
+                },
+                "controller": {
+                    "value": ""
+                },
+                "form": {
+                    "value": ""
+                },
+                "model": {
+                    "value": ""
+                },
+                "useModel": {
+                    "value": false
+                },
+                "collapsible": {
+                    "value": false
+                },
+                "classes": {
+                    "value": ""
+                },
+                "style": {
+                    "value": ""
+                },
+                "display": {
+                    "value": ""
+                },
+                "title": {
+                    "value": ""
+                },
+                "titleVisible": {
+                    "value": false
+                },
+                "layout": {
+                    "rows": [
+                        {
+                            "cols": [
+                                {
+                                    "width": {
+                                        "value": "12"
+                                    },
+                                    "classes": {
+                                        "value": ""
+                                    },
+                                    "dynamicClasses": {
+                                        "value": ""
+                                    },
+                                    "style": {
+                                        "value": ""
+                                    },
+                                    "orientation": {
+                                        "value": "vertical"
+                                    },
+                                    "alignment": {
+                                        "value": "start"
+                                    },
+                                    "disposition": {
+                                        "value": "start"
+                                    },
+                                    "css": {
+                                        "color": "",
+                                        "background": "",
+                                        "padding": "",
+                                        "text-align": ""
+                                    }
+                                }
+                            ],
+                            "classes": {
+                                "value": ""
+                            },
+                            "dynamicClasses": {
+                                "value": ""
+                            },
+                            "style": {
+                                "value": ""
+                            }
+                        }
+                    ],
+                    "classes": {
+                        "value": ""
+                    },
+                    "dynamicClasses": {
+                        "value": ""
+                    },
+                    "style": {
+                        "value": ""
+                    }
+                }
+            },
+            "children": [
+                {
+                    "id": 22963,
+                    "type": "inputfield",
+                    "attributes": {
+                        "name": {
+                            "value": "fldInput1"
+                        },
+                        "type": {
+                            "value": "text"
+                        },
+                        "label": {
+                            "value": "User ID"
+                        },
+                        "labelVisible": {
+                            "value": "yes"
+                        },
+                        "tooltip": {
+                            "value": ""
+                        },
+                        "tooltipPosition": {
+                            "value": "top"
+                        },
+                        "property": {
+                            "value": ""
+                        },
+                        "propertyInit": {
+                            "value": ""
+                        },
+                        "textIcon": {
+                            "value": ""
+                        },
+                        "textIconPosition": {
+                            "value": "left"
+                        },
+                        "textMinlength": {
+                            "value": "5"
+                        },
+                        "textMaxlength": {
+                            "value": "12"
+                        },
+                        "textPattern": {
+                            "value": ""
+                        },
+                        "textMask": {
+                            "value": ""
+                        },
+                        "textPlaceholder": {
+                            "value": ""
+                        },
+                        "textErrorMinlength": {
+                            "value": ""
+                        },
+                        "textErrorMaxlength": {
+                            "value": ""
+                        },
+                        "textErrorPattern": {
+                            "value": ""
+                        },
+                        "passwordIcon": {
+                            "value": ""
+                        },
+                        "passwordIconPosition": {
+                            "value": "left"
+                        },
+                        "passwordMinlength": {
+                            "value": ""
+                        },
+                        "passwordMaxlength": {
+                            "value": ""
+                        },
+                        "passwordErrorMinlength": {
+                            "value": ""
+                        },
+                        "passwordErrorMaxlength": {
+                            "value": ""
+                        },
+                        "dateFormat": {
+                            "value": "mm/dd/yyyy"
+                        },
+                        "dateMin": {
+                            "value": ""
+                        },
+                        "dateMax": {
+                            "value": ""
+                        },
+                        "dateErrorFormat": {
+                            "value": ""
+                        },
+                        "display": {
+                            "value": "true"
+                        },
+                        "disabled": {
+                            "value": "false"
+                        },
+                        "required": {
+                            "value": "no"
+                        },
+                        "errorRequired": {
+                            "value": ""
+                        },
+                        "containerClasses": {
+                            "value": ""
+                        },
+                        "containerDynamicClasses": {
+                            "value": ""
+                        },
+                        "containerCss": {
+                            "width": "200px",
+                            "height": "",
+                            "color": "",
+                            "background": "",
+                            "padding": "",
+                            "margin": "",
+                            "text-align": ""
+                        },
+                        "containerStyle": {
+                            "value": ""
+                        },
+                        "classes": {
+                            "value": ""
+                        },
+                        "dynamicClasses": {
+                            "value": ""
+                        },
+                        "css": {
+                            "width": "",
+                            "height": "",
+                            "color": "",
+                            "background": "",
+                            "padding": "",
+                            "margin": "",
+                            "text-align": ""
+                        },
+                        "style": {
+                            "value": ""
+                        },
+                        "onchange": {
+                            "value": ""
+                        }
+                    },
+                    "children": [],
+                    "container": "layout_0_row_0_column_0"
+                },
+                {
+                    "id": 43283,
+                    "type": "inputfield",
+                    "attributes": {
+                        "name": {
+                            "value": "fldInput2"
+                        },
+                        "type": {
+                            "value": "password"
+                        },
+                        "label": {
+                            "value": "Password"
+                        },
+                        "labelVisible": {
+                            "value": "yes"
+                        },
+                        "tooltip": {
+                            "value": ""
+                        },
+                        "tooltipPosition": {
+                            "value": "top"
+                        },
+                        "property": {
+                            "value": ""
+                        },
+                        "propertyInit": {
+                            "value": ""
+                        },
+                        "textIcon": {
+                            "value": ""
+                        },
+                        "textIconPosition": {
+                            "value": "left"
+                        },
+                        "textMinlength": {
+                            "value": ""
+                        },
+                        "textMaxlength": {
+                            "value": ""
+                        },
+                        "textPattern": {
+                            "value": ""
+                        },
+                        "textMask": {
+                            "value": ""
+                        },
+                        "textPlaceholder": {
+                            "value": ""
+                        },
+                        "textErrorMinlength": {
+                            "value": ""
+                        },
+                        "textErrorMaxlength": {
+                            "value": ""
+                        },
+                        "textErrorPattern": {
+                            "value": ""
+                        },
+                        "passwordIcon": {
+                            "value": ""
+                        },
+                        "passwordIconPosition": {
+                            "value": "left"
+                        },
+                        "passwordMinlength": {
+                            "value": "7"
+                        },
+                        "passwordMaxlength": {
+                            "value": "12"
+                        },
+                        "passwordErrorMinlength": {
+                            "value": ""
+                        },
+                        "passwordErrorMaxlength": {
+                            "value": ""
+                        },
+                        "dateFormat": {
+                            "value": "mm/dd/yyyy"
+                        },
+                        "dateMin": {
+                            "value": ""
+                        },
+                        "dateMax": {
+                            "value": ""
+                        },
+                        "dateErrorFormat": {
+                            "value": ""
+                        },
+                        "display": {
+                            "value": "true"
+                        },
+                        "disabled": {
+                            "value": "false"
+                        },
+                        "required": {
+                            "value": "no"
+                        },
+                        "errorRequired": {
+                            "value": ""
+                        },
+                        "containerClasses": {
+                            "value": ""
+                        },
+                        "containerDynamicClasses": {
+                            "value": ""
+                        },
+                        "containerCss": {
+                            "width": "200px",
+                            "height": "",
+                            "color": "",
+                            "background": "",
+                            "padding": "",
+                            "margin": "",
+                            "text-align": ""
+                        },
+                        "containerStyle": {
+                            "value": ""
+                        },
+                        "classes": {
+                            "value": ""
+                        },
+                        "dynamicClasses": {
+                            "value": ""
+                        },
+                        "css": {
+                            "width": "",
+                            "height": "",
+                            "color": "",
+                            "background": "",
+                            "padding": "",
+                            "margin": "",
+                            "text-align": ""
+                        },
+                        "style": {
+                            "value": ""
+                        },
+                        "onchange": {
+                            "value": ""
+                        }
+                    },
+                    "children": [],
+                    "container": "layout_0_row_0_column_0"
+                },
+                {
+                    "id": 268,
+                    "type": "inputfield",
+                    "attributes": {
+                        "name": {
+                            "value": "fldInput3"
+                        },
+                        "type": {
+                            "value": "text"
+                        },
+                        "label": {
+                            "value": "Name"
+                        },
+                        "labelVisible": {
+                            "value": "yes"
+                        },
+                        "tooltip": {
+                            "value": ""
+                        },
+                        "tooltipPosition": {
+                            "value": "top"
+                        },
+                        "property": {
+                            "value": ""
+                        },
+                        "propertyInit": {
+                            "value": ""
+                        },
+                        "textIcon": {
+                            "value": ""
+                        },
+                        "textIconPosition": {
+                            "value": "left"
+                        },
+                        "textMinlength": {
+                            "value": ""
+                        },
+                        "textMaxlength": {
+                            "value": ""
+                        },
+                        "textPattern": {
+                            "value": "/^[a-zA-Z]*$/"
+                        },
+                        "textMask": {
+                            "value": ""
+                        },
+                        "textPlaceholder": {
+                            "value": ""
+                        },
+                        "textErrorMinlength": {
+                            "value": ""
+                        },
+                        "textErrorMaxlength": {
+                            "value": ""
+                        },
+                        "textErrorPattern": {
+                            "value": ""
+                        },
+                        "passwordIcon": {
+                            "value": ""
+                        },
+                        "passwordIconPosition": {
+                            "value": "left"
+                        },
+                        "passwordMinlength": {
+                            "value": ""
+                        },
+                        "passwordMaxlength": {
+                            "value": ""
+                        },
+                        "passwordErrorMinlength": {
+                            "value": ""
+                        },
+                        "passwordErrorMaxlength": {
+                            "value": ""
+                        },
+                        "dateFormat": {
+                            "value": "mm/dd/yyyy"
+                        },
+                        "dateMin": {
+                            "value": ""
+                        },
+                        "dateMax": {
+                            "value": ""
+                        },
+                        "dateErrorFormat": {
+                            "value": ""
+                        },
+                        "display": {
+                            "value": "true"
+                        },
+                        "disabled": {
+                            "value": "false"
+                        },
+                        "required": {
+                            "value": "no"
+                        },
+                        "errorRequired": {
+                            "value": ""
+                        },
+                        "containerClasses": {
+                            "value": ""
+                        },
+                        "containerDynamicClasses": {
+                            "value": ""
+                        },
+                        "containerCss": {
+                            "width": "200px",
+                            "height": "",
+                            "color": "",
+                            "background": "",
+                            "padding": "",
+                            "margin": "",
+                            "text-align": ""
+                        },
+                        "containerStyle": {
+                            "value": ""
+                        },
+                        "classes": {
+                            "value": ""
+                        },
+                        "dynamicClasses": {
+                            "value": ""
+                        },
+                        "css": {
+                            "width": "",
+                            "height": "",
+                            "color": "",
+                            "background": "",
+                            "padding": "",
+                            "margin": "",
+                            "text-align": ""
+                        },
+                        "style": {
+                            "value": ""
+                        },
+                        "onchange": {
+                            "value": ""
+                        }
+                    },
+                    "children": [],
+                    "container": "layout_0_row_0_column_0"
+                },
+                {
+                    "id": 53950,
+                    "type": "inputfield",
+                    "attributes": {
+                        "name": {
+                            "value": "fldInput4"
+                        },
+                        "type": {
+                            "value": "text"
+                        },
+                        "label": {
+                            "value": "Address"
+                        },
+                        "labelVisible": {
+                            "value": "yes"
+                        },
+                        "tooltip": {
+                            "value": ""
+                        },
+                        "tooltipPosition": {
+                            "value": "top"
+                        },
+                        "property": {
+                            "value": ""
+                        },
+                        "propertyInit": {
+                            "value": ""
+                        },
+                        "textIcon": {
+                            "value": ""
+                        },
+                        "textIconPosition": {
+                            "value": "left"
+                        },
+                        "textMinlength": {
+                            "value": ""
+                        },
+                        "textMaxlength": {
+                            "value": ""
+                        },
+                        "textPattern": {
+                            "value": ""
+                        },
+                        "textMask": {
+                            "value": ""
+                        },
+                        "textPlaceholder": {
+                            "value": ""
+                        },
+                        "textErrorMinlength": {
+                            "value": ""
+                        },
+                        "textErrorMaxlength": {
+                            "value": ""
+                        },
+                        "textErrorPattern": {
+                            "value": ""
+                        },
+                        "passwordIcon": {
+                            "value": ""
+                        },
+                        "passwordIconPosition": {
+                            "value": "left"
+                        },
+                        "passwordMinlength": {
+                            "value": ""
+                        },
+                        "passwordMaxlength": {
+                            "value": ""
+                        },
+                        "passwordErrorMinlength": {
+                            "value": ""
+                        },
+                        "passwordErrorMaxlength": {
+                            "value": ""
+                        },
+                        "dateFormat": {
+                            "value": "mm/dd/yyyy"
+                        },
+                        "dateMin": {
+                            "value": ""
+                        },
+                        "dateMax": {
+                            "value": ""
+                        },
+                        "dateErrorFormat": {
+                            "value": ""
+                        },
+                        "display": {
+                            "value": "true"
+                        },
+                        "disabled": {
+                            "value": "false"
+                        },
+                        "required": {
+                            "value": "no"
+                        },
+                        "errorRequired": {
+                            "value": ""
+                        },
+                        "containerClasses": {
+                            "value": ""
+                        },
+                        "containerDynamicClasses": {
+                            "value": ""
+                        },
+                        "containerCss": {
+                            "width": "200px",
+                            "height": "",
+                            "color": "",
+                            "background": "",
+                            "padding": "",
+                            "margin": "",
+                            "text-align": ""
+                        },
+                        "containerStyle": {
+                            "value": ""
+                        },
+                        "classes": {
+                            "value": ""
+                        },
+                        "dynamicClasses": {
+                            "value": ""
+                        },
+                        "css": {
+                            "width": "",
+                            "height": "",
+                            "color": "",
+                            "background": "",
+                            "padding": "",
+                            "margin": "",
+                            "text-align": ""
+                        },
+                        "style": {
+                            "value": ""
+                        },
+                        "onchange": {
+                            "value": ""
+                        }
+                    },
+                    "children": [],
+                    "container": "layout_0_row_0_column_0"
+                },
+                {
+                    "id": 85,
+                    "type": "combobox",
+                    "attributes": {
+                        "name": {
+                            "value": "fldCombobox1"
+                        },
+                        "label": {
+                            "value": "Country"
+                        },
+                        "labelVisible": {
+                            "value": "yes"
+                        },
+                        "tooltip": {
+                            "value": ""
+                        },
+                        "tooltipPosition": {
+                            "value": "top"
+                        },
+                        "property": {
+                            "value": "countries"
+                        },
+                        "propertyInit": {
+                            "value": ""
+                        },
+                        "propertyOptions": {
+                            "value": "coutry_list"
+                        },
+                        "displayValue": {
+                            "value": "name"
+                        },
+                        "dataValue": {
+                            "value": "value"
+                        },
+                        "display": {
+                            "value": "true"
+                        },
+                        "disabled": {
+                            "value": "false"
+                        },
+                        "required": {
+                            "value": "no"
+                        },
+                        "errorRequired": {
+                            "value": ""
+                        },
+                        "containerClasses": {
+                            "value": ""
+                        },
+                        "containerDynamicClasses": {
+                            "value": ""
+                        },
+                        "containerCss": {
+                            "width": "",
+                            "height": "",
+                            "color": "",
+                            "background": "",
+                            "padding": "",
+                            "margin": "",
+                            "text-align": ""
+                        },
+                        "containerStyle": {
+                            "value": ""
+                        },
+                        "classes": {
+                            "value": ""
+                        },
+                        "dynamicClasses": {
+                            "value": ""
+                        },
+                        "css": {
+                            "width": "200px",
+                            "height": "",
+                            "color": "",
+                            "background": "",
+                            "padding": "",
+                            "margin": "",
+                            "text-align": ""
+                        },
+                        "style": {
+                            "value": ""
+                        },
+                        "onchange": {
+                            "value": ""
+                        }
+                    },
+                    "children": [],
+                    "container": "layout_0_row_0_column_0"
+                },
+                {
+                    "id": 55492,
+                    "type": "inputfield",
+                    "attributes": {
+                        "name": {
+                            "value": "fldInput5"
+                        },
+                        "type": {
+                            "value": "text"
+                        },
+                        "label": {
+                            "value": "ZIP Code"
+                        },
+                        "labelVisible": {
+                            "value": "yes"
+                        },
+                        "tooltip": {
+                            "value": ""
+                        },
+                        "tooltipPosition": {
+                            "value": "top"
+                        },
+                        "property": {
+                            "value": ""
+                        },
+                        "propertyInit": {
+                            "value": ""
+                        },
+                        "textIcon": {
+                            "value": ""
+                        },
+                        "textIconPosition": {
+                            "value": "left"
+                        },
+                        "textMinlength": {
+                            "value": ""
+                        },
+                        "textMaxlength": {
+                            "value": ""
+                        },
+                        "textPattern": {
+                            "value": "/^\\\\d+$/"
+                        },
+                        "textMask": {
+                            "value": ""
+                        },
+                        "textPlaceholder": {
+                            "value": ""
+                        },
+                        "textErrorMinlength": {
+                            "value": ""
+                        },
+                        "textErrorMaxlength": {
+                            "value": ""
+                        },
+                        "textErrorPattern": {
+                            "value": ""
+                        },
+                        "passwordIcon": {
+                            "value": ""
+                        },
+                        "passwordIconPosition": {
+                            "value": "left"
+                        },
+                        "passwordMinlength": {
+                            "value": ""
+                        },
+                        "passwordMaxlength": {
+                            "value": ""
+                        },
+                        "passwordErrorMinlength": {
+                            "value": ""
+                        },
+                        "passwordErrorMaxlength": {
+                            "value": ""
+                        },
+                        "dateFormat": {
+                            "value": "mm/dd/yyyy"
+                        },
+                        "dateMin": {
+                            "value": ""
+                        },
+                        "dateMax": {
+                            "value": ""
+                        },
+                        "dateErrorFormat": {
+                            "value": ""
+                        },
+                        "display": {
+                            "value": "true"
+                        },
+                        "disabled": {
+                            "value": "false"
+                        },
+                        "required": {
+                            "value": "no"
+                        },
+                        "errorRequired": {
+                            "value": ""
+                        },
+                        "containerClasses": {
+                            "value": ""
+                        },
+                        "containerDynamicClasses": {
+                            "value": ""
+                        },
+                        "containerCss": {
+                            "width": "200px",
+                            "height": "",
+                            "color": "",
+                            "background": "",
+                            "padding": "",
+                            "margin": "",
+                            "text-align": ""
+                        },
+                        "containerStyle": {
+                            "value": ""
+                        },
+                        "classes": {
+                            "value": ""
+                        },
+                        "dynamicClasses": {
+                            "value": ""
+                        },
+                        "css": {
+                            "width": "",
+                            "height": "",
+                            "color": "",
+                            "background": "",
+                            "padding": "",
+                            "margin": "",
+                            "text-align": ""
+                        },
+                        "style": {
+                            "value": ""
+                        },
+                        "onchange": {
+                            "value": ""
+                        }
+                    },
+                    "children": [],
+                    "container": "layout_0_row_0_column_0"
+                },
+                {
+                    "id": 14260,
+                    "type": "inputfield",
+                    "attributes": {
+                        "name": {
+                            "value": "fldInput6"
+                        },
+                        "type": {
+                            "value": "text"
+                        },
+                        "label": {
+                            "value": "Email"
+                        },
+                        "labelVisible": {
+                            "value": "yes"
+                        },
+                        "tooltip": {
+                            "value": ""
+                        },
+                        "tooltipPosition": {
+                            "value": "top"
+                        },
+                        "property": {
+                            "value": ""
+                        },
+                        "propertyInit": {
+                            "value": ""
+                        },
+                        "textIcon": {
+                            "value": ""
+                        },
+                        "textIconPosition": {
+                            "value": "left"
+                        },
+                        "textMinlength": {
+                            "value": ""
+                        },
+                        "textMaxlength": {
+                            "value": ""
+                        },
+                        "textPattern": {
+                            "value": "/^([a-z0-9_\\\\.-]+)@([\\\\da-z\\\\.-]+)\\\\.([a-z\\\\.]{2,6})$/"
+                        },
+                        "textMask": {
+                            "value": ""
+                        },
+                        "textPlaceholder": {
+                            "value": ""
+                        },
+                        "textErrorMinlength": {
+                            "value": ""
+                        },
+                        "textErrorMaxlength": {
+                            "value": ""
+                        },
+                        "textErrorPattern": {
+                            "value": ""
+                        },
+                        "passwordIcon": {
+                            "value": ""
+                        },
+                        "passwordIconPosition": {
+                            "value": "left"
+                        },
+                        "passwordMinlength": {
+                            "value": ""
+                        },
+                        "passwordMaxlength": {
+                            "value": ""
+                        },
+                        "passwordErrorMinlength": {
+                            "value": ""
+                        },
+                        "passwordErrorMaxlength": {
+                            "value": ""
+                        },
+                        "dateFormat": {
+                            "value": "mm/dd/yyyy"
+                        },
+                        "dateMin": {
+                            "value": ""
+                        },
+                        "dateMax": {
+                            "value": ""
+                        },
+                        "dateErrorFormat": {
+                            "value": ""
+                        },
+                        "display": {
+                            "value": "true"
+                        },
+                        "disabled": {
+                            "value": "false"
+                        },
+                        "required": {
+                            "value": "no"
+                        },
+                        "errorRequired": {
+                            "value": ""
+                        },
+                        "containerClasses": {
+                            "value": ""
+                        },
+                        "containerDynamicClasses": {
+                            "value": ""
+                        },
+                        "containerCss": {
+                            "width": "200px",
+                            "height": "",
+                            "color": "",
+                            "background": "",
+                            "padding": "",
+                            "margin": "",
+                            "text-align": ""
+                        },
+                        "containerStyle": {
+                            "value": ""
+                        },
+                        "classes": {
+                            "value": ""
+                        },
+                        "dynamicClasses": {
+                            "value": ""
+                        },
+                        "css": {
+                            "width": "",
+                            "height": "",
+                            "color": "",
+                            "background": "",
+                            "padding": "",
+                            "margin": "",
+                            "text-align": ""
+                        },
+                        "style": {
+                            "value": ""
+                        },
+                        "onchange": {
+                            "value": ""
+                        }
+                    },
+                    "children": [],
+                    "container": "layout_0_row_0_column_0"
+                },
+                {
+                    "id": 11138,
+                    "type": "statictext",
+                    "attributes": {
+                        "name": {
+                            "value": "txtStaticText1"
+                        },
+                        "bind": {
+                            "value": ""
+                        },
+                        "text": {
+                            "value": "Gender:"
+                        },
+                        "display": {
+                            "value": "true"
+                        },
+                        "tooltip": {
+                            "value": ""
+                        },
+                        "tooltipPosition": {
+                            "value": "top"
+                        },
+                        "counter": {
+                            "bind": {
+                                "value": ""
+                            },
+                            "onclick": {
+                                "value": ""
+                            },
+                            "position": {
+                                "value": "left"
+                            }
+                        },
+                        "onclick": {
+                            "value": ""
+                        },
+                        "classes": {
+                            "value": ""
+                        },
+                        "dynamicClasses": {
+                            "value": ""
+                        },
+                        "style": {
+                            "value": ""
+                        },
+                        "css": {
+                            "width": "",
+                            "height": "",
+                            "color": "",
+                            "background": "",
+                            "padding": "",
+                            "margin": "",
+                            "text-align": ""
+                        },
+                        "containerClasses": {
+                            "value": ""
+                        },
+                        "containerDynamicClasses": {
+                            "value": ""
+                        },
+                        "containerStyle": {
+                            "value": ""
+                        },
+                        "containerCss": {
+                            "width": "",
+                            "height": "",
+                            "color": "",
+                            "background": "",
+                            "padding": "",
+                            "margin": "",
+                            "text-align": ""
+                        }
+                    },
+                    "children": [],
+                    "container": "layout_0_row_0_column_0"
+                },
+                {
+                    "id": 11067,
+                    "type": "radio",
+                    "attributes": {
+                        "name": {
+                            "value": "fldRadio1"
+                        },
+                        "orientation": {
+                            "value": "horizontal"
+                        },
+                        "tooltip": {
+                            "value": ""
+                        },
+                        "tooltipPosition": {
+                            "value": "top"
+                        },
+                        "property": {
+                            "value": ""
+                        },
+                        "dynamicOptions": {
+                            "value": false
+                        },
+                        "propertyOptions": {
+                            "value": ""
+                        },
+                        "propertyOptionsFields": {
+                            "displayValue": "label",
+                            "dataValue": "value",
+                            "disabled": "disabled"
+                        },
+                        "staticOptions": [
+                            {
+                                "displayValue": "Female",
+                                "disabled": false,
+                                "dataValue": "F"
+                            },
+                            {
+                                "displayValue": "Mail",
+                                "disabled": false,
+                                "dataValue": "M"
+                            }
+                        ],
+                        "display": {
+                            "value": "true"
+                        },
+                        "required": {
+                            "value": "no"
+                        },
+                        "containerClasses": {
+                            "value": ""
+                        },
+                        "containerDynamicClasses": {
+                            "value": ""
+                        },
+                        "containerCss": {
+                            "width": "",
+                            "height": "",
+                            "color": "",
+                            "background": "",
+                            "padding": "",
+                            "margin": "",
+                            "text-align": ""
+                        },
+                        "containerStyle": {
+                            "value": ""
+                        },
+                        "classes": {
+                            "value": ""
+                        },
+                        "dynamicClasses": {
+                            "value": ""
+                        },
+                        "css": {
+                            "width": "",
+                            "height": "",
+                            "color": "",
+                            "background": "",
+                            "padding": "",
+                            "margin": "",
+                            "text-align": ""
+                        },
+                        "style": {
+                            "value": ""
+                        },
+                        "onchange": {
+                            "value": ""
+                        }
+                    },
+                    "children": [],
+                    "container": "layout_0_row_0_column_0"
+                },
+                {
+                    "id": 44675,
+                    "type": "button",
+                    "attributes": {
+                        "name": {
+                            "value": "btnButton1"
+                        },
+                        "label": {
+                            "value": "Submit"
+                        },
+                        "icon": {
+                            "value": "ok"
+                        },
+                        "iconPosition": {
+                            "value": "left"
+                        },
+                        "tooltip": {
+                            "value": ""
+                        },
+                        "tooltipPosition": {
+                            "value": "top"
+                        },
+                        "display": {
+                            "value": "true"
+                        },
+                        "disabled": {
+                            "value": "false"
+                        },
+                        "containerClasses": {
+                            "value": ""
+                        },
+                        "containerDynamicClasses": {
+                            "value": ""
+                        },
+                        "containerCss": {
+                            "width": "",
+                            "height": "",
+                            "color": "",
+                            "background": "",
+                            "padding": "",
+                            "margin": "",
+                            "text-align": ""
+                        },
+                        "containerStyle": {
+                            "value": ""
+                        },
+                        "classes": {
+                            "value": "btn-primary"
+                        },
+                        "dynamicClasses": {
+                            "value": ""
+                        },
+                        "css": {
+                            "width": "",
+                            "height": "",
+                            "color": "",
+                            "background": "",
+                            "padding": "",
+                            "margin": "",
+                            "text-align": ""
+                        },
+                        "style": {
+                            "value": ""
+                        },
+                        "onclick": {
+                            "value": ""
+                        }
+                    },
+                    "children": [],
+                    "container": "layout_0_row_0_column_0"
+                }
+            ]
+        }
+    ]
+}

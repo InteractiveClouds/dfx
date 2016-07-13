@@ -1,0 +1,38 @@
+{
+	"template": 			{ "value": "default" },
+	"name": {
+		"value": "htHtml"
+	},
+	"binding": {
+		"value": ""
+	},
+    "flex": {"value": 100},
+	"content": {
+		"value": "<h3>Lorem Ipsum</h3><p>Lorem ipsum dolor sit <b>amet</b>, consectetuer adipiscing elit. <b>Aenean</b> commodo ligula eget dolor. Aenean massa. Cum sociis natoque <b>penatibus et magnis</b> dis parturient montes, nascetur ridiculus mus. <b>Donec quam felis</b>, ultricies nec, pellentesque eu, pretium quis, sem.</p>"
+	},
+	"display": {
+		"value": "true"
+	},
+	"disabled": {
+		"value": "false"
+	},
+	"classes": {
+		"value": ""
+	},
+	"dynamicClasses": {
+		"value": ""
+	},
+	"style": {
+		"value": ""
+	},
+    "onclick": { "value": "" },
+    "ondblclick": { "value": "" },
+    "onkeypress": { "value": "" },
+    "onkeydown": { "value": "" },
+    "onkeyup": { "value": "" },
+    "onmouseover": { "value": "" },
+    "onmouseenter": { "value": "" },
+    "onmousemove": { "value": "" },
+    "onmouseleave": { "value": "" },
+    "onmouseup": { "value": "" }
+}

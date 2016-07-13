@@ -1,0 +1,296 @@
+<div class="dfx-pe-property-treeview hover col-md-12">
+	<ul>
+		<li>
+			<input class="dfx-pe-property-treeview-button" type="checkbox" id="item-props" />
+			<label for="item-props">Page Properties</label>
+			<span class="pull-right"><a href="#" ng-click="addLayoutRow()" title="Add a row"><i class="fa fa-plus"></i></a></span>
+			<ul class="dfx-pe-property-treeview-content" style="margin-left:10px">
+				<li class="col-md-12" ng-repeat="row in selected_page.layout.rows">
+					<ul>
+						<li>
+							<input class="dfx-pe-property-treeview-button" type="checkbox" id="item-layout-row-{{$index}}" />
+							<label for="item-layout-row-{{$index}}">Row {{$index}}</label>
+							<span class="pull-right"><a href="#" ng-click="deleteLayoutRow($index)" title="Remove the row"><i class="fa fa-minus"></i></a></span>
+							<span class="pull-right"><a href="#" ng-click="addLayoutColumn($index)" title="Add a new column"><i class="fa fa-plus"></i></a></span>
+							<ul class="dfx-pe-property-treeview-content">
+								<li ng-repeat="column in row.columns">
+									<ul>
+										<li>
+											<input class="dfx-pe-property-treeview-button" type="checkbox" id="item-layout-row-{{$parent.$index}}-{{$index}}" />
+											<label for="item-layout-row-{{$parent.$index}}-{{$index}}">
+												Column {{$index}}
+											</label>
+											<span class="pull-right"><a href="#" ng-click="deleteLayoutColumn($parent.$index, $index)" title="Delete the column"><i class="fa fa-minus"></i></a></span>
+											<ul class="dfx-pe-property-treeview-content">
+												<li class="col-md-12">
+													<div layout>
+														<md-slider class="md-primary" flex ng-model="column.width" step="5" min="0" max="100" aria-label="Flex width:">
+									  					</md-slider>
+														<div flex="20" layout layout-align="center center">
+															<input flex type="text" ng-model="column.width" aria-label="blue" aria-controls="column-width" style="margin-left:5px">
+														</div>
+									  				</div>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+		<li>
+			<input class="dfx-pe-property-treeview-button" type="checkbox" id="item-1" />
+			<label for="item-1">Template Properties</label>
+			<ul class="dfx-pe-property-treeview-content" style="margin-left:10px">
+				<li class="col-md-12">
+					<span class="col-md-4">Name:</span>
+					<md-input-container class="col-md-8" style="padding: 0 0 10px">
+                        <md-select aria-label="Template Name:" ng-model="selected_page.template" ng-change="changePageTemplate()">
+                            <md-option ng-repeat="template in templates" value="{{template.name}}">{{template.name}}</md-option>
+						</md-select>
+					</md-input-container>
+					<span class="col-md-4"></span>
+					<span class="col-md-8">
+						<a ng-click="editTemplateProperty()" ng-show="templatePropertyEditMode==false" style="cursor:pointer">Edit</a>
+						<a ng-click="saveTemplateProperty()" ng-show="templatePropertyEditMode" style="cursor:pointer">Save</a>
+						<a ng-click="saveTemplatePropertyAs()" ng-show="templatePropertyEditMode" style="cursor:pointer;margin-left:10px">Save as</a>
+						<a ng-click="cancelTemplateProperty()" ng-show="templatePropertyEditMode" style="cursor:pointer;margin-left:10px">Cancel</a>
+					</span>
+				</li>
+				<li ng-show="templatePropertyEditMode">
+					<input class="dfx-pe-property-treeview-button" type="checkbox" id="item-tpl-0" />
+					<label for="item-tpl-0">Body</label>
+					<ul class="dfx-pe-property-treeview-content">
+						<li class="col-md-12">
+							<span class="col-md-4">Style:</span>
+							<input class="col-md-8" type="text" ng-model="selected_template.layout.body.style" />
+						</li>
+					</ul>
+				</li>
+				<li ng-show="templatePropertyEditMode">
+					<input class="dfx-pe-property-treeview-button" type="checkbox" id="item-tpl-1" />
+					<label for="item-tpl-1">Header</label>
+					<ul class="dfx-pe-property-treeview-content">
+						<li class="col-md-12">
+							<span class="col-md-4">Content:</span>
+							<a ng-href="#" ng-click="editContent($event, 'header')" style="font-size:12px;color:#fff;text-decoration:none;">
+								<span style="padding-left:0">
+									<md-icon class="fa fa-edit" style="font-size:14px;height:16px;color:inherit;"></md-icon>Edit
+								</span>
+							</a>
+						</li>
+						<li class="col-md-12">
+							<span class="col-md-4">Display:</span>
+							<input class="col-md-8" type="text" ng-model="selected_template.layout.header.display" />
+						</li>
+						<li class="col-md-12">
+							<span class="col-md-4">Height:</span>
+							<input class="col-md-8" type="text" ng-model="selected_template.layout.header.height" />
+						</li>
+						<li class="col-md-12">
+							<span class="col-md-4">Style:</span>
+							<input class="col-md-8" type="text" ng-model="selected_template.layout.header.style" />
+						</li>
+						<li class="col-md-12">
+							<span class="col-md-4">Hor. Alignment:</span>
+							<md-input-container class="col-md-8" style="padding: 0 0 10px">
+		                        <md-select aria-label="Hor. Alignment:" ng-model="selected_template.layout.header.halignment">
+		                            <md-option value="start">start</md-option>
+		                            <md-option value="center">center</md-option>
+		                            <md-option value="end">end</md-option>
+		                            <md-option value="space-around">space-around</md-option>
+		                            <md-option value="space-between">space-between</md-option>
+								</md-select>
+    						</md-input-container>
+						</li>
+						<li class="col-md-12">
+							<span class="col-md-4">Ver. Alignment:</span>
+							<md-input-container class="col-md-8" style="padding: 0 0 10px">
+								<md-select aria-label="Ver. Alignment:" ng-model="selected_template.layout.header.valignment">
+									<md-option value="start">start</md-option>
+		                            <md-option value="center">center</md-option>
+		                            <md-option value="end">end</md-option>
+								</md-select>
+    						</md-input-container>
+						</li>
+					</ul>
+				</li>
+				<li ng-show="templatePropertyEditMode">
+					<input class="dfx-pe-property-treeview-button" type="checkbox" id="item-tpl-2" />
+					<label for="item-tpl-2">Left Side</label>
+					<ul class="dfx-pe-property-treeview-content">
+						<li class="col-md-12">
+							<span class="col-md-4">Content:</span>
+							<a ng-href="#" ng-click="editContent($event, 'left')" style="font-size:12px;color:#fff;text-decoration:none;">
+								<span style="padding-left:0">
+									<md-icon class="fa fa-edit" style="font-size:14px;height:16px;color:inherit;"></md-icon>Edit
+								</span>
+							</a>
+						</li>
+						<li class="col-md-12">
+							<span class="col-md-4">Width:</span>
+							<input class="col-md-8" type="text" ng-model="selected_template.layout.left.width" />
+						</li>
+						<li class="col-md-12" dfx-gc-property="whiteframe">
+							<span class="col-md-4">Whiteframe:</span>
+							<md-input-container class="col-md-8" style="padding: 0 0 10px">
+		                        <md-select aria-label="Whiteframe:" ng-model="selected_template.layout.left.whiteframe">
+		                            <md-option value="">None</md-option>
+		                            <md-option value="md-whiteframe-1dp">1dp</md-option>
+		                            <md-option value="md-whiteframe-3dp">3dp</md-option>
+		                            <md-option value="md-whiteframe-6dp">6dp</md-option>
+		                            <md-option value="md-whiteframe-10dp">10dp</md-option>
+		                            <md-option value="md-whiteframe-18dp">18p</md-option>
+		                            <md-option value="md-whiteframe-24dp">24p</md-option>
+		                        </md-select>
+		                    </md-input-container>
+						</li>
+						<li class="col-md-12">
+							<span class="col-md-4">Display:</span>
+							<input class="col-md-8" type="text" ng-model="selected_template.layout.left.display" />
+						</li>
+						<li class="col-md-12">
+							<span class="col-md-4">Style:</span>
+							<input class="col-md-8" type="text" ng-model="selected_template.layout.left.style" />
+						</li>
+						<li class="col-md-12">
+							<span class="col-md-4">Hor. Alignment:</span>
+							<md-input-container class="col-md-8" style="padding: 0 0 10px">
+		                        <md-select aria-label="Hor. Alignment:" ng-model="selected_template.layout.left.halignment">
+		                            <md-option value="start">start</md-option>
+		                            <md-option value="center">center</md-option>
+		                            <md-option value="end">end</md-option>
+		                            <md-option value="space-around">space-around</md-option>
+		                            <md-option value="space-between">space-between</md-option>
+								</md-select>
+    						</md-input-container>
+						</li>
+						<li class="col-md-12">
+							<span class="col-md-4">Ver. Alignment:</span>
+							<md-input-container class="col-md-8" style="padding: 0 0 10px">
+								<md-select aria-label="Ver. Alignment:" ng-model="selected_template.layout.left.valignment">
+									<md-option value="start">start</md-option>
+		                            <md-option value="center">center</md-option>
+		                            <md-option value="end">end</md-option>
+								</md-select>
+    						</md-input-container>
+						</li>
+					</ul>
+				</li>
+				<li ng-show="templatePropertyEditMode">
+					<input class="dfx-pe-property-treeview-button" type="checkbox" id="item-tpl-3" />
+					<label for="item-tpl-3">Right Side</label>
+					<ul class="dfx-pe-property-treeview-content">
+						<li class="col-md-12">
+							<span class="col-md-4">Content:</span>
+							<a ng-href="#" ng-click="editContent($event, 'right')" style="font-size:12px;color:#fff;text-decoration:none;">
+								<span style="padding-left:0">
+									<md-icon class="fa fa-edit" style="font-size:14px;height:16px;color:inherit;"></md-icon>Edit
+								</span>
+							</a>
+						</li>
+						<li class="col-md-12">
+							<span class="col-md-4">Width:</span>
+							<input class="col-md-8" type="text" ng-model="selected_template.layout.right.width" />
+						</li>
+						<li class="col-md-12" dfx-gc-property="whiteframe">
+							<span class="col-md-4">Whiteframe:</span>
+							<md-input-container class="col-md-8" style="padding: 0 0 10px">
+		                        <md-select aria-label="Whiteframe:" ng-model="selected_template.layout.right.whiteframe">
+		                            <md-option value="">None</md-option>
+		                            <md-option value="md-whiteframe-1dp">1dp</md-option>
+		                            <md-option value="md-whiteframe-3dp">3dp</md-option>
+		                            <md-option value="md-whiteframe-6dp">6dp</md-option>
+		                            <md-option value="md-whiteframe-10dp">10dp</md-option>
+		                            <md-option value="md-whiteframe-18dp">18p</md-option>
+		                            <md-option value="md-whiteframe-24dp">24p</md-option>
+		                        </md-select>
+		                    </md-input-container>
+						</li>
+						<li class="col-md-12">
+							<span class="col-md-4">Display:</span>
+							<input class="col-md-8" type="text" ng-model="selected_template.layout.right.display" />
+						</li>
+						<li class="col-md-12">
+							<span class="col-md-4">Style:</span>
+							<input class="col-md-8" type="text" ng-model="selected_template.layout.right.style" />
+						</li>
+						<li class="col-md-12">
+							<span class="col-md-4">Hor. Alignment:</span>
+							<md-input-container class="col-md-8" style="padding: 0 0 10px">
+		                        <md-select aria-label="Hor. Alignment:" ng-model="selected_template.layout.right.halignment">
+		                            <md-option value="start">start</md-option>
+		                            <md-option value="center">center</md-option>
+		                            <md-option value="end">end</md-option>
+		                            <md-option value="space-around">space-around</md-option>
+		                            <md-option value="space-between">space-between</md-option>
+								</md-select>
+    						</md-input-container>
+						</li>
+						<li class="col-md-12">
+							<span class="col-md-4">Ver. Alignment:</span>
+							<md-input-container class="col-md-8" style="padding: 0 0 10px">
+								<md-select aria-label="Ver. Alignment:" ng-model="selected_template.layout.right.valignment">
+									<md-option value="start">start</md-option>
+		                            <md-option value="center">center</md-option>
+		                            <md-option value="end">end</md-option>
+								</md-select>
+    						</md-input-container>
+						</li>
+					</ul>
+				</li>
+				<li ng-show="templatePropertyEditMode">
+					<input class="dfx-pe-property-treeview-button" type="checkbox" id="item-tpl-4" />
+					<label for="item-tpl-4">Footer</label>
+					<ul class="dfx-pe-property-treeview-content">
+						<li class="col-md-12">
+							<span class="col-md-4">Content:</span>
+							<a ng-href="#" ng-click="editContent($event, 'footer')" style="font-size:12px;color:#fff;text-decoration:none;">
+								<span style="padding-left:0">
+									<md-icon class="fa fa-edit" style="font-size:14px;height:16px;color:inherit;"></md-icon>Edit
+								</span>
+							</a>
+						</li>
+						<li class="col-md-12">
+							<span class="col-md-4">Display:</span>
+							<input class="col-md-8" type="text" ng-model="selected_template.layout.footer.display" />
+						</li>
+						<li class="col-md-12">
+							<span class="col-md-4">Height:</span>
+							<input class="col-md-8" type="text" ng-model="selected_template.layout.footer.height" />
+						</li>
+						<li class="col-md-12">
+							<span class="col-md-4">Style:</span>
+							<input class="col-md-8" type="text" ng-model="selected_template.layout.footer.style" />
+						</li>
+						<li class="col-md-12">
+							<span class="col-md-4">Hor. Alignment:</span>
+							<md-input-container class="col-md-8" style="padding: 0 0 10px">
+		                        <md-select aria-label="Hor. Alignment:" ng-model="selected_template.layout.footer.halignment">
+		                            <md-option value="start">start</md-option>
+		                            <md-option value="center">center</md-option>
+		                            <md-option value="end">end</md-option>
+		                            <md-option value="space-around">space-around</md-option>
+		                            <md-option value="space-between">space-between</md-option>
+								</md-select>
+    						</md-input-container>
+						</li>
+						<li class="col-md-12">
+							<span class="col-md-4">Ver. Alignment:</span>
+							<md-input-container class="col-md-8" style="padding: 0 0 10px">
+								<md-select aria-label="Ver. Alignment:" ng-model="selected_template.layout.footer.valignment">
+									<md-option value="start">start</md-option>
+		                            <md-option value="center">center</md-option>
+		                            <md-option value="end">end</md-option>
+								</md-select>
+    						</md-input-container>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+	</ul>
+</div>

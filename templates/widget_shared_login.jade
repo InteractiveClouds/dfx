@@ -1,0 +1,25 @@
+doctype html
+html
+    head
+        meta(http-equiv="content-type", content="text/HTML;charset=UTF-8")
+        title Preview Login
+        script(src="/js/vendor/des.min.js")
+        script(src="/js/vendor/md5.js")
+        script(src="/js/vendor/jquery.min.js")
+        script(src="/js/preview/dfx.preview.min.js")
+        script(type="text/javascript").
+            sessionStorage.dfx_server = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port;
+            $.post('/studio/_previewlogin')
+            .then(function(d){ return authRequest.initToken(d.data.token) })
+            .then(function(){
+                var path = '#{redirect}';
+
+                if ( path ) window.location.replace(path);
+                else throw('no path to redirect');
+            })
+            .fail(function(error){throw(error)});
+    body
+        p 
+            span redirecting to #{redirect && " shared view preview : "}
+            a(href="#{redirect || '#'}") #{redirect || "nowhere. An error occurred."}
+            span ...

@@ -1,0 +1,42 @@
+div.panel.panel-primary(style="position: relative; height: 99%; margin-bottom: 1%;")
+    div.panel-heading
+        h4 DB Driver Details
+    div.panel-body#dbs_databases
+        form#provider_info(action="javascript:void(0);", style="margin-top:10px", name="driver_info")
+            fieldset
+                div.form-group
+                    label(for="dfx_github_settings_username") Driver Name:
+                    input.form-control(readonly="readonly", name="nameDriver", value="#{nameDriver}")
+                div.form-group
+                    label(for="dfx_github_settings_access_token") Dialect:
+                    select.form-control(name="dialect")
+                        option(disabled="disabled", selected="selected", value="0") choose db provider
+                        option(value="mysql") mysql
+                        option(value="mssql") mssql
+                div.form-group
+                    label Host:
+                    input.form-control(name="host", value="#{host}", autocomplete="off")
+                div.form-group
+                    label Port:
+                    input.form-control(name="port", value="#{port}", autocomplete="off")
+                div.form-group
+                    label Database:
+                    input.form-control(name="database", value="#{database}")
+                div.form-group
+                    label User:
+                    input.form-control(name="user", value="#{user}", autocomplete="off")
+                div.form-group
+                    label Password:
+                    input.form-control(name="password", type="password", value="#{password}", autocomplete="off")
+                div.form-group
+                    label Min Connections:
+                    input.form-control(name="min", value="#{min}")
+                div.form-group
+                    label Max Connections:
+                    input.form-control(name="max", value="#{max}")
+                div.form-group
+                    label Timeout:
+                    input.form-control(name="idleTimeoutMillis", value="#{idleTimeoutMillis}")
+                button.btn.btn-info.save-now-submitter(type='submit')
+                    span.fa.fa-lg.fa-floppy-o
+                    span(style="padding-left:5px") Save

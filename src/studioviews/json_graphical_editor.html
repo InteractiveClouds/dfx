@@ -1,0 +1,103 @@
+<md-dialog aria-label="textarea" ng-cloak>
+    <form>
+        <md-toolbar><div class="md-toolbar-tools">
+            <h2>Data Dictionary Editor</h2>
+        </div></md-toolbar>
+        <md-dialog-content id="{{component_id}}_md_dialog" layout="column" style="max-width:980px;max-height:900px;width:980px;height:450px;margin:0px;padding:8px 8px 2px 8px;overflow-y: hidden;">
+            <div style="display:flex;flex-direction:row;flex-wrap:wrap;justify-content:space-between;">
+                <section id="{{component_id}}_json_structure" class="md-whiteframe-1dp" style="width:49.5%;border-radius:4px;overflow:hidden;height: 440px;">
+                    <md-toolbar style="min-height:36px;background:rgba(128,128,128,0.46);">
+                        <div class="md-toolbar-tools" style="height:36px;max-height:36px">
+                            <h3 style="font-size:16px;">data structure</h3>
+                        </div>
+                    </md-toolbar>
+                    <md-toolbar style="min-height:30px;background:#ECECEC;font-size:14px;display:flex;flex-direction:row;align-items:center;padding:0 9px;">
+                        <div class="layout-row flex-100"  layout-align="space-between center">
+                            <div style="margin-top: 3px;">
+                                <span style="color:#676B6E;">Item Name:</span>
+                                <input ng-model="dictionary.keyName" style="width:90px; color: rgba(0,0,0,0.87); margin-right: 10px;"/>
+                                <span style="color:#676B6E;">Item Type:</span>
+                                <md-input-container style="margin: -6px 0 0 0">
+                                    <md-select ng-model="dictionary.defaultType" style="color:#676B6E;">
+                                        <md-option ng-repeat="type in ['String', 'Object', 'Array']" ng-value="type">{{type}}</md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <md-button class="md-raised" ng-click="dictionary.addNewItem()" style="color:#676B6E; min-height:33px;height:33px;min-width:70px;" ng-disabled="dictionary.keyName === ''">
+                                <md-icon class="fa fa-plus" style="width:14px;height:14px;color:#676B6E;margin-top:-3px;"></md-icon>
+                                Item
+                            </md-button>
+                        </div>
+                    </md-toolbar>
+                    <hr style="margin: 1px 0 1px 0;">
+                    <md-toolbar style="min-height:30px;background:#ECECEC;font-size:14px;display:flex;flex-direction:row;align-items:center;padding:0 9px;">
+                        <div class="layout-row flex-100"  layout-align="space-between center">
+                            <div>
+                                <a class="fa fa-minus" ng-click="dictionary.removeItem()" style="color:#676B6E;text-decoration:none;margin:auto 7px;cursor:pointer;" title="Remove json object item"></a>
+                                <a class="fa fa-arrow-up" ng-click="dictionary.moveUp()" style="color:#676B6E;text-decoration:none;margin:auto 7px;cursor:pointer;" title="Move up json object item"></a>
+                                <a class="fa fa-arrow-down" ng-click="dictionary.moveDown()" style="color:#676B6E;text-decoration:none;margin:auto 7px;cursor:pointer;" title="Move down json object item"></a>
+                                <a class="fa fa-indent" ng-click="dictionary.indent()" style="color:#676B6E;text-decoration:none;margin:auto 7px;cursor:pointer;" title="Indent json object item"></a>
+                                <a class="fa fa-outdent" ng-click="dictionary.outdent()" style="color:#676B6E;text-decoration:none;margin:auto 7px;cursor:pointer;" title="Outdent json object item"></a>
+                            </div>
+                        </div>
+                    </md-toolbar>
+                    <md-content class="menu-structure" layout-padding flex id="items-list" style="max-height: 340px;"></md-content>
+                </section>
+                <section id="{{component_id}}_json_item_properties" class="md-whiteframe-1dp" style="width:49.5%;border-radius:4px;overflow:hidden;">
+                    <md-toolbar style="min-height:36px;background:rgba(128,128,128,0.46);">
+                        <div class="md-toolbar-tools" style="height:36px;max-height:36px">
+                            <h3 style="font-size:16px;">item properties</h3>
+                        </div>
+                    </md-toolbar>
+                    <md-content layout-padding flex style="">
+                        <div class="dfx-ve-property-treeview hover clearfix" style="padding:8px 16px 12px 12px;margin:0 -8px;">
+                            <ul class="dfx-ve-property-picker-content" style="margin:0;padding:0; list-style: none;">
+                                <li ng-if="dictionary.selectedItem !== null" class="col-md-12">
+                                    <span class="col-md-4" style="color: #676B6E;">Item Type:</span>
+                                    <div class="col-md-8" layout="row">
+                                        <input class="col-md-12" type="text" ng-model="dictionary.selectedItem.type" style="margin-left:-15px;" disabled/>
+                                    </div>
+                                </li>
+                                <li ng-if="dictionary.selectedItem.type === 'String'" class="col-md-12" style="margin-top: 10px;">
+                                    <span class="col-md-4" style="color: #676B6E;">Item Value:</span>
+                                    <div class="col-md-8" layout="row">
+                                        <input class="col-md-12" ng-model="dictionary.selectedItem.value" type="text" ng-model-options='{ debounce: 500 }' ng-change="dictionary.updateValue()" style="margin-left:-15px;"/>
+                                    </div>
+                                </li>
+
+                                <li ng-if="dictionary.selectedItem.type === 'Array'" class="col-md-12" style="margin-top: 10px;">
+                                    <div class="layout-row"  layout-align="start center">
+                                        <div class="col-md-4" style="padding: 0;">
+                                            <span class="col-md-2" style="padding: 0;"><a style="cursor: pointer;" ng-click="dictionary.addArrayItem()"><md-icon class="fa fa-plus" style="padding-top: 10px; padding-left: 8px"></md-icon></a></span>
+                                            <span class="col-md-2" style="padding: 0;"><a style="cursor: pointer;" ng-click="dictionary.removeArrayItem()"><md-icon class="fa fa-minus" style="padding-top: 10px; padding-left: 3px"></md-icon></a></span>
+                                        </div>
+                                        <div class="col-md-8" style="padding: 0;">
+                                            <md-input-container style="margin: -6px 0 0 0; width: 88%;">
+                                                <md-select ng-model="dictionary.arrayValue" style="color:#676B6E;">
+                                                    <md-option ng-repeat="item in dictionary.selectedItem.value" ng-value="item">{{item}}</md-option>
+                                                </md-select>
+                                            </md-input-container>
+                                        </div>
+                                    </div>
+                                    <div style="margin-top: 10px;">
+                                        <span style="color:#676B6E;"class="col-md-4">Value:</span>
+                                        <input ng-model="dictionary.newArrayItem" class="col-md-7" style="color: rgba(0,0,0,0.87);"/>
+                                    </div>
+                                </li>
+                            </ul>
+                            <!--<div ng-if="dictionary.selectedItem.displayValue === true" class="md-actions">
+                                <md-button ng-click="" class="md-raised md-button md-altTheme-theme md-ink-ripple">Update</md-button>
+                            </div>-->
+                        </div>
+                        <div ng-if="dictionary.selectedItem.displayValue === false" id="dd_editor_code_mirror_parent" style="border:1px solid #dddddd; padding: 0;"></div>
+                    </md-content>
+                </section>
+            </div>
+            <div class="second-dialog-box"></div>
+        </md-dialog-content>
+        <div class="md-actions">
+            <md-button ng-click="dictionary.closeDialog()" class="md-primary">Close</md-button>
+            <md-button ng-click="dictionary.saveDictionary()" class="md-primary">Save</md-button>
+        </div>
+    </form>
+</md-dialog>

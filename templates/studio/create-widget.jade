@@ -1,0 +1,61 @@
+div(style="overflow-x:hidden")
+    ol.breadcrumb
+        li
+            a(href="javascript:DfxStudio.Dispatcher.run('#!/home/');")
+                span.fa.fa-lg.fa-home
+        li
+            a(href="javascript:DfxStudio.Dispatcher.run('#!/catalog/');") Catalog
+        li.active Create Widget
+    div.col-lg-6
+        form#createWidgetForm(action="javascript:void(0);", style="margin-top:10px")
+            div.panel.panel-primary
+                div.panel-heading
+                    h4 Main Properties
+                div.panel-body
+                    fieldset
+                        div.form-group.col-lg-4
+                            label(for="fldName") Name:
+                            input#fldName.form-control(type="text", name="fldName", placeholder="Widget name")
+                        div.form-group.col-lg-8
+                            label(for="fldDescription") Description:
+                            input#fldDescription.form-control(type="text", name="fldDescription", placeholder="widget description")
+                        div.form-group.col-lg-4
+                            label(for="fldOwnerId") Owner:
+                            input#fldOwnerId.form-control(type="text", name="fldOwnerId", placeholder="ex: john")
+                        div.form-group.col-lg-8
+                            label(for="fldWidgetCategory") Category:
+                            div.input-group
+                                select#fldWidgetCategory.form-control.selectpicker(name="widgetCat", placeholder="")
+                                    - if (widgetcats && widgetcats.length>0) {
+                                        each widgetCat, i in widgetcats
+                                            option(value="#{widgetCat.name}") #{widgetCat.name}
+                                    - }
+                                span.input-group-btn
+                                    button#widgetAddCat.btn.btn-info(type="button", rel="popover", onclick='DfxStudio.widgetApi.widgetCat("create");')
+                                        span.fa.fa-lg.fa-plus
+                                span.input-group-btn
+                                    button#widgetEditCat.btn.btn-info(type="button", rel="popover", onclick='DfxStudio.widgetApi.widgetCat("update");')
+                                        span.fa.fa-lg.fa-pencil-square-o
+                                span.input-group-btn
+                                    button#widgetRMCat.btn.btn-info(type="button", rel="popover", onclick='DfxStudio.widgetApi.widgetCat("remove");')
+                                        span.fa.fa-lg.fa-times
+                        div.form-group.col-lg-5
+                            label(for="fldApplication") Application:
+                            input#fldApplication.form-control(type="text", name="fldApplication", placeholder="app", readonly)
+                        div.form-group.col-lg-4
+                            label(for="fldPlatform") Platform:
+                            select#fldPlatform.form-control(name="fldPlatform", placeholder="select a platform")
+                                option(value="web") Web
+                                option(value="mobile") Mobile
+                        div.form-group.col-lg-3
+                            label(for="fldType") Type:
+                            select#fldType.form-control(name="fldType", placeholder="select a type")
+                                option(value="visual") visual
+                                option(value="jade") jade
+                    div.form-group
+                        button.btn.btn-info.save-now-submitter(type='submit', onclick="DfxStudio.Dashboard.createWidget();")
+                            span.fa.fa-lg.fa-floppy-o
+                            span(style="padding-left:5px") Save
+                        button.btn.btn-default(type='button', onclick="DfxStudio.Dispatcher.run('#!/catalog/');", style="margin-left:10px")
+                            span.fa.fa-lg.fa-undo
+                            span(style="padding-left:5px") Cancel

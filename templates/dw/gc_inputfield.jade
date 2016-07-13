@@ -1,0 +1,216 @@
+- var attr = gcitem.attributes;
+- var type = attr.type ? attr.type.value : '';
+- var typeAttr = attr.propertyByType && attr.propertyByType[type] ? attr.propertyByType[type] : '';
+
+- var containerCss = '';
+if (gcitem.attributes.containerCss)
+    each val, key in gcitem.attributes.containerCss
+        - if (val!='') containerCss += key + ':' + val + ';'
+- var css = '';
+if (gcitem.attributes.css)
+    each val, key in gcitem.attributes.css
+        - if (val!='') css += key + ':' + val + ';'
+div(
+    id="#{gcitem.id}_{{$index}}",
+    ng-show = (gcitem.attributes.display.value == '' ? undefined : "#{gcitem.attributes.display.value}"),
+    style=(gcitem.attributes.containerStyle ? containerCss+'display:inline-block;position:relative;'+gcitem.attributes.containerStyle.value : containerCss+'display:inline-block;position:relative;'),
+    class="#{gcitem.attributes.containerClasses.value}",
+    ng-class = (gcitem.attributes.containerDynamicClasses.value == '' ? undefined : "#{gcitem.attributes.containerDynamicClasses.value}")
+    )
+    div(
+        id="#{gcitem.id}_form_group_{{$index}}",
+        class="form-group")
+        if (gcitem.attributes.labelVisible.value=='yes')
+            - var is_label_expression = (attr.label.value.indexOf('{{')>-1 && attr.label.value.indexOf('}}')>-1) ? true : false;
+            label(for="#{gcitem.id}_field_{{$index}}") #{attr.label.value}
+        if (gcitem.attributes.type.value=='text')
+            div(
+                id="#{gcitem.id}_form_group_{{$index}}",
+                class="input-group",
+                style="width:100%"
+                )
+                if (gcitem.attributes.textIcon.value!='' && gcitem.attributes.textIconPosition.value=='left')
+                    span(
+                        class="input-group-addon left-icon",
+                        style="display:table-cell")
+                        i(class=('glyphicon glyphicon-' + gcitem.attributes.textIcon.value))
+                input(
+                    id = "#{gcitem.id}_field_{{$index}}",
+                    name = (gcitem.attributes.name.value ? "#{gcitem.attributes.name.value}" : undefined ),
+                    type = "text",
+                    class=(gcitem.attributes.classes ? 'form-control '+gcitem.attributes.classes.value : 'form-control'),
+                    style=(gcitem.attributes.style ? gcitem.attributes.style.value+';'+css : css),
+                    placeholder = (gcitem.attributes.textPlaceholder.value),
+                    ng-required = (gcitem.attributes.display.value!='true' ? gcitem.attributes.display.value : (gcitem.attributes.required.value=='yes' ? 'true' : 'false')),
+                    ng-model = (gcitem.attributes.property.value == '' ? 'mdl#{gcitem.id}' : '#{gcitem.attributes.property.value}'),
+                    ng-init = (gcitem.attributes.propertyInit.value == '' ? undefined : "#{gcitem.attributes.propertyInit.value}"),
+                    ng-class = (gcitem.attributes.dynamicClasses && gcitem.attributes.dynamicClasses.value=='yes' ? "#{gcitem.attributes.dynamicClasses.value}" : undefined),
+                    ng-disabled = (!gcitem.attributes.disabled || gcitem.attributes.disabled.value == '' ? undefined : "#{gcitem.attributes.disabled.value}"),
+                    ng-minlength = (gcitem.attributes.textMinlength.value!='' ? "#{gcitem.attributes.textMinlength.value}" : undefined),
+                    ng-maxlength = (gcitem.attributes.textMaxlength.value!='' ? "#{gcitem.attributes.textMaxlength.value}" : undefined),
+                    ng-pattern = (gcitem.attributes.textPattern.value!='' ? "#{gcitem.attributes.textPattern.value}" : undefined),
+                    input-mask = (gcitem.attributes.textMask.value!='' ? "{mask: '#{gcitem.attributes.textMask.value}'}" : undefined),
+                    ng-change = (!gcitem.attributes.onchange || gcitem.attributes.onchange.value == '' ? undefined : "#{gcitem.attributes.onchange.value}"),
+                    dfx-tool-tip,
+                    tooltip-title = (gcitem.attributes.tooltip.value == '' ? undefined : "#{gcitem.attributes.tooltip.value}"),
+                    data-placement = (gcitem.attributes.tooltipPosition.value ? "#{gcitem.attributes.tooltipPosition.value}" : undefined))
+                if (gcitem.attributes.textIcon.value!='' && gcitem.attributes.textIconPosition.value=='right')
+                    span(
+                    class="input-group-addon left-icon",
+                    style="display:table-cell")
+                        i(class=('glyphicon glyphicon-' + gcitem.attributes.textIcon.value))
+            if (gcitem.attributes.required.value=='yes')
+                span.help-block(ng-show="#{gcformname}.#{gcitem.attributes.name.value}.$error.required && #{gcformname}.#{gcitem.attributes.name.value}.$dirty") #{(gcitem.attributes.errorRequired.value=='' ? "Thid field is required" : gcitem.attributes.errorRequired.value)}
+            if (gcitem.attributes.textPattern.value!='')
+                span.help-block(ng-show="#{gcformname}.#{gcitem.attributes.name.value}.$error.pattern && #{gcformname}.#{gcitem.attributes.name.value}.$dirty") #{(gcitem.attributes.textErrorPattern.value=='' ? "Your entry is invalid" : gcitem.attributes.textErrorPattern.value)}
+            if (gcitem.attributes.textMinlength.value!='')
+                span.help-block(ng-show="#{gcformname}.#{gcitem.attributes.name.value}.$error.minlength && #{gcformname}.#{gcitem.attributes.name.value}.$dirty") #{(gcitem.attributes.textErrorMinlength.value=='' ? "Your entry required to be at least " + gcitem.attributes.textMinlength.value + " characters" : gcitem.attributes.textErrorMinlength.value)}
+            if (gcitem.attributes.textMaxlength.value!='')
+                span.help-block(ng-show="#{gcformname}.#{gcitem.attributes.name.value}.$error.maxlength && #{gcformname}.#{gcitem.attributes.name.value}.$dirty") #{(gcitem.attributes.textErrorMaxlength.value=='' ? "Your entry required to be at least " + gcitem.attributes.textMaxlength.value + " characters" : gcitem.attributes.textErrorMaxlength.value)}
+        if (gcitem.attributes.type.value=='password')
+            div(
+                id="#{gcitem.id}_form_group_{{$index}}",
+                name = (gcitem.attributes.name.value ? "#{gcitem.attributes.name.value}" : undefined ),
+                class="input-group",
+                style="width:100%")
+                if (gcitem.attributes.passwordIcon.value!='' && gcitem.attributes.passwordIconPosition.value=='left')
+                    span(
+                        class="input-group-addon left-icon",
+                        style="display:table-cell")
+                        i(class=('glyphicon glyphicon-' + gcitem.attributes.passwordIcon.value))
+                input(
+                    id = "#{gcitem.id}_field_{{$index}}",
+                    type = "password",
+                    class=(gcitem.attributes.classes ? 'form-control '+gcitem.attributes.classes.value : 'form-control'),
+                    style=(gcitem.attributes.style ? gcitem.attributes.style.value+';'+css : css),
+                    ng-required = (gcitem.attributes.display.value!='true' ? gcitem.attributes.display.value : (gcitem.attributes.required.value=='yes' ? 'true' : 'false')),
+                    ng-model = (gcitem.attributes.property.value == '' ? 'mdl#{gcitem.id}' : '#{gcitem.attributes.property.value}'),
+                    ng-class = (gcitem.attributes.dynamicClasses && gcitem.attributes.dynamicClasses.value=='yes' ? "#{gcitem.attributes.dynamicClasses.value}" : undefined),
+                    ng-init = (gcitem.attributes.propertyInit.value == '' ? undefined : "#{gcitem.attributes.propertyInit.value}"),
+                    ng-disabled = (!gcitem.attributes.disabled || gcitem.attributes.disabled.value == '' ? undefined : "#{gcitem.attributes.disabled.value}"),
+                    ng-minlength = (gcitem.attributes.passwordMinlength.value!='' ? "#{gcitem.attributes.passwordMinlength.value}" : undefined),
+                    ng-maxlength = (gcitem.attributes.passwordMaxlength.value!='' ? "#{gcitem.attributes.passwordMaxlength.value}" : undefined),
+                    dfx-tool-tip,
+                    tooltip-title = (gcitem.attributes.tooltip.value == '' ? undefined : "#{gcitem.attributes.tooltip.value}"),
+                    data-placement = (gcitem.attributes.tooltipPosition.value ? "#{gcitem.attributes.tooltipPosition.value}" : undefined))
+                if (gcitem.attributes.passwordIcon.value!='' && gcitem.attributes.passwordIconPosition.value=='right')
+                    span(
+                    class="input-group-addon left-icon",
+                    style="display:table-cell")
+                        i(class=('glyphicon glyphicon-' + gcitem.attributes.passwordIcon.value))
+            if (gcitem.attributes.required.value=='yes')
+                span.help-block(ng-show="#{gcformname}.#{gcitem.attributes.name.value}.$error.required && #{gcformname}.#{gcitem.attributes.name.value}.$dirty") #{(gcitem.attributes.errorRequired.value=='' ? "Thid field is required" : gcitem.attributes.errorRequired.value)}
+            if (gcitem.attributes.passwordMinlength.value!='')
+                span.help-block(ng-show="#{gcformname}.#{gcitem.attributes.name.value}.$error.minlength && #{gcformname}.#{gcitem.attributes.name.value}.$dirty") #{(gcitem.attributes.passwordErrorMinlength.value=='' ? "Your entry required to be at least " + gcitem.attributes.passwordMinlength.value + " characters" : gcitem.attributes.passwordErrorMinlength.value)}
+            if (gcitem.attributes.passwordMaxlength.value!='')
+                span.help-block(ng-show="#{gcformname}.#{gcitem.attributes.name.value}.$error.maxlength && #{gcformname}.#{gcitem.attributes.name.value}.$dirty") #{(gcitem.attributes.passwordErrorMaxlength.value=='' ? "Your entry required to be at least " + gcitem.attributes.passwordMaxlength.value + " characters" : gcitem.attributes.passwordErrorMaxlength.value)}
+        if (gcitem.attributes.type.value=='date')
+            div(
+                id="#{gcitem.id}_form_group_{{$index}}",
+                name = (gcitem.attributes.name.value ? "#{gcitem.attributes.name.value}" : undefined ),
+                class="input-group input-append date",
+                style="width:100%",
+                data-date = "",
+                data-date-format = (gcitem.attributes.dateFormat.value == '' ? "dd/mm/yyyy" : "#{gcitem.attributes.dateFormat.value}"),
+                data-date-start = (gcitem.attributes.dateMin.value == '' ? "" : "#{gcitem.attributes.dateMin.value}"),
+                data-date-end = (gcitem.attributes.dateMax.value == '' ? "" : "#{gcitem.attributes.dateMax.value}"),
+                ng-init = (gcitem.attributes.propertyInit.value == '' ? undefined : "#{gcitem.attributes.propertyInit.value}"),
+                ng-model = (gcitem.attributes.property.value == '' ? 'd#{gcitem.id}' : "#{gcitem.attributes.property.value}"),
+                ng-change = (!gcitem.attributes.onchange || gcitem.attributes.onchange.value == '' ? undefined : "#{gcitem.attributes.onchange.value}"),
+                dfx-date)
+                input(
+                    id = "#{gcitem.id}_field_{{$index}}",
+                    type = "text",
+                    class=(gcitem.attributes.classes ? 'form-control '+gcitem.attributes.classes.value : 'form-control'),
+                    style=(gcitem.attributes.style ? gcitem.attributes.style.value+';'+css : css),
+                    ng-required = (gcitem.attributes.display.value!='true' ? gcitem.attributes.display.value : (gcitem.attributes.required.value=='yes' ? 'true' : 'false')),
+                    ng-model = (gcitem.attributes.property.value == '' ? 'd#{gcitem.id}' : '#{gcitem.attributes.property.value}'),
+                    ng-init = (gcitem.attributes.propertyInit.value == '' ? undefined : "#{gcitem.attributes.propertyInit.value}"),
+                    ng-class = (gcitem.attributes.dynamicClasses && gcitem.attributes.dynamicClasses.value!='' ? "#{gcitem.attributes.dynamicClasses.value}" : undefined),
+                    ng-disabled = (!gcitem.attributes.disabled || gcitem.attributes.disabled.value == '' ? undefined : "#{gcitem.attributes.disabled.value}"),
+                    min-date = (gcitem.attributes.dateMin.value == '' ? undefined : "'#{gcitem.attributes.dateMin.value}'"),
+                    max-date = (gcitem.attributes.dateMax.value == '' ? undefined : "'#{gcitem.attributes.dateMax.value}'"),
+                    dfx-tool-tip,
+                    tooltip-title = (gcitem.attributes.tooltip.value == '' ? undefined : "#{gcitem.attributes.tooltip.value}"),
+                    data-placement = (gcitem.attributes.tooltipPosition.value ? "#{gcitem.attributes.tooltipPosition.value}" : undefined))
+                div.input-group-btn
+                    button.btn.btn-default(
+                        type="button",
+                        ng-model="$parent.entity.#{gcitem.attributes.name.value}",
+                        ng-disabled = (!gcitem.attributes.disabled || gcitem.attributes.disabled.value == '' ? undefined : "#{gcitem.attributes.disabled.value}"))
+                        i.fa.fa-calendar
+            span.help-block(ng-show="#{gcformname}.#{gcitem.attributes.name.value}.$error.required && #{gcformname}.#{gcitem.attributes.name.value}.$dirty") #{(gcitem.attributes.errorRequired.value=='' ? "Thid field is required" : gcitem.attributes.errorRequired.value)}
+            span.help-block(ng-show="#{gcformname}.#{gcitem.attributes.name.value}.$invalid && #{gcformname}.#{gcitem.attributes.name.value}.$dirty") #{(gcitem.attributes.dateErrorFormat.value=='' ? "Invalid Date Format!" : gcitem.attributes.dateErrorFormat.value)}
+        if (gcitem.attributes.type.value=='number')
+            div(
+                id="#{gcitem.id}_form_group_{{$index}}",
+                class="input-group",
+                style="width:100%"
+                )
+                if (gcitem.attributes.numberIcon.value!='' && gcitem.attributes.numberIconPosition.value=='left')
+                    span(
+                        class="input-group-addon left-icon",
+                        style="display:table-cell")
+                        i(class=('glyphicon glyphicon-' + gcitem.attributes.numberIcon.value))
+                input(
+                    id = "#{gcitem.id}_field_{{$index}}",
+                    name = (gcitem.attributes.name.value ? "#{gcitem.attributes.name.value}" : undefined ),
+                    type = "number",
+                    class=(gcitem.attributes.classes ? 'form-control '+gcitem.attributes.classes.value : 'form-control'),
+                    style=(gcitem.attributes.style ? gcitem.attributes.style.value+';'+css : css),
+                    ng-required = (gcitem.attributes.display.value!='true' ? gcitem.attributes.display.value : (gcitem.attributes.required.value=='yes' ? 'true' : 'false')),
+                    ng-model = (gcitem.attributes.property.value == '' ? 'mdl#{gcitem.id}' : '#{gcitem.attributes.property.value}'),
+                    ng-init = (gcitem.attributes.propertyInit.value == '' ? undefined : "#{gcitem.attributes.propertyInit.value}"),
+                    ng-class = (gcitem.attributes.dynamicClasses && gcitem.attributes.dynamicClasses.value=='yes' ? "#{gcitem.attributes.dynamicClasses.value}" : undefined),
+                    ng-disabled = (!gcitem.attributes.disabled || gcitem.attributes.disabled.value == '' ? undefined : "#{gcitem.attributes.disabled.value}"),
+                    min = (gcitem.attributes.numberMin.value == '' ? undefined : "#{gcitem.attributes.numberMin.value}"),
+                    max = (gcitem.attributes.numberMax.value == '' ? undefined : "#{gcitem.attributes.numberMax.value}"),
+                    step = (gcitem.attributes.numberStep.value == '' ? undefined : "#{gcitem.attributes.numberStep.value}"),
+                    ng-change = (!gcitem.attributes.onchange || gcitem.attributes.onchange.value == '' ? undefined : "#{gcitem.attributes.onchange.value}"),
+                    dfx-tool-tip,
+                    tooltip-title = (gcitem.attributes.tooltip.value == '' ? undefined : "#{gcitem.attributes.tooltip.value}"),
+                    data-placement = (gcitem.attributes.tooltipPosition.value ? "#{gcitem.attributes.tooltipPosition.value}" : undefined))
+                if (gcitem.attributes.numberIcon.value!='' && gcitem.attributes.numberIconPosition.value=='right')
+                    span(
+                        class="input-group-addon left-icon",
+                        style="display:table-cell")
+                        i(class=('glyphicon glyphicon-' + gcitem.attributes.numberIcon.value))
+            if (gcitem.attributes.required.value=='yes')
+                span.help-block(ng-show="#{gcformname}.#{gcitem.attributes.name.value}.$error.required && #{gcformname}.#{gcitem.attributes.name.value}.$dirty") #{(gcitem.attributes.errorRequired.value=='' ? "Thid field is required" : gcitem.attributes.errorRequired.value)}
+        if (gcitem.attributes.type.value=='money')
+            div(
+                id="#{gcitem.id}_form_group_{{$index}}",
+                class="input-group",
+                style="width:100%"
+                )
+                if (gcitem.attributes.moneyIcon.value!='' && gcitem.attributes.moneyIconPosition.value=='left')
+                    span(
+                        class="input-group-addon left-icon",
+                        style="display:table-cell")
+                        i(class=('glyphicon glyphicon-' + gcitem.attributes.moneyIcon.value))
+                input(
+                    id = "#{gcitem.id}_field_{{$index}}",
+                    name = (gcitem.attributes.name.value ? "#{gcitem.attributes.name.value}" : undefined ),
+                    type = "text",
+                    class=(gcitem.attributes.classes ? 'form-control '+gcitem.attributes.classes.value : 'form-control'),
+                    style=(gcitem.attributes.style ? gcitem.attributes.style.value+';'+css : css),
+                    ng-required = (gcitem.attributes.display.value!='true' ? gcitem.attributes.display.value : (gcitem.attributes.required.value=='yes' ? 'true' : 'false')),
+                    ng-model = (gcitem.attributes.property.value == '' ? 'mdl#{gcitem.id}' : '#{gcitem.attributes.property.value}'),
+                    ng-init = (gcitem.attributes.propertyInit.value == '' ? undefined : "#{gcitem.attributes.propertyInit.value}"),
+                    ng-class = (gcitem.attributes.dynamicClasses && gcitem.attributes.dynamicClasses.value=='yes' ? "#{gcitem.attributes.dynamicClasses.value}" : undefined),
+                    ng-disabled = (!gcitem.attributes.disabled || gcitem.attributes.disabled.value == '' ? undefined : "#{gcitem.attributes.disabled.value}"),
+                    input-mask = "'decimal'",
+                    mask-groupsep = (gcitem.attributes.moneyThousandSeparator.value == '' ? undefined : "#{gcitem.attributes.moneyThousandSeparator.value}"),
+                    mask-decsep = (gcitem.attributes.moneyDecimalSeparator.value == '' ? undefined : "#{gcitem.attributes.moneyDecimalSeparator.value}"),
+                    mask-digits = (gcitem.attributes.moneyNumberDigits.value == '' ? undefined : "#{gcitem.attributes.moneyNumberDigits.value}"),
+                    ng-change = (!gcitem.attributes.onchange || gcitem.attributes.onchange.value == '' ? undefined : "#{gcitem.attributes.onchange.value}"),
+                    dfx-tool-tip,
+                    tooltip-title = (gcitem.attributes.tooltip.value == '' ? undefined : "#{gcitem.attributes.tooltip.value}"),
+                    data-placement = (gcitem.attributes.tooltipPosition.value ? "#{gcitem.attributes.tooltipPosition.value}" : undefined))
+                if (gcitem.attributes.moneyIcon.value!='' && gcitem.attributes.moneyIconPosition.value=='right')
+                    span(
+                        class="input-group-addon left-icon",
+                        style="display:table-cell")
+                        i(class=('glyphicon glyphicon-' + gcitem.attributes.moneyIcon.value))
+            if (gcitem.attributes.required.value=='yes')
+                span.help-block(ng-show="#{gcformname}.#{gcitem.attributes.name.value}.$error.required && #{gcformname}.#{gcitem.attributes.name.value}.$dirty") #{(gcitem.attributes.errorRequired.value=='' ? "Thid field is required" : gcitem.attributes.errorRequired.value)}

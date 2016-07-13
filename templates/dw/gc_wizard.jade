@@ -1,0 +1,80 @@
+- var containerCss = '';
+if (gcitem.attributes.containerCss)
+    each val, key in gcitem.attributes.containerCss
+        - if (val!='') containerCss += key + ':' + val + ';'
+- var css = '';
+if (gcitem.attributes.css)
+    each val, key in gcitem.attributes.css
+        - if (val!='') css += key + ':' + val + ';'
+
+div(id="#{gcitem.id}_{{$index}}",
+    ng-show = (gcitem.attributes.display.value == '' ? undefined : "#{gcitem.attributes.display.value}"),
+    style=('display:inline-block;position:relative;' + (gcitem.attributes.containerStyle ? gcitem.attributes.containerStyle.value : '') + ';' + containerCss),
+    class="#{gcitem.attributes.containerClasses.value}",
+    ng-class = (gcitem.attributes.containerDynamicClasses.value == '' ? undefined : "#{gcitem.attributes.containerDynamicClasses.value}"))
+    h3(ng-show=(gcitem.attributes.titleVisible.value ? "true" : "false")) #{gcitem.attributes.title.value}
+    div.wizard(id="#{gcitem.id}_wizard",ng-controller=(gcitem.attributes.controller.value == '' ? undefined : gcitem.attributes.controller.value), dfx-wizard)
+        div.steps
+            each item, i in gcitem.attributes.layoutElements
+                a(class=( i==0 ? "active" : undefined), data-target="##{gcitem.id}_#{i+1}")
+                    span(class=( i==0 ? "badge badge-info" : "badge")) #{i+1}
+                    span #{item.header.value}
+        div.step-content
+            each layout_item, i in gcitem.attributes.layoutElements
+                - var gc_form_name = 'form_' + gcitem.id + '_layout_' + i;
+                - var columnClass = (i==0 ? 'step-pane active '+layout_item.classes:'step-pane '+layout_item.classes)
+                div(id="#{gcitem.id}_#{i+1}",
+                    class=(i==0 ? 'step-pane active' : 'step-pane'))
+                    ng-form(name="#{gc_form_name}")
+                        each row, i_row in layout_item.layout.rows
+                            - var rowCss = '';
+                            if (row.css)
+                                each val, key in row.css
+                                    - if (val!='') rowCss += key + ':' + val + ';'
+                            div(class="row #{row.classes.value}", style="margin:0;#{row.style.value};#{rowCss}",
+                                ng-class=(row.dynamicClasses == undefined) ? undefined : row.dynamicClasses.value)
+                                - var columnClass = 'col-md-12'
+                                each column, i_column in row.cols
+                                    - columnClass = (column.width ? 'col-md-'+column.width.value : columnClass)+(column.classes.value != '' ? ' '+ column.classes.value : '')
+                                    - if (column.orientation) {
+                                    -     columnClass += ' gc_w_column_layout ' + 'gc_w_column_orientation_'+column.orientation.value;
+                                    -     columnClass += ' gc_w_column_align_'+column.alignment.value;
+                                    -     columnClass += ' gc_w_column_disposition_'+column.disposition.value;
+                                    - }
+                                    - var columnCss = '';
+                                    if (column.css)
+                                        each val, key in column.css
+                                            - if (val!='') columnCss += key + ':' + val + ';'
+                                    div(class="#{columnClass}" style="#{column.style.value};#{columnCss}",
+                                        ng-class=(column.dynamicClasses == undefined) ? undefined : column.dynamicClasses.value)
+                                        each gcitem_child, j in gcitem.children
+                                            - if (gcitem_child.container=='layout_'+i+'_row_'+i_row+'_column_'+i_column) {
+                                                mixin displayItem(gcitem_child, gc_form_name)
+                                            - }
+                    div.action
+                        button.btn.btn-default.btn-prev(id="btnWizardPrev#{i+1}", name="btnWizardPrev", type="button", ng-click=(gcitem.attributes.backClick.value == '' ? undefined : gcitem.attributes.backClick.value))
+                            i.fa.fa-arrow-left
+                            span(style="padding-left:5px") Back
+                        button.btn.btn-primary.btn-next(id="btnWizardNext#{i+1}", name="btnWizardNext", type="button", ng-disabled="#{gc_form_name}.$invalid", ng-click=(gcitem.attributes.nextClick.value == '' ? undefined : gcitem.attributes.nextClick.value))
+                            span(style="padding-right:5px") Next
+                            i.fa.fa-arrow-right
+script(type="text/javascript").
+    angular.element(document).ready(function() {
+        var scope = angular.element($( '#' + '#{gcitem.id}_wizard' )).scope();
+
+        var assignHandler = function(fn_name, handler_name) {
+            if (fn_name) {
+                if (fn_name.indexOf('(') !== -1) {
+                    fn_name = fn_name.replace(/\(.*?\)/g, "");
+                }
+                scope.$on(handler_name, function(){
+                    scope[fn_name]();
+                });
+            }
+        }
+        if ('#{gcitem.attributes.onSelect.value}' != '') {
+            assignHandler('#{gcitem.attributes.onSelect.value}', 'selectedItem');
+        }
+    });
+
+

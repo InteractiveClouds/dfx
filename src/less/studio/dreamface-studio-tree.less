@@ -1,0 +1,299 @@
+/*
+ This notice must be untouched at all times.
+
+ DreamFace DFX
+ Version: 2.0.0
+ Author: Interactive Clouds
+
+ Copyright (c) 2015 Interactive Clouds, Inc.  "DreamFace" is a trademark of Interactive Clouds, Inc.
+
+ LICENSE: DreamFace Open License
+ */
+
+/**
+ * COLOR-THEME
+ */
+@white: #FFFFFF;
+@deep-sky-blue: #00D8FF;
+@true-sky-blue: #1FBBD7;
+@italian-sky-blue: #B2F3FF;
+@prussian-blue: #223957;
+@brink-pink: #FF5C7F;
+@red-path: #CC3214;
+@white-smoke: #F2F2F2;
+@teal-blue: #26727F;
+@dark-turquoise: #1FBBD7;
+@sea-green: #1FBB63;
+@tangerine: #F98E2B;
+@moondance: #E1E1E1;
+@glacier-white: #E9E9E9;
+@pebble-drift: #7F9AA8;
+@gray-neutral: #808080;
+// COLOR-THEME END
+
+@media all and (-webkit-min-device-pixel-ratio: 1.5),(min--moz-device-pixel-ratio: 1.5),(-o-min-device-pixel-ratio: 1.5/1),(min-device-pixel-ratio: 1.5),(min-resolution: 138dpi),(min-resolution: 1.5dppx) {
+  .treeview {
+    .hitarea {
+      background: url(/images/treeview-default@2x.png) -185px -61px no-repeat;
+      //    background: url(/images/treeview-default.png) -231px -14px no-repeat;
+      height: 64px;
+      width: 92px;
+      margin-left: -92px;
+    }
+    li {
+      padding: 30px 0pt 6px 92px;
+      background: url(/images/treeview-default-line@2x.png) 0 0 no-repeat;
+      &.tree-root > a{
+        font-weight: 600;
+      }
+      &.collapsable,
+      &.expandable {
+        background-position: -2 -464px;
+      }
+      &.first,
+      &.last {
+        background-position: 0 -5058px;
+      }
+      &.lastCollapsable,
+      &.lastExpandable ,
+      &.firstCollapsable,
+      &.firstExpandable {
+        background-image: url(/images/treeview-default@2x.png);
+      }
+      &.lastCollapsable {
+        background-position: -2px -472px;
+      }
+      &.lastExpandable {
+        background-position: -186px -284px;
+      }
+      &.firstCollapsable {
+        background-position: -94px -378px;
+      }
+      &.firstExpandable {
+        background-position: -278px -190px;
+      }
+    }
+    div {
+      &.lastCollapsable-hitarea,
+      &.lastExpandable-hitarea,
+      &.firstCollapsable-hitarea,
+      &.firstExpandable-hitarea {
+        background-position: 0;
+      }
+    }
+    .expandable-hitarea {
+      background-position: -462px -28px;
+    }
+  }
+}
+
+.treeview {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  .hitarea {
+    background: url(/images/treeview-default.png) -185px -61px no-repeat;
+//    background: url(/images/treeview-default.png) -231px -14px no-repeat;
+    height: 32px;
+    width: 46px;
+    margin-left: -46px;
+    float: left;
+    cursor: pointer;
+  }
+  li {
+    margin: 0;
+    padding: 15px 0pt 3px 46px;
+    background: url(/images/treeview-default-line.png) 0 0 no-repeat;
+    &.tree-root > a{
+      font-weight: 600;
+    }
+    &.collapsable,
+    &.expandable {
+      background-position: -1 -232px;
+    }
+    &.first,
+    &.last {
+      background-position: 0 -2529px;
+    }
+    &.lastCollapsable,
+    &.lastExpandable ,
+    &.firstCollapsable,
+    &.firstExpandable {
+      background-image: url(/images/treeview-default.png);
+    }
+    &.lastCollapsable {
+      background-position: -1px -236px;
+    }
+    &.lastExpandable {
+      background-position: -93px -142px;
+    }
+    &.firstCollapsable {
+      background-position: -47px -189px;
+    }
+    &.firstExpandable {
+      background-position: -139px -95px;
+    }
+  }
+  div {
+    &.lastCollapsable-hitarea,
+    &.lastExpandable-hitarea,
+    &.firstCollapsable-hitarea,
+    &.firstExpandable-hitarea {
+      background-position: 0;
+    }
+  }
+  .expandable-hitarea {
+    background-position: -231px -14px;
+  }
+  .tree-selected,
+  .tree-selected + a {
+    color: @white;
+    background-color: @true-sky-blue;
+  }
+  a {
+    display: inline-block;
+    padding: 5px 10px;
+    text-decoration: none;
+    color: @prussian-blue;
+    font-size: 14px;
+    background-color: white;
+    height: 32px;
+    letter-spacing: 0.5px;
+    background-size: 100%;
+  }
+  .hover,
+  .tree-selected + a.hover {
+    color: @white;
+    background-color: @deep-sky-blue;
+    cursor: pointer;
+  }
+}
+
+/* fix for IE6 */
+* html .hitarea {
+  display: inline;
+  float: none;
+}
+
+// New application tree style
+@defaultColor: rgb(105, 167, 245);
+@hoverColor: rgb(115, 203, 255);
+
+//Mixins
+.transition-duration(@duration: 1s) {
+  -webkit-transition-duration: @duration;
+  -moz-transition-duration: @duration;
+  -ms-transition-duration: @duration;
+  -o-transition-duration: @duration;
+  transition-duration: @duration;
+}
+
+.transition-property(@property) {
+  -webkit-transition-property: @property;
+  -moz-transition-property: @property;
+  -ms-transition-property: @property;
+  -o-transition-property: @property;
+  transition-property: @property;
+}
+
+.user-select(@select: none) {
+  -webkit-user-select: @select;
+  -moz-user-select: @select;
+  -ms-user-select: @select;
+  -o-user-select: @select;
+  user-select: @select;
+}
+
+.dfx-at-treeview {
+  float: left; //Prevent 100% width
+  .user-select; //Prevent accidental selection on dbl click to fast expand/collapse
+
+  //Fade back to default
+  &:hover input ~ label:before,
+  &.hover input ~ label:before{
+    opacity: 1.0;
+    .transition-duration(0.5s);
+  }
+
+  ul {
+    .transition-duration;
+    list-style: none;
+    padding-left: 1em;
+
+    li {
+      padding-left:0px;
+      padding-right:5px;
+      //Fade back to default
+      span{
+        .transition-property(color);
+        .transition-duration;
+
+        //Highlight on hover
+        &:hover {
+          color: @hoverColor;
+          .transition-duration(0.3s);
+        }
+      }
+    }
+  }
+
+  //Hide checkboxes
+  input.dfx-at-treeview-button {
+    display: none;
+
+    //Hide collapsed branches
+    &:checked ~ ul {
+      display: none;
+    }
+
+    //Show pointer on collapsible rows
+    & ~ label {
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    //Expanded branch
+    & ~ label:before {
+      content: '';
+      width: 0;
+      height: 0;
+      position: absolute;
+      margin-left: -1em;
+      margin-top: 0.4em;
+      border-width: 4px;
+      border-style: solid;
+      border-top-color: transparent;
+      border-right-color: @defaultColor;
+      border-bottom-color: @defaultColor;
+      border-left-color: transparent;
+      .transition-property(opacity);
+      .transition-duration;
+    }
+
+    //Collapsed branch
+    &:checked ~ label:before {
+      margin-left: -0.8em;
+      border-width: 5px;
+      border-top-color: transparent;
+      border-right-color: transparent;
+      border-bottom-color: transparent;
+      border-left-color: @defaultColor;
+    }
+  }
+}
+
+.dfx-at-treeview-content {
+  padding-left: 0px !important;
+}
+
+.dfx-at-treeview-content span {
+  padding-left: 5px;
+  font-family: "Open Sans",Arial,sans-serif;
+  font-size: 12px;
+  line-height: 25px;
+}

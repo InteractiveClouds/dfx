@@ -1,0 +1,37 @@
+doctype html
+html
+    head
+        meta(http-equiv="content-type", content="text/HTML;charset=UTF-8")
+        meta(name="viewport", content="width=device-width,initial-scale=1")
+        title DreamFace Studio Console Log in
+        link(rel="stylesheet", href="/css/console/dfx.min.css", media="screen")
+        script(src="/js/console/dfx.js")
+    body#dfx_studio_login_page.console
+        div#dfx_studio_login.panel
+            div.row
+                div.col-sm-offset-4.col-sm-4
+                    div.panel.panel-login
+                        div.panel-heading
+                            div.panel-heading-img
+                                img(src="/images/df_LogoLogin.png")
+                            h3
+                                span X
+                                | -Platform
+                        div.panel-body
+                            h4 Log in to DreamFace Console
+                            form(role="form", action="/console/login", method="post")
+                                div.form-group.clearfix
+                                    label.col-sm-offset-1.col-sm-10.control-label(for="username") User ID:
+                                    div.col-sm-offset-1.col-sm-10
+                                        input#username.form-control(type="text", autofocus="off", name="username")
+                                div.form-group.clearfix
+                                    label.col-sm-offset-1.col-sm-10.control-label(for="password") Password:
+                                    div.col-sm-offset-1.col-sm-10
+                                        input#password.form-control(type="password", autofocus="off", name="password", placeholder="Enter your password")
+                                div.form-group.clearfix
+                                    div.col-sm-offset-1.col-sm-10
+                                        button.btn.btn-sign-in(type="submit") Sign in
+        footer.dfx_studio_login
+            div.dfx-logo
+                img(src="/images/df_LogoLoginFooter.png")
+            p Copyright &copy; Interactive Clouds, all rights reserved.

@@ -1,0 +1,12 @@
+<div flex style="{{attributes.style.value}}" class="{{attributes.classes.value}}">
+    <md-chips ng-if="attributes.selectedType.value==='standard' && attributes.selectedInput.value!=='number'"
+              ng-model="attributes.itemsArray.value" placeholder="{{attributes.addPlaceholder.value | checkExpression}}"
+              secondary-placeholder="{{attributes.basicPlaceholder.value | checkExpression}}">
+    </md-chips>
+
+    <md-chips ng-if="attributes.selectedType.value==='standard' && attributes.selectedInput.value==='number'"
+              ng-model="attributes.itemsArray.value" placeholder="{{attributes.addPlaceholder.value | checkExpression}}"
+              secondary-placeholder="{{attributes.basicPlaceholder.value | checkExpression}}">
+        <input type="number" placeholder="{{attributes.basicPlaceholder.value | checkExpression}}">
+    </md-chips>
+</div>

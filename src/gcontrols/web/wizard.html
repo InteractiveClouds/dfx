@@ -1,0 +1,72 @@
+<div flex layout="row" layout-align="center center" ng-show="$eval(attributes.display.value)">
+    <div style="{{attributes.style.value}}" class="{{attributes.classes.value}} {{attributes.whiteframe.value}} flex" ng-class="$eval(attributes.dynamicClasses.value)"
+         ng-focus="$eval(attributes.onfocus.value)"
+         ng-blur="$eval(attributes.onblur.value)"
+         ng-click="$eval(attributes.onclick.value)"
+         ng-dblclick="$eval(attributes.ondblclick.value)"
+         ng-keypress="$eval(attributes.onkeypress.value)"
+         ng-keydown="$eval(attributes.onkeydown.value)"
+         ng-keyup="$eval(attributes.onkeyup.value)"
+         ng-mouseover="$eval(attributes.onmouseover.value)"
+         ng-mouseenter="$eval(attributes.onmouseenter.value)"
+         ng-mousemove="$eval(attributes.onmousemove.value)"
+         ng-mouseleave="$eval(attributes.onmouseleave.value)"
+         ng-mousedown="$eval(attributes.onmousedown.value)"
+         ng-mouseup="$eval(attributes.onmouseup.value)">
+        <div dfx-gc-web-toolbar></div>
+        <md-content flex style="{{attributes.bodyStyle.value}}" ng-hide="$eval(attributes.toolbar.collapsed.value)">
+            <form name="form_{{component_id}}" id="form_{{component_id}}" ng-submit="$eval(attributes.formSubmit.value)" role="form">
+                <md-tabs md-no-ink-bar="{{attributes.inkBar.value==='disabled' ? 'true': 'false'}}" md-center-tabs="{{attributes.centerSteps.value}}"
+                         md-dynamic-height md-border-bottom md-selected="attributes.stepIndex.value" md-align-tabs="{{attributes.stepAlign.value}}" md-stretch-tabs="{{attributes.stretching.value}}">
+                    <md-tab ng-repeat="step in attributes.steps.value track by $index" label="{{$eval(step.label)}}" ng-disabled="$eval(step.disabled.value) || step.validDisabled.value"> <!--md-on-select="$eval(attributes.onSelect.value)" md-on-deselect="$eval(attributes.onDeselect.value)"-->
+                        <div ng-form name="stepForm{{$index}}" id="form_{{component_id}}_step_{{$index}}">
+                            <md-content flex="100" layout="row" layout-padding style="{{step.style.value}}" class="{{step.classes.value}}" ng-class="$eval(step.dynamicClasses.value)">
+                                <div flex id="{{component_id}}_step_{{$index}}">
+                                    <div ng-repeat="row in step.layout.rows track by $index" id="{{component_id}}_layout_{{$parent.$index}}_row_{{$index}}" layout="row" layout-wrap flex="100">
+                                        <div ng-repeat="col in row.cols track by $index" id="{{component_id}}_layout_{{$parent.$parent.$index}}_row_{{$parent.$index}}_column_{{$index}}" flex="{{col.width.value}}"
+                                             gc-container="layout_{{$parent.$parent.$index}}_row_{{$parent.$index}}_column_{{$index}}" gc-parent="{{component_id}}" style="{{col.style.value}}" ng-style="{'flex-wrap': col.orientation.value ==='row' ? 'wrap' : 'nowrap'}"
+                                             layout="{{col.orientation.value}}" layout-align="{{col.halignment.value}} {{col.valignment.value}}"
+                                             class="ui-placeholder dfx_visual_editor_droppable flex {{col.classes.value}}" ng-class="$eval(col.dynamicClasses.value)">
+                                            <div id="{{gcontrol.id}}" dfx-gc-web="{{gcontrol.type}}" gc-role="control" gc-parent="{{component_id}}" view-id="{{view_id}}" ng-repeat="gcontrol in children['layout_' + $parent.$parent.$index + '_row_'+ $parent.$index+'_column_'+$index]"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </md-content>
+                            <div ng-if="!step.isLast.value" layout="row" layout-align="end-center" >
+                                <button ng-click="decrIndex(); $eval(attributes.onPrevious.value); $eval(attributes.previousButton.onclick.value); prevent($event);"
+                                        style="{{attributes.previousButton.style.value}}"
+                                        class="{{attributes.previousButton.classes.value}} md-altTheme-theme glyph md-raised md-primary md-button"
+                                        ng-class="$eval(attributes.previousButton.dynamicClasses.value)"
+                                        ng-disabled="$index===0">
+                                    {{$eval(attributes.previousButton.label.value)}}
+                                </button>
+                                <button ng-click="incrIndex(); $eval(attributes.onNext.value); $eval(attributes.nextButton.onclick.value); prevent($event);"
+                                        style="{{attributes.nextButton.style.value}}"
+                                        class="{{attributes.nextButton.classes.value}} md-altTheme-theme glyph md-raised md-primary md-button"
+                                        ng-class="$eval(attributes.nextButton.dynamicClasses.value)"
+                                        ng-disabled="stepForm{{$index}}.$invalid">
+                                    {{$eval(attributes.nextButton.label.value)}}
+                                </button>
+                            </div>
+                        </div>
+                    </md-tab>
+                </md-tabs>
+                <div ng-if="attributes.steps.value[attributes.stepIndex.value].isLast.value" layout="row" layout-align="end-center">
+                    <button ng-click="decrIndex(); $eval(attributes.onPrevious.value); $eval(attributes.previousButton.onclick.value); prevent($event);"
+                            style="{{attributes.previousButton.style.value}}"
+                            class="{{attributes.previousButton.classes.value}} md-altTheme-theme glyph md-raised md-primary md-button"
+                            ng-class="$eval(attributes.previousButton.dynamicClasses.value)"
+                            ng-disabled="attributes.steps.value.length===1">
+                        {{$eval(attributes.previousButton.label.value)}}
+                    </button>
+                    <input type="submit" style="{{attributes.submitButton.style.value}}"
+                           ng-click="$eval(attributes.submitButton.onclick.value)"
+                           class="{{attributes.submitButton.classes.value}} md-button md-altTheme-theme glyph md-raised dfx-core-gc-wizard-submit"
+                           ng-class="$eval(attributes.submitButton.dynamicClasses.value)"
+                           ng-disabled="form_{{component_id}}.$invalid"
+                           value="{{$eval(attributes.submitButton.label.value)}}">
+                </div>
+            </form>
+        </md-content>
+    </div>
+</div>

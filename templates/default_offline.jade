@@ -1,0 +1,68 @@
+doctype html
+html(ng-app="#{appname}")
+    head
+        meta(http-equiv="content-type", content="text/HTML;charset=UTF-8")
+        meta(name="viewport", content="width=device-width,initial-scale=1")
+        title #{apptitle}
+        link(rel="stylesheet", href="std/css/bootstrap.min.css", media="screen")
+        link(rel="stylesheet", href="styles/app.css", media="screen")
+        link(rel="stylesheet", href="std/css/dfx-utils.min.css", media="screen")
+        script(src="js/des.min.js")
+        script(src="js/md5.js")
+        script(src="js/authRequest.js")
+        script(src="commons/js/angular.min.js")
+        script(src="commons/js/d3.min.js")
+        script(src="commons/js/jquery-1.9.1.js")
+        script(src="commons/js/dataquery.js")
+        script(src="commons/js/dfx.utils.js")
+        script(src="bootstrap/js/bootstrap.min.js")
+        script(src="commons/js/nv-d3.min.js")
+        script(src="commons/js/angular-nvd3.min.js")
+        script(src="commons/js/dfx.directives.js")
+        script(src="js/jquery.dreamface-1.0.js")
+        script(src="commons/js/app.js")
+    body(style="padding-top:51px; padding-bottom:31px")
+        script(type="text/javascript").
+            DreamFace.initSession( {dfx_appname:'#{appname}', dfx_tenantid:'#{tenantid}'} );
+
+        mixin displayWidget(src_obj, children)
+            include dw/widget_frame
+
+        div.navbar.navbar-inverse.navbar-fixed-top(role="navigation")
+            div.container
+                div.navbar-header
+                    button.navbar-toggle(type="button", data-toggle="collapse", data-target="#main-navbar-collapse")
+                        span.sr-only Toggle navigation
+                        span.icon-bar
+                        span.icon-bar
+                        span.icon-bar
+                    a.navbar-brand(href="#") #{apptitle}
+                div.collapse.navbar-collapse(id="main-navbar-collapse")
+                    ul.nav.navbar-nav
+                        li.active
+                            a(href="Home.html") Home
+                        li
+                            a(href="index.html") Logout
+        div
+            - console.log('COMPILER: widget');
+            each row in screen.layout.rows
+                div.col-sm-12(id="#{row.id}", style="padding-left:0;padding-right:0;padding-bottom:31px")
+                each col in row.columns
+                        div.col-sm-12(style="padding-left:0;padding-right:0")
+                            each widget in col.widgets
+                                each wclass in wclasses
+                                    if wclass.name==widget.name
+                                        - var widgetname = wclass.name;
+                                        case wclass.definition.wtype
+                                            when "jade"
+                                                - var dyn_fn = jade_compiler.compile( wclass.definition.src )
+                                                - var dyn_res = dyn_fn({widget:wclass.definition, wid: 'abc'})
+                                                | !{dyn_res}
+                                            when "visual"
+                                                - var src_obj = JSON.parse(wclass.definition.src);
+                                                - var children = src_obj.definition;
+                                                mixin displayWidget(src_obj, children)
+        div.navbar.navbar-inverse.navbar-fixed-bottom
+            div.container
+                div.navbar-header
+                a.navbar-brand(href="#") powered by DreamFace

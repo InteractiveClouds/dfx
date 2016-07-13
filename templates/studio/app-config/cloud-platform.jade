@@ -1,0 +1,38 @@
+div.panel.panel-primary(style="position: relative; height: 99%; margin-bottom: 1%;")
+    div.panel-heading
+        h4 Cloud Platform Configuration
+    div.panel-body
+        form#applicationForm(action="javascript:void(0);")
+            div.panel.panel-primary
+                div.panel-heading
+                    h4 General Information
+                div.panel-body
+                    fieldset
+                        //div.form-group.col-lg-6
+                        //    label(for="fldTitle") Title:
+                        //    input#fldTitle.form-control(type="text", value='#{application.title}', data-inputname='title')
+                        //div.form-group.col-lg-6
+                        //    label(for="fldOwnerId") Owner:
+                        //    input#fldOwnerId.form-control(type="text", value='#{application.ownerId}', data-inputname='ownerId')
+                        //div.form-group.col-lg-6
+                        //    label(for="fldRequestDate") Creation Date:
+                        //    input#fldRequestDate.form-control(readonly, type="text", value='#{application.creationDate}')
+                        //div.form-group.col-lg-4
+                        //    label(for="fldPlatform") Platform:
+                        //    select#fldPlatform.form-control(name="fldPlatform", data-inputname='platform', placeholder="select a platform")
+                        //        option(value="web", selected=application.platform=='web') Web
+                        //        option(value="mobile", selected=application.platform=='mobile') Mobile
+            div
+                //a.btn.btn-info.save-now-submitter(href="javascript:DfxStudio.Dashboard.updateApplication({applicationName:'#{application.name}',formId:'applicationForm'});")
+                //    span.fa.fa-lg.fa-floppy-o
+                //    span(style="padding-left:5px") Save
+                //a.btn.btn-default(href="javascript:DfxStudio.Dispatcher.run('#!/catalog/');", style="margin-left:10px")
+                //    span.fa.fa-lg.fa-undo
+                //    span(style="padding-left:5px") Cancel
+        div.panel.panel-danger(style="margin-top: 15px;")
+            div.panel-heading
+                h4 Danger Zone
+            div.panel-body
+                //button.btn.btn-default(type='button', onclick="javascript:DfxStudio.Dashboard.deleteApplication({applicationName:'#{application.name}'});", style="margin-left:10px")
+                //    span.fa.fa-lg.fa-trash-o
+                //    span(style="padding-left:5px") Delete the Application

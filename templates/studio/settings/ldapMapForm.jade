@@ -1,0 +1,34 @@
+form
+    table.userTable
+        thead(align="center")
+            tr
+                td
+                td login
+                td first name
+                td last name
+                td roles
+                td email
+                td
+        thead(align="center")
+            tr#ldapMapForm.bg-verylightgray
+                td mapping:
+                td
+                    input(name="login", disabled, value="User Principal Name").form-control
+                td
+                    select(name="firstName").form-control.bg-transparent
+                        each key, i in keys
+                            option(value="#{key}", disabled=(key.length ? undefined : true), selected=(i===0 || undefined))=key
+                td
+                    select(name="lastName").form-control.bg-transparent
+                        each key, i in keys
+                            option(value="#{key}", disabled=(key.length ? undefined : true), selected=(i===0 || undefined))=key
+                td roles
+                td
+                    select(name="email").form-control.bg-transparent
+                        each key, i in keys
+                            option(value="#{key}", disabled=(key.length ? undefined : true), selected=(i===0 || undefined))=key
+                td
+        tbody#rawUsersList
+br
+button.btn.btn-small.btn-primary#importButton
+    span Import

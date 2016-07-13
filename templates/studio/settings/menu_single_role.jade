@@ -1,0 +1,5 @@
+li
+    a.tree-toggle.dfx_dbs_collection(data-role-name="#{item}")= item
+        - if ( type !== 'staff' && item !== 'guest' ) {
+            div.fa.fa-lg.fa-trash-o.btn.btn-danger.pull-right
+        - }

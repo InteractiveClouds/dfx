@@ -1,0 +1,35 @@
+div.row
+    div.col-lg-4
+        div.panel.panel-primary
+            div.panel-heading
+                h4
+                    span Application Menu
+            div.panel-body
+                div
+                    ul#ac-menu-item-treeview(style="margin-bottom: 10px; padding-left: 0;")
+    div.col-lg-8
+        div.panel.panel-primary
+            div.panel-heading
+                div.panel-title
+                    | Menu Item Details
+            div.panel-body#dfx_collapsible_menu_item_details
+                span#menu_item_detail_intro(style="display: block;")
+                    div Select a menu item from tree.
+                span#menu_item_detail_form(style="display: none;")
+                    form(action="javascript:void(0);", id='applicationMenuForm')
+                        fieldset
+                            div.form-group.col-lg-4
+                                label(for="fldName") Name:
+                                input#fldName.form-control(type="text", data-inputname='name', readonly)
+                            div.form-group.col-lg-4
+                                label(for="fldVisibility") Visible:
+                                select#fldVisibility.form-control.selectpicker(name="fldVisibility", data-inputname='visibility')
+                                    option(value="true") yes
+                                    option(value="false") no
+                        div#menu_item_detail_buttons(style="margin-top: 30px;")
+                            a.btn.btn-info(href="javascript:DfxStudio.Home.Configuration.saveMenuItemConfig('#{application.name}', '#{role}');")
+                                span.fa.fa-lg.fa-floppy-o
+                                span(style="padding-left: 5px;") Save
+                            a.btn.btn-default(href="javascript:DfxStudio.Home.Configuration.discardMenuItemConfigChanges();", style="margin-left: 10px;")
+                                span.fa.fa-lg.fa-undo
+                                span(style="padding-left: 5px;") Cancel

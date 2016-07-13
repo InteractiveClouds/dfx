@@ -1,0 +1,334 @@
+<div ng-if="attributes.isBindingPresent.value === true"
+     class="{{attributes.classes.value}}"
+     ng-class="$eval(attributes.dynamicClasses.value)"
+     style="{{attributes.style.value}}"
+     ng-show="$eval(attributes.display.value)">
+    <div class="gc-checkbox-label-preview">{{$eval(attributes.label.value)}}</div>
+    <div ng-if="attributes.dynamicPresent.value=== true" layout="row">
+        <div ng-if="attributes.direction.value === 'column'" layout="column" style="margin-right: 5px">
+            <div ng-repeat="item in $gcscope[attributes.source.value] track by $index" layout layout-align="start center"
+                 style="padding-left: 5px;margin-bottom: 3px;"
+                 ng-style="{'margin-top' : $index === 0? '3px' : '18px'}"><span>{{item[attributes.bindingLabel.value]}}</span></div>
+        </div>
+        <div layout="{{attributes.direction.value}}" flex style="padding-top: 1px">
+            <div flex layout layout-align="start center" ng-repeat="item in $gcscope[attributes.source.value] track by $index">
+                <div flex="none" ng-if="attributes.direction.value === 'row'" style="margin:-11px 5px 0 0; padding-left: 5px"><span>{{item[attributes.bindingLabel.value]}}</span></div>
+                <md-slider flex ng-if="$eval(attributes.discrete.value)" md-discrete
+                    class="md-altTheme-theme flex"
+                    ng-model="$gcscope[attributes.binding.value][$index]"
+                    min="{{attributes.minValue.value}}"
+                    max="{{attributes.maxValue.value}}"
+                    step="{{attributes.step.value}}"
+                    aria-label="{{attributes.name.value}},{{attributes.discrete.value}}"
+                    id="{{attributes.name.value}}-slider"
+                    style="margin-top: -11px; margin-bottom: 4px;"
+                    ng-class="attributes.buttonClass.value"
+                    ng-click="$eval(attributes.onclick.value)"
+                    ng-dblclick="$eval(attributes.ondblclick.value)"
+                    ng-keypress="$eval(attributes.onkeypress.value)"
+                    ng-keydown="$eval(attributes.onkeydown.value)"
+                    ng-keyup="$eval(attributes.onkeyup.value)"
+                    ng-mouseover="$eval(attributes.onmouseover.value)"
+                    ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                    ng-mousemove="$eval(attributes.onmousemove.value)"
+                    ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                    ng-mousedown="$eval(attributes.onmousedown.value)"
+                    ng-mouseup="$eval(attributes.onmouseup.value)"
+                    ng-disabled="$eval(attributes.disabled.value)">
+                </md-slider>
+                <md-slider flex ng-if="!$eval(attributes.discrete.value)"
+                    class="md-altTheme-theme flex"
+                    ng-model="$gcscope[attributes.binding.value][$index]"
+                    min="{{attributes.minValue.value}}"
+                    max="{{attributes.maxValue.value}}"
+                    aria-label="{{attributes.name.value}},{{attributes.discrete.value}}"
+                    id="{{attributes.name.value}}-slider"
+                    style="margin-top: -11px;margin-bottom: 4px;"
+                    ng-class="attributes.buttonClass.value"
+                    ng-click="$eval(attributes.onclick.value)"
+                    ng-dblclick="$eval(attributes.ondblclick.value)"
+                    ng-keypress="$eval(attributes.onkeypress.value)"
+                    ng-keydown="$eval(attributes.onkeydown.value)"
+                    ng-keyup="$eval(attributes.onkeyup.value)"
+                    ng-mouseover="$eval(attributes.onmouseover.value)"
+                    ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                    ng-mousemove="$eval(attributes.onmousemove.value)"
+                    ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                    ng-mousedown="$eval(attributes.onmousedown.value)"
+                    ng-mouseup="$eval(attributes.onmouseup.value)"
+                    ng-disabled="$eval(attributes.disabled.value)">
+                </md-slider>
+                <div flex="none" layout layout-align="center center"
+                     ng-show="$eval(attributes.inputVisible.value)">
+                    <input ng-disabled="$eval(attributes.disabled.value)" type="number" style="text-align: center; width:55px; margin:-13px 10px 0 5px"
+                        ng-model="$gcscope[attributes.binding.value][$index]"
+                        ng-change="$eval(attributes.onchange.value)"
+                        ng-focus="$eval(attributes.onfocus.value)"
+                        ng-blur="$eval(attributes.onblur.value)"
+                        ng-click="$eval(attributes.onclick.value)"
+                        ng-dblclick="$eval(attributes.ondblclick.value)"
+                        ng-keypress="$eval(attributes.onkeypress.value)"
+                        ng-keydown="$eval(attributes.onkeydown.value)"
+                        ng-keyup="$eval(attributes.onkeyup.value)"
+                        ng-mouseover="$eval(attributes.onmouseover.value)"
+                        ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                        ng-mousemove="$eval(attributes.onmousemove.value)"
+                        ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                        ng-mousedown="$eval(attributes.onmousedown.value)"
+                        ng-mouseup="$eval(attributes.onmouseup.value)"
+                        aria-label="{{attributes.name.value}}"
+                        aria-controls="{{attributes.name.value}}-slider">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-if="attributes.dynamicPresent.value=== false" layout="row">
+        <div ng-if="attributes.direction.value === 'column'" layout="column" style="margin-right: 5px">
+            <div ng-repeat="item in attributes.slidersArray.value track by $index" layout layout-align="start center"
+                 style="padding-left: 5px;margin-bottom: 3px;"
+                 ng-style="{'margin-top' : $index === 0? '3px' : '18px'}" ng-bind="$eval(item.label)"></div>
+        </div>
+        <div layout="{{attributes.direction.value}}" flex style="padding-top: 1px">
+            <div flex layout layout-align="start center" ng-repeat="item in attributes.slidersArray.value track by $index">
+                <div flex="none" ng-if="attributes.direction.value === 'row'" style="margin:-11px 5px 0 0; padding-left: 5px" ng-bind="$eval(item.label)"></div>
+                <md-slider flex ng-if="$eval(attributes.discrete.value)" md-discrete
+                    class="md-altTheme-theme flex"
+                    ng-model="$gcscope[attributes.binding.value][$index]"
+                    min="{{attributes.minValue.value}}"
+                    max="{{attributes.maxValue.value}}"
+                    step="{{attributes.step.value}}"
+                    aria-label="{{attributes.name.value}},{{attributes.discrete.value}}"
+                    id="{{attributes.name.value}}-slider"
+                    style="margin-top: -11px; margin-bottom: 4px;"
+                    ng-class="attributes.buttonClass.value"
+                    ng-click="$eval(attributes.onclick.value)"
+                    ng-dblclick="$eval(attributes.ondblclick.value)"
+                    ng-keypress="$eval(attributes.onkeypress.value)"
+                    ng-keydown="$eval(attributes.onkeydown.value)"
+                    ng-keyup="$eval(attributes.onkeyup.value)"
+                    ng-mouseover="$eval(attributes.onmouseover.value)"
+                    ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                    ng-mousemove="$eval(attributes.onmousemove.value)"
+                    ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                    ng-mousedown="$eval(attributes.onmousedown.value)"
+                    ng-mouseup="$eval(attributes.onmouseup.value)"
+                    ng-disabled="$eval(attributes.disabled.value)">
+                </md-slider>
+                <md-slider flex ng-if="!$eval(attributes.discrete.value)"
+                    class="md-altTheme-theme flex"
+                    ng-model="$gcscope[attributes.binding.value][$index]"
+                    min="{{attributes.minValue.value}}"
+                    max="{{attributes.maxValue.value}}"
+                    aria-label="{{attributes.name.value}},{{attributes.discrete.value}}"
+                    id="{{attributes.name.value}}-slider"
+                    style="margin-top: -11px;margin-bottom: 4px;"
+                    ng-class="attributes.buttonClass.value"
+                    ng-click="$eval(attributes.onclick.value)"
+                    ng-dblclick="$eval(attributes.ondblclick.value)"
+                    ng-keypress="$eval(attributes.onkeypress.value)"
+                    ng-keydown="$eval(attributes.onkeydown.value)"
+                    ng-keyup="$eval(attributes.onkeyup.value)"
+                    ng-mouseover="$eval(attributes.onmouseover.value)"
+                    ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                    ng-mousemove="$eval(attributes.onmousemove.value)"
+                    ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                    ng-mousedown="$eval(attributes.onmousedown.value)"
+                    ng-mouseup="$eval(attributes.onmouseup.value)"
+                    ng-disabled="$eval(attributes.disabled.value)">
+                </md-slider>
+                <div flex="none" layout layout-align="center center"
+                     ng-show="$eval(attributes.inputVisible.value)">
+                    <input ng-disabled="$eval(attributes.disabled.value)" type="number" style="text-align: center; width:55px; margin:-13px 10px 0 5px"
+                        ng-model="$gcscope[attributes.binding.value][$index]"
+                        ng-change="$eval(attributes.onchange.value)"
+                        ng-focus="$eval(attributes.onfocus.value)"
+                        ng-blur="$eval(attributes.onblur.value)"
+                        ng-click="$eval(attributes.onclick.value)"
+                        ng-dblclick="$eval(attributes.ondblclick.value)"
+                        ng-keypress="$eval(attributes.onkeypress.value)"
+                        ng-keydown="$eval(attributes.onkeydown.value)"
+                        ng-keyup="$eval(attributes.onkeyup.value)"
+                        ng-mouseover="$eval(attributes.onmouseover.value)"
+                        ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                        ng-mousemove="$eval(attributes.onmousemove.value)"
+                        ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                        ng-mousedown="$eval(attributes.onmousedown.value)"
+                        ng-mouseup="$eval(attributes.onmouseup.value)"
+                        aria-label="{{attributes.name.value}}"
+                        aria-controls="{{attributes.name.value}}-slider">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-if="attributes.isBindingPresent.value === false"
+     class="{{attributes.classes.value}}"
+     ng-class="$eval(attributes.dynamicClasses.value)"
+     style="{{attributes.style.value}}"
+     ng-show="$eval(attributes.display.value)">
+    <div class="gc-checkbox-label-preview">{{$eval(attributes.label.value)}}</div>
+    <div ng-if="attributes.dynamicPresent.value=== true" layout="row">
+        <div ng-if="attributes.direction.value === 'column'" layout="column" style="margin-right: 5px">
+            <div ng-repeat="item in $gcscope[attributes.source.value] track by $index" layout layout-align="start center"
+                 style="padding-left: 5px;margin-bottom: 3px;"
+                 ng-style="{'margin-top' : $index === 0? '3px' : '18px'}"><span>{{item.label}}</span></div>
+        </div>
+        <div layout="{{attributes.direction.value}}" flex style="padding-top: 1px">
+            <div flex layout layout-align="start center" ng-repeat="item in $gcscope[attributes.source.value] track by $index">
+                <div flex="none" ng-if="attributes.direction.value === 'row'" style="margin:-11px 5px 0 0; padding-left: 5px"><span>{{item[[attributes.bindingLabel.value]]}}</span></div>
+                <md-slider flex ng-if="$eval(attributes.discrete.value)" md-discrete
+                    class="md-altTheme-theme flex"
+                    ng-model="item[attributes.displayValue.value]"
+                    min="{{attributes.minValue.value}}"
+                    max="{{attributes.maxValue.value}}"
+                    step="{{attributes.step.value}}"
+                    aria-label="{{attributes.name.value}},{{attributes.discrete.value}}"
+                    id="{{attributes.name.value}}-slider"
+                    style="margin-top: -11px; margin-bottom: 4px;"
+                    ng-class="attributes.buttonClass.value"
+                    ng-click="$eval(attributes.onclick.value)"
+                    ng-dblclick="$eval(attributes.ondblclick.value)"
+                    ng-keypress="$eval(attributes.onkeypress.value)"
+                    ng-keydown="$eval(attributes.onkeydown.value)"
+                    ng-keyup="$eval(attributes.onkeyup.value)"
+                    ng-mouseover="$eval(attributes.onmouseover.value)"
+                    ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                    ng-mousemove="$eval(attributes.onmousemove.value)"
+                    ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                    ng-mousedown="$eval(attributes.onmousedown.value)"
+                    ng-mouseup="$eval(attributes.onmouseup.value)"
+                    ng-disabled="$eval(attributes.disabled.value)">
+                </md-slider>
+                <md-slider flex ng-if="!$eval(attributes.discrete.value)"
+                    class="md-altTheme-theme flex"
+                    ng-model="item[attributes.displayValue.value]"
+                    min="{{attributes.minValue.value}}"
+                    max="{{attributes.maxValue.value}}"
+                    aria-label="{{attributes.name.value}},{{attributes.discrete.value}}"
+                    id="{{attributes.name.value}}-slider"
+                    style="margin-top: -11px; margin-bottom: 4px;"
+                    ng-class="attributes.buttonClass.value"
+                    ng-click="$eval(attributes.onclick.value)"
+                    ng-dblclick="$eval(attributes.ondblclick.value)"
+                    ng-keypress="$eval(attributes.onkeypress.value)"
+                    ng-keydown="$eval(attributes.onkeydown.value)"
+                    ng-keyup="$eval(attributes.onkeyup.value)"
+                    ng-mouseover="$eval(attributes.onmouseover.value)"
+                    ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                    ng-mousemove="$eval(attributes.onmousemove.value)"
+                    ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                    ng-mousedown="$eval(attributes.onmousedown.value)"
+                    ng-mouseup="$eval(attributes.onmouseup.value)"
+                    ng-disabled="$eval(attributes.disabled.value)">
+                </md-slider>
+                <div flex="none" layout layout-align="center center" ng-show="$eval(attributes.inputVisible.value)">
+                    <input ng-disabled="$eval(attributes.disabled.value)" type="number" style="text-align: center; width:55px; margin:-13px 10px 0 5px"
+                        ng-model="item[attributes.displayValue.value]"
+                        ng-change="$eval(attributes.onchange.value)"
+                        ng-focus="$eval(attributes.onfocus.value)"
+                        ng-blur="$eval(attributes.onblur.value)"
+                        ng-click="$eval(attributes.onclick.value)"
+                        ng-dblclick="$eval(attributes.ondblclick.value)"
+                        ng-keypress="$eval(attributes.onkeypress.value)"
+                        ng-keydown="$eval(attributes.onkeydown.value)"
+                        ng-keyup="$eval(attributes.onkeyup.value)"
+                        ng-mouseover="$eval(attributes.onmouseover.value)"
+                        ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                        ng-mousemove="$eval(attributes.onmousemove.value)"
+                        ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                        ng-mousedown="$eval(attributes.onmousedown.value)"
+                        ng-mouseup="$eval(attributes.onmouseup.value)"
+                        aria-label="{{attributes.name.value}}"
+                        aria-controls="{{attributes.name.value}}-slider">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-if="attributes.dynamicPresent.value=== false" layout="row">
+        <div ng-if="attributes.direction.value === 'column'" layout="column" style="margin-right: 5px">
+            <div ng-repeat="item in attributes.slidersArray.value track by $index" layout layout-align="start center"
+                 style="padding-left: 5px;margin-bottom: 3px;"
+                 ng-style="{'margin-top' : $index === 0? '3px' : '18px'}" ng-bind="$eval(item.label)"></div>
+        </div>
+        <div layout="{{attributes.direction.value}}" flex style="padding-top: 1px">
+            <div flex layout layout-align="start center" ng-repeat="item in attributes.slidersArray.value track by $index">
+                <div flex="none" ng-if="attributes.direction.value === 'row'" style="margin:-11px 5px 0 0; padding-left: 5px" ng-bind="$eval(item.label)"></div>
+                <md-slider flex ng-if="$eval(attributes.discrete.value)" md-discrete
+                    class="md-altTheme-theme flex"
+                    ng-model="item.value"
+                    min="{{attributes.minValue.value}}"
+                    max="{{attributes.maxValue.value}}"
+                    step="{{attributes.step.value}}"
+                    aria-label="{{attributes.name.value}},{{attributes.discrete.value}}"
+                    id="{{attributes.name.value}}-slider"
+                    style="margin-top: -11px; margin-bottom: 4px;"
+                    ng-class="attributes.buttonClass.value"
+                    ng-click="$eval(attributes.onclick.value)"
+                    ng-dblclick="$eval(attributes.ondblclick.value)"
+                    ng-keypress="$eval(attributes.onkeypress.value)"
+                    ng-keydown="$eval(attributes.onkeydown.value)"
+                    ng-keyup="$eval(attributes.onkeyup.value)"
+                    ng-mouseover="$eval(attributes.onmouseover.value)"
+                    ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                    ng-mousemove="$eval(attributes.onmousemove.value)"
+                    ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                    ng-mousedown="$eval(attributes.onmousedown.value)"
+                    ng-mouseup="$eval(attributes.onmouseup.value)"
+                    ng-disabled="$eval(attributes.disabled.value)">
+                </md-slider>
+                <md-slider flex ng-if="!$eval(attributes.discrete.value)"
+                    class="md-altTheme-theme flex"
+                    ng-model="item.value"
+                    min="{{attributes.minValue.value}}"
+                    max="{{attributes.maxValue.value}}"
+                    aria-label="{{attributes.name.value}},{{attributes.discrete.value}}"
+                    id="{{attributes.name.value}}-slider"
+                    style="margin-top: -11px; margin-bottom: 4px;"
+                    ng-class="attributes.buttonClass.value"
+                    ng-click="$eval(attributes.onclick.value)"
+                    ng-dblclick="$eval(attributes.ondblclick.value)"
+                    ng-keypress="$eval(attributes.onkeypress.value)"
+                    ng-keydown="$eval(attributes.onkeydown.value)"
+                    ng-keyup="$eval(attributes.onkeyup.value)"
+                    ng-mouseover="$eval(attributes.onmouseover.value)"
+                    ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                    ng-mousemove="$eval(attributes.onmousemove.value)"
+                    ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                    ng-mousedown="$eval(attributes.onmousedown.value)"
+                    ng-mouseup="$eval(attributes.onmouseup.value)"
+                    ng-disabled="$eval(attributes.disabled.value)">
+                </md-slider>
+                <div flex="none" layout layout-align="center center"
+                     ng-show="$eval(attributes.inputVisible.value)">
+                    <input ng-disabled="$eval(attributes.disabled.value)" type="number" style="text-align: center; width:55px; margin:-13px 10px 0 5px"
+                        ng-model="item.value"
+                        ng-change="$eval(attributes.onchange.value)"
+                        ng-focus="$eval(attributes.onfocus.value)"
+                        ng-blur="$eval(attributes.onblur.value)"
+                        ng-click="$eval(attributes.onclick.value)"
+                        ng-dblclick="$eval(attributes.ondblclick.value)"
+                        ng-keypress="$eval(attributes.onkeypress.value)"
+                        ng-keydown="$eval(attributes.onkeydown.value)"
+                        ng-keyup="$eval(attributes.onkeyup.value)"
+                        ng-mouseover="$eval(attributes.onmouseover.value)"
+                        ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                        ng-mousemove="$eval(attributes.onmousemove.value)"
+                        ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                        ng-mousedown="$eval(attributes.onmousedown.value)"
+                        ng-mouseup="$eval(attributes.onmouseup.value)"
+                        aria-label="{{attributes.name.value}}"
+                        aria-controls="{{attributes.name.value}}-slider">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<div layout style="{{attributes.style.value}}" ng-show="$eval(attributes.display.value)">
+    <div flex="20" layout layout-align="center center"><span>{{$eval(attributes.label.value)}}</span></div>
+    <md-slider ng-if="$eval(attributes.discrete.value)" class="{{attributes.classes.value}} md-altTheme-theme flex" ng-model="$gcscope[attributes.binding.value]" min="{{attributes.minValue.value}}" max="{{attributes.maxValue.value}}" step="{{attributes.step.value}}" md-discrete aria-label="{{attributes.name.value}}" id="{{attributes.name.value}}-slider" class="{{attributes.classes.value}} md-altTheme-theme glyph" ng-class="$eval(attributes.dynamicClasses.value)" style="{{attributes.style.value}}" ng-click="$eval(attributes.onclick.value)" ng-disabled="$eval(attributes.disabled.value)"></md-slider>
+    <md-slider ng-if="!$eval(attributes.discrete.value)" class="{{attributes.classes.value}} md-altTheme-theme flex" ng-model="$gcscope[attributes.binding.value]" min="{{attributes.minValue.value}}" max="{{attributes.maxValue.value}}" aria-label="{{attributes.name.value}}" id="{{attributes.name.value}}-slider" class="{{attributes.classes.value}} md-altTheme-theme glyph" ng-class="$eval(attributes.dynamicClasses.value)" style="{{attributes.style.value}}" ng-click="$eval(attributes.onclick.value)" ng-disabled="$eval(attributes.disabled.value)"></md-slider>
+    <div flex="20" layout layout-align="center center" ng-show="$eval(attributes.inputVisible.value)">
+        <input ng-disabled="$eval(attributes.disabled.value)" flex type="number" ng-style="{'text-align': 'center', 'padding-left': '15px'}" ng-model="$gcscope[attributes.binding.value]" aria-label="{{attributes.name.value}}" aria-controls="{{attributes.name.value}}-slider">
+    </div>
+</div>-->

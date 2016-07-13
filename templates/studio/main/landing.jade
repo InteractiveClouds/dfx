@@ -1,0 +1,14 @@
+doctype html
+html
+    head
+        meta(http-equiv="content-type", content="text/HTML;charset=UTF-8")
+        meta(name="viewport", content="width=device-width,initial-scale=1, maximum-scale=1, user-scalable=no")
+        title DreamFace Studio
+
+        link(rel="stylesheet", href="/css/studio/dfx.min.css", media="screen")
+        script(src="/js/studio/dfx.js")
+
+        script(src="/socket.io/socket.io.js")
+
+    body#dfx-studio-landing-body(data-tenantid="#{tenantid}", ng-app="dfxStudioLandingApp", ng-controller="dfx_studio_landing_controller")
+        div.ng-view(style="height:100%;overflow: hidden;", layout="column" layout-fill layout-align="space-between center")

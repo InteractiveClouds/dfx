@@ -1,0 +1,253 @@
+/*
+ This notice must be untouched at all times.
+
+ DreamFace DFX
+ Version: 2.0.0
+ Author: Interactive Clouds
+
+ Copyright (c) 2015 Interactive Clouds, Inc.  "DreamFace" is a trademark of Interactive Clouds, Inc.
+
+ LICENSE: DreamFace Open License
+ */
+/**
+ * COLOR-THEME
+ */
+@media all and (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 1.5/1), (min-device-pixel-ratio: 1.5), (min-resolution: 138dpi), (min-resolution: 1.5dppx) {
+  .treeview .hitarea {
+    background: url(/images/treeview-default@2x.png) -185px -61px no-repeat;
+    height: 64px;
+    width: 92px;
+    margin-left: -92px;
+  }
+  .treeview li {
+    padding: 30px 0pt 6px 92px;
+    background: url(/images/treeview-default-line@2x.png) 0 0 no-repeat;
+  }
+  .treeview li.tree-root > a {
+    font-weight: 600;
+  }
+  .treeview li.collapsable,
+  .treeview li.expandable {
+    background-position: -2 -464px;
+  }
+  .treeview li.first,
+  .treeview li.last {
+    background-position: 0 -5058px;
+  }
+  .treeview li.lastCollapsable,
+  .treeview li.lastExpandable,
+  .treeview li.firstCollapsable,
+  .treeview li.firstExpandable {
+    background-image: url(/images/treeview-default@2x.png);
+  }
+  .treeview li.lastCollapsable {
+    background-position: -2px -472px;
+  }
+  .treeview li.lastExpandable {
+    background-position: -186px -284px;
+  }
+  .treeview li.firstCollapsable {
+    background-position: -94px -378px;
+  }
+  .treeview li.firstExpandable {
+    background-position: -278px -190px;
+  }
+  .treeview div.lastCollapsable-hitarea,
+  .treeview div.lastExpandable-hitarea,
+  .treeview div.firstCollapsable-hitarea,
+  .treeview div.firstExpandable-hitarea {
+    background-position: 0;
+  }
+  .treeview .expandable-hitarea {
+    background-position: -462px -28px;
+  }
+}
+.treeview {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.treeview ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.treeview .hitarea {
+  background: url(/images/treeview-default.png) -185px -61px no-repeat;
+  height: 32px;
+  width: 46px;
+  margin-left: -46px;
+  float: left;
+  cursor: pointer;
+}
+.treeview li {
+  margin: 0;
+  padding: 15px 0pt 3px 46px;
+  background: url(/images/treeview-default-line.png) 0 0 no-repeat;
+}
+.treeview li.tree-root > a {
+  font-weight: 600;
+}
+.treeview li.collapsable,
+.treeview li.expandable {
+  background-position: -1 -232px;
+}
+.treeview li.first,
+.treeview li.last {
+  background-position: 0 -2529px;
+}
+.treeview li.lastCollapsable,
+.treeview li.lastExpandable,
+.treeview li.firstCollapsable,
+.treeview li.firstExpandable {
+  background-image: url(/images/treeview-default.png);
+}
+.treeview li.lastCollapsable {
+  background-position: -1px -236px;
+}
+.treeview li.lastExpandable {
+  background-position: -93px -142px;
+}
+.treeview li.firstCollapsable {
+  background-position: -47px -189px;
+}
+.treeview li.firstExpandable {
+  background-position: -139px -95px;
+}
+.treeview div.lastCollapsable-hitarea,
+.treeview div.lastExpandable-hitarea,
+.treeview div.firstCollapsable-hitarea,
+.treeview div.firstExpandable-hitarea {
+  background-position: 0;
+}
+.treeview .expandable-hitarea {
+  background-position: -231px -14px;
+}
+.treeview .tree-selected,
+.treeview .tree-selected + a {
+  color: #ffffff;
+  background-color: #1fbbd7;
+}
+.treeview a {
+  display: inline-block;
+  padding: 5px 10px;
+  text-decoration: none;
+  color: #223957;
+  font-size: 14px;
+  background-color: white;
+  height: 32px;
+  letter-spacing: 0.5px;
+  background-size: 100%;
+}
+.treeview .hover,
+.treeview .tree-selected + a.hover {
+  color: #ffffff;
+  background-color: #00d8ff;
+  cursor: pointer;
+}
+/* fix for IE6 */
+* html .hitarea {
+  display: inline;
+  float: none;
+}
+.dfx-at-treeview {
+  float: left;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+.dfx-at-treeview:hover input ~ label:before,
+.dfx-at-treeview.hover input ~ label:before {
+  opacity: 1.0;
+  -webkit-transition-duration: 0.5s;
+  -moz-transition-duration: 0.5s;
+  -ms-transition-duration: 0.5s;
+  -o-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+}
+.dfx-at-treeview ul {
+  -webkit-transition-duration: 1s;
+  -moz-transition-duration: 1s;
+  -ms-transition-duration: 1s;
+  -o-transition-duration: 1s;
+  transition-duration: 1s;
+  list-style: none;
+  padding-left: 1em;
+}
+.dfx-at-treeview ul li {
+  padding-left: 0px;
+  padding-right: 5px;
+}
+.dfx-at-treeview ul li span {
+  -webkit-transition-property: color;
+  -moz-transition-property: color;
+  -ms-transition-property: color;
+  -o-transition-property: color;
+  transition-property: color;
+  -webkit-transition-duration: 1s;
+  -moz-transition-duration: 1s;
+  -ms-transition-duration: 1s;
+  -o-transition-duration: 1s;
+  transition-duration: 1s;
+}
+.dfx-at-treeview ul li span:hover {
+  color: #73cbff;
+  -webkit-transition-duration: 0.3s;
+  -moz-transition-duration: 0.3s;
+  -ms-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+}
+.dfx-at-treeview input.dfx-at-treeview-button {
+  display: none;
+}
+.dfx-at-treeview input.dfx-at-treeview-button:checked ~ ul {
+  display: none;
+}
+.dfx-at-treeview input.dfx-at-treeview-button ~ label {
+  cursor: pointer;
+  font-weight: 700;
+}
+.dfx-at-treeview input.dfx-at-treeview-button ~ label:before {
+  content: '';
+  width: 0;
+  height: 0;
+  position: absolute;
+  margin-left: -1em;
+  margin-top: 0.4em;
+  border-width: 4px;
+  border-style: solid;
+  border-top-color: transparent;
+  border-right-color: #69a7f5;
+  border-bottom-color: #69a7f5;
+  border-left-color: transparent;
+  -webkit-transition-property: opacity;
+  -moz-transition-property: opacity;
+  -ms-transition-property: opacity;
+  -o-transition-property: opacity;
+  transition-property: opacity;
+  -webkit-transition-duration: 1s;
+  -moz-transition-duration: 1s;
+  -ms-transition-duration: 1s;
+  -o-transition-duration: 1s;
+  transition-duration: 1s;
+}
+.dfx-at-treeview input.dfx-at-treeview-button:checked ~ label:before {
+  margin-left: -0.8em;
+  border-width: 5px;
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: #69a7f5;
+}
+.dfx-at-treeview-content {
+  padding-left: 0px !important;
+}
+.dfx-at-treeview-content span {
+  padding-left: 5px;
+  font-family: "Open Sans", Arial, sans-serif;
+  font-size: 12px;
+  line-height: 25px;
+}

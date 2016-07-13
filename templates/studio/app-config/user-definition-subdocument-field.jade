@@ -1,0 +1,57 @@
+div.properties-container
+    input.dfx-at-treeview-button(type="checkbox" id="#{name}" checked)
+    label(for="#{name}") #{name}
+    ul.dfx-at-treeview-content
+        li
+            div.well.well-hideable(style="overflow: auto; padding: 10px 0 0;")
+                div.row.property-container-item(style="margin: 0;")
+                    div.form-group.col-lg-2
+                        label.control-label(for="field-#{name}-name", readonly) Name:
+                        if isDefault
+                            input.form-control(id="field-#{name}-name", type="text", name="fldName", placeholder="Property name", value="#{name}", disabled)
+                        else
+                            input.form-control(id="field-#{name}-name", type="text", name="fldName", placeholder="Property name", value="#{name}")
+                    div.form-group.col-lg-3
+                        label.control-label(for="field-#{name}-title") Title:
+                        if isDefault
+                            input.form-control(id="field-#{name}-title", type="text", name="fldTitle", placeholder="Form label", value="#{title}", disabled)
+                        else
+                            input.form-control(id="field-#{name}-title", type="text", name="fldTitle", placeholder="Form label", value="#{title}")
+                    div.form-group.col-lg-2
+                        label(for="field-#{name}-type") Type:
+                        if isDefault
+                            select.form-control.selectpicker.field-type-selector(id="field-#{name}-type", name="fldType", placeholder="", onChange="DfxStudio.Home.UserDefinition.selectBoxAction(this)", disabled)
+                                option(value="boolean", selected=type == 'boolean') Boolean
+                                option(value="numeric", selected=type == 'numeric') Numeric
+                                option(value="string", selected=type == 'string') String
+                                option(value="text", selected=type == 'text') Text
+                        else
+                            select.form-control.selectpicker.field-type-selector(id="field-#{name}-type", name="fldType", onChange="DfxStudio.Home.UserDefinition.selectBoxAction(this)", placeholder="")
+                                option(value="boolean", selected=type == 'boolean') Boolean
+                                option(value="numeric", selected=type == 'numeric') Numeric
+                                option(value="string", selected=type == 'string') String
+                                option(value="text", selected=type == 'text') Text
+                    if isDefault
+                        div.form-group.value-field(id="field-#{name}-value-input", class=(type == 'array' ? 'col-lg-4' : 'col-lg-5'), data-subdocument="#{subdocument}", data-mandatory="#{mandatory}", style="display:none")
+                    else
+                        div.form-group.value-field(id="field-#{name}-value-input", class=(type == 'array' ? 'col-lg-4' : 'col-lg-5'), data-subdocument="#{subdocument}", data-mandatory="#{mandatory}")
+                            label(for="field-#{name}-default") Default:
+                            case type
+                                when "boolean"
+                                    select.form-control.selectpicker(id="field-#{name}-default", name="fldType")
+                                        option(value="false") false
+                                        option(value="true") true
+                                when "numeric"
+                                    input.form-control(id="field-#{name}-default", type="text", name="fldDefault", placeholder="Default value", value="#{default_value}")
+                                when "string"
+                                    input.form-control(id="field-#{name}-default", type="text", name="fldDefault", placeholder="Default value", value="#{default_value}")
+                                when "text"
+                                    textarea(id="field-#{name}-default", name="fldDefault", placeholder="Default value", class="form-control", rows="3") #{default_value}
+                div.row(style="margin: 0 15px 15px;")
+                    strong Send to client:
+                    div.make-switch(style="display: inline-block; margin-left: 15px;")
+                        input(type="checkbox", checked=(pass === 'true' ? "" : undefined), value=(pass === 'true' ? "1" : "0"), name="passToClient", class="js-switch-#{name}", autocomplete="off")
+                    if mandatory != 'true'
+                        button.btn.btn-danger(id="remove-property-#{name}", type='button', style="margin-left: 15px;")
+                            i.fa.fa-lg.fa-trash-o
+                            div(style="padding-left:5px; display:inline-block;") Remove Property

@@ -1,0 +1,49 @@
+div.row(data-application-name="#{application.name}", data-role-name="#{role}")
+    div.col-lg-4
+        div.panel.panel-primary
+            div.panel-heading
+                h4 Application Pages
+            div.panel-body#screens_categories
+                ul#ac-screens-treeview(style="margin-bottom: 10px; padding-left: 0;")
+    div.col-lg-8
+        div.panel.panel-primary
+            div.panel-heading
+                div.panel-title
+                    | Graphical Components Configuration - Role #{role}
+                    div.pull-right
+                        a(href="javascript:DfxStudio.switchCollapsible('screen_details');")
+                            span#dfx_collapsible_icon_screen_details.fa.fa-lg.fa-angle-down
+            div.panel-body#dfx_collapsible_screen_details
+                span#screen_detail_intro(style="display: block;")
+                    div Select a page from list.
+                span#screen_detail_form(style="display: none;")
+                    div.row
+                        div.col-lg-4
+                            table#widgetsTable.table.table-condensed.table-thick-bordered(style="margin-bottom: 0;")
+                                thead
+                                    tr
+                                        th Choose View
+                                tbody
+                        div.col-lg-4
+                            table#graphicalComponentsTable.table.table-condensed.table-thick-bordered(style="margin-bottom: 0;")
+                                thead
+                                    tr
+                                        th Choose Graphical Component
+                                tbody
+                        div.col-lg-4()
+                            table.table.table-condensed.table-thick-bordered(style="margin-bottom: 0;")
+                                thead
+                                    tr
+                                        th Graphical Component Attributes
+                                tbody
+                                    tr#graphicalComponentAttributesFormTable(style="display: none;")
+                                        td
+                                            form#graphicalComponentAttributesForm(action="javascript:void(0);")
+                                                fieldset
+                                                div#graphicalComponentAttributesFormButtons
+                                                    a.btn.btn-info(href="javascript:DfxStudio.Home.Configuration.saveGraphicalComponentConfig('#{application.name}', '#{role}');")
+                                                        span.fa.fa-lg.fa-floppy-o
+                                                        span(style="padding-left: 5px;") Save
+                                                    a.btn.btn-default(href="javascript:DfxStudio.Home.Configuration.discardGraphicalComponentChanges();", style="margin-left: 10px;")
+                                                        span.fa.fa-lg.fa-undo
+                                                        span(style="padding-left: 5px;") Cancel

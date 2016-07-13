@@ -1,0 +1,16 @@
+mixin displayItemBars(gcitem)
+    include widget_item_bar_mobile
+
+mixin displayItem(gcitem, widgetname)
+    include widget_item_mobile
+
+div.content(
+    dfx-renderrer="widget_frame",
+    name="#{widgetname}",
+    ng-controller=(children[0].attributes.controller.value == '' ? undefined : children[0].attributes.controller.value)
+    )
+    each gcitem_child, i in children
+        mixin displayItemBars(gcitem_child)
+
+    each gcitem_child, i in children
+        mixin displayItem(gcitem_child, widgetname)

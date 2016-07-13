@@ -1,0 +1,11 @@
+{
+    "name": "mdbw",
+    "version": "0.0.1",
+    "description": "simple interface for node-mongodb-native",
+    "main": "mdbw.js",
+    "dependencies": {
+        "mongodb" : "*",
+        "q" : "*"
+    }
+}
+

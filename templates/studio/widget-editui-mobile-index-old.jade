@@ -1,0 +1,64 @@
+doctype html
+html
+    head
+        meta(http-equiv="content-type", content="text/HTML;charset=UTF-8")
+        meta(name="viewport", content="width=device-width,initial-scale=1")
+        title DreamFace Studio
+        link(rel="stylesheet", href="/css/vendor/bootstrap.min.css", media="screen")
+        link(rel="stylesheet", href="/css/vendor/font-awesome.min.css", media="screen")
+        link(rel="stylesheet", href="/css/dfx/dfx.min.css", media="screen")
+        link(rel="stylesheet", href="/css/dfx/dfx-dropzone.min.css", media="screen")
+        link(rel="stylesheet", href="/css/vendor/jquery-ui.min.css", media="screen")
+        link(rel="stylesheet", href="/css/vendor/jqtree.min.css", media="screen")
+        link(rel="stylesheet", href="/css/dfx/dfx-gcontrols.min.css", media="screen")
+        link(rel="stylesheet", href="/css/visualbuilder/dfx-utils.min.css", media="screen")
+        link(rel="stylesheet", href="/css/dfx/block_s-select.min.css", media="screen")
+        link(rel="stylesheet", type="text/css", href="/semantic/dist/semantic.min.css", media="screen")
+        script(src="/socket.io/socket.io.js")
+        script(src="/js/vendor/angular.min.js")
+        script(src="/js/vendor/jade.min.js")
+        script(src="/js/vendor/jquery.min.js")
+        script(src="/js/vendor/jquery-ui.min.js")
+        script(src="/js/vendor/jquery-slimscroll.min.js")
+        script(src="/js/vendor/bootstrap.min.js")
+        script(src="/semantic/dist/semantic.min.js")
+        script(src="/js/vendor/ace.min.js")
+        script(src="/js/vendor/mode-jade.js")
+        script(src="/js/vendor/mode-javascript.js")
+        script(src="/js/vendor/mode-css.js")
+        script(src="/js/vendor/theme-twilight.js")
+        script(src="/js/vendor/jquery-cookie.min.js")
+        script(src="/js/vendor/require.min.js")
+        script(src="/js/visualbuilder/dfx.directives.js")
+        script(src="/js/visualbuilder/jquery.dfx.visualbuilder.min.js")
+    body#dfx-studio-body(data-tenantid="#{tenantid}", data-username="#{username}")
+        div.dfx_content
+        footer#dfx_visual_editor_footer
+            div Copyright &copy; Interactive Clouds, all rights reserved.
+        div#dfx_visual_editor_help.modal.fade(tabindex="-1", role="dialog", aria-labelledby="Help", aria-hidden="true")
+            div.modal-dialog
+                div.modal-content
+                    div.modal-header.modal-header-primary
+                        button.close(type="button", data-dismiss="modal", aria-hidden="true") ×
+                        span.icon.icon-question
+                        span(style="margin-left:5px") Help
+                    div.modal-body
+                        div.list-group
+                            a.list-group-item(href="javascript:DfxStudio.helpWidgetScript({item:'module'});")
+                                h4.list-group-item-heading Declare Module
+                                p.list-group-item-text.
+                                    Add to your script the Angular module declaration associated to your widget
+                            a.list-group-item(href="javascript:DfxStudio.helpWidgetScript({item:'controller'});")
+                                h4.list-group-item-heading Add Controller
+                                p.list-group-item-text.
+                                    Add to your script an Angular controller declaration associated to your widget
+                            a.list-group-item(href="javascript:DfxStudio.helpWidgetScript({item:'function'});")
+                                h4.list-group-item-heading Add Function
+                                p.list-group-item-text.
+                                    Add to your script an Angular function declaration associated to your controller
+                            a.list-group-item(href="javascript:DfxStudio.helpWidgetScript({item:'dataquery'});")
+                                h4.list-group-item-heading Call a DataQuery
+                                p.list-group-item-text.
+                                    Add to your script a DreamFace DataQuery call
+                    div.modal-footer
+                        button#dfx_visual_editor_help_close.btn.btn-default.pull-left(type="button", data-dismiss="modal") Close

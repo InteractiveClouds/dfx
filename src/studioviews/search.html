@@ -1,0 +1,120 @@
+<div layout="row" layout-align="space-between center" style="background:#DCDCDC">
+    <h4 style="padding: 5px 10px 4px;">
+        Search Results
+    </h4>
+</div>
+<div layout="row">
+    <md-content id="search-results" class="md-padding" style="overflow:auto;">
+        <md-card ng-if="pagesArray.length > 0" style="overflow:hidden;">
+            <md-card-title layout-padding style="background:#4bcdff;color:#0f518e;">
+                <md-card-title-text>
+                    Pages
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-content style="padding:0;">
+                <table class="datatable" style="width:100%;">
+                    <thead>
+                        <tr style="border-bottom:1px solid #C7C7C7;">
+                            <th width="15%">Name</th>
+                            <th width="15%">App</th>
+                            <th width="15%">Platform</th>
+                            <th width="15%">Category</th>
+                            <th width="30%">Description</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                </table>
+                <div style="padding:0;overflow-y:auto;">
+                    <table class="datatable" style="width:100%;">
+                        <tbody>
+                            <tr ng-repeat="page in pagesArray track by $index" ng-click="" style="cursor:pointer;">
+                                <td width="15%">{{page.name}}</td>
+                                <td width="15%">{{page.application}}</td>
+                                <td width="15%" style="text-transform:capitalize;">{{page.platform === 'web' ? 'Desktop' : page.platform}}</td>
+                                <td width="15%">{{page.category}}</td>
+                                <td width="30%">{{page.description}}</td>
+                                <td>
+                                    <md-button ng-click="editPage( page.application, page.platform, page.name )" style="margin: 0; padding: 0; min-width: 20px" aria-label="edit-element"><md-icon class="fa fa-edit" style="font-size:20px; padding-top: 5px;"></md-icon></md-button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>                        
+                </div>
+            </md-card-content>
+        </md-card>
+
+        <md-card ng-if="viewsArray.length > 0" style="overflow:hidden;">
+            <md-card-title layout-padding style="background:#4bcdff;color:#0f518e;">
+                <md-card-title-text>
+                    Views
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-content style="padding:0;">
+                <table class="datatable" style="width:100%;">
+                    <thead>
+                        <tr style="border-bottom:1px solid #C7C7C7;">
+                            <th width="15%">Name</th>
+                            <th width="15%">App</th>
+                            <th width="15%">Platform</th>
+                            <th width="15%">Category</th>
+                            <th width="30%">Description</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                </table>
+                <div style="padding:0;overflow-y:auto;">
+                    <table class="datatable" style="width:100%;">
+                        <tbody>
+                            <tr ng-repeat="view in viewsArray track by $index" ng-click="" style="cursor:pointer;">
+                                <td width="15%">{{view.name}}</td>
+                                <td width="15%">{{view.application}}</td>
+                                <td width="15%" style="text-transform:capitalize;">{{view.platform === 'web' ? 'Desktop' : view.platform}}</td>
+                                <td width="15%">{{view.category}}</td>
+                                <td width="30%">{{view.description}}</td>
+                                <td>
+                                    <md-button ng-click="editView( view.application, view.platform, view.name )" style="margin: 0; padding: 0; min-width: 20px" aria-label="edit-element"><md-icon class="fa fa-edit" style="font-size:20px; padding-top: 5px;"></md-icon></md-button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>                        
+                </div>
+            </md-card-content>
+        </md-card>
+
+        <md-card ng-if="apiSoArray.length > 0" style="overflow:hidden;">
+            <md-card-title layout-padding style="background:#4bcdff;color:#0f518e;">
+                <md-card-title-text>
+                    API Service Objects
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-content style="padding:0;">
+                <table class="datatable" style="width:100%;">
+                    <thead>
+                        <tr style="border-bottom:1px solid #C7C7C7;">
+                            <th width="15%">Name</th>
+                            <th width="15%">App</th>
+                            <th width="15%">Category</th>
+                            <th width="45%">Description</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                </table>
+                <div style="padding:0;overflow-y:auto;">
+                    <table class="datatable" style="width:100%;">
+                        <tbody>
+                            <tr ng-repeat="apiSo in apiSoArray track by $index" ng-click="" style="cursor:pointer;">
+                                <td width="15%">{{apiSo.name}}</td>
+                                <td width="15%">{{apiSo.application}}</td>
+                                <td width="15%">{{apiSo.category}}</td>
+                                <td width="45%">{{apiSo.description}}</td>
+                                <td>
+                                    <md-button ng-click="editApiSo( apiSo.application, apiSo.name )" style="margin: 0; padding: 0; min-width: 20px" aria-label="edit-element"><md-icon class="fa fa-edit" style="font-size:20px; padding-top: 5px;"></md-icon></md-button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>                        
+                </div>
+            </md-card-content>
+        </md-card>
+    </md-content>
+</div>

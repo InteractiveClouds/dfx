@@ -1,0 +1,200 @@
+<md-tabs md-dynamic-height md-border-bottom>
+    <!--
+    <md-tab label="Data Dictionary">
+        <md-content class="md-padding">
+            <div id="dd_code_mirror_parent" ng-hide="!dictionary.hide_areas" style="border:1px solid #dddddd; padding: 0;"></div>
+            <div ng-hide="dictionary.hide_areas" class="form-group">
+                <div class="form-group" style="display: none;">
+                    <div id="dfx_resource_dictionary_folder_upload" dropzone="" class="dropzone">
+                    </div>
+                </div>
+
+                <div layout="row" class="layout-align-end">
+                    <md-button class="md-raised" ng-click="dictionary.createResource($event)">
+                        <md-icon class="fa fa-plus" style="width:14px;height:14px;"></md-icon>
+                        Business Object
+                    </md-button>
+                </div>
+                <div layout="row">
+                    <md-card class="md-altTheme-theme" style="width:100%;overflow:hidden;">
+                        <md-card-content style="padding:0;">
+                            <table class="datatable" class="layout-row" style="width: 100%">
+                                <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="item in dictionary.data.items track by $index">
+                                    <td>{{item.name}}</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <md-button ng-click="dictionary.editDataDictionary(item)" style="margin: 0 5px 0 0; padding: 0; min-width: 20px"><md-icon class="fa fa-code" style="font-size:20px; padding-top: 4px;"></md-icon></md-button>
+                                        <md-button ng-click="dictionary.graphicalEdit($event, item)" style="margin: 0; padding: 0; min-width: 20px"><md-icon class="fa fa-edit" style="font-size:20px; padding-top: 5px;"></md-icon></md-button>
+                                        <md-button style="margin: 0; padding: 0; min-width: 20px" ng-click="dictionary.confirmDictionaryDelete($event, item)"><md-icon class="fa fa-trash" style="font-size:20px; padding-top: 4px;"></md-icon></md-button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </md-card-content>
+                    </md-card>
+                </div>
+            </div>
+            <div ng-hide="!dictionary.hide_areas">
+                <button ng-click="dictionary.updateDictionary()" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-floppy-o" style="color: #757575"></span><span style="padding-left:5px">Save</span>
+                </button>
+                <button style="margin: 0 0 0 20px" ng-click="dictionary.closeEditor()" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-undo" style="color: #757575"></span><span style="padding-left:5px">Cancel</span>
+                </button>
+            </div>
+        </md-content>
+    </md-tab>
+    -->
+
+    <md-tab label="JavaScript">
+        <md-content class="md-padding">
+            <md-card class="md-altTheme-theme" style="width:100%;overflow:hidden;">
+                <md-card-content layout-padding>
+                    <div id="js_code_mirror_parent" ng-hide="!javascript.hide_areas" style="border:1px solid #dddddd; padding: 0;">
+                    </div>
+                    <form ng-hide="javascript.hide_areas" action="javascript:void(0);" method="post" enctype="multipart/form-data" style="margin-top:10px">
+                        <fieldset>
+                            <input id="dfx_resource_settings_name_0" type="hidden" name="dfx_resource_settings_name" value="javascript" class="form-control">
+                            <input id="dfx_resource_settings_application_0" type="hidden" name="dfx_resource_settings_application" value="{{app_name}}" class="form-control">
+                            <div class="form-group">
+                                <!--<label>Items:</label>-->
+                                <div class="form-group">
+                                    <div id="dfx_resource_javascript_folder_upload" dropzone="" class="dropzone">
+                                    </div>
+                                </div>
+                                <div class="resourses-panel">
+                                    <div ng-repeat="resitem in javascript.data.items track by $index" data-item-type="{{resitem.type}}" ng-dblclick="javascript.editResource(resitem.path, $index)" class="dz-preview dz-file-preview">
+                                        <div class="dz-details">
+                                            <div class="dz-filename"><span data-dz-name="">{{resitem.path}}</span>
+                                            </div>
+                                            <div ng-if="resitem.size" data-dz-size="" class="dz-size"><strong>{{resitem.size}}</strong> KiB</div>
+                                            <div data-dz-remove="" class="dz-remove">
+                                                <button type="button" remove_res_btn="yes" ng-click="javascript.confirmResourceDelete($event, resitem)" class="btn btn-link"><span class="fa fa-lg fa-trash-o"></span>
+                                                </button>
+                                            </div>
+                                            <div ng-if="resitem.is_uploaded" style="opacity: 1;" class="dz-success-mark"><span>V</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button id="upload-javascript-resources" style="display: none;" type="submit" ng-click="javascript.uploadResources()" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-cloud-upload" style="color: #757575"></span><span style="padding-left:5px">Upload</span>
+                            </button>
+                            <button style="margin: 0 0 0 20px" ng-click="javascript.createResource($event)" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-file-o" style="color: #757575"></span><span style="padding-left:5px">Сreate</span>
+                            </button>
+                        </fieldset>
+                    </form>
+                    <div ng-hide="!javascript.hide_areas">
+                        <button ng-hide="!javascript.create_new" ng-click="javascript.saveNewResource()" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-floppy-o" style="color: #757575"></span><span style="padding-left:5px">Save</span>
+                        </button>
+                        <button ng-hide="javascript.create_new" ng-click="javascript.updateResource()" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-floppy-o" style="color: #757575"></span><span style="padding-left:5px">Save</span>
+                        </button>
+                        <button style="margin: 0 0 0 20px" ng-click="javascript.closeEditor()" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-undo" style="color: #757575"></span><span style="padding-left:5px">Cancel</span>
+                        </button>
+                    </div>
+                </md-card-content>
+            </md-card>
+
+        </md-content>
+    </md-tab>
+    <md-tab label="CSS">
+        <md-content class="md-padding">
+            <md-card class="md-altTheme-theme" style="width:100%;overflow:hidden;">
+                <md-card-content layout-padding>
+                    <div id="css_code_mirror_parent" ng-hide="!stylesheets.hide_areas" style="border:1px solid #dddddd; padding: 0;">
+                    </div>
+                    <form ng-hide="stylesheets.hide_areas" action="javascript:void(0);" method="post" enctype="multipart/form-data" style="margin-top:10px">
+                        <fieldset>
+                            <input id="dfx_resource_settings_name_1" type="hidden" name="dfx_resource_settings_name" value="stylesheets" class="form-control">
+                            <input id="dfx_resource_settings_application_1" type="hidden" name="dfx_resource_settings_application" value="{{app_name}}" class="form-control">
+                            <div class="form-group">
+                                <!--<label>Items:</label>-->
+                                <div class="form-group">
+                                    <div id="dfx_resource_stylesheets_folder_upload" dropzone="" class="dropzone">
+                                    </div>
+                                </div>
+                                <div class="resourses-panel">
+                                    <div ng-repeat="resitem in stylesheets.data.items track by $index" data-item-type="{{resitem.type}}" ng-dblclick="stylesheets.editResource(resitem.path, $index)" class="dz-preview dz-file-preview">
+                                        <div class="dz-details">
+                                            <div class="dz-filename"><span data-dz-name="">{{resitem.path}}</span>
+                                            </div>
+                                            <div ng-if="resitem.size" data-dz-size="" class="dz-size"><strong>{{resitem.size}}</strong> KiB</div>
+                                            <div data-dz-remove="" class="dz-remove">
+                                                <button type="button" remove_res_btn="yes" ng-click="stylesheets.confirmResourceDelete($event, resitem)" class="btn btn-link"><span class="fa fa-lg fa-trash-o"></span>
+                                                </button>
+                                            </div>
+                                            <div ng-if="resitem.is_uploaded" style="opacity: 1;" class="dz-success-mark"><span>V</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button id="upload-stylesheets-resources" style="display: none;" type="submit" ng-click="stylesheets.uploadResources()" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-cloud-upload" style="color: #757575"></span><span style="padding-left:5px">Upload</span>
+                            </button>
+                            <button style="margin: 0 0 0 20px" ng-click="stylesheets.createResource($event)" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-file-o" style="color: #757575"></span><span style="padding-left:5px">Сreate</span>
+                            </button>
+                        </fieldset>
+                    </form>
+                    <div ng-hide="!stylesheets.hide_areas">
+                        <button ng-hide="!stylesheets.create_new" ng-click="stylesheets.saveNewResource()" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-floppy-o" style="color: #757575"></span><span style="padding-left:5px">Save</span>
+                        </button>
+                        <button ng-hide="stylesheets.create_new" ng-click="stylesheets.updateResource()" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-floppy-o" style="color: #757575"></span><span style="padding-left:5px">Save</span>
+                        </button>
+                        <button style="margin: 0 0 0 20px" ng-click="stylesheets.closeEditor()" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-undo" style="color: #757575"></span><span style="padding-left:5px">Cancel</span>
+                        </button>
+                    </div>
+                </md-card-content>
+            </md-card>
+        </md-content>
+    </md-tab>
+    <md-tab label="Images & Assets">
+        <md-content class="md-padding">
+            <md-card class="md-altTheme-theme" style="width:100%;overflow:hidden;">
+                <md-card-content layout-padding>
+                    <div id="assets_code_mirror_parent" ng-hide="!assets.hide_areas" style="border:1px solid #dddddd; padding: 0;">
+                    </div>
+                    <form ng-hide="assets.hide_areas" action="javascript:void(0);" method="post" enctype="multipart/form-data" style="margin-top:10px">
+                        <fieldset>
+                            <input id="dfx_resource_settings_name_2" type="hidden" name="dfx_resource_settings_name" value="assets" class="form-control">
+                            <input id="dfx_resource_settings_application_2" type="hidden" name="dfx_resource_settings_application" value="{{app_name}}" class="form-control">
+                            <div class="form-group">
+                                <!--<label>Items:</label>-->
+                                <div class="form-group">
+                                    <div id="dfx_resource_assets_folder_upload" dropzone="" class="dropzone">
+                                    </div>
+                                </div>
+                                <div class="resourses-panel">
+                                    <div ng-repeat="resitem in assets.data.items track by $index" data-item-type="{{resitem.type}}" ng-class="(resitem.type == 'image/jpeg' || resitem.type == 'image/png' || resitem.type == 'image/gif')? 'dz-image-preview': 'dz-file-preview'" class="dz-preview">
+                                        <div class="dz-details">
+                                            <div class="dz-filename"><span data-dz-name="">{{resitem.path}}</span>
+                                            </div>
+                                            <div ng-if="resitem.size" data-dz-size="" class="dz-size"><strong>{{resitem.size}}</strong> KiB</div>
+                                            <div data-dz-remove="" class="dz-remove">
+                                                <button type="button" remove_res_btn="yes" ng-click="assets.confirmResourceDelete($event, resitem)" class="btn btn-link"><span class="fa fa-lg fa-trash-o"></span>
+                                                </button>
+                                            </div><img data-dz-thumbnail="" alt="{{resitem.path}}" title="{{resitem.path}}"
+                                                   ng-src="{{(resitem.type == 'image/jpeg' || resitem.type == 'image/png' || resitem.type == 'image/gif')? '/studio/resources/preview/' + (app_name ? app_name + '/' : '')  + assets.current_resource_type + '/' + resitem.path  : ''}}">
+                                        </div>
+                                        <div ng-if="resitem.is_uploaded" style="opacity: 1;" class="dz-success-mark"><span>V</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button id="upload-assets-resources" type="submit" ng-click="assets.uploadResources()" style="display: none;" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-cloud-upload" style="color: #757575"></span><span style="padding-left:5px">Upload</span>
+                            </button>
+                        </fieldset>
+                    </form>
+                </md-card-content>
+            </md-card>
+        </md-content>
+    </md-tab>
+</md-tabs>

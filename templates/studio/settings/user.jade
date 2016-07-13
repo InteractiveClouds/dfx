@@ -1,0 +1,9 @@
+tr(style="display: table-row;")
+    td.user-login
+        a.dfx_table_text.btn.btn-link(href="javascript:void(0);", data-user-login="#{user.login}") #{user.login}
+    td #{user.firstName}
+    td #{user.lastName}
+    td #{user.email}
+    td
+        a.dfx_table_text.btn.btn-link.delete-user(href="javascript:void(0);")
+            span.fa.fa-lg.fa-trash-o

@@ -1,0 +1,30 @@
+div.panel.panel-primary
+    div.panel-heading
+        div.panel-title Docker Registry Settings
+            div.pull-right
+                a(href="javascript:DfxStudio.switchCollapsible('dockerization_list');")
+                    span#dfx_collapsible_icon_dockerization_list.fa.fa-lg.fa-angle-down
+    div.panel-body#dfx_collapsible_dockerization_list
+        form#dockerizationForm(action="javascript:void(0);")
+            div.panel.panel-primary
+                div.panel-body
+                    div.form-group.col-lg-4
+                        label(for="fldUserName") Username:
+                        input#fldUserName.form-control(type="text", value='#{username}', name='username')
+                    div.form-group.col-lg-4
+                        label(for="fldPassword") Password:
+                        input#fldPassword.form-control(type="password", value='#{password}', name='password')
+                    div.form-group.col-lg-4
+                        label(for="fldEmail") Email:
+                        input#fldEmail.form-control(type="text", value='#{email}', name='email')
+                    div.form-group.col-lg-8
+                        label(for="fldAddress") Registry Server URL:
+                        input#fldAddress.form-control(type="text", value='#{serveraddress}', name='serveraddress', placeholder='https://index.docker.io/v1/')
+                    div.form-group.col-lg-4
+                        label(for="fldAuth") Auth:
+                        input#fldAuth.form-control(type="text", value='#{auth}', name='auth')
+        div.control-button-panel
+            button.btn.btn-info.save-now-submitter(type='submit', onclick='DfxStudio.Settings.Dockerization.addInfo()', style="margin-left: 2px;")
+                span.fa.fa-lg.fa-floppy-o
+                span(style="padding-left:5px") Save
+

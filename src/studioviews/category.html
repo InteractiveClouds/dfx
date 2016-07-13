@@ -1,0 +1,49 @@
+<div layout="row" layout-align="space-between center" style="background:#DCDCDC">
+    <h4 style="padding: 5px 10px 4px;">
+        <span ng-if="entity === 'pages'">Pages > <span style="text-transform: capitalize;">{{cat_platform === 'web' ? 'Desktop' : cat_platform }}</span></span>
+        <span ng-if="entity === 'views'">Views > <span style="text-transform: capitalize;">{{cat_platform === 'web' ? 'Desktop' : cat_platform }}</span></span>
+        <span ng-if="entity === 'apiServices'">API Service Objects</span>
+        > {{category}}
+    </h4>
+    <div layout="row">
+        <md-button ng-click="addEntity(category, cat_platform)" class="md-primary">+
+            <span ng-if="entity === 'pages'">Page</span>
+            <span ng-if="entity === 'views'">View</span>
+            <span ng-if="entity === 'apiServices'">API Service Object</span>
+        </md-button>
+    </div>
+</div>
+<div layout="row">
+    <md-content class="md-padding flex-100" style="overflow:auto;">
+        <md-card style="overflow:hidden;">
+            <md-card-content style="padding:0;">
+                <table class="datatable" style="width:100%;">
+                    <thead>
+                        <tr style="border-bottom:1px solid #C7C7C7;">
+                            <th width="15%">Name</th>
+                            <th width="15%">App</th>
+                            <th width="15%">Category</th>
+                            <th width="45%">{{ entity === 'pages' ? 'Title' : 'Description'}}</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                </table>
+                <div style="padding:0;overflow-y:auto;">
+                    <table class="datatable" style="width:100%;">
+                        <tbody>
+                            <tr ng-repeat="item in table_data track by $index" ng-click="" style="cursor:pointer;">
+                                <td width="15%">{{ item.name }}</td>
+                                <td width="15%">{{ app_name }}</td>
+                                <td width="15%">{{ category }}</td>
+                                <td width="45%">{{ entity === 'pages' ? item.title : item.description }}</td>
+                                <td>
+                                    <md-button ng-click="edit( item.name )" style="margin: 0; padding: 0; min-width: 20px" aria-label="edit-element"><md-icon class="fa fa-edit" style="font-size:20px; padding-top: 5px;"></md-icon></md-button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>                        
+                </div>
+            </md-card-content>
+        </md-card>
+    </md-content>
+</div>

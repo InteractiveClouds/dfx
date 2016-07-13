@@ -1,0 +1,33 @@
+<div ng-if="!attributes.state.value && attributes.waiting.value !== 'true'" style="{{attributes.style.value}}" class="dfx-core-gc-icon {{attributes.classes.value}}">
+    <div style="display: inline-block">
+        <div style="text-align: center">
+            <md-icon ng-if="attributes.icon.type ==='fa-icon'" class="fa {{$eval(attributes.icon.value) || 'fa-home'}}" ng-style="{'font-size': attributes.icon.size + 'px', color: 'inherit', width: attributes.icon.size + 'px', height: attributes.icon.size + 'px', 'vertical-align': 'top'}" aria-label="{{ attributes.icon.value + attributes.icon.size }}"></md-icon>
+            <ng-md-icon ng-if="attributes.icon.type ==='svg-icon'" icon="{{$eval(attributes.icon.value) || 'home'}}" size="{{attributes.icon.size}}"></ng-md-icon>
+        </div>
+        <div ng-show="attributes.label.value !== ''" style="text-align: center">
+            <span ng-style="{color: 'inherit'}">{{attributes.label.value | checkExpression}}</span>
+        </div>
+    </div>
+</div>
+<div ng-if="attributes.state.value && attributes.waiting.value !== 'true'" style="{{attributes.style.value}}" class="dfx-core-gc-icon dfx-core-state-icons {{attributes.classes.value}}">
+    <div style="display: inline-block">
+        <div style="text-align: center">
+            <md-icon ng-if="attributes.state.icon.type ==='fa-icon'" class="fa {{$eval(attributes.state.icon.value) || 'fa-home'}} {{attributes.state.icon.class}}" ng-style="{'font-size': attributes.icon.size + 'px', color: 'inherit', width: attributes.icon.size + 'px', height: attributes.icon.size + 'px', 'vertical-align': 'top'}" style="{{attributes.state.icon.style}}" aria-label="{{ attributes.icon.value + attributes.icon.size }}"></md-icon>
+            <ng-md-icon ng-if="attributes.state.icon.type ==='svg-icon'" icon="{{$eval(attributes.state.icon.value) || 'home'}}" size="{{attributes.icon.size}}" style="{{attributes.state.icon.style}}" class="{{attributes.state.icon.class}}"></ng-md-icon>
+        </div>
+        <div ng-show="attributes.label.value !== ''" style="text-align: center">
+            <span ng-style="{color: 'inherit'}">{{attributes.label.value | checkExpression}}</span>
+        </div>
+    </div>
+</div>
+<div ng-if="attributes.waiting.value === 'true'" style="{{attributes.style.value}}" class="dfx-core-gc-icon dfx-core-wait-icon {{attributes.classes.value}}">
+    <div style="display: inline-block">
+        <div style="text-align: center">
+            <md-icon ng-if="attributes.waiting.icon.type ==='fa-icon'" class="fa {{$eval(attributes.waiting.icon.value) || 'fa-spinner'}} {{attributes.waiting.icon.class}}" style="font-size: {{attributes.icon.size}}px; color: inherit; width: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; vertical-align: top; {{attributes.waiting.icon.style}}"></md-icon>
+            <ng-md-icon ng-if="attributes.waiting.icon.type ==='svg-icon'" icon="{{$eval(attributes.waiting.icon.value) || 'track_changes'}}" size="{{attributes.icon.size}}" class="{{attributes.waiting.icon.class}}" style="{{attributes.waiting.icon.style}}"></ng-md-icon>
+        </div>
+        <div ng-show="attributes.label.value !== ''" style="text-align: center">
+            <span ng-style="{color: 'inherit'}">{{attributes.label.value | checkExpression}}</span>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,53 @@
+<md-tabs md-dynamic-height md-border-bottom>
+    <md-tab label="Environments">
+        <md-content class="md-padding">
+            <h1 class="md-display-2">Environments</h1>
+            <p>Coming soon. This feature will be available in a future release. To know more about managing environments in DreamFace, contact our support:</p>
+            <md-button class="md-raised md-primary" ng-href="#contactus">DreamFace Support</md-button>
+        </md-content>
+    </md-tab>
+    <md-tab label="Collaboration">
+        <md-content class="md-padding">
+            <h5 class="md-title" style="padding-left: 10px">Slack Properties</h5>
+            <div layout="row" class="layout-padding">
+                <md-input-container class="md-block flex-50">
+                    <label>Channel</label>
+                    <input ng-model="devops.channel">
+                </md-input-container>
+            </div>
+            <div layout="row" layout-align ="start">
+                <button ng-click="saveCollaboration()" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-floppy-o" style="color: #757575"></span><span style="padding-left:5px">Save</span></button>
+            </div>
+        </md-content>
+    </md-tab>
+    <md-tab label="Github">
+        <md-content class="md-padding">
+            <h5 class="md-title" style="padding-left: 10px">Github Repository</h5>
+            <div layout="row" class="layout-padding">
+                <md-input-container class="md-block flex">
+                    <label>Access token:</label>
+                    <input ng-model="devops.access_token" placeholder="Github personal access token">
+                </md-input-container>
+            </div>
+            <div layout="row" class="layout-padding">
+                <md-input-container class="md-block flex-50">
+                    <label>Name:</label>
+                    <input ng-model="devops.repository" placeholder="Repository name">
+                </md-input-container>
+                <md-input-container class="md-block flex-50">
+                    <label>Owner's name:</label>
+                    <input ng-model="devops.github_username" placeholder="Repository owner name">
+                </md-input-container>
+            </div>
+                <div layout="row" layout-align="space-between center">
+                    <div>
+                        <button ng-click="saveGithub()" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-floppy-o" style="color: #757575"></span><span style="padding-left:5px">Save</span></button>
+                        <button ng-click="" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-cloud-download" style="color: #757575"></span><span style="padding-left:5px">Git Pull</span></button>
+                        <button ng-click="" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-cloud-upload" style="color: #757575"></span><span style="padding-left:5px">Git Push</span></button>
+                        <button ng-click="" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-info" style="color: #757575"></span><span style="padding-left:5px">Git Status</span></button>
+                    </div>
+                    <button ng-click="" class="md-raised md-warn md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-trash-o" style="color: #ffffff"></span><span style="padding-left:5px">Empty Remote Repository</span></button>
+                </div>
+        </md-content>
+    </md-tab>
+</md-tabs>

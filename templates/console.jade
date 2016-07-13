@@ -1,0 +1,94 @@
+doctype html
+html
+    head
+        meta(http-equiv="content-type", content="text/HTML;charset=UTF-8")
+        meta(name="viewport", content="width=device-width,initial-scale=1")
+        title DreamFace
+        link(rel="stylesheet", href="/css/console/dfx.min.css", media="screen")
+        script(src="/js/console/dfx.js")
+    body#dfx-console
+        div.panel
+            div.pull-right.controls
+                - if ( newVersion ) {
+                    span#updateButton.btn.btn-info.btn-lg(style="margin-left:10px;") update to #{newVersion}
+                - }
+                a.btn.btn-info.btn-lg(href='/console/changepassword')
+                    span.fa.fa-lg.fa-asterisk
+                    | &nbsp;Change Password
+                a.btn.btn-info.btn-lg(href='/console/log')
+                    span.fa.fa-lg.fa-terminal
+                    | &nbsp;Log
+                a.btn.btn-info.btn-lg(href='/console/logout', title="Log out")
+                    span.fa.fa-lg.fa-sign-out
+            img(src="/images/df_LogoConsole.png")
+            h1 Welcome to DreamFace&nbsp;
+                span X
+                | -Platform
+                - if ( version ) { 
+                    small(style="padding-left:10px") version #{version}
+                - }
+            - if (!version) {
+                p.text-danger The Cloud Repository is not initialized.
+                p.lead In order to initialize a new DreamFace repository, MongoDB must be up and running.
+                a.btn.btn-primary(href="/console/repository/initialize") Initialize
+            - } else {
+                div.alert.alert-success
+                    h4
+                        span.fa.fa-lg.fa-arrow-circle-right
+                        | &nbsp;The DreamFace X-Platform is up and running.
+                - var tenants_length = tenants.length;
+                div.alert.alert-info
+                    h4
+                        span.fa.fa-lg.fa-cloud-upload
+                        | &nbsp;The Cloud Repository is initialized.
+                        strong &nbsp;You have #{tenants_length} tenant(s).
+                div.panel.panel-primary
+                    div.panel-heading
+                        h3.panel-title
+                            span.fa.fa-lg.fa-plus
+                            | &nbsp;Create a new tenant
+                    form#tenantCreate.panel-body.form(style="padding: 10px;", method="post", action="/console/tenant/create")
+                        fieldset
+                            div.form-group.clearfix
+                                div.col-sm-3
+                                    input#fldTenantID.form-control(name="fldTenantID", type="text", size="20", placeholder="tenant id", required="required")
+                            div.form-group.clearfix
+                                div.col-sm-3
+                                    input#fldPassword.form-control(name="fldPassword", type="password", size="20", placeholder="user password", required="required")
+                            div.form-group.clearfix
+                                div.col-sm-3
+                                    button.btn.btn-info.pull-right(type="button", onClick='DfxConsole.createTenant();')
+                                        span.fa.fa-lg.fa-plus
+                                        | &nbsp;Create
+                - if (tenants_length>0) {
+                    div.panel.panel-primary
+                        div.panel-heading
+                            h3.panel-title
+                                span.fa.fa-lg.fa-list
+                                | &nbsp;List of tenants
+                        table.table
+                            thead
+                                tr
+                                    th id
+                                    th actions
+                            tbody
+                            each tenant, i in tenants
+                                tr
+                                    td #{tenant.id}
+                                    td
+                                        a.btn.btn-success(href="/studio/#{tenant.id}/login")
+                                            span.fa.fa-lg.fa-arrow-circle-right
+                                            | &nbsp;Open Studio
+                                        a.btn.btn-info(href="/console/#{tenant.id}/edit", style="margin-left:10px;")
+                                            span.fa.fa-lg.fa-pencil-square-o
+                                            | &nbsp;Edit
+                                        a#removeTenant.btn.btn-danger(href="javascript: void(0);", style="margin-left:10px;", onClick="DfxConsole.confirmRemovingTenant('#{tenant.id}');")
+                                            span.fa.fa-lg.fa-trash-o
+                                            | &nbsp;Remove
+
+                - }
+            - }
+        footer.dfx_studio_login
+            div.dfx-logo
+                img(src="/images/df_LogoLoginFooter.png")
+            p Copyright &copy; Interactive Clouds, all rights reserved.

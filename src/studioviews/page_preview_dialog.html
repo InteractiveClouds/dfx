@@ -1,0 +1,32 @@
+<md-dialog aria-label="view-rename" ng-cloak>
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h5>Select page where you want to see a view</h5>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="closeDialog()">
+                    <md-icon class="fa fa-lg fa-times" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content style="width:400px;">
+            <div class="md-dialog-content layout-row layout-padding" style="padding-bottom:0;">
+                <md-select class="flex-100" ng-model="selectedPage.value" ng-if="selectedPage.value">
+                    <md-option value="{{value.name}}" ng-repeat="(key, value) in pagesArray">
+                        {{value.name}}
+                    </md-option>
+                </md-select>
+                <p ng-if="!selectedPage.value">Seems your view does not present in any page yet! <br> Please add view to page first.</p>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button class="md-primary" ng-click="show()" ng-if="selectedPage.value">
+                Show
+            </md-button>
+            <md-button class="md-primary" ng-click="closeDialog()">
+                Cancel
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

@@ -1,0 +1,68 @@
+<div layout="row" layout-align="space-between center" style="background:#DCDCDC">
+    <h4 style="padding: 5px 10px 4px;">
+        Applications > {{app_name}} > API Service Objects Categories
+    </h4>
+</div>
+
+<md-sidenav md-component-id="side_nav_api_category" class="md-sidenav-left" style="width: 450px; max-width: 450px;" ng-cloak>
+    <md-content style="padding-top: 20px;">
+    <form >
+        
+        <div class="md-dialog-content layout-column layout-padding">
+            <div class="layout-column flex-100">
+                <md-input-container class="md-block flex" style="margin: 0;">
+                    <label>Category Name</label>
+                    <input ng-model="scopeCategory.name" ng-disabled="categoryMode === 'editCategory'" md-autofocus>
+                </md-input-container>
+            </div>
+            <div ng-if="categoryMode === 'editCategory'" class="layout-column flex-100">
+                <md-input-container class="md-block flex" style="margin: 0;">
+                    <label>New Category Name</label>
+                    <input ng-model="toEdit.name" md-autofocus>
+                </md-input-container>
+            </div>
+            <div style="display:flex; justify-content: flex-end;">
+                <md-button ng-if="categoryMode === 'addCategory'" class="md-primary" ng-click="createCategory()">Save</md-button>
+                <md-button ng-if="categoryMode === 'editCategory'" class="md-primary" ng-click="editCategory( toEdit )">Save</md-button>
+                <md-button class="md-primary" ng-click="closeSidenav()">Cancel</md-button>
+            </div>
+        </div>
+    </form>
+    </md-content>
+</md-sidenav>
+
+<div layout="row">
+    <md-content class="md-padding flex-100" layout="column">
+        <div layout="row" layout-align="end center">                            
+            <md-button class="md-raised" ng-click="addCategoryBtn()">
+                <md-icon class="fa fa-plus" style="width:14px;height:14px;"></md-icon>
+                Category
+            </md-button>            
+        </div>
+        <md-card style="flex-grow:3;overflow:hidden;">
+            <md-card-content style="padding:0;">
+                <table class="datatable" style="width:100%;">
+                    <thead>
+                        <tr style="border-bottom:1px solid #C7C7C7;">
+                            <th width="50%">Name</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                </table>
+                <div id="scope-source-table" style="padding:0;overflow-y:auto;">
+                    <table class="datatable" style="width:100%;">
+                        <tbody>
+                            <tr ng-repeat="app_category in app_categories track by $index" ng-click="" style="cursor:pointer;">
+                                <td width="50%">{{app_category.name}}</td>
+                                <td>
+                                    <md-button ng-click="editCategoryBtn( app_category )" ng-disabled="app_category.name ==='Default'" style="margin: 0; padding: 0; min-width: 20px"><md-icon class="fa fa-edit" style="font-size:20px; padding-top: 5px;"></md-icon></md-button>
+                                    <md-button style="margin: 0; padding: 0; min-width: 20px" ng-click="confirmDelete( $event, app_category.name )" ng-disabled="app_category.name ==='Default'"><md-icon class="fa fa-trash" style="font-size:20px; padding-top: 3px;"></md-icon></md-button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>                        
+                </div>
+            </md-card-content>
+        </md-card>
+    </md-content>
+</div>

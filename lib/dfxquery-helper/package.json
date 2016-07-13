@@ -1,0 +1,11 @@
+{
+  "name": "dfxquery-helper",
+  "version": "0.0.1",
+  "description": "Query helper for execute custom pre/post code",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Helen Nikitina",
+  "license": "Apache License, Version 2.0"
+}

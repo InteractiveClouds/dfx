@@ -1,0 +1,32 @@
+{
+    "jquery": [
+        { "name": "Accordion" },
+        { "name": "Autocomplete" },
+        { "name": "Buttons", "formFileName": "buttons.jade", "formName": "buttons" },
+        { "name": "Checkboxes", "formFileName": "checkboxes.jade", "formName": "checkboxes" },
+        { "name": "Collapsibles" },
+        { "name": "Controlgroup" },
+        { "name": "Dialogs" },
+        { "name": "Fixed Toolbars" },
+        { "name": "Flip switch toggle" },
+        { "name": "Footer Toolbar" },
+        { "name": "Form Elements" },
+        { "name": "Grids" },
+        { "name": "Header Toolbar" },
+        { "name": "Icons" },
+        { "name": "Links" },
+        { "name": "Listviews" },
+        { "name": "Navbar" },
+        { "name": "Pages" },
+        { "name": "Panels" },
+        { "name": "Popup" },
+        { "name": "Radio buttons" },
+        { "name": "Select" },
+        { "name": "Slider, single" },
+        { "name": "Slider, dual range" },
+        { "name": "Table, column toggle" },
+        { "name": "Table, reflow" },
+        { "name": "Text inputs and textarea" },
+        { "name": "Transitions" }
+    ]
+}

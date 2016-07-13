@@ -1,0 +1,8 @@
+div.dz-preview(class=(item.type == 'Image')? "dz-image-preview" : "dz-file-preview")
+   div.dz-details
+      div.dz-filename
+         span(data-dz-name="") #{item.name}
+      div.dz-size(data-dz-size="")
+         strong 0.2
+         | &nbsp;MiB
+      img(data-dz-thumbnail="", title="#{item.name}", alt="#{item.name}", src="")

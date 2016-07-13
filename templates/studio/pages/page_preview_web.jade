@@ -1,0 +1,14 @@
+doctype html
+html(ng-app="dfxAppRuntime")
+    head
+        meta(http-equiv="content-type", content="text/HTML;charset=UTF-8")
+        meta(name="viewport", content="width=device-width,initial-scale=1")
+        title #{apptitle}
+        link(rel="stylesheet", type="text/css", href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,700', rel='stylesheet'")
+
+        link(rel="stylesheet", href="/css/preview/dfx.min.css", media="screen")
+        script(src="/js/preview/dfx.js")
+
+    body(layout="row", ng-controller="dfx_app_controller", dfx-app="#{appname}", dfx-platform="#{platform}")
+        div(style="width:100%", layout="column", flex, ng-controller="dfx_page_controller")
+            div#dfx_page_content(layout="column", flex)

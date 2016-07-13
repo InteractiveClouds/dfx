@@ -1,0 +1,38 @@
+<div layout="row" class="layout-align-end">
+    <md-button class="md-raised" ng-click="initNewUser()">
+        <md-icon class="fa fa-plus" style="width:14px;height:14px;"></md-icon>
+        Developer
+    </md-button>
+</div>
+<div layout="row">
+    <md-card class="md-altTheme-theme" style="width:100%;overflow:hidden;">
+        <md-card-content style="padding:0;">
+            <table class="datatable" class="layout-row" style="width: 100%">
+                <thead>
+                <tr>
+                    <th>Login</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Roles</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="user in users track by $index">
+                    <td>{{user.login}}</td>
+                    <td>{{user.firstName}}</td>
+                    <td>{{user.lastName}}</td>
+                    <td>{{user.email}}</td>
+                    <td><span ng-repeat="role in user.roles.list track by $index">{{role}}<span ng-if="$index !== user.roles.list.length-1">, </span>
+                            </span></td>
+                    <td>
+                        <md-button ng-click="editCurrentUser(user)" style="margin: 0; padding: 0; min-width: 20px"><md-icon class="fa fa-edit" style="font-size:20px; padding-top: 5px;"></md-icon></md-button>
+                        <md-button style="margin: 0; padding: 0; min-width: 20px" ng-click="confirmUserDelete($event, user.login)" ng-disabled="user.login==='admin'|| user.type==='openid'"><md-icon class="fa fa-trash" style="font-size:20px; padding-top: 3px;"></md-icon></md-button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </md-card-content>
+    </md-card>
+</div>

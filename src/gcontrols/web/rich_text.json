@@ -1,0 +1,39 @@
+{
+  "template": 			{ "value": "default" },
+  "name":             { "value": "rchText1" },
+  "whiteframe":       { "value": "" },
+  "binding":          { "value": "" },
+  "bindedData":       { "value": "Sample text" },
+  "display":          { "value": "true" },
+  "disabled":         { "value": "false" },
+  "toolbar": {
+    "visible":          { "value": "true" },
+    "entries":          { "value": [
+                          { "value": true, "label": "font", "entries": [ "font", "size" ] },
+                          { "value": true, "label": "style", "entries": [ "bold", "italic", "underline", "strike" ] },
+                          { "value": true, "label": "color", "entries": [ "color", "background" ] },
+                          { "value": true, "label": "list", "entries": [ "list" ] },
+                          { "value": true, "label": "bullet", "entries": [ "bullet" ] },
+                          { "value": true, "label": "align", "entries": [ "align" ] },
+                          { "value": true, "label": "link", "entries": [ "link" ] },
+                          { "value": true, "label": "image", "entries": [ "image" ] }
+    ]}
+  },
+  "flex":             { "value": 100 },
+  "style":            { "value": "" },
+  "classes":          { "value": "" },
+  "dynamicClasses":   { "value": "" },
+  "onclick":          { "value": "" },
+  "ondblclick":       { "value": "" },
+  "onchange":         { "value": "" },
+  "onfocus":          { "value": "" },
+  "onblur":           { "value": "" },
+  "onkeypress":       { "value": "" },
+  "onkeydown":        { "value": "" },
+  "onkeyup":          { "value": "" },
+  "onmouseover":      { "value": "" },
+  "onmouseenter":     { "value": "" },
+  "onmousemove":      { "value": "" },
+  "onmouseleave":     { "value": "" },
+  "onmouseup":        { "value": "" }
+}

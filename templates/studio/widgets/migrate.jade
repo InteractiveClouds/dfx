@@ -1,0 +1,53 @@
+div(style="overflow-x:hidden")
+    ol.breadcrumb
+        li
+            a(href="javascript:DfxStudio.Dispatcher.run('#!/home/');")
+                span.fa.fa-lg.fa-home
+        li
+            a(href="javascript:javascript:DfxStudio.Dispatcher.run('#!/catalog/');") Catalog
+        li.active Widget: #{widget.name}
+    div.col-lg-4
+        form#widgetForm(action="javascript:void(0);", style="margin-top:10px")
+            div.panel.panel-primary
+                div.panel-heading
+                    h4 Current Widget Properties
+                div.panel-body
+                    fieldset
+                        div.form-group.col-lg-4
+                            label(for="fldName") Name:
+                            input#fldName.form-control(type="text", value='#{widget.name}', data-inputname='name', disabled)
+                        div.form-group.col-lg-8
+                            label(for="fldDescription") Description:
+                            input#fldDescription.form-control(type="text", name="fldDescription", value='#{widget.description}', data-inputname='description', placeholder="widget description")
+                        div.form-group.col-lg-4
+                            label(for="fldOwnerId") Owner:
+                            input#fldOwnerId.form-control(type="text", name="fldOwnerId", value='#{widget.ownerId}', data-inputname='ownerId', placeholder="ex: john")
+        form#widgetForm(action="javascript:void(0);", style="margin-top:10px")
+            div.panel.panel-primary
+                div.panel-heading
+                    h4 Graphical Controls
+                div.panel-body(style="height:200px;overflow:auto")
+                    ul#dfx_gc_list(style="list-style-type:none;")
+                    input#dfx_gc_object_list(type="hidden")
+    div.col-lg-8
+        form#widgetFormSource(action="javascript:void(0);", style="margin-top:10px")
+            div.panel.panel-primary
+                div.panel-heading
+                    h4 Widget Source
+                div.panel-body
+                    pre#dfx_widget_source(style="border-radius: 0;height:300px").
+                        #{widget.src}
+            div.panel.panel-primary(style="display:none")
+                div.panel-heading
+                    h4 GC Source
+                div.panel-body
+                    pre#dfx_gc_source(style="border-radius: 0;height:300px")
+            div.panel.panel-primary
+                div.panel-heading
+                    h4 GC Migration
+                div.panel-body
+                    pre#dfx_gc_migrated(style="border-radius: 0;height:600px")
+                div.panel-footer
+                    a.btn.btn-default(href="javascript:void(0);" onclick="DfxStudio.migrateWidgetSaveComponent();") Migrate
+script.
+    DfxStudio.migrateWidget();

@@ -1,0 +1,439 @@
+<div class="dfx-ve-css-style-editor">
+<md-toolbar><div class="md-toolbar-tools">
+<h2>Css styles</h2>
+</div></md-toolbar>
+<md-content>
+	<div class="dfx-css-style-preview-box">
+		<div class="dfx-css-style-preview-inner" 
+			ng-style="{'background-color': preview.background.color ? preview.background.color : previewBox.BackgroundColor,
+			'border-style': preview.border.style ? preview.border.style : previewBox.BorderStyle,
+			'border-width': preview.border.width ? preview.border.width : previewBox.BorderWidth,
+			'border-color': preview.border.color ? preview.border.color : previewBox.BorderColor,
+			'border-top': preview.border.top ? preview.border.top : previewBox.BorderTop,
+			'border-right': preview.border.right ? preview.border.right : previewBox.BorderRight,
+			'border-bottom': preview.border.bottom ? preview.border.bottom : previewBox.BorderBottom,
+			'border-left': preview.border.left ? preview.border.left : previewBox.BorderLeft,
+			'border-radius': preview.border.radius ? preview.border.radius : previewBox.BorderRadius,
+			'box-shadow': preview.box.shadow ? preview.box.shadow : previewBox.BoxShadow, }">
+			<p class="dfx-css-style-preview-text" 
+			ng-style="{color: preview.color ? preview.color : previewBox.Color,
+			'cursor': preview.cursor ? preview.cursor : previewBox.Cursor,
+			'font-family': preview.font.family ? preview.font.family : previewBox.FontFamily,
+			'font-size': preview.font.size ? preview.font.size : previewBox.FontSize,
+			'font-style': preview.font.style ? preview.font.style : previewBox.FontStyle,
+			'font-weight': preview.font.weight ? preview.font.weight : previewBox.FontWeight,
+			'line-height': preview.line.height ? preview.line.height : previewBox.LineHeight,
+			'letter-spacing': preview.letter.spacing ? preview.letter.spacing : previewBox.LetterSpacing,
+			'text-align': preview.text.align ? preview.text.align : previewBox.TextAlign,
+			'text-transform': preview.text.transform ? preview.text.transform : previewBox.TextTransform,
+			'text-shadow': preview.text.shadow ? preview.text.shadow : previewBox.TextShadow,
+			'opacity': preview.opacity ? preview.opacity : previewBox.Opacity,}">Sample Text</p>
+		</div>
+	</div>
+	<div class="dfx-ve-property-treeview hover">
+	<ul>
+		<li>
+			<input class="dfx-ve-property-treeview-button" type="checkbox" id="css-style-background" checked="checked"/>
+			<label for="css-style-background">Background</label>
+			<ul class="dfx-ve-property-treeview-content">
+				<li class="col-md-12">
+					<span class="col-md-6">Background:</span>
+					<input class="col-md-6 css-style background" type="text" name="background" placeholder="red" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Background-attachment:</span>
+					<input class="col-md-6 css-style background-attachment" type="text" name="background-attachment" placeholder="scroll" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Background-color:</span>
+					<div class="col-md-6 dfx-ve-color-picker" layout="row">
+						<dfx-ve-color-picker class="col-md-12 css-style background-color" ng-model="preview.background.color" name="background-color" style="margin-left:-15px;"></dfx-ve-color-picker>
+					</div>
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Background-image:</span>
+					<input class="col-md-6 css-style background-image" type="text" name="background-image" placeholder="url(http://www.example.com/bck.png)" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Background-position:</span>
+					<input class="col-md-6 css-style background-position" type="text" name="background-position" placeholder="center, top" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Background-repeat:</span>
+					<input class="col-md-6 css-style background-repeat" type="text" name="background-repeat" placeholder="repeat-x" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Background-size:</span>
+					<input class="col-md-6 css-style background-size" type="text" name="background-size" placeholder="12px" />
+				</li>
+			</ul>
+		</li>
+		<li>
+			<input class="dfx-ve-property-treeview-button" type="checkbox" id="css-style-border" checked="checked"/>
+			<label for="css-style-border">Border</label>
+			<ul class="dfx-ve-property-treeview-content">
+				<li class="col-md-12">
+					<span class="col-md-6">Border:</span>
+					<input class="col-md-6 css-style border" type="text" name="border" placeholder="1px dashed green" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Border-style:</span>
+					<input class="col-md-6 css-style border-style" type="text" ng-model="preview.border.style" name="border-style" placeholder="none solid dotted dashed" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Border-width:</span>
+					<input class="col-md-6 css-style border-width" type="text" ng-model="preview.border.width" name="border-width" placeholder="1px" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Border-color:</span>
+					<div class="col-md-6 dfx-ve-color-picker" layout="row">
+						<dfx-ve-color-picker class="col-md-12 css-style border-color" ng-model="preview.border.color" name="border-color" style="margin-left:-15px;"></dfx-ve-color-picker>
+					</div>
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Border-top:</span>
+					<input class="col-md-6 css-style border-top" type="text" ng-model="preview.border.top" name="border-top" placeholder="1px dashed green" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Border-right:</span>
+					<input class="col-md-6 css-style border-right" type="text" ng-model="preview.border.right" name="border-right" placeholder="1px dashed <green></green>" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Border-bottom:</span>
+					<input class="col-md-6 css-style border-bottom" type="text" ng-model="preview.border.bottom" name="border-bottom" placeholder="1px dashed green" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Border-left:</span>
+					<input class="col-md-6 css-style border-left" type="text" ng-model="preview.border.left" name="border-left" placeholder="1px dashed green" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Border-radius:</span>
+					<input class="col-md-6 css-style border-radius" type="text" ng-model="preview.border.radius" name="border-radius" placeholder="1px 0 3px 4px" />
+				</li>
+			</ul>
+		</li>
+		<li>
+			<input class="dfx-ve-property-treeview-button" type="checkbox" id="css-style-box" checked="checked"/>
+			<label for="css-style-box">Box</label>
+			<ul class="dfx-ve-property-treeview-content">
+				<li class="col-md-12">
+					<span class="col-md-6">Box-sizing:</span>
+					<input class="col-md-6 css-style box-sizing" type="text" name="box-sizing" placeholder="border-box" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Box-shadow:</span>
+					<input class="col-md-6 css-style box-shadow" ng-model="preview.box.shadow" type="text" name="box-shadow" placeholder="2px 2px 2px 1px <rgba></rgba>(0, 0, 0, 0.7)" />
+				</li>
+			</ul>
+		</li>
+		<li>
+			<input class="dfx-ve-property-treeview-button" type="checkbox" id="css-style-cursor" checked="checked"/>
+			<label for="css-style-cursor">Cursor</label>
+			<ul class="dfx-ve-property-treeview-content">
+				<li class="col-md-12">
+					<span class="col-md-6">Cursor:</span>
+					<input class="col-md-6 css-style cursor" ng-model="preview.cursor" type="text" name="cursor" placeholder="pointer" />
+				</li>				
+			</ul>
+		</li>
+		<li>
+			<input class="dfx-ve-property-treeview-button" type="checkbox" id="css-style-direction" checked="checked"/>
+			<label for="css-style-direction">Direction</label>
+			<ul class="dfx-ve-property-treeview-content">
+				<li class="col-md-12">
+					<span class="col-md-6">Direction:</span>
+					<input class="col-md-6 css-style direction" type="text" name="direction" placeholder="ltr" />
+				</li>				
+			</ul>
+		</li>
+		<li>
+			<input class="dfx-ve-property-treeview-button" type="checkbox" id="css-style-display" checked="checked"/>
+			<label for="css-style-display">Display</label>
+			<ul class="dfx-ve-property-treeview-content">
+				<li class="col-md-12">
+					<span class="col-md-6">Display:</span>
+					<input class="col-md-6 css-style display" type="text" name="display" placeholder="inline-block" />
+				</li>				
+			</ul>
+		</li>
+		<li>
+			<input class="dfx-ve-property-treeview-button" type="checkbox" id="css-style-flex" checked="checked"/>
+			<label for="css-style-flex">Flex</label>
+			<ul class="dfx-ve-property-treeview-content">
+				<li class="col-md-12">
+					<span class="col-md-6">Flex:</span>
+					<input class="col-md-6 css-style flex" type="text" name="flex" placeholder="auto" />
+				</li>	
+				<li class="col-md-12">
+					<span class="col-md-6">Flex-basis:</span>
+					<input class="col-md-6 css-style flex-basis" type="text" name="flex-basis" placeholder="content" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Flex-direction:</span>
+					<input class="col-md-6 css-style flex-direction" type="text" name="flex-direction" placeholder="row" />
+				</li>	
+				<li class="col-md-12">
+					<span class="col-md-6">Flex-flow:</span>
+					<input class="col-md-6 css-style flex-flow" type="text" name="flex-flow" placeholder="row nowrap" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Flex-grow:</span>
+					<input class="col-md-6 css-style flex-grow" type="text" name="flex-grow" placeholder="initial" />
+				</li>	
+				<li class="col-md-12">
+					<span class="col-md-6">Flex-shrink:</span>
+					<input class="col-md-6 css-style flex-shrink" type="text" name="flex-shrink" placeholder="initial" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Flex-wrap:</span>
+					<input class="col-md-6 css-style flex-wrap" type="text" name="flex-wrap" placeholder="nowrap" />
+				</li>	
+				<li class="col-md-12">
+					<span class="col-md-6">Justify-content:</span>
+					<input class="col-md-6 css-style justify-content" type="text" name="justify-content" placeholder="flex-start>" />
+				</li>				
+			</ul>
+		</li>
+		<li>
+			<input class="dfx-ve-property-treeview-button" type="checkbox" id="css-style-float" checked="checked"/>
+			<label for="css-style-float">Float</label>
+			<ul class="dfx-ve-property-treeview-content">
+				<li class="col-md-12">
+					<span class="col-md-6">Float:</span>
+					<input class="col-md-6 css-style float" type="text" name="float" placeholder="none" />
+				</li>	
+				<li class="col-md-12">
+					<span class="col-md-6">Clear:</span>
+					<input class="col-md-6 css-style clear" type="text" name="clear" placeholder="both" />
+				</li>				
+			</ul>
+		</li>
+		<li>
+			<input class="dfx-ve-property-treeview-button" type="checkbox" id="css-style-font" checked="checked"/>
+			<label for="css-style-font">Font</label>
+			<ul class="dfx-ve-property-treeview-content">
+				<li class="col-md-12">
+					<span class="col-md-6">Font-family:</span>
+					<input class="col-md-6 css-style font-family" ng-model="preview.font.family" type="text" name="font-family" placeholder="'Times New Roman', sans-serif" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Font-size:</span>
+					<input class="col-md-6 css-style font-size" ng-model="preview.font.size" type="text" name="font-size" placeholder="14px" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Color:</span>					
+					<div class="col-md-6 dfx-ve-color-picker" layout="row">
+						<dfx-ve-color-picker class="col-md-12 css-style color" ng-model="preview.color" name="color" style="margin-left:-15px;"></dfx-ve-color-picker>
+					</div>
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Font-style:</span>
+					<input class="col-md-6 css-style font-style" ng-model="preview.font.style" type="text" name="font-style" placeholder="normal" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Font-weight:</span>
+					<input class="col-md-6 css-style font-weight" ng-model="preview.font.weight" type="text" name="font-weight" placeholder="400" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Line-height:</span>
+					<input class="col-md-6 css-style line-height" ng-model="preview.line.height" type="text" name="line-height" placeholder="16px" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Letter-spacing:</span>
+					<input class="col-md-6 css-style letter-spacing" ng-model="preview.letter.spacing" type="text" name="letter-spacing" placeholder="0.3em" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Text-align:</span>
+					<input class="col-md-6 css-style text-align" ng-model="preview.text.align" type="text" name="text-align" placeholder="left" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Text-transform:</span>
+					<input class="col-md-6 css-style text-transform" ng-model="preview.text.transform" type="text" name="text-transform" placeholder="capitalize" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Text-shadow:</span>
+					<input class="col-md-6 css-style text-shadow" ng-model="preview.text.shadow" type="text" name="text-shadow" placeholder="1px 1px 2px black" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Vertical-align:</span>
+					<input class="col-md-6 css-style vertical-align" type="text" name="vertical-align" placeholder="top" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">White-space:</span>
+					<input class="col-md-6 css-style white-space" type="text" name="white-space" placeholder="normal" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Word-spacing:</span>
+					<input class="col-md-6 css-style word-spacing" type="text" name="word-spacing" placeholder="normal" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Word-wrap:</span>
+					<input class="col-md-6 css-style word-wrap" type="text" name="word-wrap" placeholder="break-word" />
+				</li>
+			</ul>
+		</li>
+		<li>
+			<input class="dfx-ve-property-treeview-button" type="checkbox" id="css-style-height" checked="checked"/>
+			<label for="css-style-height">Height</label>
+			<ul class="dfx-ve-property-treeview-content">
+				<li class="col-md-12">
+					<span class="col-md-6">Height:</span>
+					<input class="col-md-6 css-style height" type="text" name="height" placeholder="250px" />
+				</li>	
+				<li class="col-md-12">
+					<span class="col-md-6">Min-height:</span>
+					<input class="col-md-6 css-style min-height" type="text" name="min-height" placeholder="100px" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Max-height:</span>
+					<input class="col-md-6 css-style max-height" type="text" name="max-height" placeholder="500px" />
+				</li>
+			</ul>
+		</li>
+		<li>
+			<input class="dfx-ve-property-treeview-button" type="checkbox" id="css-style-list" checked="checked"/>
+			<label for="css-style-list">List style</label>
+			<ul class="dfx-ve-property-treeview-content">
+				<li class="col-md-12">
+					<span class="col-md-6">List-style:</span>
+					<input class="col-md-6 css-style list-style" type="text" name="list-style" placeholder="initial" />
+				</li>	
+				<li class="col-md-12">
+					<span class="col-md-6">List-style-position:</span>
+					<input class="col-md-6 css-style list-style-position" type="text" name="list-style-position" placeholder="inside" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">List-style-type:</span>
+					<input class="col-md-6 css-style list-style-type" type="text" name="list-style-type" placeholder="square" />
+				</li>
+			</ul>
+		</li>
+		<li>
+			<input class="dfx-ve-property-treeview-button" type="checkbox" id="css-style-margin" checked="checked"/>
+			<label for="css-style-margin">Margin</label>
+			<ul class="dfx-ve-property-treeview-content">
+				<li class="col-md-12">
+					<span class="col-md-6">Margin:</span>
+					<input class="col-md-6 css-style margin" type="text" name="margin" placeholder="0px 0px 0px 0px" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Margin top:</span>
+					<input class="col-md-6 css-style margin-top" type="text" name="margin-top" placeholder="0px" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Margin right:</span>
+					<input class="col-md-6 css-style margin-right" type="text" name="margin-right" placeholder="0px" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Margin bottom:</span>
+					<input class="col-md-6 css-style margin-bottom" type="text" name="margin-bottom" placeholder="0px" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Margin left:</span>
+					<input class="col-md-6 css-style margin-left" type="text" name="margin-left" placeholder="0px" />
+				</li>	
+			</ul>
+		</li>	
+		<li>
+			<input class="dfx-ve-property-treeview-button" type="checkbox" id="css-style-opacity" checked="checked"/>
+			<label for="css-style-opacity">Opacity</label>
+			<ul class="dfx-ve-property-treeview-content">
+				<li class="col-md-12">
+					<span class="col-md-6">Opacity:</span>
+					<input class="col-md-6 css-style opacity" ng-model="preview.opacity" type="text" name="opacity" placeholder="0.7" />
+				</li>					
+			</ul>
+		</li>	
+		<li>
+			<input class="dfx-ve-property-treeview-button" type="checkbox" id="css-style-padding" checked="checked"/>
+			<label for="css-style-padding">Padding</label>
+			<ul class="dfx-ve-property-treeview-content">
+				<li class="col-md-12">
+					<span class="col-md-6">Padding:</span>
+					<input class="col-md-6 css-style padding" type="text" name="padding" placeholder="0px 0px 0px 0px" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Padding top:</span>
+					<input class="col-md-6 css-style padding-top" type="text" name="padding-top" placeholder="0px" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Padding right:</span>
+					<input class="col-md-6 css-style padding-right" type="text" name="padding-right" placeholder="0px" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Padding bottom:</span>
+					<input class="col-md-6 css-style padding-bottom" type="text" name="padding-bottom" placeholder="0px" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Padding left:</span>
+					<input class="col-md-6 css-style padding-left" type="text" name="padding-left" placeholder="0px" />
+				</li>
+			</ul>
+		</li>			
+		<li>
+			<input class="dfx-ve-property-treeview-button" type="checkbox" id="css-style-position" checked="checked"/>
+			<label for="css-style-position">Position</label>
+			<ul class="dfx-ve-property-treeview-content">
+				<li class="col-md-12">
+					<span class="col-md-6">Position:</span>
+					<input class="col-md-6 css-style position" type="text" name="position" placeholder="relative" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Top:</span>
+					<input class="col-md-6 css-style top" type="text" name="top" placeholder="0" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Right:</span>
+					<input class="col-md-6 css-style right" type="text" name="right" placeholder="auto" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Bottom:</span>
+					<input class="col-md-6 css-style bottom" type="text" name="bottom" placeholder="auto" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Left:</span>
+					<input class="col-md-6 css-style Left" type="text" name="Left" placeholder="0" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Z-index:</span>
+					<input class="col-md-6 css-style z-index" type="text" name="z-index" placeholder="1" />
+				</li>
+			</ul>
+		</li>
+		<li>
+			<input class="dfx-ve-property-treeview-button" type="checkbox" id="css-style-transition" checked="checked"/>
+			<label for="css-style-transition">Transition</label>
+			<ul class="dfx-ve-property-treeview-content">
+				<li class="col-md-12">
+					<span class="col-md-6">Transition:</span>
+					<input class="col-md-6 css-style transition" type="text" name="transition" placeholder="all 0.5s ease-out" />
+				</li>					
+			</ul>
+		</li>	
+		<li>
+			<input class="dfx-ve-property-treeview-button" type="checkbox" id="css-style-width" checked="checked"/>
+			<label for="css-style-width">Width</label>
+			<ul class="dfx-ve-property-treeview-content">
+				<li class="col-md-12">
+					<span class="col-md-6">Width:</span>
+					<input class="col-md-6 css-style width" type="text" name="width" placeholder="100%" />
+				</li>	
+				<li class="col-md-12">
+					<span class="col-md-6">Min-width:</span>
+					<input class="col-md-6 css-style min-width" type="text" name="min-width" placeholder="500px" />
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-6">Max-width:</span>
+					<input class="col-md-6 css-style max-width" type="text" name="max-width" placeholder="100%" />
+				</li>
+			</ul>
+		</li>
+	</ul>
+</div>
+</md-content>
+<div class="dfx-ve-css-styles-actions"> 
+<md-button ng-click="saveStyles()" class="md-primary">Save</md-button> 
+<md-button ng-click="closeCssDialog()" class="md-primary">Cancel</md-button> 
+</div> 
+</div>
+<div class="dfx-ve-backdrop" ng-click="closeCssDialog()"></div>

@@ -1,0 +1,24 @@
+<md-dialog aria-label="Add a Card"  ng-cloak>
+	<md-toolbar>
+		<div class="md-toolbar-tools">
+			<h2>Add a Card</h2>
+		</div>
+    </md-toolbar>
+    <md-dialog-content>
+		<div class="md-dialog-content">
+			<form name="frmAddCard">
+				<div layout-gt-sm="row">
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Card name</label>
+						<input ng-model="card.name" placeholder="Enter a card name" md-autofocus>
+					</md-input-container>
+				</div>
+			</form>
+		</div>
+	</md-dialog-content>
+	<md-dialog-actions layout="row">
+		<span flex></span>
+		<md-button ng-click="addCardConfirm('ok')" ng-disabled="card.name==''">OK</md-button>
+		<md-button ng-click="addCardCancel()" style="margin-right:20px;">Cancel</md-button>
+	</md-dialog-actions>
+</md-dialog>

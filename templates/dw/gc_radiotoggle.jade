@@ -1,0 +1,82 @@
+- var radioStyle = gcitem.attributes.style.value == '' ? '' : gcitem.attributes.style.value;
+- var orientation = gcitem.attributes.orientation && gcitem.attributes.orientation.value == 'horizontal' ? 'display:inline-block;margin-right:12px;' : '';
+- var containerCss = '';
+if (gcitem.attributes.containerCss)
+    each val, key in gcitem.attributes.containerCss
+        - if (val!='') containerCss += key + ':' + val + ';'
+- var css = '';
+if (gcitem.attributes.css)
+    each val, key in gcitem.attributes.css
+        - if (val!='') css += key + ':' + val + ';'
+- var completeStyle = orientation + checkboxStyle + css;
+div.form-group.dfx-form-group(
+    id="#{gcitem.id}_{{$index}}",
+    ng-show = (gcitem.attributes.display.value == '' ? undefined : "#{gcitem.attributes.display.value}"),
+    style=('display:inline-block;position:relative;' + (gcitem.attributes.containerStyle ? gcitem.attributes.containerStyle.value : '') + ';' + containerCss),
+    class="#{gcitem.attributes.containerClasses.value}",
+    ng-class = (gcitem.attributes.containerDynamicClasses.value == '' ? undefined : "#{gcitem.attributes.containerDynamicClasses.value}")
+    )
+    if (gcitem.attributes.dynamicOptions.value)
+        - var collection = (gcitem.attributes.propertyOptions.value == '' ? 'x' :gcitem.attributes.propertyOptions.value)
+        div(ng-repeat="item in #{collection}", style = "#{completeStyle}", class = (gcitem.attributes.classes.value ? "dfx-form-group #{gcitem.attributes.classes.value}" : 'dfx-form-group control-group'))
+            label(for="#{gcitem.id}_field{{$index + 1}}", style="display:block") {{item["#{gcitem.attributes.propertyOptionsFields.displayValue}"]}}
+            div(
+                style="display:inline-block",
+                dfx-tool-tip,
+                tooltip-title = (gcitem.attributes.tooltip && gcitem.attributes.tooltip.value ? "#{gcitem.attributes.tooltip.value}" : undefined),
+                data-placement = (gcitem.attributes.tooltipPosition && gcitem.attributes.tooltipPosition.value ? "#{gcitem.attributes.tooltipPosition.value}" : undefined),
+                ng-class = (gcitem.attributes.dynamicClasses.value ? "#{gcitem.attributes.dynamicClasses.value}" : undefined))
+                input(
+                    id = "#{gcitem.id}_field{{$index + 1}}",
+                    name = (gcitem.attributes.name.value == '' ? "#{gcitem.id}_field" : "#{gcitem.attributes.name.value}"),
+                    type = "radio",
+                    ng-model = (gcitem.attributes.property.value == '' ? 'mdl#{gcitem.id}_field' : "$parent.#{gcitem.attributes.property.value}"),
+                    ng-disabled = "{{ item['#{gcitem.attributes.propertyOptionsFields.disabled}'] }}",
+                    value = "{{ item['#{gcitem.attributes.propertyOptionsFields.dataValue}'] ? item['#{gcitem.attributes.propertyOptionsFields.dataValue}'] : 'true' }}",
+                    bs-switch,
+                    switch-size=(gcitem.attributes.css.toggleSize ? "#{gcitem.attributes.css.toggleSize}" : undefined),
+                    switch-on-text = (gcitem.attributes.onLabel.value ? "#{gcitem.attributes.onLabel.value}" : undefined),
+                    switch-off-text = (gcitem.attributes.offLabel.value ? "#{gcitem.attributes.offLabel.value}" : undefined),
+                    switch-on-color = (gcitem.attributes.css.onColor ? "#{gcitem.attributes.css.onColor}" : undefined),
+                    switch-off-color = (gcitem.attributes.css.offColor ? "#{gcitem.attributes.css.offColor}" : undefined),
+                    switch-label = (gcitem.attributes.centralLabel.value ? "#{gcitem.attributes.centralLabel.value}" : undefined),
+                    switch-icon = (gcitem.attributes.centralIcon.value ? "glyphicon glyphicon-#{gcitem.attributes.centralIcon.value}" : undefined),
+                    switch-label-width=(gcitem.attributes.css.centralWidth ? "#{gcitem.attributes.css.centralWidth}px" : undefined),
+                    switch-handle-width=(gcitem.attributes.css.handleWidth ? "#{gcitem.attributes.css.handleWidth}px" : undefined),
+                    ng-true-value = "{{ item['#{gcitem.attributes.propertyOptionsFields.dataValue}'] ? item['#{gcitem.attributes.propertyOptionsFields.dataValue}'] : 'true' }}",
+                    ng-false-value = "{{ 'false' }}",
+                    onswitch = (gcitem.attributes.onchange.value != '' ? "#{gcitem.attributes.onchange.value}" : undefined ))
+            input(type="hidden", id="dfxHiddenRequest_#{gcitem.id}", ng-if="$index == 0", ng-model = (gcitem.attributes.property.value == '' ? "mdl_#{gcitem.attributes.name.value}" : "#{gcitem.attributes.property.value}"))
+
+    else
+        each item, i in gcitem.attributes.staticOptions
+            div(style = "#{completeStyle}", class = (gcitem.attributes.classes.value ? "dfx-form-group #{gcitem.attributes.classes.value}" : 'dfx-form-group control-group'))
+                label(for="#{gcitem.id}_field#{i}", style="display:block") #{item.displayValue}
+                div(
+                    style="display:inline-block",
+                    dfx-tool-tip,
+                    tooltip-title = (gcitem.attributes.tooltip && gcitem.attributes.tooltip.value ? "#{gcitem.attributes.tooltip.value}" : undefined),
+                    data-placement = (gcitem.attributes.tooltipPosition && gcitem.attributes.tooltipPosition.value ? "#{gcitem.attributes.tooltipPosition.value}" : undefined),
+                    ng-class = (gcitem.attributes.dynamicClasses.value ? "#{gcitem.attributes.dynamicClasses.value}" : undefined))
+                    input(
+                        id = "#{gcitem.id}_field#{i}",
+                        name = (gcitem.attributes.name.value == '' ? "#{gcitem.id}_field" : "#{gcitem.attributes.name.value}"),
+                        type = "radio",
+                        ng-model = (gcitem.attributes.property.value == '' ? 'mdl#{gcitem.id}_field' : "#{gcitem.attributes.property.value}"),
+                        bs-switch,
+                        switch-size = (gcitem.attributes.css.toggleSize ? "#{gcitem.attributes.css.toggleSize}" : undefined),
+                        switch-on-text = (gcitem.attributes.onLabel.value ? "#{gcitem.attributes.onLabel.value}" : undefined),
+                        switch-off-text = (gcitem.attributes.offLabel.value ? "#{gcitem.attributes.offLabel.value}" : undefined),
+                        switch-on-color = (gcitem.attributes.css.onColor ? "#{gcitem.attributes.css.onColor}" : undefined),
+                        switch-off-color = (gcitem.attributes.css.offColor ? "#{gcitem.attributes.css.offColor}" : undefined),
+                        switch-label = (gcitem.attributes.centralLabel.value ? "#{gcitem.attributes.centralLabel.value}" : undefined),
+                        switch-icon = (gcitem.attributes.centralIcon.value ? "glyphicon glyphicon-#{gcitem.attributes.centralIcon.value}" : undefined),
+                        switch-label-width=(gcitem.attributes.css.centralWidth ? "#{gcitem.attributes.css.centralWidth}px" : undefined),
+                        switch-handle-width=(gcitem.attributes.css.handleWidth ? "#{gcitem.attributes.css.handleWidth}px" : undefined),
+                        ng-disabled = (item.disabled ? 'true' : undefined),
+                        disabled = (item.disabled ? 'true' : undefined),
+                        value = (item.dataValue != '' ? "#{item.dataValue}" : ''),
+                        ng-true-value = (item.dataValue ? "#{item.dataValue}" : undefined),
+                        ng-false-value = ("false"),
+                        onswitch = (gcitem.attributes.onchange.value == '' ? undefined : "#{gcitem.attributes.onchange.value}"))
+                input(type="hidden", id="dfxHiddenRequest_#{gcitem.id}", ng-if="#{i} == 0", ng-model = (gcitem.attributes.property.value == '' ? "mdl#{gcitem.id}_field" : "#{gcitem.attributes.property.value}"))

@@ -1,0 +1,33 @@
+<div ng-show="$eval(attributes.display.value)" style="{{attributes.style.value}}" ng-class="$eval(attributes.dynamicClasses.value)" class="{{attributes.classes.value}} {{attributes.whiteframe.value}} flex">
+    <div dfx-gc-web-toolbar></div>
+    <md-content flex style="{{attributes.bodyStyle.value}}" ng-hide="$eval(attributes.toolbar.collapsed.value)">
+        <md-tabs md-no-ink-bar="{{attributes.inkBar.value==='disabled' ? 'true': 'false'}}" md-center-tabs="{{attributes.centerTabs.value}}"
+                 md-dynamic-height md-border-bottom md-selected="attributes.tabIndex.value" md-align-tabs="{{attributes.tabAlign.value}}" md-stretch-tabs="{{attributes.stretching.value}}"
+                 ng-click="$eval(attributes.onclick.value)"
+                 ng-dblclick="$eval(attributes.ondblclick.value)"
+                 ng-keypress="$eval(attributes.onkeypress.value)"
+                 ng-keydown="$eval(attributes.onkeydown.value)"
+                 ng-keyup="$eval(attributes.onkeyup.value)"
+                 ng-mouseover="$eval(attributes.onmouseover.value)"
+                 ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                 ng-mousemove="$eval(attributes.onmousemove.value)"
+                 ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                 ng-mousedown="$eval(attributes.onmousedown.value)"
+                 ng-mouseup="$eval(attributes.onmouseup.value)">
+            <md-tab ng-repeat="tab in attributes.tabs.value track by $index" label="{{$eval(tab.label)}}" ng-disabled="$eval(tab.disabled.value)"> <!--md-on-select="$eval(attributes.onSelect.value)" md-on-deselect="$eval(attributes.onDeselect.value)"-->
+                <md-content flex="100" layout="row" layout-padding style="{{tab.style.value}}" class="{{tab.classes.value}}" ng-class="$eval(tab.dynamicClasses.value)">
+                    <div flex id="{{component_id}}_tab_{{$index}}">
+                        <div ng-repeat="row in tab.layout.rows track by $index" id="{{component_id}}_layout_{{$parent.$index}}_row_{{$index}}" layout="row" layout-wrap flex="100">
+                            <div ng-repeat="col in row.cols track by $index" id="{{component_id}}_layout_{{$parent.$parent.$index}}_row_{{$parent.$index}}_column_{{$index}}" flex="{{col.width.value}}"
+                                 gc-container="layout_{{$parent.$parent.$index}}_row_{{$parent.$index}}_column_{{$index}}" gc-parent="{{component_id}}" style="{{col.style.value}}" ng-style="{'flex-wrap': col.orientation.value ==='row' ? 'wrap' : 'nowrap'}"
+                                 layout="{{col.orientation.value}}" layout-align="{{col.halignment.value}} {{col.valignment.value}}"
+                                 class="ui-placeholder dfx_visual_editor_droppable {{col.classes.value}}" ng-class="$eval(col.dynamicClasses.value)">
+                                <div id="{{gcontrol.id}}" dfx-gc-web="{{gcontrol.type}}" gc-role="control" gc-parent="{{component_id}}" view-id="{{view_id}}" ng-repeat="gcontrol in children['layout_' + $parent.$parent.$index + '_row_'+ $parent.$index+'_column_'+$index]"></div>
+                            </div>
+                        </div>
+                    </div>
+                </md-content>
+            </md-tab>
+        </md-tabs>
+    </md-content>
+</div>

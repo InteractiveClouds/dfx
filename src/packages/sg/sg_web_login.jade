@@ -1,0 +1,89 @@
+doctype html
+html#extr-page(ng-app="#{appname}")
+    head
+        meta(http-equiv="content-type", content="text/HTML;charset=UTF-8")
+        meta(name="viewport", content="width=device-width,initial-scale=1")
+        title Login to #{apptitle}
+        link(rel="stylesheet", type="text/css", href="sg/css/bootstrap.min.css", media="screen")
+        link(rel="stylesheet", type="text/css", href="sg/css/font-awesome.min.css", media="screen")
+        link(rel="stylesheet", type="text/css", href="sg/css/smartadmin-production.min.css", media="screen")
+        link(rel="stylesheet", type="text/css", href="sg/css/smartadmin-skins.min.css", media="screen")
+        link(rel="stylesheet", type="text/css", href="sg/css/app_setup.min.css", media="screen")
+        link(rel="stylesheet", type="text/css", href="css/web/app.css", media="screen")
+        script(src="js/vendor/des.min.js")
+        script(src="js/vendor/md5.js")
+        script(src="js/commons/authRequest.js")
+        script(src="js/vendor/angular.min.js")
+        script(src="js/vendor/angular-route.min.js")
+        script(src="js/vendor/d3.min.js")
+        script(src="js/vendor/jquery.min.js")
+        script(src="js/vendor/jquery-ui.min.js")
+        script(src="js/vendor/bootstrap.min.js")
+        script(src="js/commons/dfx.utils.js")
+        script(src="js/vendor/nv-d3.min.js")
+        script(src="js/vendor/angular-nvd3.min.js")
+        script(src="js/vendor/jquery-inputmask.min.js")
+        script(src="js/commons/dfx.directives.js")
+        script(src="js/commons/jquery.dreamface-1.0.js")
+        script(src="js/vendor/jarvis.widget.min.js")
+        script(src="js/web/dfx.web.js")
+        script(src="js/web/app.js")
+    body.animated.fadeInDown
+        script(type="text/javascript").
+            DreamFace.initSession( {dfx_appname:'#{appname}', dfx_tenantid:'#{tenantid}', dfx_ispreview:false} );
+            DreamFace.successfulLoginRedirectUrl = 'index.html';
+
+        header#header
+            div#logo-group
+                span#logo
+                    img(src="sg/img/logo.png", alt="#{apptitle}")
+        div#main(role="main")
+
+            div#content.container
+                div.row
+                    div.col-xs-12.col-sm-12.col-md-7.col-lg-8.hidden-xs.hidden-sm
+                        h1.login-header-big #{apptitle}
+                        div.hero
+
+                            div.pull-left.login-desc-box-l
+                                h4.paragraph-header(style="color:#fff;padding-left:10px") Welcome to the Sample Gallery Application built with DreamFace X-Platform.
+                                div.login-app-icons(style="padding-left:10px")
+                                    a.btn.btn-primary.btn-sm(href="http://www.interactive-clouds.com/theproduct.html", target="_blank") Find out more
+
+                            img.pull-right(src="sg/img/login_illustration.png", alt="", style="margin-top:30px;width:370px")
+
+                        div.row
+                            div.col-xs-12.col-sm-12.col-md-6.col-lg-6
+                                h5.about-heading Your User Experience in a few simple clicks
+                                p.
+                                    Create your default User Experience with ready to use themes, templates, menu styles and positioning, internationalization, widget behavior and personalization, collapsable widgets, application links, notification settings and content, application themes and skins, header, footer and navigation bar style and positioning and much more, all with simple click and choose interface.
+                            div.col-xs-12.col-sm-12.col-md-6.col-lg-6
+                                h5.about-heading Save Time and Prepare your User Experience with ease
+                                p.
+                                    All of details that you define to customize your user experience will be added to the default behavior of your application, all you do is click and choose the colors and themes for your best user experience and DreamFace will take care of packaging the default behavior into your application and if you change your mind just come back, everything is a click away from the look and feel you want.
+
+                    div.col-xs-12.col-sm-12.col-md-5.col-lg-4
+                        div.well.no-padding
+                            form#loginForm.smart-form.client-form(action="#")
+                                header Sign In
+                                fieldset
+                                    section
+                                        label.label User ID
+                                        label.input
+                                            i.icon-append.fa.fa-user
+                                            input#username(type="text", name="username", value="appuser", autocomplete="off", autofocus)
+                                            b.tooltip.tooltip-top-right
+                                                i.fa.fa-user.txt-color-teal(style="margin-right:5px")
+                                                span Please enter your user id
+                                    section
+                                        label.label Password
+                                        label.input
+                                            i.icon-append.fa.fa-lock
+                                            input#password(type="password", name="password", value="12345", autocomplete="off")
+                                            b.tooltip.tooltip-top-right
+                                                i.fa.fa-lock.txt-color-teal(style="margin-right:5px")
+                                                span(style="margin-right:5px") Enter your password
+                                footer
+                                    a.btn.btn-primary(href="#", onclick="$(this).closest('form').submit()", data-role="button", type="submit") Sign in
+
+        script(src="js/vendor/login.js")

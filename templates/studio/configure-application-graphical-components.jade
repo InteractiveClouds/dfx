@@ -1,0 +1,109 @@
+div(style="overflow-x:hidden")
+    ol.breadcrumb
+        li
+            a(href="javascript:DfxStudio.Dispatcher.run('#!/home/');")
+                span.fa.fa-lg.fa-home
+        li
+            a(href="javascript:DfxStudio.Dispatcher.run('#!/catalog/');") Catalog
+        li
+            a(href="javascript:DfxStudio.Dispatcher.run('#!/catalog/application/#{application.name}');") Application: #{application.name}
+        li.active Application Configuration: Graphical Components - role #{role}
+div.row(style="margin-top:10px; min-height: 100%;", data-application-name="#{application.name}", data-role-name="#{role}")
+    div.col-lg-4
+        div.panel.panel-primary
+            div.panel-heading
+                h4 Screens Categories List
+            div.panel-body#screens_categories
+                ul.nav
+                    li
+                        a.tree-toggle.dfx_dbs_database(href="javascript:void(0);", onclick="DfxStudio.Screens.showAllCategories();")
+                            span.fa.fa-lg.fa-tags
+                            span(style="padding-left: 10px;") All
+                    each category in categories
+                        li
+                            a.tree-toggle.dfx_dbs_database(href="javascript:void(0);", onclick="DfxStudio.Screens.filterByCategory('#{category.name}');")
+                                span.fa.fa-lg.fa-tag
+                                span(style="padding-left: 10px;") #{category.name}
+                    li
+                        a.tree-toggle.dfx_dbs_database(href="javascript:void(0);", onclick="DfxStudio.Screens.showNoCategoryScreen();")
+                            span.fa.fa-lg.fa-tag
+                            span(style="padding-left: 10px;") No category
+                    li
+                        div.dbx_dbs_divider
+        div.panel.panel-primary
+            div.panel-heading
+                div.panel-title
+                    | Application Screens List
+                    div.pull-right
+                        a(href="javascript:DfxStudio.switchCollapsible('screens_list');")
+                            span#dfx_collapsible_icon_screens_list.fa.fa-lg.fa-angle-down
+            div.panel-body#dfx_collapsible_screens_list
+                form(action="javascript:void(0);", id='applicationMenuForm')
+                    fieldset
+                        div#searchScreens.form-group.col-lg-12
+                            label(for="fldName") Search a Screen:
+                            div.input-group(style="margin-bottom:10px")
+                                input#fldScreen.form-control(type="text", placeholder="Search a screen")
+                                span.input-group-btn
+                                    div.dropdown
+                                        a#search-screens.btn.btn-info.dropdown-toggle(type="button", onclick="DfxStudio.Dashboard.searchScreens()")
+                                            span.fa.fa-lg.fa-search
+                table#screensTable.table.table-condensed.table-thick-bordered(style="margin-bottom: 0;")
+                    col(width="30%")
+                    col(width="40%")
+                    col(width="20%")
+                    col(width="10%")
+                    thead
+                        tr
+                            th Name
+                            th Title
+                            th Category
+                    tbody
+                        each screen in screens
+                            tr(style="display: table-row;")
+                                td.screen-name
+                                    a.dfx_table_text.btn.btn-link(href="javascript:DfxStudio.Dashboard.configureGraphicalComponents({applicationName:'#{application.name}', screenName:'#{screen.name}'});", data-screen-name="#{screen.name}") #{screen.name}
+                                td #{screen.title}
+                                td.screens-category #{screen.category}
+    div.col-lg-8
+        div.panel.panel-primary
+            div.panel-heading
+                div.panel-title
+                    | Graphical Components Configuration - Role #{role}
+                    div.pull-right
+                        a(href="javascript:DfxStudio.switchCollapsible('screen_details');")
+                            span#dfx_collapsible_icon_screen_details.fa.fa-lg.fa-angle-down
+            div.panel-body#dfx_collapsible_screen_details
+                span#screen_detail_intro(style="display: block;")
+                    div Select a screen from list.
+                span#screen_detail_form(style="display: none;")
+                    div.row
+                        div.col-lg-4
+                            table#widgetsTable.table.table-condensed.table-thick-bordered(style="margin-bottom: 0;")
+                                thead
+                                    tr
+                                        th Choose Widget
+                                tbody
+                        div.col-lg-4
+                            table#graphicalComponentsTable.table.table-condensed.table-thick-bordered(style="margin-bottom: 0;")
+                                thead
+                                    tr
+                                        th Choose Graphical Component
+                                tbody
+                        div.col-lg-4()
+                            table.table.table-condensed.table-thick-bordered(style="margin-bottom: 0;")
+                                thead
+                                    tr
+                                        th Choose Graphical Component
+                                tbody
+                                    tr#graphicalComponentAttributesFormTable(style="display: none;")
+                                        td
+                                            form#graphicalComponentAttributesForm(action="javascript:void(0);")
+                                                fieldset
+                                                div#graphicalComponentAttributesFormButtons
+                                                    a.btn.btn-info(href="javascript:DfxStudio.Dashboard.saveGraphicalComponentConfig();")
+                                                        span.fa.fa-lg.fa-floppy-o
+                                                        span(style="padding-left: 5px;") Save
+                                                    a.btn.btn-default(href="javascript:DfxStudio.Dashboard.discardGraphicalComponentChanges();", style="margin-left: 10px;")
+                                                        span.fa.fa-lg.fa-undo
+                                                        span(style="padding-left: 5px;") Cancel

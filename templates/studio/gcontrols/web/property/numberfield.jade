@@ -1,0 +1,110 @@
+table.table.table-bordered
+    tbody
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4
+                label.dfx_visual_editor_property_label Name:
+            td
+                input#gc_numberfield_attr_name.form-control(type="text")
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4.gc_w_design_attr_bind
+                label.dfx_visual_editor_property_label Property:
+            td
+                div.input-group
+                    input#gc_numberfield_attr_property.form-control(type="text")
+                    span.input-group-btn
+                        button#btnPickProperty.btn.btn-default(data-toggle="modal", data-target="#pickerValueModal", data-vb-picker="bind", data-vb-picker-target="gc_numberfield_attr_property") ...
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4.gc_w_design_attr_exp
+                label.dfx_visual_editor_property_label Property Init:
+            td
+                .input-group
+                    input#gc_numberfield_attr_propertyInit.form-control(type="text")
+                    span.input-group-btn
+                        button#btnPickPropertyInit.btn.btn-default(data-toggle="modal", data-target="#pickerValueModal", data-vb-picker="exp", data-vb-picker-target="gc_numberfield_attr_propertyInit") ...
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4
+                label.dfx_visual_editor_property_label Label:
+            td
+                input#gc_numberfield_attr_label.form-control(type="text")
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4
+                label.dfx_visual_editor_property_label Label Visible:
+            td
+                select#gc_numberfield_attr_labelVisible.form-control
+                    option(value="yes") yes
+                    option(value="no") no
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4.gc_w_design_attr_exp
+                label.dfx_visual_editor_property_label Display:
+            td
+                .input-group
+                    input#gc_numberfield_attr_display.form-control(type="text")
+                    span.input-group-btn
+                        button#btnPickDisplay.btn.btn-default(data-toggle="modal", data-target="#pickerValueModal", data-vb-picker="exp", data-vb-picker-target="gc_numberfield_attr_display") ...
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4.gc_w_design_attr_exp
+                label.dfx_visual_editor_property_label Disabled:
+            td
+                .input-group
+                    input#gc_numberfield_attr_disabled.form-control(type="text")
+                    span.input-group-btn
+                        button#btnPickDisabled.btn.btn-default(data-toggle="modal", data-target="#pickerValueModal", data-vb-picker="exp", data-vb-picker-target="gc_numberfield_attr_disabled") ...
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4
+                label.dfx_visual_editor_property_label Required:
+            td
+                select#gc_numberfield_attr_required.form-control
+                    option(value="yes") yes
+                    option(value="no") no
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4
+                label.dfx_visual_editor_property_label Min:
+            td
+                input#gc_numberfield_attr_min.form-control(type="text", placeholder="the minimum value allowed")
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4
+                label.dfx_visual_editor_property_label Max:
+            td
+                input#gc_numberfield_attr_max.form-control(type="text", placeholder="the maximum value allowed")
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4
+                label.dfx_visual_editor_property_label Step:
+            td
+                input#gc_numberfield_attr_step.form-control(type="text")
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4
+                label.dfx_visual_editor_property_label Default Value:
+            td
+                input#gc_numberfield_attr_defaultValue.form-control(type="text")
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4
+                label.dfx_visual_editor_property_label Error msg:
+            td
+                div.input-group
+                    button#btnSelectClass.btn.btn-default(type="button", data-toggle="collapse", data-target="#listErrorMessages") Edit...
+                ul#listErrorMessages.list-unstyled.collapse(style="padding-left:10px")
+                    li
+                        label Required
+                        input#gc_numberfield_attr_error_required.form-control(type="text")
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4
+                label.dfx_visual_editor_property_label Classes:
+            td
+                input#gc_numberfield_attr_classes.form-control(type="text")
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4
+                label.dfx_visual_editor_property_label Style:
+            td
+                input#gc_numberfield_attr_style.form-control(type="text")
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4.gc_w_design_attr_evt
+                label.dfx_visual_editor_property_label On Change:
+            td
+                div.input-group
+                    input#gc_numberfield_attr_onchange.form-control(type="text")
+                    span.input-group-btn
+                        button#btnPickOnChange.btn.btn-default(data-toggle="modal", data-target="#pickerValueModal", data-vb-picker="evt", data-vb-picker-target="gc_numberfield_attr_onchange") ...
+input#gc_numberfield_attr_id(type="hidden")
+a.btn.btn-info.dfx_visual_editor_property_button(href="javascript:gc_web_number_field.savePropertyPanel();")
+    span.fa.fa-lg.fa-check
+    span(style="padding-left:5px") Apply

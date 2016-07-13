@@ -1,0 +1,20 @@
+div.panel(style="position:fixed;top:203px;right:0;height:35px;width:349px;z-index:3;padding:5px")
+    a#dfx_visual_editor_property_panel_apply.pull-left.btn.btn-xs.btn-info(href="javascript:gc_web_layout.savePropertyPanel();", gc-type="layout")
+        span.fa.fa-lg.fa-check
+        span(style="padding-left:5px") Apply
+    a.pull-right(href="javascript:DfxVisualBuilder.propertyPanelExpandAll();", style="margin-left:10px") Expand
+    a.pull-right(href="javascript:DfxVisualBuilder.propertyPanelCollapseAll();") Collapse
+div.panel(style="position: fixed;top: 233px;right: 0;width: 349px;padding: 5px;bottom: 20px;overflow-y: auto;")
+    form.form-horizontal
+        div.col-xs-12
+            a#layout_container_link(href="javascript:void(0)") Panel
+            span(style="padding-left:10px;padding-right:10px;") &gt;
+            a#layout_link(href="javascript:void(0)") Layout
+        legend
+            a.dfx_visual_editor_property_collapsible_btn(data-toggle="collapse", data-target="#main_props") Main Properties
+        div#main_props.collapse.in
+            label.col-xs-4.control-label Rows:
+            div.col-xs-8
+                div#layout_manager.col-md-12
+                div#layout_manager_edit.col-md-12
+            input#gc_layout_attr_id(type="hidden")

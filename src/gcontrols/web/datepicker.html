@@ -1,0 +1,46 @@
+<form name="dateForm" ng-show="$eval(attributes.display.value)" style="{{attributes.style.value}}" ng-class="$eval(attributes.dynamicClasses.value)" class="{{attributes.classes.value}} gc-datepicker">
+    <div>
+        <label ng-class="attributes.labelClass" style="font-size: 11px; margin-top: 6px; margin-bottom: 3px"
+               ng-bind="$eval(attributes.label.value)"></label>
+        <div>
+            <md-datepicker ng-if="attributes.selectedType.value !== 'ranged'" name="dateField" ng-required="$eval(attributes.isDateRequired.value)"
+                           ng-model="attributes.bindingDate.value" ng-disabled="$eval(attributes.disabled.value)" md-placeholder="Enter date"
+                           ng-change="$eval(attributes.onchange.value)"
+                           ng-focus="$eval(attributes.onfocus.value)"
+                           ng-blur="$eval(attributes.onblur.value)"
+                           ng-click="$eval(attributes.onclick.value)"
+                           ng-dblclick="$eval(attributes.ondblclick.value)"
+                           ng-keypress="$eval(attributes.onkeypress.value)"
+                           ng-keydown="$eval(attributes.onkeydown.value)"
+                           ng-keyup="$eval(attributes.onkeyup.value)"
+                           ng-mouseover="$eval(attributes.onmouseover.value)"
+                           ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                           ng-mousemove="$eval(attributes.onmousemove.value)"
+                           ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                           ng-mousedown="$eval(attributes.onmousedown.value)"
+                           ng-mouseup="$eval(attributes.onmouseup.value)"></md-datepicker>
+
+            <md-datepicker ng-if="attributes.selectedType.value === 'ranged'" name="dateField" ng-required="$eval(attributes.isDateRequired.value)"
+                           ng-model="attributes.bindingDate.value" ng-disabled="$eval(attributes.disabled.value)"md-placeholder="Enter date"
+                           md-min-date="minDate" md-max-date="maxDate"
+                           ng-change="$eval(attributes.onchange.value)"
+                           ng-focus="$eval(attributes.onfocus.value)"
+                           ng-blur="$eval(attributes.onblur.value)"
+                           ng-click="$eval(attributes.onclick.value)"
+                           ng-dblclick="$eval(attributes.ondblclick.value)"
+                           ng-keypress="$eval(attributes.onkeypress.value)"
+                           ng-keydown="$eval(attributes.onkeydown.value)"
+                           ng-keyup="$eval(attributes.onkeyup.value)"
+                           ng-mouseover="$eval(attributes.onmouseover.value)"
+                           ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                           ng-mousemove="$eval(attributes.onmousemove.value)"
+                           ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                           ng-mousedown="$eval(attributes.onmousedown.value)"
+                           ng-mouseup="$eval(attributes.onmouseup.value)"></md-datepicker>
+
+            <div ng-messages="dateForm.dateField.$error">
+                <div class="validation-messages" ng-message="required">This date is required.</div>
+            </div>
+        </div>
+    </div>
+</form>

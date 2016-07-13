@@ -1,0 +1,41 @@
+div.panel.panel-primary(style="position: relative; height: 99%; margin-bottom: 1%;")
+    div.panel-heading
+        h4 Role details
+    div.panel-body#dbs_databases
+        form(action="javascript:void(0);", style="margin-top: 10px;")
+            fieldset
+                div.form-group
+                    label(data-role-name="#{roleName}") Role:
+                    input.form-control(type="text", value='#{roleName}', disabled=true)
+                div.form-group
+                    label Description:
+                    input.form-control(type="text", name="description", value="#{description}", disabled=(type === 'staff' ? true : undefined))
+                if ( type !== 'staff' )
+                    div.form-group
+                        label API Route Execution Rights:
+                        table.table.table-condensed.table-thick-bordered(style="margin-bottom: 0;")
+                            col(width="10%")
+                            col(width="90%")
+                            thead
+                                tr
+                                    th(style="padding-left: 20px;")
+                                        input#dfx_check_role_rights(type="checkbox", onclick="javascript:DfxStudio.Home.ApplicationRoles.checkAllRights();", checked=(isAllRightsChecked ? "checked" : undefined))
+                                    th API Route
+                            tbody#dfx_role_search_result_body
+                                each dataquery in dataqueries
+                                    tr
+                                        td(style="padding-left: 20px;")
+                                            label
+                                                input(type="checkbox", data-query="DATAQUERY::#{dataquery.name}", checked=(checked = rightsList.indexOf('DATAQUERY::' + dataquery.name) != -1 ? "checked" : undefined))
+                                        td #{dataquery.name}
+                button#save-role-settings.btn.btn-info.save-now-submitter(type='button', onclick="javascript:DfxStudio.Home.ApplicationRoles.update('#{applicationName}', '#{roleName}');")
+                    span.fa.fa-lg.fa-floppy-o
+                    span(style="padding-left:5px") Save
+if (!unremovable)
+    div.panel.panel-danger(style="margin-top: 15px;")
+        div.panel-heading
+            h4 Danger Zone
+        div.panel-body
+            button.btn.btn-default(type='button', onclick="javascript:DfxStudio.Home.ApplicationRoles.remove('#{applicationName}', '#{roleName}');", style="margin-left: 10px;")
+                span.fa.fa-lg.fa-trash-o
+                span(style="padding-left:5px") Delete the Role

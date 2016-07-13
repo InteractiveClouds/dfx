@@ -1,0 +1,199 @@
+<div layout="row" layout-align="space-between center" style="background:#DCDCDC">
+    <h4 style="padding-left:10px">
+        Platform
+    </h4>
+</div>
+<md-sidenav md-component-id="side_nav_left" md-is-open="isSidenavOpen" class="md-sidenav-left layout-padding" style="width: 450px; max-width: 450px;">
+    <div ng-if="section === 'developers'">
+        <md-tabs md-dynamic-height md-center-tabs md-stretch-tabs="always" md-border-bottom>
+            <md-tab label="Identity">
+                <md-content style="padding-top: 20px;">
+                    <div ng-if="developers.operation==='update'">
+                        <md-input-container class="md-block">
+                            <label>Login:</label>
+                            <input ng-model="developers.current_user.login" disabled>
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label>First Name:</label>
+                            <input ng-model="developers.current_user.firstName" ng-disabled="developers.current_user.type==='openid'">
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label>Last Name:</label>
+                            <input ng-model="developers.current_user.lastName" ng-disabled="developers.current_user.type==='openid'">
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label>Email:</label>
+                            <input ng-model="developers.current_user.email" ng-disabled="developers.current_user.type==='openid'">
+                        </md-input-container>
+                        <md-input-container class="md-block" ng-if="developers.current_user.type!=='openid'">
+                            <label>Password:</label>
+                            <input ng-change="developers.changePass()" ng-model="developers.current_user.new_pass" type="password">
+                        </md-input-container>
+                        <md-input-container ng-if="developers.current_user.pass_changed === true && developers.current_user.type!=='openid'" class="md-block">
+                            <label>Repeat Password:</label>
+                            <input ng-model="developers.current_user.repeat_pass" type="password" ng-change="developers.showPassMessage(developers.current_user)">
+                            <div ng-if="developers.current_user.pass_matching === true && developers.current_user.show_pass_message" style="color: green; margin-top: 35px; font-size: 12px;">password is matching</div>
+                            <div ng-if="developers.current_user.pass_matching === false && developers.current_user.show_pass_message" style="color: red; margin-top: 35px; font-size: 12px;">password is not matching</div>
+                        </md-input-container>
+                    </div>
+                    <div ng-if="developers.operation==='create'">
+                        <md-input-container class="md-block">
+                            <label>Login:</label>
+                            <input ng-model="developers.new_user.login">
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label>First Name:</label>
+                            <input ng-model="developers.new_user.firstName">
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label>Last Name:</label>
+                            <input ng-model="developers.new_user.lastName">
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label>Email:</label>
+                            <input ng-model="developers.new_user.email">
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label>Password:</label>
+                            <input ng-model="developers.new_user.pass" type="password">
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label>Repeat Password:</label>
+                            <input ng-model="developers.new_user.repeat_pass" type="password" ng-change="developers.showPassMessage(developers.new_user)">
+                            <div ng-if="developers.new_user.pass_matching === true && developers.new_user.show_pass_message" style="color: green; margin-top: 35px; font-size: 12px;">password is matching</div>
+                            <div ng-if="developers.new_user.pass_matching === false && developers.new_user.show_pass_message" style="color: red; margin-top: 35px; font-size: 12px;">password is not matching</div>
+                        </md-input-container>
+                    </div>
+                </md-content>
+            </md-tab>
+            <md-tab label="Roles">
+                <md-content style="padding-top: 20px;">
+                    <table ng-if="developers.operation==='update'" class="datatable" class="layout-row" style="width: 100%">
+                        <thead>
+                        <tr style="height: 40px;">
+                            <th style="padding-left: 0;">
+                                <span>Default</span>
+                            </th>
+                            <th style="padding-left: 0;">
+                                <span>Assigned</span>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr id="users_roles_table_row_update" style="border-bottom: solid 1px #c6c6c6">
+                            <td style="padding-top: 17px; padding-left: 0;">
+                                <md-radio-group ng-model="developers.current_user.roles.default" class="md-primary">
+                                    <md-radio-button value="admin" ng-disabled="developers.current_user.type=='openid'"></md-radio-button>
+                                    <md-radio-button value="developer" ng-disabled="developers.current_user.type=='openid'"></md-radio-button>
+                                </md-radio-group>
+                            </td>
+                            <td style="padding-top: 17px; padding-left: 0;">
+                                <md-checkbox class="md-primary" ng-model="developers.current_user.admin_role" style="margin-top: -1px; display: block;" ng-disabled="developers.current_user.admin_disabled || developers.current_user.type=='openid'">admin</md-checkbox>
+                                <md-checkbox class="md-primary" ng-model="developers.current_user.dev_role" style="margin-top: -1px" ng-disabled="developers.current_user.dev_disabled || developers.current_user.type=='openid'">developer</md-checkbox>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <table ng-if="developers.operation==='create'" class="datatable" class="layout-row" style="width: 100%">
+                        <thead>
+                        <tr style="height: 40px;">
+                            <th style="padding-left: 0;">
+                                <span>Default</span>
+                            </th>
+                            <th style="padding-left: 0;">
+                                <span>Assigned</span>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr id="users_roles_table_row_create" style="border-bottom: solid 1px #c6c6c6">
+                            <td style="padding-top: 17px; padding-left: 0;">
+                                <md-radio-group ng-model="developers.new_user.roles.default" class="md-primary">
+                                    <md-radio-button value="admin" ng-disabled="developers.new_user.type=='openid'"></md-radio-button>
+                                    <md-radio-button value="developer" ng-disabled="developers.new_user.type=='openid'"></md-radio-button>
+                                </md-radio-group>
+                            </td>
+                            <td style="padding-top: 17px; padding-left: 0;">
+                                <md-checkbox class="md-primary" ng-model="developers.new_user.admin_role" style="margin-top: -1px; display: block;" ng-disabled="developers.new_user.admin_disabled || developers.new_user.type=='openid'">admin</md-checkbox>
+                                <md-checkbox class="md-primary" ng-model="developers.new_user.dev_role" style="margin-top: -1px" ng-disabled="developers.new_user.dev_disabled || developers.new_user.type=='openid'">developer</md-checkbox>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </md-content>
+            </md-tab>
+        </md-tabs>
+        <div ng-if="developers.operation==='update'" style="display:flex; justify-content: flex-end; margin-top: 15px;">
+            <md-button class="md-primary" ng-click="developers.updateUser()" ng-disabled="(!developers.current_user.pass_matching && developers.current_user.pass_changed) || developers.current_user.type=='openid'">Save</md-button>
+            <md-button class="md-primary" ng-click="developers.closeSidenav()">Cancel</md-button>
+        </div>
+        <div ng-if="developers.operation==='create'" style="display:flex; justify-content: flex-end">
+            <md-button class="md-primary" ng-click="developers.createUser()" ng-disabled="!developers.new_user.pass_matching">Save</md-button>
+            <md-button class="md-primary" ng-click="developers.closeSidenav()">Cancel</md-button>
+        </div>
+    </div>
+    <div ng-if="section === 'cloud'">
+        <md-tabs md-stretch-tabs="always" md-dynamic-height md-center-tabs md-border-bottom >
+            <md-tab label="Create New Image">
+                <md-content style="padding-top: 20px; overflow-y: hidden;" ng-if="cloud.bluemix.show_sidenav_content == true">
+                    <div layout="row">
+                        <md-input-container class="md-block flex-70">
+                            <label>Image Name:</label>
+                            <input ng-model="cloud.bluemix.new_image.name">
+                        </md-input-container>
+                        <div style="padding: 10px; margin-top: 14px;">:</div>
+                        <md-input-container class="md-block flex-30">
+                            <label>Version:</label>
+                            <input ng-model="cloud.bluemix.new_image.version">
+                        </md-input-container>
+                    </div>
+                    <div layout="row">
+                        <table class="datatable" class="layout-row" style="width: 100%; border-bottom: solid 1px #c6c6c6;">
+                            <thead>
+                            <tr>
+                                <th>Application</th>
+                                <th ng-style="{color: cloud.bluemix.builds_counter > 0 ? 'rgba(0,0,0,.54)':'transparent'}">Build #</th>
+                            </tr>
+                            </thead>
+                            <tbody ng-repeat="app in cloud.bluemix.new_image.applications track by $index">
+                                <tr style="cursor: pointer; border-bottom: solid 1px #c6c6c6;" ng-click="cloud.bluemix.toggleNewImageBuilds($index, app)">
+                                    <td>{{app.application_name}}</td>
+                                    <td></td>
+                                </tr>
+                                <tr ng-if="app.display_builds === true" ng-repeat="build in app.builds" style="background: #ffffff; border-bottom: solid 1px #c6c6c6;">
+                                    <td></td>
+                                    <td><md-checkbox ng-model="build.selected" style="margin: 0;" class="md-primary"></md-checkbox>{{build.app_version +'.' + build.build_number + ' (' + build.platform + ')'}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </md-content>
+            </md-tab>
+        </md-tabs>
+        <div style="display:flex; justify-content: flex-end; margin-top: 20px;">
+            <md-button class="md-primary" ng-click="cloud.bluemix.saveImage()" ng-disabled="cloud.bluemix.disabled_button === true">Save</md-button>
+            <md-button class="md-primary" ng-click="cloud.bluemix.closeSidenav()" ng-disabled="cloud.bluemix.disabled_button === true">Cancel</md-button>
+        </div>
+        <md-progress-linear ng-if="cloud.bluemix.disabled_button === true" md-mode="indeterminate"></md-progress-linear>
+    </div>
+</md-sidenav>
+
+<md-tabs md-dynamic-height md-border-bottom>
+    <md-tab label="Developers" md-on-select="defineSection('developers')">
+        <md-content class="md-padding" ng-controller="dfx_studio_developers_controller">
+            <div ng-include="'studioviews/developers.html'"></div>
+        </md-content>
+    </md-tab>
+    <md-tab label="Cloud" md-on-select="defineSection('cloud')">
+        <md-content class="md-padding" ng-controller="dfx_studio_cloud_controller">
+            <div ng-include="'studioviews/cloud.html'"></div>
+        </md-content>
+    </md-tab>
+    <md-tab label="Settings" md-on-select="defineSection('settings')">
+        <md-content class="md-padding" ng-controller="dfx_studio_platform_settings_controller">
+            <div ng-include="'studioviews/platform_settings.html'"></div>
+        </md-content>
+    </md-tab>
+</md-tabs>
+

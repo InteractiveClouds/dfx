@@ -1,0 +1,8 @@
+{ "steps" : [
+    {
+        "title": "DashBoard",
+        "content": "The dashboard provides a single view of all applications, widgets and data queries associated with this cloud platform from a single place.",
+        "top": "50",
+        "left": "400"
+    }
+]}

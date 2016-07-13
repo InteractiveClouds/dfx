@@ -1,0 +1,9 @@
+div.panel(style="position:fixed;top:203px;right:0;height:35px;width:349px;z-index:3;padding:5px")
+    a#dfx_visual_editor_property_panel_apply.pull-left.btn.btn-xs.btn-info(href="javascript:void(0);" onclick="gc_web_carousel.savePropertyPanel();", gc-type="carousel")
+        span.fa.fa-lg.fa-check
+        span(style="padding-left:5px") Apply
+    a.pull-right(href="javascript:DfxVisualBuilder.propertyPanelExpandAll();", style="margin-left:10px") Expand
+    a.pull-right(href="javascript:DfxVisualBuilder.propertyPanelCollapseAll();") Collapse
+div.panel(style="position: fixed;top: 233px;right: 0;width: 349px;padding: 5px;bottom: 20px;overflow-y: auto;")
+    form#dfx_visual_editor_property_panel_attributes.form-horizontal
+input#gc_carousel_attr_id(type="hidden")

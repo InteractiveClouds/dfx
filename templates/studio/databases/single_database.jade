@@ -1,0 +1,9 @@
+li
+    a.tree-toggle.dfx_dbs_database
+        span.fa.fa-database
+        span(style="padding-left:10px") #{databaseName}
+        div.fa.fa-lg.fa-trash-o.btn.btn-danger.pull-right
+    ul.nav.dbx_dbs_menu_next_level
+        li
+            form.dbx_dbs_item_creating_form(onsubmit="DfxStudio.databases.createCollection(this); return false;")
+                input.form-control(name="newCollectionName", type="text", placeholder="Create new collection")

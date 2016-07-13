@@ -1,0 +1,25 @@
+doctype html
+html(ng-app="dfxAppRuntime")
+    head
+        meta(http-equiv="content-type", content="text/HTML;charset=UTF-8")
+        meta(name="viewport", content="width=device-width,initial-scale=1")
+        title #{apptitle}
+        link(rel="stylesheet", type="text/css", href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,700', rel='stylesheet'")
+
+        link(rel="stylesheet", type="text/css", href="css/web/runtime_web/dfx.min.css", media="screen")
+        link(rel="stylesheet", type="text/css", href="css/web/app.css", media="screen")
+
+        script(src="js/web/runtime_web/script.js")
+        script(src="js/web/app.js")
+        script(src="js/web/runtime_web/dfx.js")
+
+        if (loadGoogleMap)
+            script(src='https://maps.googleapis.com/maps/api/js?key=#{googleMapAPIKey}')
+        each resource_item in resources
+            - if ( resource_item.type == 'JavaScript' ) {
+                script(src="#{resource_item.path}")
+            - } else if ( resource_item.type == 'CSS' ) {
+                link(rel="stylesheet", type="text/css", href="#{resource_item.path}", media="screen")
+            - }
+    body(layout="row", ng-controller="dfx_app_controller", dfx-app="#{appname}")
+        div.ng-view(style="width:100%", layout="column", flex)

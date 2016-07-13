@@ -1,0 +1,28 @@
+<md-menu-bar>
+	<md-menu>
+  	<div class="gc-btn-group">
+			<button ng-click="$eval(attributes.onclick.value)" class="gc-btn-group-first md-raised md-primary {{attributes.classes.value}} md-altTheme-theme md-button glyph" style="{{attributes.style.value}}">
+				<div ng-if="attributes.waiting.value !== 'true' && attributes.icon.type ==='fa-icon'" ng-style="{'display':'flex','flex-direction': attributes.icon.position === 'right' ? 'row-reverse' : 'row', 'justify-content': 'center', 'align-items':'center'}">
+					<md-icon ng-if="attributes.icon.value.length > 0" class="fa {{$eval(attributes.icon.value) || 'fa-home'}} {{attributes.icon.class}}" style="font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px; color: inherit; {{attributes.icon.style}}"></md-icon>
+					<span class="dfx-gc-core-button-label">{{attributes.label.value | checkExpression}}</span>
+			  </div>
+			  <div ng-if="attributes.waiting.value !== 'true' && attributes.icon.type ==='svg-icon'" ng-style="{'display':'flex','flex-direction': attributes.icon.position === 'right' ? 'row-reverse' : 'row', 'justify-content': 'center', 'align-items':'center'}">
+			    <ng-md-icon ng-if="attributes.icon.value.length > 0" icon="{{$eval(attributes.icon.value) || 'home'}}" size="{{attributes.icon.size}}" style="height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px; color: inherit; {{attributes.icon.style}}" class="{{attributes.icon.class}}"></ng-md-icon>
+			    <span class="dfx-gc-core-button-label">{{attributes.label.value | checkExpression}}</span>
+			  </div>
+			  <div ng-if="attributes.waiting.value === 'true' && attributes.waiting.icon.type ==='fa-icon'" ng-style="{'display':'flex','flex-direction': attributes.icon.position === 'right' ? 'row-reverse' : 'row', 'justify-content': 'center', 'align-items':'center'}">
+			    <md-icon ng-if="attributes.waiting.icon.value.length > 0" class="fa {{$eval(attributes.waiting.icon.value) || 'fa-spinner'}} {{attributes.icon.class}} {{attributes.waiting.icon.class}}" style="font-size: {{attributes.icon.size}}px; color: inherit; width: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; vertical-align: top; {{attributes.icon.style}}; {{attributes.waiting.icon.style}}"></md-icon>
+			    <span class="dfx-gc-core-button-label">{{attributes.label.value | checkExpression}}</span>
+			  </div>
+			  <div ng-if="attributes.waiting.value === 'true' && attributes.waiting.icon.type ==='svg-icon'" ng-style="{'display':'flex','flex-direction': attributes.icon.position === 'right' ? 'row-reverse' : 'row', 'justify-content': 'center', 'align-items':'center'}">
+			    <ng-md-icon ng-if="attributes.waiting.icon.value.length > 0" icon="{{$eval(attributes.waiting.icon.value) || 'track_changes'}}" size="{{attributes.icon.size}}" class="{{attributes.icon.class}} {{attributes.waiting.icon.class}}" style="{{attributes.icon.style}}; {{attributes.waiting.icon.style}}"></ng-md-icon>
+			    <span class="dfx-gc-core-button-label">{{attributes.label.value | checkExpression}}</span>
+				</div>
+			</button>
+	  	<button ng-click="$mdOpenMenu();" class="gc-btn-group-last md-raised md-primary {{attributes.classes.value}} md-altTheme-theme md-button" style="{{attributes.style.value}}">
+	  		<md-icon class="fa fa-caret-down" style="color:inherit"></md-icon>
+	  	</button>
+  	</div>
+		<md-menu-content class="root-menu-container" width="4"></md-menu-content>
+	</md-menu>
+</md-menu-bar>

@@ -1,0 +1,103 @@
+div.panel(style="position:fixed;top:203px;right:0;height:35px;width:349px;z-index:3;padding:5px")
+    a#dfx_visual_editor_property_panel_apply.pull-left.btn.btn-xs.btn-info(href="javascript:gc_web_layout_column.savePropertyPanel();", gc-type="layout-column")
+        span.fa.fa-lg.fa-check
+        span(style="padding-left:5px") Apply
+    a.pull-right(href="javascript:DfxVisualBuilder.propertyPanelExpandAll();", style="margin-left:10px") Expand
+    a.pull-right(href="javascript:DfxVisualBuilder.propertyPanelCollapseAll();") Collapse
+div.panel(style="position: fixed;top: 233px;right: 0;width: 349px;padding: 5px;bottom: 20px;overflow-y: auto;")
+    form.form-horizontal
+        div.col-xs-12
+            a#layout_container_link(href="javascript:void(0)") Panel
+            span(style="padding-left:10px;padding-right:10px;") &gt;
+            a#layout_link(href="javascript:void(0)") Layout
+            span(style="padding-left:10px;padding-right:10px;") &gt;
+            a#layout_row_link(href="javascript:void(0)") Row
+            span(style="padding-left:10px;padding-right:10px;") &gt;
+            a(href="javascript:void(0)") Column
+        legend
+            a.dfx_visual_editor_property_collapsible_btn(data-toggle="collapse", data-target="#main_props") Main Properties
+        div#main_props.collapse.in
+            div.form-group
+                label.col-xs-4.control-label Width:
+                div.col-xs-8
+                    select#gc_layout_column_attr_width.input-xs.dfx_visual_editor_property_input(size="1")
+                        option(value="2") 2
+                        option(value="3") 3
+                        option(value="4") 4
+                        option(value="5") 5
+                        option(value="6") 6
+                        option(value="7") 7
+                        option(value="8") 8
+                        option(value="9") 9
+                        option(value="10") 10
+                        option(value="11") 11
+                        option(value="12") 12
+            div.form-group
+                label.col-xs-4.control-label Orientation:
+                div.col-xs-8
+                    select#gc_layout_column_attr_orientation.input-xs.dfx_visual_editor_property_input(size="1")
+                        option(value="horizontal") horizontal
+                        option(value="vertical") vertical
+            div.form-group
+                label.col-xs-4.control-label Alignment:
+                div.col-xs-8
+                    select#gc_layout_column_attr_alignment.input-xs.dfx_visual_editor_property_input(size="1")
+                        option(value="start") start
+                        option(value="center") center
+                        option(value="end") end
+            div.form-group
+                label.col-xs-4.control-label Disposition:
+                div.col-xs-8
+                    select#gc_layout_column_attr_disposition.input-xs.dfx_visual_editor_property_input(size="1")
+                        option(value="start") start
+                        option(value="center") center
+                        option(value="end") end
+                        option(value="space_between") space between
+                        option(value="space_around") space around
+        legend
+            a.dfx_visual_editor_property_collapsible_btn.collapsed(data-toggle="collapse", data-target="#container_css_props") Layout Column CSS
+        div#container_css_props.collapse
+            div.form-group
+                label.col-xs-4.control-label Column Classes:
+                div.col-xs-8
+                    div.input-group
+                        input#gc_layout_column_attr_classes.form-control.input-xs.dfx_visual_editor_property_input(type="text")
+                        span.input-group-btn
+                            a#btnPickClasses.btn.btn-default(href="#", data-toggle="modal", data-target="#pickerValueModal", data-vb-picker="class", data-vb-picker-target="gc_layout_column_attr_classes") ...
+            div.form-group
+                label.col-xs-4.control-label Dynamic Classes:
+                div.col-xs-8
+                    div.input-group
+                        input#gc_layout_column_attr_dynamicClasses.form-control.input-xs.dfx_visual_editor_property_input(type="text")
+                        span.input-group-btn
+                            a#btnPickPropertyDynClasses.btn.btn-default(href="#",data-toggle="modal", data-target="#pickerValueModal", data-vb-picker="exp", data-vb-picker-target="gc_layout_column_attr_dynamicClasses") ...
+            div.form-group
+                label.col-xs-4.control-label Color:
+                div.col-xs-8
+                    .input-group#layoutColumnColorPicker.fgcolor
+                        span.input-group-addon.color-picker(style="padding:3px")
+                            i(style="border:1px solid #b0b0b0")
+                        input#gc_layout_column_attr_css_color.input-xs.dfx_visual_editor_property_input(type="text", style="width:80px")
+            div.form-group
+                label.col-xs-4.control-label Background:
+                div.col-xs-8
+                    .input-group#layoutColumnBgcolorPicker.fgcolor
+                        span.input-group-addon.color-picker(style="padding:3px")
+                            i(style="border:1px solid #b0b0b0")
+                        input#gc_layout_column_attr_css_background.input-xs.dfx_visual_editor_property_input(type="text", style="width:80px")
+            div.form-group
+                label.col-xs-4.control-label Padding:
+                div.col-xs-8
+                    input#gc_layout_column_attr_css_padding.input-xs.dfx_visual_editor_property_input(type="text", placeholder="0px")
+            div.form-group
+                label.col-xs-4.control-label Text-Alignment:
+                div.col-xs-8
+                    input#gc_layout_column_attr_css_alignment.input-xs.dfx_visual_editor_property_input(type="text", placeholder="left/right/center")
+            div.form-group
+                label.col-xs-4.control-label Custom CSS:
+                div.col-xs-8
+                    input#gc_layout_column_attr_style.input-xs.dfx_visual_editor_property_input(type="text")
+input#gc_layout_column_attr_container_id(type="hidden")
+input#gc_layout_column_attr_index(type="hidden")
+input#gc_layout_column_attr_row_index(type="hidden")
+input#gc_layout_column_attr_layout_index(type="hidden")

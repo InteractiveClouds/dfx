@@ -1,0 +1,26 @@
+<div class="dfx-core-gc-treemenu {{attributes.classes.value}}" style="{{attributes.style.value}}" ng-class="$eval(attributes.dynamicClasses.value)" ng-click="$eval(attributes.onclick.value)"
+     ng-dblclick="$eval(attributes.ondblclick.value)" ng-keypress="$eval(attributes.onkeypress.value)" ng-keydown="$eval(attributes.onkeydown.value)" ng-keyup="$eval(attributes.onkeyup.value)"
+     ng-mouseover="$eval(attributes.onmouseover.value)" ng-mouseenter="$eval(attributes.onmouseenter.value)" ng-mousemove="$eval(attributes.onmousemove.value)" ng-mouseleave="$eval(attributes.onmouseleave.value)"
+     ng-mousedown="$eval(attributes.onmousedown.value)" ng-mouseup="$eval(attributes.onmouseup.value)">
+	<script type="text/ng-template" id="treeMenu">
+        <md-menu-divider ng-if="menuItem.divider === true"></md-menu-divider>
+        <md-menu-item ng-if="menuItem.title === true && menuItem.divider === false" class="tree-menu-title" style="{{attributes.titleStyle.value}}">
+            <div ng-bind="$eval(menuItem.label)"></div>
+        </md-menu-item>
+		<md-menu-item ng-if="menuItem.divider !== true && menuItem.title !== true" ng-show="$eval(menuItem.display)">
+            <md-button style="{{attributes.itemStyle.value}}" ng-disabled="$eval(menuItem.disabled)" ng-click="menuItem.menuItems.value.length > 0 ? menuToggle($event) : '';$eval(menuItem.onclick)">
+                <md-icon ng-if="menuItem.icon.value && menuItem.icon.type ==='fa-icon'" class="fa {{$eval(menuItem.icon.value) || 'fa-home'}} tree-menu-icon"></md-icon>
+                <ng-md-icon ng-if="menuItem.icon.value && menuItem.icon.type ==='svg-icon'" icon="{{$eval(menuItem.icon.value) || 'home'}}" size="16" class=" tree-menu-icon"></ng-md-icon>
+                <span class="tree-menu-label" ng-bind="$eval(menuItem.label)"></span>
+                <span class="md-alt-text">{{menuItem.shortcut}}</span>
+                <small ng-if="menuItem.notification && attributes.dynamicPresent.value" style="{{attributes.notificationStyle.value}}">{{menuItem.notification}}</small>
+                <small ng-if="menuItem.notification && !attributes.dynamicPresent.value" style="{{attributes.notificationStyle.value}}" ng-bind="$eval(menuItem.notification)"></small>
+                <md-icon ng-if="menuItem.menuItems.value.length > 0" class="fa fa-angle-right trigger-icon" style="{{attributes.itemStyle.value}}"></md-icon>
+            </md-button>
+        </md-menu-item>
+        <ul ng-if="menuItem.menuItems.value" style="display:none;">
+            <li ng-repeat="menuItem in menuItem.menuItems.value track by $index" class="tree-menu-item" ng-include="'treeMenu'"></li>
+        </ul>
+	</script>
+	<ul><li ng-repeat="menuItem in attributes.menuItems.value track by $index" class="tree-menu-item" ng-include="'treeMenu'"></li></ul>
+</div>

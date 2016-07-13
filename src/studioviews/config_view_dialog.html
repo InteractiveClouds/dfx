@@ -1,0 +1,30 @@
+<md-dialog aria-label="config-view" ng-cloak>
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools layout-padding">
+                <h5>Configure View</h5>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="closeDialog()" style="margin-right:-6px;">
+                    <md-icon class="fa fa-lg fa-times" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content style="width:400px;">
+            <div class="md-dialog-content layout-column">
+                <label>Fit view to:</label>
+                <md-input-container class="input-select-aligned margin-select">
+                    <md-radio-group ng-model="selected_view.fit">
+                      <md-radio-button value="container" class="md-primary">Container</md-radio-button>
+                      <md-radio-button value="content" class="md-primary">Content</md-radio-button>
+                    </md-radio-group>
+                </md-input-container>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button class="md-primary" ng-click="closeDialog()">
+                OK
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

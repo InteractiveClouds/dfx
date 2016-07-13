@@ -1,0 +1,52 @@
+div(style="overflow-x:hidden; min-height: 100%;")
+    ol.breadcrumb
+        li
+            a(href="javascript:DfxStudio.Dispatcher.run('#!/home/');")
+                span.fa.fa-lg.fa-home
+        li.active Dockerization
+div.row(style="padding-left:2em;")
+    h3 Create a new Docker Image
+    form.form-inline(role="form", style="margin-top:20px;margin-left:20px")
+        div.form-group
+            label(for="imagename", style="width:100px") Image name:
+            input.form-control(type='text' size='30' name='imagename', placeholder='username/repository:tag')
+        button.btn.btn-info(data-action='build') Build
+    form.form-inline(role="form", style="margin-top:20px;margin-left:20px")
+        label Select the application/build to Dockerize:
+        ul(style="list-style-type: none;margin: 0px;")
+            each app in list
+                li(data-appname='#{app.name}')
+                    input(type='checkbox')
+                    span(style="padding-left:10px") #{app.name}
+                    ul(style="list-style-type: none;margin: 0px;")
+                        each build in app.builds
+                            li
+                                input(type='radio' name='#{app.name}' data-build='#{build.number}' data-descr='#{build.descr}'  data-date='#{build.date}')
+                                span(style="padding-left:10px") Build: #{build.number}:
+                                span(style="padding-left:10px") #{build.descr}
+                                span(style="padding-left:10px") (#{build.date})
+    h3 List of existing images
+    pre(style="display:none") #{listofimages}
+    table.table(style="width:300px")
+        thead
+            tr
+                th Image Name
+                th Content
+        tbody
+            - var json_listofimages = JSON.parse(listofimages)
+            each image in json_listofimages
+                tr
+                    td #{image.RepoTags}
+                    td #{image.Labels.content.applications[0].name} #{image.Labels.content.applications[0].build}
+    h3 Push an image to DockerHub
+    form.form-inline(role="form", style="margin-top:20px;margin-left:20px")
+        div.form-group
+            label(for="imagetopush", style="width:100px") Image name:
+            input.form-control(type='text' size='30' name='imagetopush', placeholder='username/repository:tag')
+        button.btn.btn-info(data-action='push') Push
+    h3 Remove an image from the list
+    form.form-inline(role="form", style="margin-top:20px;margin-left:20px")
+        div.form-group
+            label(for="imagetoremove", style="width:100px") Image name:
+            input.form-control(type='text' size='30' name='imagetoremove', placeholder='username/repository:tag')
+        button.btn.btn-danger(data-action='remove') Remove

@@ -1,0 +1,132 @@
+- var cssPanel = '';
+- var cssBodyPanel = gcitem.attributes.style.value+';';
+- gcformname = gcitem.attributes.form.value;
+if (gcitem.attributes.css)
+    each val, key in gcitem.attributes.css
+        - if (val!='') cssPanel += key + ':' + val + ';'
+if (gcitem.attributes.bodyCss)
+    each val, key in gcitem.attributes.bodyCss
+        - if (val!='') cssBodyPanel += key + ':' + val + ';'
+if (gcitem.attributes.useModel && gcitem.attributes.useModel.value)
+    div(id="#{gcitem.id}_{{$index}}", class="ui segment #{gcitem.attributes.classes.value}", ng-controller=(gcitem.attributes.controller.value == '' ? undefined : gcitem.attributes.controller.value), ng-show = (gcitem.attributes.display.value == '' ? undefined : "#{gcitem.attributes.display.value}"), style="#{cssPanel}")
+        div(
+            ng-repeat="item in #{gcitem.attributes.model.value}",
+            style="#{cssBodyPanel}",
+            class=(gcitem.attributes.bodyClasses == undefined) ? undefined : gcitem.attributes.bodyClasses.value,
+            ng-class=(gcitem.attributes.dynamicClasses == undefined) ? undefined : gcitem.attributes.dynamicClasses.value)
+            if (gcitem.attributes.form!=null && gcitem.attributes.form.value!='')
+                form(name=(gcitem.attributes.form.value == '' ? undefined : gcitem.attributes.form.value))
+                    each row, i_row in gcitem.attributes.layout.rows
+                        - var rowCss = '';
+                        if (row.css)
+                            each val, key in row.css
+                                - if (val!='') rowCss += key + ':' + val + ';'
+                        div(class="#{row.classes.value}", style="margin:0;#{row.style.value};#{rowCss}",
+                            ng-class=(row.dynamicClasses == undefined) ? undefined : row.dynamicClasses.value)
+                            - var columnClass = ''
+                            each column, i_column in row.cols
+                                - //columnClass = (column.width ? 'col-md-'+column.width.value : columnClass)+(column.classes.value != '' ? ' '+ column.classes.value : '')
+                                - if (column.orientation) {
+                                -     columnClass += ' gc_w_column_layout ' + 'gc_w_column_orientation_'+column.orientation.value;
+                                -     columnClass += ' gc_w_column_align_'+column.alignment.value;
+                                -     columnClass += ' gc_w_column_disposition_'+column.disposition.value;
+                                - }
+                                - var columnCss = '';
+                                if (column.css)
+                                    each val, key in column.css
+                                        - if (val!='') columnCss += key + ':' + val + ';'
+                                div.sixteen.wide.column
+                                    div(class="#{columnClass}" style="#{column.style.value};#{columnCss}",
+                                        ng-class=(column.dynamicClasses == undefined) ? undefined : column.dynamicClasses.value)
+                                        each gcitem_child, j in gcitem.children
+                                            - if (gcitem_child.container=='layout_0_row_'+i_row+'_column_'+i_column) {
+                                                mixin displayItem(gcitem_child, gcitem.attributes.form.value)
+                                            - }
+            else
+                each row, i_row in gcitem.attributes.layout.rows
+                    - var rowCss = '';
+                    if (row.css)
+                        each val, key in row.css
+                            - if (val!='') rowCss += key + ':' + val + ';'
+                    div(class="#{row.classes.value}", style="margin:0;#{row.style.value};#{rowCss}",
+                        ng-class=(row.dynamicClasses == undefined) ? undefined : row.dynamicClasses.value)
+                        - var columnClass = ''
+                        each column, i_column in row.cols
+                            - //columnClass = (column.width ? 'col-md-'+column.width.value : columnClass)+(column.classes.value != '' ? ' '+ column.classes.value : '')
+                            - if (column.orientation) {
+                            -     columnClass += ' gc_w_column_layout ' + 'gc_w_column_orientation_'+column.orientation.value;
+                            -     columnClass += ' gc_w_column_align_'+column.alignment.value;
+                            -     columnClass += ' gc_w_column_disposition_'+column.disposition.value;
+                            - }
+                            - var columnCss = '';
+                            if (column.css)
+                                each val, key in column.css
+                                    - if (val!='') columnCss += key + ':' + val + ';'
+                            div.sixteen.wide.column
+                                div(class="#{columnClass}" style="#{column.style.value};#{columnCss}",
+                                    ng-class=(column.dynamicClasses == undefined) ? undefined : column.dynamicClasses.value)
+                                    each gcitem_child, j in gcitem.children
+                                        - if (gcitem_child.container=='layout_0_row_'+i_row+'_column_'+i_column) {
+                                            mixin displayItem(gcitem_child)
+                                        - }
+else
+    div(id="#{gcitem.id}_{{$index}}", class="ui segment #{gcitem.attributes.classes.value}", ng-controller=(gcitem.attributes.controller.value == '' ? undefined : gcitem.attributes.controller.value), ng-show = (gcitem.attributes.display.value == '' ? undefined : "#{gcitem.attributes.display.value}"), style="#{cssPanel}")
+        div(
+            style="#{cssBodyPanel}",
+            class=(gcitem.attributes.bodyClasses == undefined) ? undefined : gcitem.attributes.bodyClasses.value,
+            ng-class=(gcitem.attributes.dynamicClasses == undefined) ? undefined : gcitem.attributes.dynamicClasses.value)
+            if (gcitem.attributes.form!=null && gcitem.attributes.form.value!='')
+                form(name=(gcitem.attributes.form.value == '' ? undefined : gcitem.attributes.form.value))
+                    each row, i_row in gcitem.attributes.layout.rows
+                        - var rowCss = '';
+                        if (row.css)
+                            each val, key in row.css
+                                - if (val!='') rowCss += key + ':' + val + ';'
+                        div(class="#{row.classes.value}", style="margin:0;#{row.style.value};#{rowCss}",
+                            ng-class=(row.dynamicClasses == undefined) ? undefined : row.dynamicClasses.value)
+                            - var columnClass = ''
+                            each column, i_column in row.cols
+                                - //columnClass = (column.width ? 'col-md-'+column.width.value : columnClass)+(column.classes.value != '' ? ' '+ column.classes.value : '')
+                                - if (column.orientation) {
+                                -     columnClass += ' gc_w_column_layout ' + 'gc_w_column_orientation_'+column.orientation.value;
+                                -     columnClass += ' gc_w_column_align_'+column.alignment.value;
+                                -     columnClass += ' gc_w_column_disposition_'+column.disposition.value;
+                                - }
+                                - var columnCss = '';
+                                if (column.css)
+                                    each val, key in column.css
+                                        - if (val!='') columnCss += key + ':' + val + ';'
+                                div.sixteen.wide.column
+                                    div(class="#{columnClass}" style="#{column.style.value};#{columnCss}",
+                                        ng-class=(column.dynamicClasses == undefined) ? undefined : column.dynamicClasses.value)
+                                        each gcitem_child, j in gcitem.children
+                                            - if (gcitem_child.container=='layout_0_row_'+i_row+'_column_'+i_column) {
+                                                mixin displayItem(gcitem_child, gcitem.attributes.form.value)
+                                            - }
+            else
+                each row, i_row in gcitem.attributes.layout.rows
+                    - var rowCss = '';
+                    if (row.css)
+                        each val, key in row.css
+                            - if (val!='') rowCss += key + ':' + val + ';'
+                    div(class="#{row.classes.value}", style="margin:0;#{row.style.value};#{rowCss}",
+                        ng-class=(row.dynamicClasses == undefined) ? undefined : row.dynamicClasses.value)
+                        - var columnClass = ''
+                        each column, i_column in row.cols
+                            - //columnClass = (column.width ? 'col-md-'+column.width.value : columnClass)+(column.classes.value != '' ? ' '+ column.classes.value : '')
+                            - if (column.orientation) {
+                            -     columnClass += ' gc_w_column_layout ' + 'gc_w_column_orientation_'+column.orientation.value;
+                            -     columnClass += ' gc_w_column_align_'+column.alignment.value;
+                            -     columnClass += ' gc_w_column_disposition_'+column.disposition.value;
+                            - }
+                            - var columnCss = '';
+                            if (column.css)
+                                each val, key in column.css
+                                    - if (val!='') columnCss += key + ':' + val + ';'
+                            div.sixteen.wide.column
+                                div(class="#{columnClass}" style="#{column.style.value};#{columnCss}",
+                                    ng-class=(column.dynamicClasses == undefined) ? undefined : column.dynamicClasses.value)
+                                    each gcitem_child, j in gcitem.children
+                                        - if (gcitem_child.container=='layout_0_row_'+i_row+'_column_'+i_column) {
+                                            mixin displayItem(gcitem_child)
+                                        - }

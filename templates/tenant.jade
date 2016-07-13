@@ -1,0 +1,44 @@
+doctype html
+html
+    head
+        meta(http-equiv="content-type", content="text/HTML;charset=UTF-8")
+        meta(name="viewport", content="width=device-width,initial-scale=1")
+        title DreamFace
+        link(rel="stylesheet", href="/css/console/dfx.min.css", media="screen")
+        script(src="/js/console/dfx.js")
+    body#dfx-console
+        div.panel
+            img(src="/images/df_LogoConsole.png")
+            h1 Welcome to DreamFace&nbsp;
+                span X
+                | -Platform
+                small(style="padding-left:10px") version #{version}
+            div.alert.alert-info
+                h4
+                    span.fa.fa-lg.fa-cloud-upload
+                    | &nbsp;Tenant ID:&nbsp;
+                    strong #{tenant.id}
+            div.panel.panel-primary
+                div.panel-heading
+                    h3.panel-title
+                        span.fa.fa-lg.fa-star
+                        | &nbsp;Tenant Properties
+                form.panel-body.form(style="padding:10px", method="post", action="/console/tenant/#{tenant.id}/update")
+                    fieldset
+                        input#tenantId(type="hidden", value="#{tenant.id}")
+                        div.form-group.clearfix
+                            label(for="queryName") Tenant Token:
+                            - var token_length = Object.keys(tenant.databaseTokens).length
+                            each item, n in tenant.databaseTokens
+                                div.input-group.col-sm-3
+                                    input#tenantToken.form-control(type="text", name="tenantToken", value="#{n}", readonly="readonly")
+                                    a#tenantGenerateToken.btn.btn-info.input-group-addon.input-group-addon-info(type="button", onclick='DfxConsole.generateToken(event)', data-confirm="Token will be regenerated and saved. Are you sure?")
+                                        span.fa.fa-lg.fa-qrcode
+                div.panel-footer
+                    a.btn.btn-info(href='/console', style="margin-left:10px")
+                        span.fa.fa-lg.fa-arrow-left
+                        | &nbsp;Back
+        footer.dfx_studio_login
+            div.dfx-logo
+                img(src="/images/df_LogoLoginFooter.png")
+            p Copyright &copy; Interactive Clouds, all rights reserved.

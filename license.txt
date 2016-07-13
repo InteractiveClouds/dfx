@@ -1,0 +1,15 @@
+Copyright (c) 2015 Interactive Clouds, Inc.  "DreamFace" is a trademark of Interactive Clouds, Inc.
+
+DREAMFACE™ OPEN LICENSE
+
+The software and associated documentation (the "Software") at this website is provided for development, testing, staging, production, hosting, distribution, demonstration, evaluation and technical support of software applications, including to create, use, reproduce and modify interfaces between or integrating the Software with any application (creating an "Integrated Product"), and to reproduce, sublicense and distribute any Integrated Product through any datacenter (collectively, "Intended Functions").
+Permission is hereby granted, free of charge, to any person ("Licensees") obtaining the Software to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+1. The above copyright notice and this permission notice (license) shall be included in all copies or substantial portions of the Software.
+2. Licensees may impose any terms and conditions on the use of any Integrated Product but may not (i) restrict any third party's use of the Software for the Intended Functions or (ii) use or authorize the use of the Software to assist or take part in the development, marketing, or sale of any product or service that may be offered or used for the Intended Functions in competition with the Software.
+3. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.

@@ -1,0 +1,538 @@
+/* Page Editor */
+
+@deep-sky-blue: #00D8FF;
+@white : #FFFFFF;
+@sea-green: #1FBB63;
+
+/* Body */
+#dfx-page-editor-body {
+  overflow:hidden;
+}
+
+/* Toast Theme */
+
+md-toast.md-success-toast-theme div {
+    background-color: rgb(132, 227, 255);
+    color: rgb(58, 58, 58);
+}
+
+/* Header */
+
+#dfx-pe-header {
+  background-color: #353535;
+}
+
+#dfx-pe-title {
+  font-size: 16px;
+  padding-top: 1px; 
+}
+
+#dfx_widget_editor_title {
+  color: #2EA6CE;
+}
+
+#dfx-pe-toggle-palette {
+  background: #B1B1B1;
+  margin: 0px !important;
+  height: 32px;
+  color: #383838;
+  padding: 0;
+}
+
+#dfx-pe-toggle-property {
+  background: #B1B1B1;
+  margin: 0px !important;
+  height: 32px;
+  color: #383838;
+  padding: 0;
+}
+
+/* Sidenav */
+
+#dfx-pe-sidenav-left {
+  width: 170px;
+  background-color: #383838;
+  color: #fff;
+}
+
+#dfx-pe-sidenav-left-content {
+  background-color: #383838;
+  color: #fff;
+}
+
+#dfx_visual_editor_gc_palette_content ul {
+  background-color: #383838;
+}
+
+#dfx-pe-sidenav-right {
+  width: 430px;
+  max-width: 430px;
+  background-color: #383838;
+  color: #fff;
+}
+
+#dfx-pe-sidenav-right-content {
+  background-color: #383838;
+  color: #fff;
+}
+
+/* Toolbar */
+
+.dfx-pe-toolbar {
+  background-color: #ececec !important;
+  color: #000 !important;
+  min-height: 36px !important;
+}
+
+.dfx-pe-toolbar-tools {
+  padding: 0;
+  height: 36px !important;
+  max-height: 36px !important;
+}
+
+.dfx-pe-toolbar-button {
+  width: 30px;
+  min-width: 30px;
+  height: 24px;
+  min-height: 24px;
+  line-height: 24px;
+  margin: 2px;
+  margin-top: 3px !important;
+}
+
+.dfx-pe-toolbar-button-selected {
+  border-bottom: 2px red solid;
+}
+
+/* GC Palette & Property Panel */
+
+#dfx-pe-palette-title {
+  height: 36px;
+  line-height: 36px;
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+  width: 170px;
+  background: #B1B1B1;
+}
+
+.dfx-pe-palette-title-collapsed {
+  width: 32px !important;
+}
+
+.dfx-pe-palette-title-text-collapsed {
+  display: none !important;
+}
+
+#dfx-pe-palette-title-text {
+  display: inline-block;
+  padding-left: 10px;
+  width: 138px;
+}
+
+#dfx-pe-property-title {
+  height: 36px;
+  line-height: 36px;
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+  width: 430px;
+  background: #B1B1B1;
+}
+
+.dfx-pe-property-title-collapsed {
+  width: 32px !important;
+}
+
+.dfx-pe-property-title-text-collapsed {
+  display: none !important;
+}
+
+#dfx-pe-property-title-text {
+  display: inline-block;
+  padding-left: 10px;
+  width: 398px;
+}
+
+#dfx-pe-sidenav-left {
+  z-index: 0;
+}
+
+#dfx-pe-sidenav-right {
+  z-index: 0;
+}
+
+.dfx_visual_editor_gc_cat_item_draggable {
+  cursor: pointer;
+}
+
+#dfx_visual_editor_property_panel a {
+  color: #97CFFF;
+}
+
+#dfx_visual_editor_property_panel a md-icon {
+  color: #97CFFF !important;
+}
+
+@defaultColor: rgb(105, 167, 245);
+@hoverColor: rgb(115, 203, 255);
+
+//Mixins
+.transition-duration(@duration: 1s) {
+  -webkit-transition-duration: @duration;
+  -moz-transition-duration: @duration;
+  -ms-transition-duration: @duration;
+  -o-transition-duration: @duration;
+  transition-duration: @duration;
+}
+
+.transition-property(@property) {
+  -webkit-transition-property: @property;
+  -moz-transition-property: @property;
+  -ms-transition-property: @property;
+  -o-transition-property: @property;
+  transition-property: @property;
+}
+
+.user-select(@select: none) {
+  -webkit-user-select: @select;
+  -moz-user-select: @select;
+  -ms-user-select: @select;
+  -o-user-select: @select;
+  user-select: @select;
+}
+
+// Graphical Controls Palette Treeview
+.dfx-pe-palette-treeview {
+  float: left; //Prevent 100% width
+  .user-select; //Prevent accidental selection on dbl click to fast expand/collapse
+  max-width: 100%;
+
+  //Fade back to default
+  &:hover input ~ label:before,
+  &.hover input ~ label:before{
+    opacity: 1.0;
+    .transition-duration(0.5s);
+  }
+  
+  ul {
+    .transition-duration;
+    list-style: none;
+    padding-left: 1em;
+    
+    li {
+      padding-left:0px;
+      padding-right:5px;
+      //Fade back to default
+      span{
+        .transition-property(color);
+        .transition-duration;
+      
+        //Highlight on hover
+        &:hover {
+          color: @hoverColor;
+          .transition-duration(0.3s);
+        }
+      }
+      div {
+        max-width: 100%;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+    }
+  }
+  
+  //Hide checkboxes
+  input.dfx-pe-palette-treeview-button {
+    display: none;
+    
+    //Hide collapsed branches
+    &:checked ~ ul {
+      display: none;
+    }
+     
+    //Show pointer on collapsible rows
+    & ~ label {
+      cursor: pointer;
+      font-weight: 700;
+    }
+    
+    //Expanded branch
+    & ~ label:before {
+      content: '';
+      width: 0;
+      height: 0;
+      position: absolute;
+      margin-left: -1em;
+      margin-top: 0.4em;
+      border-width: 4px;
+      border-style: solid;
+      border-top-color: transparent;
+      border-right-color: @defaultColor;
+      border-bottom-color: @defaultColor;
+      border-left-color: transparent;
+      .transition-property(opacity);
+      .transition-duration;
+    }
+
+    //Collapsed branch
+    &:checked ~ label:before {
+      margin-left: -0.8em;
+      border-width: 5px;
+      border-top-color: transparent;
+      border-right-color: transparent;
+      border-bottom-color: transparent;
+      border-left-color: @defaultColor;
+    }
+  }
+}
+
+.dfx-pe-palette-treeview-content {
+  padding-left: 0px !important;
+}
+
+.dfx-pe-palette-treeview-content span {
+  padding-left: 5px;
+  font-family: "Open Sans",Arial,sans-serif;
+  font-size: 12px;
+  line-height: 25px;
+}
+
+// Property Panel Treeview
+md-dialog .dfx-pe-property-treeview {
+  float: none;
+}
+.dfx-pe-property-treeview {
+  float: left; //Prevent 100% width
+  .user-select; //Prevent accidental selection on dbl click to fast expand/collapse
+
+  //Fade back to default
+  &:hover input ~ label:before,
+  &.hover input ~ label:before{
+    opacity: 1.0;
+    .transition-duration(0.5s);
+  }
+  
+  ul {
+    .transition-duration;
+    list-style: none;
+    padding-left: 1em;
+    
+    li {
+      padding-left:0px;
+      padding-right:0px;
+      //Fade back to default
+      span{
+        .transition-property(color);
+        .transition-duration;
+      
+        //Highlight on hover
+        &:hover {
+          color: @hoverColor;
+          .transition-duration(0.3s);
+        }
+      }
+    }
+  }
+  
+  //Hide checkboxes
+  input.dfx-pe-property-treeview-button {
+    display: none;
+    
+    //Hide collapsed branches
+    &:checked ~ ul {
+      display: none;
+    }
+     
+    //Show pointer on collapsible rows
+    & ~ label {
+      cursor: pointer;
+      font-weight: 700;
+    }
+    
+    //Expanded branch
+    & ~ label:before {
+      content: '';
+      width: 0;
+      height: 0;
+      position: absolute;
+      margin-left: -1em;
+      margin-top: 0.4em;
+      border-width: 4px;
+      border-style: solid;
+      border-top-color: transparent;
+      border-right-color: @defaultColor;
+      border-bottom-color: @defaultColor;
+      border-left-color: transparent;
+      .transition-property(opacity);
+      .transition-duration;
+    }
+
+    //Collapsed branch
+    &:checked ~ label:before {
+      margin-left: -0.8em;
+      border-width: 5px;
+      border-top-color: transparent;
+      border-right-color: transparent;
+      border-bottom-color: transparent;
+      border-left-color: @defaultColor;
+    }
+  }
+}
+
+md-dialog .dfx-pe-property-treeview label:before {
+  margin-top: 3px !important;
+}
+
+.dfx-pe-property-treeview-content {
+  padding-left: 0px !important;
+}
+
+.dfx-pe-property-treeview-content span {
+  padding-left: 5px;
+  font-family: "Open Sans",Arial,sans-serif;
+  font-size: 12px;
+  line-height: 25px;
+}
+
+.dfx-pe-gc-handle {
+  left: 0;
+  top: 0;
+  position: absolute;
+  z-index: 10;
+  width: 24px;
+  height: 24px;
+  margin-left: -5px;
+  margin-top: -5px;
+  border-radius: 50%;
+  background: #e1e1e1;
+  color: #7B7B7B;
+  display:none;
+}
+
+.dfx-pe-gc-handle-remove {
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  z-index: 10;
+  width: 24px;
+  height: 24px;
+  margin-right: -5px;
+  margin-bottom: -5px;
+  border-radius: 50%;
+  background: #e1e1e1;
+  color: #7B7B7B;
+  display:none;
+}
+
+.dfx-pe-gc-handle > i {
+  font-size: 14px;
+  padding: 4px 5px;
+}
+
+.dfx-pe-gc-handle-remove > i {
+  font-size: 14px;
+  padding: 4px 6px;
+}
+
+.dfx-pe-gc-handle-container {
+  cursor: pointer;
+  position: relative;
+}
+
+.dfx-pe-gc-handle-container:hover > .dfx-pe-gc-handle {
+  display: block !important;
+}
+
+.dfx-pe-gc-handle-container:hover > .dfx-pe-gc-handle-remove {
+  display: block !important;
+}
+
+.dfx-pe-property-treeview-content md-input-container {
+  margin: 0;
+  border:0px;
+  color: #333;
+  background: #fff;
+  padding: 0px !important;
+  margin-bottom: 2px;
+}
+
+.dfx-pe-property-treeview-content md-input-container span.md-select-icon {
+  color: #333;
+}
+
+.dfx-pe-property-treeview-content input {
+  border:1px #ddd solid;
+  color: #333;
+}
+
+.dfx-pe-property-treeview-content md-select-value {
+  height: 24px;
+  padding: 0 0 0 8px !important;
+}
+
+/* Script Editor */
+#dfx_pe_script_editor {
+  width:100%;
+  height:100%;
+}
+
+/* Droppable elements */
+
+.dfx_page_editor_droppable {
+  min-height: 20px;
+  border: 1px #ccc dotted;
+}
+
+.dfx_page_editor_droppable li {
+  list-style: none;
+}
+
+.dfx-pe-property-picker-content {
+  padding-left: 0px !important;
+}
+
+.dfx-pe-property-picker-content span {
+  padding-left: 5px;
+  font-family: "Open Sans",Arial,sans-serif;
+  font-size: 12px;
+  line-height: 25px;
+}
+
+.dfx-pe-property-picker-content input {
+  border: 1px #ccc solid;
+}
+
+.dfx-pe-template-disabled:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height:100%;
+  z-index: 50;
+  background-color: rgba(0,54,79,.2);
+  background-image: url("/images/dfx_bg_pe_disabled_tpl.png");
+}
+
+.dfx-view-menu {
+  position: absolute;
+  z-index: 2000;
+  background: #F1F1F1;
+  width: 150px;
+  height: 50px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.dfx-pe-view-menu a {
+  color: #8DCEFF;
+  display: none;
+  margin-left:5px;
+}
+
+.dfx-pe-view-menu:hover > a {
+  display: inline-block !important;
+}

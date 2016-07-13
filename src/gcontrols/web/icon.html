@@ -1,0 +1,41 @@
+<div ng-if="!attributes.state.value && !$eval(attributes.waiting.value)" style="{{attributes.style.value}}" ng-class="$eval(attributes.dynamicClasses.value)" class="dfx-core-gc-icon {{attributes.classes.value}}"  ng-show="$eval(attributes.display.value)">
+    <div style="display: inline-block">
+        <div style="text-align: center">
+            <md-icon ng-if="attributes.icon.type ==='fa-icon'" class="fa {{$eval(attributes.icon.value) || 'fa-home'}} md-font md-altTheme-theme glyph" aria-label="{{ attributes.icon.value + attributes.icon.size }}" ng-style="{'font-size': attributes.icon.size + 'px', color: 'inherit', width: attributes.icon.size + 'px', height: attributes.icon.size + 'px', 'vertical-align': 'top'}" style="color: {{attributes.state.icon.color}}" ng-click="$eval(attributes.onclick.value)" ng-dblclick="$eval(attributes.ondblclick.value)" ng-keypress="$eval(attributes.onkeypress.value)" ng-keydown="$eval(attributes.onkeydown.value)" ng-keyup="$eval(attributes.onkeyup.value)" ng-mouseover="$eval(attributes.onmouseover.value)" ng-mouseenter="$eval(attributes.onmouseenter.value)" ng-mousemove="$eval(attributes.onmousemove.value)" ng-mouseleave="$eval(attributes.onmouseleave.value)" ng-mousedown="$eval(attributes.onmousedown.value)" ng-mouseup="$eval(attributes.onmouseup.value)" ng-disabled="$eval(attributes.disabled.value)"></md-icon>
+            <ng-md-icon ng-if="attributes.icon.type ==='svg-icon'" icon="{{$eval(attributes.icon.value) || 'home'}}" size="{{attributes.icon.size}}" style="color: {{attributes.state.icon.color}}" ng-click="$eval(attributes.onclick.value)" ng-dblclick="$eval(attributes.ondblclick.value)" ng-keypress="$eval(attributes.onkeypress.value)" ng-keydown="$eval(attributes.onkeydown.value)" ng-keyup="$eval(attributes.onkeyup.value)" ng-mouseover="$eval(attributes.onmouseover.value)" ng-mouseenter="$eval(attributes.onmouseenter.value)" ng-mousemove="$eval(attributes.onmousemove.value)" ng-mouseleave="$eval(attributes.onmouseleave.value)" ng-mousedown="$eval(attributes.onmousedown.value)" ng-mouseup="$eval(attributes.onmouseup.value)" ng-disabled="$eval(attributes.disabled.value)"></ng-md-icon>
+        </div>
+        <div style="text-align: center" ng-show="attributes.label.value !== ''">
+            <span ng-bind="$eval(attributes.label.value)" ng-style="{color: 'inherit'}"></span>
+        </div>
+    </div>
+</div>
+<div ng-if="attributes.state.value && !$eval(attributes.waiting.value)" style="{{attributes.style.value}}" ng-class="$eval(attributes.dynamicClasses.value)" class="dfx-core-gc-icon dfx-core-state-icons {{attributes.classes.value}}"  ng-show="$eval(attributes.display.value)">
+    <div style="display: inline-block">
+        <div style="text-align: center">
+            <md-icon ng-if="attributes.state.icon.type ==='fa-icon'" class="fa {{$eval(attributes.state.icon.value) || 'fa-home'}} md-font md-altTheme-theme glyph {{attributes.state.icon.class}}" aria-label="{{ attributes.state.icon.value + attributes.icon.size }}" ng-style="{'font-size': attributes.icon.size + 'px', color: 'inherit', width: attributes.icon.size + 'px', height: attributes.icon.size + 'px', 'vertical-align': 'top'}" style="{{attributes.state.icon.style}}" ng-click="checkState();$eval(attributes.onclick.value)" ng-dblclick="$eval(attributes.ondblclick.value)" ng-keypress="$eval(attributes.onkeypress.value)" ng-keydown="$eval(attributes.onkeydown.value)" ng-keyup="$eval(attributes.onkeyup.value)" ng-mouseover="$eval(attributes.onmouseover.value)" ng-mouseenter="$eval(attributes.onmouseenter.value)" ng-mousemove="$eval(attributes.onmousemove.value)" ng-mouseleave="$eval(attributes.onmouseleave.value)" ng-mousedown="$eval(attributes.onmousedown.value)" ng-mouseup="$eval(attributes.onmouseup.value)" ng-disabled="$eval(attributes.disabled.value)"></md-icon>
+            <ng-md-icon ng-if="attributes.state.icon.type ==='svg-icon'" icon="{{$eval(attributes.state.icon.value) || 'home'}}" size="{{attributes.icon.size}}" style="{{attributes.state.icon.style}}" class="{{attributes.state.icon.class}}" ng-click="checkState();$eval(attributes.onclick.value)" ng-dblclick="$eval(attributes.ondblclick.value)" ng-keypress="$eval(attributes.onkeypress.value)" ng-keydown="$eval(attributes.onkeydown.value)" ng-keyup="$eval(attributes.onkeyup.value)" ng-mouseover="$eval(attributes.onmouseover.value)" ng-mouseenter="$eval(attributes.onmouseenter.value)" ng-mousemove="$eval(attributes.onmousemove.value)" ng-mouseleave="$eval(attributes.onmouseleave.value)" ng-mousedown="$eval(attributes.onmousedown.value)" ng-mouseup="$eval(attributes.onmouseup.value)" ng-disabled="$eval(attributes.disabled.value)"></ng-md-icon>
+        </div>
+        <div style="text-align: center" ng-show="attributes.label.value !== ''">
+            <span ng-bind="$eval(attributes.label.value)" ng-style="{color: 'inherit'}"></span>
+        </div>
+    </div>
+</div>
+<div ng-if="$eval(attributes.waiting.value)" style="{{attributes.style.value}}" class="dfx-core-gc-icon dfx-core-wait-icon {{attributes.classes.value}}">
+    <div style="display: inline-block">
+        <div ng-if="attributes.waiting.icon.type ==='fa-icon' && !$eval(attributes.waiting.autoDisabled)" style="text-align:center">
+            <md-icon class="fa {{$eval(attributes.waiting.icon.value) || 'fa-spinner'}} {{attributes.waiting.icon.class}}" style="font-size: {{attributes.icon.size}}px; color: inherit; width: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; vertical-align: top; cursor: wait; {{attributes.waiting.icon.style}}" ng-click="$eval(attributes.onclick.value)" ng-dblclick="$eval(attributes.ondblclick.value)" ng-keypress="$eval(attributes.onkeypress.value)" ng-keydown="$eval(attributes.onkeydown.value)" ng-keyup="$eval(attributes.onkeyup.value)" ng-mouseover="$eval(attributes.onmouseover.value)" ng-mouseenter="$eval(attributes.onmouseenter.value)" ng-mousemove="$eval(attributes.onmousemove.value)" ng-mouseleave="$eval(attributes.onmouseleave.value)" ng-mousedown="$eval(attributes.onmousedown.value)" ng-mouseup="$eval(attributes.onmouseup.value)"></md-icon>
+        </div>
+        <div ng-if="attributes.waiting.icon.type==='svg-icon' && !$eval(attributes.waiting.autoDisabled)" style="text-align:center">
+            <ng-md-icon icon="{{$eval(attributes.waiting.icon.value) || 'track_changes'}}" size="{{attributes.icon.size}}" class="{{attributes.waiting.icon.class}}" style="{{attributes.waiting.icon.style}} cursor: wait;" ng-click="$eval(attributes.onclick.value)" ng-dblclick="$eval(attributes.ondblclick.value)" ng-keypress="$eval(attributes.onkeypress.value)" ng-keydown="$eval(attributes.onkeydown.value)" ng-keyup="$eval(attributes.onkeyup.value)" ng-mouseover="$eval(attributes.onmouseover.value)" ng-mouseenter="$eval(attributes.onmouseenter.value)" ng-mousemove="$eval(attributes.onmousemove.value)" ng-mouseleave="$eval(attributes.onmouseleave.value)" ng-mousedown="$eval(attributes.onmousedown.value)" ng-mouseup="$eval(attributes.onmouseup.value)"></ng-md-icon>
+        </div>
+        <div ng-if="attributes.waiting.icon.type ==='fa-icon' && $eval(attributes.waiting.autoDisabled)" style="text-align:center">
+            <md-icon class="fa {{$eval(attributes.waiting.icon.value) || 'fa-spinner'}} {{attributes.waiting.icon.class}}" style="font-size: {{attributes.icon.size}}px; color: inherit; width: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; vertical-align: top; {{attributes.waiting.icon.style}} color: rgba(0,0,0,0.26) !important;cursor: wait; "></md-icon>
+        </div>        
+        <div ng-if="attributes.waiting.icon.type ==='svg-icon' && $eval(attributes.waiting.autoDisabled)" style="text-align:center">
+            <ng-md-icon icon="{{$eval(attributes.waiting.icon.value) || 'track_changes'}}" size="{{attributes.icon.size}}" class="{{attributes.waiting.icon.class}}" style="{{attributes.waiting.icon.style}} color: rgba(0,0,0,0.26) !important;cursor: wait;"></ng-md-icon>
+        </div>
+        <div ng-show="attributes.label.value !== ''" style="text-align: center">
+            <span ng-bind="$eval(attributes.label.value)" style="color: {{$eval(attributes.waiting.autoDisabled) ? 'rgba(0,0,0,0.26)!important' : 'inherit'}}"></span>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,52 @@
+table.table.table-bordered
+    tbody
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4
+                label.dfx_visual_editor_property_label Name:
+            td
+                input#gc_list_attr_name.form-control(type="text")
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4
+                label.dfx_visual_editor_property_label Controller:
+            td
+                input#gc_list_attr_controller.form-control(type="text")
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4
+                label.dfx_visual_editor_property_label Model:
+            td
+                input#gc_list_attr_model.form-control(type="text")
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4
+                label.dfx_visual_editor_property_label Model Init:
+            td
+                input#gc_list_attr_modelinit.form-control(type="text")
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4
+                label.dfx_visual_editor_property_label Title:
+            td
+                input#gc_list_attr_title.form-control(type="text")
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4
+                label.dfx_visual_editor_property_label Title Visible:
+            td
+                select#gc_list_attr_titleVisible.form-control
+                    option(value="yes") yes
+                    option(value="no") no
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4
+                label.dfx_visual_editor_property_label Display:
+            td
+                input#gc_list_attr_display.form-control(type="text", placeholder="true / false / expression")
+        tr
+            td.field-label.dfx_visual_editor_property
+                label.dfx_visual_editor_property_label Classes:
+            td
+                input#gc_list_attr_classes.form-control(type="text")
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4
+                label.dfx_visual_editor_property_label Style:
+            td
+                input#gc_list_attr_style.form-control(type="text")
+
+input#gc_list_attr_id(type="hidden")
+a.btn.btn-success.dfx_visual_editor_property_button(href="javascript:gc_web_list.savePropertyPanel();") Apply

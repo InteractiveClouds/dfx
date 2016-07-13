@@ -1,0 +1,21 @@
+div.panel.panel-primary(style="position: relative; height: 99%; margin-bottom: 1%;")
+    div.panel-heading
+        h4 Provider details
+    div.panel-body#dbs_databases
+        form(name="provider_info")
+            fieldset
+                div.form-group
+                    label Name:
+                    input.form-control(readonly="readonly", name="provider", value="#{name}")
+                div.form-group
+                    label Auth Protocol:
+                    select.form-control(name="protocol")
+                        option(disabled="disabled", selected="selected", value="choose auth protocol") choose auth protocol
+                        option(value="basic") basic
+                        option(value="digest") digest
+                        option(value="oAuth1") oAuth 1
+                        option(value="oAuth2") oAuth 2
+                .credentials
+                button#save-auth-provider-settings.btn.btn-info.save-now-submitter(type='button')
+                    span.fa.fa-lg.fa-floppy-o
+                    span(style="padding-left:5px") Save

@@ -1,0 +1,14 @@
+{
+    "name": "run_dfx_dep_server",
+    "version": "0.0.1",
+    "main": "run_dep.js",
+    "dependencies": {
+        "dreamface" : "*"
+    },
+    "engines": {
+        "node" : "5.5.0"
+    },
+    "scripts": {
+        "start": "node run_dep.js"
+    }
+}

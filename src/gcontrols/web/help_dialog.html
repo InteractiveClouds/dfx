@@ -1,0 +1,181 @@
+<md-dialog aria-label="textarea" ng-cloak style="width: 555px;">
+    <form>
+        <md-toolbar><div class="md-toolbar-tools">
+            <h2>Code Assistant</h2>
+        </div></md-toolbar>
+        <md-dialog-content style="padding:0 10px; min-height: 270px;">
+            <div class="dfx-ve-property-treeview hover" style="padding-top: 10px;" ng-show="helpTree">
+                <ul>
+                    <li>
+                        <input class="dfx-ve-property-treeview-button" type="checkbox" id="help-apiroutes" checked="checked"/>
+                        <label for="help-apiroutes">API Services</label>
+                        <ul class="help-apiroutes">
+                            <li ng-click="showApiRoutesTree('get')">
+                                <span style="cursor:pointer;">Get data</span>
+                            </li>
+                            <li ng-click="showApiRoutesTree('post')">
+                                <span style="cursor:pointer;">Send data</span>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <input class="dfx-ve-property-treeview-button" type="checkbox" id="help-function" checked="checked"/>
+                        <label for="help-function">Application Services</label>
+                        <ul class="help-function">
+                            <li ng-click="showInputForm('function')">
+                                <span style="cursor:pointer;">Scope function</span>
+                            </li>
+                            <li ng-click="showInputForm('dialog_html')">
+                                <span style="cursor:pointer;">HTML in Dialog</span>
+                            </li>
+                            <li ng-click="showInputForm('dialog_view')">
+                                <span style="cursor:pointer;">View in Dialog</span>
+                            </li>
+                            <li ng-click="showInputForm('dialog_wait')">
+                                <span style="cursor:pointer;">Waiting message</span>
+                            </li>
+                            <li ng-click="showInputForm('side_nav_html')">
+                                <span style="cursor:pointer;">HTML in SideNav</span>
+                            </li>
+                            <li ng-click="showInputForm('side_nav_view')">
+                                <span style="cursor:pointer;">View in SideNav</span>
+                            </li>
+                            <li ng-click="showInputForm('bottom_sheet_html')">
+                                <span style="cursor:pointer;">HTML in Bottom Sheet</span>
+                            </li>
+                            <li ng-click="showInputForm('bottom_sheet_view')">
+                                <span style="cursor:pointer;">View in Bottom Sheet</span>
+                            </li>
+                            <li ng-click="showInputForm('show_card')">
+                                <span style="cursor:pointer;">Show card</span>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <input class="dfx-ve-property-treeview-button" type="checkbox" id="help-charts" checked="checked"/>
+                        <label for="help-charts">Charts</label>
+                        <ul class="help-charts">
+                            <li ng-click="showInputForm('barchart')">
+                                <span style="cursor:pointer;">Bar</span>
+                            </li>
+                            <li ng-click="showInputForm('hzbarchart')">
+                                <span style="cursor:pointer;">Horizontal</span>
+                            </li>
+                            <li ng-click="showInputForm('piechart')">
+                                <span style="cursor:pointer;">Pie</span>
+                            </li>
+                            <li ng-click="showInputForm('donutchart')">
+                                <span style="cursor:pointer;">Donut</span>
+                            </li>
+                            <li ng-click="showInputForm('linechart')">
+                                <span style="cursor:pointer;">Line</span>
+                            </li>
+                            <li ng-click="showInputForm('cmlinechart')">
+                                <span style="cursor:pointer;">Cumulative Line</span>
+                            </li>
+                            <li ng-click="showInputForm('areachart')">
+                                <span style="cursor:pointer;">Stacked Area</span>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <input class="dfx-ve-property-treeview-button" type="checkbox" id="help-others" checked="checked"/>
+                        <label for="help-others">Others</label>
+                        <ul class="help-others">
+                            <li ng-click="showInputForm('googleMap')">
+                                <span style="cursor:pointer;">Google Maps</span>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div ng-show="helpForm">
+                <form name="helpForm">
+                    <div class="col-md-12" style="padding: 15px 15px 10px 0px;">
+                        <span class="col-md-5">Scope variable name:</span>
+                        <input class="col-md-7" type="text" ng-model="scopeVarName">
+                    </div>
+                    <div ng-show="scopeOptionsVarNameInput" class="col-md-12" style="padding: 15px 15px 10px 0px;">
+                        <span class="col-md-5">Scope options variable name:</span>
+                        <input class="col-md-7" type="text" ng-model="scopeOptionsVarName">
+                    </div>
+                    <div class="col-md-12" style="padding: 15px 15px 10px 0px;" ng-show="helpCardForm">
+                        <span class="col-md-4">Select card name:</span>
+                        <md-input-container class="col-md-8" style="padding: 0 0 4px 0">
+                            <md-select aria-label="card-list" ng-model="scopeCardName">
+                                <md-option ng-repeat="viewCard in helpViewCards" value="{{viewCard.name}}" ng-selected="{{viewCard.name === 'default'}}">
+                                    {{viewCard.name}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                </form>
+            </div>
+            <div class="dfx-ve-property-treeview hover" id="help_dialog_box" ng-show="helpApiRoutesTree" style="padding: 13px;">
+                <ul>
+                    <li>
+                        <input class="dfx-ve-property-treeview-button" type="checkbox" id="apiroute-root" />
+                        <label for="apiroute-root"> Application API Services </label>
+                            <ul class="dfx-ve-property-treeview-content">
+                                <p ng-show="!picker_apiroutes_cat.length"> There is no API Services</p>
+                                <li ng-repeat="cat in picker_apiroutes_cat">
+                                    <ul>
+                                        <li>
+                                            <input class="dfx-ve-property-treeview-button" type="checkbox" id="apiroute-item-cat-{{$index}}" />
+                                            <label for="apiroute-item-cat-{{$index}}">{{cat}}</label>
+                                            <ul>
+                                                <li ng-repeat="service in picker_apiroutes[cat]">
+                                                    <input class="dfx-ve-property-treeview-button" type="checkbox" id="apiroute-item-cat-{{$parent.$index}}-{{$index}}" checked />
+                                                    <label for="apiroute-item-cat-{{$parent.$index}}-{{$index}}">{{service.name}} ({{service.description}})</label>
+                                                    <ul>
+                                                        <li ng-repeat="(key, value) in service.apiRoutes">
+                                                            <a href="#" ng-click="selectApiRoute( cat, $parent.$index, key)">{{key}}</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                    </li>
+                    <li>
+                        <input class="dfx-ve-property-treeview-button" type="checkbox" id="apiroute-root-shared" />
+                        <label for="apiroute-root-shared"> Shared catalog API Services </label>
+                        <ul class="dfx-ve-property-treeview-content">
+                            <p ng-show="!shared_picker_apiroutes_cat.length"> There is no API Services</p>
+                            <li ng-repeat="cat in shared_picker_apiroutes_cat">
+                                <ul>
+                                    <li>
+                                        <input class="dfx-ve-property-treeview-button" type="checkbox" id="shared-apiroute-item-cat-{{$index}}" />
+                                        <label for="shared-apiroute-item-cat-{{$index}}">{{cat}}</label>
+                                        <ul>
+                                            <li ng-repeat="service in shared_picker_apiroutes[cat]">
+                                                <input class="dfx-ve-property-treeview-button" type="checkbox" id="shared-apiroute-item-cat-{{$parent.$index}}-{{$index}}" checked />
+                                                <label for="shared-apiroute-item-cat-{{$parent.$index}}-{{$index}}">{{service.name}} ({{service.description}})</label>
+                                                <ul>
+                                                    <li ng-repeat="(key, value) in service.apiRoutes">
+                                                        <a href="#" ng-click="selectApiRoute( cat, $parent.$index, key, true)">{{key}}</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </md-dialog-content>
+        <div class="md-actions">
+            <md-button class="md-primary" ng-show="showOkButton" ng-click="ok()">Ok</md-button>
+            <md-button ng-click="closeDialog()" class="md-primary">Close</md-button>
+        </div>
+        <div layout="row">
+            <md-button class="md-primary" ng-show="showBackButton" ng-click="back()" style="margin-bottom: -44px;">Back</md-button>
+        </div>
+    </form>
+</md-dialog>
+
+

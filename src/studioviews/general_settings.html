@@ -1,0 +1,59 @@
+<md-tabs md-dynamic-height md-border-bottom>
+    <md-tab label="Properties">
+        <md-content class="md-padding">
+            <h5 class="md-title" style="padding-left: 10px">Application Properties</h5>
+            <div layout="row" class="layout-padding">
+                <md-input-container class="md-block flex-40">
+                    <label>Application Name</label>
+                    <input ng-model="app_name" disabled>
+                </md-input-container>
+                <md-input-container class="md-block flex-60">
+                    <label>Title</label>
+                    <input ng-model="general.title">
+                </md-input-container>
+            </div>
+            <div layout="row" class="layout-padding" style="padding-bottom: 0">
+                <div class="layout-row flex-40" style="padding-bottom: 0">
+                    <md-input-container class="md-block" flex style="margin-bottom: 0; padding-bottom: 0;">
+                        <label>Logo</label>
+                        <input ng-model="selected_logo_image_input.value" ng-model-options="{ debounce: 500 }" ng-change="changeLogo(selected_logo_image_input.value)">
+                    </md-input-container>
+                    <a ng-click="chooseLogoImage($event)" style="height: 30px; margin-top: 36px; padding: 0 10px 0 10px"><i style="font-size:20px;cursor:pointer;" class="fa fa-ellipsis-h md-altTheme-theme"></i></a>
+                </div>
+                <md-input-container class="md-block flex-60" style="margin-bottom: 0; padding-bottom: 0;">
+                    <label>Creation Date</label>
+                    <input ng-model="general.creationDate" disabled>
+                </md-input-container>
+            </div>
+            <div layout="row" class="layout-padding" style="padding-top: 0">
+                <img ng-src="{{selected_logo_image}}" style="height: 150px; width: auto;">
+            </div>
+            <div layout="row" layout-align ="space-between center" style="margin-top: 15px;">
+                <button ng-click="saveGeneral()" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-floppy-o" style="color: #757575"></span><span style="padding-left:5px">Save</span></button>
+                <button ng-click="confirmAppDelete()" class="md-raised md-warn md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-trash-o" style="color: #ffffff"></span><span style="padding-left:5px">Delete the Application</span></button>
+            </div>
+        </md-content>
+    </md-tab>
+    <md-tab label="WEB login page" ng-click="loadLoginPage()">
+        <md-content class="md-padding">
+            <h5 class="md-title" style="padding-left: 10px">WEB login page definition</h5>
+            <div id="login_editor_web" style="border:1px solid #dddddd; padding: 0;">
+            </div>
+            <div layout="row" layout-align ="space-between center" style="margin-top: 15px;">
+                <button ng-click="saveLoginPage()" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-floppy-o" style="color: #757575"></span><span style="padding-left:5px">Save</span></button>
+            </div>
+        </md-content>
+    </md-tab>
+    <md-tab label="Mobile login page" ng-click="loadLoginPage()">
+        <md-content class="md-padding">
+            <h5 class="md-title" style="padding-left: 10px">Mobile login page definition</h5>
+            <div id="login_editor_mobile" style="border:1px solid #dddddd; padding: 0;">
+            </div>
+            <div layout="row" layout-align ="space-between center" style="margin-top: 15px;">
+                <button ng-click="saveLoginPage()" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-floppy-o" style="color: #757575"></span><span style="padding-left:5px">Save</span></button>
+            </div>
+        </md-content>
+    </md-tab>
+</md-tabs>
+
+

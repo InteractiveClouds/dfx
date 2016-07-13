@@ -1,0 +1,36 @@
+<div layout="row" layout-align="space-between center" style="background:#DCDCDC">
+    <h4 style="padding-left:10px">
+        Contact our team
+    </h4>
+    <div layout="row">
+        <md-button ng-click="sendMail()" class="md-primary" ng-disabled="supportForm.$invalid || contact_msg.value ===''|| show_form==false">Send</md-button>
+    </div>
+</div>
+<form name="supportForm" class="md-padding" ng-if="show_form == true">
+    <div class="layout-row layout-padding" flex="100">
+        <md-input-container class="md-block flex-40">
+            <label>Your name:</label>
+            <input ng-model="contact_name.value">
+        </md-input-container>
+        <md-input-container class="md-block flex-60" >
+            <label>Your email:</label>
+            <input type="email" ng-model="contact_email.value">
+        </md-input-container>
+    </div>
+    <div class="layout-row layout-padding" flex="100">
+        <md-input-container class="md-block flex-40" >
+            <label>Subject:</label>
+            <input ng-model="subject.value">
+        </md-input-container>
+        <md-input-container flex="60">
+            <label>Message:</label>
+            <textarea ng-model="contact_msg.value" columns="1"></textarea>
+        </md-input-container>
+    </div>
+</form>
+<div ng-if="show_form == false" style="padding: 20px;" id="support-scope-id">
+    <span style="padding-left: 10px;">Thank you. Your message has been sent to our customer service department. You will be contacted shortly by our team.</span>
+    <div layout="row" style="padding-left: 0; margin-top: 20px;">
+        <md-button ng-click="refreshForm()" class="md-raised">Send another message</md-button>
+    </div>
+</div>

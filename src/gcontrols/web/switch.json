@@ -1,0 +1,79 @@
+{
+  "template": 			{ "value": "default" },
+  "name": {
+    "value": "swtSwitch1"
+  },
+  "binding": {
+    "value": ""
+  },
+  "source": {
+    "value": ""
+  },
+  "isBindingPresent": {
+    "value": false
+  },
+  "dynamicPresent": {
+    "value": false
+  },
+  "bindingBoolean": {
+    "value": ""
+  },
+  "label": {
+    "value": "'Switch:'"
+  },
+  "switchValue": {
+    "trueSwitchValue": "",
+    "falseSwitchValue": "",
+    "label": ""
+  },
+  "direction":{
+    "value": "column"
+  },
+  "staticArray":{
+    "value": [{"label":"'option1: '", "checked":"'yes'", "unchecked":"'no'", "isChecked":false}]
+  },
+  "defaultArray":{
+    "value":[]
+  },
+  "display": {
+    "value": "true"
+  },
+  "displayValue":{
+    "value": ""
+  },
+  "selectedIndex":{
+    "value": "",
+    "status":"overridden"
+  },
+  "counterSwitch":{
+    "value": 1
+  },
+  "disabled": {
+    "value": "false"
+  },
+  "classes": {
+    "value": ""
+  },
+  "buttonClass":{
+    "value": "md-primary"
+  },
+  "dynamicClasses": {
+    "value": ""
+  },
+  "style": {
+    "value": ""
+  },
+  "onclick": { "value": "" },
+  "ondblclick": { "value": "" },
+  "onchange": { "value": "" },
+  "onfocus": { "value": "" },
+  "onblur": { "value": "" },
+  "onkeypress": { "value": "" },
+  "onkeydown": { "value": "" },
+  "onkeyup": { "value": "" },
+  "onmouseover": { "value": "" },
+  "onmouseenter": { "value": "" },
+  "onmousemove": { "value": "" },
+  "onmouseleave": { "value": "" },
+  "onmouseup": { "value": "" }
+}

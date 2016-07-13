@@ -1,0 +1,6 @@
+{
+    "codeVersion"  : "%%codeVersion%%",
+    "server-uuid"  : "%%server-uuid%%",
+    "creationDate" : "%%creationDate%%",
+    "tenantId"     : "%%tenantId%%"
+}

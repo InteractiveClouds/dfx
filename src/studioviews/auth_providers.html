@@ -1,0 +1,37 @@
+<div layout="row" class="layout-align-end">
+    <md-button class="md-raised" ng-click="initNewAuthProvider()">
+        <md-icon class="fa fa-plus" style="width:14px;height:14px;"></md-icon>
+        API Source
+    </md-button>
+</div>
+<div layout="row">
+    <md-card class="md-altTheme-theme" style="width:100%;overflow:hidden;">
+        <md-card-content style="padding:0;">
+            <table class="datatable" class="layout-row" style="width: 100%">
+                <thead>
+                <tr>
+                    <th>
+                        <span>Name</span>
+                    </th>
+                    <th>
+                        <span>Auth Protocol</span>
+                    </th>
+                    <th>
+                        <span>Actions</span>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="provider in auth_providers track by $index">
+                    <td>{{provider.provider}}</td>
+                    <td>{{provider.schema}}</td>
+                    <td>
+                        <md-button ng-click="editAuthProvider(provider.provider)" style="margin: 0; padding: 0; min-width: 20px"><md-icon class="fa fa-edit" style="font-size:20px; padding-top: 5px;"></md-icon></md-button>
+                        <md-button style="margin: 0; padding: 0; min-width: 20px" ng-click="confirmProviderRemove($event, provider.provider)"><md-icon class="fa fa-trash" style="font-size:20px; padding-top: 3px;"></md-icon></md-button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </md-card-content>
+    </md-card>
+</div>

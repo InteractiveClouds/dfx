@@ -1,0 +1,63 @@
+- var attr = gcitem.attributes;
+- var type = attr.type ? attr.type.value : '';
+- var typeAttr = attr.propertyByType && attr.propertyByType[type] ? attr.propertyByType[type] : '';
+- var semantic_classes = 'ui input';
+
+- var containerCss = '';
+if (gcitem.attributes.containerCss)
+    each val, key in gcitem.attributes.containerCss
+        - if (val!='') containerCss += key + ':' + val + ';'
+- var css = '';
+if (gcitem.attributes.css)
+    each val, key in gcitem.attributes.css
+        - if (val!='') css += key + ':' + val + ';'
+div(
+    id="#{gcitem.id}_{{$index}}",
+    ng-show = (gcitem.attributes.display.value == '' ? undefined : "#{gcitem.attributes.display.value}"),
+    style=(gcitem.attributes.containerStyle ? containerCss+'position:relative;'+gcitem.attributes.containerStyle.value : containerCss+'position:relative;'),
+    class="#{gcitem.attributes.containerClasses.value}",
+    ng-class = (gcitem.attributes.containerDynamicClasses.value == '' ? undefined : "#{gcitem.attributes.containerDynamicClasses.value}")
+    )
+    if (gcitem.attributes.labeledPosition.value=='right')
+        - semantic_classes += ' right labeled ';
+        div(
+            id="#{gcitem.id}_field_{{$index}}",
+            class=(semantic_classes + gcitem.attributes.classes.value),
+            style=(gcitem.attributes.style ? gcitem.attributes.style.value+';'+css : css)
+        )
+            input(
+                id = "#{gcitem.id}_input_{{$index}}",
+                type = "text",
+                placeholder = (gcitem.attributes.placeholder.value))
+            if (gcitem.attributes.labeledIcon.value != '')
+                div.ui.right.label
+                    i(class=(gcitem.attributes.labeledIcon.value+' icon'))
+            else
+                div.ui.right.label #{gcitem.attributes.labeledIcon.value}
+    if (gcitem.attributes.labeledPosition.value=='left')
+        - semantic_classes += ' labeled ';
+        div(
+            id="#{gcitem.id}_field_{{$index}}",
+            class=(semantic_classes + gcitem.attributes.classes.value),
+            style=(gcitem.attributes.style ? gcitem.attributes.style.value+';'+css : css)
+        )
+            if (gcitem.attributes.labeledIcon.value != '')
+                div.ui.label
+                    i(class=(gcitem.attributes.labeledIcon.value+' icon'))
+            else
+                div.ui.label #{gcitem.attributes.labeledText.value}
+            input(
+                id = "#{gcitem.id}_input_{{$index}}",
+                type = "text",
+                placeholder = (gcitem.attributes.textPlaceholder.value))
+    if (gcitem.attributes.labeledPosition.value=='')
+        div(
+            id="#{gcitem.id}_field_{{$index}}",
+            class=(semantic_classes + gcitem.attributes.classes.value),
+            style=(gcitem.attributes.style ? gcitem.attributes.style.value+';'+css : css)
+        )
+            input(
+                id = "#{gcitem.id}_input_{{$index}}",
+                type = "text",
+                placeholder = (gcitem.attributes.placeholder.value)
+                )

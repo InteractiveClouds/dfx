@@ -1,0 +1,9 @@
+nav.bar.bar-tab(
+    id="#{gcitem.id}",
+    ng-show = (gcitem.attributes.display.value == '' ? undefined : "#{gcitem.attributes.display.value}"),
+    style=('position:absolute;')
+    )
+    each item, i in gcitem.attributes.tabs
+        a.tab-item(href="javascript:void(0);", ng-click = "#{gcitem.attributes.onclick.value}('#{item.value.value}')")
+            span(class = "icon icon-#{item.icon.value}")
+            span.tab-label #{item.label.value}

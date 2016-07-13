@@ -1,0 +1,46 @@
+- var containerCss = '';
+- var clean_regex_tenantid = /\#\{tenantid\}/g;
+- var clean_regex_appname = /\#\{appname\}/g;
+if (gcitem.attributes.containerCss)
+    each val, key in gcitem.attributes.containerCss
+        - if (val!='') containerCss += key + ':' + val + ';'
+- var css = '';
+if (gcitem.attributes.css)
+    each val, key in gcitem.attributes.css
+        - if (val!='') css += key + ':' + val + ';'
+- var clean_cont_style = gcitem.attributes.containerStyle.value.replace( clean_regex_tenantid, tenantid );
+- clean_cont_style = clean_cont_style.replace( clean_regex_appname, appname );
+div(
+    id="#{gcitem.id}_{{$index}}",
+    ng-show = (gcitem.attributes.display.value == '' ? undefined : "#{gcitem.attributes.display.value}"),
+    style=('display:inline-block;position:relative;' + clean_cont_style + ';' + containerCss),
+    class="#{gcitem.attributes.containerClasses.value}",
+    ng-class = (gcitem.attributes.containerDynamicClasses.value == '' ? undefined : "#{gcitem.attributes.containerDynamicClasses.value}"),
+    )
+    div.btn-group
+        - var clean_comp_style = gcitem.attributes.style.value.replace( clean_regex_tenantid, tenantid );
+        - clean_comp_style = clean_comp_style.replace( clean_regex_appname, appname );
+        a.btn(
+            id="#{gcitem.id}_button_{{$index}}",
+            href="javascript:void(0);",
+            tenant="#{tenantid}",
+            class="#{gcitem.attributes.classes.value}",
+            type="button",
+            style=(clean_comp_style + ';' + css),
+            dfx-tool-tip,
+            tooltip-title = (gcitem.attributes.tooltip && gcitem.attributes.tooltip.value ? "#{gcitem.attributes.tooltip.value}" : undefined),
+            data-placement = (gcitem.attributes.tooltipPosition ? "#{gcitem.attributes.tooltipPosition.value}" : undefined),
+            ng-class = (gcitem.attributes.dynamicClasses && gcitem.attributes.dynamicClasses.value!='' ? "#{gcitem.attributes.dynamicClasses.value}" : undefined),
+            ng-disabled=(gcitem.attributes.disabled.value == '' ? undefined : "#{gcitem.attributes.disabled.value}"),
+            ng-click="#{gcitem.attributes.onclick.value}")
+            - if(gcitem.attributes.icon && gcitem.attributes.icon.value) {
+                - if(gcitem.attributes.iconPosition.value == 'left') {
+                    span.glyphicon(class = "glyphicon-#{gcitem.attributes.icon.value}" )
+                    span(style="padding-left:5px", dfx-text = "#{gcitem.attributes.label.value}") #{gcitem.attributes.label.value}
+                - } else if(gcitem.attributes.iconPosition.value == 'right') {
+                    span(style="padding-right:5px", dfx-text = "#{gcitem.attributes.label.value}") #{gcitem.attributes.label.value}
+                    span.glyphicon( class = "glyphicon-#{gcitem.attributes.icon.value}" )
+                - }
+            - } else {
+                span(dfx-text = "#{gcitem.attributes.label.value}") #{gcitem.attributes.label.value}
+            - }

@@ -1,0 +1,23 @@
+- var containerCss = '';
+if (gcitem.attributes.containerCss)
+    each val, key in gcitem.attributes.containerCss
+        - if (val!='') containerCss += key + ':' + val + ';'
+- var css = '';
+if (gcitem.attributes.css)
+    each val, key in gcitem.attributes.css
+        - if (val!='') css += key + ':' + val + ';'
+div(
+    id="#{gcitem.id}_{{$index}}",
+    ng-show = (gcitem.attributes.display.value == '' ? undefined : "#{gcitem.attributes.display.value}"),
+    style=('display:inline-block;position:relative;' + (gcitem.attributes.containerStyle ? gcitem.attributes.containerStyle.value : '') + ';' + containerCss),
+    class="#{gcitem.attributes.classes.value}",
+    ng-class = (gcitem.attributes.containerDynamicClasses.value == '' ? undefined : "#{gcitem.attributes.containerDynamicClasses.value}"),
+    ng-click = (gcitem.attributes.onclick && gcitem.attributes.onclick.value ? "#{gcitem.attributes.onclick.value}" : undefined)
+    )
+    div(
+        id="#{gcitem.id}_html_{{$index}}",
+        ng-bind-html = (gcitem.attributes.property.value == '' ? undefined : "#{gcitem.attributes.property.value}"),
+        style=((gcitem.attributes.style ? gcitem.attributes.style.value : '') + ';' + css),
+        class=(gcitem.attributes.classes ? gcitem.attributes.classes.value : undefined)
+        )
+        != gcitem.attributes.html.value

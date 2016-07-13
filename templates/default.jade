@@ -1,0 +1,23 @@
+doctype html
+html(ng-app="#{appname}")
+    head
+        meta(http-equiv="content-type", content="text/HTML;charset=UTF-8")
+        meta(name="viewport", content="width=device-width,initial-scale=1")
+        title #{apptitle}
+        link(rel="stylesheet", href="themes/standard/standard.min.css")
+        link(rel="stylesheet", href="styles/jquery.mobile.structure-1.3.1.min.css")
+        script(src="all/commons/js/angular.min.js")
+        script(src="all/commons/js/jquery-1.9.1.js")
+        script(src="commons/js/app.js")
+        script(src="mobile/js/jquery.mobile-1.3.1.min.js")
+        script(src="mobile/js/jquery.dreamface-1.0.js")
+        script(src="commons/js/app.js")
+    body
+        div(id="BodyContent", data-role="page")
+            div(data-role="header")
+                h1 #{apptitle} - #{screentitle}
+            div(data-role="content")
+                each widget, i in widgets
+                    dfx-widget(id="#{widget.name}", title="#{widget.title}", wclass="#{widget.wclass}")
+            div(data-role="footer")
+                h5 powered by DreamFace

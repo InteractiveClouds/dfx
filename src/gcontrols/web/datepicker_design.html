@@ -1,0 +1,16 @@
+<form style="{{attributes.style.value}}" class="{{attributes.classes.value}} gc-datepicker">
+    <div ng-if="attributes.selectedType.value !== 'ranged'">
+        <label ng-class="attributes.labelClass" style="font-size: 10px;">{{attributes.label.value | checkExpression}}</label>
+        <div style="margin-top:-2px">
+            <md-datepicker ng-model="attributes.designDate.value" md-placeholder="Enter date">
+            </md-datepicker>
+        </div>
+    </div>
+    <div ng-if="attributes.selectedType.value === 'ranged'">
+        <label ng-class="attributes.labelClass" style="font-size: 10px">{{attributes.label.value | checkExpression}}</label>
+        <div style="margin-top:-2px">
+            <md-datepicker ng-model="attributes.designDate.value" md-placeholder="Enter date" md-min-date="minDate" md-max-date="maxDate">
+            </md-datepicker>
+        </div>
+    </div>
+</form>

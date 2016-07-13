@@ -1,0 +1,47 @@
+{
+  "template": 			{ "value": "default" },
+  "name":           { "value": "fbFab1" },  
+	"label":          { "value": "'Home'" },	
+  "fabDirection":   { "display": "Right", "value": "right" },
+  "animation":      { "display": "Fling", "value": "md-fling" },
+  "dynamicClasses": { "value": "" },
+  "classes":        { "value": "" },
+  "style":          { "value": "" },
+  "triggerButton":  { "style": "", "class": "", "tooltip": { "direction": "top", "style": "", "classes": "" } },
+  "icon":           { "value": "'fa-bars'", "type": "fa-icon", "size": 24, "style": "" },
+  "actionButton":   { 
+    "style": "", 
+    "class": "", 
+    "icon": { "value": "", "type": "", "size": 20, "style": "" },
+    "tooltip": { "direction": "top", "style": "", "classes": "" } 
+  },
+  "initialClick":   { "value": "false" },
+  "dynamicPresent": { "value": false },
+  "dynamic":        { "value": "" },
+  "menuItems": {
+    "value": [
+      {
+        "label": "'Home'",
+        "icon": { "value": "'home'", "type": "svg-icon" },
+        "display": "true",
+        "disabled": "false",
+        "onclick": ""
+      }
+    ]
+  },
+  "display":        { "value": "true" },
+  "disabled":       { "value": "false" },
+  "layoutType":     { "value": "none" },
+  "onclick":        { "value": "" },
+  "ondblclick":     { "value": "" },
+  "onfocus":        { "value": "" },
+  "onblur":         { "value": "" },
+  "onkeypress":     { "value": "" },
+  "onkeydown":      { "value": "" },
+  "onkeyup":        { "value": "" },
+  "onmouseover":    { "value": "" },
+  "onmouseenter":   { "value": "" },
+  "onmousemove":    { "value": "" },
+  "onmouseleave":   { "value": "" },
+  "onmouseup":      { "value": "" }
+}

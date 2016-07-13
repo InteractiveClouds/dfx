@@ -1,0 +1,50 @@
+doctype html
+html(ng-app="#{appname}")
+    head
+        meta(http-equiv="content-type", content="text/HTML;charset=UTF-8")
+        meta(name="viewport", content="width=device-width,initial-scale=1")
+        title Login
+        link(rel="stylesheet", href="themes/standard/standard.min.css")
+        link(rel="stylesheet", href="styles/jquery.mobile.structure-1.3.1.min.css")
+        script(src="js/md5.js")
+        script(src="js/authRequest.js")
+        script(src="commons/js/angular.min.js")
+        script(src="commons/js/jquery-1.9.1.js")
+        script(src="commons/js/dataquery.js")
+        script(src="js/jquery.mobile-1.3.1.min.js")
+        script(src="js/jquery.dreamface-1.0.js")
+        script(src="commons/js/app.js")
+    body
+        script(type="text/javascript").
+            DreamFace.initSession( {dfx_appname:'#{appname}', dfx_tenantid:'#{tenantid}'} );
+        div(data-role="page")
+            div(data-role="header")
+                h1 #{apptitle}
+            div(data-role="content")
+                form#loginForm(action="")
+                    h2 Login
+                    label(for="username") User ID:
+                    input#username(type="text", name="username", value="", autocomplete="off")
+                    label(for="password") Password:
+                    input#password(type="password", name="password", value="", autocomplete="off")
+                    a(href="#", onclick="$(this).closest('form').submit()", data-role="button", type="submit", data-inline="true", data-icon="star") Sign In
+        script.
+            (function(){
+                var $form     = $('#loginForm'),
+                    $username = $('#username'),
+                    $password = $('#password');
+
+                $form.submit(function(e){
+
+                    e.preventDefault();
+
+                    var username = $username.val(),
+                        password = $password.val();
+                
+                    DreamFace.authenticate({
+                        username: username,
+                        password: password
+                    });
+                });
+
+            })();

@@ -1,0 +1,115 @@
+div.panel.panel-primary
+   div.panel-heading
+      h4
+         span Application Configuration Matrix
+   div.panel-body
+      if matrix.roles.length == 0
+         p Application configuration is empty.
+      else
+         table#matrixTable.table.table-condensed.table-thick-bordered(style="margin-bottom: 0;")
+            thead
+               tr
+                  th Page
+                     span.fa.fa-lg.fa-sort.pull-right(data-sort-by="screen", style="margin-right: 15px; cursor: pointer;", title="Sort by screen name")
+                  th View
+                     span.fa.fa-lg.fa-sort.pull-right(data-sort-by="widget", style="margin-right: 15px; cursor: pointer;", title="Sort by widget name")
+                  th Type
+                     span.fa.fa-lg.fa-sort.pull-right(data-sort-by="type", style="margin-right: 15px; cursor: pointer;", title="Sort by type")
+                  th Name
+                     span.fa.fa-lg.fa-sort.pull-right(data-sort-by="name", style="margin-right: 15px; cursor: pointer;", title="Sort by name")
+                  th(style="display: none;") ID
+                     span.fa.fa-lg.fa-sort.pull-right(data-sort-by="id", style="margin-right: 15px; cursor: pointer;", title="Sort by control ID")
+                  th(style="display: none;") Widget ID
+                     span.fa.fa-lg.fa-sort.pull-right(data-sort-by="widgetid", style="margin-right: 15px; cursor: pointer;", title="Sort by widget ID")
+                  th Attribute
+                     span.fa.fa-lg.fa-sort.pull-right(data-sort-by="attribute", style="margin-right: 15px; cursor: pointer;", title="Sort by attribute")
+                  each role in matrix.roles
+                     th Role: #{role}
+            tbody
+               tr#matrixTableFilter
+                  td
+                     div.input-group.input-group-sm
+                        input#gcScreenFilter(data-filter-by="screen", name="gcScreenFilter", class="form-control")
+                        div.input-group-btn
+                           button.btn.btn-default.apply-filters(type="button", tabindex="-1")
+                              span.fa.fa-filter
+                           button.btn.btn-default.clear-filter(type="button")
+                              span.fa.fa-times
+                  td
+                     div.input-group.input-group-sm
+                        input#gcWidgetFilter(data-filter-by="widget", name="gcWidgetFilter", class="form-control")
+                        div.input-group-btn
+                           button.btn.btn-default.apply-filters(type="button", tabindex="-1")
+                              span.fa.fa-filter
+                           button.btn.btn-default.clear-filter(type="button")
+                              span.fa.fa-times
+                  td
+                     div.input-group.input-group-sm
+                        input#typeFilter(data-filter-by="type", name="typeFilter", class="form-control")
+                        div.input-group-btn
+                           button.btn.btn-default.apply-filters(type="button", tabindex="-1")
+                              span.fa.fa-filter
+                           button.btn.btn-default.clear-filter(type="button")
+                              span.fa.fa-times
+                  td
+                     div.input-group.input-group-sm
+                        input#nameFilter(data-filter-by="name", name="nameFilter", class="form-control")
+                        div.input-group-btn
+                           button.btn.btn-default.apply-filters(type="button", tabindex="-1")
+                              span.fa.fa-filter
+                           button.btn.btn-default.clear-filter(type="button")
+                              span.fa.fa-times
+                  td(style="display: none;")
+                     div.input-group.input-group-sm
+                        input#gcIdFilter(data-filter-by="id", name="gcIdFilter", class="form-control")
+                        div.input-group-btn
+                           button.btn.btn-default.apply-filters(type="button", tabindex="-1")
+                              span.fa.fa-filter
+                           button.btn.btn-default.clear-filter(type="button")
+                              span.fa.fa-times
+                  td(style="display: none;")
+                     div.input-group.input-group-sm
+                        input#gcWidgetIdFilter(data-filter-by="widgetid", name="gcWidgetIdFilter", class="form-control")
+                        div.input-group-btn
+                           button.btn.btn-default.apply-filters(type="button", tabindex="-1")
+                              span.fa.fa-filter
+                           button.btn.btn-default.clear-filter(type="button")
+                              span.fa.fa-times
+                  td
+                     div.input-group.input-group-sm
+                        input#attributeFilter(data-filter-by="attribute", name="attributeFilter", class="form-control")
+                        div.input-group-btn
+                           button.btn.btn-default.apply-filters(type="button", tabindex="-1")
+                              span.fa.fa-filter
+                           button.btn.btn-default.clear-filter(type="button")
+                              span.fa.fa-times
+                  td(colspan="#{matrix.roles.length}")
+               each property, propId in matrix.props
+                  tr.sortable-row.filtrable-row(data-property-id="#{propId}")
+                     if property.type == 'menu-item'
+                        td(data-item="screen") ---
+                        td(data-item="widget") ---
+                        td(data-item="type") Menu Item
+                        td(data-item="name") #{property.parameters.name}
+                        td(data-item="id", style="display: none;") ---
+                        td(data-item="widgetid", style="display: none;") ---
+                     else if property.type == 'gcontrol'
+                        td(data-item="screen") #{property.parameters.screen}
+                        td(data-item="widget") #{property.parameters.widget}
+                        td(data-item="type") Graphical Control
+                        td(data-item="name") #{property.parameters.name}
+                        td(data-item="id", style="display: none;") #{property.parameters.id}
+                        td(data-item="widgetid", style="display: none;") #{property.parameters.widgetid}
+                     td(data-item-attribute="#{property.parameters.attribute}") #{property.parameters.attribute}
+                     each role in matrix.roles
+                        if property[role]
+                           td(data-role="#{role}", data-value="#{property[role]}")
+                              //a.pull-right(href="#{property.link}/#{role}/", style="margin-right: 15px;")
+                              if property.type == 'menu-item'
+                                 a.btn.btn-link(href="javascript:void(0);", onclick="DfxStudio.Home.Configuration.editProperty({type: \"menu-item\", application: \"#{application}\", role: \"#{role}\", name: \"#{property.parameters.name}\", attribute: \"#{property.parameters.attribute}\", value: \"#{property[role]}\"});", style="margin-right: 15px;")
+                                    | #{property[role]}
+                              else if property.type == 'gcontrol'
+                                 a.btn.btn-link(href="javascript:void(0);", onclick="DfxStudio.Home.Configuration.editProperty({propId: \"#{propId}\", type: \"gcontrol\", id: \"#{property.parameters.id}\", application: \"#{application}\", role: \"#{role}\", name: \"#{property.parameters.name}\", widget: \"#{property.parameters.widget}\", widgetid: \"#{property.parameters.widgetid}\", screen: \"#{property.parameters.screen}\", attribute: \"#{property.parameters.attribute}\", value: \"#{property[role]}\"});", style="margin-right: 15px;")
+                                    | #{property[role]}
+                        else
+                           td &nbsp;

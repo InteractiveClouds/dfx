@@ -1,0 +1,10 @@
+doctype xml
+widget(xmlns="http://www.w3.org/ns/widgets", xmlns:gap="http://phonegap.com/ns/1.0", id="com.interactive-clouds.dfx.#{application.name}", versionCode="10", version="1.0.0")
+    name #{application.name}
+    description #{application.title}
+    author(href="http://www.interactive-clouds.com/",email="info@interactive-clouds.com") #{application.owner}
+    preference(name="fullscreen", value="true")
+    icon(src="images/icons/icon.png")
+    access(origin="#{server}",subdomains="true")
+    access(origin="#{server}/app/login",subdomains="true")
+    gap:platform(name="android")

@@ -1,0 +1,1277 @@
+/*!
+ * =====================================================
+ * Ratchet v2.0.2 (http://goratchet.com)
+ * Copyright 2014 Connor Sears
+ * Licensed under MIT (https://github.com/twbs/ratchet/blob/master/LICENSE)
+ *
+ * v2.0.2 designed by @connors.
+ * =====================================================
+ */
+
+body#ratchet {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 17px;
+    line-height: 21px;
+    color: #000;
+    background-color: #fff;
+}
+
+.ratchet a {
+    color: #428bca;
+    text-decoration: none;
+
+    -webkit-tap-highlight-color: transparent;
+}
+
+.ratchet a:active {
+    color: #3071a9;
+}
+
+.ratchet .content {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    background-color: #fff;
+}
+
+.ratchet .content > * {
+    -webkit-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    transform: translateZ(0);
+}
+
+.bar-nav ~ .content {
+    padding-top: 44px;
+}
+
+.bar-header-secondary ~ .content {
+    padding-top: 88px;
+}
+
+.bar-footer ~ .content {
+    padding-bottom: 44px;
+}
+
+.bar-footer-secondary ~ .content {
+    padding-bottom: 88px;
+}
+
+.bar-tab ~ .content {
+    padding-bottom: 50px;
+}
+
+.bar-footer-secondary-tab ~ .content {
+    padding-bottom: 94px;
+}
+
+.content-padded {
+    margin: 10px;
+}
+
+.ratchet .pull-left {
+    float: left;
+}
+
+.ratchet .pull-right {
+    float: right;
+}
+
+.ratchet .clearfix:before, .clearfix:after {
+    display: table;
+    content: " ";
+}
+
+.ratchet .clearfix:after {
+    clear: both;
+}
+
+.ratchet h1, .ratchet h2, .ratchet h3, .ratchet h4, .ratchet h5, .ratchet h6 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    line-height: 1;
+}
+
+.ratchet h1, .ratchet .h1 {
+    font-size: 36px;
+}
+
+.ratchet h2, .ratchet .h2 {
+    font-size: 30px;
+}
+
+.ratchet h3, .ratchet .h3 {
+    font-size: 24px;
+}
+
+.ratchet h4, .ratchet .h4 {
+    font-size: 18px;
+}
+
+.ratchet h5, .ratchet .h5 {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.ratchet h6, .ratchet .h6 {
+    margin-top: 20px;
+    font-size: 12px;
+}
+
+.ratchet p {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #777;
+}
+
+.ratchet .btn {
+    position: relative;
+    display: inline-block;
+    padding: 6px 8px 7px;
+    margin-bottom: 0;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1;
+    color: #333;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: top;
+    cursor: pointer;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.ratchet .btn:active, .ratchet .btn.active {
+    color: inherit;
+    background-color: #ccc;
+}
+
+.ratchet .btn:disabled, .ratchet .btn.disabled {
+    opacity: .6;
+}
+
+.ratchet .btn-primary {
+    color: #fff;
+    background-color: #428bca;
+    border: 1px solid #428bca;
+}
+
+.ratchet .btn-primary:active, .ratchet .btn-primary.active {
+    color: #fff;
+    background-color: #3071a9;
+    border: 1px solid #3071a9;
+}
+
+.ratchet .btn-positive {
+    color: #fff;
+    background-color: #5cb85c;
+    border: 1px solid #5cb85c;
+}
+
+.ratchet .btn-positive:active, .ratchet .btn-positive.active {
+    color: #fff;
+    background-color: #449d44;
+    border: 1px solid #449d44;
+}
+
+.ratchet .btn-negative {
+    color: #fff;
+    background-color: #d9534f;
+    border: 1px solid #d9534f;
+}
+
+.ratchet .btn-negative:active, .ratchet .btn-negative.active {
+    color: #fff;
+    background-color: #c9302c;
+    border: 1px solid #c9302c;
+}
+
+.ratchet .btn-outlined {
+    background-color: transparent;
+}
+
+.ratchet .btn-outlined.btn-primary {
+    color: #428bca;
+}
+
+.ratchet .btn-outlined.btn-positive {
+    color: #5cb85c;
+}
+
+.ratchet .btn-outlined.btn-negative {
+    color: #d9534f;
+}
+
+.ratchet .btn-outlined.btn-primary:active, .ratchet .btn-outlined.btn-positive:active, .ratchet .btn-outlined.btn-negative:active {
+    color: #fff;
+}
+
+.ratchet .btn-link {
+    padding-top: 6px;
+    padding-bottom: 6px;
+    color: #428bca;
+    background-color: transparent;
+    border: 0;
+}
+
+.ratchet .btn-link:active, .ratchet .btn-link.active {
+    color: #3071a9;
+    background-color: transparent;
+}
+
+.ratchet .btn-block {
+    display: block;
+    width: 100%;
+    padding: 15px 0;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.ratchet input[type="submit"],
+.ratchet input[type="reset"],
+.ratchet input[type="button"] {
+    width: 100%;
+}
+
+.ratchet .btn .badge {
+    margin: -2px -4px -2px 4px;
+    font-size: 12px;
+    background-color: rgba(0, 0, 0, .15);
+}
+
+.ratchet .btn .badge-inverted,
+.ratchet .btn:active .badge-inverted {
+    background-color: transparent;
+}
+
+.ratchet .btn-primary:active .badge-inverted,
+.ratchet .btn-positive:active .badge-inverted,
+.ratchet .btn-negative:active .badge-inverted {
+    color: #fff;
+}
+
+.ratchet .btn-block .badge {
+    position: absolute;
+    right: 0;
+    margin-right: 10px;
+}
+
+.ratchet .btn .icon {
+    font-size: inherit;
+}
+
+.ratchet .bar {
+    position: fixed;
+    right: 0;
+    left: 0;
+    z-index: 10;
+    height: 44px;
+    padding-right: 10px;
+    padding-left: 10px;
+    background-color: white;
+    border-bottom: 1px solid #ddd;
+
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.ratchet .bar-header-secondary {
+    top: 44px;
+}
+
+.ratchet .bar-footer {
+    bottom: 0;
+}
+
+.ratchet .bar-footer-secondary {
+    bottom: 44px;
+}
+
+.ratchet .bar-footer-secondary-tab {
+    bottom: 50px;
+}
+
+.ratchet .bar-footer,
+.ratchet .bar-footer-secondary,
+.ratchet .bar-footer-secondary-tab {
+    border-top: 1px solid #ddd;
+    border-bottom: 0;
+}
+
+.ratchet .bar-nav {
+    top: 0;
+}
+
+.ratchet .title {
+    position: absolute;
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin: 0 -10px;
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 44px;
+    color: #000;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.ratchet .title a {
+    color: inherit;
+}
+
+.ratchet .bar-tab {
+    bottom: 0;
+    display: table;
+    width: 100%;
+    height: 50px;
+    padding: 0;
+    table-layout: fixed;
+    border-top: 1px solid #ddd;
+    border-bottom: 0;
+}
+
+.ratchet .bar-tab .tab-item {
+    display: table-cell;
+    width: 1%;
+    height: 50px;
+    color: #929292;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.ratchet .bar-tab .tab-item.active, .bar-tab .tab-item:active {
+    color: #428bca;
+}
+
+.ratchet .bar-tab .tab-item .icon {
+    top: 3px;
+    width: 24px;
+    height: 24px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.ratchet .bar-tab .tab-item .icon ~ .tab-label {
+    display: block;
+    font-size: 11px;
+}
+
+.ratchet .bar .btn {
+    position: relative;
+    top: 7px;
+    z-index: 20;
+    padding: 6px 12px 7px;
+    margin-top: 0;
+    font-weight: 400;
+}
+
+.ratchet .bar .btn.pull-right {
+    margin-left: 10px;
+}
+
+.ratchet .bar .btn.pull-left {
+    margin-right: 10px;
+}
+
+.ratchet .bar .btn-link {
+    top: 0;
+    padding: 0;
+    font-size: 16px;
+    line-height: 44px;
+    color: #428bca;
+    border: 0;
+}
+
+.ratchet .bar .btn-link:active, .ratchet .bar .btn-link.active {
+    color: #3071a9;
+}
+
+.ratchet .bar .btn-block {
+    top: 6px;
+    padding: 7px 0;
+    margin-bottom: 0;
+    font-size: 16px;
+}
+
+.ratchet .bar .btn-nav.pull-left {
+    margin-left: -5px;
+}
+
+.ratchet .bar .btn-nav.pull-left .icon-left-nav {
+    margin-right: -3px;
+}
+
+.ratchet .bar .btn-nav.pull-right {
+    margin-right: -5px;
+}
+
+.ratchet .bar .btn-nav.pull-right .icon-right-nav {
+    margin-left: -3px;
+}
+
+.ratchet .bar .icon {
+    position: relative;
+    z-index: 20;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 24px;
+}
+
+.ratchet .bar .btn .icon {
+    top: 3px;
+    padding: 0;
+}
+
+.ratchet .bar .title .icon {
+    padding: 0;
+}
+
+.ratchet .bar .title .icon.icon-caret {
+    top: 4px;
+    margin-left: -5px;
+}
+
+.ratchet .bar input[type="search"] {
+    height: 29px;
+    margin: 6px 0;
+}
+
+.ratchet .bar .segmented-control {
+    top: 7px;
+    margin: 0 auto;
+}
+
+.ratchet .badge {
+    display: inline-block;
+    padding: 2px 9px 3px;
+    font-size: 12px;
+    line-height: 1;
+    color: #333;
+    background-color: rgba(0, 0, 0, .15);
+    border-radius: 100px;
+}
+
+.ratchet .badge.badge-inverted {
+    padding: 0 5px 0 0;
+    background-color: transparent;
+}
+
+.ratchet .badge-primary {
+    color: #fff;
+    background-color: #428bca;
+}
+
+.ratchet .badge-primary.badge-inverted {
+    color: #428bca;
+}
+
+.ratchet .badge-positive {
+    color: #fff;
+    background-color: #5cb85c;
+}
+
+.ratchet .badge-positive.badge-inverted {
+    color: #5cb85c;
+}
+
+.ratchet .badge-negative {
+    color: #fff;
+    background-color: #d9534f;
+}
+
+.ratchet .badge-negative.badge-inverted {
+    color: #d9534f;
+}
+
+.ratchet .card {
+    margin: 10px;
+    overflow: hidden;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.ratchet .card .table-view {
+    margin-bottom: 0;
+    border-top: 0;
+    border-bottom: 0;
+}
+
+.ratchet .card .table-view .table-view-divider:first-child {
+    top: 0;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+.ratchet .card .table-view .table-view-divider:last-child {
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+
+.ratchet .card .table-view-cell:last-child {
+    border-bottom: 0;
+}
+
+.ratchet .table-view {
+    padding-left: 0;
+    margin-top: 0;
+    margin-bottom: 15px;
+    list-style: none;
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+.ratchet .table-view-cell {
+    position: relative;
+    padding: 11px 65px 11px 15px;
+    overflow: hidden;
+    border-bottom: 1px solid #ddd;
+}
+
+.ratchet .table-view-cell:last-child {
+    border-bottom: 0;
+}
+
+.ratchet .table-view-cell > a:not(.btn) {
+    position: relative;
+    display: block;
+    padding: inherit;
+    margin: -11px -65px -11px -15px;
+    overflow: hidden;
+    color: inherit;
+}
+
+.ratchet .table-view-cell > a:not(.btn):active {
+    background-color: #eee;
+}
+
+.ratchet .table-view-cell p {
+    margin-bottom: 0;
+}
+
+.ratchet .table-view-divider {
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 15px;
+    margin-top: -1px;
+    margin-left: 0;
+    font-weight: 500;
+    color: #999;
+    background-color: #fafafa;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+.ratchet .table-view .media,
+.ratchet .table-view .media-body {
+    overflow: hidden;
+}
+
+.ratchet .table-view .media-object.pull-left {
+    margin-right: 10px;
+}
+
+.ratchet .table-view .media-object.pull-right {
+    margin-left: 10px;
+}
+
+.ratchet .table-view-cell > .btn,
+.ratchet .table-view-cell > .badge,
+.ratchet .table-view-cell > .toggle,
+.ratchet .table-view-cell > a > .btn,
+.ratchet .table-view-cell > a > .badge,
+.ratchet .table-view-cell > a > .toggle {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.ratchet .table-view-cell .navigate-left > .btn,
+.ratchet .table-view-cell .navigate-left > .badge,
+.ratchet .table-view-cell .navigate-left > .toggle,
+.ratchet .table-view-cell .navigate-right > .btn,
+.ratchet .table-view-cell .navigate-right > .badge,
+.ratchet .table-view-cell .navigate-right > .toggle,
+.ratchet .table-view-cell .push-left > .btn,
+.ratchet .table-view-cell .push-left > .badge,
+.ratchet .table-view-cell .push-left > .toggle,
+.ratchet .table-view-cell .push-right > .btn,
+.ratchet .table-view-cell .push-right > .badge,
+.ratchet .table-view-cell .push-right > .toggle,
+.ratchet .table-view-cell > a .navigate-left > .btn,
+.ratchet .table-view-cell > a .navigate-left > .badge,
+.ratchet .table-view-cell > a .navigate-left > .toggle,
+.ratchet .table-view-cell > a .navigate-right > .btn,
+.ratchet .table-view-cell > a .navigate-right > .badge,
+.ratchet .table-view-cell > a .navigate-right > .toggle,
+.ratchet .table-view-cell > a .push-left > .btn,
+.ratchet .table-view-cell > a .push-left > .badge,
+.ratchet .table-view-cell > a .push-left > .toggle,
+.ratchet .table-view-cell > a .push-right > .btn,
+.ratchet .table-view-cell > a .push-right > .badge,
+.ratchet .table-view-cell > a .push-right > .toggle {
+    right: 35px;
+}
+
+.ratchet .content > .table-view:first-child {
+    margin-top: 15px;
+}
+
+.ratchet input,
+.ratchet textarea,
+.ratchet button,
+.ratchet select {
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 17px;
+}
+
+.ratchet select,
+.ratchet textarea,
+.ratchet input[type="text"],
+.ratchet input[type="search"],
+.ratchet input[type="password"],
+.ratchet input[type="datetime"],
+.ratchet input[type="datetime-local"],
+.ratchet input[type="date"],
+.ratchet input[type="month"],
+.ratchet input[type="time"],
+.ratchet input[type="week"],
+.ratchet input[type="number"],
+.ratchet input[type="email"],
+.ratchet input[type="url"],
+.ratchet input[type="tel"],
+.ratchet input[type="color"] {
+    width: 100%;
+    height: 35px;
+    -webkit-appearance: none;
+    padding: 0 15px;
+    margin-bottom: 15px;
+    line-height: 21px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    outline: none;
+}
+
+.ratchet input[type="search"] {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 0 10px;
+    font-size: 16px;
+    border-radius: 20px;
+}
+
+.ratchet input[type="search"]:focus {
+    text-align: left;
+}
+
+.ratchet textarea {
+    height: auto;
+}
+
+.ratchet select {
+    height: auto;
+    font-size: 14px;
+    background-color: #f8f8f8;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .1);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .1);
+}
+
+.ratchet .input-group {
+    background-color: #fff;
+}
+
+.ratchet .input-group input,
+.ratchet .input-group textarea {
+    margin-bottom: 0;
+    background-color: transparent;
+    border-top: 0;
+    border-right: 0;
+    border-left: 0;
+    border-radius: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.ratchet .input-row {
+    height: 35px;
+    overflow: hidden;
+    border-bottom: 1px solid #ddd;
+}
+
+.ratchet .input-row label {
+    float: left;
+    width: 35%;
+    padding: 8px 15px;
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    line-height: 1.1;
+}
+
+.ratchet .input-row input {
+    float: right;
+    width: 65%;
+    padding-left: 0;
+    margin-bottom: 0;
+    border: 0;
+}
+
+.ratchet .segmented-control {
+    position: relative;
+    display: table;
+    overflow: hidden;
+    font-size: 12px;
+    font-weight: 400;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.ratchet .segmented-control .control-item {
+    display: table-cell;
+    width: 1%;
+    padding-top: 6px;
+    padding-bottom: 7px;
+    overflow: hidden;
+    line-height: 1;
+    color: #333;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border-left: 1px solid #ccc;
+}
+
+.ratchet .segmented-control .control-item:first-child {
+    border-left-width: 0;
+}
+
+.ratchet .segmented-control .control-item:active {
+    background-color: #eee;
+}
+
+.ratchet .segmented-control .control-item.active {
+    background-color: #ccc;
+}
+
+.ratchet .segmented-control-primary {
+    border-color: #428bca;
+}
+
+.ratchet .segmented-control-primary .control-item {
+    color: #428bca;
+    border-color: inherit;
+}
+
+.ratchet .segmented-control-primary .control-item:active {
+    background-color: #cde1f1;
+}
+
+.ratchet .segmented-control-primary .control-item.active {
+    color: #fff;
+    background-color: #428bca;
+}
+
+.ratchet .segmented-control-positive {
+    border-color: #5cb85c;
+}
+
+.ratchet .segmented-control-positive .control-item {
+    color: #5cb85c;
+    border-color: inherit;
+}
+
+.ratchet .segmented-control-positive .control-item:active {
+    background-color: #d8eed8;
+}
+
+.ratchet .segmented-control-positive .control-item.active {
+    color: #fff;
+    background-color: #5cb85c;
+}
+
+.ratchet .segmented-control-negative {
+    border-color: #d9534f;
+}
+
+.ratchet .segmented-control-negative .control-item {
+    color: #d9534f;
+    border-color: inherit;
+}
+
+.ratchet .segmented-control-negative .control-item:active {
+    background-color: #f9e2e2;
+}
+
+.ratchet .segmented-control-negative .control-item.active {
+    color: #fff;
+    background-color: #d9534f;
+}
+
+.ratchet .control-content {
+    display: none;
+}
+
+.ratchet .control-content.active {
+    display: block;
+}
+
+.ratchet .popover {
+    position: fixed;
+    top: 55px;
+    left: 50%;
+    z-index: 20;
+    display: none;
+    width: 280px;
+    margin-left: -140px;
+    background-color: white;
+    border-radius: 6px;
+    -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, .1);
+    box-shadow: 0 0 15px rgba(0, 0, 0, .1);
+    opacity: 0;
+    -webkit-transition: all .25s linear;
+    -moz-transition: all .25s linear;
+    transition: all .25s linear;
+    -webkit-transform: translate3d(0, -15px, 0);
+    -ms-transform: translate3d(0, -15px, 0);
+    transform: translate3d(0, -15px, 0);
+}
+
+.ratchet .popover:before {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    width: 0;
+    height: 0;
+    margin-left: -15px;
+    content: '';
+    border-right: 15px solid transparent;
+    border-bottom: 15px solid white;
+    border-left: 15px solid transparent;
+}
+
+.ratchet .popover.visible {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    -ms-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+}
+
+.ratchet .popover .bar ~ .table-view {
+    padding-top: 44px;
+}
+
+.ratchet .backdrop {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 15;
+    background-color: rgba(0, 0, 0, .3);
+}
+
+.ratchet .popover .btn-block {
+    margin-bottom: 5px;
+}
+
+.ratchet .popover .btn-block:last-child {
+    margin-bottom: 0;
+}
+
+.ratchet .popover .bar-nav {
+    border-bottom: 1px solid #ddd;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.ratchet .popover .table-view {
+    max-height: 300px;
+    margin-bottom: 0;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    background-color: #fff;
+    border-top: 0;
+    border-bottom: 0;
+    border-radius: 6px;
+}
+
+.ratchet .modal {
+    position: fixed;
+    top: 0;
+    z-index: 11;
+    width: 100%;
+    min-height: 100%;
+    overflow: hidden;
+    background-color: #fff;
+    opacity: 0;
+    -webkit-transition: -webkit-transform .25s, opacity 1ms .25s;
+    -moz-transition: -moz-transform .25s, opacity 1ms .25s;
+    transition: transform .25s, opacity 1ms .25s;
+    -webkit-transform: translate3d(0, 100%, 0);
+    -ms-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+}
+
+.ratchet .modal.active {
+    height: 100%;
+    opacity: 1;
+    -webkit-transition: -webkit-transform .25s;
+    -moz-transition: -moz-transform .25s;
+    transition: transform .25s;
+    -webkit-transform: translate3d(0, 0, 0);
+    -ms-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+}
+
+.ratchet .slider {
+    width: 100%;
+}
+
+.ratchet .slider {
+    overflow: hidden;
+    background-color: #000;
+}
+
+.ratchet .slider .slide-group {
+    position: relative;
+    font-size: 0;
+    white-space: nowrap;
+    -webkit-transition: all 0s linear;
+    -moz-transition: all 0s linear;
+    transition: all 0s linear;
+}
+
+.ratchet .slider .slide-group .slide {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    font-size: 14px;
+    vertical-align: top;
+}
+
+.ratchet .toggle {
+    position: relative;
+    display: block;
+    width: 74px;
+    height: 30px;
+    background-color: #fff;
+    border: 2px solid #ddd;
+    border-radius: 20px;
+    -webkit-transition-duration: .2s;
+    -moz-transition-duration: .2s;
+    transition-duration: .2s;
+    -webkit-transition-property: background-color, border;
+    -moz-transition-property: background-color, border;
+    transition-property: background-color, border;
+}
+
+.ratchet .toggle .toggle-handle {
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    z-index: 2;
+    width: 28px;
+    height: 28px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 100px;
+    -webkit-transition-duration: .2s;
+    -moz-transition-duration: .2s;
+    transition-duration: .2s;
+    -webkit-transition-property: -webkit-transform, border, width;
+    -moz-transition-property: -moz-transform, border, width;
+    transition-property: transform, border, width;
+}
+
+.ratchet .toggle:before {
+    position: absolute;
+    top: 3px;
+    right: 11px;
+    font-size: 13px;
+    color: #999;
+    text-transform: uppercase;
+    content: "Off";
+}
+
+.ratchet .toggle.active {
+    background-color: #5cb85c;
+    border: 2px solid #5cb85c;
+}
+
+.ratchet .toggle.active .toggle-handle {
+    border-color: #5cb85c;
+    -webkit-transform: translate3d(44px, 0, 0);
+    -ms-transform: translate3d(44px, 0, 0);
+    transform: translate3d(44px, 0, 0);
+}
+
+.ratchet .toggle.active:before {
+    right: auto;
+    left: 15px;
+    color: #fff;
+    content: "On";
+}
+
+.ratchet .toggle input[type="checkbox"] {
+    display: none;
+}
+
+.ratchet .content.fade {
+    left: 0;
+    opacity: 0;
+}
+
+.ratchet .content.fade.in {
+    opacity: 1;
+}
+
+.ratchet .content.sliding {
+    z-index: 2;
+    -webkit-transition: -webkit-transform .4s;
+    -moz-transition: -moz-transform .4s;
+    transition: transform .4s;
+    -webkit-transform: translate3d(0, 0, 0);
+    -ms-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+}
+
+.ratchet .content.sliding.left {
+    z-index: 1;
+    -webkit-transform: translate3d(-100%, 0, 0);
+    -ms-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+}
+
+.ratchet .content.sliding.right {
+    z-index: 3;
+    -webkit-transform: translate3d(100%, 0, 0);
+    -ms-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0);
+}
+
+.ratchet .navigate-left:after,
+.ratchet .navigate-right:after,
+.ratchet .push-left:after,
+.ratchet .push-right:after {
+    position: absolute;
+    top: 50%;
+    display: inline-block;
+    font-family: Ratchicons;
+    font-size: inherit;
+    line-height: 1;
+    color: #bbb;
+    text-decoration: none;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+
+    -webkit-font-smoothing: antialiased;
+}
+
+.ratchet .navigate-left:after,
+.ratchet .push-left:after {
+    left: 15px;
+    content: '\e822';
+}
+
+.ratchet .navigate-right:after,
+.ratchet .push-right:after {
+    right: 15px;
+    content: '\e826';
+}
+
+@font-face {
+    font-family: Ratchicons;
+    font-style: normal;
+    font-weight: normal;
+
+    src: url("../fonts/ratchicons.eot");
+    src: url("../fonts/ratchicons.eot?#iefix") format("embedded-opentype"), url("../fonts/ratchicons.woff") format("woff"), url("../fonts/ratchicons.ttf") format("truetype"), url("../fonts/ratchicons.svg#svgFontName") format("svg");
+}
+
+.ratchet .icon {
+    display: inline-block;
+    font-family: Ratchicons;
+    font-size: 24px;
+    line-height: 1;
+    text-decoration: none;
+
+    -webkit-font-smoothing: antialiased;
+}
+
+.ratchet .icon-back:before {
+    content: '\e80a';
+}
+
+.ratchet .icon-bars:before {
+    content: '\e80e';
+}
+
+.ratchet .icon-caret:before {
+    content: '\e80f';
+}
+
+.ratchet .icon-check:before {
+    content: '\e810';
+}
+
+.ratchet .icon-close:before {
+    content: '\e811';
+}
+
+.ratchet .icon-code:before {
+    content: '\e812';
+}
+
+.ratchet .icon-compose:before {
+    content: '\e813';
+}
+
+.ratchet .icon-download:before {
+    content: '\e815';
+}
+
+.ratchet .icon-edit:before {
+    content: '\e829';
+}
+
+.ratchet .icon-forward:before {
+    content: '\e82a';
+}
+
+.ratchet .icon-gear:before {
+    content: '\e821';
+}
+
+.ratchet .icon-home:before {
+    content: '\e82b';
+}
+
+.ratchet .icon-info:before {
+    content: '\e82c';
+}
+
+.ratchet .icon-list:before {
+    content: '\e823';
+}
+
+.ratchet .icon-more-vertical:before {
+    content: '\e82e';
+}
+
+.ratchet .icon-more:before {
+    content: '\e82f';
+}
+
+.ratchet .icon-pages:before {
+    content: '\e824';
+}
+
+.ratchet .icon-pause:before {
+    content: '\e830';
+}
+
+.ratchet .icon-person:before {
+    content: '\e832';
+}
+
+.ratchet .icon-play:before {
+    content: '\e816';
+}
+
+.ratchet .icon-plus:before {
+    content: '\e817';
+}
+
+.ratchet .icon-refresh:before {
+    content: '\e825';
+}
+
+.ratchet .icon-search:before {
+    content: '\e819';
+}
+
+.ratchet .icon-share:before {
+    content: '\e81a';
+}
+
+.ratchet .icon-sound:before {
+    content: '\e827';
+}
+
+.ratchet .icon-sound2:before {
+    content: '\e828';
+}
+
+.ratchet .icon-sound3:before {
+    content: '\e80b';
+}
+
+.ratchet .icon-sound4:before {
+    content: '\e80c';
+}
+
+.ratchet .icon-star-filled:before {
+    content: '\e81b';
+}
+
+.ratchet .icon-star:before {
+    content: '\e81c';
+}
+
+.ratchet .icon-stop:before {
+    content: '\e81d';
+}
+
+.ratchet .icon-trash:before {
+    content: '\e81e';
+}
+
+.ratchet .icon-up-nav:before {
+    content: '\e81f';
+}
+
+.ratchet .icon-up:before {
+    content: '\e80d';
+}
+
+.ratchet .icon-right-nav:before {
+    content: '\e818';
+}
+
+.ratchet .icon-right:before {
+    content: '\e826';
+}
+
+.ratchet .icon-down-nav:before {
+    content: '\e814';
+}
+
+.ratchet .icon-down:before {
+    content: '\e820';
+}
+
+.ratchet .icon-left-nav:before {
+    content: '\e82d';
+}
+
+.ratchet .icon-left:before {
+    content: '\e822';
+}

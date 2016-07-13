@@ -1,0 +1,84 @@
+div.panel.panel-primary
+    div.panel-heading
+        div.panel-title
+            | User Details
+            div.pull-right
+                a(href="javascript:DfxStudio.switchCollapsible('user_details');")
+                    span#dfx_collapsible_icon_user_details.fa.fa-lg.fa-angle-down
+    div.panel-body#dfx_collapsible_user_details
+        span#user_detail_form
+            form#userForm(action="javascript:void(0);")
+                h4
+                    span.dfs_content_title_2 Main Properties
+                div.well.well-hideable
+                    div.form-group.col-lg-4
+                        label(for="login") Login:
+                        input#login.form-control(type="text", name="login", placeholder="login", data-field="login", readonly)
+                    div.form-group.col-lg-4
+                        label(for="firstName") First Name:
+                        input#firstName.form-control(type="text", name="firstName", placeholder="first name", data-field="firstName")
+                    div.form-group.col-lg-4
+                        label(for="lastName") Last Name:
+                        input#lastName.form-control(type="text", name="lastName", placeholder="last name", data-field="lastName")
+                    div.form-group.col-lg-6
+                        label(for="email") Email:
+                        input#email.form-control(type="text", name="email", placeholder="email", data-field="email")
+                    div.form-group.col-lg-6
+                        label(for="pass") Password:
+                        input#pass.form-control(type="password", name="pass", placeholder="password", data-field="pass")
+                    div.form-group.col-lg-12(data-field="roles")
+                        label Roles:
+                        each role, name in roles
+                            div.checkbox.radio(data-role-name="#{name}")
+                                label
+                                    input(type="radio", name="default-role")
+                                    input(type="checkbox", style="margin-left: 15px;")
+                                    span(style="margin-left: 45px; font-size: 14px;") #{name}
+                    div.clearfix
+                if !system
+                    div.user-properties-form
+                        each definition, name in metadata
+                            if definition.type == 'subdocument'
+                                h4 #{name}
+                                div.well.well-hideable(data-subdocument="#{name}", style="overflow: auto;")
+                                    each property, propName in definition.structure
+                                        div.form-group.col-lg-6(data-subdocument="#{name}", data-type="#{property.type}")
+                                            label #{propName}:
+                                            case property.type
+                                                when "boolean"
+                                                    select.form-control.selectpicker(name="#{propName}", data-field="#{propName}", id="#{name + propName}")
+                                                        option(value="false") false
+                                                        option(value="true") true
+                                                when "numeric"
+                                                    input.form-control(type="text", name="#{propName}", placeholder="enter value", data-field="#{propName}", id="#{name + propName}")
+                                                when "string"
+                                                    input.form-control(type="text", name="#{propName}", placeholder="enter value", data-field="#{propName}", id="#{name + propName}")
+                                                when "text"
+                                                    textarea.form-control(name="#{propName}", placeholder="enter value", rows="3", data-field="#{propName}", id="#{name + propName}")
+                                    div.clearfix
+                            else
+                                h4 #{name}
+                                div.well.well-hideable(style="overflow: auto;")
+                                    div.form-group.col-lg-6(data-subdocument="", data-type="#{definition.type}", style="margin-bottom: 0;")
+                                        case definition.type
+                                            when "boolean"
+                                                select.form-control.selectpicker(name="#{name}", data-field="#{name}", , id="#{name}")
+                                                    option(value="false") false
+                                                    option(value="true") true
+                                            when "numeric"
+                                                input.form-control(type="text", name="#{name}", placeholder="enter value", data-field="#{name}", id="#{name}")
+                                            when "string"
+                                                input.form-control(type="text", name="#{name}", placeholder="enter value", data-field="#{name}", id="#{name}")
+                                            when "text"
+                                                textarea.form-control(name="#{name}", placeholder="enter value", rows="3", data-field="#{name}", id="#{name}")
+                                    div.clearfix
+                a.btn.btn-info.save-now-submitter(href="javascript:DfxStudio.Home.ApplicationUsers.update('#{applicationName}');")
+                            span.fa.fa-lg.fa-floppy-o
+                            span(style="padding-left:5px") Save
+div.panel.panel-danger
+    div.panel-heading
+        h4 Danger Zone
+    div.panel-body
+        button.btn.btn-default(type='button', onclick='DfxStudio.Home.ApplicationUsers.remove({userLogin:"#{userLogin}",applicationName:"#{applicationName}"});', style="margin-left:10px")
+            span.fa.fa-lg.fa-trash-o
+            span(style="padding-left:5px") Delete the User

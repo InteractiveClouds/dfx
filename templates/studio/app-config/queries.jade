@@ -1,0 +1,56 @@
+div#dfxQueriesPanel.panel.panel-default.collapsed
+    div.panel-heading
+        div.col-sm-6
+            h3
+                span.badge.badge-primary #{nbqueries}
+                | &nbsp;API Service Catalog&nbsp;
+                span.fa.fa-lg.fa-angle-right
+        div.pull-right.col-sm-6
+            form.search-components.form-inline(method="get", role="form", onsubmit="return false;")
+                div.form-group.col-xxl-9.col-xl-9.col-lg-8.col-md-7
+                    div.input-group(style="width: 100%;")
+                        input#fldQueryName.form-control(type="text", placeholder="Search a Service", aria-describedby="component-search-button")
+                        span#component-search-button.input-group-addon.btn-info(style="width: 1%;")
+                            span.fa.fa-lg.fa-search(type="button", title="Search a Service", data-toggle="tooltip", data-placement="right", onclick="DfxStudio.Home.Dataqueries.searchQuery({applicationName: '#{applicationName}'});", style="border: none;")
+                div.form-group.pull-right
+                    span.fa.fa-2x.fa-bolt(type="button", title="List of Services as API", onclick="DfxStudio.Home.Dataqueries.searchQueryApi({applicationName: '#{applicationName}'});", style="display: none;")
+                    span.fa.fa-2x.fa-plus(type="button", onclick="DfxStudio.Dispatcher.run('#!/home/#{applicationName}/queries/create');")
+        div.clearfix
+    div#dfx_query_search_result.panel-body(style="padding-top: 20px; display: none;")
+        table.table.table-condensed.table-thick-bordered(style="margin-bottom: 0;")
+            col(width="20%")
+            col(width="20%")
+            col(width="15%")
+            col(width="35%")
+            col(width="10%")
+            thead
+                tr
+                    th(style="padding-left: 20px;") Name
+                    th Application
+                    th Category
+                    th Description
+                    th Action
+        div.queries-table(style="overflow: hidden;")
+            table.table.table-condensed.table-thick-bordered
+                col(width="20%")
+                col(width="20%")
+                col(width="15%")
+                col(width="35%")
+                col(width="10%")
+                tbody#dfx_query_search_result_body
+    div#dfx_queryApi_search_result.panel-body(style="padding-top: 20px; display: none;")
+        table.table.table-condensed.table-thick-bordered(style="margin-bottom: 0;")
+            col(width="20%")
+            col(width="60%")
+            col(width="20%")
+            thead
+                tr
+                    th(style="padding-left: 20px;") Method
+                    th Url
+                    th Name
+        div.queries-table(style="overflow: hidden;")
+            table.table.table-condensed.table-thick-bordered
+                col(width="20%")
+                col(width="60%")
+                col(width="20%")
+                tbody#dfx_queryApi_search_result_body

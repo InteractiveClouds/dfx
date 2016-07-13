@@ -1,0 +1,46 @@
+- var labelPosition = gcitem.attributes.labelPosition && gcitem.attributes.labelPosition.value ? 'text-align:'+gcitem.attributes.labelPosition.value: ''
+- var labelCursor = gcitem.attributes.onclickLabel && gcitem.attributes.onclickLabel.value!='' ? 'cursor:pointer' : 'cursor:default'
+- var containerCss = '';
+if (gcitem.attributes.containerCss)
+    each val, key in gcitem.attributes.containerCss
+        - if (val!='') containerCss += key + ':' + val + ';'
+- var css = '';
+if (gcitem.attributes.css)
+    each val, key in gcitem.attributes.css
+        - if (val!='') css += key + ':' + val + ';'
+div(
+    id="#{gcitem.id}_{{$index}}",
+    ng-show = (gcitem.attributes.display.value == '' ? undefined : "#{gcitem.attributes.display.value}"),
+    style=('display:inline-block;position:relative;' + (gcitem.attributes.containerStyle ? gcitem.attributes.containerStyle.value : '') + ';' + containerCss),
+    class="#{gcitem.attributes.containerClasses.value}",
+    ng-class = (gcitem.attributes.containerDynamicClasses.value == '' ? undefined : "#{gcitem.attributes.containerDynamicClasses.value}")
+    )
+        label(
+            for="#{gcitem.id}_label_{{$index}}",
+            ng-show = ((!gcitem.attributes.labelVisible.value) || (gcitem.attributes.labelVisible.value == 'no') ? 'false' : 'true'),
+            style=((!gcitem.attributes.labelVisible.value) || (gcitem.attributes.labelVisible.value == 'no') ? 'display:none' : 'display:block;#{labelPosition};#{labelCursor}'),
+            ng-click = (gcitem.attributes.onclickLabel && gcitem.attributes.onclickLabel.value ? "#{gcitem.attributes.onclickLabel.value}" : undefined)
+            ) #{gcitem.attributes.label.value}
+        input(
+            id="#{gcitem.id}_knob_{{$index}}",
+            name = (gcitem.attributes.name.value == '' ? undefined : "#{gcitem.attributes.name.value}"),
+            style=(gcitem.attributes.style.value),
+            class = (!gcitem.attributes.classes || gcitem.attributes.classes.value == '' ? 'knob' : 'knob ' + "#{gcitem.attributes.classes.value}"),
+            type = "knob",
+            dfx-knob,
+            dfx-tool-tip,
+            tooltip-title = (gcitem.attributes.tooltip && gcitem.attributes.tooltip.value ? "#{gcitem.attributes.tooltip.value}" : undefined),
+            data-placement = (gcitem.attributes.tooltipPosition && gcitem.attributes.tooltipPosition.value ? "#{gcitem.attributes.tooltipPosition.value}" : undefined),
+            data-readOnly = (gcitem.attributes.disabled && gcitem.attributes.disabled.value ? "#{gcitem.attributes.disabled.value}" : undefined),
+            data-width = (gcitem.attributes.css.width == '' ? 100 : "#{gcitem.attributes.css.width}"),
+            data-height = (gcitem.attributes.css.width == '' ? 100 : "#{gcitem.attributes.css.width}"),
+            data-fgColor = (gcitem.attributes.css.color == '' ? "#87ceeb" : "#{gcitem.attributes.css.color}"),
+            data-bgColor = (gcitem.attributes.css.background == '' ? "#eeeeee" : "#{gcitem.attributes.css.background}"),
+            data-symbol = (gcitem.attributes.symbol && gcitem.attributes.symbol.value ? "#{gcitem.attributes.symbol.value}" : undefined ),
+            data-symbol-position = (gcitem.attributes.symbolPosition && gcitem.attributes.symbolPosition.value ? "#{gcitem.attributes.symbolPosition.value}" : undefined ),
+            ng-model = (gcitem.attributes.property.value == '' ? undefined : "#{gcitem.attributes.property.value}"),
+            ng-init = (gcitem.attributes.propertyInit.value == '' ? undefined : "#{gcitem.attributes.propertyInit.value}"),
+            change = (gcitem.attributes.onchange.value == '' ? undefined : "#{gcitem.attributes.onchange.value}"),
+            min = (gcitem.attributes.min && gcitem.attributes.min.value ? "#{gcitem.attributes.min.value}" : "0"),
+            max = (gcitem.attributes.max && gcitem.attributes.max.value ? "#{gcitem.attributes.max.value}" : "150"),
+            step = (gcitem.attributes.step && gcitem.attributes.step.value ? "#{gcitem.attributes.step.value}" : "1"))

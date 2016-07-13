@@ -1,0 +1,53 @@
+<div ng-if="attributes.repeat_title.value === 'false' || attributes.repeat_title.value === false">
+    <section id="{{component_id}}_panel" dfx-gc-compiled class="{{attributes.whiteframe.value}} {{attributes.classes.value}} dfx-core-gc-panel" style="{{attributes.style.value}}" dfx-ng-if="ng-if,display" dfx-gc-web-container ng-class="$eval(attributes.dynamicClasses.value)"
+        dfx-ng-click="ng-click,onclick"
+        dfx-ng-dblclick="ng-dblclick,ondblclick"
+        dfx-ng-keypress="ng-keypress,onkeypress"
+        dfx-ng-keydown="ng-keydown,onkeydown"
+        dfx-ng-keyup="ng-keyup,onkeyup"
+        dfx-ng-mouseover="ng-mouseover,onmouseover"
+        dfx-ng-mouseenter="ng-mouseenter,onmouseenter"
+        dfx-ng-mousemove="ng-mousemove,onmousemove"
+        dfx-ng-mouseleave="ng-mouseleave,onmouseleave"
+        dfx-ng-mouseup="ng-mouseup,onmouseup">
+        <div dfx-gc-web-toolbar></div>
+        <md-content flex ng-hide="$eval(attributes.toolbar.collapsed.value)" style="{{attributes.bodyStyle.value}}" dfx-sidenav-and-bottomsheet="{{component_id}}">
+            <div ng-repeat="$dfx_item in $eval(attributes.repeat_in.value)" dfx-repeatable-panel="{{$index}}" ng-if="attributes.repeat_in.value != ''">
+                <div id="{{component_id}}_layout_0_row_{{$index}}" layout="row" layout-wrap flex="{{attributes.flex.value}}" ng-repeat="row in attributes.layout.rows" style="{{row.style.value}}" class="{{row.classes.value}}" ng-class="$eval(row.dynamicClasses.value)">
+                    <div id="{{component_id}}_layout_0_row_{{$parent.$index}}_column_{{$index}}" flex="{{col.autoWidth.value == true ? '' : col.width.value}}" ng-show="{{col.display.value==null  ? true : col.display.value}}" layout="{{col.orientation.value}}" layout-wrap layout-align="{{col.halignment.value}} {{col.valignment.value}}" gc-container="layout_0_row_{{$parent.$index}}_column_{{$index}}" gc-parent="{{component_id}}" style="{{col.style.value}}" ng-style="{'flex-wrap': col.orientation.value ==='row' ? 'wrap' : 'nowrap'}" class="{{col.classes.value}}" ng-class="$eval(col.dynamicClasses.value)" ng-repeat="col in row.cols">
+                        <div id="{{gcontrol.id}}" dfx-gc-web="{{gcontrol.type}}" gc-role="control" gc-parent="{{component_id}}" view-id="{{view_id}}" ng-repeat="gcontrol in children['layout_0_row_'+$parent.$index+'_column_'+$index]"></div>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="attributes.repeat_in.value == ''">
+                <div id="{{component_id}}_layout_0_row_{{$index}}" layout="row" layout-wrap flex="100" ng-repeat="row in attributes.layout.rows" style="{{row.style.value}}" class="{{row.classes.value}}" ng-class="$eval(row.dynamicClasses.value)">
+                    <div id="{{component_id}}_layout_0_row_{{$parent.$index}}_column_{{$index}}" flex="{{col.autoWidth.value == true ? '' : col.width.value}}" ng-show="{{col.display.value==null  ? true : col.display.value}}" layout="{{col.orientation.value}}" layout-wrap layout-align="{{col.halignment.value}} {{col.valignment.value}}" gc-container="layout_0_row_{{$parent.$index}}_column_{{$index}}" gc-parent="{{component_id}}" style="{{col.style.value}}" ng-style="{'flex-wrap': col.orientation.value ==='row' ? 'wrap' : 'nowrap'}" class="{{col.classes.value}}" ng-class="$eval(col.dynamicClasses.value)" ng-repeat="col in row.cols">
+                        <div id="{{gcontrol.id}}" dfx-gc-web="{{gcontrol.type}}" gc-role="control" gc-parent="{{component_id}}" view-id="{{view_id}}" ng-repeat="gcontrol in children['layout_0_row_'+$parent.$index+'_column_'+$index]"></div>
+                    </div>
+                </div>
+            </div>
+        </md-content>
+    </section>
+</div>
+<div ng-repeat-start="$dfx_item in $eval(attributes.repeat_in.value)" flex="{{attributes.flex.value}}" dfx-repeatable-panel="{{$index}}" style="width: {{attributes.flex.value}}%;" ng-if="attributes.repeat_title.value && attributes.repeat_in.value != ''" ng-repeat-end>
+    <section id="{{component_id}}_panel_{{$index}}" dfx-gc-compiled class="{{attributes.whiteframe.value}} {{attributes.classes.value}} dfx-core-gc-panel" style="{{attributes.style.value}}" dfx-ng-if="ng-if,display" dfx-gc-web-container ng-class="$eval(attributes.dynamicClasses.value)"
+        dfx-ng-click="ng-click,onclick"
+        dfx-ng-dblclick="ng-dblclick,ondblclick"
+        dfx-ng-keypress="ng-keypress,onkeypress"
+        dfx-ng-keydown="ng-keydown,onkeydown"
+        dfx-ng-keyup="ng-keyup,onkeyup"
+        dfx-ng-mouseover="ng-mouseover,onmouseover"
+        dfx-ng-mouseenter="ng-mouseenter,onmouseenter"
+        dfx-ng-mousemove="ng-mousemove,onmousemove"
+        dfx-ng-mouseleave="ng-mouseleave,onmouseleave"
+        dfx-ng-mouseup="ng-mouseup,onmouseup">
+        <div><div dfx-gc-web-toolbar dfx-repeatable-panel="{{$index}}"></div></div>
+        <md-content flex ng-hide="$eval(attributes.toolbar.collapsed.value)" style="{{attributes.bodyStyle.value}}" dfx-sidenav-and-bottomsheet="{{component_id}}">
+            <div id="{{component_id}}_layout_0_row_{{$index}}" layout="row" layout-wrap flex="100" ng-repeat="row in attributes.layout.rows" style="{{row.style.value}}" class="{{row.classes.value}}" ng-class="$eval(row.dynamicClasses.value)">
+                <div id="{{component_id}}_layout_0_row_{{$parent.$index}}_column_{{$index}}" flex="{{col.autoWidth.value == true ? '' : col.width.value}}" ng-show="{{col.display.value==null  ? true : col.display.value}}" layout="{{col.orientation.value}}" layout-wrap layout-align="{{col.halignment.value}} {{col.valignment.value}}" gc-container="layout_0_row_{{$parent.$index}}_column_{{$index}}" gc-parent="{{component_id}}" style="flex-wrap:wrap; {{col.style.value}}" class="{{col.classes.value}}" ng-class="$eval(col.dynamicClasses.value)" ng-repeat="col in row.cols">
+                    <div id="{{gcontrol.id}}" dfx-gc-web="{{gcontrol.type}}" gc-role="control" gc-parent="{{component_id}}" view-id="{{view_id}}" ng-repeat="gcontrol in children['layout_0_row_'+$parent.$index+'_column_'+$index]"></div>
+                </div>
+            </div>
+        </md-content>
+    </section>
+</div>

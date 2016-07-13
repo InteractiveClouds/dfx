@@ -1,0 +1,36 @@
+div(style="overflow-x:hidden")
+    ol.breadcrumb
+        li
+            a(href="javascript:DfxStudio.Dispatcher.run('#!/home/');")
+                span.fa.fa-lg.fa-home
+        li
+            a(href="javascript:DfxStudio.Dispatcher.run('#!/catalog/');") Catalog
+        li.active Create Application
+    div.col-lg-6
+        form#createApplicationForm(action="javascript:void(0);")
+            div.panel.panel-primary
+                div.panel-heading
+                    h4 Main Properties
+                div.panel-body
+                    fieldset
+                        div.form-group
+                            label(for="dfx_application_input_applicationName") Name:
+                            input#dfx_application_input_applicationName.form-control(type="text", name="dfx_application_input_applicationName", placeholder="App name")
+                        div.form-group
+                            label(for="") Owner:
+                            input#dfx_application_input_ownerId.form-control(type="text", name="dfx_application_input_ownerId", placeholder="ex: john")
+                        div.form-group
+                            label(for="dfx_application_input_title") Title:
+                            input#dfx_application_input_title.form-control(type="text", name="dfx_application_input_title", placeholder="app title")
+                        div.form-group
+                            label(for="dfx_application_input_platform") Platform:
+                            select#dfx_application_input_platform.form-control(type="text", name="dfx_application_input_platform", placeholder="select a platform")
+                                option(value="web") Web
+                                option(value="mobile", disabled="true") Mobile
+                        div.form-group.pull-right
+                            button.btn.btn-info.save-now-submitter(type='submit', onclick='DfxStudio.Dashboard.createApplication({});')
+                                span.fa.fa-lg.fa-floppy-o
+                                span(style="padding-left:5px") Save
+                            button.btn.btn-default(type='button', onclick="DfxStudio.Dispatcher.run('#!/catalog/');", style="margin-left:10px")
+                                span.fa.fa-lg.fa-undo
+                                span(style="padding-left:5px") Cancel

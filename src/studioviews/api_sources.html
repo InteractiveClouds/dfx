@@ -1,0 +1,119 @@
+<md-dialog aria-label="api-so-info" ng-cloak>
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h5>Select 
+                    <span ng-if="serviceModeBtn !== 'addServices'">a service </span>
+                    <span ng-if="serviceModeBtn === 'addServices'">services </span>
+                    from {{ selectedDataSource === 'none' ? 'public/rest' : selectedDataSource }} 
+                    <span ng-if="selectedDataSource !== 'none'">({{dataSource}})</span>
+                </h5>
+            </div>
+        </md-toolbar>
+        <md-dialog-content style="max-width:750px;max-height:810px;min-height:300px;width:750px;margin:0px;padding:8px 8px 2px 8px;">
+            <md-card style="margin:0;padding:0;">
+                <md-card-content style="padding:0;">
+                    <div class="api-datasource">
+                        <div class="api-datasource-head" style="display:inline-flex;" ng-if="scopeService.data.settings.authentication !== 'none' && restSource === false" >
+                            <div class="datasource-actions"></div>
+                            <div class="datasource-type">Request Type</div>
+                            <div class="datasource-service">API Service</div>
+                            <div class="datasource-select">
+                                <md-checkbox ng-if="serviceModeBtn === 'addServices'" ng-click="singleGroup($event)" ng-model="singleGroup.checked" class="md-primary" style="margin-bottom:0px;" aria-label="checked-service-item"></md-checkbox>
+                            </div>
+                        </div><!-- /.api-data-source-head -->
+                        <div ng-if="scopeService.data.settings.authentication !== 'none' && restSource === false" class="api-datasource-item" ng-repeat="route in listSources track by $index">
+                            <div class="api-datasource-labels">
+                                <div class="datasource-actions">                                    
+                                    <a ng-if="route.data.parameters.length > 0 || route.data.precode.length > 0 || route.data.postcode.length > 0" ng-click="toggleInfo($event)" style="display:block;cursor:pointer;" class="toggle-info fa fa-toggle-right">
+                                    </a>
+                                </div>
+                                <div class="datasource-type">{{route.data.settings.typerequest.slice(5)}}</div>
+                                <div class="datasource-service">{{route.name}}</div>
+                                <div class="datasource-select">
+                                    <md-button ng-if="serviceModeBtn !== 'addServices'" ng-click="chooseRoute(route)" class="md-raised">Select</md-button>
+                                    <md-checkbox ng-if="serviceModeBtn === 'addServices'" ng-model="serviceItem[$index]" class="md-primary service-checkbox" style="margin-bottom:0px;" aria-label="checked-service-item"></md-checkbox>
+                                </div>
+                            </div><!-- /.api-datasource-labels -->
+                            <div class="api-datasource-info">
+                                <table ng-if="route.data.parameters.length > 0">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Type</th>
+                                            <th>Value</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="parameter in route.data.parameters track by $index">
+                                            <td>{{parameter.name}}</td>
+                                            <td>{{parameter.type}}</td>
+                                            <td>{{parameter.value}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div><!-- /.api-datasource-info -->
+                        </div><!-- /.api-data-source-item -->
+                        <div ng-if="restSource === true" >
+                            <div ng-repeat="restItem in strongLoopList track by $index" class="rest-item">
+                                <div class="group-trigger">
+                                    <h4 class="trigger-source fa" ng-click="triggerSource( $event )">
+                                        {{restItem.dataSource}}
+                                    </h4>
+                                    <md-checkbox ng-if="serviceModeBtn === 'addServices'" ng-click="singleGroup($event)" ng-model="serviceItem[$index]" class="md-primary" aria-label="checked-service-item"></md-checkbox>
+                                </div>
+                                <div class="trigger-source-container" style="display:none;">
+                                    <div class="api-datasource-head" style="display:inline-flex;">
+                                        <div class="restdata datasource-actions"></div>
+                                        <div class="restdata datasource-type">Request Type</div>
+                                        <div class="restdata datasource-service">API Service</div>
+                                        <div class="restdata datasource-summary">Description</div>
+                                        <div class="restdata datasource-actions"></div>
+                                    </div><!-- /.api-data-source-head -->
+                                    <div class="api-datasource-item" ng-repeat="route in restItem.data track by $index">
+                                        <div class="api-datasource-labels">
+                                            <div class="restdata datasource-actions">                                    
+                                                <a ng-if="route.data.parameters.length > 0 || route.data.precode.length > 0 || route.data.postcode.length > 0" ng-click="toggleInfo($event)" style="display:block;cursor:pointer;" class="toggle-info fa fa-toggle-right">
+                                                </a>
+                                            </div>
+                                            <div class="restdata datasource-type">{{route.data.settings.typerequest.slice(5)}}</div>
+                                            <div class="restdata datasource-service">{{route.name}}</div>
+                                            <div class="restdata datasource-summary">{{route.summary}}</div>
+                                            <div class="restdata datasource-select">
+                                                <md-button ng-if="serviceModeBtn !== 'addServices'" ng-click="chooseRoute(route)" class="md-raised">Select</md-button>
+                                                <md-checkbox ng-if="serviceModeBtn === 'addServices'" ng-model="checkedServiceItem" class="md-primary service-checkbox" style="margin-bottom:0px;" aria-label="checked-service-item"></md-checkbox>
+                                            </div>
+                                        </div><!-- /.api-datasource-labels -->
+                                        <div class="api-datasource-info">
+                                            <table ng-if="route.data.parameters.length > 0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Type</th>
+                                                        <th>Value</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="parameter in route.data.parameters track by $index">
+                                                        <td>{{parameter.name}}</td>
+                                                        <td>{{parameter.type}}</td>
+                                                        <td>{{parameter.value}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div><!-- /.api-datasource-info -->
+                                    </div><!-- /.api-data-source-item -->
+                                </div>                                
+                            </div>
+                        </div>
+                    </div><!-- /.api-data-source -->
+                </md-card-content>
+            </md-card>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <md-button ng-if="serviceModeBtn !== 'addServices'" class="md-primary" ng-click="closeCatalog()" style="margin: 0 8px;">Cancel</md-button>
+            <md-button ng-if="serviceModeBtn === 'addServices'" class="md-primary" ng-click="pushServices()" style="margin: 0 8px;">Add Services</md-button>
+            <md-button ng-if="serviceModeBtn === 'addServices'" class="md-primary" ng-click="closeCatalog()" style="margin: 0 8px;">Cancel</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

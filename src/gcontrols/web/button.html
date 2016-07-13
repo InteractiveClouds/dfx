@@ -1,0 +1,27 @@
+<md-button dfx-gc-compiled ng-if="attributes.menuItems.value.length === 0" class="dfx-core-gc-button md-raised md-primary {{attributes.classes.value}} md-altTheme-theme {{$eval(attributes.waiting.value) ? 'dfx-core-button-wait' : ''}}"
+    style="{{attributes.style.value}}"
+    dfx-ng-show="ng-show,display"    
+    dfx-ng-class="ng-class,dynamicClasses"
+    dfx-ng-click="ng-click,onclick"
+    dfx-ng-dblclick="ng-dblclick,ondblclick"
+    dfx-ng-keypress="ng-keypress,onkeypress"
+    dfx-ng-keydown="ng-keydown,onkeydown"
+    dfx-ng-keyup="ng-keyup,onkeyup"
+    dfx-ng-mouseover="ng-mouseover,onmouseover"
+    dfx-ng-mouseenter="ng-mouseenter,onmouseenter"
+    dfx-ng-mousemove="ng-mousemove,onmousemove"
+    dfx-ng-mouseleave="ng-mouseleave,onmouseleave"
+    dfx-ng-mouseup="ng-mouseup,onmouseup"
+    ng-disabled="$eval(attributes.disabled.value) || $eval(attributes.waiting.autoDisabled)" aria-label="{{attributes.name.value}}">
+	<div ng-if="!$eval(attributes.waiting.value)" ng-style="{'display':'flex','flex-direction': attributes.position.value === 'right' ? 'row-reverse' : 'row', 'justify-content': 'center', 'align-items':'center'}">
+		<md-icon ng-if="attributes.icon.type ==='fa-icon' && attributes.icon.value.length > 0" class="fa {{$eval(attributes.icon.value)}}" style="font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px; color: inherit;"></md-icon>
+        <ng-md-icon ng-if="attributes.icon.type ==='svg-icon' && attributes.icon.value.length > 0" icon="{{$eval(attributes.icon.value)}}" size="{{attributes.icon.size}}" style="height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px; color: inherit;"></ng-md-icon>
+        <span ng-bind="$eval(attributes.label.value)" class="dfx-gc-core-button-label"></span>
+    </div>
+    <div ng-if="$eval(attributes.waiting.value)" ng-style="{'display':'flex','flex-direction': attributes.position.value === 'right' ? 'row-reverse' : 'row', 'justify-content': 'center', 'align-items':'center'}">
+        <md-icon ng-if="attributes.waiting.icon.type ==='fa-icon' && attributes.waiting.icon.value.length > 0" class="fa {{$eval(attributes.waiting.icon.value) || 'fa-spinner'}} {{attributes.waiting.icon.class}}" style="font-size: {{attributes.icon.size}}px; color: inherit; width: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; vertical-align: top; {{attributes.waiting.icon.style}}"></md-icon>
+        <ng-md-icon ng-if="attributes.waiting.icon.type ==='svg-icon' && attributes.waiting.icon.value.length > 0" icon="{{$eval(attributes.waiting.icon.value) || 'track_changes'}}" size="{{attributes.icon.size}}" class="{{attributes.waiting.icon.class}}" style="{{attributes.waiting.icon.style}}"></ng-md-icon>
+        <span ng-bind="$eval(attributes.label.value)" class="dfx-gc-core-button-label"></span>
+	</div>
+</md-button>
+<div class="{{component_class}}_button_menu" ng-if="attributes.menuItems.value.length > 0 || scope.attributes.dynamicPresent.value"></div>

@@ -1,0 +1,27 @@
+div(style="overflow-x: hidden;")
+    ol.breadcrumb.settings-screen
+        li
+            a(href="javascript:DfxStudio.Dispatcher.run('#!/home/');")
+                span.fa.fa-lg.fa-home
+        li.active Settings
+div.row(style="margin-top: 10px; min-height: 100%;")
+    div.col-lg-3
+        div.panel.panel-primary
+            div.panel-heading
+                h4 Settings
+            div.panel-body
+                div.dfx-at-treeview.hover
+                    ul
+                        li
+                            input#item-0.dfx-at-treeview-button(type="checkbox" checked)
+                            label(for="item-0") Users Management
+                            ul.dfx-at-treeview-content
+                                li(style="cursor:pointer" onclick = "DfxStudio.Settings.SystemUsers.run()" )
+                                    span System Users
+                        li
+                            input#item-1.dfx-at-treeview-button(type="checkbox" checked)
+                            label(for="item-1") Dockerization
+                            ul.dfx-at-treeview-content
+                                li(style="cursor:pointer" onclick = "DfxStudio.Settings.Dockerization.init()")
+                                    span Docker Registry Settings
+    div.col-lg-9.dfx_dbs_full-height.screen_content.dfx_dbs_scrollable#screen_content

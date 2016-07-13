@@ -1,0 +1,20 @@
+<div class="dfx-core-gc-treeview {{attributes.classes.value}}" style="{{attributes.style.value}}">
+    <div ng-if="attributes.static.value.length === 0">
+        <span>Empty TreeView</span>
+    </div>
+    <div ng-if="attributes.static.value.length > 0">
+        <script type="text/ng-template" id="{{component_id}}_tree_view">
+            <md-icon ng-if="node.expanded && node.children.length > 0 && attributes.isOpened.type ==='fa-icon'" ng-click="toggleNode($event, node)" style="color: {{attributes.color.value}};" class="fa node-trigger {{ $eval(attributes.isOpened.value) || 'fa-minus'}}"></md-icon>
+            <md-icon ng-if="!node.expanded && node.children.length > 0 && attributes.isClosed.type ==='fa-icon'" ng-click="toggleNode($event, node)" style="color: {{attributes.color.value}};" class="fa node-trigger {{ $eval(attributes.isClosed.value) || 'fa-plus'}}"></md-icon>
+            <ng-md-icon ng-if="node.expanded && node.children.length > 0 && attributes.isOpened.type ==='svg-icon'" ng-click="toggleNode($event, node)" style="color: {{attributes.color.value}}" class="node-trigger"
+                icon="{{ $eval(attributes.isOpened.value) || 'expand_more'}} " size="16"></ng-md-icon>
+            <ng-md-icon ng-if="!node.expanded && node.children.length > 0 && attributes.isClosed.type ==='svg-icon'" ng-click="toggleNode($event, node)" style="color: {{attributes.color.value}}" class="node-trigger" 
+                icon="{{ $eval(attributes.isClosed.value) || 'chevron_right' }}" size="16"></ng-md-icon>
+            <a href="#">{{ node.name | checkExpression }}</a>
+            <ul ng-if="node.children.length > 0" ng-show="node.expanded">
+                <li ng-repeat="node in node.children track by $index" class="tree-view-item" ng-include="'{{component_id}}_tree_view'"></li>
+            </ul>
+        </script>
+        <ul><li ng-repeat="node in attributes.static.value track by $index" class="tree-view-item" ng-include="'{{component_id}}_tree_view'"></li></ul>
+    </div>
+</div>

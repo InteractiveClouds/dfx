@@ -1,0 +1,34 @@
+{
+  "name": "dbtool",
+  "version": "0.0.6",
+  "description": "help to execute sql query in SQL database, it is just support mysql, mssql, oracle with simple sql in current version.",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc",
+    "test": "tests"
+  },
+  "dependencies": {
+    "generic-pool": "~2.0.4",
+    "mssql": "~0.3.4",
+    "mysql": "~2.0.0-alpha9",
+    "oracle": "~0.3.4"
+  },
+  "devDependencies": {
+    "coffee-script": "~1.6.3"
+  },
+  "scripts": {
+    "test": "node"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chenwb-m/dbtool.git"
+  },
+  "keywords": [
+    "mysql",
+    "mssql",
+    "oracle",
+    "dbtool"
+  ],
+  "author": "chenweibin",
+  "license": "MIT"
+}

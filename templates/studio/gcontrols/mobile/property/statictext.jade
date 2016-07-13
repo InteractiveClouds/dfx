@@ -1,0 +1,203 @@
+div.panel(style="position:fixed;top:203px;right:0;height:35px;width:349px;z-index:3;padding:5px")
+    a#dfx_visual_editor_property_panel_apply.pull-left.btn.btn-xs.btn-info(href="javascript:void(0);" onclick="gc_mobile_statictext.savePropertyPanel();", gc-type="statictext")
+        span.fa.fa-lg.fa-check
+        span(style="padding-left:5px") Apply
+    a.pull-right(href="javascript:DfxVisualBuilder.propertyPanelExpandAll();", style="margin-left:10px") Expand
+    a.pull-right(href="javascript:DfxVisualBuilder.propertyPanelCollapseAll();") Collapse
+div.panel(style="position: fixed;top: 233px;right: 0;width: 349px;padding: 5px;bottom: 20px;overflow-y: auto;")
+    form.form-horizontal
+        legend
+            a.dfx_visual_editor_property_collapsible_btn(data-toggle="collapse", data-target="#main_props") Main Properties
+        div#main_props.collapse.in
+            div.form-group
+                label.col-xs-4.control-label Name:
+                div.col-xs-8
+                    input#gc_statictext_attr_name.input-xs.dfx_visual_editor_property_input(type="text")
+        div.form-group
+            label.col-xs-4.control-label Text:
+            div.col-xs-8
+                div.input-group
+                    input#gc_statictext_attr_text.form-control.input-xs.dfx_visual_editor_property_input(type="text")
+                    span.input-group-btn
+                        a#btnPickText.btn.btn-default(href="#", data-toggle="modal", data-target="#pickerValueModal", data-vb-picker="exptext", data-vb-picker-target="gc_statictext_attr_text") ...
+        div.form-group
+            label.col-xs-4.control-label Tooltip:
+            div.col-xs-8
+                div.input-group
+                    input#gc_statictext_attr_tooltip.form-control.input-xs.dfx_visual_editor_property_input(type="text")
+                    span.input-group-btn
+                        a#btnPickModel.btn.btn-default(href="#", data-toggle="modal", data-target="#pickerValueModal", data-vb-picker="exptext", data-vb-picker-target="gc_statictext_attr_tooltip") ...
+        div.form-group
+            label.col-xs-4.control-label Tooltip position:
+            div.col-xs-8
+                select#gc_statictext_attr_tooltipPosition.input-xs.dfx_visual_editor_property_input(size="1")
+                    option(value="top") top
+                    option(value="left") left
+                    option(value="right") right
+                    option(value="bottom") bottom
+        legend
+            a.dfx_visual_editor_property_collapsible_btn.collapsed(data-toggle="collapse", data-target="#data_props") Data & Binding Options
+        div#data_props.collapse
+            div.form-group
+                label.col-xs-4.control-label Variable:
+                div.col-xs-8
+                    div.input-group
+                        input#gc_statictext_attr_bind.form-control.input-xs.dfx_visual_editor_property_input(type="text")
+                        span.input-group-btn
+                            a#btnPickBind.btn.btn-default(href="#", data-toggle="modal", data-target="#pickerValueModal", data-vb-picker="bind", data-vb-picker-target="gc_statictext_attr_bind") ...
+        legend
+            a.dfx_visual_editor_property_collapsible_btn.collapsed(data-toggle="collapse", data-target="#counter_props") Counter
+        div#counter_props.collapse
+            div.form-group
+                label.col-xs-4.control-label Variable:
+                div.col-xs-8
+                    div.input-group
+                        input#gc_statictext_attr_counterBind.form-control.input-xs.dfx_visual_editor_property_input(type="text")
+                        span.input-group-btn
+                            a#btnPickCounter.btn.btn-default(href="#", data-toggle="modal", data-target="#pickerValueModal", data-vb-picker="bind", data-vb-picker-target="gc_statictext_attr_counterBind") ...
+            div.form-group
+                label.col-xs-4.control-label Position:
+                div.col-xs-8
+                    select#gc_statictext_attr_counterPosition.input-xs.dfx_visual_editor_property_input(size="1")
+                        option(value="left") left
+                        option(value="right") right
+            div.form-group
+                label.col-xs-4.control-label On Click:
+                div.col-xs-8
+                    div.input-group
+                        input#gc_statictext_attr_counterOnClick.form-control.input-xs.dfx_visual_editor_property_input(type="text")
+                        span.input-group-btn
+                            a#btnPickCounterClick.btn.btn-default(href="#", data-toggle="modal", data-target="#pickerValueModal", data-vb-picker="evt", data-vb-picker-target="gc_statictext_attr_counterOnClick") ...
+        legend
+            a.dfx_visual_editor_property_collapsible_btn.collapsed(data-toggle="collapse", data-target="#rules_props") Presentation Rules
+        div#rules_props.collapse
+            div.form-group
+                label.col-xs-4.control-label Display rule:
+                div.col-xs-8
+                    div.input-group
+                        input#gc_statictext_attr_display.form-control.input-xs.dfx_visual_editor_property_input(type="text")
+                        span.input-group-btn
+                            a#btnPickDisplay.btn.btn-default(href="#", data-toggle="modal", data-target="#pickerValueModal", data-vb-picker="exp", data-vb-picker-target="gc_statictext_attr_display") ...
+        legend
+            a.dfx_visual_editor_property_collapsible_btn.collapsed(data-toggle="collapse", data-target="#container_props") Container CSS
+        div#container_props.collapse
+            div.form-group
+                label.col-xs-4.control-label Classes:
+                div.col-xs-8
+                    div.input-group
+                        input#gc_container_attr_classes.form-control.input-xs.dfx_visual_editor_property_input(type="text")
+                        span.input-group-btn
+                            a#btnPickContainerClasses.btn.btn-default(href="#", data-toggle="modal", data-target="#pickerValueModal", data-vb-picker="class", data-vb-picker-target="gc_container_attr_classes") ...
+            div.form-group
+                label.col-xs-4.control-label Dynamic Classes:
+                div.col-xs-8
+                    div.input-group
+                        input#gc_container_attr_dynamicClasses.form-control.input-xs.dfx_visual_editor_property_input(type="text")
+                        span.input-group-btn
+                            a#btnPickContainerDynamicClasses.btn.btn-default(href="#", data-toggle="modal", data-target="#pickerValueModal", data-vb-picker="class", data-vb-picker-target="gc_container_attr_dynamicClasses") ...
+            div.form-group
+                label.col-xs-4.control-label Width:
+                div.col-xs-8
+                    input#gc_container_attr_css_width.input-xs.dfx_visual_editor_property_input(type="text", style="width:80px")
+            div.form-group
+                label.col-xs-4.control-label Height:
+                div.col-xs-8
+                    input#gc_container_attr_css_height.input-xs.dfx_visual_editor_property_input(type="text", style="width:80px")
+            div.form-group
+                label.col-xs-4.control-label Color:
+                div.col-xs-8
+                    .input-group#containerCssColorPicker.fgcolor
+                        span.input-group-addon.color-picker(style="padding:3px")
+                            i(style="border:1px solid #b0b0b0")
+                        input#gc_container_attr_css_color.input-xs.dfx_visual_editor_property_input(type="text", style="width:80px")
+            div.form-group
+                label.col-xs-4.control-label Background:
+                div.col-xs-8
+                    .input-group#containerCssBgcolorPicker.fgcolor
+                        span.input-group-addon.color-picker(style="padding:3px")
+                            i(style="border:1px solid #b0b0b0")
+                        input#gc_container_attr_css_background.input-xs.dfx_visual_editor_property_input(type="text", style="width:80px")
+            div.form-group
+                label.col-xs-4.control-label Padding:
+                div.col-xs-8
+                    input#gc_container_attr_css_padding.input-xs.dfx_visual_editor_property_input(type="text", placeholder="0px")
+            div.form-group
+                label.col-xs-4.control-label Margin:
+                div.col-xs-8
+                    input#gc_container_attr_css_margin.input-xs.dfx_visual_editor_property_input(type="text", placeholder="0px")
+            div.form-group
+                label.col-xs-4.control-label Text-Alignment:
+                div.col-xs-8
+                    input#gc_container_attr_css_alignment.input-xs.dfx_visual_editor_property_input(type="text", placeholder="left/right/center")
+            div.form-group
+                label.col-xs-4.control-label Custom CSS:
+                div.col-xs-8
+                    input#gc_container_attr_style.input-xs.dfx_visual_editor_property_input(type="text")
+        legend
+            a.dfx_visual_editor_property_collapsible_btn.collapsed(data-toggle="collapse", data-target="#component_props") Component CSS
+        div#component_props.collapse
+            div.form-group
+                label.col-xs-4.control-label Classes:
+                div.col-xs-8
+                    div.input-group
+                        input#gc_component_attr_classes.form-control.input-xs.dfx_visual_editor_property_input(type="text")
+                        span.input-group-btn
+                            a#btnPickContainerClasses.btn.btn-default(href="#", data-toggle="modal", data-target="#pickerValueModal", data-vb-picker="class", data-vb-picker-target="gc_component_attr_classes") ...
+            div.form-group
+                label.col-xs-4.control-label Dynamic Classes:
+                div.col-xs-8
+                    div.input-group
+                        input#gc_component_attr_dynamicClasses.form-control.input-xs.dfx_visual_editor_property_input(type="text")
+                        span.input-group-btn
+                            a#btnPickComponentDynamicClasses.btn.btn-default(href="#", data-toggle="modal", data-target="#pickerValueModal", data-vb-picker="class", data-vb-picker-target="gc_component_attr_dynamicClasses") ...
+            div.form-group
+                label.col-xs-4.control-label Width:
+                div.col-xs-8
+                    input#gc_component_attr_css_width.input-xs.dfx_visual_editor_property_input(type="text", style="width:80px")
+            div.form-group
+                label.col-xs-4.control-label Height:
+                div.col-xs-8
+                    input#gc_component_attr_css_height.input-xs.dfx_visual_editor_property_input(type="text", style="width:80px")
+            div.form-group
+                label.col-xs-4.control-label Color:
+                div.col-xs-8
+                    .input-group#componentCssColorPicker.fgcolor
+                        span.input-group-addon.color-picker(style="padding:3px")
+                            i(style="border:1px solid #b0b0b0")
+                        input#gc_component_attr_css_color.input-xs.dfx_visual_editor_property_input(type="text", style="width:80px")
+            div.form-group
+                label.col-xs-4.control-label Background:
+                div.col-xs-8
+                    .input-group#componentCssBgcolorPicker.fgcolor
+                        span.input-group-addon.color-picker(style="padding:3px")
+                            i(style="border:1px solid #b0b0b0")
+                        input#gc_component_attr_css_background.input-xs.dfx_visual_editor_property_input(type="text", style="width:80px")
+            div.form-group
+                label.col-xs-4.control-label Padding:
+                div.col-xs-8
+                    input#gc_component_attr_css_padding.input-xs.dfx_visual_editor_property_input(type="text", placeholder="0px")
+            div.form-group
+                label.col-xs-4.control-label Margin:
+                div.col-xs-8
+                    input#gc_component_attr_css_margin.input-xs.dfx_visual_editor_property_input(type="text", placeholder="0px")
+            div.form-group
+                label.col-xs-4.control-label Text-Alignment:
+                div.col-xs-8
+                    input#gc_component_attr_css_alignment.input-xs.dfx_visual_editor_property_input(type="text", placeholder="left/right/center")
+            div.form-group
+                label.col-xs-4.control-label Custom CSS:
+                div.col-xs-8
+                    input#gc_component_attr_style.input-xs.dfx_visual_editor_property_input(type="text")
+        legend
+            a.dfx_visual_editor_property_collapsible_btn.collapsed(data-toggle="collapse", data-target="#events_props") Events
+        div#events_props.collapse
+            div.form-group
+                label.col-xs-4.control-label On Click:
+                div.col-xs-8
+                    div.input-group
+                        input#gc_statictext_attr_onclick.form-control.input-xs.dfx_visual_editor_property_input(type="text")
+                        span.input-group-btn
+                            a#btnPickOnClick.btn.btn-default(href="#", data-toggle="modal", data-target="#pickerValueModal", data-vb-picker="evt", data-vb-picker-target="gc_statictext_attr_onclick") ...
+
+input#gc_statictext_attr_id(type="hidden")
+

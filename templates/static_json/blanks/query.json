@@ -1,0 +1,33 @@
+{
+  "selector": ":root",
+  "update_comment": "",
+  "ownerId": "",
+  "persistence": "none",
+  "settings": {
+    "authentication": "",
+    "auth_password": "",
+    "typerequest": "HTTP_GET",
+    "auth_userid": "",
+    "url": "",
+    "dbdriver": ""
+  },
+  "appexpr": "",
+  "format": "",
+  "dependency": "",
+  "category": "",
+  "description": "",
+  "name": "",
+  "connector": "http",
+  "requestDate": "",
+  "parameters": [],
+  "metadata": {
+    "name": "root",
+    "children": []
+  },
+  "source": "ext",
+  "visibility": "visible",
+  "lock": {
+    "status": "unlocked"
+  },
+  "application": ""
+}

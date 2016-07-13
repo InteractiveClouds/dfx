@@ -1,0 +1,24 @@
+<div ng-if="attributes.icon.value !== ''" layout="row" style="{{attributes.style.value}}" class="{{attributes.classes.value}}">
+    <div class="gc_w_input_icon_wrap_design" flex="none" ng-if="attributes.position.value==='left'">
+        <span class="gc_w_input_icon" style="text-align: right;">
+            <md-icon ng-if="attributes.icon.type ==='fa-icon'" class="fa {{$eval(attributes.icon.value) || 'fa-home'}}" style="font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
+            <ng-md-icon ng-if="attributes.icon.type ==='svg-icon'" icon="{{$eval(attributes.icon.value) || 'home'}}" size="{{attributes.icon.size}}" style="height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></ng-md-icon>
+        </span>
+    </div>
+    <md-input-container flex class="gc-textarea-icon-container">
+        <label>{{attributes.label.value | checkExpression}}</label>
+        <textarea ng-model="attributes.temporary.value" columns="1" md-maxlength="attributes.maxlength.value" style="padding-left: 5px;" rows="{{attributes.rowsNumber.value}}"></textarea>
+    </md-input-container>
+    <div class="gc_w_input_icon_wrap_design" flex="none" ng-if="attributes.position.value==='right'">
+        <span class="gc_w_input_icon">
+            <md-icon ng-if="attributes.icon.type ==='fa-icon'" class="fa {{$eval(attributes.icon.value) || 'fa-home'}}" style="font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
+            <ng-md-icon ng-if="attributes.icon.type ==='svg-icon'" icon="{{$eval(attributes.icon.value) || 'home'}}" size="{{attributes.icon.size}}" style="height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></ng-md-icon>
+        </span>
+    </div>
+</div>
+<div ng-if="attributes.icon.value === ''" layout="row" style="{{attributes.style.value}}" class="{{attributes.classes.value}}">
+    <md-input-container flex>
+        <label>{{attributes.label.value | checkExpression}}</label>
+        <textarea ng-model="attributes.temporary.value" columns="1" md-maxlength="attributes.maxlength.value" style="padding-left: 5px;" rows="{{attributes.rowsNumber.value}}"></textarea>
+    </md-input-container>
+</div>

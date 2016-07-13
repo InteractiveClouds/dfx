@@ -1,0 +1,403 @@
+doctype html
+html
+    head
+        meta(http-equiv="content-type", content="text/HTML;charset=UTF-8")
+        meta(name="viewport", content="width=device-width,initial-scale=1, maximum-scale=1, user-scalable=no")
+        title DreamFace Studio index
+
+        link(rel="stylesheet", href="/css/studio/dfx.min.css", media="screen")
+        script(src="/js/studio/dfx.js")
+
+        script(src="/socket.io/socket.io.js")
+        script(type="text/javascript").
+            try {
+                var GLOBAL_SOCKET  = io(
+                        'http://' + window.location.hostname + ':' + window.location.port,
+                        {
+                            'force new connection': true
+                        }
+                );
+            }
+            catch(err) {}
+
+    body#dfx-studio-main-body(data-tenantid="#{tenantid}", ng-app="dfxStudioApp", ng-controller="dfx_studio_controller", deploymentUrl="#{deploymentUrl}")
+        div(style="height:100%;", layout="row", layout-align="space-between center")
+            md-content.dfx_content(style="height:100%;width:100%;overflow: hidden;")
+                div#dfx-studio-home(layout="column", flex, style="height:100%;")
+                    div#dfx-studio-header
+                        md-button.dfx-studio-toolbar-button.dfx-studio-toolbar-button-home(aria-label="home", ng-click="loadStudioView('/home')", style="margin-left:10px;color: #4BCDFF")
+                            md-tooltip(md-direction="bottom") Home
+                            i.fa.fa-home(title="Home")
+                        img(src="/images/df_logo_blanc_1029x223.png", style="width:90px;margin-top:-3px;")
+                        div(style="color: #fff;font-size: 13px;font-style: italic;display: inline-block;margin-left:5px;line-height:25px")
+                            span - Studio
+                        div(style="color: #212121;font-size: 13px;line-height:25px;display: inline-block;margin-top:2px;margin-left:20px;margin-right:20px;padding-left:5px; padding-right:5px; background:#A2F321;border-radius:3px;cursor:pointer;outline: none" ng-click="loadStudioView('/release-notes')")
+                            md-tooltip(md-direction="bottom") Open Release Notes
+                            span(style="line-height:25px;") v.{{dfx_version_major}}.{{dfx_version_minor}}{{dfx_version_release}}
+                        div.pull-right(style="display:inline-block;padding-right:10px")
+                            md-menu-bar(style="padding: 0;")
+                                md-menu(style="padding: 1px;")
+                                    button.dfx-studio-toolbar-button.dfx-studio-toolbar-button-help.md-button(aria-label="Sign Out", ng-click="signOut()")
+                                        md-tooltip(md-direction="bottom") Sign Out
+                                        i.fa.fa-sign-out(title="Sign Out", style="color:#4BCDFF;")
+                                    md-menu-content(width="4")
+                        div.pull-right(style="display:inline-block")
+                            //md-button.dfx-studio-toolbar-button.dfx-studio-toolbar-button-help.md-raised(aria-label="help", ng-click="showHelp()")
+                                i.fa.fa-support(title="Help")
+                            md-menu-bar(style="padding: 0;")
+                                md-menu(style="padding: 1px;")
+                                    button.dfx-studio-toolbar-button.dfx-studio-toolbar-button-help.md-button(aria-label="help", ng-click="$mdOpenMenu();" style="padding:0")
+                                        md-tooltip(md-direction="bottom") Help
+                                        md-icon.fa.fa-support(title="Help" style="text-align: center; padding-top: 4px;color:#4BCDFF;")
+                                    md-menu-content(width="4")
+                                        md-menu-item
+                                            md-button(ng-click="loadStudioView('/stackoverflow')" style="line-height:32px;")
+                                                md-icon.fa.fa-stack-overflow.md-altTheme-theme.material-icons(style="height:18px;margin:7px 16px 0 0;text-align:center;")
+                                                span Stack Overflow
+                                        md-menu-item
+                                            md-button(ng-click="redirectDocumentation()" style="line-height:32px;")
+                                                md-icon.fa.fa-file-text-o.md-altTheme-theme.material-icons(style="height:18px;margin:7px 16px 0 0;text-align:center;")
+                                                span Documentation
+                                        md-menu-item
+                                            md-button(ng-click="loadStudioView('/samples');" style="line-height:32px;" aria-label="iconbar-button")
+                                                md-icon.fa.fa-desktop.md-altTheme-theme.material-icons(style="height:18px;margin:9px 16px 0 0;text-align:center;")
+                                                span Play with samples
+                                        md-menu-item
+                                            md-button(ng-click="loadStudioView('/support');refreshSupportForm()" style="line-height:32px;")
+                                                md-icon.fa.fa-support.md-altTheme-theme.material-icons(style="height:18px;margin:7px 16px 0 0;text-align:center;")
+                                                span Get Support
+                                        md-menu-item
+                                            md-button(ng-click="loadStudioView('/contactus');refreshSupportForm()" style="line-height:32px;")
+                                                md-icon.fa.fa-envelope-o.md-altTheme-theme.material-icons(style="height:18px;margin:7px 16px 0 0;text-align:center;")
+                                                span Contact us
+                        div.pull-right(style="color: #fff;font-size: 13px;line-height:25px;display: inline-block;margin-top:2px;margin-right:20px;padding-left:5px; padding-right:5px; background:#2196F3;border-radius:3px")
+                            i.fa.fa-user
+                            span(style="padding-left:5px;line-height:25px;") Tenant ID: {{tenant_id}}
+                    div#dfx-studio-toolbar(style="display:none")
+                        md-toolbar.dfx-studio-toolbar
+                            div.dfx-studio-toolbar-tools.md-toolbar-tools(layout="row")
+                                div#dfx-studio-explorer-title(flex="none")
+                                    div#dfx-studio-explorer-title-text Explorer
+                                    md-button#dfx-studio-toggle-explorer.dfx-studio-toolbar-button(aria-label="Explorer", ng-click="toggleLeft()")
+                                        i#dfx-studio-toggle-explorer-icon.fa.fa-angle-double-left
+                                div(layout="row", layout-align="space-between center", flex)
+                                    div(flex)
+                                        md-button.dfx-studio-toolbar-button.dfx-studio-toolbar-button-home.md-raised.dfx-studio-toolbar-button-selected(aria-label="home", ng-click="loadStudioView('/home')", style="margin-left:20px")
+                                            i.fa.fa-home(title="Home")
+
+                                    div
+                                        //md-button.dfx-studio-toolbar-button.dfx-studio-toolbar-button-help.md-raised(aria-label="help", ng-click="showHelp()")
+                                            i.fa.fa-support(title="Help")
+                                        md-menu-bar(style="padding: 0;")
+                                            md-menu(style="padding: 1px;")
+                                                button.dfx-studio-toolbar-button.dfx-studio-toolbar-button-help.md-button.md-raised(aria-label="help", ng-click="$mdOpenMenu();" style="padding:0;")
+                                                    md-icon.fa.fa-support(title="Help" style="color: black; text-align: center; padding-top: 4px;")
+                                                md-menu-content(width="4")
+                                                    md-menu-item
+                                                        md-button(ng-click="loadStudioView('/stackoverflow')" style="line-height:32px;")
+                                                            md-icon.fa.fa-stack-overflow.md-altTheme-theme.material-icons(style="height:18px;margin:7px 16px 0 0;text-align:center;")
+                                                            span Stack Overflow
+                                                    md-menu-item
+                                                        md-button(ng-click="redirectDocumentation()" style="line-height:32px;")
+                                                            md-icon.fa.fa-file-text-o.md-altTheme-theme.material-icons(style="height:18px;margin:7px 16px 0 0;text-align:center;")
+                                                            span Documentation
+                                                    md-menu-item
+                                                        md-button(ng-click="loadStudioView('/samples')" style="line-height:32px;" aria-label="iconbar-button")
+                                                            md-icon.fa.fa-desktop.md-altTheme-theme.material-icons(style="height:18px;margin:9px 16px 0 0;text-align:center;")
+                                                            span Install samples
+                                                    md-menu-item
+                                                        md-button(ng-click="loadStudioView('/support');refreshSupportForm()" style="line-height:32px;")
+                                                            md-icon.fa.fa-envelope-o.md-altTheme-theme.material-icons(style="height:18px;margin:7px 16px 0 0;text-align:center;")
+                                                            span Support
+                                    div(style="padding-right:30px")
+                                        md-button.dfx-studio-toolbar-button.dfx-studio-toolbar-button-help.md-raised(aria-label="Sign Out", ng-click="signOut()")
+                                            i.fa.fa-sign-out(title="Sign Out")
+
+
+                    div(layout="column", flex)
+                        section(layout="row", flex)
+                            md-sidenav#dfx-studio-sidenav-left.md-sidenav-left.md-whiteframe-z2(md-component-id="left", md-is-locked-open="$mdMedia('gt-md')", ng-show="studio_explorer_visible")
+                                md-content#dfx-studio-sidenav-left-content(layout-padding)
+                                    div(layout="row")
+                                        md-button.md-icon-button(style="margin:0 6px 6px -10px", aria-label="md-icon-button")
+                                            i.fa.fa-bars(style="font-size:18px")
+                                        form(layout="row")
+                                            md-input-container#dfx-studio-explorer-search(style="margin:5px 0")
+                                                label(style="color: #fff !important;") Search
+                                                input(style="color: #fff !important;border-color: #fff;" ng-model="dfxStudioSearch")
+                                            md-button.md-icon-button(type="submit", ng-click="loadStudioView('/search/' + dfxStudioSearch)", aria-label="md-icon-button")
+                                                i.fa.fa-search(style="font-size:18px")
+                                    div.dfx-studio-explorer-treeview.hover
+                                        ul
+                                            li.dfx-studio-explorer-treeview-menuicon-label
+                                                input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="root-platform")
+                                                label(for="root-platform") Platform
+                                                ul.dfx-studio-explorer-treeview-content
+                                                    li
+                                                        a(href="", ng-click="loadStudioView('/platform/developers')") Developers
+                                                    li
+                                                        a(href="", ng-click="loadStudioView('/platform/cloud')") Cloud
+                                                    li
+                                                        a(href="", ng-click="loadStudioView('/platform/settings')") Settings
+                                            li.dfx-studio-explorer-treeview-menuicon-label
+                                                input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="root-application")
+                                                label.dfx-studio-explorer-treeview-menuicon-label(for="root-application") Applications
+                                                    a.pull-right.dfx-studio-explorer-treeview-menuicon(ng-click="loadExplorerMenu($event, 'application')")
+                                                        i.fa.fa-cog
+                                                ul.dfx-studio-explorer-treeview-content
+                                                    li(ng-repeat="application in applications track by $index")
+                                                        input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="app-root-{{$index}}")
+                                                        label(for="app-root-{{$index}}") {{application.name}}
+                                                        ul.dfx-studio-explorer-treeview-content
+                                                            li
+                                                                input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="root-configuration-{{$index}}")
+                                                                label(for="root-configuration-{{$index}}") Configuration
+                                                                ul.dfx-studio-explorer-treeview-content
+                                                                    li
+                                                                        a(href="", ng-click="loadStudioView(application.name + '/configuration/general')") General
+                                                                    li
+                                                                        a(href="", ng-click="loadStudioView(application.name + '/configuration/devops')") Devops
+                                                                    li
+                                                                        a(href="", ng-click="loadStudioView(application.name + '/configuration/api_sources')") API Sources
+                                                                    li
+                                                                        a(href="", ng-click="loadStudioView(application.name + '/configuration/resources')") Resources
+                                                                    li
+                                                                        a(href="", ng-click="loadStudioView(application.name + '/configuration/users')") Users and Roles
+                                                                    li
+                                                                        a(href="", ng-click="loadStudioView(application.name + '/configuration/personalization')") Personalization
+                                                                    li
+                                                                        a(href="", ng-click="loadStudioView(application.name + '/configuration/deployment')") Deployment
+                                                            li
+                                                                input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="root-components-{{$index}}")
+                                                                label(for="root-components-{{$index}}") Components
+                                                                ul.dfx-studio-explorer-treeview-content
+                                                                    li
+                                                                        input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="root-pages-{{$index}}")
+                                                                        label.dfx-studio-explorer-treeview-menuicon-label(for="root-pages-{{$index}}") Pages
+                                                                            //a.pull-right.dfx-studio-explorer-treeview-menuicon(ng-click="loadExplorerMenu($event, 'page', application.name)")
+                                                                                i.fa.fa-cog
+                                                                        ul.dfx-studio-explorer-treeview-content
+                                                                            li
+                                                                                input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="root-pages-desktop-{{$index}}")
+                                                                                label.dfx-studio-explorer-treeview-menuicon-label(for="root-pages-desktop-{{$index}}") Desktop
+                                                                                    a.pull-right.dfx-studio-explorer-treeview-menuicon(ng-click="loadExplorerMenu($event, 'page', application.name, 'Default', 'page', undefined, 'web')")
+                                                                                        i.fa.fa-cog
+                                                                                ul.dfx-studio-explorer-treeview-content
+                                                                                    li
+                                                                                        input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="root-pages-web-cat-default-{{$index}}")
+                                                                                        label.dfx-studio-explorer-treeview-menuicon-label(for="root-pages-web-cat-default-{{$index}}") Default
+                                                                                            a.pull-right.dfx-studio-explorer-treeview-menuicon(ng-click="loadExplorerMenu($event, 'category', application.name, 'Default', 'page', undefined, 'web')")
+                                                                                                i.fa.fa-cog
+                                                                                        ul.dfx-studio-explorer-treeview-content
+                                                                                            li(ng-repeat="defPage in appTrees[$index].data.pages.web.Default track by $index" )
+                                                                                                label.dfx-studio-explorer-treeview-menuicon-label(ng-click="loadStudioView('/page/update/'+application.name+'/web/'+defPage.name)")
+                                                                                                    span {{defPage.name}}
+                                                                                                    a.pull-right.dfx-studio-explorer-treeview-menuicon(ng-click="loadExplorerMenu($event, 'menuItem', application.name, 'Default', 'page', defPage.name, 'web')")
+                                                                                                        i.fa.fa-cog
+                                                                                    li(ng-repeat="(pageCategory, pages) in appTrees[$index].data.pages.web track by $index" ng-if="pageCategory !=='Default'")
+                                                                                        input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="root-pages-web-cat-notdefault-{{$parent.$parent.$index}}-{{$parent.$index}}")
+                                                                                        label.dfx-studio-explorer-treeview-menuicon-label(for="root-pages-web-cat-notdefault-{{$parent.$parent.$index}}-{{$parent.$index}}") {{pageCategory}}
+                                                                                            a.pull-right.dfx-studio-explorer-treeview-menuicon(ng-click="loadExplorerMenu($event, 'category', application.name, pageCategory, 'page', undefined, 'web')")
+                                                                                                i.fa.fa-cog
+                                                                                        ul.dfx-studio-explorer-treeview-content
+                                                                                            li(ng-repeat="page in pages track by $index" )
+                                                                                                label.dfx-studio-explorer-treeview-menuicon-label(ng-click="loadStudioView('/page/update/'+application.name+ '/web/' + page.name)")
+                                                                                                    span {{page.name}}
+                                                                                                    a.pull-right.dfx-studio-explorer-treeview-menuicon(ng-click="loadExplorerMenu($event, 'menuItem', application.name, pageCategory, 'page', page.name, 'web')")
+                                                                                                        i.fa.fa-cog
+                                                                            li
+                                                                                input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="root-pages-tablet-{{$index}}")
+                                                                                label.dfx-studio-explorer-treeview-menuicon-label(for="root-pages-tablet-{{$index}}") Tablet
+                                                                                    a.pull-right.dfx-studio-explorer-treeview-menuicon(ng-click="loadExplorerMenu($event, 'page', application.name, 'Default', 'page', undefined, 'tablet')")
+                                                                                        i.fa.fa-cog
+                                                                                ul.dfx-studio-explorer-treeview-content
+                                                                                    li
+                                                                                        input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="root-pages-tablet-cat-default-{{$index}}")
+                                                                                        label.dfx-studio-explorer-treeview-menuicon-label(for="root-pages-tablet-cat-default-{{$index}}") Default
+                                                                                            a.pull-right.dfx-studio-explorer-treeview-menuicon(ng-click="loadExplorerMenu($event, 'category', application.name, 'Default', 'page', undefined, 'tablet')")
+                                                                                                i.fa.fa-cog
+                                                                                        ul.dfx-studio-explorer-treeview-content
+                                                                                            li(ng-repeat="defPage in appTrees[$index].data.pages.tablet.Default track by $index" )
+                                                                                                label.dfx-studio-explorer-treeview-menuicon-label(ng-click="loadStudioView('/page/update/'+application.name+'/tablet/'+ defPage.name)")
+                                                                                                    span {{defPage.name}}
+                                                                                                    a.pull-right.dfx-studio-explorer-treeview-menuicon(ng-click="loadExplorerMenu($event, 'menuItem', application.name, 'Default', 'page', defPage.name, 'tablet')")
+                                                                                                        i.fa.fa-cog
+                                                                                    li(ng-repeat="(pageCategory, pages) in appTrees[$index].data.pages.tablet track by $index" ng-if="pageCategory !=='Default'")
+                                                                                        input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="root-pages-tablet-cat-notdefault-{{$parent.$parent.$index}}-{{$parent.$index}}")
+                                                                                        label.dfx-studio-explorer-treeview-menuicon-label(for="root-pages-tablet-cat-notdefault-{{$parent.$parent.$index}}-{{$parent.$index}}") {{pageCategory}}
+                                                                                            a.pull-right.dfx-studio-explorer-treeview-menuicon(ng-click="loadExplorerMenu($event, 'category', application.name, pageCategory, 'page', undefined, 'tablet')")
+                                                                                                i.fa.fa-cog
+                                                                                        ul.dfx-studio-explorer-treeview-content
+                                                                                            li(ng-repeat="page in pages track by $index" )
+                                                                                                label.dfx-studio-explorer-treeview-menuicon-label(ng-click="loadStudioView('/page/update/'+application.name+'/tablet/' + page.name)")
+                                                                                                    span {{page.name}}
+                                                                                                    a.pull-right.dfx-studio-explorer-treeview-menuicon(ng-click="loadExplorerMenu($event, 'menuItem', application.name, pageCategory, 'page', page.name, 'tablet')")
+                                                                                                        i.fa.fa-cog
+                                                                            li
+                                                                                input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="root-pages-mobile-{{$index}}")
+                                                                                label.dfx-studio-explorer-treeview-menuicon-label(for="root-pages-mobile-{{$index}}") Mobile
+                                                                                    a.pull-right.dfx-studio-explorer-treeview-menuicon(ng-click="loadExplorerMenu($event, 'page', application.name, 'Default', 'page', undefined, 'mobile')")
+                                                                                        i.fa.fa-cog
+                                                                                ul.dfx-studio-explorer-treeview-content
+                                                                                    li
+                                                                                        input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="root-pages-mobile-cat-default-{{$index}}")
+                                                                                        label.dfx-studio-explorer-treeview-menuicon-label(for="root-pages-mobile-cat-default-{{$index}}") Default
+                                                                                            a.pull-right.dfx-studio-explorer-treeview-menuicon(ng-click="loadExplorerMenu($event, 'category', application.name, 'Default', 'page', undefined, 'mobile')")
+                                                                                                i.fa.fa-cog
+                                                                                        ul.dfx-studio-explorer-treeview-content
+                                                                                            li(ng-repeat="defPage in appTrees[$index].data.pages.mobile.Default track by $index" )
+                                                                                                label.dfx-studio-explorer-treeview-menuicon-label(ng-click="loadStudioView('/page/update/'+application.name+'/mobile/'+ defPage.name)")
+                                                                                                    span {{defPage.name}}
+                                                                                                    a.pull-right.dfx-studio-explorer-treeview-menuicon(ng-click="loadExplorerMenu($event, 'menuItem', application.name, 'Default', 'page', defPage.name, 'mobile')")
+                                                                                                        i.fa.fa-cog
+                                                                                    li(ng-repeat="(pageCategory, pages) in appTrees[$index].data.pages.mobile track by $index" ng-if="pageCategory !=='Default'")
+                                                                                        input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="root-pages-mobile-cat-notdefault-{{$parent.$parent.$index}}-{{$parent.$index}}")
+                                                                                        label.dfx-studio-explorer-treeview-menuicon-label(for="root-pages-mobile-cat-notdefault-{{$parent.$parent.$index}}-{{$parent.$index}}") {{pageCategory}}
+                                                                                            a.pull-right.dfx-studio-explorer-treeview-menuicon(ng-click="loadExplorerMenu($event, 'category', application.name, pageCategory, 'page', undefined, 'mobile')")
+                                                                                                i.fa.fa-cog
+                                                                                        ul.dfx-studio-explorer-treeview-content
+                                                                                            li(ng-repeat="page in pages track by $index" )
+                                                                                                label.dfx-studio-explorer-treeview-menuicon-label(ng-click="loadStudioView('/page/update/'+application.name+'/mobile/' + page.name)")
+                                                                                                    span {{page.name}}
+                                                                                                    a.pull-right.dfx-studio-explorer-treeview-menuicon(ng-click="loadExplorerMenu($event, 'menuItem', application.name, pageCategory, 'page', page.name, 'mobile')")
+                                                                                                        i.fa.fa-cog
+                                                                    li
+                                                                        input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="root-views-{{$index}}")
+                                                                        label.dfx-studio-explorer-treeview-menuicon-label(for="root-views-{{$index}}") Views
+                                                                            //a.pull-right.dfx-studio-explorer-treeview-menuicon(ng-click="loadExplorerMenu($event, 'view', application.name)")
+                                                                                i.fa.fa-cog
+                                                                        ul.dfx-studio-explorer-treeview-content
+                                                                            li
+                                                                                input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="root-views-desktop-{{$index}}")
+                                                                                label.dfx-studio-explorer-treeview-menuicon-label(for="root-views-desktop-{{$index}}") Desktop
+                                                                                    a.pull-right.dfx-studio-explorer-treeview-menuicon(ng-click="loadExplorerMenu($event, 'view', application.name, 'Default', 'view', undefined, 'web')")
+                                                                                        i.fa.fa-cog
+                                                                                ul.dfx-studio-explorer-treeview-content
+                                                                                    li.dfx-studio-explorer-treeview-menuiconcontainer
+                                                                                        input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="root-views-web-cat-default-{{$index}}")
+                                                                                        label.dfx-studio-explorer-treeview-menuicon-label(for="root-views-web-cat-default-{{$index}}") Default
+                                                                                            a.pull-right.dfx-studio-explorer-treeview-menuicon(ng-click="loadExplorerMenu($event, 'category', application.name, 'Default', 'view', undefined, 'web')")
+                                                                                                i.fa.fa-cog
+                                                                                        ul.dfx-studio-explorer-treeview-content
+                                                                                            li(ng-repeat="defView in appTrees[$index].data.views.web.Default track by $index" )
+                                                                                                label.dfx-studio-explorer-treeview-menuicon-label(ng-click="loadStudioView('/view/update/'+application.name+'/web/' + defView.name)")
+                                                                                                    span {{defView.name}}
+                                                                                                    a.pull-right.dfx-studio-explorer-treeview-menuicon(ng-click="loadExplorerMenu($event, 'menuItem', application.name, 'Default', 'view', defView.name, 'web')")
+                                                                                                        i.fa.fa-cog
+                                                                                    li.dfx-studio-explorer-treeview-menuiconcontainer(ng-repeat="(viewCategory, views) in appTrees[$index].data.views.web track by $index" ng-if="viewCategory !=='Default'")
+                                                                                        input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="root-views-web-cat-notdefault-{{$parent.$parent.$index}}-{{$parent.$index}}")
+                                                                                        label.dfx-studio-explorer-treeview-menuicon-label(for="root-views-web-cat-notdefault-{{$parent.$parent.$index}}-{{$parent.$index}}") {{viewCategory}}
+                                                                                            a.pull-right.dfx-studio-explorer-treeview-menuicon(ng-click="loadExplorerMenu($event, 'category', application.name, viewCategory, 'view', undefined, 'web')")
+                                                                                                i.fa.fa-cog
+                                                                                        ul.dfx-studio-explorer-treeview-content
+                                                                                            li(ng-repeat="view in views track by $index" )
+                                                                                                label.dfx-studio-explorer-treeview-menuicon-label(ng-click="loadStudioView('/view/update/'+application.name+'/web/' + view.name )")
+                                                                                                    span {{view.name}}
+                                                                                                    a.pull-right.dfx-studio-explorer-treeview-menuicon(ng-click="loadExplorerMenu($event, 'menuItem', application.name, viewCategory, 'view', view.name, 'web')")
+                                                                                                        i.fa.fa-cog
+                                                                            li
+                                                                                input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="root-views-tablet-{{$index}}")
+                                                                                label.dfx-studio-explorer-treeview-menuicon-label(for="root-views-tablet-{{$index}}") Tablet
+                                                                                    a.pull-right.dfx-studio-explorer-treeview-menuicon(ng-click="loadExplorerMenu($event, 'view', application.name, 'Default', 'view', undefined, 'tablet')")
+                                                                                        i.fa.fa-cog
+                                                                                ul.dfx-studio-explorer-treeview-content
+                                                                                    li.dfx-studio-explorer-treeview-menuiconcontainer
+                                                                                        input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="root-views-tablet-cat-default-{{$index}}")
+                                                                                        label.dfx-studio-explorer-treeview-menuicon-label(for="root-views-tablet-cat-default-{{$index}}") Default
+                                                                                            a.pull-right.dfx-studio-explorer-treeview-menuicon(ng-click="loadExplorerMenu($event, 'category', application.name, 'Default', 'view', undefined, 'tablet')")
+                                                                                                i.fa.fa-cog
+                                                                                        ul.dfx-studio-explorer-treeview-content
+                                                                                            li(ng-repeat="defView in appTrees[$index].data.views.tablet.Default track by $index" )
+                                                                                                label.dfx-studio-explorer-treeview-menuicon-label(ng-click="loadStudioView('/view/update/'+application.name+'/tablet/' + defView.name)")
+                                                                                                    span {{defView.name}}
+                                                                                                    a.pull-right.dfx-studio-explorer-treeview-menuicon(ng-click="loadExplorerMenu($event, 'menuItem', application.name, 'Default', 'view', defView.name, 'tablet')")
+                                                                                                        i.fa.fa-cog
+                                                                                    li.dfx-studio-explorer-treeview-menuiconcontainer(ng-repeat="(viewCategory, views) in appTrees[$index].data.views.tablet track by $index" ng-if="viewCategory !=='Default'")
+                                                                                        input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="root-views-tablet-cat-notdefault-{{$parent.$parent.$index}}-{{$parent.$index}}")
+                                                                                        label.dfx-studio-explorer-treeview-menuicon-label(for="root-views-tablet-cat-notdefault-{{$parent.$parent.$index}}-{{$parent.$index}}") {{viewCategory}}
+                                                                                            a.pull-right.dfx-studio-explorer-treeview-menuicon(ng-click="loadExplorerMenu($event, 'category', application.name, viewCategory, 'view', undefined, 'tablet')")
+                                                                                                i.fa.fa-cog
+                                                                                        ul.dfx-studio-explorer-treeview-content
+                                                                                            li(ng-repeat="view in views track by $index" )
+                                                                                                label.dfx-studio-explorer-treeview-menuicon-label(ng-click="loadStudioView('/view/update/'+application.name+'/tablet/' + view.name )")
+                                                                                                    span {{view.name}}
+                                                                                                    a.pull-right.dfx-studio-explorer-treeview-menuicon(ng-click="loadExplorerMenu($event, 'menuItem', application.name, viewCategory, 'view', view.name, 'tablet')")
+                                                                                                        i.fa.fa-cog
+                                                                            li
+                                                                                input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="root-views-mobile-{{$index}}")
+                                                                                label.dfx-studio-explorer-treeview-menuicon-label(for="root-views-mobile-{{$index}}") Mobile
+                                                                                    a.pull-right.dfx-studio-explorer-treeview-menuicon(ng-click="loadExplorerMenu($event, 'view', application.name, 'Default', 'view', undefined, 'mobile')")
+                                                                                        i.fa.fa-cog
+                                                                                ul.dfx-studio-explorer-treeview-content
+                                                                                    li.dfx-studio-explorer-treeview-menuiconcontainer
+                                                                                        input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="root-views-mobile-cat-default-{{$index}}")
+                                                                                        label.dfx-studio-explorer-treeview-menuicon-label(for="root-views-mobile-cat-default-{{$index}}") Default
+                                                                                            a.pull-right.dfx-studio-explorer-treeview-menuicon(ng-click="loadExplorerMenu($event, 'category', application.name, 'Default', 'view', undefined, 'mobile')")
+                                                                                                i.fa.fa-cog
+                                                                                        ul.dfx-studio-explorer-treeview-content
+                                                                                            li(ng-repeat="defView in appTrees[$index].data.views.mobile.Default track by $index" )
+                                                                                                label.dfx-studio-explorer-treeview-menuicon-label(ng-click="loadStudioView('/view/update/'+application.name+'/mobile/' + defView.name)")
+                                                                                                    span {{defView.name}}
+                                                                                                    a.pull-right.dfx-studio-explorer-treeview-menuicon(ng-click="loadExplorerMenu($event, 'menuItem', application.name, 'Default', 'view', defView.name, 'mobile')")
+                                                                                                        i.fa.fa-cog
+                                                                                    li.dfx-studio-explorer-treeview-menuiconcontainer(ng-repeat="(viewCategory, views) in appTrees[$index].data.views.mobile track by $index" ng-if="viewCategory !=='Default'")
+                                                                                        input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="root-views-mobile-cat-notdefault-{{$parent.$parent.$index}}-{{$parent.$index}}")
+                                                                                        label.dfx-studio-explorer-treeview-menuicon-label(for="root-views-mobile-cat-notdefault-{{$parent.$parent.$index}}-{{$parent.$index}}") {{viewCategory}}
+                                                                                            a.pull-right.dfx-studio-explorer-treeview-menuicon(ng-click="loadExplorerMenu($event, 'category', application.name, viewCategory, 'view', undefined, 'mobile')")
+                                                                                                i.fa.fa-cog
+                                                                                        ul.dfx-studio-explorer-treeview-content
+                                                                                            li(ng-repeat="view in views track by $index" )
+                                                                                                label.dfx-studio-explorer-treeview-menuicon-label(ng-click="loadStudioView('/view/update/'+application.name+'/mobile/' + view.name )")
+                                                                                                    span {{view.name}}
+                                                                                                    a.pull-right.dfx-studio-explorer-treeview-menuicon(ng-click="loadExplorerMenu($event, 'menuItem', application.name, viewCategory, 'view', view.name, 'mobile')")
+                                                                                                        i.fa.fa-cog
+                                                                    li
+                                                                        input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="root-api-{{$index}}")
+                                                                        label.dfx-studio-explorer-treeview-menuicon-label(for="root-api-{{$index}}") API Service Objects
+                                                                            a.pull-right.dfx-studio-explorer-treeview-menuicon(ng-click="loadExplorerMenu($event, 'api_so', application.name)")
+                                                                                i.fa.fa-cog
+                                                                        ul.dfx-studio-explorer-treeview-content
+                                                                            li.dfx-studio-explorer-treeview-menuiconcontainer
+                                                                                input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="root-apiso-cat-default-{{$index}}")
+                                                                                label.dfx-studio-explorer-treeview-menuicon-label(for="root-apiso-cat-default-{{$index}}") Default
+                                                                                    a.pull-right.dfx-studio-explorer-treeview-menuicon(ng-click="loadExplorerMenu($event, 'category', application.name, 'Default', 'apiso')")
+                                                                                        i.fa.fa-cog
+                                                                                ul.dfx-studio-explorer-treeview-content
+                                                                                    li(ng-repeat="defApiso in appTrees[$index].data.apiServices.Default track by $index" )
+                                                                                        label.dfx-studio-explorer-treeview-menuicon-label(ng-click="loadStudioView('/api_so/update/'+application.name+'/' + defApiso.name)")
+                                                                                            span {{defApiso.name}}
+                                                                                            a.pull-right.dfx-studio-explorer-treeview-menuicon(ng-click="loadExplorerMenu($event, 'menuItem', application.name, 'Default', 'apiso', defApiso.name)")
+                                                                                                i.fa.fa-cog
+                                                                            li.dfx-studio-explorer-treeview-menuiconcontainer(ng-repeat="(apisoCategoryName, apisoCategory) in appTrees[$index].data.apiServices track by $index" ng-if="apisoCategoryName !=='Default'")
+                                                                                input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="root-apiso-cat-notdefault-{{$parent.$parent.$index}}-{{$parent.$index}}")
+                                                                                label.dfx-studio-explorer-treeview-menuicon-label(for="root-apiso-cat-notdefault-{{$parent.$parent.$index}}-{{$parent.$index}}") {{apisoCategoryName}}
+                                                                                    a.pull-right.dfx-studio-explorer-treeview-menuicon(ng-click="loadExplorerMenu($event, 'category', application.name, apisoCategoryName, 'apiso')")
+                                                                                        i.fa.fa-cog
+                                                                                ul.dfx-studio-explorer-treeview-content
+                                                                                    li(ng-repeat="apiso in apisoCategory track by $index" )
+                                                                                        label.dfx-studio-explorer-treeview-menuicon-label(ng-click="loadStudioView('/api_so/update/'+application.name+'/' + apiso.name )")
+                                                                                            span {{apiso.name}}
+                                                                                            a.pull-right.dfx-studio-explorer-treeview-menuicon(ng-click="loadExplorerMenu($event, 'menuItem', application.name, apisoCategoryName, 'apiso', apiso.name)")
+                                                                                                i.fa.fa-cog
+                                            li
+                                                input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="shared-cat")
+                                                label(for="shared-cat") Shared Catalog
+                                                ul.dfx-studio-explorer-treeview-content
+                                                    li
+                                                        input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="shared-configuration")
+                                                        label(for="shared-configuration") Configuration
+                                                        ul.dfx-studio-explorer-treeview-content
+                                                    li
+                                                        input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="shared-components")
+                                                        label(for="shared-components") Components
+                                                        ul.dfx-studio-explorer-treeview-content
+                                                            li
+                                                                input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="shared-views")
+                                                                label(for="shared-views") Views
+                                                                ul.dfx-studio-explorer-treeview-content
+                                                            li
+                                                                input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="shared-api")
+                                                                label(for="shared-api") API Service Objects
+                                                                ul.dfx-studio-explorer-treeview-content
+                            md-content#dfx-studio-main-content(flex)
+                                div.ng-view

@@ -1,0 +1,64 @@
+{
+	"template": 			{ "value": "default" },
+	"name": {
+		"value": "donutChart1"
+	},
+	"flex": {
+	  	"value": 50
+	},
+	"binding": {
+	  	"value": ""
+	},
+	"title": {
+	  	"value": "'Donut Chart'"
+	},
+  	"chartType": {
+	  	"value": "pieChart"
+	},
+	"display": {
+		"value": "true"
+	},
+	"options": {
+			"labelSunbeamLayout": "true",
+			"labelThreshold": 0.01,
+			"donutLabelsOutside": "false",
+			"showLabels": "true",
+			"showLegend": "true",
+			"donutRatio": 0.35,
+			"cornerRadius": 0,
+			"growOnHover": "true"
+	},
+	"dynamicOptions": {
+	  	"value": ""
+	},
+	"style": {
+	  	"value": ""
+	},
+	"classes": {
+		"value": ""
+	},
+	"dynamicClasses": {
+		"value": ""
+	},
+	"onclick": {
+		"value": ""
+	},
+	"ondblclick": {
+	  	"value": ""
+	},
+	"onmouseover": {
+	  	"value": ""
+	},
+	"onmouseleave": {
+	  	"value": ""
+	},
+	"onmousemove": {
+	  	"value": ""
+	},
+	"onstatechange": {
+	  	"value": ""
+	},
+	"onrenderend": {
+	  	"value": ""
+	}
+}

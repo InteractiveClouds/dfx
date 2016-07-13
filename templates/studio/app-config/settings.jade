@@ -1,0 +1,79 @@
+form#applicationForm(action="javascript:void(0);")
+    div.panel.panel-primary
+        div.panel-heading
+            h4 General Information
+        div.panel-body
+            fieldset
+                div.form-group.col-lg-6
+                    label(for="fldTitle") Title:
+                    input#fldTitle.form-control(type="text", value='#{application.title}', data-inputname='title')
+                div.form-group.col-lg-6
+                    label(for="fldOwnerId") Owner:
+                    input#fldOwnerId.form-control(type="text", value='#{application.ownerId}', data-inputname='ownerId')
+                div.form-group.col-lg-6
+                    label(for="fldRequestDate") Creation Date:
+                    input#fldRequestDate.form-control(readonly, type="text", value='#{application.creationDate}')
+                div.form-group.col-lg-3
+                    label(for="fldPlatformVisible") Platform:
+                    input#fldPlatform(readonly, type="hidden", value='#{application.platform}')
+                    input#fldPlatformVisible.form-control(readonly, type="text", value='#{application.platform == "web" ? "Web" : "Mobile"}')
+                div.form-group.col-lg-3
+                    label(for="fldAppVersion") Version:
+                    input#fldRequestDate.form-control(type="text", value='#{application.version}', data-inputname='version')
+    div.panel.panel-primary
+        div.panel-heading
+            h4 Personalization
+        div.panel-body
+            - var template_value = (application.personalization == null) ? '' : application.personalization.template;
+            div.col-md-6
+                fieldset
+                    label(for="fldTemplate") Theme template:
+                    select#fldTemplate.form-control(value='#{template_value}', data-inputname='template', onchange="DfxStudio.appSelectTheme(this);")
+                        each template in templates
+                            if template.platform == application.platform
+                                option(id="dfx_theme_#{template.name}", thumbnail="#{template.thumbnail}", value="#{template.name}", selected=(template_value==template.name ? 'true' : undefined)) #{template.name}
+    div.panel.panel-primary(style="position: relative; height: 99%; margin-bottom: 1%;")
+        div.panel-heading
+            h4 GitHub Repository
+        div.panel-body
+            form(action="javascript:void(0);", style="margin-top:10px")
+                fieldset
+                    input#dfx_github_settings_provider_type(type="hidden", name="dfx_github_settings_provider_type", value='github')
+                    div.form-group.col-md-12
+                        label(for="dfx_github_settings_access_token") Access token:
+                        input#dfx_github_settings_access_token.form-control(type="text", name="dfx_github_settings_access_token", placeholder="Github personal access token", value='#{access_token}')
+                    div.form-group.col-md-6
+                        label(for="dfx_github_settings_repository_name") Name:
+                        input#dfx_github_settings_repository_name.form-control(type="text", name="dfx_github_settings_repository_name", placeholder="Repository name", size="50", value="#{reponame}")
+                    div.form-group.col-md-6
+                        label(for="dfx_github_settings_repository_user") Owner's Name:
+                        input#dfx_github_settings_repository_user.form-control(type="text", name="dfx_github_settings_repository_user", placeholder="Repository owner name", size="50", value="#{username}")
+            div.col-md-12
+                button.btn.btn-info(type='button', onclick="DfxStudio.Home.Settings.importAll('#{application.name}','#{application.tenant}','#{application.user}')")
+                    span.fa.fa-lg.fa-cloud-download
+                    span(style="padding-left:5px") Git Pull
+                button.btn.btn-info(type='button', onclick="DfxStudio.Home.Settings.exportAll('#{application.name}','#{application.tenant}','#{application.user}')", style="margin-left:10px")
+                    span.fa.fa-lg.fa-cloud-upload
+                    span(style="padding-left:5px") Git Push
+                button.btn.btn-info(type='button', onclick="DfxStudio.Home.Settings.status('#{application.name}','#{application.tenant}','#{application.user}')", style="margin-left:10px")
+                    span.fa.fa-lg.fa-info
+                    span(style="padding-left:5px") Git Status
+                button#clearGithubRepository.btn.btn-danger.pull-right(type='button', onclick="DfxStudio.Home.Settings.clearRep({applicationName: '#{application.name}', reponame: '#{reponame}'},'#{application.tenant}','#{application.user}')", style="margin-left:10px")
+                    span.fa.fa-lg.fa-trash-o
+                    span(style="padding-left:5px") Empty Remote Repository
+                div#git-status-block.panel.panel-primary(style="display: none; margin-top: 15px;")
+                    div.panel-heading(style="background-color: #7F9AA8;")
+                        h4 Local Repository Changes
+                    div.panel-body(style="background-color: #F5F5F5;")
+                        div.components
+    div
+        a.btn.btn-info.save-now-submitter(href="javascript:void(0);", onclick="javascript:DfxStudio.Home.Settings.update({applicationName: '#{application.name}', formId: 'applicationForm'});")
+            span.fa.fa-lg.fa-floppy-o
+            span(style="padding-left:5px") Save
+    div.panel.panel-danger(style="margin-top: 15px;")
+        div.panel-heading
+            h4 Danger Zone
+        div.panel-body
+            button.btn.btn-default(type='button', onclick="DfxStudio.Dashboard.deleteApplication({applicationName:'#{application.name}'});", style="margin-left:10px")
+                span.fa.fa-lg.fa-trash-o
+                span(style="padding-left:5px") Delete the Application

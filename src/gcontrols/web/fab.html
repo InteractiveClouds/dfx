@@ -1,0 +1,34 @@
+<div layout="column" dfx-gc-compiled layout-align="center end" style="{{attributes.style.value}}" class="{{attributes.classes.value}}" dfx-ng-class="ng-class,dynamicClasses" dfx-ng-show="ng-show,display">
+  <md-fab-speed-dial md-direction="{{attributes.fabDirection.value}}" ng-class="attributes.animation.value" dfx-ng-disabled="ng-disabled,disabled">
+    <md-fab-trigger dfx-ng-disabled="ng-disabled,disabled">
+      <md-button id="{{component_id}}_fab_menu" dfx-gc-compiled-child aria-label="{{component_id}}_fab_menu" class="{{attributes.triggerButton.class}} dfx-core-gc-fab md-fab" style="{{attributes.triggerButton.style}}"
+        dfx-ng-focus="ng-focus,onfocus"
+        dfx-ng-blur="ng-blur,onblur"
+        dfx-ng-click="ng-click,onclick"
+        dfx-ng-dblclick="ng-dblclick,ondblclick"
+        dfx-ng-keypress="ng-keypress,onkeypress"
+        dfx-ng-keydown="ng-keydown,onkeydown"
+        dfx-ng-keyup="ng-keyup,onkeyup"
+        dfx-ng-mouseover="ng-mouseover,onmouseover"
+        dfx-ng-mouseenter="ng-mouseenter,onmouseenter"
+        dfx-ng-mousemove="ng-mousemove,onmousemove"
+        dfx-ng-mouseleave="ng-mouseleave,onmouseleave"
+        dfx-ng-mouseup="ng-mouseup,onmouseup"
+        dfx-ng-disabled="ng-disabled,disabled">
+        <md-tooltip ng-if="attributes.label.value.length>0" md-autohide="true" md-direction="{{attributes.triggerButton.tooltip.direction}}" class="dfx-core-gc-fab-tooltip {{attributes.triggerButton.tooltip.classes}}" style="{{attributes.triggerButton.tooltip.style}}">{{$eval(attributes.label.value)}}</md-tooltip>
+        <md-icon ng-if="attributes.icon.type ==='fa-icon'"  class="fa {{$eval(attributes.icon.value) || 'fa-bars'}} dfx-core-gc-fab-icon" style="{{attributes.icon.style}};font-size:{{attributes.icon.size}}px;width:{{attributes.icon.size}}px;height:{{attributes.icon.size}}px;"></md-icon>
+        <ng-md-icon ng-if="attributes.icon.type ==='svg-icon'" icon="{{$eval(attributes.icon.value) || 'menu'}}" size="{{attributes.icon.size}}" class="dfx-core-gc-fab-icon" style="{{attributes.icon.style}};width:{{attributes.icon.size}}px;height:{{attributes.icon.size}}px;"></ng-md-icon>
+      </md-button>
+    </md-fab-trigger>
+    <md-fab-actions id="{{component_id}}_fab_menu_list">
+      <div class="md-fab-action-item" ng-repeat="item in attributes.menuItems.value track by $index" >
+      <md-button aria-label="{{component_id}}_fab-icon_{{$index}}"
+        ng-click="$eval(item.onclick);hideTooltip();" class="{{attributes.actionButton.class}} dfx-core-gc-fab-item md-fab"
+        style="{{attributes.actionButton.style}}" ng-show="$eval(item.display)" ng-disabled="$eval(item.disabled)">
+        <md-tooltip ng-if="item.label.length>0" md-autohide="true" md-direction="{{attributes.actionButton.tooltip.direction}}" class="dfx-core-gc-fab-tooltip {{attributes.actionButton.tooltip.classes}}" style="{{attributes.actionButton.tooltip.style}}">{{$eval(item.label)}}</md-tooltip>
+        <md-icon ng-if="item.icon.type ==='fa-icon'" class="fa {{$eval(item.icon.value) || 'fa-home'}} dfx-core-gc-fab-item-icon" style="{{attributes.actionButton.icon.style}};font-size:{{attributes.actionButton.icon.size}}px;width:{{attributes.actionButton.icon.size}}px;height:{{attributes.actionButton.icon.size}}px;"></md-icon>
+        <ng-md-icon ng-if="item.icon.type ==='svg-icon'" icon="{{$eval(item.icon.value) || 'home'}}" size="{{attributes.actionButton.icon.size}}" class="dfx-core-gc-fab-item-icon" style="{{attributes.actionButton.icon.style}};width:{{attributes.actionButton.icon.size}}px;height:{{attributes.actionButton.icon.size}}px;"></ng-md-icon>
+      </md-button></div>
+    </md-fab-actions>
+  </md-fab-speed-dial>
+</div>

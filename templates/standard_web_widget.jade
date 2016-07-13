@@ -1,0 +1,12 @@
+mixin displayWidget(widgetname, children)
+    include dw/widget_frame
+case wclass.definition.wtype
+    when "jade"
+        - var dyn_fn = jade_compiler.compile( wclass.definition.src )
+        - var dyn_res = dyn_fn({widget:wclass.definition, wid:'abc'})
+        | !{dyn_res}
+    when "visual"
+        - var widgetname = wclass.name;
+        - var src_obj = JSON.parse(wclass.definition.src);
+        - var children = src_obj.definition;
+        mixin displayWidget(widgetname, children)

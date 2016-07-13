@@ -1,0 +1,75 @@
+doctype html
+html(ng-app="dfx_preview_app")
+    head
+        meta(http-equiv="content-type", content="text/HTML;charset=UTF-8")
+        meta(name="viewport", content="width=device-width,initial-scale=1")
+        title Preview #{wclass.name}
+
+        link(rel="stylesheet", href="/css/preview/dfx.min.css", media="screen")
+        script(src="/js/preview/dfx.js")
+
+        if (loadGoogleMap)
+            script(src='https://maps.googleapis.com/maps/api/js?key=#{googleMapAPIKey}')
+        each dialog_widget_name in dialog_widget_names
+            script(src="/widgets/#{tenantid}/#{dialog_widget_name}.js")
+        each resource_item in resources
+            - if ( resource_item.type == 'JavaScript' ) {
+                script(src="/#{resource_item.path}")
+            - } else if ( resource_item.type == 'CSS' ) {
+                link(rel="stylesheet", type="text/css", href="/#{resource_item.path}", media="screen")
+            - }
+        style.
+            {{source_styles}}
+        script(type="text/javascript").
+            DreamFace.initSession( {dfx_appname:'#{appname}', dfx_tenantid:'#{tenantid}'} );
+            DreamFace.setUserDefinition();
+            var dfx_preview_app = angular.module('dfx_preview_app', [ 'ngMaterial', 'dfxAppRuntime', 'dfxAppServices', 'dfxGControls', '#{wclass.name}']);
+            dfx_preview_app.config(function($mdThemingProvider) {
+                $mdThemingProvider.theme('altTheme').primaryPalette('blue');
+                $mdThemingProvider.setDefaultTheme('altTheme');
+            });
+
+            dfx_preview_app.directive('dfxVePlatform', function() {
+                return {
+                    restrict: 'A',
+                    scope: false,
+                    link: function(scope, element, attrs) {
+                        if (scope.platform == 'mobile') {
+                            scope.refreshDevice();
+                        } else {
+                            element.css('width', '100%');
+                        }
+                    }
+                }
+            });
+        script(type="text/javascript").
+            {{source_script}}
+    body(ng-controller="dfx_app_controller", dfx-app="dfx_preview_app", dfx-platform="#{platform}")
+        div(layout="column")
+            div(layout="row", style="height:40px;background-color: #353535;border-bottom: 1px #d2d2d2 solid;padding:2px")
+                img(src="/images/df_logo_blanc_1029x223.png" style="width:90px;height:20px;margin-top:7px;margin-left:10px")
+                div(style="color: #fff;font-size: 13px;font-style: italic;display: inline-block;margin-left:10px;line-height:33px")
+                    span Preview the view {{view_name}}
+                div(style="color: #212121;font-size: 13px;line-height:30px;display: inline-block;height:31px;margin-top:2px;margin-left:20px;margin-right:20px;padding-left:5px; padding-right:5px; background:#A2F321;border-radius:3px;cursor:pointer;outline: none" ng-click="logout()")
+                    md-tooltip(md-direction="bottom") Logout
+                    span(style="line-height:25px;") Logged as {{app_user.firstName + ' ' + app_user.lastName}}
+                span.flex
+                    label.pull-right(style="font-size:12px;background:#8731AB;padding: 2px 4px;color:#fff;margin-top:6px;margin-right:10px;border-radius:8px;cursor:pointer", ng-if="platform=='mobile'", ng-click="changeDeviceOrientation()") {{design_device_orientation}}
+                    md-menu.pull-right(style="margin-top:-6px", ng-if="platform=='mobile'")
+                        label(md-menu-origin, style="font-size:12px;background:#14BD39;padding: 2px 4px;color:#fff;margin-top:4px;margin-right:10px;border-radius:8px;cursor:pointer", ng-click="$mdOpenMenu($event)") {{design_selected_device.label}}
+                        md-menu-content(width="6")
+                            md-menu-item(ng-repeat="device in design_devices")
+                                md-button(ng-click="changeDevice($index)") {{device.name}}
+            div(id="PreviewContent", flex)
+                - var widgetname = wclass.name;
+                - if (wclass.definition.wtype=='builder') {
+                    - var children = wclass.definition.parameters.widgetDefinition.definition[0].children;
+                    include dw/widget_frame
+                - } else if (wclass.definition.wtype=='jade') {
+                    - var dyn_fn = jade_compiler.compile( wclass.definition.src )
+                    - var dyn_res = dyn_fn({ "widget": wclass.definition, "wid": "abc", "appname": appname, "tenantid": tenantid})
+                    | !{dyn_res}
+                - } else if (wclass.definition.wtype=='visual') {
+                    div#dfx_view_preview_main_container(ng-controller="#{widgetname}Controller", layout="row", layout-align="center start")
+                        div#dfx_view_preview_container(dfx-view-preview="#{widgetname}", dfx-ve-platform="#{platform}", ng-controller="dfx_view_controller", dfx-view-card="default")
+                - }

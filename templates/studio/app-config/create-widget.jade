@@ -1,0 +1,54 @@
+form#createWidgetForm(action="javascript:void(0);")
+    div.panel.panel-primary
+        div.panel-heading
+            h4 View Main Properties
+        div.panel-body
+            fieldset
+                div.form-group.col-lg-4
+                    label(for="fldName") Name:
+                    input#fldName.form-control(type="text", name="fldName", placeholder="View name")
+                div.form-group.col-lg-8
+                    label(for="fldDescription") Description:
+                    input#fldDescription.form-control(type="text", name="fldDescription", placeholder="view description")
+                div.form-group.col-lg-4
+                    label(for="fldOwnerId") Owner:
+                    input#fldOwnerId.form-control(type="text", name="fldOwnerId", placeholder="ex: john")
+                div.form-group.col-lg-8
+                    label(for="fldWidgetCategory") Category:
+                    div.input-group
+                        select#fldWidgetCategory.form-control.selectpicker(name="widgetCat", placeholder="")
+                            - if (widgetcats && widgetcats.length > 0) {
+                                each widgetCat, i in widgetcats
+                                    option(value="#{widgetCat.name}", selected = widgetCat.name == category) #{widgetCat.name}
+                            - }
+                        span.input-group-btn
+                            button#widgetAddCat.btn.btn-info(type="button", rel="popover", onclick="DfxStudio.Home.Widgets.categories('create', '#{applicationName}', '#{platform}');")
+                                span.fa.fa-lg.fa-plus
+                        span.input-group-btn
+                            button#widgetEditCat.btn.btn-info(type="button", rel="popover", onclick="DfxStudio.Home.Widgets.categories('edit', '#{applicationName}', '#{platform}');")
+                                span.fa.fa-lg.fa-pencil-square-o
+                        span.input-group-btn
+                            button#widgetRMCat.btn.btn-info(type="button", rel="popover", onclick="DfxStudio.Home.Widgets.categories('remove', '#{applicationName}', '#{platform}');")
+                                span.fa.fa-lg.fa-trash-o
+                    input#fldApplication(type="hidden", name="fldApplication", value="#{applicationName}")
+                div.form-group.col-lg-4
+                    label(for="fldPlatformVisible") Platform:
+                    - if (platform)
+                        input#fldPlatform(name="fldPlatform", readonly, type="hidden", value='#{platform}')
+                        input#fldPlatformVisible.form-control(readonly, type="text", value='#{platform == "web" ? "Web" : "Mobile"}')
+                    - else
+                        select#fldPlatform.form-control(name="fldPlatform", placeholder="select a platform")
+                            option(value="web") Web
+                            option(value="mobile") Mobile
+                div.form-group.col-lg-3
+                    label(for="fldType") Type:
+                    select#fldType.form-control(name="fldType", placeholder="select a type")
+                        option(value="visual") visual
+                        option(value="jade") jade
+            div.form-group.col-lg-12
+                button.btn.btn-info.save-now-submitter(type='submit', onclick="DfxStudio.Home.Widgets.createWidget();")
+                    span.fa.fa-lg.fa-floppy-o
+                    span(style="padding-left:5px") Save
+                button.btn.btn-default(type='button', onclick="DfxStudio.Dispatcher.run('#!/home/#{applicationName}/widgets');", style="margin-left:10px")
+                    span.fa.fa-lg.fa-undo
+                    span(style="padding-left:5px") Cancel

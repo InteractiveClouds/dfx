@@ -1,0 +1,59 @@
+<md-dialog aria-label="textarea" ng-cloak>
+    <form>
+        <md-toolbar><div class="md-toolbar-tools">
+            <h2>TreeView editor</h2>
+        </div></md-toolbar>
+        <md-dialog-content id="{{component_id}}_md_dialog" layout="column" style="max-width:880px;max-height:810px;width:880px;height:400px;margin:0px;padding:8px 8px 2px 8px;">
+            <div style="display:flex;flex-direction:row;flex-wrap:wrap;justify-content:space-between;">
+                <section id="{{component_id}}_menu_structure" class="md-whiteframe-1dp" style="width:49.5%;border-radius:4px;overflow:hidden;">
+                    <md-toolbar style="min-height:36px;background:rgba(128,128,128,0.46);">
+                        <div class="md-toolbar-tools" style="height:36px;max-height:36px">
+                            <h3 style="font-size:16px;">TreeView structure</h3>
+                        </div>
+                    </md-toolbar>
+                    <md-toolbar style="min-height:30px;background:#ECECEC;font-size:14px;display:flex;flex-direction:row;align-items:center;padding:0 9px;">
+                        <a href="#" class="fa fa-plus" ng-click="addTreeItem()" style="color:#676B6E;text-decoration:none;margin:auto 7px;" title="Add treeview item"></a>
+                        <a href="#" class="fa fa-minus" ng-click="deleteTreeItem()" style="color:#676B6E;text-decoration:none;margin:auto 7px;" title="Remove treeview item"></a>
+                        <a href="#" class="fa fa-arrow-up" ng-click="moveUpTreeItem()" style="color:#676B6E;text-decoration:none;margin:auto 7px;" title="Move up treeview item"></a>
+                        <a href="#" class="fa fa-arrow-down" ng-click="moveDownTreeItem()" style="color:#676B6E;text-decoration:none;margin:auto 7px;" title="Move down treeview item"></a>
+                        <a href="#" class="fa fa-indent" ng-click="indentTreeItem()" style="color:#676B6E;text-decoration:none;margin:auto 7px;" title="Indent treeview item"></a>
+                        <a href="#" class="fa fa-outdent" ng-click="outdentTreeItem()" style="color:#676B6E;text-decoration:none;margin:auto 7px;" title="Outdent treeview item"></a>
+                    </md-toolbar>
+                    <md-content class="tree-structure" layout-padding flex style="">
+                        <script type="text/ng-template" id="treeView">
+                            <a href="#" ng-click="selectTreeItem($event, node)">{{ node.name | checkExpression }}</a>
+                            <ul ng-if="node.children.length > 0">
+                                <li ng-repeat="node in node.children track by $index"  class="tree-view-item" parent-index="{{$parent.$parent.$index}}" self-index="{{$index}}" ng-include="'treeView'"></li>
+                            </ul>
+                        </script>
+                        <ul><li ng-repeat="node in children track by $index"  class="tree-view-item" parent-index="{{$parent.$parent.$index}}" self-index="{{$parent.$index}}" ng-include="'treeView'"></li></ul>
+                    </md-content>
+                </section>
+                <section id="{{component_id}}_tree_item_properties" class="md-whiteframe-1dp" style="width:49.5%;border-radius:4px;overflow:hidden;">
+                    <md-toolbar style="min-height:36px;background:rgba(128,128,128,0.46);">
+                        <div class="md-toolbar-tools" style="height:36px;max-height:36px">
+                            <h3 style="font-size:16px;">TreeView item properties</h3>
+                        </div>
+                    </md-toolbar>
+                    <md-content layout-padding flex style="">
+                        <div class="dfx-ve-property-treeview hover clearfix" style="padding:8px 16px 12px 12px;margin:0 -8px;">
+                            <ul class="dfx-ve-property-picker-content" style="margin:0;padding:0">
+                                <li class="col-md-12">
+                                    <span class="col-md-4">Label:</span>
+                                    <div class="col-md-8" layout="row">
+                                        <input class="col-md-12" type="text" ng-model="tree.name" style="margin-left:-15px;"/>
+                                        <dfx-ve-menu-expression></dfx-ve-menu-expression>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </md-content>
+                </section>
+            </div>
+            <div class="second-dialog-box"></div>
+        </md-dialog-content>
+        <div class="md-actions">
+            <md-button ng-click="closeDialog()" class="md-primary">Close</md-button>
+        </div>
+    </form>
+</md-dialog>

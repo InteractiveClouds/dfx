@@ -1,0 +1,10 @@
+ <div id="{{component_id}}_panel" class="panel {{attributes.classes.value}}" dfx-gc-web-container>
+ 	<div class="panel-body">
+ 		<div>
+	 		<div id="{{component_id}}_layout_0_row_{{$index}}" class="row" ng-repeat="row in attributes.layout.rows">
+	 			<div id="{{component_id}}_layout_0_row_{{$parent.$index}}_column_{{$index}}" gc-container="layout_0_row_{{$parent.$index}}_column_{{$index}}" gc-parent="{{component_id}}" class="ui-placeholder dfx_visual_editor_droppable col-md-{{col.width.value}} gc_w_column_layout gc_w_column_orientation_horizontal gc_w_column_align_start gc_w_column_disposition_start" ng-repeat="col in row.cols">
+	 			</div>
+	 		</div>
+ 		</div>
+ 	</div>
+ </div>

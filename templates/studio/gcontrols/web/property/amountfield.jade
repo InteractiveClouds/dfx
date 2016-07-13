@@ -1,0 +1,146 @@
+table.table.table-bordered
+    tbody
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4
+                label.dfx_visual_editor_property_label Name:
+            td
+                input#gc_amountfield_attr_name.form-control(type="text")
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4.gc_w_design_attr_bind
+                label.dfx_visual_editor_property_label Property:
+            td
+                div.input-group
+                    input#gc_amountfield_attr_property.form-control(type="text")
+                    span.input-group-btn
+                        button#btnPickProperty.btn.btn-default(data-toggle="modal", data-target="#pickerValueModal", data-vb-picker="bind", data-vb-picker-target="gc_amountfield_attr_property") ...
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4.gc_w_design_attr_exp
+                label.dfx_visual_editor_property_label Property Init:
+            td
+                .input-group
+                    input#gc_amountfield_attr_propertyInit.form-control(type="text")
+                    span.input-group-btn
+                        button#btnPickPropertyInit.btn.btn-default(data-toggle="modal", data-target="#pickerValueModal", data-vb-picker="exp", data-vb-picker-target="gc_amountfield_attr_propertyInit") ...
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4
+                label.dfx_visual_editor_property_label Label:
+            td
+                input#gc_amountfield_attr_label.form-control(type="text")
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4
+                label.dfx_visual_editor_property_label Label Visible:
+            td
+                select#gc_amountfield_attr_labelVisible.form-control
+                    option(value="yes") yes
+                    option(value="no") no
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4.gc_w_design_attr_exp
+                label.dfx_visual_editor_property_label Display:
+            td
+                .input-group
+                    input#gc_amountfield_attr_display.form-control(type="text")
+                    span.input-group-btn
+                        button#btnPickDisplay.btn.btn-default(data-toggle="modal", data-target="#pickerValueModal", data-vb-picker="exp", data-vb-picker-target="gc_amountfield_attr_display") ...
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4.gc_w_design_attr_exp
+                label.dfx_visual_editor_property_label Disabled:
+            td
+                .input-group
+                    input#gc_amountfield_attr_disabled.form-control(type="text")
+                    span.input-group-btn
+                        button#btnPickDisabled.btn.btn-default(data-toggle="modal", data-target="#pickerValueModal", data-vb-picker="exp", data-vb-picker-target="gc_amountfield_attr_disabled") ...
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4
+                label.dfx_visual_editor_property_label Required:
+            td
+                select#gc_amountfield_attr_required.form-control
+                    option(value="yes") yes
+                    option(value="no") no
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4
+                label.dfx_visual_editor_property_label Thousands separator:
+            td
+                input#gc_amountfield_attr_groupsep.form-control(type="text",placeholder=", or .")
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4
+                label.dfx_visual_editor_property_label Decimal separator:
+            td
+                input#gc_amountfield_attr_decsep.form-control(type="text",placeholder="")
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4
+                label.dfx_visual_editor_property_label Number of decimal:
+            td
+                input#gc_amountfield_attr_digits.form-control(type="text",placeholder="")
+
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4
+                label.dfx_visual_editor_property_label Min Length:
+            td
+                input#gc_amountfield_attr_minlength.form-control(type="text")
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4
+                label.dfx_visual_editor_property_label Max Length:
+            td
+                input#gc_amountfield_attr_maxlength.form-control(type="text")
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4
+                label.dfx_visual_editor_property_label Pattern:
+            td
+                input#gc_amountfield_attr_pattern.form-control(type="text")
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4
+                label.dfx_visual_editor_property_label Error msg:
+            td
+                div.input-group
+                    button#btnSelectClass.btn.btn-default(type="button", data-toggle="collapse", data-target="#listErrorMessages") Edit...
+                ul#listErrorMessages.list-unstyled.collapse(style="padding-left:10px")
+                    li
+                        label Required
+                        input#gc_amountfield_attr_error_required.form-control(type="text")
+                    li
+                        label Min Length
+                        input#gc_amountfield_attr_error_minlength.form-control(type="text")
+                    li
+                        label Max Length
+                        input#gc_amountfield_attr_error_maxlength.form-control(type="text")
+                    li
+                        label Invalid pattern
+                        input#gc_amountfield_attr_error_pattern.form-control(type="text")
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4
+                label.dfx_visual_editor_property_label PlaceHolder:
+            td
+                input#gc_amountfield_attr_placeholder.form-control(type="text")
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4
+                label.dfx_visual_editor_property_label Classes:
+            td
+                input#gc_amountfield_attr_classes.form-control(type="text")
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4
+                label.dfx_visual_editor_property_label Style:
+            td
+                input#gc_amountfield_attr_style.form-control(type="text")
+        tr
+            td.field-label.dfx_visual_editor_property.col-md-4.gc_w_design_attr_evt
+                label.dfx_visual_editor_property_label On Change:
+            td
+                div.input-group
+                    input#gc_amountfield_attr_onchange.form-control(type="text")
+                    span.input-group-btn
+                        button#btnPickOnChange.btn.btn-default(data-toggle="modal", data-target="#pickerValueModal", data-vb-picker="evt", data-vb-picker-target="gc_amountfield_attr_onchange") ...
+input#gc_amountfield_attr_id(type="hidden")
+a.btn.btn-info.dfx_visual_editor_property_button(href="javascript:gc_web_amount_field.savePropertyPanel();")
+    span.fa.fa-lg.fa-check
+    span(style="padding-left:5px") Apply
+script.
+    $(document).ready(function(){
+        $('#btnDecimal').on('click', function(e){
+            $('#gc_amountfield_attr_mask').val('decimal');
+            $('#btnSelectMask').click();
+        });
+        $('#btnIP').on('click', function(e){
+            $('#gc_amountfield_attr_mask').val('ip');
+            $('#btnSelectMask').click();
+        });
+    });

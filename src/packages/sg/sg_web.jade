@@ -1,0 +1,138 @@
+html(ng-app="#{appname}")
+doctype html
+head
+    meta(http-equiv="content-type", content="text/HTML;charset=UTF-8")
+    meta(name="viewport", content="width=device-width,initial-scale=1")
+    title #{apptitle}
+    link(rel="stylesheet", type="text/css", href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,700', rel='stylesheet'")
+    link(rel="stylesheet", type="text/css", href="sg/css/bootstrap.min.css", media="screen")
+    link(rel="stylesheet", type="text/css", href="sg/css/font-awesome.min.css", media="screen")
+    link(rel="stylesheet", type="text/css", href="sg/css/smartadmin-production.min.css", media="screen")
+    link(rel="stylesheet", type="text/css", href="sg/css/smartadmin-skins.min.css", media="screen")
+    link(rel="stylesheet", type="text/css", href="sg/css/dfx-utils.min.css", media="screen")
+    link(rel="stylesheet", type="text/css", href="sg/css/app_setup.min.css", media="screen")
+    link(rel="stylesheet", type="text/css", href="css/web/app.css", media="screen")
+    link(rel="stylesheet", type="text/css", href="css/vendor/dfx-gcontrols.min.css", media="screen")
+    script(src="js/vendor/des.min.js")
+    script(src="js/vendor/md5.js")
+    script(src="js/commons/authRequest.js")
+    script(src="js/vendor/jquery.min.js")
+    script(src="js/vendor/jquery-ui.min.js")
+    script(src="js/vendor/angular.min.js")
+    script(src="js/vendor/angular-route.min.js")
+    script(src="js/vendor/d3.min.js")
+    script(src="js/vendor/bootstrap.min.js")
+    script(src="js/commons/dfx.utils.js")
+    script(src="js/vendor/nv-d3.min.js")
+    script(src="js/vendor/angular-nvd3.min.js")
+    script(src="js/vendor/jquery-inputmask.min.js")
+    script(src="js/vendor/jarvis.widget.min.js")
+    script(src="js/vendor/plugin/datatables/jquery.dataTables.min.js")
+    script(src="js/vendor/plugin/datatables/dataTables.extensions.min.js")
+    script(src="js/vendor/plugin/datatables/dataTables.colVis.min.js")
+    script(src="js/vendor/plugin/datatables/dataTables.tableTools.min.js")
+    script(src="js/vendor/plugin/datatables/dataTables.bootstrap.min.js")
+    script(src="js/vendor/notification/SmartNotification.min.js")
+    script(src="js/vendor/app_setup.min.js")
+    script(src="js/web/dfx.web.js")
+    script(src="js/web/app.js")
+    script(src="js/web/app_services.js")
+body
+    script(type="text/javascript").
+        DreamFace.initSession( {dfx_appname:'#{appname}', dfx_tenantid:'#{tenantid}'} );
+        $(document).ready(function(){
+            setup_widgets_web();
+        });
+    header#header
+        div#logo-group
+            span#logo
+                img(src="sg/img/logo.png", alt="#{appname}")
+            span#activity.activity-dropdown
+                i.fa.fa-user
+                b.badge 0
+        div.project-context.hidden-xs
+            span.label Application:
+            span.project-selector.dropdown-toggle(data-toggle="dropdown")
+                span #{apptitle}:&nbsp;
+                i.fa.fa-angle-down
+        div.pull-right
+            div#hide-menu.btn-header.pull-right
+                span
+                    a(href="javascript:void(0);", data-action="toggleMenu", title="Collapse Menu")
+                        i.fa.fa-reorder
+            div#logout.btn-header.transparent.pull-right
+                span
+                    a(href="index.html", title="Sign Out", data-action="userLogout", data-logout-msg="You will be disconnected and will go back to the login screen.")
+                        i.fa.fa-sign-out
+            div#fullscreen.btn-header.transparent.pull-right
+                span
+                    a(href="javascript:void(0);", data-action="launchFullscreen", title="Full Screen")
+                        i.fa.fa-arrows-alt
+            ul.header-dropdown-list.hidden-xs
+                li
+                    a.dropdown-toggle(href="#", data-toggle="dropdown")
+                        img.flag.flag-us(src="sg/img/blank.gif", alt="United States")
+                        span &nbsp;US&nbsp;
+                        i.fa.fa-angle-down
+                    ul.dropdown-menu.pull-right
+                        li.active
+                            a(href="javascript:void(0);")
+                                img.flag.flag-us(src="sg/img/blank.gif", alt="US English")
+                                span &nbsp;US&nbsp;
+                        li
+                            a(href="javascript:void(0);")
+                                img.flag.flag-es(src="sg/img/blank.gif", alt="Spanish")
+                                span &nbsp;EN&nbsp;
+                        li
+                            a(href="javascript:void(0);")
+                                img.flag.flag-fr(src="sg/img/blank.gif", alt="French")
+                                span &nbsp;FR&nbsp;
+    aside#left-panel
+        div.login-info
+            span
+                a#show-shortcut(href="javascript:void(0);", data-action="toggleShortcut")
+                    img.online(src="sg/img/avatars/male.png", alt="me")
+                    span john.doe&nbsp;
+                    i.fa.fa-angle-down
+        div.minifyme(data-action="minifyMenu")
+            i.fa.fa-arrow-circle-left.hit
+        nav
+            ul#main_menu
+    div#main(role="main")
+        div#ribbon
+            span.ribbon-button-alignment
+                span#refresh.btn.btn-ribbon(data-action="resetWidgets", data-title="refresh",  rel="tooltip", data-placement="bottom", data-original-title="<i class='text-warning fa fa-warning'></i> Warning! This will reset all your widget settings.", data-html="true")
+                    i.fa.fa-refresh
+            ol.breadcrumb
+                li Home
+        div#dfxContainer(ng-controller="ScreenController")
+            input#dfxScreenUrl(name="dfxScreenUrl", type="text", style="display:none", value="", ng-model="screenUrl")
+            div#content(dfx-screen="screenContent")
+                section#widget-grid
+                    each row, row_id in screen.layout.rows
+                        div.row(id="rid-#{row_id}")
+                            each col, col_id in row.columns
+                                article(id="cid-#{row_id}-#{col_id}", class="col-xs-12 col-sm-#{col.width} col-md-#{col.width} col-lg-#{col.width}")
+                                    each widget, widget_id in col.widgets
+                                        each wclass in wclasses
+                                            if wclass.name==widget.name
+                                                - var widgetname = wclass.name;
+                                                - var widgetprops = (wclass.definition.wtype=='jade') ? null : JSON.parse(wclass.definition.src).properties;
+                                                div.jarviswidget(id="wid-#{row_id}-#{col_id}-#{wclass.id}",
+                                                    data-widget-editbutton=(widgetprops != null && widgetprops.tools.edit == false ? "false" : undefined),
+                                                    data-widget-colorbutton=(widgetprops != null && widgetprops.tools.color == false ? "false" : undefined),
+                                                    data-widget-togglebutton=(widgetprops != null && widgetprops.tools.collapse == false ? "false" : undefined),
+                                                    data-widget-deletebutton=(widgetprops != null && widgetprops.tools.delete == false ? "false" : undefined),
+                                                    data-widget-fullscreenbutton=(widgetprops != null && widgetprops.tools.fullscreen == false ? "false" : undefined),
+                                                    data-widget-sortable=(widgetprops != null && widgetprops.sortable == false ? "false" : undefined))
+                                                    header(style="display:#{(widgetprops == null || widgetprops.title.visible == true ? 'block' : 'none')}")
+                                                        h2
+                                                            strong #{(widgetprops != null ? widgetprops.title.label : widgetname)}
+                                                    div
+                                                        div.jarviswidget-editbox
+                                                            input.form-control(type="text")
+                                                        div.widget-body(ng-include="widget_template_#{widgetname}", dfx-include-replace)
+    div.page-footer
+        div.row
+            div.col-xs-12.col-sm-6
+                span.txt-color-white powered by DreamFace

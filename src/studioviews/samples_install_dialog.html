@@ -1,0 +1,36 @@
+<md-dialog aria-label="Install Sample" style="width: 400px;" ng-cloak>
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <img src="/images/github_logo.png" style="width: 32px; margin-right: 5px;"/>
+                <h5 style="padding-top: 2px;">Install {{selected_sample.content.title}}</h5>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon class="fa fa-lg fa-times" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div layout="col" layout-padding class="md-dialog-content">
+                <div class="layout-column flex-100">
+                    <md-input-container class="md-block flex" style="margin: 0;">
+                        <label>Select an Application:</label>
+                        <md-select ng-model="selected_application">
+                            <md-option ng-repeat="app in applications" value="{{app.name}}">{{app.name}}</md-option>
+                        </md-select>
+                    </md-input-container>
+                    <div style="font-style: italic;padding-top: 10px">All components used by this sample will be installed in the selected application.</div>
+                </div>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button ng-disabled="selected_application==null" class="md-primary" ng-click="install()">
+                Install
+            </md-button>
+            <md-button class="md-primary" ng-click="cancel()">
+                Cancel
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

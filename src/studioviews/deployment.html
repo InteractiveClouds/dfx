@@ -1,0 +1,121 @@
+<div class="md-title" style="padding-left: 10px">Application Builds</div>
+<md-card class="md-altTheme-theme" style="width:100%;overflow:hidden;">
+    <md-card-content class="md-padding">
+        <div layout="row" layout-align="space-between center" style="margin-top: 15px;">
+            <div style="font-size: 17px;"><i class="fa fa-desktop"></i><span style="margin-left:10px">Desktop Build History</span></div>
+            <span>
+                <md-button class="md-raised" ng-click="buildDialog($event, 'web')">
+                    <md-tooltip>Create a new build</md-tooltip>
+                    <md-icon class="fa fa-plus" style="width:14px;height:14px;"></md-icon>
+                    Build
+                </md-button>
+                <md-button class="md-raised" ng-click="navToCloud()">
+                    <md-tooltip>Deploy on the cloud</md-tooltip>
+                    <md-icon class="fa fa-cloud" style="margin-left:10px;width:14px;height:14px;"></md-icon>
+                    Deploy
+                </md-button>
+            </span>
+        </div>
+        <md-card class="md-altTheme-theme" style="width:100%;overflow:hidden; margin:0;">
+            <md-card-content style="padding:0;">
+                <table class="datatable" class="layout-row" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Build Version</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Description</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody ng-repeat="build in builds.web track by $index">
+                        <tr>
+                            <td>{{build.app_version + '.' + build.build_number}}</td>
+                            <td>{{build.build_date || (build.requestDate | date: 'EEE MMM dd yyyy HH:mm:ss') + ' GMT' + (build.requestDate | date: 'Z')}}</td>
+                            <td><span ng-style="{'background': build.status === 'pending...'? '#FF8D00':(build.status === 'failed'?'#cc3214':(build.status === 'success'?'#5cb85c':''))}" style="padding: 2px; color: #ffffff">{{build.status}}</span>
+                                <span><md-button ng-click="showBuildLog(build, 'web', $index)" style="margin: 0; padding: 0; min-width: 20px"><md-icon class="fa fa-lg fa-info-circle" style="font-size:20px; color:#158194;"></md-icon></md-button></span>
+                            </td>
+                            <td>{{build.description}}</td>
+                            <td>
+                                <span><md-button ng-click="doRebuild(build, 'web')" style="margin: 0; padding: 0; min-width: 20px"><md-tooltip>Re-create the build</md-tooltip><md-icon class="fa fa-lg fa-repeat" style="font-size:20px; color:#158194;"></md-icon></md-button></span>
+                                <span ng-if="build.status==='success' && !build.waitingMessage"><md-button ng-click="deployBuild(build, 'web')" style="margin: 0; padding: 0; min-width: 20px"><md-tooltip>Deploy locally</md-tooltip><md-icon class="fa fa-lg fa-cloud-upload" style="font-size:20px; color:#158194;"></md-icon></md-button></span>
+                                <span ng-if="build.waitingMessage"><md-icon class="fa fa-spinner fa-pulse" style="font-size: 24px; color:#300000;"></md-icon></span>
+                                <span><md-button ng-click="confirmDelete($event, build, 'web', $index)" style="margin: 0; padding: 0; min-width: 20px"><md-tooltip>Delete this build</md-tooltip><md-icon class="fa fa-lg fa-trash-o" style="font-size:20px; color:#F50057;"></md-icon></md-button></span>
+                                <span ng-if="build.deployed === true"><a target="_blank" ng-href={{build.link}} style="margin: 0; padding: 0; min-width: 20px"><md-tooltip>Run the application</md-tooltip><md-icon class="fa fa-lg fa-play" style="font-size:20px; color:#158194;"></md-icon></a></span>
+                            </td>
+                        </tr>
+                        <tr ng-show="build.displayLog === true">
+                            <td colspan="5" style="background: #ffffff">
+                                <p ng-repeat="log in build.logs track by $index">
+                                    <span ng-style="{'background': log.level.trim()==='ERROR'? '#ff0000': (log.level.trim()==='WARN'? '#66512c':''), 'color': log.level.trim()==='ERROR'? '#ffffff': (log.level.trim()==='WARN'? '#ffffff':'')}" ng-bind="log.level.trim() + ': '"></span>
+                                    <span ng-bind="log.appid + '/' + build.build_number + ' - '"></span>
+                                    <span ng-bind="log.text"></span>
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </md-card-content>
+        </md-card>
+    </md-card-content>
+</md-card>
+<md-card class="md-altTheme-theme" style="width:100%;overflow:hidden;">
+    <md-card-content class="md-padding">
+        <div layout="row" layout-align="space-between center" style="margin-top: 15px;">
+            <div style="font-size: 17px;"><i class="fa fa-mobile" style="font-size: 24px;"></i><span style="margin-left:10px">Mobile Build History</span></div>
+            <span>
+                <md-button class="md-raised" ng-click="buildDialog($event, 'mobile')">
+                    <md-tooltip>Create a new build</md-tooltip>
+                    <md-icon class="fa fa-plus" style="width:14px;height:14px;"></md-icon>
+                    Build
+                </md-button>
+                <md-button class="md-raised" ng-click="navToCloud()">
+                    <md-tooltip>Deploy on the cloud</md-tooltip>
+                    <md-icon class="fa fa-cloud" style="margin-left:10px;width:14px;height:14px;"></md-icon>
+                    Deploy
+                </md-button>
+            </span>
+        </div>
+        <md-card class="md-altTheme-theme" style="width:100%;overflow:hidden; margin:0;">
+            <md-card-content style="padding:0;">
+                <table class="datatable" class="layout-row" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Build Version</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Description</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody ng-repeat="build in builds.mobile track by $index">
+                        <tr>
+                            <td>{{build.app_version + '.' + build.build_number}}</td>
+                            <td>{{build.build_date || (build.requestDate | date: 'EEE MMM dd yyyy HH:mm:ss') + ' GMT' + (build.requestDate | date: 'Z')}}</td>
+                            <td><span ng-style="{'background': build.status === 'pending...'? '#FF8D00':(build.status === 'failed'?'#cc3214':(build.status === 'success'?'#5cb85c':''))}" style="padding: 2px; color: #ffffff">{{build.status}}</span>
+                                <span><md-button ng-click="showBuildLog(build, 'mobile', $index)" style="margin: 0; padding: 0; min-width: 20px"><md-icon class="fa fa-lg fa-info-circle" style="font-size:20px; color:#158194;"></md-icon></md-button></span>
+                            </td>
+                            <td>{{build.description}}</td>
+                            <td>
+                                <span><md-button ng-click="doRebuild(build, 'mobile')" style="margin: 0; padding: 0; min-width: 20px"><md-tooltip>Re-create the build</md-tooltip><md-icon class="fa fa-lg fa-repeat" style="font-size:20px; color:#158194;"></md-icon></md-button></span>
+                                <span ng-if="build.status==='success' && !build.waitingMessage"><md-button ng-click="deployBuild(build, 'mobile')" style="margin: 0; padding: 0; min-width: 20px"><md-tooltip>Deploy locally</md-tooltip><md-icon class="fa fa-lg fa-cloud-upload" style="font-size:20px; color:#158194;"></md-icon></md-button></span>
+                                <span ng-if="build.waitingMessage"><md-icon class="fa fa-spinner fa-pulse" style="font-size: 24px; color:#300000;"></md-icon></span>
+                                <span><md-button ng-click="confirmDelete($event, build, 'mobile', $index)" style="margin: 0; padding: 0; min-width: 20px"><md-tooltip>Delete this build</md-tooltip><md-icon class="fa fa-lg fa-trash-o" style="font-size:20px; color:#F50057;"></md-icon></md-button></span>
+                                <span ng-if="build.deployed === true"><a ng-click="getDeployedQRCode(build)" style="margin: 0; padding: 0; min-width: 20px"><md-tooltip>Run the application</md-tooltip><md-icon class="fa fa-lg fa-qrcode" style="font-size:20px; color:#158194;"></md-icon></a></span>
+                            </td>
+                        </tr>
+                        <tr ng-show="build.displayLog === true">
+                            <td colspan="5" style="background: #ffffff">
+                                <p ng-repeat="log in build.logs track by $index">
+                                    <span ng-style="{'background': log.level.trim()==='ERROR'? '#ff0000': (log.level.trim()==='WARN'? '#66512c':''), 'color': log.level.trim()==='ERROR'? '#ffffff': (log.level.trim()==='WARN'? '#ffffff':'')}" ng-bind="log.level.trim() + ': '"></span>
+                                    <span ng-bind="log.appid + '/' + build.build_number + ' - '"></span>
+                                    <span ng-bind="log.text"></span>
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </md-card-content>
+        </md-card>
+    </md-card-content>
+</md-card>

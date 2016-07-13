@@ -1,0 +1,52 @@
+- var containerCss = '';
+if (gcitem.attributes.containerCss)
+    each val, key in gcitem.attributes.containerCss
+        - if (val!='') containerCss += key + ':' + val + ';'
+- var css = '';
+if (gcitem.attributes.css)
+    each val, key in gcitem.attributes.css
+        - if (val!='') css += key + ':' + val + ';'
+
+- var semantic_classes = 'ui list';
+if (gcitem.attributes.size.value != '')
+    - semantic_classes += ' ' + gcitem.attributes.size.value;
+div(
+    id="#{gcitem.id}_{{$index}}",
+    ng-show = (gcitem.attributes.display.value == '' ? undefined : "#{gcitem.attributes.display.value}"),
+    style=('position:relative;' + (gcitem.attributes.containerStyle ? gcitem.attributes.containerStyle.value : '') + ';' + containerCss),
+    class="#{gcitem.attributes.containerClasses.value}",
+    ng-class = (gcitem.attributes.containerDynamicClasses.value == '' ? undefined : "#{gcitem.attributes.containerDynamicClasses.value}")
+    )
+    div(
+        id="#{gcitem.id}_list_{{$index}}",
+        style=((gcitem.attributes.style) ? gcitem.attributes.style.value : '' + ';' + css),
+        class="#{semantic_classes} #{gcitem.attributes.classes.value}"
+        )
+        div.item(
+            ng-repeat="item in #{gcitem.attributes.property.value}",
+            ng-click = ((gcitem.attributes.onclick && gcitem.attributes.onclick.value) ? "#{gcitem.attributes.onclick.value}" : undefined)
+        )
+            if (gcitem.attributes.rbdisplay.value == 'yes')
+                - var circular_class = (gcitem.attributes.rbdisplay.value=='yes') ? 'circular' : '';
+                if (gcitem.attributes.rbicon.value=='')
+                    div(
+                        class=("right floated compact " + circular_class + " ui button"),
+                        style=(gcitem.attributes.rbstyle.value),
+                        ng-click = ((gcitem.attributes.onrbclick && gcitem.attributes.onrbclick.value) ? "#{gcitem.attributes.onrbclick.value}" : undefined)
+                    )
+                        span.text #{gcitem.attributes.rblabel.value}
+                else
+                    div(
+                        class=("ui right floated button icon " + circular_class + " small"),
+                        style=(gcitem.attributes.rbstyle.value),
+                        ng-click = ((gcitem.attributes.onrbclick && gcitem.attributes.onrbclick.value) ? "#{gcitem.attributes.onrbclick.value}" : undefined)
+                    )
+                        i(class=(gcitem.attributes.rbicon.value + ' icon'))
+            if (gcitem.attributes.icon.value!='')
+                i(class=(gcitem.attributes.icon.value + ' icon'))
+            else if (gcitem.attributes.image!='')
+                div.ui.avatar.image(style="width:50px")
+                    img(src=('{{'+gcitem.attributes.image.value+'}}'))
+            div.content
+                a.header {{#{gcitem.attributes.header.value}}}
+                div.description {{#{gcitem.attributes.description.value}}}

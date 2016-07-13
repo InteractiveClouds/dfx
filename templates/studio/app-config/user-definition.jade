@@ -1,0 +1,22 @@
+div.panel.panel-primary(style="position: relative; height: 99%; margin-bottom: 1%;")
+    div.panel-heading
+        h4 User Definition
+    div.panel-body
+        div#treecontrol.pull-right.clearfix
+        div.clearfix
+        form#userDefinitionForm(action="javascript:void(0);", style="margin-top:10px")
+            div.dfx-at-treeview.hover.col-lg-12(style="margin-left: -15px;")
+                ul#userDefinitionFieldset
+            div.form-group
+                button#add-property.btn.btn-info(type='button')
+                    span.fa.fa-lg.fa-plus
+                    span(style="padding-left:5px") Property
+                button#add-subdocument.btn.btn-info(type='button', style="margin-left:10px")
+                    span.fa.fa-lg.fa-plus
+                    span(style="padding-left:5px") Object
+                button#save-user-definition.btn.btn-info.save-now-submitter(type='button', style="margin-left:10px")
+                    span.fa.fa-lg.fa-floppy-o
+                    span(style="padding-left:5px") Save
+                button#discard-changes.btn.btn-default(type='button', style="margin-left:10px")
+                    span.fa.fa-lg.fa-undo
+                    span(style="padding-left:5px") Cancel

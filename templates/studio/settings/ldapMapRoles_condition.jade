@@ -1,0 +1,7 @@
+.form-inline.form-group
+    select.form-control(data-ldapmaproles="option")
+        option(disabled, selected, value="") Option
+        each option, i in optionsList
+            option(value="#{option}") #{option}
+    select.form-control(disabled, data-ldapmaproles="value")
+        option(disabled, selected, value="") Value

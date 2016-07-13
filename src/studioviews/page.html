@@ -1,0 +1,39 @@
+<div layout="row" layout-align="space-between center" style="background:#DCDCDC">
+	<h4 style="padding-left:10px">
+		Edit Page
+	</h4>
+	<div layout="row">
+		<md-button ng-click="update()" class="md-primary">Save</md-button>
+		<md-button ng-click="cancel($event)" class="md-primary">Cancel</md-button>
+	</div>
+</div>
+<div layout="column" layout-padding>
+	<div layout="row" layout-padding>
+		<md-input-container flex="40">
+	        <label>Name</label>
+	        <input type="text" disabled ng-model="page.name"/>
+	    </md-input-container>
+		<md-input-container flex="60">
+	        <label>Title</label>
+	        <input type="text"  ng-model="page.title"/>
+	    </md-input-container>
+	</div>
+	<div layout="row" layout-padding>
+		<md-input-container class="input-select-aligned margin-select" flex="40" style="padding: 0px 8px;">
+		  <label>Category</label>
+		  <md-select ng-model="page.category" aria-label="page.category">
+		    <md-option ng-value="category.name" ng-repeat="category in app_categories track by $index">{{ category.name }}</md-option>
+		  </md-select>
+		</md-input-container>
+        <!--<md-input-container class="input-select-aligned margin-select" flex="20" style="padding: 0px 8px;">-->
+            <!--<label>Platform</label>-->
+            <!--<md-select ng-model="page.platform" aria-label="page.platform" ng-disabled="true">-->
+                <!--<md-option ng-value="platform" ng-repeat="platform in ['web', 'tablet', 'mobile'] track by $index">{{ platform }}</md-option>-->
+            <!--</md-select>-->
+        <!--</md-input-container>-->
+	</div>	
+</div>
+<div layout="row" layout-align ="space-between center">
+	<button ng-click="openPageDesigner()" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-floppy-o" style="color: #757575"></span><span style="padding-left:5px">Open Designer</span></button>
+    <button ng-click="delete($event)" ng-disabled="page.name === 'Home' && page.category === 'Default' " class="md-raised md-warn md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-trash-o" style="color: #ffffff"></span><span style="padding-left:5px">Delete the Page</span></button>
+</div>

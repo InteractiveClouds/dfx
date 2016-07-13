@@ -1,0 +1,34 @@
+doctype html
+html
+    head
+        meta(http-equiv="content-type", content="text/HTML;charset=UTF-8")
+        meta(name="viewport", content="width=device-width,initial-scale=1")
+        title Preview #{wclass.name} (Authenticating...)
+
+        link(rel="stylesheet", href="/css/preview/dfx.min.css", media="screen")
+        script(src="/js/preview/dfx.js")
+
+        style.
+            {{source_styles}}
+        script(type="text/javascript").
+            DreamFace.initSession( {dfx_appname:'#{appname}', dfx_tenantid:'#{tenantid}', dfx_ispreview:'#{ispreview}'} );
+            DreamFace.successfulLoginRedirectUrl = '/studio/widget/#{platform}/preview/#{appname}/#{wclass.name}/#{device}';
+    body
+        div.container(style="margin-top:30px")
+            div.col-md-4.col-md-offset-4
+                div.center(style="text-align:center")
+                    h3(style="color:#3385B0") Preview the view #{wclass.name}
+                div.panel.panel-default
+                    div.panel-heading
+                        h3.panel-title
+                            strong Sign in as a user
+                    div.panel-body
+                        form#loginForm(action="", role="form")
+                            div.form-group
+                                label(for="previewUserID") User ID
+                                input#username.form-control(type="text", style="border-radius:0px", placeholder="Enter user id")
+                            div.form-group
+                                label(for="previewPassword") Password
+                                input#password.form-control(type="password", style="border-radius:0px", placeholder="Enter password")
+                            button.btn.btn-sm.btn-default(type="submit") Sign in
+        script(src="/js/preview/login.js")

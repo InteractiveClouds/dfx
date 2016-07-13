@@ -1,0 +1,40 @@
+{
+  "template": 			{ "value": "default" },
+  "name": {
+    "value": "pgbProgressbar1"
+  },
+  "label": {
+    "value": "'Progress bar'"
+  },
+  "selectedType": {
+    "value":"determinate"
+  },
+  "binding": {
+    "value": ""
+  },
+  "display": {
+    "value": "true"
+  },
+  "flex" : {
+    "value" : 100
+  },
+  "classes": {
+    "value": ""
+  },
+  "dynamicClasses": {
+    "value": ""
+  },
+  "style": {
+    "value": ""
+  },
+  "onclick": { "value": "" },
+  "ondblclick": { "value": "" },
+  "onkeypress": { "value": "" },
+  "onkeydown": { "value": "" },
+  "onkeyup": { "value": "" },
+  "onmouseover": { "value": "" },
+  "onmouseenter": { "value": "" },
+  "onmousemove": { "value": "" },
+  "onmouseleave": { "value": "" },
+  "onmouseup": { "value": "" }
+}

@@ -1,0 +1,44 @@
+{
+  "template": 			 { "value": "default" },
+	"name":            { "value": "iconBar1" },
+	"display":         { "value": "true" },  
+	"menuItems": {
+		"value": [
+			{
+				"label": "'Home'",
+				"icon": { "value": "'home'", "type": "svg-icon" },
+				"shortcut": "",
+				"divider": false,
+				"notification": "",
+				"display": "true",
+				"disabled": "false",
+				"onclick": "",
+        "state": { 
+          "value": false, 
+          "binding": "false",
+          "icon":          { "value": "'thumb_up'", "type": "svg-icon", "style": "", "class": "" },
+          "checkedIcon":   { "value": "'thumb_up'", "type": "svg-icon", "style": "", "class": "" },
+          "uncheckedIcon": { "value": "'thumb_down'", "type": "svg-icon", "style": "", "class": "" }
+        },
+				"menuItems": { "value": []}			
+			}
+		]
+	},
+	"static":         { "value": "" },
+	"dynamic":        { "value": "" },  
+  "style":          { "value": "" },
+  "rootMenu":       { "button": { "style": "", "class": "" }, "icon": { "size": 24, "style": "", "class": "" } },
+  "singleMenu":     { "button": { "style": "", "class": "" }, "icon": { "size": 16, "style": "", "class": "" } },
+  "classes":        { "value": "" },
+  "dynamicClasses": { "value": "" },
+  "onclick":        { "value": "" },
+  "ondblclick":     { "value": "" },
+  "onkeypress":     { "value": "" },
+  "onkeydown":      { "value": "" },
+  "onkeyup":        { "value": "" },
+  "onmouseover":    { "value": "" },
+  "onmouseenter":   { "value": "" },
+  "onmousemove":    { "value": "" },
+  "onmouseleave":   { "value": "" },
+  "onmouseup":      { "value": "" }
+}

@@ -1,0 +1,158 @@
+div(style="overflow-x:hidden")
+    ol.breadcrumb
+        li
+            a(href="javascript:DfxStudio.Dispatcher.run('#!/home/');")
+                span.fa.fa-lg.fa-home
+        li
+            a(href="javascript:DfxStudio.Dispatcher.run('#!/catalog/');") Catalog
+        li
+            a(href="javascript:DfxStudio.Dispatcher.run('#!/catalog/application/#{application.name}');") Application: #{application.name}
+        li.active Application Menu
+    div.row(style="margin-top:10px")
+        div.col-lg-4
+            div.panel.panel-primary
+                div.panel-heading
+                    h4
+                        span Application Menu
+                div.panel-body
+                    div#treecontrol.pull-right
+                        a.btn.btn-link.expand-all(href="javascript:void(0);")
+                            span.fa.fa-minus
+                            span(style="padding-left: 5px;") Collapse All
+                        a.btn.btn-link.collapse-all(href="javascript:void(0);", style="margin-left: 10px;")
+                            span.fa.fa-plus
+                            span(style="padding-left: 5px;") Expand All
+                    div.clearfix
+                    div
+                        ul#menu-item-treeview(style="margin-bottom:10px")
+                            li.tree-root
+                                a.item-selector(href="javascript:void(0);") #{application.name}
+                                ul
+                                    mixin displayTreeItem(tree_item)
+                                        li(item-type="menu-item", item-application="#{application.name}", item-menu="#{tree_item.name}", item-order="#{tree_item.order}", item-id="#{tree_item._id}")
+                                            a.item-selector(href="javascript:void(0);") #{tree_item.name}
+                                            a.dfx_table_text.btn.btn-link(href="javascript:DfxStudio.Menu.deleteItem({menuID:'#{tree_item._id}',menuName:'#{tree_item.name}',appName:'#{application.name}'});")
+                                                span.fa.fa-lg.fa-trash-o
+                                            - if (tree_item.children.length > 0) {
+                                                ul
+                                                    each child_tree_item, j in tree_item.children
+                                                        mixin displayTreeItem(child_tree_item)
+                                            - }
+                                    each menu_item, i in menuItems
+                                        mixin displayTreeItem(menu_item)
+                    div(style="margin-top:20px")
+                        button.btn.btn-info(type="button", onclick="DfxStudio.Menu.addItem({application:'#{application.name}'});")
+                            span.fa.fa-lg.fa-plus
+                            span(style="padding-left: 5px;") Menu Item
+        div.col-lg-8
+            div.panel.panel-primary
+                div.panel-heading
+                    div.panel-title
+                        | Menu Item Details
+                        div.pull-right
+                            a(href="javascript:DfxStudio.switchCollapsible('menu_item_details');")
+                                span#dfx_collapsible_icon_menu_item_details.fa.fa-lg.fa-angle-down
+                div.panel-body#dfx_collapsible_menu_item_details
+                    span#menu_item_detail_intro(style="display: block;")
+                        div Select a menu item from tree.
+                    span#menu_item_detail_form(style="display: none;")
+                        form(action="javascript:void(0);", id='applicationMenuForm')
+                            fieldset
+                                div.form-group.col-lg-4
+                                    label(for="fldName") Name:
+                                    input#fldName.form-control(type="text", data-inputname='name', readonly)
+                                div.form-group.col-lg-4
+                                    label(for="fldTitle") Title:
+                                    input#fldTitle.form-control(type="text", data-inputname='title')
+                                div.form-group.col-lg-4
+                                    label(for="fldParentName") Parent:
+                                    select#fldParentName.form-control(data-inputname='parentName')
+                                        option(value="") /
+                                        mixin addOption(item)
+                                            option(value="#{item.name}") #{item.name}
+                                            - if (item.children.length > 0) {
+                                                each child in item.children
+                                                    mixin addOption(child)
+                                            - }
+                                        each menu_item in menuItems
+                                            mixin addOption(menu_item)
+                            fieldset
+                                div.form-group.col-lg-1
+                                    label(for="fldOrder") Order:
+                                    input#fldOrder.form-control(type="text", data-inputname='order', readonly)
+                                div.form-group.col-lg-3
+                                    label(for="gc_button_attr_icon") Icon:
+                                    div.input-group(style="margin-bottom:10px")
+                                        input#gc_button_attr_icon.form-control(type="text", data-inputname='icon', placeholder="Select icon")
+                                        span.input-group-btn
+                                            button.btn.btn-info(type="button", data-toggle="modal", data-target="#iconsModal", data-vb-picker-target="gc_button_attr_icon")
+                                                span.fa.fa-lg.fa-ellipsis-h
+                                div.form-group.col-lg-4
+                                    label(for="fldAction") Action:
+                                    select#fldAction.form-control(data-inputname='action')
+                                        option(value="no_action") No action
+                                        option(value="widget") Assign To Widget
+                                div#searchWidgets.form-group.col-lg-4(style="display: none;")
+                                    label(for="fldWidget") Choose or Create a Widget:
+                                    div.input-group(style="margin-bottom:10px")
+                                        span.input-group-btn
+                                            div.dropdown
+                                                a#list-all-widgets.btn.btn-info.dropdown-toggle(type="button", data-toggle="dropdown", onclick="DfxStudio.Menu.listAllWidgets({platform: '#{application.platform}'})")
+                                                    span.fa.fa-lg.fa-chevron-down
+                                                ul.dropdown-menu(role="menu", aria-labelledby="list-all-screens")
+                                        input#fldWidget.form-control(type="text", data-inputname='searchWidgets', placeholder="Start typing the name")
+                                        span.input-group-btn
+                                            button.btn.btn-info(type="button", onclick="DfxStudio.Menu.createPredefinedWidget();")
+                                                span.fa.fa-lg.fa-plus
+            div#widget_detail_form.panel.panel-primary(style="display: none;")
+                div.panel-heading
+                    div.panel-title
+                        | Widget Details
+                        div.pull-right
+                            a(href="javascript:DfxStudio.switchCollapsible('widget_details');")
+                                span#dfx_collapsible_icon_widget_details.fa.fa-lg.fa-angle-down
+                div.panel-body#dfx_collapsible_widget_details
+                    form(action="javascript:void(0);", id='widgetEditForm')
+                        fieldset
+                            div.form-group.col-lg-4
+                                label(for="fldWidgetName") Name:
+                                input#fldWidgetName.form-control(type="text", data-inputname='widgetName', disabled)
+                            div.form-group.col-lg-8
+                                label(for="fldDescription") Description:
+                                input#fldDescription.form-control(type="text", name="fldDescription", data-inputname='description', placeholder="widget description")
+                            div.form-group.col-lg-4
+                                label(for="fldOwnerId") Owner:
+                                input#fldOwnerId.form-control(type="text", name="fldOwnerId", data-inputname='ownerId', placeholder="ex: john")
+                            div.form-group.col-lg-8
+                                label(for="fldWidgetCategory") Category:
+                                div.input-group
+                                    select#fldWidgetCategory.form-control.selectpicker(name="widgetCat", data-inputname="category", placeholder="")
+                                    span.input-group-btn
+                                        button#widgetAddCat.btn.btn-info(type="button", rel="popover", onclick='DfxStudio.widgetApi.widgetCat("create");')
+                                            span.fa.fa-lg.fa-plus
+                                    span.input-group-btn
+                                        button#widgetEditCat.btn.btn-info(type="button", rel="popover", onclick='DfxStudio.widgetApi.widgetCat("update");')
+                                            span.fa.fa-lg.fa-pencil-square-o
+                                    span.input-group-btn
+                                        button#widgetRMCat.btn.btn-info(type="button", rel="popover", onclick='DfxStudio.widgetApi.widgetCat("remove");')
+                                            span.fa.fa-lg.fa-trash-o
+                            div.form-group.col-lg-4
+                                label(for="fldPlatform") Platform:
+                                select#fldPlatform.form-control(name="fldPlatform", data-inputname='platform', placeholder="select a platform", disabled)
+                                    option(value="web") Web
+                                    option(value="mobile", selected) Mobile
+                            div.form-group.col-lg-3
+                                label(for="fldType") Type:
+                                select#fldType.form-control(name="fldType", data-inputname='wtype', placeholder="select a type", disabled)
+                                    option(value="jade") jade
+                                    option(value="visual") visual
+            div#menu_item_detail_buttons(style="display: none; margin-top: 30px;")
+                a.btn.btn-info.save-now-submitter(href="javascript:DfxStudio.Menu.saveChanges({applicationName:'#{application.name}', formId:'applicationMenuForm'});")
+                    span.fa.fa-lg.fa-floppy-o
+                    span(style="padding-left: 5px;") Save
+                a.btn.btn-default(href="javascript:DfxStudio.Menu.discardChanges();", style="margin-left: 10px;")
+                    span.fa.fa-lg.fa-undo
+                    span(style="padding-left: 5px;") Cancel
+                //a.btn.btn-info(href="", style="margin-left:10px")
+                    span.fa.fa-lg.fa-pencil-square-o
+                    span(style="padding-left:5px") Widget Editor

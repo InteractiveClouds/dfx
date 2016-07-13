@@ -1,0 +1,27 @@
+/* Basic theme CSS */
+
+.basic-side-nav-open {
+}
+
+.basic-side-nav-closed {
+	min-width: 48px!important;
+	width: 48px!important;
+}
+
+.basic-menu-item {
+    display: block;
+    text-align: left;
+    width: 100%;
+    height: 48px;
+    padding: 0 16px;
+    margin: 0;
+    text-transform: none;
+    border-radius: 0!important;
+    white-space: normal;
+    line-height: 48px;
+    position: relative;
+    z-index: 2;
+    box-shadow: none!important;
+    -webkit-transform: translate3d(0,0,0);
+    transform: translate3d(0,0,0);
+}

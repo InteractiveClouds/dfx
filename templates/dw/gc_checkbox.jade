@@ -1,0 +1,83 @@
+- var checkboxClasses = gcitem.attributes.classes.value == '' ? 'checkbox' : 'checkbox ' + gcitem.attributes.classes.value;
+- var checkboxStyle = gcitem.attributes.style.value == '' ? '' : gcitem.attributes.style.value;
+- var orientation = gcitem.attributes.orientation && gcitem.attributes.orientation.value == 'horizontal' ? 'display:inline-block;margin-right:12px;' : 'display:block;';
+- var containerCss = '';
+if (gcitem.attributes.containerCss)
+    each val, key in gcitem.attributes.containerCss
+        - if (val!='') containerCss += key + ':' + val + ';'
+- var css = '';
+if (gcitem.attributes.css)
+    each val, key in gcitem.attributes.css
+        - if (val!='') css += key + ':' + val + ';'
+- var completeStyle = orientation + checkboxStyle + css;
+div(
+    id="#{gcitem.id}_{{$index}}",
+    ng-show = (gcitem.attributes.display.value == '' ? undefined : "#{gcitem.attributes.display.value}"),
+    style=('display:inline-block;position:relative;' + (gcitem.attributes.containerStyle ? gcitem.attributes.containerStyle.value : '') + ';' + containerCss),
+    class="#{gcitem.attributes.containerClasses.value}",
+    ng-class = (gcitem.attributes.containerDynamicClasses.value == '' ? undefined : "#{gcitem.attributes.containerDynamicClasses.value}"),
+    ng-init=(gcitem.attributes.property.value == '' ? "mdl_#{gcitem.attributes.name.value} = []" : "#{gcitem.attributes.property.value}=#{gcitem.attributes.property.value} || []")
+    )
+    if (gcitem.attributes.dynamicOptions && gcitem.attributes.dynamicOptions.value)
+        - var collection = (gcitem.attributes.propertyOptions && gcitem.attributes.propertyOptions.value ? gcitem.attributes.propertyOptions.value : 'mdl#{gcitem.id}_field')
+        label(ng-repeat="item in #{collection}", for="#{gcitem.id}_field{{$index + 1}}", class = "#{checkboxClasses}", style = "#{completeStyle}", ng-class = (gcitem.attributes.dynamicClasses && gcitem.attributes.dynamicClasses.value ? "#{gcitem.attributes.dynamicClasses.value}" : undefined))
+            input(
+                id = "#{gcitem.id}_field{{$index + 1}}",
+                name = (gcitem.attributes.name.value == '' ? "#{gcitem.id}_field" : "#{gcitem.attributes.name.value}"),
+                type = "checkbox",
+                style = "position:relative;margin-left:0px;",
+                ng-model = (gcitem.attributes.property.value == '' ? "mdl_#{gcitem.attributes.name.value}[$index]" : "#{gcitem.attributes.property.value}[$index]"),
+                ng-true-value = "'" + "{{ item['#{gcitem.attributes.propertyOptionsFields.checkedValue}'] ? item['#{gcitem.attributes.propertyOptionsFields.checkedValue}'] : true }}" + "'",
+                ng-false-value = "'" + "{{ item['#{gcitem.attributes.propertyOptionsFields.uncheckedValue}'] != null && item['#{gcitem.attributes.propertyOptionsFields.uncheckedValue}'] != '' ? item['#{gcitem.attributes.propertyOptionsFields.uncheckedValue}'] : false }}" + "'",
+                ng-disabled = "{{ item['#{gcitem.attributes.propertyOptionsFields.disabled}'] }}",
+                value = "{{ item['#{gcitem.attributes.propertyOptionsFields.checkedValue}'] ? item['#{gcitem.attributes.propertyOptionsFields.checkedValue}'] : true }}",
+                ng-change = (gcitem.attributes.onchange.value == '' ? undefined : "#{gcitem.attributes.onchange.value}()"))
+            span(ng-show = "{{ item['#{gcitem.attributes.propertyOptionsFields.visible}'] == true || item['#{gcitem.attributes.propertyOptionsFields.visible}'] == undefined ? 'true' : 'false' }}", dfx-tool-tip, tooltip-title = (gcitem.attributes.tooltip && gcitem.attributes.tooltip.value ? "#{gcitem.attributes.tooltip.value}" : undefined), data-placement = (gcitem.attributes.tooltipPosition ? "#{gcitem.attributes.tooltipPosition.value}" : undefined), style = "margin-left:5px") {{item["#{gcitem.attributes.propertyOptionsFields.displayValue}"]}}
+            input(type="hidden", id="dfxHiddenRequest_#{gcitem.id}", ng-if="$index == 0", ng-model = (gcitem.attributes.property.value == '' ? "mdl_#{gcitem.attributes.name.value}" : "#{gcitem.attributes.property.value}"), dfx-required = (gcitem.attributes.required && gcitem.attributes.required.value !='no' ? "true": undefined))
+    else if (gcitem.attributes.staticOptions)
+        if(gcitem.attributes.staticOptions.length == 1)
+            label(for="#{gcitem.id}_field", class = "#{checkboxClasses}", style = "#{completeStyle}", ng-class = (gcitem.attributes.dynamicClasses && gcitem.attributes.dynamicClasses.value ? "#{gcitem.attributes.dynamicClasses.value}" : undefined))
+                input(
+                    id = "#{gcitem.id}_field",
+                    name = (gcitem.attributes.name.value == '' ? "#{gcitem.id}_field" : "#{gcitem.attributes.name.value}[]"),
+                    type = "checkbox",
+                    style = "position:relative;margin-left:0px;",
+                    ng-model = (gcitem.attributes.property.value == '' ? "mdl_#{gcitem.attributes.name.value}" : "#{gcitem.attributes.property.value}"),
+                    ng-true-value = (gcitem.attributes.staticOptions[0].checkedValue ? "'#{gcitem.attributes.staticOptions[0].checkedValue}'" : "'true'"),
+                    ng-false-value = (gcitem.attributes.staticOptions[0].uncheckedValue != null && gcitem.attributes.staticOptions[0].uncheckedValue != '' ? "'#{gcitem.attributes.staticOptions[0].uncheckedValue}'" : "'false'"),
+                    ng-disabled = (gcitem.attributes.staticOptions[0].disabled ? 'true' : undefined),
+                    value = (gcitem.attributes.staticOptions[0].checkedValue != '' ? gcitem.attributes.staticOptions[0].checkedValue : 'true'),
+                    ng-change = (gcitem.attributes.onchange.value == '' ? undefined : "#{gcitem.attributes.onchange.value}()"))
+                span(dfx-tool-tip, tooltip-title = (gcitem.attributes.tooltip && gcitem.attributes.tooltip.value ? "#{gcitem.attributes.tooltip.value}" : undefined), data-placement = (gcitem.attributes.tooltipPosition ? "#{gcitem.attributes.tooltipPosition.value}" : undefined), style = "margin-left:5px") #{gcitem.attributes.staticOptions[0].displayValue}
+                input(type="hidden", id="dfxHiddenRequest_#{gcitem.id}", ng-model = (gcitem.attributes.property.value == '' ? "mdl_#{gcitem.attributes.name.value}" : "#{gcitem.attributes.property.value}"), dfx-required = (gcitem.attributes.required && gcitem.attributes.required.value != 'no' ? "true": undefined))
+        else
+            each item, i in gcitem.attributes.staticOptions
+                label(for="#{gcitem.id}_field#{i}", class = "#{checkboxClasses}", style = "#{completeStyle}", ng-class = (gcitem.attributes.dynamicClasses && gcitem.attributes.dynamicClasses.value ? "#{gcitem.attributes.dynamicClasses.value}" : undefined))
+                    input(
+                        id = "#{gcitem.id}_field#{i}",
+                        name = (gcitem.attributes.name.value == '' ? "#{gcitem.id}_field" : "#{gcitem.attributes.name.value}[]"),
+                        type = "checkbox",
+                        style = "position:relative;margin-left:0px;",
+                        ng-model = (gcitem.attributes.property.value == '' ? "mdl_#{gcitem.attributes.name.value}[#{i}]" : "#{gcitem.attributes.property.value}[#{i}]"),
+                        ng-true-value = (item.checkedValue ? "'#{item.checkedValue}'" : "'true'"),
+                        ng-false-value = (item.uncheckedValue != null && item.uncheckedValue != '' ? "'#{item.uncheckedValue}'" : "'false'"),
+                        ng-disabled = (item.disabled ? 'true' : undefined),
+                        value = (item.checkedValue != '' ? "#{item.checkedValue}" : 'true'),
+                        ng-change = (gcitem.attributes.onchange.value == '' ? undefined : "#{gcitem.attributes.onchange.value}()"))
+                    span(dfx-tool-tip, tooltip-title = (gcitem.attributes.tooltip && gcitem.attributes.tooltip.value ? "#{gcitem.attributes.tooltip.value}" : undefined), data-placement = (gcitem.attributes.tooltipPosition ? "#{gcitem.attributes.tooltipPosition.value}" : undefined), style = "margin-left:5px") #{item.displayValue}
+                    input(type="hidden", id="dfxHiddenRequest_#{gcitem.id}", ng-if="#{i} == 0", ng-model = (gcitem.attributes.property.value == '' ? "mdl_#{gcitem.attributes.name.value}" : "#{gcitem.attributes.property.value}"), dfx-required = (gcitem.attributes.required && gcitem.attributes.required.value !='no' ? "true": undefined))
+    else
+        label.checkbox(for="#{gcitem.id}")
+            input(
+                name = (gcitem.attributes.name.value == '' ? undefined : "#{gcitem.attributes.name.value}"),
+                class = 'checkbox',
+                ng-class = (gcitem.attributes.dynamicClasses && gcitem.attributes.dynamicClasses.value ? "#{gcitem.attributes.dynamicClasses.value}" : undefined),
+                type = "checkbox",
+                ng-model = (gcitem.attributes.property.value == '' ? undefined : "#{gcitem.attributes.property.value}"),
+                ng-init = (gcitem.attributes.propertyInit && gcitem.attributes.propertyInit.value == '' ? undefined : "#{gcitem.attributes.propertyInit.value}"),
+                ng-disabled = (!gcitem.attributes.disabled || gcitem.attributes.disabled.value == '' ? undefined : "#{gcitem.attributes.disabled.value}"),
+                style = (gcitem.attributes.style.value == '' ? undefined : "#{gcitem.attributes.style.value}"),
+                ng-true-value = (gcitem.attributes.checkedValue && gcitem.attributes.checkedValue.value == '' ? "true" : "#{gcitem.attributes.checkedValue.value}"),
+                ng-false-value = (gcitem.attributes.uncheckedValue && gcitem.attributes.uncheckedValue.value == '' ? undefined : "#{gcitem.attributes.uncheckedValue.value}"),
+                ng-change = (gcitem.attributes.onchange.value == '' ? undefined : "#{gcitem.attributes.onchange.value}"))
+            span(dfx-text = "#{gcitem.attributes.label.value}", dfx-tool-tip, tooltip-title = (gcitem.attributes.tooltip && gcitem.attributes.tooltip.value ? "#{gcitem.attributes.tooltip.value}" : undefined), data-placement = (gcitem.attributes.tooltipPosition ? "#{gcitem.attributes.tooltipPosition.value}" : undefined)) #{gcitem.attributes.label.value}

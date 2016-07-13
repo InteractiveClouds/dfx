@@ -1,0 +1,2114 @@
+{
+  "Gmail": {
+    "auth": true,
+    "schemas": [
+      "oAuth2"
+    ],
+    "data": [
+      {
+        "name": "profile",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "https://www.googleapis.com/gmail/v1/users/me/profile",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "service": {
+            "method": ""
+          }
+        }
+      },
+      {
+        "name": "emails/list",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "https://www.googleapis.com/gmail/v1/users/me/messages",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "service": {
+            "method": ""
+          }
+        }
+      },
+      {
+        "name": "emails/get",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "https://www.googleapis.com/gmail/v1/users/me/messages/{id}",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "service": {
+            "method": ""
+          },
+          "parameters": [
+            {
+              "name": "id",
+              "type": "url",
+              "value": "Email id",
+              "operation": "eq"
+            }
+          ]
+        }
+      },
+      {
+        "name": "threads/list",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "https://www.googleapis.com/gmail/v1/users/me/threads/{id}",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "service": {
+            "method": ""
+          },
+          "parameters": [
+            {
+              "name": "id",
+              "type": "url",
+              "value": "Thread id",
+              "operation": "eq"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "Calendar": {
+    "auth": true,
+    "schemas": [
+      "oAuth2"
+    ],
+    "data": [
+      {
+        "name": "calendar",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "https://www.googleapis.com/calendar/v3/users/me/calendarList",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "service": {
+            "method": ""
+          }
+        }
+      }
+    ]
+  },
+  "Contacts": {
+    "auth": true,
+    "schemas": [
+      "oAuth2"
+    ],
+    "data": [
+      {
+        "name": "list",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "https://www.google.com/m8/feeds/contacts/default/full",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "service": {
+            "method": ""
+          }
+        }
+      }
+    ]
+  },
+  "Drive": {
+    "auth": true,
+    "schemas": [
+      "oAuth2"
+    ],
+    "data": [
+      {
+        "name": "files",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "https://www.googleapis.com/drive/v2/files",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "service": {
+            "method": ""
+          }
+        }
+      }
+    ]
+  },
+  "Translate": {
+    "auth": false,
+    "schemas": [
+      "public/rest"
+    ],
+    "data": [
+      {
+        "name": "google/translate/languages",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "https://www.googleapis.com/language/translate/v2/languages",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "service": {
+            "method": ""
+          },
+          "parameters": [
+            {
+              "name": "target",
+              "type": "request",
+              "value": "en",
+              "operation": "eq"
+            },
+            {
+              "name": "key",
+              "type": "request",
+              "value": "",
+              "variable": "apiKey",
+              "operation": "eq"
+            }
+          ]
+        }
+      },
+      {
+        "name": "google/translate/detect/language",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "https://www.googleapis.com/language/translate/v2/detect",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "service": {
+            "method": ""
+          },
+          "parameters": [
+            {
+              "name": "q",
+              "type": "request",
+              "value": "Hello World",
+              "operation": "eq"
+            },
+            {
+              "name": "key",
+              "type": "request",
+              "value": "",
+              "variable": "apiKey",
+              "operation": "eq"
+            }
+          ]
+        }
+      },
+      {
+        "name": "google/translate",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "https://www.googleapis.com/language/translate/v2",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "service": {
+            "method": ""
+          },
+          "parameters": [
+            {
+              "name": "q",
+              "type": "request",
+              "value": "Hello World",
+              "operation": "eq"
+            },
+            {
+              "name": "source",
+              "type": "request",
+              "value": "en",
+              "operation": "eq"
+            },
+            {
+              "name": "target",
+              "type": "request",
+              "value": "fr",
+              "operation": "eq"
+            },
+            {
+              "name": "key",
+              "type": "request",
+              "value": "",
+              "variable": "apiKey",
+              "operation": "eq"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "Places": {
+    "auth": false,
+    "schemas": [
+      "public/rest"
+    ],
+    "data": [
+      {
+        "name": "google/places/autocomplete",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "https://maps.googleapis.com/maps/api/place/autocomplete/json",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "service": {
+            "method": ""
+          },
+          "parameters": [
+            {
+              "name": "input",
+              "type": "request",
+              "value": "Paris",
+              "operation": "eq"
+            },
+            {
+              "name": "types",
+              "type": "request",
+              "value": "geocode",
+              "operation": "eq"
+            },
+            {
+              "name": "key",
+              "type": "request",
+              "value": "",
+              "variable": "apiKey",
+              "operation": "eq"
+            }
+          ]
+        }
+      },
+      {
+        "name": "google/places/details",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "https://maps.googleapis.com/maps/api/place/details/json",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "service": {
+            "method": ""
+          },
+          "parameters": [
+            {
+              "name": "placeid",
+              "type": "request",
+              "value": "ChIJRXe4DXJu5kcR_u_BPeHJ2mE",
+              "operation": "eq"
+            },
+            {
+              "name": "key",
+              "type": "request",
+              "value": "",
+              "variable": "apiKey",
+              "operation": "eq"
+            }
+          ]
+        }
+      },
+      {
+        "name": "google/places/nearbysearch",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "https://maps.googleapis.com/maps/api/place/nearbysearch/json",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "service": {
+            "method": ""
+          },
+          "parameters": [
+            {
+              "name": "location",
+              "type": "request",
+              "value": "-33.8670,151.1957",
+              "operation": "eq"
+            },
+            {
+              "name": "radius",
+              "type": "request",
+              "value": "500",
+              "operation": "eq"
+            },
+            {
+              "name": "types",
+              "type": "request",
+              "value": "food",
+              "operation": "eq"
+            },
+            {
+              "name": "me",
+              "type": "request",
+              "value": "cruise",
+              "operation": "eq"
+            },
+            {
+              "name": "key",
+              "type": "request",
+              "value": "",
+              "variable": "apiKey",
+              "operation": "eq"
+            }
+          ]
+        }
+      },
+      {
+        "name": "google/places/searchByQuery",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "https://maps.googleapis.com/maps/api/place/textsearch/json",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "service": {
+            "method": ""
+          },
+          "parameters": [
+            {
+              "name": "query",
+              "type": "request",
+              "value": "restaurants+in+Paris",
+              "operation": "eq"
+            },
+            {
+              "name": "key",
+              "type": "request",
+              "value": "",
+              "variable": "apiKey",
+              "operation": "eq"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "Elevation": {
+    "auth": false,
+    "schemas": [
+      "public/rest"
+    ],
+    "data": [
+      {
+        "name": "google/elevation",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "https://maps.googleapis.com/maps/api/elevation/json",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "service": {
+            "method": ""
+          },
+          "parameters": [
+            {
+              "name": "locations",
+              "type": "request",
+              "value": "46.6495725,32.6077816",
+              "operation": "eq"
+            },
+            {
+              "name": "key",
+              "type": "request",
+              "value": "",
+              "variable": "apiKey",
+              "operation": "eq"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "Facebook": {
+    "auth": true,
+    "schemas": [
+      "oAuth2"
+    ],
+    "data": [
+      {
+        "name": "groups",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "https://graph.facebook.com/v2.0/me/groups",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "service": {
+            "method": ""
+          }
+        }
+      },
+      {
+        "name": "notifications",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "https://graph.facebook.com/v2.0/me/notifications",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "service": {
+            "method": ""
+          }
+        }
+      },
+      {
+        "name": "photos",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "https://graph.facebook.com/v2.0/me/photos",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "service": {
+            "method": ""
+          }
+        }
+      },
+      {
+        "name": "friends",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "https://graph.facebook.com/v2.0/me/friends",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "service": {
+            "method": ""
+          }
+        }
+      },
+      {
+        "name": "profile",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "https://graph.facebook.com/v2.0/me",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "service": {
+            "method": ""
+          }
+        }
+      },
+      {
+        "name": "feeds",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "https://graph.facebook.com/v2.5/me/feed",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "service": {
+            "method": ""
+          }
+        }
+      },
+      {
+        "name": "wall",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "https://graph.facebook.com/v2.0/me/home",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "service": {
+            "method": ""
+          }
+        }
+      }
+    ]
+  },
+  "Google+": {
+    "auth": true,
+    "schemas": [
+      "oAuth2"
+    ],
+    "data": [
+      {
+        "name": "plus",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "https://www.googleapis.com/plus/v1/people/me",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "service": {
+            "method": ""
+          }
+        }
+      },
+      {
+        "name": "search",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "https://www.googleapis.com/plus/v1/people",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "service": {
+            "method": ""
+          },
+          "parameters": [
+            {
+              "name": "query",
+              "type": "request",
+              "value": "dreamface",
+              "operation": "eq"
+            },
+            {
+              "name": "language",
+              "type": "request",
+              "value": "en",
+              "operation": "eq"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "Twitter": {
+    "auth": true,
+    "schemas": [
+      "oAuth1",
+      "oAuth2"
+    ],
+    "data": [
+      {
+        "name": "twitter/statuses/home_timeline",
+        "auth": true,
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "https://api.twitter.com/1.1/statuses/home_timeline.json",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "service": {
+            "method": ""
+          }
+        }
+      },
+      {
+        "name": "twitter/statuses/user_timeline",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=twitterapi&count=2",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "service": {
+            "method": ""
+          }
+        }
+      }
+    ]
+  },
+  "StrongLoop": {
+    "auth": false,
+    "schemas": [
+      "public/rest",
+      "basic",
+      "digets"
+    ],
+    "data": [
+      {
+        "name": "get-coffee-shops",
+        "auth": false,
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "http://127.0.0.1:3001/api/CoffeeShops",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "service": {
+            "method": ""
+          }
+        }
+      },
+      {
+        "name": "put-coffee-shop",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "",
+            "auth_password": "",
+            "typerequest": "HTTP_PUT",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "http://127.0.0.1:3001/api/CoffeeShops",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "service": {
+            "method": ""
+          },
+          "postrequestbody": "{\n  \"name\": \"Edited Coffee shop\",\n  \"city\": \"Paris\",\n  \"id\": \"569d32e1b5dbf7ad1b424fa3\"\n}"
+        }
+      },
+      {
+        "name": "count-coffee-shops",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "http://127.0.0.0:3001/api/CoffeeShops/count",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "service": {
+            "method": ""
+          }
+        }
+      },
+      {
+        "name": "delete-coffee-shop",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_DELETE",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "http://127.0.0.1:3001/api/CoffeeShops/1",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "service": {
+            "method": ""
+          }
+        }
+      }
+    ]
+  },
+  "CNN": {
+    "auth": false,
+    "schemas": [
+      "public/rest"
+    ],
+    "data": [
+      {
+        "name": "cnn/top_stories",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "url": "http://rss.cnn.com/rss/edition.rss",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "postcode": {
+            "name": "Beautify JSON Filter",
+            "code": "var resp = [];\nvar data = response.rss.channel[0].item;\nvar maxResults = (data.length < 15) ? data.length : 15;\nvar i, item;\n//Get only 15 items back to caller\nfor (i=0; i< maxResults; i++){\n    item = data[i];\n    resp.push({\n    'title': item.title[0],\n    'link' : item.link[0],\n    'image_url' : item['media:content'] ? item['media:content'][0].$.url : undefined,\n    'image' : item['media:content'] ? item['media:content'][0].$ : undefined,\n    'description': item.description ? item.description[0] : item['itunes:summary'][0]\n   });  \n}\nresponse = resp;\nterminateFilter(response);"
+          },
+          "service": {
+            "method": ""
+          }
+        }
+      },
+      {
+        "name": "cnn/world",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "http://rss.cnn.com/rss/edition_world.rss",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "postcode": {
+            "name": "Beautify JSON Filter",
+            "code": "var resp = [];\nvar data = response.rss.channel[0].item;\nvar maxResults = (data.length < 15) ? data.length : 15;\nvar i, item;\n//Get only 15 items back to caller\nfor (i=0; i< maxResults; i++){\n    item = data[i];\n    resp.push({\n    'title': item.title[0],\n    'link' : item.link[0],\n    'image_url' : item['media:content'] ? item['media:content'][0].$.url : undefined,\n    'image' : item['media:content'] ? item['media:content'][0].$ : undefined,\n    'description': item.description ? item.description[0] : item['itunes:summary'][0]\n   });  \n}\nresponse = resp;\nterminateFilter(response);"
+          },
+          "service": {
+            "method": ""
+          }
+        }
+      },
+      {
+        "name": "cnn/europe",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "http://rss.cnn.com/rss/edition_europe.rss",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "postcode": {
+            "name": "Beautify JSON Filter",
+            "code": "var resp = [];\nvar data = response.rss.channel[0].item;\nvar maxResults = (data.length < 15) ? data.length : 15;\nvar i, item;\n//Get only 15 items back to caller\nfor (i=0; i< maxResults; i++){\n    item = data[i];\n    resp.push({\n    'title': item.title[0],\n    'link' : item.link[0],\n    'image_url' : item['media:content'] ? item['media:content'][0].$.url : undefined,\n    'image' : item['media:content'] ? item['media:content'][0].$ : undefined,\n    'description': item.description ? item.description[0] : item['itunes:summary'][0]\n   });  \n}\nresponse = resp;\nterminateFilter(response);"
+          },
+          "service": {
+            "method": ""
+          }
+        }
+      },
+      {
+        "name": "cnn/money",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "http://rss.cnn.com/rss/money_news_international.rss",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "postcode": {
+            "name": "Beautify JSON Filter",
+            "code": "var resp = [];\nvar data = response.rss.channel[0].item;\nvar maxResults = (data.length < 15) ? data.length : 15;\nvar i, item;\n//Get only 15 items back to caller\nfor (i=0; i< maxResults; i++){\n    item = data[i];\n    resp.push({\n    'title': item.title[0],\n    'link' : item.link[0],\n    'image_url' : item['media:content'] ? item['media:content'][0].$.url : undefined,\n    'image' : item['media:content'] ? item['media:content'][0].$ : undefined,\n    'description': item.description ? item.description[0] : item['itunes:summary'][0]\n   });  \n}\nresponse = resp;\nterminateFilter(response);"
+          },
+          "service": {
+            "method": ""
+          }
+        }
+      },
+      {
+        "name": "cnn/football",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "http://rss.cnn.com/rss/edition_football.rss",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "postcode": {
+            "name": "Beautify JSON Filter",
+            "code": "var resp = [];\nvar data = response.rss.channel[0].item;\nvar maxResults = (data.length < 15) ? data.length : 15;\nvar i, item;\n//Get only 15 items back to caller\nfor (i=0; i< maxResults; i++){\n    item = data[i];\n    resp.push({\n    'title': item.title[0],\n    'link' : item.link[0],\n    'image_url' : item['media:content'] ? item['media:content'][0].$.url : undefined,\n    'image' : item['media:content'] ? item['media:content'][0].$ : undefined,\n    'description': item.description ? item.description[0] : item['itunes:summary'][0]\n   });  \n}\nresponse = resp;\nterminateFilter(response);"
+          },
+          "service": {
+            "method": ""
+          }
+        }
+      },
+      {
+        "name": "cnn/technology",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "http://rss.cnn.com/rss/edition_technology.rss",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "postcode": {
+            "name": "Beautify JSON Filter",
+            "code": "var resp = [];\nvar data = response.rss.channel[0].item;\nvar maxResults = (data.length < 15) ? data.length : 15;\nvar i, item;\n//Get only 15 items back to caller\nfor (i=0; i< maxResults; i++){\n    item = data[i];\n    resp.push({\n    'title': item.title[0],\n    'link' : item.link[0],\n    'image_url' : item['media:content'] ? item['media:content'][0].$.url : undefined,\n    'image' : item['media:content'] ? item['media:content'][0].$ : undefined,\n    'description': item.description ? item.description[0] : item['itunes:summary'][0]\n   });  \n}\nresponse = resp;\nterminateFilter(response);"
+          },
+          "service": {
+            "method": ""
+          }
+        }
+      },
+      {
+        "name": "cnn/science_and_space",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "http://rss.cnn.com/rss/edition_space.rss",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "postcode": {
+            "name": "Beautify JSON Filter",
+            "code": "var resp = [];\nvar data = response.rss.channel[0].item;\nvar maxResults = (data.length < 15) ? data.length : 15;\nvar i, item;\n//Get only 15 items back to caller\nfor (i=0; i< maxResults; i++){\n    item = data[i];\n    resp.push({\n    'title': item.title[0],\n    'link' : item.link[0],\n    'image_url' : item['media:content'] ? item['media:content'][0].$.url : undefined,\n    'image' : item['media:content'] ? item['media:content'][0].$ : undefined,\n    'description': item.description ? item.description[0] : item['itunes:summary'][0]\n   });  \n}\nresponse = resp;\nterminateFilter(response);"
+          },
+          "service": {
+            "method": ""
+          }
+        }
+      }
+    ]
+  },
+  "TechCrunch": {
+    "auth": false,
+    "schemas": [
+      "public/rest"
+    ],
+    "data": [
+      {
+        "name": "TechCrunch/startups",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "http://feeds.feedburner.com/TechCrunch/startups",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "postcode": {
+            "name": "Beautify JSON Filter",
+            "code": "var resp = [];\nvar data = response.rss.channel[0].item;\nvar maxResults = (data.length < 15) ? data.length : 15;\nvar i, item;\n//Get only 15 items back to caller\nfor (i=0; i< maxResults; i++){\n    item = data[i];\n    resp.push({\n    'title': item.title[0],\n    'link' : item.link[0],\n    'image_url' : item['media:content'] ? item['media:content'][0].$.url : undefined,\n    'image' : item['media:content'] ? item['media:content'][0].$ : undefined,\n    'description': item.description ? item.description[0] : item['itunes:summary'][0]\n   });  \n}\nresponse = resp;\nterminateFilter(response);"
+          },
+          "service": {
+            "method": ""
+          }
+        }
+      },
+      {
+        "name": "TechCrunch/fundings-exits",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "http://feeds.feedburner.com/TechCrunch/fundings-exits",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "postcode": {
+            "name": "Beautify JSON Filter",
+            "code": "var resp = [];\nvar data = response.rss.channel[0].item;\nvar maxResults = (data.length < 15) ? data.length : 15;\nvar i, item;\n//Get only 15 items back to caller\nfor (i=0; i< maxResults; i++){\n    item = data[i];\n    resp.push({\n    'title': item.title[0],\n    'link' : item.link[0],\n    'image_url' : item['media:content'] ? item['media:content'][0].$.url : undefined,\n    'image' : item['media:content'] ? item['media:content'][0].$ : undefined,\n    'description': item.description ? item.description[0] : item['itunes:summary'][0]\n   });  \n}\nresponse = resp;\nterminateFilter(response);"
+          },
+          "service": {
+            "method": ""
+          }
+        }
+      },
+      {
+        "name": "TechCrunch/social",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "http://feeds.feedburner.com/TechCrunch/social",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "postcode": {
+            "name": "Beautify JSON Filter",
+            "code": "var resp = [];\nvar data = response.rss.channel[0].item;\nvar maxResults = (data.length < 15) ? data.length : 15;\nvar i, item;\n//Get only 15 items back to caller\nfor (i=0; i< maxResults; i++){\n    item = data[i];\n    resp.push({\n    'title': item.title[0],\n    'link' : item.link[0],\n    'image_url' : item['media:content'] ? item['media:content'][0].$.url : undefined,\n    'image' : item['media:content'] ? item['media:content'][0].$ : undefined,\n    'description': item.description ? item.description[0] : item['itunes:summary'][0]\n   });  \n}\nresponse = resp;\nterminateFilter(response);"
+          },
+          "service": {
+            "method": ""
+          }
+        }
+      },
+      {
+        "name": "TechCrunch/Mobilecrunch",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "http://feeds.feedburner.com/Mobilecrunch",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "postcode": {
+            "name": "Beautify JSON Filter",
+            "code": "var resp = [];\nvar data = response.rss.channel[0].item;\nvar maxResults = (data.length < 15) ? data.length : 15;\nvar i, item;\n//Get only 15 items back to caller\nfor (i=0; i< maxResults; i++){\n    item = data[i];\n    resp.push({\n    'title': item.title[0],\n    'link' : item.link[0],\n    'image_url' : item['media:content'] ? item['media:content'][0].$.url : undefined,\n    'image' : item['media:content'] ? item['media:content'][0].$ : undefined,\n    'description': item.description ? item.description[0] : item['itunes:summary'][0]\n   });  \n}\nresponse = resp;\nterminateFilter(response);"
+          },
+          "service": {
+            "method": ""
+          }
+        }
+      },
+      {
+        "name": "TechCrunch/crunchgear",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "http://feeds.feedburner.com/crunchgear",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "postcode": {
+            "name": "Beautify JSON Filter",
+            "code": "var resp = [];\nvar data = response.rss.channel[0].item;\nvar maxResults = (data.length < 15) ? data.length : 15;\nvar i, item;\n//Get only 15 items back to caller\nfor (i=0; i< maxResults; i++){\n    item = data[i];\n    resp.push({\n    'title': item.title[0],\n    'link' : item.link[0],\n    'image_url' : item['media:content'] ? item['media:content'][0].$.url : undefined,\n    'image' : item['media:content'] ? item['media:content'][0].$ : undefined,\n    'description': item.description ? item.description[0] : item['itunes:summary'][0]\n   });  \n}\nresponse = resp;\nterminateFilter(response);"
+          },
+          "service": {
+            "method": ""
+          }
+        }
+      },
+      {
+        "name": "TechCrunch/gaming",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "http://feeds.feedburner.com/TechCrunch/gaming",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "postcode": {
+            "name": "Beautify JSON Filter",
+            "code": "var resp = [];\nvar data = response.rss.channel[0].item;\nvar maxResults = (data.length < 15) ? data.length : 15;\nvar i, item;\n//Get only 15 items back to caller\nfor (i=0; i< maxResults; i++){\n    item = data[i];\n    resp.push({\n    'title': item.title[0],\n    'link' : item.link[0],\n    'image_url' : item['media:content'] ? item['media:content'][0].$.url : undefined,\n    'image' : item['media:content'] ? item['media:content'][0].$ : undefined,\n    'description': item.description ? item.description[0] : item['itunes:summary'][0]\n   });  \n}\nresponse = resp;\nterminateFilter(response);"
+          },
+          "service": {
+            "method": ""
+          }
+        }
+      },
+      {
+        "name": "Techcrunch/TechCrunchIT",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "http://feeds.feedburner.com/TechCrunchIT",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "postcode": {
+            "name": "Beautify JSON Filter",
+            "code": "var resp = [];\nvar data = response.rss.channel[0].item;\nvar maxResults = (data.length < 15) ? data.length : 15;\nvar i, item;\n//Get only 15 items back to caller\nfor (i=0; i< maxResults; i++){\n    item = data[i];\n    resp.push({\n    'title': item.title[0],\n    'link' : item.link[0],\n    'image_url' : item['media:content'] ? item['media:content'][0].$.url : undefined,\n    'image' : item['media:content'] ? item['media:content'][0].$ : undefined,\n    'description': item.description ? item.description[0] : item['itunes:summary'][0]\n   });  \n}\nresponse = resp;\nterminateFilter(response);"
+          },
+          "service": {
+            "method": ""
+          }
+        }
+      },
+      {
+        "name": "TechCrunch/greentech",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "http://feeds.feedburner.com/TechCrunch/greentech",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "postcode": {
+            "name": "Beautify JSON Filter",
+            "code": "var resp = [];\nvar data = response.rss.channel[0].item;\nvar maxResults = (data.length < 15) ? data.length : 15;\nvar i, item;\n//Get only 15 items back to caller\nfor (i=0; i< maxResults; i++){\n    item = data[i];\n    resp.push({\n    'title': item.title[0],\n    'link' : item.link[0],\n    'image_url' : item['media:content'] ? item['media:content'][0].$.url : undefined,\n    'image' : item['media:content'] ? item['media:content'][0].$ : undefined,\n    'description': item.description ? item.description[0] : item['itunes:summary'][0]\n   });  \n}\nresponse = resp;\nterminateFilter(response);"
+          },
+          "service": {
+            "method": ""
+          }
+        }
+      },
+      {
+        "name": "Techcrunch/europe",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "http://feeds.feedburner.com/Techcrunch/europe",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "json",
+          "postcode": {
+            "name": "Beautify JSON Filter",
+            "code": "var resp = [];\nvar data = response.rss.channel[0].item;\nvar maxResults = (data.length < 15) ? data.length : 15;\nvar i, item;\n//Get only 15 items back to caller\nfor (i=0; i< maxResults; i++){\n    item = data[i];\n    resp.push({\n    'title': item.title[0],\n    'link' : item.link[0],\n    'image_url' : item['media:content'] ? item['media:content'][0].$.url : undefined,\n    'image' : item['media:content'] ? item['media:content'][0].$ : undefined,\n    'description': item.description ? item.description[0] : item['itunes:summary'][0]\n   });  \n}\nresponse = resp;\nterminateFilter(response);"
+          },
+          "service": {
+            "method": ""
+          }
+        }
+      }
+    ]
+  },
+  "Forbes": {
+    "auth": false,
+    "schemas": [
+      "public/rest"
+    ],
+    "data": [
+      {
+        "name": "forbes/popstories",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "http://www.forbes.com/feeds/popstories.xml",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "xml",
+          "postcode": {
+            "name": "Beautify JSON Filter",
+            "code": "var resp = [];\nvar data = response.rss.channel[0].item;\nvar maxResults = (data.length < 15) ? data.length : 15;\nvar i, item;\n//Get only 15 items back to caller\nfor (i=0; i< maxResults; i++){\n    item = data[i];\n    resp.push({\n    'title': item.title[0],\n    'link' : item.link[0],\n    'image_url' : item['media:content'] ? item['media:content'][0].$.url : undefined,\n    'image' : item['media:content'] ? item['media:content'][0].$ : undefined,\n    'description': item.description ? item.description[0] : item['itunes:summary'][0]\n   });  \n}\nresponse = resp;\nterminateFilter(response);"
+          },
+          "service": {
+            "method": ""
+          }
+        }
+      },
+      {
+        "name": "forbes/europe_news",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "http://www.forbes.com/europe_news/index.xml",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "xml",
+          "postcode": {
+            "name": "Beautify JSON Filter",
+            "code": "var resp = [];\nvar data = response.rss.channel[0].item;\nvar maxResults = (data.length < 15) ? data.length : 15;\nvar i, item;\n//Get only 15 items back to caller\nfor (i=0; i< maxResults; i++){\n    item = data[i];\n    resp.push({\n    'title': item.title[0],\n    'link' : item.link[0],\n    'image_url' : item['media:content'] ? item['media:content'][0].$.url : undefined,\n    'image' : item['media:content'] ? item['media:content'][0].$ : undefined,\n    'description': item.description ? item.description[0] : item['itunes:summary'][0]\n   });  \n}\nresponse = resp;\nterminateFilter(response);"
+          },
+          "service": {
+            "method": ""
+          }
+        }
+      },
+      {
+        "name": "forbes/technology",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "http://www.forbes.com/technology/index.xml",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "xml",
+          "postcode": {
+            "name": "Beautify JSON Filter",
+            "code": "var resp = [];\nvar data = response.rss.channel[0].item;\nvar maxResults = (data.length < 15) ? data.length : 15;\nvar i, item;\n//Get only 15 items back to caller\nfor (i=0; i< maxResults; i++){\n    item = data[i];\n    resp.push({\n    'title': item.title[0],\n    'link' : item.link[0],\n    'image_url' : item['media:content'] ? item['media:content'][0].$.url : undefined,\n    'image' : item['media:content'] ? item['media:content'][0].$ : undefined,\n    'description': item.description ? item.description[0] : item['itunes:summary'][0]\n   });  \n}\nresponse = resp;\nterminateFilter(response);"
+          },
+          "service": {
+            "method": ""
+          }
+        }
+      },
+      {
+        "name": "forbes/education",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "http://www.forbes.com/education/index.xml",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "xml",
+          "postcode": {
+            "name": "Beautify JSON Filter",
+            "code": "var resp = [];\nvar data = response.rss.channel[0].item;\nvar maxResults = (data.length < 15) ? data.length : 15;\nvar i, item;\n//Get only 15 items back to caller\nfor (i=0; i< maxResults; i++){\n    item = data[i];\n    resp.push({\n    'title': item.title[0],\n    'link' : item.link[0],\n    'image_url' : item['media:content'] ? item['media:content'][0].$.url : undefined,\n    'image' : item['media:content'] ? item['media:content'][0].$ : undefined,\n    'description': item.description ? item.description[0] : item['itunes:summary'][0]\n   });  \n}\nresponse = resp;\nterminateFilter(response);"
+          },
+          "service": {
+            "method": ""
+          }
+        }
+      },
+      {
+        "name": "forbes/sportsmoney",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "http://www.forbes.com/sportsmoney/index.xml",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "xml",
+          "postcode": {
+            "name": "Beautify JSON Filter",
+            "code": "var resp = [];\nvar data = response.rss.channel[0].item;\nvar maxResults = (data.length < 15) ? data.length : 15;\nvar i, item;\n//Get only 15 items back to caller\nfor (i=0; i< maxResults; i++){\n    item = data[i];\n    resp.push({\n    'title': item.title[0],\n    'link' : item.link[0],\n    'image_url' : item['media:content'] ? item['media:content'][0].$.url : undefined,\n    'image' : item['media:content'] ? item['media:content'][0].$ : undefined,\n    'description': item.description ? item.description[0] : item['itunes:summary'][0]\n   });  \n}\nresponse = resp;\nterminateFilter(response);"
+          },
+          "service": {
+            "method": ""
+          }
+        }
+      },
+      {
+        "name": "forbes/energy",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "http://www.forbes.com/energy/index.xml",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "xml",
+          "postcode": {
+            "name": "Beautify JSON Filter",
+            "code": "var resp = [];\nvar data = response.rss.channel[0].item;\nvar maxResults = (data.length < 15) ? data.length : 15;\nvar i, item;\n//Get only 15 items back to caller\nfor (i=0; i< maxResults; i++){\n    item = data[i];\n    resp.push({\n    'title': item.title[0],\n    'link' : item.link[0],\n    'image_url' : item['media:content'] ? item['media:content'][0].$.url : undefined,\n    'image' : item['media:content'] ? item['media:content'][0].$ : undefined,\n    'description': item.description ? item.description[0] : item['itunes:summary'][0]\n   });  \n}\nresponse = resp;\nterminateFilter(response);"
+          },
+          "service": {
+            "method": ""
+          }
+        }
+      },
+      {
+        "name": "forbes/autos",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "http://www.forbes.com/autos/index.xml",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "xml",
+          "postcode": {
+            "name": "Beautify JSON Filter",
+            "code": "var resp = [];\nvar data = response.rss.channel[0].item;\nvar maxResults = (data.length < 15) ? data.length : 15;\nvar i, item;\n//Get only 15 items back to caller\nfor (i=0; i< maxResults; i++){\n    item = data[i];\n    resp.push({\n    'title': item.title[0],\n    'link' : item.link[0],\n    'image_url' : item['media:content'] ? item['media:content'][0].$.url : undefined,\n    'image' : item['media:content'] ? item['media:content'][0].$ : undefined,\n    'description': item.description ? item.description[0] : item['itunes:summary'][0]\n   });  \n}\nresponse = resp;\nterminateFilter(response);"
+          },
+          "service": {
+            "method": ""
+          }
+        }
+      },
+      {
+        "name": "forbes/business",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "http://www.forbes.com/business/index.xml",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "xml",
+          "postcode": {
+            "name": "Beautify JSON Filter",
+            "code": "var resp = [];\nvar data = response.rss.channel[0].item;\nvar maxResults = (data.length < 15) ? data.length : 15;\nvar i, item;\n//Get only 15 items back to caller\nfor (i=0; i< maxResults; i++){\n    item = data[i];\n    resp.push({\n    'title': item.title[0],\n    'link' : item.link[0],\n    'image_url' : item['media:content'] ? item['media:content'][0].$.url : undefined,\n    'image' : item['media:content'] ? item['media:content'][0].$ : undefined,\n    'description': item.description ? item.description[0] : item['itunes:summary'][0]\n   });  \n}\nresponse = resp;\nterminateFilter(response);"
+          },
+          "service": {
+            "method": ""
+          }
+        }
+      },
+      {
+        "name": "forbes/opinions",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "http://www.forbes.com/opinions/index.xml",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "xml",
+          "postcode": {
+            "name": "Beautify JSON Filter",
+            "code": "var resp = [];\nvar data = response.rss.channel[0].item;\nvar maxResults = (data.length < 15) ? data.length : 15;\nvar i, item;\n//Get only 15 items back to caller\nfor (i=0; i< maxResults; i++){\n    item = data[i];\n    resp.push({\n    'title': item.title[0],\n    'link' : item.link[0],\n    'image_url' : item['media:content'] ? item['media:content'][0].$.url : undefined,\n    'image' : item['media:content'] ? item['media:content'][0].$ : undefined,\n    'description': item.description ? item.description[0] : item['itunes:summary'][0]\n   });  \n}\nresponse = resp;\nterminateFilter(response);"
+          },
+          "service": {
+            "method": ""
+          }
+        }
+      }
+    ]
+  },
+  "Bloomberg": {
+    "auth": false,
+    "schemas": [
+      "public/rest"
+    ],
+    "data": [
+      {
+        "name": "bloomberg/view",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "http://www.bloomberg.com/feed/podcast/bloombergview.xml",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "xml",
+          "postcode": {
+            "name": "Beautify JSON Filter",
+            "code": "var resp = [];\nvar data = response.rss.channel[0].item;\nvar maxResults = (data.length < 15) ? data.length : 15;\nvar i, item;\n//Get only 15 items back to caller\nfor (i=0; i< maxResults; i++){\n    item = data[i];\n    resp.push({\n    'title': item.title[0],\n    'link' : item.link[0],\n    'image_url' : item['media:content'] ? item['media:content'][0].$.url : undefined,\n    'image' : item['media:content'] ? item['media:content'][0].$ : undefined,\n    'description': item.description ? item.description[0] : item['itunes:summary'][0]\n   });  \n}\nresponse = resp;\nterminateFilter(response);"
+          },
+          "service": {
+            "method": ""
+          }
+        }
+      },
+      {
+        "name": "bloomberg/brief",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "http://www.bloomberg.com/feed/podcast/bloomberg-brief.xml",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "xml",
+          "postcode": {
+            "name": "Beautify JSON Filter",
+            "code": "var resp = [];\nvar data = response.rss.channel[0].item;\nvar maxResults = (data.length < 15) ? data.length : 15;\nvar i, item;\n//Get only 15 items back to caller\nfor (i=0; i< maxResults; i++){\n    item = data[i];\n    resp.push({\n    'title': item.title[0],\n    'link' : item.link[0],\n    'image_url' : item['media:content'] ? item['media:content'][0].$.url : undefined,\n    'image' : item['media:content'] ? item['media:content'][0].$ : undefined,\n    'description': item.description ? item.description[0] : item['itunes:summary'][0]\n   });  \n}\nresponse = resp;\nterminateFilter(response);"
+          },
+          "service": {
+            "method": ""
+          }
+        }
+      },
+      {
+        "name": "bloomberg/benchmark",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "http://www.bloomberg.com/feed/podcast/benchmark.xml",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "xml",
+          "postcode": {
+            "name": "Beautify JSON Filter",
+            "code": "var resp = [];\nvar data = response.rss.channel[0].item;\nvar maxResults = (data.length < 15) ? data.length : 15;\nvar i, item;\n//Get only 15 items back to caller\nfor (i=0; i< maxResults; i++){\n    item = data[i];\n    resp.push({\n    'title': item.title[0],\n    'link' : item.link[0],\n    'image_url' : item['media:content'] ? item['media:content'][0].$.url : undefined,\n    'image' : item['media:content'] ? item['media:content'][0].$ : undefined,\n    'description': item.description ? item.description[0] : item['itunes:summary'][0]\n   });  \n}\nresponse = resp;\nterminateFilter(response);"
+          },
+          "service": {
+            "method": ""
+          }
+        }
+      },
+      {
+        "name": "bloomberg/featured",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "http://www.bloomberg.com/feed/podcast/featured.xml",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "xml",
+          "postcode": {
+            "name": "Beautify JSON Filter",
+            "code": "var resp = [];\nvar data = response.rss.channel[0].item;\nvar maxResults = (data.length < 15) ? data.length : 15;\nvar i, item;\n//Get only 15 items back to caller\nfor (i=0; i< maxResults; i++){\n    item = data[i];\n    resp.push({\n    'title': item.title[0],\n    'link' : item.link[0],\n    'image_url' : item['media:content'] ? item['media:content'][0].$.url : undefined,\n    'image' : item['media:content'] ? item['media:content'][0].$ : undefined,\n    'description': item.description ? item.description[0] : item['itunes:summary'][0]\n   });  \n}\nresponse = resp;\nterminateFilter(response);"
+          },
+          "service": {
+            "method": ""
+          }
+        }
+      },
+      {
+        "name": "bloomberg/first-word",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "http://www.bloomberg.com/feed/podcast/first-word.xml",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "xml",
+          "postcode": {
+            "name": "Beautify JSON Filter",
+            "code": "var resp = [];\nvar data = response.rss.channel[0].item;\nvar maxResults = (data.length < 15) ? data.length : 15;\nvar i, item;\n//Get only 15 items back to caller\nfor (i=0; i< maxResults; i++){\n    item = data[i];\n    resp.push({\n    'title': item.title[0],\n    'link' : item.link[0],\n    'image_url' : item['media:content'] ? item['media:content'][0].$.url : undefined,\n    'image' : item['media:content'] ? item['media:content'][0].$ : undefined,\n    'description': item.description ? item.description[0] : item['itunes:summary'][0]\n   });  \n}\nresponse = resp;\nterminateFilter(response);"
+          },
+          "service": {
+            "method": ""
+          }
+        }
+      },
+      {
+        "name": "bloomberg/surveillance",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "http://www.bloomberg.com/feed/podcast/surveillance.xml",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "xml",
+          "postcode": {
+            "name": "Beautify JSON Filter",
+            "code": "var resp = [];\nvar data = response.rss.channel[0].item;\nvar maxResults = (data.length < 15) ? data.length : 15;\nvar i, item;\n//Get only 15 items back to caller\nfor (i=0; i< maxResults; i++){\n    item = data[i];\n    resp.push({\n    'title': item.title[0],\n    'link' : item.link[0],\n    'image_url' : item['media:content'] ? item['media:content'][0].$.url : undefined,\n    'image' : item['media:content'] ? item['media:content'][0].$ : undefined,\n    'description': item.description ? item.description[0] : item['itunes:summary'][0]\n   });  \n}\nresponse = resp;\nterminateFilter(response);"
+          },
+          "service": {
+            "method": ""
+          }
+        }
+      },
+      {
+        "name": "bloomberg/hays-advantage",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "http://www.bloomberg.com/feed/podcast/hays-advantage.xml",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "xml",
+          "postcode": {
+            "name": "Beautify JSON Filter",
+            "code": "var resp = [];\nvar data = response.rss.channel[0].item;\nvar maxResults = (data.length < 15) ? data.length : 15;\nvar i, item;\n//Get only 15 items back to caller\nfor (i=0; i< maxResults; i++){\n    item = data[i];\n    resp.push({\n    'title': item.title[0],\n    'link' : item.link[0],\n    'image_url' : item['media:content'] ? item['media:content'][0].$.url : undefined,\n    'image' : item['media:content'] ? item['media:content'][0].$ : undefined,\n    'description': item.description ? item.description[0] : item['itunes:summary'][0]\n   });  \n}\nresponse = resp;\nterminateFilter(response);"
+          },
+          "service": {
+            "method": ""
+          }
+        }
+      },
+      {
+        "name": "bloomberg/taking-stock",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "http://www.bloomberg.com/feed/podcast/taking-stock.xml",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "xml",
+          "postcode": {
+            "name": "Beautify JSON Filter",
+            "code": "var resp = [];\nvar data = response.rss.channel[0].item;\nvar maxResults = (data.length < 15) ? data.length : 15;\nvar i, item;\n//Get only 15 items back to caller\nfor (i=0; i< maxResults; i++){\n    item = data[i];\n    resp.push({\n    'title': item.title[0],\n    'link' : item.link[0],\n    'image_url' : item['media:content'] ? item['media:content'][0].$.url : undefined,\n    'image' : item['media:content'] ? item['media:content'][0].$ : undefined,\n    'description': item.description ? item.description[0] : item['itunes:summary'][0]\n   });  \n}\nresponse = resp;\nterminateFilter(response);"
+          },
+          "service": {
+            "method": ""
+          }
+        }
+      },
+      {
+        "name": "bloomberg/masters-in-business",
+        "data": {
+          "metadata": "",
+          "settings": {
+            "source": "ext",
+            "connector": "http",
+            "postrequestbody": "",
+            "authentication": "none",
+            "auth_password": "",
+            "typerequest": "HTTP_GET",
+            "urlrandom": "0",
+            "auth_userid": "",
+            "url": "http://www.bloomberg.com/feed/podcast/masters-in-business.xml",
+            "dbdriver": "",
+            "dbnames": {
+              "database": "",
+              "collection": ""
+            }
+          },
+          "format": "xml",
+          "postcode": {
+            "name": "Beautify JSON Filter",
+            "code": "var resp = [];\nvar data = response.rss.channel[0].item;\nvar maxResults = (data.length < 15) ? data.length : 15;\nvar i, item;\n//Get only 15 items back to caller\nfor (i=0; i< maxResults; i++){\n    item = data[i];\n    resp.push({\n    'title': item.title[0],\n    'link' : item.link[0],\n    'image_url' : item['media:content'] ? item['media:content'][0].$.url : undefined,\n    'image' : item['media:content'] ? item['media:content'][0].$ : undefined,\n    'description': item.description ? item.description[0] : item['itunes:summary'][0]\n   });  \n}\nresponse = resp;\nterminateFilter(response);"
+          },
+          "service": {
+            "method": ""
+          }
+        }
+      }
+    ]
+  }
+}

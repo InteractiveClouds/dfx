@@ -1,0 +1,376 @@
+md-toolbar.dfx-core-gc-toolbar {
+    display: flex;
+    flex-direction: row;
+}
+md-toolbar:not(.md-menu-toolbar) md-icon.dfx-core-gc-toolbar-left-menu-icon, md-toolbar:not(.md-menu-toolbar) ng-md-icon.dfx-core-gc-toolbar-left-menu-icon {
+    color: #757575;
+    font-size: 20px;
+    width: auto;
+    height: auto;
+    margin: 0 6px 0 0;
+}
+md-toolbar:not(.md-menu-toolbar) md-icon.dfx-core-gc-toolbar-left-menu-iconbar, md-toolbar:not(.md-menu-toolbar) ng-md-icon.dfx-core-gc-toolbar-left-menu-iconbar {
+    color: #ffffff;
+    font-size: 24px;
+    margin-top:-5px;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+md-toolbar:not(.md-menu-toolbar) md-icon.dfx-core-gc-toolbar-left-menu-iconbar:hover, md-toolbar:not(.md-menu-toolbar) ng-md-icon.dfx-core-gc-toolbar-left-menu-iconbar:hover {
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+}
+md-toolbar:not(.md-menu-toolbar) button[disabled] md-icon.dfx-core-gc-toolbar-left-menu-iconbar, md-toolbar:not(.md-menu-toolbar) button[disabled] ng-md-icon.dfx-core-gc-toolbar-left-menu-iconbar {
+    color: rgba(0,0,0,0.26);
+    text-shadow: none;
+    -webkit-transform: scale(1.0);
+    -ms-transform: scale(1.0);
+    transform: scale(1.0);
+}
+md-toolbar md-menu-bar > md-menu.md-open > button.md-icon-button,
+md-toolbar md-menu-bar > md-menu > button.md-icon-button:focus {
+    background: rgba(158,158,158,0.2);
+}
+md-toolbar md-menu-bar > md-menu > button.md-icon-button:hover {
+    background-color: rgba(158,158,158,0.2);
+}
+.md-button.glyph.dfx-core-gc-toolbar-left-buttons{
+    margin:0;
+    height:36px;
+    color: #2196f3;
+    display: flex;
+}
+
+md-toolbar:not(.md-menu-toolbar) md-icon.dfx-core-gc-toolbar-right-menu-icon, md-toolbar:not(.md-menu-toolbar) ng-md-icon.dfx-core-gc-toolbar-right-menu-icon {
+    color: #757575;
+    font-size: 20px;
+    width: auto;
+    height: auto;
+    margin: 0 6px 0 0;
+}
+md-toolbar:not(.md-menu-toolbar) md-icon.dfx-core-gc-toolbar-right-menu-iconbar, md-toolbar:not(.md-menu-toolbar) ng-md-icon.dfx-core-gc-toolbar-right-menu-iconbar {
+    color: #ffffff;
+    font-size: 24px;
+    margin-top:-5px;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+md-toolbar:not(.md-menu-toolbar) md-icon.dfx-core-gc-toolbar-right-menu-iconbar:hover, md-toolbar:not(.md-menu-toolbar) ng-md-icon.dfx-core-gc-toolbar-right-menu-iconbar:hover {
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+}
+md-toolbar:not(.md-menu-toolbar) button[disabled] md-icon.dfx-core-gc-toolbar-right-menu-iconbar, md-toolbar:not(.md-menu-toolbar) button[disabled] ng-md-icon.dfx-core-gc-toolbar-right-menu-iconbar{
+    color: rgba(0,0,0,0.26);
+    text-shadow: none;
+    -webkit-transform: scale(1.0);
+    -ms-transform: scale(1.0);
+    transform: scale(1.0);
+}
+.md-button.glyph.dfx-core-gc-toolbar-right-buttons{
+    margin:0;
+    height:36px;
+    color: #2196f3;
+    display: flex;
+}
+
+md-toolbar.dfx-core-gc-toolbar-wiz-tabs:not(.md-menu-toolbar){
+    min-height:48px;
+    background-color:#e7e7e7;
+    color:rgb(33,150,243);
+    padding: 0 5px;
+}
+
+md-toolbar.dfx-core-gc-toolbar:not(.md-menu-toolbar){
+    padding: 0 5px;
+    min-height:48px;
+}
+
+.md-button.glyph.dfx-core-gc-wizard-submit:not([disabled]).md-focused,
+.md-button.glyph.dfx-core-gc-wizard-submit:not([disabled]):hover,
+.md-button.glyph.dfx-core-gc-wizard-submit{
+    color: rgba(0,0,0,0.87);
+    background-color: rgb(255,215,64);
+}
+.panel-body-collapser {
+    width: 50px;
+    float: right;
+    padding: 10px 0 0 20px;
+}
+.panel-body-collapser md-icon.collapser-trigger {
+    width: 15px;
+    height: 20px;
+    cursor: pointer;
+    transition: all .5s;
+}
+.panel-body-collapser md-icon.collapser-trigger.expanded {
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg)
+}
+/* Fab */
+.dfx-core-gc-fab.md-button.md-fab {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    line-height: 0;
+    margin: 6px 2px;
+    background-color: #f5f5f5;
+}
+.dfx-core-gc-fab.md-button.md-fab .dfx-core-gc-fab-icon {
+    font-size: 24px;
+    color: #757575;
+}
+.dfx-core-gc-fab-item.md-button.md-fab {
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    min-height: 30px;
+    line-height: 0px;
+    margin: 6px 2px;
+    background-color: #f5f5f5;  
+}
+.dfx-core-gc-fab-item.md-button.md-fab .dfx-core-gc-fab-item-icon {
+    color: #757575; 
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+}
+.dfx-core-gc-fab.md-button.md-fab:not([disabled]).md-focused, 
+.dfx-core-gc-fab.md-button.md-fab:not([disabled]):hover, 
+.dfx-core-gc-fab-item.md-button.md-fab:not([disabled]).md-focused,
+.dfx-core-gc-fab-item.md-button.md-fab:not([disabled]):hover {
+    background-color: #f5f5f5;
+}
+md-tooltip.dfx-core-gc-fab-tooltip, md-tooltip.dfx-core-gc-fab-tooltip-item {
+    background: rgba(0,0,0,0.5);
+} 
+md-tooltip.dfx-core-gc-fab-tooltip .md-content, md-tooltip.dfx-core-gc-fab-tooltip-item .md-content {
+    background: none;
+}
+
+/* Icon */
+.dfx-core-gc-icon {
+    color: #757575;
+}
+.dfx-core-gc-iconbar-button ng-md-icon {
+    color: #757575;
+}
+.dfx-core-gc-icon md-icon, .dfx-core-gc-icon ng-md-icon, .dfx-core-gc-iconbar-button md-icon, .dfx-core-gc-iconbar-button ng-md-icon {
+    width: auto;
+    height: auto;
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+.dfx-core-gc-icon.dfx-core-state-icons md-icon, .dfx-core-gc-icon.dfx-core-state-icons ng-md-icon {
+    width: auto;
+    height: auto;
+    -webkit-transition: all 0s ease;
+    -moz-transition: all 0s ease;
+    -o-transition: all 0s ease;
+    transition: all 0s ease;
+}
+.dfx-core-gc-icon md-icon:hover, .dfx-core-gc-icon ng-md-icon:hover, .dfx-core-gc-iconbar-button md-icon:hover, .dfx-core-gc-iconbar-button ng-md-icon:hover {
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+}
+button[disabled].dfx-core-gc-icon md-icon, button[disabled].dfx-core-gc-icon ng-md-icon, button[disabled].dfx-core-gc-iconbar-button md-icon, button[disabled].dfx-core-gc-iconbar-button ng-md-icon {
+    -webkit-transform: scale(1.0);
+    -ms-transform: scale(1.0);
+    transform: scale(1.0);
+    cursor: default;
+}
+.dfx-core-gc-icon.dfx-core-wait-icon md-icon, .dfx-core-gc-icon.dfx-core-wait-icon ng-md-icon {
+    cursor: wait;
+}
+/* Button */
+.dfx-gc-core-button-label {
+    margin: 0 5px;
+}
+button.dfx-core-gc-button.md-button.dfx-core-button-wait, button.gc-btn-group-last.md-button.dfx-core-button-wait {
+    cursor: wait !important;
+}
+button[disabled="disabled"].dfx-core-gc-button.md-button md-icon, button[disabled="disabled"].dfx-core-gc-button.md-button ng-md-icon {
+    color: rgba(0,0,0,0.26)!important;
+}
+
+/* Image */
+.dfx-core-gc-image img {
+    width: 150px;
+    height: 150px;
+    max-width: 100%;
+    max-height: 100%;
+}
+/* Select */
+.dfx-core-gc-select {
+    margin-bottom: 24px;
+}
+/* Table */
+.dfx-core-gc-table {
+    width:100%;
+    margin:0;
+}
+/* Charts */
+.dfx-core-gc-chart {
+    height:300px;
+}
+/* Tree menu */
+.dfx-core-gc-treemenu {
+    width: 100%;
+    /*background-color: rgb(33, 150, 243);*/
+}
+.dfx-core-gc-treemenu ul {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    list-style: none;   
+}
+.dfx-core-gc-treemenu > ul > li li {
+    background-color: rgba(153,153,153,.15);
+}
+.dfx-core-gc-treemenu button {
+    color: #707070;
+    display:inline-flex;
+    flex-direction:row;
+}
+.dfx-core-gc-treemenu button:before {
+    content: '';
+    display: block;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+.dfx-core-gc-treemenu button, .dfx-core-gc-treemenu button * {
+    transition: all .5s;
+}
+.dfx-core-gc-treemenu button .tree-menu-icon {
+    color: inherit;
+    width: 16px;
+    height:16px;
+    margin:auto 16px auto 0;
+    text-align: center;
+}
+.dfx-core-gc-treemenu button .tree-menu-label {
+    flex-grow:1;
+}
+.dfx-core-gc-treemenu button .trigger-icon {
+    width:5px;
+    height:16px;
+    margin:auto 0;
+}
+.dfx-core-gc-treemenu button.opened .trigger-icon {
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+.dfx-core-gc-treemenu button > small {    
+    background-color: #707070;
+}
+.dfx-core-gc-treemenu button[disabled="disabled"] > small {
+    opacity: 0.5;
+}
+.dfx-core-gc-treemenu md-menu-divider {
+    display: block;
+    height: 1px;
+    background-color: rgba(0,0,0,0.12);
+}
+/* Menu editor */
+.tree-menu-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #707070;    
+    background-color: rgba(0,0,0,0.15);
+    transition: all .5s;
+}
+.tree-menu-title > div {
+    transition: all .5s;    
+}
+/* Horizontal Menu */
+.dfx-core-gc-horizontalmenu md-menu-bar {
+    padding: 0px;
+}
+.dfx-core-gc-horizontalmenu button, .dfx-core-gc-horizontalmenu button * {
+    transition: all .5s;
+    color: #707070;
+}
+.dfx-core-gc-horizontalmenu button.dfx-horizontalmenu-root-button {
+    font-size: 15px;
+    line-height: 15px;
+    padding: 0 16px;
+    height: 48px;
+}
+.dfx-core-gc-horizontalmenu button.dfx-horizontalmenu-root-button:hover {
+    background-color: rgba(158,158,158,0.2);
+}
+.dfx-core-gc-horizontalmenu button .dfx-horizontalmenu-root-icon {
+    color: inherit;
+    font-size: 15px;
+    text-align:center;
+    display: inline-flex;
+    width: 16px;
+    height:16px;
+    margin:auto 8px auto 0;
+}
+.dfx-core-gc-horizontalmenu md-menu button small {
+    color: #fff;
+    background: #707070;
+}
+md-menu-item button.dfx-horizontalmenu-button small {
+    background: #707070;
+}
+/* Panel */
+.dfx-core-gc-panel > md-content {
+    padding: 8px;
+}
+/* Editor */
+.dfx-core-gc-richtext .ql-container {
+    min-height: 200px;
+}
+.dfx-core-gc-richtext .ql-tooltip.ql-image-tooltip {
+    top: 0 !important;
+}
+.dfx-core-gc-richtext .ql-tooltip.ql-image-tooltip .preview {
+    height: 90px;
+}
+/* Progressbar */
+.dfx-core-gc-progressbar {
+    padding-bottom: 35px;
+}
+/* Google Map */
+.dfx-core-gc-google-map {
+    width: 100%;
+    height: 300px;
+}
+/* Tree view */
+.dfx-core-gc-treeview {
+    padding: 16px;
+}
+.dfx-core-gc-treeview ul {
+    padding: 0 0 0 18px;
+    margin: 0;
+}
+.dfx-core-gc-treeview li {
+    list-style: none;
+}
+.dfx-core-gc-treeview .node-trigger {
+    width: 18px;
+    height: auto;
+    margin-left: -18px;
+    cursor: pointer;
+}
+.dfx-core-gc-treeview ng-md-icon.node-trigger {
+    color: #757575;
+    height: 18px;
+}

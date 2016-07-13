@@ -1,0 +1,141 @@
+div(style="overflow-x:hidden")
+    ol.breadcrumb
+        li
+            a(href="javascript:DfxStudio.Dispatcher.run('#!/home/');")
+                span.fa.fa-lg.fa-home
+        li
+            a(href="javascript:DfxStudio.Dispatcher.run('#!/catalog/');") Catalog
+        li.active Application: #{application.name}
+    div.row(style="margin-top:10px")
+        div.col-lg-6
+            form#applicationForm(action="javascript:void(0);")
+                div.panel.panel-primary
+                    div.panel-heading
+                        h4 General Information
+                    div.panel-body
+                        fieldset
+                            div.form-group.col-lg-6
+                                label(for="fldTitle") Title:
+                                input#fldTitle.form-control(type="text", value='#{application.title}', data-inputname='title')
+                            div.form-group.col-lg-6
+                                label(for="fldOwnerId") Owner:
+                                input#fldOwnerId.form-control(type="text", value='#{application.ownerId}', data-inputname='ownerId')
+                            div.form-group.col-lg-6
+                                label(for="fldRequestDate") Creation Date:
+                                input#fldRequestDate.form-control(readonly, type="text", value='#{application.creationDate}')
+                            div.form-group.col-lg-4
+                                label(for="fldPlatform") Platform:
+                                select#fldPlatform.form-control(name="fldPlatform", data-inputname='platform', placeholder="select a platform")
+                                    option(value="web", selected=application.platform=='web') Web
+                                    option(value="mobile", selected=application.platform=='mobile') Mobile
+                div.panel.panel-primary
+                    div.panel-heading
+                        h4 Personalization
+                    div.panel-body
+                        - var template_value = (application.personalization==null) ? '' : application.personalization.template;
+                        div.col-md-6
+                            fieldset
+                                label(for="fldTemplate") Theme template:
+                                select#fldTemplate.form-control(value='#{template_value}', data-inputname='template', onchange="DfxStudio.appSelectTheme(this);")
+                                    each template in templates
+                                        if template.platform == application.platform
+                                            option(id="dfx_theme_#{template.name}", thumbnail="#{template.thumbnail}", value="#{template.name}", selected=(template_value==template.name ? 'true' : undefined)) #{template.name}
+                        div.col-md-6
+                            - var selected_thumbnail = templates[template_value].thumbnail
+                            img#dfx_theme_thumbnail(src="#{selected_thumbnail}", style="border:2px #1fbbd7 solid;padding:0;")
+                div.panel.panel-primary
+                    div.panel-heading
+                        h4 Application Configuration
+                    div.panel-body
+                        ul.nav.nav-pills.nav-stacked
+                            li
+                                a(href="javascript:DfxStudio.Dispatcher.run('#!/catalog/application/#{application.name}/snapshot/');")
+                                    span(style="margin-left:10px") Application Configuration Matrix
+                        fieldset
+                            div.form-group.col-lg-6
+                                label(for="role-selector") Choose Role:
+                                select.form-control.selectpicker.role-selector(id="role-selector", name="fldRoleSelector", data-application="#{application.name}")
+                                    option(value="noselection") No Roles
+                                    each role in roles
+                                        option(value="#{role.name}") #{role.name}
+                        ul.nav.nav-pills.nav-stacked.configure-menu(style="display: none;")
+                            li
+                                a(id="configure-menu-items-link", href="")
+                                    span(id="configure-menu-items", style="margin-left:10px") Configure Menu Items for XXX
+                            li
+                                a(id="configure-graphical-components-link", href="")
+                                    span(id="configure-graphical-components", style="margin-left:10px") Configure Graphical components for XXX
+                div
+                    a.btn.btn-info.save-now-submitter(href="javascript:DfxStudio.Dashboard.updateApplication({applicationName:'#{application.name}',formId:'applicationForm'});")
+                        span.fa.fa-lg.fa-floppy-o
+                        span(style="padding-left:5px") Save
+                    a.btn.btn-default(href="javascript:DfxStudio.Dispatcher.run('#!/catalog/');", style="margin-left:10px")
+                        span.fa.fa-lg.fa-undo
+                        span(style="padding-left:5px") Cancel
+            div.panel.panel-danger(style="margin-top: 15px;")
+                div.panel-heading
+                    h4 Danger Zone
+                div.panel-body
+                    button.btn.btn-default(type='button', onclick="javascript:DfxStudio.Dashboard.deleteApplication({applicationName:'#{application.name}'});", style="margin-left:10px")
+                        span.fa.fa-lg.fa-trash-o
+                        span(style="padding-left:5px") Delete the Application
+        div.col-lg-6
+            div.panel.panel-primary
+                div.panel-heading
+                    h4 User Interface
+                div.panel-body
+                    ul.nav.nav-pills.nav-stacked
+                        li
+                            a(href="javascript:DfxStudio.Dispatcher.run('#!/catalog/application/#{application.name}/menu/');")
+                                span(style="margin-left:10px") Application Menu
+                        if application.platform == "web"
+                            li
+                                a(href="javascript:DfxStudio.Dispatcher.run('#!/catalog/application/#{application.name}/screens/');")
+                                    span(style="margin-left:10px") Screens
+            div.panel.panel-primary
+                div.panel-heading
+                    h4 Build Your Application
+                div.panel-body Build a pure MEAN based application.
+                        ul.nav.nav-pills.nav-stacked(style="margin-top:20px;")
+                            li
+                                a(href='javascript:void(0);', onclick="DfxStudio.buildDeployApplication({applicationName:'#{application.name}'});")
+                                    span(style="margin-left:10px") Build & Deploy Application
+                            li#btnRunApplication
+                                if application.platform == "mobile"
+                                    a(href="/deploy/#{tenantid}/#{application.name}/index.html", target="_blank")
+                                        span(style="margin-left:10px") Run the Application
+                                else
+                                    a(href="/deploy/#{tenantid}/#{application.name}/login.html", target="_blank")
+                                        span(style="margin-left:10px") Run the Application
+                            li#progressDeployApplication(style="display:none")
+                                div.progress.progress-striped.active(style="margin-left:15px")
+                                    div.progress-bar(role="progressbar", aria-valuenow="100", aria-valuemin="0", aria-valuemax="100", style="width:100%")
+                                        span Deploying Application...
+                            li#deployApplicationFailed(style="display:none")
+                                div.progress.active(style="margin-left:15px")
+                                    div.progress-bar-danger(role="progressbar", aria-valuenow="100", aria-valuemin="0", aria-valuemax="100", style="width:100%")
+                                        span#deployApplicationFailedMessage(style="color:#FFFFFF") &nbsp;Deploying failed, compilation error
+                            li(style="display:none")
+                                a(href='javascript:void(0);', onclick="DfxStudio.buildGithubApplication({applicationName:'#{application.name}'});")
+                                    span(style="margin-left:10px") Build and Publish on GitHub
+                            if application.platform == "mobile"
+                                li#create-phonegap-archive
+                                    a(href='javascript:void(0);', onclick="DfxStudio.buildPhoneGapApplication({applicationName:'#{application.name}'});")
+                                        span(style="margin-left:10px") Create Application Archive for Adobe
+                                            sup ®
+                                            | &nbsp;PhoneGap™
+                                li#download-app-archive(style="display:none")
+                                    a(href="/studio/compiler/download/#{application.name}", target="_blank")
+                                        span(style="margin-left:10px") Download Application Archive
+                                li#build-phonegap(style="display:none")
+                                    a(href="/studio/compiler/build/#{application.name}", target="_blank")
+                                        span(style="margin-left:10px") Build Application at Adobe
+                                            sup ®
+                                            | &nbsp;PhoneGap™
+        if (application.phonegap.applicationId !== "")
+            div.col-lg-6
+                div.panel.panel-info
+                    div.dfx_content_subtitle Scan to install application
+                    br
+                    div(style="overflow:hidden;width:150px;height:150px")
+                        iframe(id='testframe', src="https://build.phonegap.com/apps/#{application.phonegap.applicationId}/builds", style="margin-left: -1347px;margin-top:-98px;width:2000px;height:2000px")

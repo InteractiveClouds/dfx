@@ -1,0 +1,8 @@
+li
+    a(href="javascript:DfxStudio.doNothing();", item-type="screen", item-application="#{application.name}", item-screen="#{screen.name}") #{screen.name}
+    - if (screen.children.length>0) {
+        ul
+            - for (var i=0; i<screen.children.length; i++) {
+                include screen_tree
+            - }
+    - }

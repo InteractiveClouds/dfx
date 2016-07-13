@@ -1,0 +1,234 @@
+{
+  "template": 		{ "value": "default" },
+  "name":         { "value": "wzrdWizard" },
+  "display":      { "value": "true" },
+  "stepAlign":    { "value": "top" },
+  "stretching":   { "value": "always" },
+  "inkBar":       { "value": "enabled" },
+  "centerSteps":  { "value": false },
+  "whiteframe":   { "value": "md-whiteframe-1dp" },
+  "percentage":   { "value": "" },
+  "toolbar": { 
+    "visible":        { "value": "true" },
+    "collapsible":    { "value": "false" },
+    "collapsed":      { "value": "false" },
+    "classes":        { "value": "" },
+    "dynamicClasses": { "value": "" },
+    "style":          { "value": "" },
+    "title": {
+      "value":            "'Form Wizard'",
+      "visible":          { "value": "true" },
+      "isHtml":           { "value": false },
+      "bindingHtml":      { "value": "" },
+      "content":          { "value": "<div><p>Lorem ipsum dolor sit <b>amet</b>, consectetuer adipiscing elit. <b>Aenean</b> commodo ligula eget dolor. Aenean massa.</p></div>" },
+      "alignment":        { "value":"start" },
+      "classes":          { "value": "" },
+      "dynamicClasses":   { "value": "" },
+      "style":            { "value": "" },
+      "flexWidth":        { "value": 50 }
+    },
+    "leftMenu": {
+      "visible":          { "value": "false" },
+      "fabDirection":     { "value": "right" },
+      "animation":        { "value": "md-fling", "display":"Fling" },
+      "classes":          { "value": "" },
+      "dynamicClasses":   { "value": "" },
+      "style":            { "value": "" },
+      "fab": {
+        "triggerButton": {
+          "label": "'Home'", "style": "", "class": "",
+          "icon": { "value": "'fa-bars'", "type": "fa-icon", "size": 24, "style": "", "class": "" },
+          "tooltip": { "direction": "top", "style": "", "class": "" } 
+        },
+        "actionButton": {
+          "style": "", "class": "",
+          "icon": { "value": "", "type": "", "size": 20, "style": "", "class": "" },
+          "tooltip": { "direction": "top", "style": "", "class": "" } 
+        }
+      },
+      "iconBar": {
+        "triggerButton": { "style": "", "class": "", "icon": { "size": 24, "style": "", "class": "" } },
+        "actionButton": { "style": "", "class": "", "icon": { "size": 16, "style": "", "class": "" } }
+      },
+      "buttons": {
+        "triggerButton": { "style": "", "class": "", "icon": { "size": 20, "style": "", "class": "" } },
+        "actionButton": { "style": "", "class": "", "icon": { "size": 16, "style": "", "class": "" } },
+        "waiting":  { "value": "", "autoDisabled": false, "icon": { "value": "'fa-spinner'", "type": "fa-icon", "style": "", "class": "fa-pulse" }}
+      },
+      "flexWidth":        { "value": 20 },
+      "type":             { "value": "Buttons" },
+      "dynamic":          { "value": "" },
+      "menuItems": {
+        "value": [
+          {
+            "isTopLevel": true,
+            "label": "'Home'",
+            "icon": { "value": "'home'", "type": "svg-icon" },
+            "shortcut": "",
+            "divider": false,
+            "notification": "",
+            "display": "true",
+            "disabled": "false",
+            "onclick": "",
+            "menuItems": { "value": [] }
+          }
+        ]
+      }
+    },
+    "rightMenu": {
+      "visible":          { "value": "false" },
+      "fabDirection":     { "value": "left" },
+      "animation":        { "value": "md-fling", "display": "Fling" },
+      "classes":          { "value": "" },
+      "dynamicClasses":   { "value": "" },
+      "style":            { "value": "" },
+      "fab": {
+        "triggerButton": {
+          "label": "'Home'", "style": "", "class": "",
+          "icon": { "value": "'fa-bars'", "type": "fa-icon", "size": 24, "style": "", "class": "" },
+          "tooltip": { "direction": "top", "style": "", "class": "" } 
+        },
+        "actionButton": {
+          "style": "", "class": "",
+          "icon": { "value": "", "type": "", "size": 20, "style": "", "class": "" },
+          "tooltip": { "direction": "top", "style": "", "class": "" } 
+        }
+      },
+      "iconBar": {
+        "triggerButton": { "style": "", "class": "", "icon": { "size": 24, "style": "", "class": "" } },
+        "actionButton": { "style": "", "class": "", "icon": { "size": 16, "style": "", "class": "" } }
+      },
+      "buttons": {
+        "triggerButton": { "style": "", "class": "", "icon": { "size": 20, "style": "", "class": "" } },
+        "actionButton": { "style": "", "class": "", "icon": { "size": 16, "style": "", "class": "" } },
+        "waiting":  { "value": "", "autoDisabled": false, "icon": { "value": "'fa-spinner'", "type": "fa-icon", "style": "", "class": "fa-pulse" }}
+      },
+      "flexWidth":        { "value": 30 },
+      "type":             { "value": "Fab" },
+      "dynamic":          { "value": "" },
+      "menuItems": {
+        "value": [
+          {
+            "isTopLevel": true,
+            "label": "'Home'",
+            "icon": { "value": "'home'", "type": "svg-icon"},
+            "shortcut": "",
+            "divider": false,
+            "notification": "",
+            "display": "true",
+            "disabled": "false",
+            "onclick": "",
+            "menuItems": { "value": [] }
+          }
+        ]
+      }
+    }
+  },
+  "previousButton": {
+    "label":          { "value": "'Previous'" },
+    "classes":        { "value": "" },
+    "dynamicClasses": { "value": "" },
+    "style":          { "value": "" },
+    "onclick":        { "value": "" }
+  },
+  "nextButton": {
+    "label":          { "value": "'Next'" },
+    "classes":        { "value": "" },
+    "dynamicClasses": { "value": "" },
+    "style":          { "value": "" },
+    "onclick":        { "value": "" }
+  },
+  "submitButton": {
+    "label":          { "value": "'Submit'" },
+    "classes":        { "value": "" },
+    "dynamicClasses": { "value": "" },
+    "style":          { "value": "" },
+    "onclick":        { "value": "" }
+  },
+  "steps": {  
+    "value": [
+      {
+        "label":          "'Step 1'",
+        "validDisabled":  { "value": false },
+        "disabled":       { "value": "false" },        
+        "classes":        { "value": "" },
+        "dynamicClasses": { "value": "" },
+        "style":          { "value": "" },
+        "layout": {
+          "rows": [
+            {
+              "cols": [
+                {
+                  "width":          { "value": 100 },
+                  "classes":        { "value": "" },
+                  "dynamicClasses": { "value": "" },
+                  "style":          { "value": "" },
+                  "orientation":    { "value": "row" },
+                  "halignment":     { "value": "start" },
+                  "valignment":     { "value": "start" }
+                }
+              ],
+              "classes":        { "value": "" },
+              "dynamicClasses": { "value": "" },
+              "style":          { "value": "" }
+            }
+          ],
+          "classes":        { "value": "" },
+          "dynamicClasses": { "value": "" },
+          "style":          { "value": ""}
+        } 
+      },
+      {
+        "label":          "'Step 2'",
+        "validDisabled":  { "value": true },
+        "disabled":       { "value": "false" },        
+        "classes":        { "value": "" },
+        "dynamicClasses": { "value": "" },
+        "style":          { "value": "" },
+        "layout": {
+          "rows": [
+            {
+              "cols": [
+                {
+                  "width":          { "value": 100 },
+                  "classes":        { "value": "" },
+                  "dynamicClasses": { "value": "" },
+                  "style":          { "value": "" },
+                  "orientation":    { "value": "row" },
+                  "halignment":     { "value": "start" },
+                  "valignment":     { "value": "start" }
+                }
+              ],
+              "classes":        { "value": "" },
+              "dynamicClasses": { "value": "" },
+              "style":          { "value": "" }
+            }
+          ],
+          "classes":        { "value": "" },
+          "dynamicClasses": { "value": "" },
+          "style":          { "value": ""}
+        }
+      }
+    ]
+  },
+  "flex":           { "value": 100 },  
+  "style":          { "value": "" },
+  "bodyStyle":      { "value": "" },
+  "classes":        { "value": "" },
+  "dynamicClasses": { "value": "" },
+  "onPrevious":     { "value": "" },
+  "onNext":         { "value": "" },
+  "formSubmit":     { "value": "" },
+  "onclick":        { "value": "" },
+  "ondblclick":     { "value": "" },
+  "onfocus":        { "value": "" },
+  "onblur":         { "value": "" },
+  "onkeypress":     { "value": "" },
+  "onkeydown":      { "value": "" },
+  "onkeyup":        { "value": "" },
+  "onmouseover":    { "value": "" },
+  "onmouseenter":   { "value": "" },
+  "onmousemove":    { "value": "" },
+  "onmouseleave":   { "value": "" },
+  "onmouseup":      { "value": "" }
+}

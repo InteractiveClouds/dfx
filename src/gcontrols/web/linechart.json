@@ -1,0 +1,59 @@
+{
+	"template": 			{ "value": "default" },
+	"name": {
+		"value": "lineChart1"
+	},
+	"flex": {
+	  	"value": 50
+	},
+	"binding": {
+	  	"value": ""
+	},
+	"title": {
+	  	"value": "'Line Chart'"
+	},
+  	"chartType": {
+	  "value": "lineChart"
+	},
+	"display": {
+		"value": "true"
+	},
+	"options": {
+		"xAxisLabel": "'X Axis'",
+		"yAxisLabel": "'Y Axis'",
+		"xAxisLabelDistance": -5,
+		"yAxisLabelDistance": -5,
+		"duration": 500,
+		"showXAxis": "true",
+		"showYAxis": "true",
+		"showLegend": "true",
+		"useInteractiveGuideline": "true"
+	},
+	"dynamicOptions": {
+	  	"value": ""
+	},
+	"style": {
+	  	"value": ""
+	},
+	"classes": {
+		"value": ""
+	},
+	"dynamicClasses": {
+		"value": ""
+	},
+	"onclick": {
+		"value": ""
+	},
+	"onmouseover": {
+	  	"value": ""
+	},
+	"onmouseleave": {
+	  	"value": ""
+	},
+	"onstatechange": {
+	  	"value": ""
+	},
+	"onrenderend": {
+	  	"value": ""
+	}
+}

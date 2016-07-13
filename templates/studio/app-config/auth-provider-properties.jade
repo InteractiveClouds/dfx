@@ -1,0 +1,25 @@
+div.panel.panel-primary
+    div.panel-heading
+        h4 Provider details
+    div.panel-body#dbs_databases
+        form#provider_info
+            fieldset
+                div.form-group
+                    label Application:
+                    input.form-control(readonly="readonly", name="application", value="#{applicationName}")
+                div.form-group
+                    label Name:
+                    input.form-control(readonly="readonly", name="provider", value="#{provider.provider}")
+                div.form-group
+                    label Auth Protocol:
+                    select#auth-protocol-select.form-control(name="protocol")
+                        option(disabled="disabled", selected="selected", value="Choose Auth Protocol") Choose Auth Protocol
+                        option(value="basic") basic
+                        option(value="digest") digest
+                        option(value="oAuth1") oAuth 1
+                        option(value="oAuth2") oAuth 2
+                div#auth-provider-type-container
+                div#auth-provider-credentials
+                button.btn.btn-info.save-now-submitter(onclick="DfxStudio.Home.AuthenticationProviders.update();", type='button')
+                    span.fa.fa-lg.fa-floppy-o
+                    span(style="padding-left: 5px;") Save

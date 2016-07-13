@@ -1,0 +1,153 @@
+div.row
+    div.col-lg-12
+        div.panel.panel-primary
+            div.panel-heading
+                div.panel-title
+                    | Menu Item Details
+                    div.pull-right
+                        a(href="javascript:DfxStudio.switchCollapsible('menu_item_details');")
+                            span#dfx_collapsible_icon_menu_item_details.fa.fa-lg.fa-angle-down
+            div.panel-body#dfx_collapsible_menu_item_details
+                span#menu_item_detail_form(style="display: none;")
+                    form(action="javascript:void(0);", id='applicationMenuForm')
+                        fieldset
+                            div.form-group.col-lg-6
+                                label(for="fldName") Name:
+                                input#fldName.form-control(type="text", data-inputname='name', readonly)
+                            div.form-group.col-lg-6
+                                label(for="fldTitle") Title:
+                                input#fldTitle.form-control(type="text", data-inputname='title')
+                        fieldset
+                            div.form-group.col-lg-4
+                                label(for="fldParentName") Parent:
+                                select#fldParentName.form-control(data-inputname='parentName')
+                                    option(value="") /
+                                    mixin addOption(item)
+                                        if (menuItemName !== item.name)
+                                            option(value="#{item.name}") #{item.name}
+                                            if (item.children.length > 0)
+                                                each child in item.children
+                                                    mixin addOption(child)
+                                    each menu_item in menuItems
+                                        mixin addOption(menu_item)
+                            div.form-group.col-lg-3
+                                label(for="fldOrder") Order:
+                                input#fldOrder.form-control(type="text", data-inputname='order', readonly)
+                            div.form-group.col-lg-5
+                                label(for="gc_button_attr_icon") Icon:
+                                div.input-group(style="margin-bottom:10px")
+                                    input#gc_button_attr_icon.form-control(type="text", data-inputname='icon', placeholder="Select icon")
+                                    span.input-group-btn
+                                        button.btn.btn-info(type="button", data-toggle="modal", data-target="#iconsModal", data-vb-picker-target="gc_button_attr_icon")
+                                            span.fa.fa-lg.fa-ellipsis-h
+                        fieldset
+                            div.form-group.col-lg-6
+                                label(for="fldAction") Action:
+                                select#fldAction.form-control(data-inputname='action')
+                                    option(value="no_action") No action
+                                    option(value="screen") Assign To Page
+                            div#searchScreens.form-group.col-lg-6(style="display: none;")
+                                label(for="fldScreen") Choose or Create a Page:
+                                div.input-group(style="margin-bottom:10px")
+                                    span.input-group-btn
+                                        div.dropdown
+                                            a#list-all-screens.btn.btn-info.dropdown-toggle(type="button", data-toggle="dropdown", onclick="DfxStudio.Menu.listAllScreens({application:'#{application.name}'})")
+                                                span.fa.fa-lg.fa-chevron-down
+                                            ul.dropdown-menu(role="menu", aria-labelledby="list-all-screens")
+                                    input#fldScreen.form-control(type="text", data-inputname='searchScreens', placeholder="Start typing the name")
+                                    span.input-group-btn
+                                        button.btn.btn-info(type="button", onclick="DfxStudio.Screens.createScreen({application:'#{application.name}'})")
+                                            span.fa.fa-lg.fa-plus
+div.row
+    div.col-lg-12
+        div#screen_detail_form.panel.panel-primary(style="display: none;")
+            div.panel-heading
+                div.panel-title
+                    | Page Details
+                    div.pull-right
+                        a(href="javascript:DfxStudio.switchCollapsible('screen_details');")
+                            span#dfx_collapsible_icon_screen_details.fa.fa-lg.fa-angle-down
+            div.panel-body#dfx_collapsible_screen_details
+                span
+                    form#applicationScreenForm(action="javascript:void(0);")
+                        h4
+                            span.dfs_content_title_2 Properties
+                        fieldset
+                            div.form-group.col-lg-3
+                                label(for="fldScreenName") Name:
+                                input#fldScreenName.form-control(type="text", data-inputname='name', readonly)
+                            div.form-group.col-lg-6
+                                label(for="fldScreenTitle") Title:
+                                input#fldScreenTitle.form-control(type="text", data-inputname='title')
+                    h4
+                        span.dfs_content_title_2 Layout
+                    div#dfx_screen_detail_layout
+                        div(style="margin:10px")
+                            a.btn.btn-info(href="javascript:DfxStudio.layoutEditor.addRow();")
+                                span.fa.fa-lg.fa-plus
+                                span(style="padding-left:5px") Add Row
+                            a.btn.btn-info(href="javascript:DfxStudio.layoutEditor.removeRow();", style="margin-left:32px")
+                                span.fa.fa-lg.fa-trash-o
+                                span(style="padding-left:5px") Remove Row
+                        div.row
+                            div#editLayoutPanel.col-md-8
+                            div#dfx_edit_content_panel.col-md-4
+                                div.input-group(style="margin-bottom:10px")
+                                    input#fldSearchWidget.form-control(type="text", size="20", placeholder="Search a view")
+                                    span.input-group-btn
+                                        button.btn.btn-info(type="button", onclick="DfxStudio.layoutEditor.searchWidgets({applicationName: '#{application.name}', platform: 'web'})")
+                                            span.fa.fa-lg.fa-search
+                                    span.input-group-btn
+                                        button.btn.btn-info(type="button", onclick="DfxStudio.layoutEditor.createPredefinedWidget({applicationName: '#{application.name}', platform: 'web'})")
+                                            span.fa.fa-lg.fa-plus
+                                div#dfx_edit_content_cat_panel.panel.pull-left
+                                    ul.dfx_edit_content_cat
+                                        li(style="background: none; color: white; font-weight: 600;") The result list is empty.
+                        div.clearfix
+                        div#lytedt_col_size(style="margin:10px;display:none")
+                            div.row
+                                div#lytedt_nbcol.form-group.col-lg-3(style="width:100px")
+                                    label(for="fldNbCol") Nb.Col:
+                                    select#fldNbCol.form-control
+                                        option 1
+                                        option 2
+                                        option 3
+                                        option 4
+                                div#lytedt_col1.form-group.col-lg-3.dfx_lytedt_col_field(style="width: 100px;")
+                                    label(for="fldCol1") Column 1:
+                                    input#fldCol1.form-control(type="text", data-inputname='col1')
+                                div#lytedt_col2.form-group.col-lg-3.dfx_lytedt_col_field(style="width: 100px;")
+                                    label(for="fldCol2") Column 2:
+                                    input#fldCol2.form-control(type="text", data-inputname='col2')
+                                div#lytedt_col3.form-group.col-lg-3.dfx_lytedt_col_field(style="width: 100px;")
+                                    label(for="fldCol3") Column 3:
+                                    input#fldCol3.form-control(type="text", data-inputname='col3')
+                                div#lytedt_col4.form-group.col-lg-3.dfx_lytedt_col_field(style="width: 100px;")
+                                    label(for="fldCol4") Column 4:
+                                    input#fldCol4.form-control(type="text", data-inputname='col4')
+                                div.form-group.col-lg-3(style="margin-top: 25px;")
+                                    a.btn.btn-info(href="javascript:DfxStudio.layoutEditor.saveColumnsChanges();")
+                                        span.fa.fa-lg.fa-check
+                    //div(style="margin-top: 30px;")
+                    //    a.btn.btn-info(href="javascript:DfxStudio.layoutEditor.saveChanges({applicationName:'#{application.name}', formId:'applicationScreenForm'});")
+                    //        span.fa.fa-lg.fa-floppy-o
+                    //        span(style="padding-left: 5px;") Save
+                    //    a.btn.btn-default(href="javascript:DfxStudio.layoutEditor.discardChanges();", style="margin-left: 10px;")
+                    //        span.fa.fa-lg.fa-undo
+                    //        span(style="padding-left: 5px;") Cancel
+                    //    span#dfx_screen_detail_warning.label.label-warning.pull-right(style="font-size: 12px; margin-top: 7px; display: none;") Your changes have not been saved
+        div#menu_item_detail_buttons(style="display: none; margin-top: 30px;")
+            a.btn.btn-info.save-now-submitter(href="javascript:DfxStudio.Menu.saveChanges({applicationName:'#{application.name}', formId:'applicationMenuForm'});")
+                span.fa.fa-lg.fa-floppy-o
+                span(style="padding-left: 5px;") Save
+            a.btn.btn-default(href="javascript:DfxStudio.Menu.discardChanges();", style="margin-left: 10px;")
+                span.fa.fa-lg.fa-undo
+                span(style="padding-left: 5px;") Cancel
+            span#dfx_screen_detail_warning.label.label-warning.pull-right(style="font-size: 12px; margin-top: 7px; display: none;") Your changes have not been saved
+div.panel.panel-danger(style="margin-top: 15px;")
+    div.panel-heading
+        h4 Danger Zone
+    div.panel-body
+        button.btn.btn-default(type='button', onclick="javascript:DfxStudio.Dispatcher.run('#!/home/#{application.name}/menu-items/#{menuItemName}/remove');", style="margin-left: 10px;")
+            span.fa.fa-lg.fa-trash-o
+            span(style="padding-left:5px") Delete the Menu Item

@@ -1,0 +1,15 @@
+<div 
+	ng-if="attributes.binding.value!==''"
+	class="{{attributes.classes.value}} md-block md-altTheme-theme glyph"
+	style="{{attributes.style.value}}" 
+	ng-disabled="$eval(attributes.disabled.value)">
+	{{attributes.binding.value | checkExpression}}
+</div>
+<div 
+	ng-if="attributes.binding.value===''"
+	ng-bind-html="gcSnippetTrustAsHtml(attributes.content.value)"
+	class="{{attributes.classes.value}} md-block md-altTheme-theme glyph"
+	style="{{attributes.style.value}}" 
+	ng-disabled="$eval(attributes.disabled.value)">
+	{{attributes.content.value}}
+</div>

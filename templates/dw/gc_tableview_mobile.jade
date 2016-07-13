@@ -1,0 +1,66 @@
+- var tableViewClasses = gcitem.attributes.classes.value == '' ? 'table-view' : 'table-view ' + gcitem.attributes.classes.value;
+- var tableViewStyle = gcitem.attributes.style.value == '' ? '' : gcitem.attributes.style.value;
+- var onclickValue = gcitem.attributes.onclick.value;
+- var containerCss = '';
+if (gcitem.attributes.containerCss)
+    each val, key in gcitem.attributes.containerCss
+        - if (val!='') containerCss += key + ':' + val + ';'
+- var css = '';
+if (gcitem.attributes.css)
+    each val, key in gcitem.attributes.css
+        - if (val!='') css += key + ':' + val + ';'
+- var completeStyle = tableViewStyle + css;
+div(
+    id="#{gcitem.id}_{{$index}}",
+    ng-show = (gcitem.attributes.display.value == '' ? undefined : "#{gcitem.attributes.display.value}"),
+    style=('position:relative;' + (gcitem.attributes.containerStyle ? gcitem.attributes.containerStyle.value : '') + ';' + containerCss),
+    class="#{gcitem.attributes.containerClasses.value}",
+    ng-class = (gcitem.attributes.containerDynamicClasses.value == '' ? undefined : "#{gcitem.attributes.containerDynamicClasses.value}"),
+    ng-init=(gcitem.attributes.property.value == '' ? "mdl_#{gcitem.attributes.name.value} = []" : "#{gcitem.attributes.property.value}=#{gcitem.attributes.property.value} || []")
+    )
+        ul(
+            id="#{gcitem.id}_{{$index}}_tableview",
+            class="#{tableViewClasses}",
+            style="#{completeStyle}"
+            )
+                if (gcitem.attributes.dynamicOptions && gcitem.attributes.dynamicOptions.value)
+                    - var collection = (gcitem.attributes.propertyOptions && gcitem.attributes.propertyOptions.value ? gcitem.attributes.propertyOptions.value : 'mdl#{gcitem.id}_field')
+                    - var labelValue = (gcitem.attributes.propertyOptionsFields.label ? gcitem.attributes.propertyOptionsFields.label : gcitem.attributes.propertyOptionsFields.value)
+                    li(
+                        class = "table-view-cell media",
+                        ng-repeat="item in #{collection}",
+                        ng-click = (onclickValue ? "#{onclickValue}(item['#{gcitem.attributes.propertyOptionsFields.value}'])" : undefined)
+                        )
+                        if (gcitem.attributes.propertyOptionsFields != null && gcitem.attributes.propertyOptionsFields.chevron != '')
+                            a.navigate-right(data-transition = "slide-in", href = "{{ item['#{gcitem.attributes.propertyOptionsFields.chevron}'] }}.html?#{gcitem.attributes.propertyOptionsFields.value}={{ item['#{gcitem.attributes.propertyOptionsFields.value}'] }}&dfxPrevWidget=#{widgetname}")
+                                if (gcitem.attributes.propertyOptionsFields.icon != '')
+                                    span(class = "media-object pull-left icon icon-{{ item['#{gcitem.attributes.propertyOptionsFields.icon}'] }}")
+                                    div.media-body {{ item['#{labelValue}'] }}
+                                else
+                                    | {{ item['#{labelValue}'] }}
+                        else
+                            if (gcitem.attributes.propertyOptionsFields.icon != '')
+                                span(class = "media-object pull-left icon icon-{{ item['#{gcitem.attributes.propertyOptionsFields.icon}'] }}")
+                                div.media-body {{ item['#{labelValue}'] }}
+                            else
+                                | {{ item['#{labelValue}'] }}
+                else if (gcitem.attributes.staticOptions)
+                    each item, i in gcitem.attributes.staticOptions
+                        - var labelValue = (item.label ? item.label : item.value)
+                        li(
+                            class = "table-view-cell media",
+                            ng-click = (onclickValue ? "#{onclickValue}('#{item.value}')" : undefined)
+                            )
+                            if (item.chevron != '')
+                                a.navigate-right(data-transition = "slide-in", href = "#{item.chevron}.html?value=#{item.value}&dfxPrevWidget=#{widgetname}")
+                                    if (item.icon != '')
+                                        span(class = "media-object pull-left icon icon-#{item.icon}")
+                                        div.media-body #{labelValue}
+                                    else
+                                        | #{labelValue}
+                            else
+                                if (item.icon != '')
+                                    span(class = "media-object pull-left icon icon-#{item.icon}")
+                                    div.media-body #{labelValue}
+                                else
+                                    | #{labelValue}

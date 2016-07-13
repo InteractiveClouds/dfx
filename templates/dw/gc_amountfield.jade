@@ -1,0 +1,30 @@
+div.form-group(ng-show = (gcitem.attributes.display.value == '' ? undefined : "#{gcitem.attributes.display.value}"), ng-class="{'has-error': #{gcformname}.#{gcitem.attributes.name.value}.$invalid && #{gcformname}.#{gcitem.attributes.name.value}.$dirty}")
+    label(for="#{gcitem.id}", ng-show = (gcitem.attributes.labelVisible.value ? 'true' : 'false')) #{gcitem.attributes.label.value}
+    div(style="width:100%")
+        input.form-control(
+            id="#{gcitem.id}",
+            name=(gcitem.attributes.name.value == '' ? undefined : "#{gcitem.attributes.name.value}"),
+            type="text",
+            class=(gcitem.attributes.classes.value == '' ? undefined : "#{gcitem.attributes.classes.value}"),
+            required = (gcitem.attributes.required.value ? 'true' : undefined),
+            ng-model = (gcitem.attributes.property.value == '' ? undefined : "#{gcitem.attributes.property.value}"),
+            ng-init = (gcitem.attributes.propertyInit.value == '' ? undefined : "#{gcitem.attributes.propertyInit.value}"),
+            ng-disabled = (!gcitem.attributes.disabled || gcitem.attributes.disabled.value == '' ? undefined : "#{gcitem.attributes.disabled.value}"),
+            ng-minlength = (gcitem.attributes.minlength.value == '' ? undefined : gcitem.attributes.minlength.value),
+            ng-maxlength = (gcitem.attributes.maxlength.value == '' ? undefined : gcitem.attributes.maxlength.value),
+            ng-pattern= (gcitem.attributes.pattern.value == '' ? undefined : "#{gcitem.attributes.pattern.value}"),
+            style = (gcitem.attributes.style.value == '' ? undefined : "#{gcitem.attributes.style.value}"),
+            placeholder = (gcitem.attributes.placeholder.value == '' ? undefined : "#{gcitem.attributes.placeholder.value}"),
+            input-mask = (gcitem.attributes.mask.value == '' ? undefined : "'#{gcitem.attributes.mask.value}'"),
+            mask-groupsep = (gcitem.attributes.groupsep.value == '' ? undefined : "#{gcitem.attributes.groupsep.value}"),
+            mask-decsep = (gcitem.attributes.decsep.value == '' ? undefined : "#{gcitem.attributes.decsep.value}"),
+            mask-digits = (gcitem.attributes.digits.value == '' ? undefined : "#{gcitem.attributes.digits.value}"),
+            ng-change = (gcitem.attributes.onchange.value == '' ? undefined : "#{gcitem.attributes.onchange.value}"))
+    if (gcitem.attributes.required.value)
+        span.help-block(ng-show="#{gcformname}.#{gcitem.attributes.name.value}.$error.required && #{gcformname}.#{gcitem.attributes.name.value}.$dirty") #{(gcitem.attributes.error.required.value=='' ? "Thid field is required" : gcitem.attributes.error.required.value)}
+    if (gcitem.attributes.pattern.value!='')
+        span.help-block(ng-show="#{gcformname}.#{gcitem.attributes.name.value}.$error.pattern && #{gcformname}.#{gcitem.attributes.name.value}.$dirty") #{(gcitem.attributes.error.pattern.value=='' ? "Your entry is invalid" : gcitem.attributes.error.pattern.value)}
+    if (gcitem.attributes.minlength.value!='')
+        span.help-block(ng-show="#{gcformname}.#{gcitem.attributes.name.value}.$error.minlength && #{gcformname}.#{gcitem.attributes.name.value}.$dirty") #{(gcitem.attributes.error.minlength.value=='' ? "Your entry required to be at least " + gcitem.attributes.minlength.value + " characters" : gcitem.attributes.error.minlength.value)}
+    if (gcitem.attributes.maxlength.value!='')
+        span.help-block(ng-show="#{gcformname}.#{gcitem.attributes.name.value}.$error.maxlength && #{gcformname}.#{gcitem.attributes.name.value}.$dirty") #{(gcitem.attributes.error.maxlength.value=='' ? "Your entry entry cannot be longer than " + gcitem.attributes.maxlength.value + " characters" : gcitem.attributes.error.maxlength.value)}

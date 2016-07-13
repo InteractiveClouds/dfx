@@ -1,0 +1,110 @@
+<md-toolbar ng-if="$eval(attributes.toolbar.visible.value)" style="{{attributes.toolbar.style.value}}" class="gc-toolbar dfx-core-gc-toolbar md-altTheme-theme {{attributes.toolbar.classes.value}}">
+    <div style="min-height:48px;" layout="row" flex="100">
+        <!--leftMenu-->
+        <div flex="{{attributes.toolbar.leftMenu.flexWidth.value}}" layout="column" layout-align="center start" ng-show="$eval(attributes.toolbar.leftMenu.visible.value)" style="{{attributes.toolbar.leftMenu.style.value}}">
+            <div id="{{component_id}}_toolbar_left_menu" ng-show="$eval(attributes.toolbar.leftMenu.visible.value)" ng-style="{'width': attributes.toolbar.leftMenu.type.value === 'Buttons' && attributes.toolbar.leftMenu.equalButtonSize.value ? '100%':''}" class="{{attributes.toolbar.leftMenu.classes.value}}">
+                <!--fab-->
+                <md-fab-speed-dial ng-if="attributes.toolbar.leftMenu.type.value === 'Fab'" md-direction="{{attributes.toolbar.leftMenu.fabDirection.value}}" ng-class="attributes.toolbar.leftMenu.animation.value">
+                    <md-fab-trigger>
+                        <md-button aria-label="{{component_id}}_fab_menu" class="{{attributes.toolbar.leftMenu.fab.triggerButton.class}} md-fab dfx-core-gc-fab" style="{{attributes.toolbar.leftMenu.fab.triggerButton.style}}" ng-click="leftFabClick()">
+                            <md-tooltip ng-if="attributes.toolbar.leftMenu.fab.triggerButton.label.length>0" md-autohide="true" md-direction="{{attributes.toolbar.leftMenu.fab.triggerButton.tooltip.direction}}" class="dfx-core-gc-fab-tooltip {{attributes.toolbar.leftMenu.fab.triggerButton.tooltip.classes}}" style="{{attributes.toolbar.leftMenu.fab.triggerButton.tooltip.style}}">{{attributes.toolbar.leftMenu.fab.triggerButton.label | checkExpression}}</md-tooltip>
+                            <md-icon ng-if="attributes.toolbar.leftMenu.fab.triggerButton.icon.type ==='fa-icon'" class="fa {{$eval(attributes.toolbar.leftMenu.fab.triggerButton.icon.value) || 'fa-home'}} dfx-core-gc-fab-icon" style="{{attributes.toolbar.leftMenu.fab.triggerButton.icon.style}};font-size:{{attributes.toolbar.leftMenu.fab.triggerButton.icon.size}}px;width:{{attributes.toolbar.leftMenu.fab.triggerButton.icon.size}}px;height:{{attributes.toolbar.leftMenu.fab.triggerButton.icon.size}}px;"></md-icon>
+                            <ng-md-icon ng-if="attributes.toolbar.leftMenu.fab.triggerButton.icon.type ==='svg-icon'" icon="{{$eval(attributes.toolbar.leftMenu.fab.triggerButton.icon.value) || 'home'}}" size="{{attributes.toolbar.leftMenu.fab.triggerButton.icon.size}}" class="dfx-core-gc-fab-icon" style="{{attributes.toolbar.leftMenu.fab.triggerButton.icon.style}};width:{{attributes.toolbar.leftMenu.fab.triggerButton.icon.size}}px;height:{{attributes.toolbar.leftMenu.fab.triggerButton.icon.size}}px;"></ng-md-icon>
+                        </md-button>
+                    </md-fab-trigger>
+                    <md-fab-actions ng-show="attributes.toolbar.leftMenu.initialClick.value === true">
+                        <div ng-repeat="item in attributes.toolbar.leftMenu.menuItems.value track by $index">
+                            <md-button aria-label="{{component_id}}_fab-icon_{{$index}}" ng-click="$eval(item.onclick)" ng-show="true" class="{{attributes.toolbar.leftMenu.fab.actionButton.class}} md-fab dfx-core-gc-fab-item" style="{{attributes.toolbar.leftMenu.fab.actionButton.style}}">
+                                <md-tooltip ng-if="item.label.length>0" md-autohide="true" md-direction="{{attributes.toolbar.leftMenu.fab.actionButton.tooltip.direction}}" class="dfx-core-gc-fab-tooltip-item {{attributes.toolbar.leftMenu.fab.actionButton.tooltip.classes}}" style="{{attributes.toolbar.leftMenu.fab.actionButton.tooltip.style}}">{{item.label | checkExpression}}</md-tooltip>
+                                <md-icon ng-if="item.icon.type === 'fa-icon'" class="fa {{$eval(item.icon.value) || 'fa-home'}} dfx-core-gc-fab-item-icon" style="{{attributes.toolbar.leftMenu.fab.actionButton.icon.style}};font-size:{{attributes.toolbar.leftMenu.fab.actionButton.icon.size}}px;width:{{attributes.toolbar.leftMenu.fab.actionButton.icon.size}}px;height:{{attributes.toolbar.leftMenu.fab.actionButton.icon.size}}px;"></md-icon>
+                                <ng-md-icon ng-if="item.icon.type === 'svg-icon'" icon="{{$eval(item.icon.value) || 'home'}}" size="{{attributes.toolbar.leftMenu.fab.actionButton.icon.size}}" class="dfx-core-gc-fab-item-icon" style="{{attributes.toolbar.leftMenu.fab.actionButton.icon.style}};width:{{attributes.toolbar.leftMenu.fab.actionButton.icon.size}}px;height:{{attributes.toolbar.leftMenu.fab.actionButton.icon.size}}px;"></ng-md-icon>
+                            </md-button>
+                        </div>
+                    </md-fab-actions>
+                </md-fab-speed-dial>
+
+                <!--buttons-->
+                <div ng-if="attributes.toolbar.leftMenu.type.value === 'Buttons'" class="gc-icon-bar layout-column">
+                    <md-menu-bar ng-if="attributes.toolbar.leftMenu.menuItems.value.length === 0" ng-style="{'width': attributes.toolbar.leftMenu.type.value !== 'Buttons'? '':''}">
+                        <md-button class="dfx-core-gc-toolbar-left-buttons md-button md-raised {{attributes.toolbar.leftMenu.buttons.triggerButton.class}}" style="{{attributes.toolbar.leftMenu.buttons.triggerButton.style}}" aria-label="md-icon-buton">
+                            <md-icon class="dfx-core-gc-toolbar-left-menu-icon fa fa-home {{attributes.toolbar.leftMenu.buttons.triggerButton.icon.class}}" style="font-size:{{attributes.toolbar.leftMenu.buttons.triggerButton.icon.size}}px; {{attributes.toolbar.leftMenu.buttons.triggerButton.icon.style}}"></md-icon>
+                        </md-button>
+                    </md-menu-bar>
+                    <div id="{{component_id}}_left_buttons_menu" ng-if="attributes.toolbar.leftMenu.menuItems.value.length > 0" style="width: 100%"></div>
+                </div>
+
+                <!--IconBar-->
+                <div ng-if="attributes.toolbar.leftMenu.type.value === 'Icon Bar'" layout="column">
+                    <md-menu-bar ng-if="attributes.toolbar.leftMenu.menuItems.value.length === 0">
+                        <md-button style="{{attributes.toolbar.leftMenu.iconBar.triggerButton.style}}" class="md-icon-button {{attributes.toolbar.leftMenu.iconBar.triggerButton.class}}" aria-label="md-icon-buton">
+                            <md-icon class="dfx-core-gc-toolbar-left-menu-iconbar fa fa-home {{attributes.toolbar.leftMenu.iconBar.triggerButton.icon.class}}" style="font-size:{{attributes.toolbar.leftMenu.iconBar.triggerButton.icon.size}}px; {{attributes.toolbar.leftMenu.iconBar.triggerButton.icon.style}}"></md-icon>
+                        </md-button>
+                    </md-menu-bar>
+                    <div id="{{component_id}}_left_menu_bar" ng-if="attributes.toolbar.leftMenu.menuItems.value.length > 0"></div>
+                </div>
+            </div>
+        </div>
+
+        <!--Title-->
+        <div flex="{{attributes.toolbar.title.flexWidth.value}}" layout="column" layout-align="center {{attributes.toolbar.title.alignment.value}}" ng-show="$eval(attributes.toolbar.title.visible.value)" style="{{attributes.toolbar.title.style.value}}" >
+            <div ng-if="attributes.toolbar.title.isHtml.value === false" layout="column" layout-align="center" class="{{attributes.toolbar.title.classes.value}} layout-align-center layout-column">
+                <span>{{attributes.toolbar.title.value | checkExpression}}</span>
+            </div>
+            <div ng-if="attributes.toolbar.title.isHtml.value" id="{{component_id}}_toolbar_bindingHtml" style="color:#000;{{attributes.toolbar.title.style.value}}" class="{{attributes.toolbar.title.classes.value}} layout-align-center layout-column"
+                 ng-bind-html="snippetTrustAsHtml(attributes.toolbar.title.content.value)"
+                 aria-label="{{component_id}}_toolbar_bindingHtml">
+            </div>
+        </div>
+
+        <!--RightMenu-->
+        <div flex="{{attributes.toolbar.rightMenu.flexWidth.value}}" layout="column" layout-align="center end" style="{{attributes.toolbar.rightMenu.style.value}}">
+            <div id="{{component_id}}_toolbar_right_menu" ng-show="$eval(attributes.toolbar.rightMenu.visible.value)" ng-style="{'width': attributes.toolbar.rightMenu.type.value === 'Buttons' && attributes.toolbar.rightMenu.equalButtonSize.value ? '100%':''}" class="{{attributes.toolbar.rightMenu.classes.value}}">
+                <!--fab-->
+                <md-fab-speed-dial ng-if="attributes.toolbar.rightMenu.type.value === 'Fab'" md-direction="{{attributes.toolbar.rightMenu.fabDirection.value}}" ng-class="attributes.toolbar.rightMenu.animation.value">
+                    <md-fab-trigger>
+                        <md-button aria-label="{{component_id}}_fab_menu" class="{{attributes.toolbar.rightMenu.fab.triggerButton.class}} md-fab dfx-core-gc-fab" style="{{attributes.toolbar.rightMenu.fab.triggerButton.style}}" ng-click="rightFabClick()">
+                            <md-tooltip ng-if="attributes.toolbar.rightMenu.fab.triggerButton.label.length>0" md-autohide="true" md-direction="{{attributes.toolbar.rightMenu.fab.triggerButton.tooltip.direction}}" class="dfx-core-gc-fab-tooltip {{attributes.toolbar.rightMenu.fab.triggerButton.tooltip.classes}}" style="{{attributes.toolbar.rightMenu.fab.triggerButton.tooltip.style}}">{{attributes.toolbar.rightMenu.fab.triggerButton.label | checkExpression}}</md-tooltip>
+                            <md-icon ng-if="attributes.toolbar.rightMenu.fab.triggerButton.icon.type ==='fa-icon'" class="fa {{$eval(attributes.toolbar.rightMenu.fab.triggerButton.icon.value) || 'fa-home'}} dfx-core-gc-fab-icon" style="{{attributes.toolbar.rightMenu.fab.triggerButton.icon.style}};font-size:{{attributes.toolbar.rightMenu.fab.triggerButton.icon.size}}px;width:{{attributes.toolbar.rightMenu.fab.triggerButton.icon.size}}px;height:{{attributes.toolbar.rightMenu.fab.triggerButton.icon.size}}px;"></md-icon>
+                            <ng-md-icon ng-if="attributes.toolbar.rightMenu.fab.triggerButton.icon.type ==='svg-icon'" icon="{{$eval(attributes.toolbar.rightMenu.fab.triggerButton.icon.value) || 'home'}}" size="{{attributes.toolbar.rightMenu.fab.triggerButton.icon.size}}" class="dfx-core-gc-fab-icon" style="{{attributes.toolbar.rightMenu.fab.triggerButton.icon.style}};width:{{attributes.toolbar.rightMenu.fab.triggerButton.icon.size}}px;height:{{attributes.toolbar.rightMenu.fab.triggerButton.icon.size}}px;"></ng-md-icon>
+                        </md-button>
+                    </md-fab-trigger>
+                    <md-fab-actions ng-show="attributes.toolbar.rightMenu.initialClick.value === true">
+                        <div ng-repeat="item in attributes.toolbar.rightMenu.menuItems.value track by $index">
+                            <md-button  aria-label="{{component_id}}_fab-icon_{{$index}}" ng-click="$eval(item.onclick)" ng-show="true" class="{{attributes.toolbar.rightMenu.fab.actionButton.class}} md-fab dfx-core-gc-fab-item" style="{{attributes.toolbar.rightMenu.fab.actionButton.style}}">
+                                <md-tooltip ng-if="item.label.length>0" md-autohide="true" md-direction="{{attributes.toolbar.rightMenu.fab.actionButton.tooltip.direction}}" class="dfx-core-gc-fab-tooltip-item {{attributes.toolbar.rightMenu.fab.actionButton.tooltip.classes}}" style="{{attributes.toolbar.rightMenu.fab.actionButton.tooltip.style}}">{{item.label | checkExpression}}</md-tooltip>
+                                <md-icon ng-if="item.icon.type === 'fa-icon'" class="fa {{$eval(item.icon.value) || 'fa-home'}} dfx-core-gc-fab-item-icon" style="{{attributes.toolbar.rightMenu.fab.actionButton.icon.style}};font-size:{{attributes.toolbar.rightMenu.fab.actionButton.icon.size}}px;width:{{attributes.toolbar.rightMenu.fab.actionButton.icon.size}}px;height:{{attributes.toolbar.rightMenu.fab.actionButton.icon.size}}px;"></md-icon>
+                                <ng-md-icon ng-if="item.icon.type === 'svg-icon'" icon="{{$eval(item.icon.value) || 'home'}}" size="{{attributes.toolbar.rightMenu.fab.actionButton.icon.size}}" class="dfx-core-gc-fab-item-icon" style="{{attributes.toolbar.rightMenu.fab.actionButton.icon.style}};width:{{attributes.toolbar.rightMenu.fab.actionButton.icon.size}}px;height:{{attributes.toolbar.rightMenu.fab.actionButton.icon.size}}px;"></ng-md-icon>
+                            </md-button>
+                        </div>
+                    </md-fab-actions>
+                </md-fab-speed-dial>
+
+                <!--buttons-->
+                <div ng-if="attributes.toolbar.rightMenu.type.value === 'Buttons'" class="gc-icon-bar">
+                    <md-menu-bar ng-if="attributes.toolbar.rightMenu.menuItems.value.length === 0" ng-style="{'width': attributes.toolbar.rightMenu.type.value !== 'Buttons'? '':''}">
+                        <md-button class="dfx-core-gc-toolbar-right-buttons md-button md-raised {{attributes.toolbar.rightMenu.buttons.triggerButton.class}}" style="{{attributes.toolbar.rightMenu.buttons.triggerButton.style}}" aria-label="md-icon-buton">
+                            <md-icon class="dfx-core-gc-toolbar-right-menu-icon fa fa-home {{attributes.toolbar.rightMenu.buttons.triggerButton.icon.class}}" style="font-size:{{attributes.toolbar.rightMenu.buttons.triggerButton.icon.size}}px; {{attributes.toolbar.leftMenu.buttons.triggerButton.icon.style}}"></md-icon>
+                        </md-button>
+                    </md-menu-bar>
+                    <div id="{{component_id}}_right_buttons_menu" ng-if="attributes.toolbar.rightMenu.menuItems.value.length > 0" style="width: 100%"></div>
+                </div>
+
+                <!--IconBar-->
+                <div ng-if="attributes.toolbar.rightMenu.type.value === 'Icon Bar'" layout="column">
+                    <md-menu-bar ng-if="attributes.toolbar.rightMenu.menuItems.value.length === 0">
+                        <md-button style="{{attributes.toolbar.rightMenu.iconBar.triggerButton.style}}" class="md-icon-button {{attributes.toolbar.rightMenu.iconBar.triggerButton.class}}" aria-label="md-icon-buton">
+                            <md-icon class="dfx-core-gc-toolbar-right-menu-iconbar fa fa-home {{attributes.toolbar.rightMenu.iconBar.triggerButton.icon.class}}" style="font-size:{{attributes.toolbar.rightMenu.iconBar.triggerButton.icon.size}}px; {{attributes.toolbar.rightMenu.iconBar.triggerButton.icon.style}}"></md-icon>
+                        </md-button>
+                    </md-menu-bar>
+                    <div id="{{component_id}}_right_menu_bar" ng-if="attributes.toolbar.rightMenu.menuItems.value.length > 0"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body-collapser" ng-if="attributes.toolbar.collapsible.value !== 'false'">
+        <md-icon ng-click="collapsePanelBody();"
+                 class="fa fa-chevron-right collapser-trigger"
+                 ng-class="attributes.toolbar.collapsed.designValue ? '' : 'expanded' ">
+        </md-icon>
+    </div>
+</md-toolbar>

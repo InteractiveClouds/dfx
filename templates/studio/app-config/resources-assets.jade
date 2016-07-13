@@ -1,0 +1,30 @@
+div.panel.panel-primary
+    div.panel-heading
+        h4 Images & Assets
+    div.panel-body#dbs_databases
+        form(action="javascript:void(0);", method="post", enctype="multipart/form-data", style="margin-top:10px")
+            fieldset
+                input#dfx_resource_settings_name.form-control(type="hidden", name="dfx_resource_settings_name", value='assets', disabled)
+                input#dfx_resource_settings_application.form-control(type="hidden", name="dfx_resource_settings_application", value='#{applicationName}')
+                div.form-group
+                    label Items:
+                    div.form-group
+                        div#dfx_resource_assets_folder_upload.dropzone
+                    div#resourses-panel.dropzone
+                        each resitem in items
+                            div.dz-preview(data-item-type="#{resitem.type}", class=(resitem.type == 'Image')? "dz-image-preview" : "dz-file-preview")
+                                div.dz-details
+                                    div.dz-filename
+                                        span(data-dz-name="") #{resitem.path}
+                                    div.dz-size(data-dz-size="")
+                                        if resitem.size
+                                            != resitem.size
+                                    div.dz-remove(data-dz-remove="")
+                                        button.btn.btn-link(type="button", remove_res_btn="yes")
+                                            span.fa.fa-lg.fa-trash-o
+                                    img(data-dz-thumbnail="", alt="#{resitem.path}", title="#{resitem.path}", src=(resitem.type == 'Image') ? "/studio/resources/preview/" + (applicationName ? "#{applicationName}/" : "") + "#{name}/#{resitem.path}" : "")
+                                div.dz-success-mark(style="opacity: 1;")
+                                    span V
+                button#save-resource-settings.btn.btn-info.save-now-submitter(type='submit', onclick="DfxStudio.Home.Resources.saveResource(function(){})")
+                    span.fa.fa-lg.fa-cloud-upload
+                    span(style="padding-left:5px") Upload

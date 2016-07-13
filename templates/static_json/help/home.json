@@ -1,0 +1,20 @@
+{ "steps" : [
+    {
+        "title": "DashBoard",
+        "content": "The dashboard provides a single view of all applications, widgets and data queries associated with this cloud platform from a single place.",
+        "top": "60",
+        "left": "100"
+    },
+    {
+        "title": "Create",
+        "content": "Create a new application, add a new DataWidget or DataQuery in their respective catalog.",
+        "top": "160",
+        "left": "100"
+    },
+    {
+        "title": "Jim",
+        "content": "Create a new application, add a new DataWidget or DataQuery in their respective catalog.",
+        "top": "260",
+        "left": "300"
+    }
+]}

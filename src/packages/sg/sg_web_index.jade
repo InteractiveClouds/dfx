@@ -1,0 +1,129 @@
+html(ng-app="#{appname}")
+doctype html
+head
+    meta(http-equiv="content-type", content="text/HTML;charset=UTF-8")
+    meta(name="viewport", content="width=device-width,initial-scale=1")
+    title #{apptitle}
+    link(rel="stylesheet", type="text/css", href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,700', rel='stylesheet'")
+    link(rel="stylesheet", type="text/css", href="sg/css/bootstrap.min.css", media="screen")
+    link(rel="stylesheet", type="text/css", href="sg/css/font-awesome.min.css", media="screen")
+    link(rel="stylesheet", type="text/css", href="sg/css/smartadmin-production.min.css", media="screen")
+    link(rel="stylesheet", type="text/css", href="sg/css/smartadmin-skins.min.css", media="screen")
+    link(rel="stylesheet", type="text/css", href="sg/css/dfx-utils.min.css", media="screen")
+    link(rel="stylesheet", type="text/css", href="sg/css/app_setup.min.css", media="screen")
+    link(rel="stylesheet", type="text/css", href="css/web/app.css", media="screen")
+    link(rel="stylesheet", type="text/css", href="css/vendor/dfx-gcontrols.min.css", media="screen")
+    script(src="js/vendor/des.min.js")
+    script(src="js/vendor/md5.js")
+    script(src="js/commons/authRequest.js")
+    script(src="js/vendor/jquery.min.js")
+    script(src="js/vendor/jquery-ui.min.js")
+    script(src="js/vendor/angular.min.js")
+    script(src="js/vendor/angular-route.min.js")
+    script(src="js/vendor/d3.min.js")
+    script(src="js/vendor/bootstrap.min.js")
+    script(src="js/commons/dfx.utils.js")
+    script(src="js/vendor/nv-d3.min.js")
+    script(src="js/vendor/angular-nvd3.min.js")
+    script(src="js/vendor/jquery-sparkline.min.js")
+    script(src="js/vendor/jquery-inputmask.min.js")
+    script(src="js/commons/dfx.directives.js")
+    script(src="js/commons/jquery.dreamface-1.0.js")
+    script(src="js/vendor/jarvis.widget.min.js")
+    script(src="js/vendor/plugin/datatables/jquery.dataTables.min.js")
+    script(src="js/vendor/plugin/datatables/dataTables.extensions.min.js")
+    script(src="js/vendor/plugin/datatables/dataTables.colVis.min.js")
+    script(src="js/vendor/plugin/datatables/dataTables.tableTools.min.js")
+    script(src="js/vendor/plugin/datatables/dataTables.bootstrap.min.js")
+    script(src="js/vendor/notification/SmartNotification.min.js")
+    script(src="js/vendor/app_setup.min.js")
+    script(src="js/commons/dfx.widgets.js")
+    script(src="js/commons/jquery.dfxAjax.js")
+    script(src="js/web/app.js")
+    script(src="js/web/dfx.web.js")
+    script(src="js/web/app_services.js")
+    each resource_item in resources
+        - if ( resource_item.type == 'JavaScript' ) {
+            script(src="#{resource_item.path}")
+        - } else if ( resource_item.type == 'CSS' ) {
+            link(rel="stylesheet", type="text/css", href="#{resource_item.path}", media="screen")
+        - }
+body(ng-controller="MainController")
+    script(type="text/javascript").
+        DreamFace.initSession( {dfx_appname:'#{appname}', dfx_tenantid:'#{tenantid}'} );
+        DreamFace.setUserDefinition();
+        $(document).ready(function(){
+            setup_widgets_web();
+        });
+    mixin displayWidget(src_obj, children)
+        include dw/widget_frame
+    header#header
+        div#logo-group
+            span#logo
+                img(src="sg/img/logo.png", alt="#{appname}")
+            span#activity.activity-dropdown
+                i.fa.fa-user
+                b.badge 0
+        div.project-context.hidden-xs
+            span.label Application:
+            span.project-selector.dropdown-toggle(data-toggle="dropdown")
+                span #{apptitle}:&nbsp;
+                i.fa.fa-angle-down
+        div.pull-right
+            div#hide-menu.btn-header.pull-right
+                span
+                    a(href="javascript:void(0);", data-action="toggleMenu", title="Collapse Menu")
+                        i.fa.fa-reorder
+            div#logout.btn-header.transparent.pull-right
+                span
+                    a(href="index.html", title="Sign Out", data-action="userLogout", data-logout-msg="You will be disconnected and will go back to the login screen.")
+                        i.fa.fa-sign-out
+            div#fullscreen.btn-header.transparent.pull-right
+                span
+                    a(href="javascript:void(0);", data-action="launchFullscreen", title="Full Screen")
+                        i.fa.fa-arrows-alt
+            ul.header-dropdown-list.hidden-xs
+                li
+                    a.dropdown-toggle(href="#", data-toggle="dropdown")
+                        img.flag.flag-us(src="sg/img/blank.gif", alt="United States")
+                        span &nbsp;US&nbsp;
+                        i.fa.fa-angle-down
+                    ul.dropdown-menu.pull-right
+                        li.active
+                            a(href="javascript:void(0);")
+                                img.flag.flag-us(src="sg/img/blank.gif", alt="US English")
+                                span &nbsp;US&nbsp;
+                        li
+                            a(href="javascript:void(0);")
+                                img.flag.flag-es(src="sg/img/blank.gif", alt="Spanish")
+                                span &nbsp;EN&nbsp;
+                        li
+                            a(href="javascript:void(0);")
+                                img.flag.flag-fr(src="sg/img/blank.gif", alt="French")
+                                span &nbsp;FR&nbsp;
+    aside#left-panel
+        div.login-info
+            span
+                a#show-shortcut(href="javascript:void(0);", data-action="toggleShortcut")
+                    img.online(src="sg/img/avatars/male.png", alt="me")
+                    span {{user.firstName}} {{user.lastName}}&nbsp;
+                    i.fa.fa-angle-down
+        div.minifyme(data-action="minifyMenu")
+            i.fa.fa-arrow-circle-left.hit
+        nav
+            ul#main_menu
+    div#main(role="main")
+        div#ribbon
+            span.ribbon-button-alignment
+                span#refresh.btn.btn-ribbon(data-action="resetWidgets", data-title="refresh",  rel="tooltip", data-placement="bottom", data-original-title="<i class='text-warning fa fa-warning'></i> Warning! This will reset all your widget settings.", data-html="true")
+                    i.fa.fa-refresh
+            ol.breadcrumb
+                li Home
+        div#dfxContainer(ng-controller="ScreenController")
+            input#dfxScreenUrl(name="dfxScreenUrl", type="text", style="display:none", value="", ng-model="screenUrl")
+            div#content(dfx-screen="screenContent")
+    div.page-footer
+        div.row
+            div.col-xs-12.col-sm-6
+                span.txt-color-white powered by DreamFace
+

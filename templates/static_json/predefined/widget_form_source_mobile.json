@@ -1,0 +1,369 @@
+{
+  "properties": {
+    "title": {
+      "label": "",
+      "visible": true,
+      "color": ""
+    },
+    "tools": {
+      "color": true,
+      "edit": true,
+      "collapse": true,
+      "fullscreen": true,
+      "delete": true
+    },
+    "sortable": true
+  },
+  "definition": [
+    {
+      "id": "root",
+      "type": "panel",
+      "attributes": {
+        "name": {
+          "value": "pnlPanel1"
+        },
+        "controller": {
+          "value": ""
+        },
+        "form": {
+          "value": ""
+        },
+        "classes": {
+          "value": ""
+        },
+        "style": {
+          "value": ""
+        },
+        "css": {
+          "width": "",
+          "height": "",
+          "color": "",
+          "background": "",
+          "padding": "",
+          "margin": "",
+          "text-align": ""
+        },
+        "bodyCss": {
+          "width": "",
+          "height": "",
+          "color": "",
+          "background": "",
+          "padding": "",
+          "margin": "",
+          "text-align": ""
+        },
+        "bodyClasses": {
+          "value": ""
+        },
+        "bodyDynamicClasses": {
+          "value": ""
+        },
+        "display": {
+          "value": ""
+        },
+        "layout": {
+          "rows": [
+            {
+              "classes": {
+                "value": ""
+              },
+              "dynamicClasses": {
+                "value": ""
+              },
+              "style": {
+                "value": ""
+              }
+            }
+          ],
+          "classes": {
+            "value": ""
+          },
+          "dynamicClasses": {
+            "value": ""
+          },
+          "style": {
+            "value": ""
+          }
+        }
+      },
+      "children": [
+        {
+          "id": 29712,
+          "type": "statictext",
+          "attributes": {
+            "name": {
+              "value": "txtText1"
+            },
+            "bind": {
+              "value": ""
+            },
+            "text": {
+              "value": "{{books[bookId].title}}"
+            },
+            "display": {
+              "value": "true"
+            },
+            "tooltip": {
+              "value": ""
+            },
+            "tooltipPosition": {
+              "value": "top"
+            },
+            "counter": {
+              "bind": {
+                "value": ""
+              },
+              "onclick": {
+                "value": ""
+              },
+              "position": {
+                "value": "left"
+              }
+            },
+            "onclick": {
+              "value": ""
+            },
+            "classes": {
+              "value": ""
+            },
+            "dynamicClasses": {
+              "value": ""
+            },
+            "style": {
+              "value": ""
+            },
+            "css": {
+              "width": "",
+              "height": "",
+              "color": "",
+              "background": "",
+              "padding": "",
+              "margin": "",
+              "text-align": ""
+            },
+            "containerClasses": {
+              "value": ""
+            },
+            "containerDynamicClasses": {
+              "value": ""
+            },
+            "containerStyle": {
+              "value": ""
+            },
+            "containerCss": {
+              "width": "",
+              "height": "",
+              "color": "",
+              "background": "",
+              "padding": "",
+              "margin": "",
+              "text-align": ""
+            }
+          },
+          "children": [],
+          "container": "layout_0_row_0"
+        },
+        {
+          "id": 21041,
+          "type": "textarea",
+          "attributes": {
+            "name": {
+              "value": "fieldTextArea1"
+            },
+            "label": {
+              "value": "Label"
+            },
+            "labelVisible": {
+              "value": "no"
+            },
+            "tooltip": {
+              "value": ""
+            },
+            "tooltipPosition": {
+              "value": "top"
+            },
+            "property": {
+              "value": ""
+            },
+            "propertyInit": {
+              "value": ""
+            },
+            "display": {
+              "value": "true"
+            },
+            "disabled": {
+              "value": "false"
+            },
+            "required": {
+              "value": "no"
+            },
+            "errorRequired": {
+              "value": ""
+            },
+            "containerClasses": {
+              "value": ""
+            },
+            "containerDynamicClasses": {
+              "value": ""
+            },
+            "containerCss": {
+              "width": "",
+              "height": "",
+              "color": "",
+              "background": "",
+              "padding": "",
+              "margin": "",
+              "text-align": ""
+            },
+            "containerStyle": {
+              "value": ""
+            },
+            "classes": {
+              "value": ""
+            },
+            "dynamicClasses": {
+              "value": ""
+            },
+            "css": {
+              "width": "",
+              "height": "",
+              "color": "",
+              "background": "",
+              "padding": "",
+              "margin": "",
+              "text-align": ""
+            },
+            "style": {
+              "value": ""
+            },
+            "onchange": {
+              "value": ""
+            }
+          },
+          "children": [],
+          "container": "layout_0_row_0"
+        },
+        {
+          "id": 26701,
+          "type": "button",
+          "attributes": {
+            "name": {
+              "value": "btnButton1"
+            },
+            "label": {
+              "value": "Send"
+            },
+            "icon": {
+              "value": "check"
+            },
+            "iconPosition": {
+              "value": "left"
+            },
+            "tooltip": {
+              "value": ""
+            },
+            "tooltipPosition": {
+              "value": "top"
+            },
+            "display": {
+              "value": "true"
+            },
+            "disabled": {
+              "value": "false"
+            },
+            "containerClasses": {
+              "value": ""
+            },
+            "containerDynamicClasses": {
+              "value": ""
+            },
+            "containerCss": {
+              "width": "",
+              "height": "",
+              "color": "",
+              "background": "",
+              "padding": "",
+              "margin": "",
+              "text-align": ""
+            },
+            "containerStyle": {
+              "value": ""
+            },
+            "classes": {
+              "value": "btn-primary"
+            },
+            "dynamicClasses": {
+              "value": ""
+            },
+            "css": {
+              "width": "",
+              "height": "",
+              "color": "",
+              "background": "",
+              "padding": "",
+              "margin": "",
+              "text-align": ""
+            },
+            "style": {
+              "value": ""
+            },
+            "onclick": {
+              "value": ""
+            }
+          },
+          "children": [],
+          "container": "layout_0_row_0"
+        }
+      ]
+    },
+    {
+      "id": "root_tabbar",
+      "type": "tabbar",
+      "kind": "bar",
+      "attributes": {
+        "display": {
+          "value": "true"
+        },
+        "onclick": {
+          "value": "openAnotherWidget"
+        },
+        "tabs": [
+          {
+            "label": {
+              "value": "Home"
+            },
+            "value": {
+              "value": "Home"
+            },
+            "icon": {
+              "value": "home"
+            }
+          },
+          {
+            "label": {
+              "value": "Profile"
+            },
+            "value": {
+              "value": "Profile"
+            },
+            "icon": {
+              "value": "person"
+            }
+          },
+          {
+            "label": {
+              "value": "Settings"
+            },
+            "value": {
+              "value": "Settings"
+            },
+            "icon": {
+              "value": "gear"
+            }
+          }
+        ]
+      },
+      "children": []
+    }
+  ]
+}

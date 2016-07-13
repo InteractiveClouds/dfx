@@ -1,0 +1,6 @@
+div.form-group
+    label Auth Provider Type:
+    select#auth-provider-select.form-control(name="type")
+        option(disabled="disabled", selected="selected", value="Choose Auth Provider Type") Choose Auth Provider Type
+        each type in types
+            option(value="#{type}")=type

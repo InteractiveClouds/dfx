@@ -1,0 +1,48 @@
+div(style="overflow-x:hidden; min-height: 100%;")
+    ol.breadcrumb
+        li
+            a(href="javascript:DfxStudio.Dispatcher.run('#!/home/');")
+                span.fa.fa-lg.fa-home
+        li.active MongoDB Databases
+div.row(style="margin-top:10px; min-height: 100%;")
+    div.col-lg-3
+        div.panel.panel-primary
+            div.panel-heading
+                h4 Databases List
+            div.panel-body#dbs_databases
+                ul.nav
+                    li
+                        div.dbx_dbs_divider
+                        form.dbx_dbs_item_creating_form(onsubmit="DfxStudio.databases.createDatabase(this); return false;")
+                            input.form-control(name="createNewDatabase", type="text", placeholder="Create new database")
+    div#dbs_documents.col-lg-9.dfx_dbs_full-height(style="display: none;")
+        div.panel.panel-primary(style="position: relative; height: 99%; margin-bottom: 1%;")
+            div.panel-heading
+                h4 Collection
+            div.panel-body#dbs_databases
+                div#dbs_documents_table(style="position: relative; height: 44%; margin-bottom: 1%; overflow: hidden;", onselectstart="return false", onmousedown="return false")
+                div(style="position: relative; height: 330px;")
+                    div#dbs_documents_controls.btn-toolbar.well(style="position: relative; width:100%; padding:0.3em;")
+                        div.btn-toolbar.pull-right
+                            button#dbs_documents_controls_save.btn.btn-info(onclick="DfxStudio.databases.insertDocument()", style="display: none;")
+                                span.fa.fa-lg.fa-floppy-o
+                                span(style="padding-left:5px") Save
+                            button#dbs_documents_controls_create.btn.btn-info(onclick="DfxStudio.databases.createDocument()", style="display: none;")
+                                span.fa.fa-lg.fa-plus
+                                span(style="padding-left:5px") Create
+                            button#dbs_documents_controls_delete.btn.btn-danger(onclick="DfxStudio.databases.removeDocument()", style="display: none;")
+                                span.fa.fa-lg.fa-trash-o
+                                span(style="padding-left:5px") Delete
+                        div#dbs_documents_path
+                            span
+                                strong path:
+                            span.dfx_dbs_path_slash /
+                            span#dbs_documents_path_databse
+                            span.dfx_dbs_path_slash /
+                            span#dbs_documents_path_collection
+                            span.dfx_dbs_path_slash /
+                            span#dbs_documents_path_document
+                    textarea#dbs_documents_textarea
+
+
+

@@ -1,0 +1,77 @@
+doctype html
+html(ng-app="#{appname}")
+    head
+        meta(http-equiv="content-type", content="text/HTML;charset=UTF-8")
+        meta(name="viewport", content="width=device-width,initial-scale=1")
+        title #{apptitle}
+        link(rel="stylesheet", type="text/css", href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,700', rel='stylesheet'")
+        link(rel="stylesheet", type="text/css", href="css/vendor/app_setup.min.css", media="screen")
+        link(rel="stylesheet", type="text/css", href="css/mobile/dfx-utils.min.css", media="screen")
+        link(rel="stylesheet", type="text/css", href="css/mobile/dfx-gcontrols.min.css", media="screen")
+        link(rel="stylesheet", type="text/css", href="css/mobile/app.css", media="screen")
+        link(rel="stylesheet", type="text/css", href="css/mobile/ratchet.min.css", media="screen")
+        link(rel="stylesheet", type="text/css", href="css/mobile/theme-ios.min.css", media="screen")
+        script(src="js/vendor/des.min.js")
+        script(src="js/vendor/md5.js")
+        script(src="js/commons/authRequest.js")
+        script(src="js/vendor/jquery.min.js")
+        script(src="js/vendor/jquery-ui.min.js")
+        script(src="js/vendor/angular.min.js")
+        script(src="js/vendor/angular-route.min.js")
+        script(src="js/vendor/d3.min.js")
+        script(src="js/vendor/bootstrap.min.js")
+        script(src="js/vendor/ratchet.min.js")
+        script(src="js/commons/dfx.utils.js")
+        script(src="js/vendor/nv-d3.min.js")
+        script(src="js/vendor/angular-nvd3.min.js")
+        script(src="js/commons/jquery.dreamface-1.0.js")
+        script(src="js/vendor/jquery-sparkline.min.js")
+        script(src="js/vendor/jquery-inputmask.min.js")
+        script(src="js/commons/dfx.directives.js")
+        script(src="js/vendor/jarvis.widget.min.js")
+        script(src="js/vendor/plugin/datatables/jquery.dataTables.min.js")
+        script(src="js/vendor/plugin/datatables/dataTables.extensions.min.js")
+        script(src="js/vendor/plugin/datatables/dataTables.colVis.min.js")
+        script(src="js/vendor/plugin/datatables/dataTables.tableTools.min.js")
+        script(src="js/vendor/plugin/datatables/dataTables.bootstrap.min.js")
+        script(src="js/vendor/notification/SmartNotification.min.js")
+        script(src="js/mobile/app_setup_mobile.min.js")
+        script(src="js/commons/jquery.dfxAjax.js")
+        script(src="js/mobile/dfx.mobile.js")
+        script(src="js/mobile/app.js")
+        each resource_item in resources
+            - if ( resource_item.type == 'JavaScript' ) {
+                script(src="#{resource_item.path}")
+            - } else if ( resource_item.type == 'CSS' ) {
+                link(rel="stylesheet", type="text/css", href="#{resource_item.path}", media="screen")
+            - }
+    body(ng-controller="MainController")
+        script(type="text/javascript").
+            DreamFace.initSession({dfx_appname: '#{appname}', dfx_tenantid: '#{tenantid}'});
+            DreamFace.setUserDefinition();
+        nav#main-menu.bar.bar-tab
+        header.bar.bar-nav
+            a#main-menu-opener.icon.icon-bars.pull-left(data-ignore="push")
+            a#back-nav.icon.icon-left.pull-left(style="display: none;", data-transition="slide-out")
+            h1.title #{apptitle}
+        div.mobile-menu-shade(style="display: none;")
+        nav#mobile-menu.collapsed
+            ul
+        div#main(role="main")
+            div#dfxContainer(ng-controller="ScreenController")
+                div#content(dfx-screen="screenContent")
+                    section#widget-grid
+                        div.widget-body
+                            - var widgetname = wclass.name;
+                            - if (wclass.definition.wtype=='builder') {
+                                - var children = wclass.definition.parameters.widgetDefinition.definition[0].children;
+                                include dw/widget_frame
+                            - } else if (wclass.definition.wtype=='jade') {
+                                - var dyn_fn = jade_compiler.compile( wclass.definition.src )
+                                - var dyn_res = dyn_fn({widget:wclass.definition, wid: 'abc'})
+                                | !{dyn_res}
+                            - } else if (wclass.definition.wtype=='visual') {
+                                - var src_obj = JSON.parse(wclass.definition.src);
+                                - var children = src_obj.definition;
+                                include dw/widget_frame_mobile
+                            - }

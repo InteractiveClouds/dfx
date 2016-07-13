@@ -1,0 +1,7 @@
+<md-input-container style="{{attributes.style.value}}" class="md-block {{attributes.classes.value}} dfx-core-gc-select">
+  <label>{{attributes.label.value | checkExpression}}</label>
+  <md-select ng-model="attributes.currentItem" class="md-altTheme-theme glyph" id="{{component_id}}_select"
+             ng-click="$eval(attributes.onclick.value)" ng-disabled="$eval(attributes.disabled.value)">
+      <md-option ng-repeat="option in attributes.staticOptions.value track by $id(option)" ng-value="option" ng-click="hideWebGcSelectMask()">{{ option.display | checkExpression}}</md-option>
+  </md-select>
+</md-input-container>

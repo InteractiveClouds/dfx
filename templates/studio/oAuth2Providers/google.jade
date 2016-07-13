@@ -1,0 +1,28 @@
+div.form-group
+    label(for="dfx_github_settings_access_token") Access Token:
+    input.form-control(name="access_token", value=locals.access_token, type="text", autocomplete="off")
+hr
+h3 or
+hr
+input.form-control(id = 'auth-provider-type' name="type", value=locals.type, type="hidden", disabled, autocomplete="off")
+div.form-group
+    label(for="dfx_github_settings_access_token") Consumer Key:
+    input.form-control(name="consumer_key", value=locals.consumer_key, type="text", autocomplete="off")
+div.form-group
+    label(for="dfx_github_settings_access_token") Consumer Secret:
+    input.form-control(name="consumer_secret", value=locals.consumer_secret, type="text", autocomplete="off")
+div.form-group
+    label(for="dfx_github_settings_access_token") Base Provider's URL:
+    input.form-control(name="base_site", value=(locals.base_site || "https://accounts.google.com"), type="text", autocomplete="off")
+div.form-group
+    label(for="dfx_github_settings_access_token") Authorize Path:
+    input.form-control(name="authorize_path", value=(locals.authorize_path || "/o/oauth2/auth"), type="text", autocomplete="off")
+div.form-group
+    label(for="dfx_github_settings_access_token") Access Token Path:
+    input.form-control(name="access_token_path", value=(locals.access_token_path || "/o/oauth2/token"), type="text", autocomplete="off")
+div.form-group
+    label(for="dfx_github_settings_access_token") Response Type:
+    input.form-control(name="response_type", value=(locals.response_type || "code"), type="text", autocomplete="off")
+div.form-group
+    label(for="dfx_github_settings_access_token") Scope:
+    input.form-control(name="scope", value=locals.scope, type="text", autocomplete="off")

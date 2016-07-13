@@ -1,0 +1,20 @@
+div.panel.panel-primary(style="position: relative; height: 99%; margin-bottom: 1%;")
+    div.panel-heading
+        h4 Role details
+    div.panel-body#dbs_databases
+        form(action="javascript:void(0);", style="margin-top:10px")
+            fieldset
+                div.form-group
+                    label(data-role-name="#{roleName}") Role:
+                    input.form-control(type="text", value='#{roleName}', disabled=true)
+                div.form-group
+                    label Description:
+                    input.form-control(type="text", name="description", value="#{description}", disabled=(type === 'staff' ? true : undefined))
+                - if ( type !== 'staff' ) {
+                    div.form-group
+                        label API Route Execution Rights:
+                        div(type="text", data-container="dataqueries-execution-rights", name="rights", disabled=true)
+                - }
+                button#save-role-settings.btn.btn-info.save-now-submitter(type='submit')
+                    span.fa.fa-lg.fa-floppy-o
+                    span(style="padding-left:5px") Save

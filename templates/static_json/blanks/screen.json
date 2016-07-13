@@ -1,0 +1,15 @@
+{
+    "title": "",
+    "name": "",
+    "requestDate": "",
+    "ownerId": "",
+    "application": "",
+    "visibility": "visible",
+    "layout": {
+        "fixedlayout": "no",
+        "widgetspacing": "yes",
+        "width": "100%",
+        "backgroundcolor": "white",
+        "rows": []
+    }
+}

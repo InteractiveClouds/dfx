@@ -1,0 +1,21 @@
+<div style="{{attributes.style.value}}" class="{{attributes.classes.value}} {{attributes.whiteframe.value}} flex">
+    <dfx-gc-toolbar-design></dfx-gc-toolbar-design>
+    <md-content flex style="{{attributes.bodyStyle.value}}" ng-hide="attributes.toolbar.collapsed.designValue">
+        <md-tabs md-no-ink-bar="{{attributes.inkBar.value==='disabled' ? 'true': 'false'}}" md-center-tabs="{{attributes.centerTabs.value===true ? 'true': 'false'}}"
+                 md-dynamic-height md-border-bottom md-selected="attributes.tabIndex.value" md-align-tabs="{{attributes.tabAlign.value}}" md-stretch-tabs="{{attributes.stretching.value}}">
+            <md-tab ng-repeat="tab in attributes.tabs.value track by $index" label="{{tab.label | checkExpression}}">
+                <md-content flex="100" layout="row" layout-padding style="{{tab.style.value}}" class="{{tab.classes.value}}">
+                    <div flex id="{{component_id}}_tab_{{$index}}">
+                        <div ng-repeat="row in tab.layout.rows track by $index" id="{{component_id}}_layout_{{$parent.$index}}_row_{{$index}}" layout="row" layout-wrap flex="100">
+                            <div ng-repeat="col in row.cols track by $index" id="{{component_id}}_layout_{{$parent.$parent.$index}}_row_{{$parent.$index}}_column_{{$index}}" flex="{{col.width.value}}"
+                                 layout="{{col.orientation.value}}" layout-align="{{col.halignment.value}} {{col.valignment.value}}"
+                                 gc-container="layout_{{$parent.$parent.$index}}_row_{{$parent.$index}}_column_{{$index}}" gc-parent="{{component_id}}" style="{{col.style.value}}"
+                                 class="ui-placeholder dfx_visual_editor_droppable {{col.classes.value}}" dfx-gc-web-droppable>
+                            </div>
+                        </div>
+                    </div>
+                </md-content>
+            </md-tab>
+        </md-tabs>
+    </md-content>
+</div>

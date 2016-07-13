@@ -1,0 +1,120 @@
+<md-dialog aria-label="textarea" ng-cloak>
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Options editor</h2>
+            </div>
+        </md-toolbar>
+        <md-dialog-content id="{{component_id}}_md_dialog" layout="column" style="max-width:880px;max-height:810px;width:880px;height:400px;margin:0px;">
+            <md-tabs md-selected="selected_tab" md-dynamic-height md-center-tabs md-stretch-tabs="always" md-border-bottom>
+                <md-tab label="Static options">
+                    <div style="display:flex;flex-direction:row;flex-wrap:wrap;justify-content:space-between;padding:8px;">
+                        <section id="{{component_id}}_menu_structure" class="md-whiteframe-1dp" style="width:49.5%;border-radius:4px;overflow:hidden;">
+                            <md-toolbar style="min-height:36px;background:rgba(128,128,128,0.46);">
+                                <div class="md-toolbar-tools" style="height:36px;max-height:36px">
+                                    <h3 style="font-size:16px;">Options list</h3>
+                                </div>
+                            </md-toolbar>
+                            <md-toolbar style="min-height:30px;background:#ECECEC;font-size:14px;display:flex;flex-direction:row;align-items:center;padding:0 9px;">
+                                <a href="#" class="fa fa-plus" ng-click="addSwitchItem()" style="color:#676B6E;text-decoration:none;margin:auto 7px;" title="Add item"></a>
+                                <a href="#" class="fa fa-minus" ng-click="removeSwitchItem()" style="color:#676B6E;text-decoration:none;margin:auto 7px;" title="Remove item"></a>
+                                <a href="#" class="fa fa-arrow-up" ng-click="moveOptionUp()" style="color:#676B6E;text-decoration:none;margin:auto 7px;" title="Move up item"></a>
+                                <a href="#" class="fa fa-arrow-down" ng-click="moveOptionDown()" style="color:#676B6E;text-decoration:none;margin:auto 7px;" title="Move down item"></a>
+                            </md-toolbar>
+                            <md-content class="menu-structure options-editor" layout-padding flex>
+                                <ul>
+                                    <li ng-repeat="statOpt in attributes.staticArray.value track by $index" class="menu-tree-item">
+                                        <a href="#" ng-click="selectOptionItem( $index )">{{ statOpt.label | checkExpression }}</a>
+                                    </li>
+                                </ul>
+                            </md-content>
+                        </section>
+                        <section id="{{component_id}}_static_properties" class="md-whiteframe-1dp" style="width:49.5%;border-radius:4px;overflow:hidden;">
+                            <md-toolbar style="min-height:36px;background:rgba(128,128,128,0.46);">
+                                <div class="md-toolbar-tools" style="height:36px;max-height:36px">
+                                    <h3 style="font-size:16px;">Option item properties</h3>
+                                </div>
+                            </md-toolbar>
+                            <md-content layout-padding flex style="">
+                                <div class="dfx-ve-property-treeview hover clearfix" style="padding:8px 16px 12px 12px;margin:0 -8px;">
+                                    <ul class="dfx-ve-property-picker-content" style="margin:0;padding:0">
+                                        <li class="col-md-12">
+                                            <span class="col-md-4">Label:</span>
+                                            <div class="col-md-8" layout="row">
+                                                <input class="col-md-12" type="text" ng-model="attributes.currentItem.label" style="margin-left:-15px;"/>
+                                                <dfx-ve-menu-expression></dfx-ve-menu-expression>
+                                            </div>
+                                        </li>
+                                        <li class="col-md-12">
+                                            <span class="col-md-4">Checked value:</span>
+                                            <div class="col-md-8" layout="row">
+                                                <input class="col-md-12" type="text" ng-model="attributes.currentItem.checked" style="margin-left:-15px;"/>
+                                                <dfx-ve-menu-expression></dfx-ve-menu-expression>
+                                            </div>
+                                        </li>
+                                        <li class="col-md-12">
+                                            <span class="col-md-4">Unchecked value:</span>
+                                            <div class="col-md-8" layout="row">
+                                                <input class="col-md-12" type="text" ng-model="attributes.currentItem.unchecked" style="margin-left:-15px;"/>
+                                                <dfx-ve-menu-expression></dfx-ve-menu-expression>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </md-content>
+                        </section>
+                    </div>
+                </md-tab>
+                <md-tab label="Dynamic options">
+                    <div style="padding:8px;">
+                        <section id="{{component_id}}_dynamic_properties" class="md-whiteframe-1dp" style="border-radius:4px;overflow:hidden;">
+                            <md-toolbar style="min-height:36px;background:rgba(128,128,128,0.46);">
+                                <div class="md-toolbar-tools" style="height:36px;max-height:36px">
+                                    <h3 style="font-size:16px;">Choose variables from scope</h3>
+                                </div>
+                            </md-toolbar>
+                            <md-content layout-padding flex style="">
+                                <div class="dfx-ve-property-treeview hover clearfix" style="padding:8px 16px 12px 12px;margin:0 -8px;width:65%;">
+                                    <ul class="dfx-ve-property-picker-content" style="margin:0;padding:0">
+                                        <li class="col-md-12">
+                                            <span class="col-md-4">Source:</span>
+                                            <div class="col-md-8" layout="row">
+                                                <input class="col-md-12" type="text" ng-model="attributes.source.value" ng-change="overrideAttribute('source')" style="margin-left:-15px;"/>
+                                                <dfx-ve-menu-expression></dfx-ve-menu-expression>
+                                            </div>
+                                        </li>
+                                        <li class="col-md-12">
+                                            <span class="col-md-4">Label:</span>
+                                            <div class="col-md-8" layout="row">
+                                                <input class="col-md-12" type="text" ng-model="attributes.switchValue.label" ng-change="overrideAttribute('switchValue')" style="margin-left:-15px;"/>
+                                                <dfx-ve-menu-expression></dfx-ve-menu-expression>
+                                            </div>
+                                        </li>
+                                        <li class="col-md-12">
+                                            <span class="col-md-4">Checked value:</span>
+                                            <div class="col-md-8" layout="row">
+                                                <input class="col-md-12" type="text" ng-model="attributes.switchValue.trueSwitchValue" ng-change="overrideAttribute('switchValue')" style="margin-left:-15px;"/>
+                                                <dfx-ve-menu-expression></dfx-ve-menu-expression>
+                                            </div>
+                                        </li>
+                                        <li class="col-md-12">
+                                            <span class="col-md-4">Unchecked value:</span>
+                                            <div class="col-md-8" layout="row">
+                                                <input class="col-md-12" type="text" ng-model="attributes.switchValue.falseSwitchValue" ng-change="overrideAttribute('switchValue')" style="margin-left:-15px;"/>
+                                                <dfx-ve-menu-expression></dfx-ve-menu-expression>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </md-content>
+                        </section>
+                    </div>
+                </md-tab>
+            </md-tabs>
+            <div class="second-dialog-box"></div>
+        </md-dialog-content>
+        <div class="md-actions">
+            <md-button ng-click="closeDialog()" class="md-primary">Close</md-button>
+        </div>
+    </form>
+</md-dialog>

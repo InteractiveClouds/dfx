@@ -1,0 +1,46 @@
+div.panel.panel-primary(style="position: relative; height: 99%; margin-bottom: 1%;")
+    div.panel-heading
+        h4 Versioning Providers
+    div.panel-body#dbs_databases
+        form(action="javascript:void(0);", style="margin-top:10px")
+            fieldset
+                div.form-group
+                    label(for="dfx_github_settings_provider_type") Provider Type:
+                    select#dfx_github_settings_provider_type.form-control(name="dfx_github_settings_provider_type")
+                        option(value="github") GitHub
+                div.form-group
+                    label(for="dfx_github_settings_access_token") Access token:
+                    input#dfx_github_settings_access_token.form-control(type="text", name="dfx_github_settings_access_token", placeholder="Github personal access token", value='#{access_token}')
+                div.form-group
+                    label Repositories:
+                    table.repositoryTable.table-condensed.table-thick-bordered
+                        thead
+                            tr
+                                th Repository Name
+                                th Repository Owner's Name
+                                th Active Repository
+                                th Clear Repository
+                                th(width="1%")
+                                    button#createGithubRepository.btn.btn-small.btn-info
+                                        span.fa.fa-lg.fa-plus
+                        tbody
+                            each repitem in repositories
+                                tr
+                                    td
+                                        input(type="text", data-field="dfx_github_settings_repitem_name", placeholder="Repository name", size="50", value='#{repitem.reponame}')
+                                    td
+                                        input(type="text", data-field="dfx_github_settings_repitem_user", placeholder="Repository owner name", size="50", value='#{repitem.username}')
+                                    td
+                                        - if ( repository == repitem.reponame ) {
+                                            input(type="radio", data-field="dfx_github_settings_repository", name="dfx_github_settings_repository", checked="true")
+                                        - } else {
+                                            input(type="radio", data-field="dfx_github_settings_repository", name="dfx_github_settings_repository")
+                                        - }
+                                    td
+                                        button.btn.btn-small.btn-danger(value = repitem.reponame, clear_rep_btn='yes') Clear
+                                    td
+                                        button#removeGithubRepository.btn.btn-small.btn-danger(remove_rep_btn='yes')
+                                            span.fa.fa-lg.fa-trash-o
+                button#save-github-settings.btn.btn-info.save-now-submitter(type='submit')
+                    span.fa.fa-lg.fa-floppy-o
+                    span(style="padding-left:5px") Save

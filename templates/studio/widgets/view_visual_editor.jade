@@ -1,0 +1,123 @@
+div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", layout="column", flex, style="height:100%;", data-view-cat="#{widget.category}", data-view-platform="#{widget.platform}")
+    div#dfx-ve-header
+        img(src="/images/df_logoBuilder.png")
+        div(style="color: #fff;font-size: 13px;font-style: italic;display: inline-block;") - View Editor
+        div.pull-right(style="color: #fff;font-size: 13px;display: inline-block;margin-top:2px;margin-right:5px") {{view_name}}
+    div#dfx-ve-toolbar
+        md-toolbar.dfx-ve-toolbar
+            div.dfx-ve-toolbar-tools.md-toolbar-tools
+                div#dfx-ve-palette-title
+                    div#dfx-ve-palette-title-text Graphical Controls
+                    md-button#dfx-ve-toggle-palette.dfx-ve-toolbar-button(aria-label="palette", ng-click="toggleLeft()")
+                        i#dfx-ve-toggle-palette-icon.fa.fa-angle-double-left
+                span(style="font-size:12px;margin-left:50px;margin-right:5px;margin-top:5px") Display:
+                md-button.dfx-ve-toolbar-button.dfx-ve-toolbar-button-design.md-raised.dfx-ve-toolbar-button-selected(aria-label="design", ng-click="showDesign()")
+                    i.fa.fa-eye(title="design")
+                md-button.dfx-ve-toolbar-button.dfx-ve-toolbar-button-script.md-raised(aria-label="script", ng-click="showScript()")
+                    i.fa.fa-edit(title="script")
+                md-button.dfx-ve-toolbar-button.dfx-ve-toolbar-button-styles.md-raised(aria-label="style", ng-click="showStyle()")
+                    i.fa.fa-paint-brush(title="style")
+                md-button.dfx-ve-toolbar-button.dfx-ve-toolbar-button-source.md-raised(aria-label="source", ng-click="showSource()")
+                    i.fa.fa-code(title="source")
+                span(style="font-size:12px;margin-left:30px;margin-right:5px;margin-top:5px") Actions:
+                md-button.dfx-ve-toolbar-button.md-raised(aria-label="save", ng-click="saveView()")
+                    i.fa.fa-save(title="save")
+                md-button.dfx-ve-toolbar-button.md-raised(aria-label="preview", ng-click="openPreview()")
+                    i.fa.fa-play-circle-o(title="preview")
+                div(style="text-align: center;", ng-if="waitIconShowPreview === true")
+                    md-icon.fa.fa-spinner.fa-pulse(style="font-size: 24px; color:#300000;")
+                md-button.dfx-ve-toolbar-button.md-raised(aria-label="preview", ng-click="openPreviewInPage()", ng-if="waitIconShowPreview === false")
+                    i.fa.fa-laptop(title="preview in page")
+                md-button.dfx-ve-toolbar-button.md-raised(aria-label="preview", ng-click="exitViewEditor($event)")
+                    i.fa.fa-close(title="exit")
+                span(style="font-size:12px;margin-left:30px;margin-right:5px;margin-top:5px", ng-show="design_visible") Cards:
+                md-button.dfx-ve-toolbar-button.md-raised(aria-label="addcard", ng-show="design_visible", ng-click="addCard($event)")
+                    i.fa.fa-plus(title="Add a new card")
+                md-button.dfx-ve-toolbar-button.md-raised(aria-label="removecard", ng-show="design_visible", ng-click="removeCard($event)")
+                    i.fa.fa-trash(title="Remove the current card")
+                span(style="font-size:12px;margin-left:30px;margin-right:5px;margin-top:5px", ng-show="script_visible") Script:
+                md-button.dfx-ve-toolbar-button.md-raised(aria-label="assistant", ng-click="showHelpEditor(this)", ng-show="script_visible")
+                    i.fa.fa-magic(title="Code Assistant")
+                span.flex
+                    label.pull-right(style="font-size:12px;background:#8731AB;padding: 2px 4px;color:#fff;margin-top:4px;margin-right:10px;border-radius:8px;cursor:pointer", ng-if="view_platform=='mobile'", ng-click="changeDeviceOrientation()") {{design_device_orientation}}
+                    md-menu.pull-right(style="margin-top:-3px", ng-if="view_platform=='mobile'")
+                        label(md-menu-origin, style="font-size:12px;background:#14BD39;padding: 2px 4px;color:#fff;margin-top:4px;margin-right:10px;border-radius:8px;cursor:pointer", ng-click="$mdOpenMenu($event)") {{design_selected_device.label}}
+                        md-menu-content(width="6")
+                            md-menu-item(ng-repeat="device in design_devices")
+                                md-button(ng-click="changeDevice($index)") {{device.name}}
+                span(style="font-size:12px;margin-left:30px;margin-right:5px;margin-top:5px", ng-show="design_visible") Edit:
+                md-button.dfx-ve-toolbar-button.md-raised(aria-label="vieweditorcut", ng-show="design_visible", ng-click="viewEditorCut($event)")
+                    i.fa.fa-cut(title="Cut")
+                md-button.dfx-ve-toolbar-button.md-raised(aria-label="vieweditorcopy", ng-show="design_visible", ng-click="viewEditorCopy($event)")
+                    i.fa.fa-copy(title="Copy")
+                md-button.dfx-ve-toolbar-button.md-raised(aria-label="vieweditorpaste", ng-show="design_visible", ng-click="viewEditorPaste($event)")
+                    i.fa.fa-paste(title="Paste")
+                md-button.dfx-ve-toolbar-button.md-raised(aria-label="vieweditorundo", ng-show="design_visible", ng-click="viewEditorUndo($event)")
+                    i.fa.fa-undo(title="Undo")
+                div#dfx-ve-property-title
+                    md-button#dfx-ve-toggle-property.dfx-ve-toolbar-button(aria-label="properties", ng-click="toggleRight()")
+                        i#dfx-ve-toggle-property-icon.fa.fa-angle-double-right
+                    div#dfx-ve-property-title-text
+                        a(href="#") Properties
+                        div#dfx-ve-property-title-selected-gc(style="display:none")
+                            span(style="margin-left:5px;margin-right:5px") >
+                            a#dfx-ve-property-title-selected-gc-text(href="#", ng-click="reloadPropertyPanel()") Gc
+                        div#dfx-ve-property-title-selected-renderer(style="display:none")
+                            span(style="margin-left:5px;margin-right:5px") >
+                            a#dfx-ve-property-title-selected-renderer-text(href="#") Renderer
+    div(layout="column", flex, ng-show="!script_visible && !style_visible && !source_visible", style="height:100%")
+        section(layout="row", flex)
+            md-sidenav#dfx-ve-sidenav-left.md-sidenav-left.md-whiteframe-z2(md-component-id="left", md-is-locked-open="$mdMedia('gt-md')", ng-show="palette_visible")
+                md-content#dfx-ve-sidenav-left-content(layout-padding show-gt-md)
+                    div#dfx_visual_editor_gc_palette_content.dfx-ve-palette-treeview.hover
+                        ul
+                            li
+                                input#palette-item-0.dfx-ve-palette-treeview-button(type="checkbox")
+                                label(for="palette-item-0") Basic
+                                ul.dfx-ve-palette-treeview-content(gc-cat="basic")
+                            li
+                                input#palette-item-1.dfx-ve-palette-treeview-button(type="checkbox")
+                                label(for="palette-item-1") Input
+                                ul.dfx-ve-palette-treeview-content(gc-cat="input")
+                            li
+                                input#palette-item-2.dfx-ve-palette-treeview-button(type="checkbox")
+                                label(for="palette-item-2") Menu
+                                ul.dfx-ve-palette-treeview-content(gc-cat="menu")
+                            li
+                                input#palette-item-3.dfx-ve-palette-treeview-button(type="checkbox")
+                                label(for="palette-item-3") Selection
+                                ul.dfx-ve-palette-treeview-content(gc-cat="selection")
+                            li
+                                input#palette-item-4.dfx-ve-palette-treeview-button(type="checkbox")
+                                label(for="palette-item-4") Table
+                                ul.dfx-ve-palette-treeview-content(gc-cat="table")
+                            li
+                                input#palette-item-5.dfx-ve-palette-treeview-button(type="checkbox")
+                                label(for="palette-item-5") Chart
+                                ul.dfx-ve-palette-treeview-content(gc-cat="chart")
+                            li
+                                input#palette-item-6.dfx-ve-palette-treeview-button(type="checkbox")
+                                label(for="palette-item-6") Layout
+                                ul.dfx-ve-palette-treeview-content(gc-cat="layout")
+                            li(style="display:none")
+                                input#palette-item-7.dfx-ve-palette-treeview-button(type="checkbox")
+                                label(for="palette-item-7") Custom
+                                ul.dfx-ve-palette-treeview-content(gc-cat="custom")
+            md-content#dfx-ve-main-content(flex, ng-click="unselectComponent()")
+                md-tabs.md-dynamic-height(md-selected="view_card_select_index")
+                    md-tab(ng-repeat="card in view_cards", label="{{card.name}}")
+                        md-content(style="padding:10px;background-color:#efefef", layout="row", layout-align="center start")
+                            div#dfx-ve-platform(dfx-ve-platform)
+                                div(id="dfx_visual_editor_workspace_{{card.name}}", dfx-card="{{card.name}}", dfx-ve-workspace, style="height:100%;overflow:auto")
+            md-sidenav#dfx-ve-sidenav-right.md-sidenav-right.md-whiteframe-z2(md-component-id="right", md-is-locked-open="$mdMedia('gt-md')", ng-show="property_visible")
+                md-content#dfx-ve-sidenav-right-content(layout-padding show-gt-md)
+                    div(ng-show="gc_selected==null") Select a Graphical Control
+                    div#dfx_visual_editor_property(ng-show="gc_selected!=null")
+                        a#dfx_visual_editor_property_title
+                        div#dfx_visual_editor_property_panel
+    pre#dfx_src_editor(style="border-radius: 0;display: none;").
+        #{widget.src}
+    pre#dfx_script_editor(style="border-radius: 0;display: none;").
+        #{widget.src_script}
+    pre#dfx_styles_editor(style="border-radius: 0;display: none;").
+        #{widget.src_styles}

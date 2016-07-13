@@ -1,0 +1,24 @@
+<div class="{{attributes.classes.value}}"
+     style="{{attributes.style.value}}"
+     ng-class="$eval(attributes.dynamicClasses.value)"
+     ng-show="$eval(attributes.display.value)"
+     ng-click="$eval(attributes.onclick.value)"
+     ng-dblclick="$eval(attributes.ondblclick.value)"
+     ng-keypress="$eval(attributes.onkeypress.value)"
+     ng-keydown="$eval(attributes.onkeydown.value)"
+     ng-keyup="$eval(attributes.onkeyup.value)"
+     ng-mouseover="$eval(attributes.onmouseover.value)"
+     ng-mouseenter="$eval(attributes.onmouseenter.value)"
+     ng-mousemove="$eval(attributes.onmousemove.value)"
+     ng-mouseleave="$eval(attributes.onmouseleave.value)"
+     ng-mousedown="$eval(attributes.onmousedown.value)"
+     ng-mouseup="$eval(attributes.onmouseup.value)">
+    <md-input-container class="md-input-has-messages md-input-has-value" style="display: block;" ng-show="$eval(attributes.showLabel.value)">
+        <label ng-click="$eval(attributes.onlabelclick.value)" ng-bind="$eval(attributes.label.value)">
+            {{attributes.label.value}}
+        </label>
+    </md-input-container>
+    <input type="text" class="knob" style="display: inline;"
+           ng-model="$gcscope[attributes.binding.value]"
+           ng-disabled="$eval(attributes.disabled.value)">
+</div>

@@ -1,0 +1,68 @@
+div
+    h2 Session Management Console
+    div.row
+        div.col-6
+            div.panel
+                div.panel-heading
+                    div.panel-title Active Sessions
+                    script.
+                        var socket = io.connect('http://localhost');
+                        socket.on('testMessage', function(data) {
+                            console.log("socket.on testMessage clientside: \n" + JSON.stringify(data));
+                        });
+                        socket.on('sessionActivity', function(data){
+                            console.log("socket.on sessionActivity clientside: \n" + JSON.stringify(data));
+                            var newHTML = "";
+                            if(data.type == 'timeout'){
+                                newHTML = "Session '" + data.sessionID + "' has timed out<br />";
+                                $("#dfx_session_table_" + data.sessionID).remove();
+                            }else if(data.type == 'login'){
+                                if($("#dfx_session_table_" + data.sessionID)[0]){
+                                    return;
+                                }
+                                newHTML = "New session '" + data.sessionID + "'<br />";
+                                var toAppend = "";
+                                toAppend+="<tr id='dfx_session_table_" + data.sessionID + "'>";
+                                toAppend+="<td>"+data.sessionID+"</td>";
+                                toAppend+="<td>"+data.session.tenant.id+"</td>";
+                                toAppend+="<td>"+new Date(data.session.cookie.expires)+"</td>";
+                                toAppend+="<td><a href=\"javascript:DfxStudio.showSession({sessionId:'"+data.sessionID+"'});\">View Session</a></td>";
+                                toAppend+="</tr>";
+                                console.log(toAppend);
+                                $("#dfx_session_table_body").append(toAppend);
+                            } else if(data.type='touch'){
+                                $($("#dfx_session_table_" + data.sessionID + "").children()[2]).css("-webkit-transition", "all .4s ease");
+                                $($("#dfx_session_table_" + data.sessionID + "").children()[2]).css("-moz-transition", "all .4s ease");
+                                $($("#dfx_session_table_" + data.sessionID + "").children()[2]).css("transition", "all .4s ease");
+                                $($("#dfx_session_table_" + data.sessionID + "").children()[2]).css("color", "red");
+                                $($("#dfx_session_table_" + data.sessionID + "").children()[2]).html(new Date(data.session.cookie.expires) + "");
+                                setTimeout(function(){
+                                    $($("#dfx_session_table_" + data.sessionID + "").children()[2]).css("color", "inherit");
+                                }, 700);
+                    
+                            }
+                            $("#dfx_sessions_feed").prepend(newHTML);
+                        });
+                        
+                table.table
+                        thead
+                            tr
+                                th _id
+                                th Tenant
+                                th Expires
+                                th Object
+                        tbody#dfx_session_table_body
+                            each session, i in sessions
+                                if (session.expires > new Date())
+                                    tr(id="dfx_session_table_#{session._id}")
+                                        td #{session._id}
+                                        td #{session.session.tenant.id}
+                                        td #{session.expires}
+                                        td
+                                            a(href="javascript:DfxStudio.showSession({sessionId:'#{session._id}'});") View session
+        
+        div.col-6
+            div.panel.panel-info
+                div.panel-heading Activity Feed
+                div See below the activity feed of the sessions:
+                div#dfx_sessions_feed

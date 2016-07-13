@@ -1,0 +1,50 @@
+h1
+    span.fa.fa-arrow-right
+    | &nbsp;
+    span.light Welcome to
+    | &nbsp;DreamFace&nbsp;
+    span.cyan X
+    | -Platform
+    if ( version )
+        small(style="padding-left:10px") version #{version}
+div.row(style="margin-top: 30px;")
+    div
+        div.panel.panel-primary(style="border: none;")
+            div#cloud-platform-treeview-panel-heading.panel-heading
+                h4
+                    span Cloud Platform
+                    div.pull-right
+                        span.fa.fa-lg.fa-cog(style="display: none; cursor: pointer;", type="button", onclick="DfxStudio.Dispatcher.run('#!/home/cloud-platform/configuration/');")
+                        span.fa.fa-lg.fa-search(style="cursor: pointer;", type="button", title="Search Components", onclick="DfxStudio.Dispatcher.run('#!/home/cloud-platform/components/');")
+                        span.fa.fa-lg.fa-plus(style="cursor: pointer; margin-left: 10px; padding-left: 10px; border-left: 2px solid #fff;", type="button", title="Create Application", data-toggle="tooltip", data-placement="right", onclick="DfxStudio.Home.createApplication();")
+            div#cloud-platform-treeview-panel-body.panel-body(style="font-size:12px;")
+                div
+                    ul#cloud-platform-treeview(style="margin-bottom: 10px;padding-left: 0;")
+                div(style="margin-top:20px")
+                //
+                    button.btn.btn-info(type="button", onclick="DfxStudio.Home.createApplication();")
+                        span.fa.fa-lg.fa-plus
+                        span(style="padding-left: 5px;") Application
+    div#screen-content-panel
+        div#recentActivityPanel.panel.panel-default(style="display: none;")
+            div.panel-heading
+                h3
+                    | My recent activity
+                    div.pull-right
+                        span.fa.fa-recycle(type="button", onclick="DfxStudio.recentActivity.clean();", style="cursor: pointer;", title="Clean my Recent Activity")
+            div#recent-activity-panel-body.panel-body
+                table#recentActivityTable.table.table-condensed.table-thick-bordered
+                    col(width="30%")
+                    col(width="15%")
+                    col(width="20%")
+                    col(width="25%")
+                    col(width="10%")
+                    thead
+                        tr
+                            th Name
+                            th Type
+                            th Application
+                            th Description
+                            th Action
+                    tbody
+        div#application-settings-panel

@@ -1,0 +1,48 @@
+div.panel.panel-primary
+    div.panel-heading
+        h4
+            span Application Builds
+    div#dfx_app_builds.panel-body(style="padding-top: 20px;")
+        h4
+            span Deployed Build
+        div#dfx_deplolyed_build_epmty.well
+            div.col-lg-12(style="padding-top:8px;")
+                p There is no deployed build for this application
+            div.clearfix
+        div#dfx_deplolyed_build_filled.well(style="display: none")
+            div.col-lg-3(style="padding-top:8px;")
+                p Application Version:&nbsp;
+                    strong#dfx_app_version
+            div.col-lg-3(style="padding-top:8px;")
+                p Build Number:&nbsp;
+                    strong#dfx_app_build_number
+            div.col-lg-4(style="padding-top:8px;")
+                p Date:&nbsp;
+                    strong#dfx_app_build_date
+            div.col-lg-2
+                a#dfx_run_app.pull-right.btn.btn-info(target="_blank")
+                    span.fa.fa-lg.fa-play
+                    span(style="padding-left:5px") Run Application
+            div.clearfix
+        div.col-lg-6(style="padding-left:0;")
+            h4
+                span Build History
+        div.col-lg-6(style="padding-right:0;")
+            a.pull-right.btn.btn-info(href="javascript:void(0);", onclick="DfxStudio.Home.Deployment.createAppBuild('#{applicationName}', '#{applicationVersion}');")
+                span.fa.fa-lg.fa-plus
+                span(style="padding-left:5px") Build Now
+        div.clearfix
+        table.table.table-condensed.table-thick-bordered(style="margin-bottom: 0;")
+            col(width="15%")
+            col(width="20%")
+            col(width="20%")
+            col(width="25%")
+            col(width="20%")
+            thead
+                tr
+                    th(style="padding-left:20px;") Build Version
+                    th Date
+                    th Status
+                    th Description
+                    th Actions
+            tbody#dfx_app_build_list

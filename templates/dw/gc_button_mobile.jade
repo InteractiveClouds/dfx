@@ -1,0 +1,46 @@
+- var containerCss = '';
+if (gcitem.attributes.containerCss)
+    each val, key in gcitem.attributes.containerCss
+        - if (val!='') containerCss += key + ':' + val + ';'
+- var css = '';
+if (gcitem.attributes.css)
+    each val, key in gcitem.attributes.css
+        - if (val!='') css += key + ':' + val + ';'
+- var semantic_classes = 'ui button';
+if (gcitem.attributes.icon.value != '' && gcitem.attributes.iconPosition.value == 'right')
+    - semantic_classes += ' right';
+if (gcitem.attributes.label.value != '' && gcitem.attributes.icon.value != '')
+    - semantic_classes += ' labeled';
+if (gcitem.attributes.icon.value != '')
+    - semantic_classes += ' icon';
+if (gcitem.attributes.circular.value == 'yes')
+    - semantic_classes += ' circular';
+if (gcitem.attributes.size.value != '')
+    - semantic_classes += ' ' + gcitem.attributes.size.value;
+
+div(
+    id="#{gcitem.id}_{{$index}}",
+    ng-show = (gcitem.attributes.display.value == '' ? undefined : "#{gcitem.attributes.display.value}"),
+    style=('position:relative;' + (gcitem.attributes.containerStyle ? gcitem.attributes.containerStyle.value : '') + ';' + containerCss),
+    class="#{gcitem.attributes.containerClasses.value}",
+    ng-class = (gcitem.attributes.containerDynamicClasses.value == '' ? undefined : "#{gcitem.attributes.containerDynamicClasses.value}"),
+    )
+    div(
+        id="#{gcitem.id}_button_{{$index}}",
+        href="javascript:void(0);"
+        class="#{semantic_classes} #{gcitem.attributes.classes.value}",
+        style=((gcitem.attributes.style.value && gcitem.attributes.style.value.indexOf('width') > -1) ? "#{gcitem.attributes.style.value}; #{css}" : "#{gcitem.attributes.style.value}; #{css}"),
+        ng-class = (gcitem.attributes.dynamicClasses && gcitem.attributes.dynamicClasses.value!='' ? "#{gcitem.attributes.dynamicClasses.value}" : undefined),
+        ng-disabled=(gcitem.attributes.disabled.value == '' ? undefined : "#{gcitem.attributes.disabled.value}"),
+        ng-click="#{gcitem.attributes.onclick.value}")
+        - if(gcitem.attributes.icon && gcitem.attributes.icon.value) {
+            - if(gcitem.attributes.iconPosition.value == 'left') {
+                i.icon( class = "#{gcitem.attributes.icon.value} icon" )
+                span(dfx-text = "#{gcitem.attributes.label.value}") #{gcitem.attributes.label.value}
+            - } else if(gcitem.attributes.iconPosition.value == 'right') {
+                i.icon( class = "#{gcitem.attributes.icon.value} right icon" )
+                span(dfx-text = "#{gcitem.attributes.label.value}") #{gcitem.attributes.label.value}
+            - }
+        - } else {
+            span(dfx-text = "#{gcitem.attributes.label.value}") #{gcitem.attributes.label.value}
+        - }

@@ -1,0 +1,304 @@
+div(style="overflow-x:hidden")
+    ol.breadcrumb
+        li
+            a(href="javascript:DfxStudio.Dispatcher.run('#!/home/');")
+                span.fa.fa-lg.fa-home
+        li.active Github Synchronization
+    div.col-lg-6
+        div.panel.panel-primary
+            div.panel-heading
+                h4 Select tenant's components for export to github
+            div.panel-body
+                ul.nav.nav-tabs(role="tablist")
+                    li.active
+                        a(href="#applications_tab", role="tab", data-toggle="tab") Applications
+                    li
+                        a(href="#queries_tab", role="tab", data-toggle="tab") Dataqueries
+                    li
+                        a(href="#widgets_tab", role="tab", data-toggle="tab") Widgets
+                    li  
+                        a(href="#settings_tab", role="tab", data-toggle="tab") Settings
+                    li
+                        a(href="#resouces_tab", role="tab", data-toggle="tab") Resouces
+                form(action="javascript:void(0);", style="margin-top:10px")
+                    fieldset.tab-content
+                        div#applications_tab.tab-pane.active
+                            h4
+                                span.dfs_content_title_2 Applications
+                                span(style="margin-left:5px").badge #{applications_results.length}
+                            if applications_results.length != 0
+                                table#app_accordion.table.table-condensed.table-thick-bordered
+                                    thead
+                                        tr
+                                            th
+                                                input(type="checkbox" onclick='DfxStudio.github.selectAll("app")' id="appSelectAll")
+                                            th Status
+                                            th User
+                                            th Name
+                                            th Title
+                                            th Owner ID
+                                    tbody
+                                    each app, i in applications_results
+                                        tr
+                                            td
+                                                div.checkbox
+                                                    label()
+                                                        input(type="checkbox", value="#{app._id}", class="app", id="selectComponentsForm_checkboxes_#{app.name}", name="selectComponentsForm[applications][#{app.name}]", data-app="#{app.name}")
+                                            if undefined !== app.versioning && undefined !== app.versioning[activeRepository]
+                                                td
+                                                    case app.versioning[activeRepository].status
+                                                        when 'added'
+                                                            span.label.label-success Added
+                                                        when 'committed'
+                                                            span.label.label-primary Committed
+                                                        when 'modified'
+                                                            span.label.label-warning Modified
+                                                        when 'deleted'
+                                                            span.label.label-danger Deleted
+                                                            button.btn.btn-info(type='submit', onclick='DfxStudio.github.recover({"type":"application","name":"#{app.name}"})', style="margin-left:10px") Recover
+                                            else
+                                                td
+                                                    span.label.label-success Added
+                                            td
+                                                if (app && app.versioning && app.versioning[activeRepository] && app.versioning[activeRepository].user)
+                                                    div.dfx_table_text #{app.versioning[activeRepository].user}
+                                                else
+                                                    | no info
+                                            td
+                                                div.dfx_table_text #{app.name}
+                                            td
+                                                div.dfx_table_text #{app.title}
+                                            td
+                                                div.dfx_table_text #{app.ownerId}
+                            else
+                                div.panel-body There is no application on your cloud platform.
+                        div#queries_tab.tab-pane
+                            h4
+                                span.dfs_content_title_2 Dataqueries
+                                span(style="margin-left:5px").badge #{queries_results.length}
+                            if queries_results.length != 0
+                                table.table.table-condensed.table-thick-bordered
+                                    thead
+                                        tr
+                                            th
+                                                input(type="checkbox" onclick='DfxStudio.github.selectAll("query")' id="querySelectAll")
+                                            th Status
+                                            th User
+                                            th Name
+                                            th Description
+                                            th Owner ID
+                                    tbody
+                                        each dataquery in queries_results
+                                            tr
+                                                td
+                                                    div.checkbox
+                                                        label()
+                                                            input(type="checkbox", value="#{dataquery._id}",class='query', id="selectComponentsForm_checkboxes_#{dataquery.name}", name="selectComponentsForm[dataqueries][#{dataquery.name}]")
+                                                if undefined !== dataquery.versioning && undefined !== dataquery.versioning[activeRepository]
+                                                    td
+                                                        case dataquery.versioning[activeRepository].status
+                                                            when 'added'
+                                                                span.label.label-success Added
+                                                            when 'committed'
+                                                                span.label.label-primary Committed
+                                                            when 'modified'
+                                                                span.label.label-warning Modified
+                                                            when 'deleted'
+                                                                span.label.label-danger Deleted
+                                                                button.btn.btn-info(type='submit', onclick='DfxStudio.github.recover({"type":"query","name":"#{dataquery.name}"})', style="margin-left:10px") Recover
+                                                else
+                                                    td
+                                                        span.label.label-success Added
+                                                td
+                                                    if (dataquery && dataquery.versioning && dataquery.versioning[activeRepository] &&  dataquery.versioning[activeRepository].user)
+                                                        div.dfx_table_text #{dataquery.versioning[activeRepository].user}
+                                                    else
+                                                        | no info
+                                                td
+                                                    div.dfx_table_text #{dataquery.name}
+                                                td
+                                                    div.dfx_table_text #{dataquery.description}
+                                                td
+                                                    div.dfx_table_text #{dataquery.ownerId}
+                            else
+                                div.panel-body There is no dataqueries on your cloud platform.
+                        div#widgets_tab.tab-pane
+                            h4
+                                span.dfs_content_title_2 Widgets
+                                span(style="margin-left:5px").badge #{widgets_results.length}
+                            if widgets_results.length != 0
+                                table.table.table-condensed.table-thick-bordered
+                                    thead
+                                        tr
+                                            th
+                                                input(type="checkbox" onclick='DfxStudio.github.selectAll("widgets")' id="widgetsSelectAll")
+                                            th Status
+                                            th User
+                                            th Name
+                                            th Description
+                                            th Owner ID
+                                    tbody
+                                        each widget in widgets_results
+                                            tr
+                                                td
+                                                    div.checkbox
+                                                        label()
+                                                            input(type="checkbox", value="#{widget._id}",class='widgets', id="selectComponentsForm_checkboxes_#{widget.name}", name="selectComponentsForm[widgets][#{widget.name}]")
+                                                if undefined !== widget.versioning && undefined !== widget.versioning[activeRepository]
+                                                    td
+                                                        case widget.versioning[activeRepository].status
+                                                            when 'added'
+                                                                span.label.label-success Added
+                                                            when 'committed'
+                                                                span.label.label-primary Committed
+                                                            when 'modified'
+                                                                span.label.label-warning Modified
+                                                            when 'deleted'
+                                                                span.label.label-danger Deleted
+                                                                button.btn.btn-info(type='submit', onclick='DfxStudio.github.recover({"type":"widget","name":"#{widget.name}"})', style="margin-left:10px") Recover
+                                                else
+                                                    td
+                                                        span.label.label-success Added
+                                                td
+                                                    if (widget && widget.versioning && widget.versioning[activeRepository] && widget.versioning[activeRepository].user)
+                                                        div.dfx_table_text #{widget.versioning[activeRepository].user}
+                                                    else
+                                                        | no info
+                                                td
+                                                    div.dfx_table_text #{widget.name}
+                                                td
+                                                    div.dfx_table_text #{widget.description}
+                                                td
+                                                    div.dfx_table_text #{widget.ownerId}
+                            else
+                                div.panel-body There is no dataqueries on your cloud platform.
+                        div#settings_tab.tab-pane
+                            if users.length != 0
+                                h4
+                                    span.dfs_content_title_2 Users
+                                    div.checkbox
+                                        label()
+                                            span(style="margin-left:50px;color:red;font-size:0.8em") Use passwords!
+                                                input(type="checkbox", value="1", id="selectComponentsForm_checkboxes_password", name="selectComponentsForm[users][passwords]", style="margin-left:20px")
+                                    table(style="margin-top:10px;font-size:0.7em").table.table-condensed.table-thick-bordered
+                                        thead
+                                            tr
+                                                th
+                                                    input(type="checkbox" onclick='DfxStudio.github.selectAll("users")' id="usersSelectAll")
+                                                th Name
+                                                th Roles
+                                                th Type
+                                        tbody
+                                            each user in users
+                                                tr
+                                                    td
+                                                        div.checkbox
+                                                            label()
+                                                                input(type="checkbox", value="#{user._id}",class='users', id="selectComponentsForm_checkboxes_#{user._id}", name="selectComponentsForm[users][#{user.credentials.login}]")
+                                                    td
+                                                        div.dfx_table_text #{user.credentials.login}
+                                                    td
+                                                        div.dfx_table_text #{user.roles.list}
+                                                    td
+                                                        div.dfx_table_text #{user.type}
+                            if roles.length != 0
+                                h4
+                                    span.dfs_content_title_2 Roles
+                                    table(style="margin-top:10px;font-size:0.7em").table.table-condensed.table-thick-bordered
+                                        thead
+                                            tr
+                                                th
+                                                    input(type="checkbox" onclick='DfxStudio.github.selectAll("roles")' id="rolesSelectAll")
+                                                th Name
+                                                th Type
+                                                th Description
+                                        tbody
+                                            each role in roles
+                                                tr
+                                                    td
+                                                        div.checkbox
+                                                            label()
+                                                                input(type="checkbox", value="#{role._id}",class='roles', id="selectComponentsForm_checkboxes_#{role._id}", name="selectComponentsForm[roles][#{role.name}]")
+                                                    td
+                                                        div.dfx_table_text #{role.name}
+                                                    td
+                                                        div.dfx_table_text #{role.type}
+                                                    td
+                                                        div.dfx_table_text #{role.description}
+                            if auth_providers.length != 0
+                                h4
+                                    span.dfs_content_title_2 Auth providers
+                                    table(style="margin-top:10px;font-size:0.7em").table.table-condensed.table-thick-bordered
+                                        thead
+                                            tr
+                                                th
+                                                    input(type="checkbox" onclick='DfxStudio.github.selectAll("auth")' id="authSelectAll")
+                                                th Provider
+                                                th Schema
+                                        tbody
+                                            each provider in auth_providers
+                                                tr
+                                                    td
+                                                        div.checkbox
+                                                            label()
+                                                                input(type="checkbox", value="#{provider._id}",class='auth', id="selectComponentsForm_checkboxes_#{provider._id}", name="selectComponentsForm[auth_providers][#{provider.provider}]")
+                                                    td
+                                                        div.dfx_table_text #{provider.provider}
+                                                    td
+                                                        div.dfx_table_text #{provider.schema}
+                            if db_drivers.length != 0
+                                h4
+                                    span.dfs_content_title_2 Database drivers
+                                    table(style="margin-top:10px;font-size:0.7em").table.table-condensed.table-thick-bordered
+                                        thead
+                                            tr
+                                                th
+                                                    input(type="checkbox" onclick='DfxStudio.github.selectAll("db")' id="dbSelectAll")
+                                                th Driver Name
+                                                th Dialect
+                                        tbody
+                                            each driver in db_drivers
+                                                tr
+                                                    td
+                                                        div.checkbox
+                                                            label()
+                                                                input(type="checkbox", value="#{driver._id}",class='db', id="selectComponentsForm_checkboxes_#{driver._id}", name="selectComponentsForm[db_drivers][#{driver.nameDriver}]")
+                                                    td
+                                                        div.dfx_table_text #{driver.nameDriver}
+                                                    td
+                                                        div.dfx_table_text #{driver.dialect}
+                        div#resouces_tab.tab-pane
+                            h4
+                                span.dfs_content_title_2 Resources
+                                span(style="margin-left:5px").badge #{db_resources.length}
+                                if db_resources.length != 0
+                                    table(style="margin-top:10px;font-size:0.7em").table.table-condensed.table-thick-bordered
+                                        thead
+                                            tr
+                                                th
+                                                    input(type="checkbox" onclick='DfxStudio.github.selectAll("res")' id="resSelectAll")
+                                                th Name
+                                                th Description
+                                        tbody
+                                            each res in db_resources
+                                                tr
+                                                    td
+                                                        div.checkbox
+                                                            label()
+                                                                input(type="checkbox", value="#{res._id}",class='res', id="selectComponentsForm_checkboxes_#{res._id}", name="selectComponentsForm[db_resources][#{res.name}]")
+                                                    td
+                                                        div.dfx_table_text #{res.name}
+                                                    td
+                                                        div.dfx_table_text #{res.description}
+                                else
+                                    div.panel-body(style="font-size:0.8em") There is no resources on your cloud platform.
+        button.btn.btn-info(type='submit', onclick='DfxStudio.github.gitpull()', style="margin-right:10px")
+            span.fa.fa-lg.fa-github
+            span(style="padding-left:5px; margin-right:10px") Import and synchronize
+        button.btn.btn-info(type='submit', onclick='DfxStudio.github.gitselect({});')
+            span.fa.fa-lg.fa-github
+            span(style="padding-left:10px") Export objects
+        //- button.btn.btn-default(type='button', onclick='DfxStudio.selectMainMenu({menuid:"home"});', style="margin-left:10px")
+        //-     span.fa.fa-lg.fa-undo
+        //-     span(style="padding-left:5px") Cancel
+        div.clearfix

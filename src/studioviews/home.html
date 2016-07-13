@@ -1,0 +1,57 @@
+<div id="home-page-apps" layout="column" layout-padding style="overflow-y: scroll;">
+	<div layout="row" layout-align="space-between">
+		<h2 class="md-title">Your Application Platform's Statistics</h2>
+		<md-button ng-if="platform_stats.apps!=null" class="md-raised md-primary" ng-href="#/application/create" style="height: 25px; margin-top:14px;">
+			<md-icon class="fa fa-plus" style="width:14px;height:14px;"></md-icon>
+        	Create Application
+        </md-button>
+	</div>
+	<div ng-if="platform_stats.apps==null" layout="column" layout-spacing>
+		<h2 class="md-subhead">You don't have any application in your environment.</h2>
+		<md-button class="md-raised md-primary" ng-href="#/application/create" style="height: 25px; width: 200px; margin-top:14px;">
+			<md-icon class="fa fa-plus" style="width:14px;height:14px;"></md-icon>
+        	Create Application
+        </md-button>
+    </div>
+	<div layout="row" layout-align="start start" style="flex-wrap:wrap;">
+		<div ng-repeat="app in platform_stats.apps">
+			<md-card>
+		        <md-card-title style="background:#4BCDFF">
+		          <md-card-title-text>
+		            <div class="md-headline">
+		            	<span ng-click="navigateToApp(app.name)" ng-style="app.name !=='Shared Catalog'? {cursor: 'pointer'}:{cursor:'default'}">{{app.name}}</span>
+		            	<a class="pull-right" style="font-size:18px;color:#0F518E" ng-click="loadActivity('{{app.name}}')">
+		            		<span class="fa fa-slack"></span>
+		            	</a>
+		            </div>
+		            <div class="md-subhead" style="max-width:240px;width:240px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;">{{app.title}}</div>
+		          </md-card-title-text>
+		        </md-card-title>
+		        <md-card-content layout="row" layout-align="space-between">
+		          <div class="md-media-xl card-media" style="padding-bottom: 30px;" id="chart_{{app.name.replace(' ', '_')}}">
+		          	<nvd3 flex
+				          options="chart_pages_option"
+				          data="app.chartData">
+				    </nvd3>
+		          </div>
+		        </md-card-content>
+		    </md-card>
+		</div>	
+	</div>
+	<h2 class="md-title" ng-show="display_activity_panel">Activity for sample</h2>
+	<div ng-show="display_activity_panel">
+		<md-card>
+		        <md-card-title>
+		          <md-card-title-text>
+		            <span class="md-headline">Slack</span>
+		            <span class="md-subhead">Recent Activity</span>
+		          </md-card-title-text>
+		        </md-card-title>
+		        <md-card-content layout="row" layout-align="space-between">
+		          <div class="md-media-xl card-media">
+		          	
+		          </div>
+		        </md-card-content>
+		    </md-card>
+	</div>
+</div>

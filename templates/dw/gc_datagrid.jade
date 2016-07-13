@@ -1,0 +1,60 @@
+- var containerCss = '';
+if (gcitem.attributes.containerCss)
+    each val, key in gcitem.attributes.containerCss
+        - if (val!='') containerCss += key + ':' + val + ';'
+- var css = '';
+if (gcitem.attributes.css)
+    each val, key in gcitem.attributes.css
+        - if (val!='') css += key + ':' + val + ';'
+
+div(
+    id="#{gcitem.id}_{{$index}}",
+    ng-show = (gcitem.attributes.display.value == '' ? undefined : "#{gcitem.attributes.display.value}"),
+    style=('display:inline-block;position:relative;' + (gcitem.attributes.containerStyle ? gcitem.attributes.containerStyle.value : '') + ';' + containerCss),
+    class="#{gcitem.attributes.containerClasses.value}",
+    ng-class = (gcitem.attributes.containerDynamicClasses.value == '' ? undefined : "#{gcitem.attributes.containerDynamicClasses.value}"),
+    ng-click = (gcitem.attributes.onclick && gcitem.attributes.onclick.value ? "#{gcitem.attributes.onclick.value}" : undefined)
+    )
+    div.panel(
+        id="#{gcitem.id}_grid_{{$index}}",
+        class="#{gcitem.attributes.classes.value}",
+        style=(gcitem.attributes.style.value + ';' + css))
+        - if (gcitem.attributes.titleVisible.value=='yes') {
+            div.panel-heading
+                h4.panel-title #{gcitem.attributes.title.value}
+        - }
+        div.panel-body
+            - var tbl_class_bordered = (gcitem.attributes.bordered == null || gcitem.attributes.bordered.value=='yes') ? 'table-bordered' : '';
+            - var tbl_class_condensed = (gcitem.attributes.condensed == null || gcitem.attributes.condensed.value=='yes') ? 'table-condensed' : '';
+            - var tbl_class_striped = (gcitem.attributes.striped == null || gcitem.attributes.striped.value=='yes') ? 'table-striped' : '';
+            - var tbl_class_custom = (gcitem.attributes.classes != null && gcitem.attributes.classes.value!='') ? gcitem.attributes.classes.value : '';
+            - var tbl_head_style = (gcitem.attributes.bordered == null || gcitem.attributes.bordered.value=='yes') ? '' : 'background:transparent';
+                    table.table.table-hover(
+                        id="#{gcitem.id}_{{$index}}",
+                        dfx-grid="true",
+                        dfx-grid-filter=(gcitem.attributes.filter == null || gcitem.attributes.filter.value=='yes' ? 'true' : 'false'),
+                        dfx-grid-paging=(gcitem.attributes.paging == null || gcitem.attributes.paging.value=='yes' ? 'true' : 'false'),
+                        dfx-grid-dataloaded=(gcitem.attributes.ondataloaded == null || gcitem.attributes.ondataloaded.value=='' ? undefined : gcitem.attributes.ondataloaded.value),
+                        aa-data="#{gcitem.attributes.property.value}",
+                        name=(gcitem.attributes.name.value == '' ? undefined : "#{gcitem.attributes.name.value}"),
+                        style=(gcitem.attributes.style==null || gcitem.attributes.style.value == '' ? undefined : "#{gcitem.attributes.style.value}"),
+                        class="#{tbl_class_bordered} #{tbl_class_striped} #{tbl_class_condensed} #{tbl_class_custom}")
+                        thead
+                            tr(style="#{tbl_head_style}")
+                                each grid_column, i_column in gcitem.attributes.gridColumns
+                                    - var columnCss = '';
+                                    if (grid_column.css)
+                                        each val, key in grid_column.css
+                                            - if (val!='') columnCss += key + ':' + val + ';'
+                                    th(class="col-md-#{grid_column.width.value}")
+                                        span #{grid_column.header.value}
+                                        span(id="#{gcitem.id}_{{$index}}_#{i_column}", style="display:none")
+                                            column
+                                                type #{grid_column.type.value}
+                                                model #{grid_column.property.value}
+                                                classes #{grid_column.classes.value}
+                                                style #{grid_column.style.value+';'+columnCss}
+                                                scope-function #{grid_column.callbackFunction.value}
+                                                html-content
+                                                    != grid_column.html.value
+                        tbody

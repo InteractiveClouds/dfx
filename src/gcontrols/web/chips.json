@@ -1,0 +1,75 @@
+{
+  "template": 			{ "value": "default" },
+  "name": {
+    "value": "chpChips1"
+  },
+  "label": {
+    "value": ""
+  },
+  "flex": {"value": 50},
+  "isBindEmpty":{
+    "value": true
+  },
+  "binding": {
+    "value": ""
+  },
+  "chipsTypes": ["standard"],
+  "selectedType": {
+    "value": "standard"
+  },
+  "inputTypes": ["text", "number"],
+  "selectedInput":{
+    "value": "text"
+  },
+  "basicPlaceholder": {
+    "value": "'Add item'"
+  },
+  "addPlaceholder": {
+    "value": "'Add item'"
+  },
+  "defaultArray":{
+    "value":[]
+  },
+  "itemsArray":{
+    "value": []
+  },
+  "customItems": {
+  "value" :[{"prop1": "prop11", "prop2": "prop21"},{"prop1": "prop12", "prop2": "prop22"}]
+  },
+  "property1": "",
+  "property2": "",
+  "display": {
+    "value": "true"
+  },
+  "disabled": {
+  "value": "false"
+  },
+  "classes": {
+    "value": ""
+  },
+  "dynamicClasses": {
+    "value": ""
+  },
+  "style": {
+    "value": ""
+  },
+  "onAdd": {
+    "value": ""
+  },
+  "onRemove": {
+    "value": ""
+  },
+  "onSelect": {
+    "value": ""
+  },
+  "onclick": { "value": "" },
+  "ondblclick": { "value": "" },
+  "onkeypress": { "value": "" },
+  "onkeydown": { "value": "" },
+  "onkeyup": { "value": "" },
+  "onmouseover": { "value": "" },
+  "onmouseenter": { "value": "" },
+  "onmousemove": { "value": "" },
+  "onmouseleave": { "value": "" },
+  "onmouseup": { "value": "" }
+}

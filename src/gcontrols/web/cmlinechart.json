@@ -1,0 +1,60 @@
+{
+	"template": 			{ "value": "default" },
+	"name": {
+		"value": "cmLineChart1"
+	},
+	"flex": {
+	  	"value": 50
+	},
+	"binding": {
+	  	"value": ""
+	},
+	"title": {
+	  	"value": "'Cumulative Line Chart'"
+	},
+  	"chartType": {
+	  "value": "cumulativeLineChart"
+	},
+	"display": {
+		"value": "true"
+	},
+	"options": {
+		"xAxisLabel": "'X Axis'",
+		"yAxisLabel": "'Y Axis'",
+		"xAxisLabelDistance": 0,
+		"yAxisLabelDistance": -5,
+		"duration": 500,
+		"showXAxis": "true",
+		"showYAxis": "true",
+		"showLegend": "true",
+		"useInteractiveGuideline": "true",
+		"rescaleY": "true"
+	},
+	"dynamicOptions": {
+	  	"value": ""
+	},
+	"style": {
+	  	"value": ""
+	},
+	"classes": {
+		"value": ""
+	},
+	"dynamicClasses": {
+		"value": ""
+	},
+	"onclick": {
+		"value": ""
+	},
+	"onmouseover": {
+	  	"value": ""
+	},
+	"onmouseleave": {
+	  	"value": ""
+	},
+	"onstatechange": {
+	  	"value": ""
+	},
+	"onrenderend": {
+	  	"value": ""
+	}
+}

@@ -1,0 +1,10 @@
+div.panel.panel-primary(ng-show = (gcitem.attributes.display.value == '' ? undefined : "#{gcitem.attributes.display.value}"))
+    - if (gcitem.attributes.titleVisible.value)
+        div.panel-heading #{gcitem.attributes.title.value}
+    ul(id="#{gcitem.id}", class="list-group #{gcitem.attributes.classes.value}", ng-controller=(gcitem.attributes.controller.value == '' ? undefined : gcitem.attributes.controller.value),style=(gcitem.attributes.style.value == '' ? undefined : gcitem.attributes.style.value))
+        li(ng-repeat="item in #{gcitem.attributes.model.value}",class="list-group-item {{item.classes}}")
+            h4.list-group-item-heading {{item.label}}
+            div.list-group-item-text
+                each gcitem_child, j in gcitem.children
+                    if(gcitem_child.container == 'col0')
+                        mixin displayItem(gcitem_child)

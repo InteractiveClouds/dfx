@@ -1,0 +1,11 @@
+<md-input-container dfx-gc-compiled flex class="md-input-has-value md-block {{attributes.classes.value}}" dfx-ng-show="ng-show,display" style="{{attributes.style.value}}" dfx-ng-class="ng-class,dynamicClasses">
+	<label dfx-gc-compiled-child dfx-ng-bind="ng-bind,label"></label>
+	<ul ng-model="$gcscope[attributes.binding.value]" class="star-rating" aria-label="{{attributes.name.value}}" ng-click="$eval(attributes.onclick.value)" ng-mouseover="$eval(attributes.onmouseover.value)"
+        ng-mouseenter="$eval(attributes.onmouseenter.value)" ng-mousemove="$eval(attributes.onmousemove.value)" ng-mouseleave="$eval(attributes.onmouseleave.value)" ng-mousedown="$eval(attributes.onmousedown.value)"
+        ng-mouseup="$eval(attributes.onmouseup.value)" ng-disabled="$eval(attributes.disabled.value)">
+        <li ng-repeat="star in stars" class="star" ng-class="{filled: star.filled}" ng-style="{color: star.filled ? attributes.highlighted.value : attributes.color.value }" ng-click="toggle($index)">
+            <i ng-if="attributes.icon.type ==='fa-icon'" class="fa {{$eval(attributes.icon.value)}}" style="font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></i>
+            <ng-md-icon ng-if="attributes.icon.type ==='svg-icon'" icon="{{$eval(attributes.icon.value)}}" size="{{attributes.icon.size}}" style="height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></ng-md-icon>
+        </li>
+    </ul>
+</md-input-container>

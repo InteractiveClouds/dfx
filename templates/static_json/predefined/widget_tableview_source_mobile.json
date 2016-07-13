@@ -1,0 +1,229 @@
+{
+  "properties": {
+    "title": {
+      "visible": false,
+      "color": ""
+    },
+    "tools": {
+      "color": false,
+      "edit": false,
+      "collapse": false,
+      "fullscreen": false,
+      "delete": false
+    },
+    "sortable": false
+  },
+  "definition": [
+    {
+      "id": "root",
+      "type": "panel",
+      "attributes": {
+        "name": {
+          "value": "pnlPanel1"
+        },
+        "controller": {
+          "value": ""
+        },
+        "form": {
+          "value": ""
+        },
+        "classes": {
+          "value": ""
+        },
+        "style": {
+          "value": ""
+        },
+        "css": {
+          "width": "",
+          "height": "",
+          "color": "",
+          "background": "",
+          "padding": "",
+          "margin": "",
+          "text-align": ""
+        },
+        "bodyCss": {
+          "width": "",
+          "height": "",
+          "color": "",
+          "background": "",
+          "padding": "",
+          "margin": "",
+          "text-align": ""
+        },
+        "bodyClasses": {
+          "value": ""
+        },
+        "bodyDynamicClasses": {
+          "value": ""
+        },
+        "display": {
+          "value": ""
+        },
+        "layout": {
+          "rows": [
+            {
+              "classes": {
+                "value": ""
+              },
+              "dynamicClasses": {
+                "value": ""
+              },
+              "style": {
+                "value": ""
+              }
+            }
+          ],
+          "classes": {
+            "value": ""
+          },
+          "dynamicClasses": {
+            "value": ""
+          },
+          "style": {
+            "value": ""
+          }
+        }
+      },
+      "children": [
+        {
+          "id": 35829,
+          "type": "tableview",
+          "attributes": {
+            "name": {
+              "value": "tblTableView1"
+            },
+            "property": {
+              "value": ""
+            },
+            "dynamicOptions": {
+              "value": true
+            },
+            "propertyOptions": {
+              "value": "tableView"
+            },
+            "propertyOptionsFields": {
+              "label": "label",
+              "value": "value",
+              "icon": "icon",
+              "chevron": "chevron"
+            },
+            "staticOptions": [
+              {
+                "label": "Item 1",
+                "value": "Item1",
+                "icon": "trash",
+                "chevron": ""
+              },
+              {
+                "label": "Item 2",
+                "value": "Item2",
+                "icon": "gear",
+                "chevron": ""
+              },
+              {
+                "label": "Item 3",
+                "value": "Item3",
+                "icon": "pages",
+                "chevron": ""
+              }
+            ],
+            "display": {
+              "value": "true"
+            },
+            "containerClasses": {
+              "value": ""
+            },
+            "containerDynamicClasses": {
+              "value": ""
+            },
+            "containerCss": {
+              "width": "",
+              "height": "",
+              "color": "",
+              "background": "",
+              "padding": "",
+              "margin": "",
+              "text-align": ""
+            },
+            "containerStyle": {
+              "value": ""
+            },
+            "classes": {
+              "value": ""
+            },
+            "dynamicClasses": {
+              "value": ""
+            },
+            "css": {
+              "width": "",
+              "height": "",
+              "color": "",
+              "background": "",
+              "padding": "",
+              "margin": "",
+              "text-align": ""
+            },
+            "style": {
+              "value": ""
+            },
+            "onclick": {
+              "value": ""
+            }
+          },
+          "children": [],
+          "container": "layout_0_row_0"
+        }
+      ]
+    },
+    {
+      "id": "root_tabbar",
+      "type": "tabbar",
+      "kind": "bar",
+      "attributes": {
+        "display": {
+          "value": "true"
+        },
+        "onclick": {
+          "value": "openAnotherWidget"
+        },
+        "tabs": [
+          {
+            "label": {
+              "value": "Home"
+            },
+            "value": {
+              "value": "Home"
+            },
+            "icon": {
+              "value": "home"
+            }
+          },
+          {
+            "label": {
+              "value": "Profile"
+            },
+            "value": {
+              "value": "Profile"
+            },
+            "icon": {
+              "value": "person"
+            }
+          },
+          {
+            "label": {
+              "value": "Settings"
+            },
+            "value": {
+              "value": "Settings"
+            },
+            "icon": {
+              "value": "gear"
+            }
+          }
+        ]
+      },
+      "children": []
+    }
+  ]
+}

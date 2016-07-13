@@ -1,0 +1,53 @@
+<div ng-if="attributes.selectedType.value!=='number'" layout="row" style="{{attributes.style.value}}" class="{{attributes.classes.value}} layout-row">
+    <div class="gc_w_input_icon_wrap_design" flex="none" ng-if="attributes.icon.value !== '' && attributes.position.value==='left'">
+        <span class="gc_w_input_icon" style="text-align: right;">
+            <md-icon ng-if="attributes.icon.type ==='fa-icon'" class="fa {{$eval(attributes.icon.value) || 'fa-home'}}" style="font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
+            <ng-md-icon ng-if="attributes.icon.type ==='svg-icon'" icon="{{$eval(attributes.icon.value) || 'home'}}" size="{{attributes.icon.size}}" style="height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></ng-md-icon>
+        </span>
+    </div>
+    <div ng-if="attributes.icon.value !== ''" class="layout-row flex">
+        <md-input-container flex class="gc-input-icon-container">
+            <label>{{attributes.label.value | checkExpression}}</label>
+            <input style="padding-left: 5px" ng-model="attributes.temporary.value" type="{{attributes.selectedType.value}}" minlength={{attributes.minlength.value}} md-maxlength="{{attributes.maxlength.value}}">
+        </md-input-container>
+    </div>
+    <div class="gc_w_input_icon_wrap_design" flex="none" ng-if="attributes.icon.value !== '' && attributes.position.value==='right'">
+        <span class="gc_w_input_icon">
+            <md-icon ng-if="attributes.icon.type ==='fa-icon'" class="fa {{$eval(attributes.icon.value) || 'fa-home'}}" style="font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
+            <ng-md-icon ng-if="attributes.icon.type ==='svg-icon'" icon="{{$eval(attributes.icon.value) || 'home'}}" size="{{attributes.icon.size}}" style="height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></ng-md-icon>
+        </span>
+    </div>
+    <div ng-if="attributes.icon.value === ''" class="layout-row flex">
+        <md-input-container flex ng-if="attributes.selectedType.value!=='number'">
+            <label>{{attributes.label.value | checkExpression}}</label>
+            <input style="padding-left: 5px" type="{{attributes.selectedType.value}}" ng-model="attributes.temporary.value" minlength={{attributes.minlength.value}} md-maxlength="{{attributes.maxlength.value}}">
+        </md-input-container>
+    </div>
+</div>
+
+<div ng-if="attributes.selectedType.value==='number'" layout="row" style="{{attributes.style.value}}" class="{{attributes.classes.value}} layout-row">
+    <div class="gc_w_input_icon_wrap_design" flex="none" ng-if="attributes.icon.value !== '' && attributes.position.value==='left'">
+        <span class="gc_w_input_icon" style="text-align: right;">
+            <md-icon ng-if="attributes.icon.type ==='fa-icon'" class="fa {{$eval(attributes.icon.value) || 'fa-home'}}" style="font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
+            <ng-md-icon ng-if="attributes.icon.type ==='svg-icon'" icon="{{$eval(attributes.icon.value) || 'home'}}" size="{{attributes.icon.size}}" style="height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></ng-md-icon>
+        </span>
+    </div>
+    <div ng-if="attributes.icon.value !== ''" class="layout-row flex">
+        <md-input-container flex class="gc-input-icon-container">
+            <label>{{attributes.label.value | checkExpression}}</label>
+            <input style="padding-left: 5px" ng-model="attributes.temporary.value" type="number" step="any" min="{{attributes.minNumber.value}}" max="{{attributes.maxNumber.value}}">
+        </md-input-container>
+    </div>
+    <div class="gc_w_input_icon_wrap_design" flex="none" ng-if="attributes.icon.value !== '' && attributes.position.value==='right'">
+        <span class="gc_w_input_icon">
+            <md-icon ng-if="attributes.icon.type ==='fa-icon'" class="fa {{$eval(attributes.icon.value) || 'fa-home'}}" style="font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
+            <ng-md-icon ng-if="attributes.icon.type ==='svg-icon'" icon="{{$eval(attributes.icon.value) || 'home'}}" size="{{attributes.icon.size}}" style="height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></ng-md-icon>
+        </span>
+    </div>
+    <div ng-if="attributes.icon.value === ''" class="layout-row flex">
+        <md-input-container flex ng-if="attributes.selectedType.value==='number'">
+            <label>{{attributes.label.value | checkExpression}}</label>
+            <input style="padding-left: 5px" type="number" step="any" min="{{attributes.minNumber.value}}" max="{{attributes.maxNumber.value}}">
+        </md-input-container>
+    </div>
+</div>

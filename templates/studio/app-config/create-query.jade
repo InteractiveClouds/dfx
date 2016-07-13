@@ -1,0 +1,383 @@
+div#apiRouteNodes(style="display:none")
+    nav.navbar(style="margin-bottom: -1px;background-color: #f1f1f1;font-size: 12px; min-height: 10px;")
+        ul.nav.navbar-nav(style="margin:0; padding:0")
+            li#query-actions-dropdown-menu-item.dropdown
+                a#query-connector-settings-and-parameters-link.dfx_query_editor_toolbar_active(style="padding:9px", href="javascript:DfxStudio.Home.Dataqueries.switchPanels('query-connector-settings-and-parameters', this);")
+                    span.fa.fa-lg.fa-cogs
+                    span(style="padding-left: 9px;") Settings & Parameters
+            li
+                a#application-exceptions-and-query-execution-filters-link(style="padding:9px; margin-left:10px;", href="javascript:DfxStudio.Home.Dataqueries.switchPanels('application-exceptions-and-query-execution-filters', this);")
+                    span.fa.fa-lg.fa-file-code-o
+                    span(style="padding-left:9px") Filters
+            li
+                a#query-metadata-link(style="padding:9px; margin-left:10px;", href="javascript:DfxStudio.Home.Dataqueries.switchPanels('query-metadata', this);")
+                    span.fa.fa-lg.fa-flash
+                    span(style="padding-left:5px") Simulate
+    div#query-connector-settings-and-parameters.dataquery-form-panel(style="margin-top: 0px;")
+        div.panel.panel-primary(style="margin-bottom:0px;")
+            div.panel-heading
+                h4 Main properties
+            div.panel-body#dfx_collapsible_settings(style='background-color: #f1f1f1;')
+                fieldset#querySource
+                    div.form-group.col-lg-12
+                        label Api Route URL:
+                        div.input-group.col-lg-8
+                            input#apiRouteUrl.form-control(type="text", name="apiRouteUrl", placeholder="Api Route URL", value="", onkeyup="javascript:DfxStudio.Home.Dataqueries.onBlurEvent(this)")
+        div.panel.panel-primary(style="margin-bottom:0px;")
+            div.panel-heading
+                h4 Connector Settings
+            div.panel-body#dfx_collapsible_settings(style='background-color: #f1f1f1;')
+                fieldset#querySource
+                    div.form-group.col-lg-2
+                        label(for="querySource") Connector type:
+                        select#querySourceType.form-control(name="queryFormat", placeholder="")
+                            option(value="ext" id="queryExtSource") REST
+                            option(value="db" id="queryDBSource") MongoDB DataBase
+                    div.form-group.col-lg-10
+                        label(for="queryRequestUrl") Request URL:
+                        div.input-group
+                            input#queryRequestUrl.form-control(type="text", name="queryRequestUrl", placeholder="Request URL", value="")
+                            span#grpShowDB.input-group-btn
+                                button#queryShowDB.btn.btn-default.popoverThis(type="button", rel="popover", disabled="disabled")
+                                    span.fa.fa-lg.fa-list
+                    div.form-group.col-lg-4
+                        label(for="queryRequestType") Request Type:
+                        select#queryRequestType.form-control(name="queryRequestType", placeholder="")
+                            option(value="GET", selected="selected") GET
+                            option(value="POST") POST
+                            option(value="PUT") PUT
+                            option(value="DELETE") DELETE
+                    div.form-group.col-lg-4(style="display:none")
+                        label(for="queryFormat") Data Format Received:
+                        select#queryFormat.form-control(name="queryFormat", placeholder="")
+                            option(value="xml") xml
+                            option(value="json", selected="selected") json
+                    div.form-group.col-lg-4
+                        input#auth_userid(type="hidden")
+                        input#auth_password(type="hidden")
+                        label(for="queryAuthProvider") Authentication Provider:
+                        select#queryAuthProvider.form-control(name="queryAuthProvider", placeholder="")
+                            option(value="none", selected="selected") none
+                            if (providers && providers.length>0)
+                                each provider, i in providers
+                                    option(value="#{provider}") #{provider}
+                    div.form-group.col-lg-4(style="margin-top: 17px;")
+                        div.checkbox
+                            label
+                                input#queryRandom(type="checkbox", name="queryRandom")
+                                | Add a random number URL parameter
+                    div#dfx_req_body.form-group.col-lg-12(style="display:none")
+                        label(for="queryRequestBody", id="lReqBody") Request Body:
+                        textarea#queryRequestBody.form-control(name="queryRequestBody", rows="5")
+                    div.form-group.col-lg-7
+                        label(for="queryName") Angular Service Function:
+                        input#queryServiceMethod.form-control(type="text", name="queryServiceMethod", placeholder="Angular Service Function")
+        div.panel.panel-primary(style="margin-bottom:0px;")
+            div.panel-heading
+                h4 Parameters
+            div.panel-body#dfx_collapsible_parameters(style='background-color: #f1f1f1;')
+                fieldset
+                    div#dfx_add_params.col-lg-12
+                        input#savedb(type="hidden")
+                        input#savedbcol(type="hidden")
+                        table#queryParSoapSource.queryParams.table.table-condensed.table-thick-bordered(style="display:none")
+                            thead
+                                tr
+                                    th Name
+                                    th Action
+                                    th Value
+                                    th
+                            tbody#queryParSoapSourceBody
+                        table#queryParExtSource.queryParams.table.table-condensed.table-thick-bordered(style="display:none")
+                            thead
+                                tr#rowHiddenHeader
+                                    th Name
+                                    th Action
+                                    th Value
+                                    th Type
+                                    th
+                            tbody#queryParExtSourceBody
+                                tr#rowHidden(style="display:none")
+                                    td
+                                        input.form-control(type="text", name="queryParam[name]", placeholder="")
+                                    td
+                                        select.form-control(name="queryParam[action]", placeholder="", style="min-width:90px")
+                                            option(value="eq", selected="selected") equal
+                                    td
+                                        input.form-control(type="text", name="queryParam[value]", placeholder="")
+                                    td
+                                        select.form-control(name="queryParam[type]", placeholder="",style="min-width:90px")
+                                            option(value="header") header
+                                            option(value="request", selected="selected") request
+                                            option(value="url") url
+                                    td
+                                        button.btn.btn-link(type="button", onclick="DfxStudio.queries.deleteParameter(event)")
+                                            span.fa.fa-lg.fa-trash-o
+                        table#queryParDBSource.queryParams.table.table-condensed.table-thick-bordered(style="display:none")
+                            thead
+                                tr#rowHiddenHeader
+                                    th Name
+                                    th Action
+                                    th Value
+                                    th
+                            tbody#queryParDBSourceBody
+                                tr#rowHidden(style="display:none")
+                                    td
+                                        select.form-control(name="queryParam[name]", placeholder="",style="min-width:100px")
+                                    td
+                                        select.form-control(name="queryParam[action]", placeholder="",style="min-width:100px")
+                                            option(value="eq", selected="selected") equal
+                                            option(value="ne") not equal
+                                            option(value="lt") less than
+                                            option(value="gt") more than
+                                    td
+                                        input.form-control(type="text", name="queryParam[value]", placeholder="")
+                                    td
+                                        button.btn.btn-link(type="button", onclick="DfxStudio.queries.deleteParameter(event)")
+                                            span.fa.fa-lg.fa-trash-o
+                        div.form-group
+                            a#btnAddParams.btn.btn-info(type='button', onclick='DfxStudio.queries.addQueryParams();')
+                                span.fa.fa-lg.fa-plus
+                                span(style="padding-left:5px") Add Parameter
+        div.panel.panel-danger(style="margin-bottom:0;")
+            div.panel-heading
+                h4 Danger Zone
+            div.panel-body
+                button.btn.btn-default(type='button', onclick="DfxStudio.Home.Dataqueries.deleteApiRoute(this);", style="margin-left:10px")
+                    span.fa.fa-lg.fa-trash-o
+                    span(style="padding-left:5px") Delete
+    div#application-exceptions-and-query-execution-filters.dataquery-form-panel(style="margin-top: 0px;")
+        div#dfx_filter_src_query_editor_panel(style="display: none;")
+            nav.navbar.navbar-default(style="margin-bottom: 0;")
+                ul.nav.navbar-nav
+                    li#query-actions-dropdown-menu-item.dropdown
+                        a#query-actions-dropdown-button.dropdown-toggle(type="button", data-toggle="dropdown", aria-haspopup="true", aria-expanded="false")
+                            span.fa.fa-lg.fa-bars
+                            span(style="padding-left: 5px; padding-right: 5px;") Actions
+                                span.caret
+                                ul.dropdown-menu(aria-labelledby="query-actions-dropdown-button")
+                                    li
+                                        a(tabindex="-1", href="javascript: void(0);", onclick="DfxStudio.Home.Dataqueries.actionsApi('execute-another-dataquery');") Execute another DataQuery
+                                    li
+                                        a(tabindex="-1", href="javascript: void(0);", onclick="DfxStudio.Home.Dataqueries.actionsApi('execute-another-dataquery-with-params');") Execute another DataQuery with Parameters
+                                    li.post-exec-filter
+                                        a(tabindex="-1", href="javascript: void(0);", onclick="DfxStudio.Home.Dataqueries.actionsApi('filter-data');") Filter Data
+                                    li.post-exec-filter
+                                        a(tabindex="-1", href="javascript: void(0);", onclick="DfxStudio.Home.Dataqueries.actionsApi('filter-properties');") Filter Properties
+                                    li.dropdown-submenu
+                                        a(tabindex="-1", href="javascript: void(0);") Object
+                                        ul.dropdown-menu
+                                            li.post-exec-filter
+                                                a(tabindex="-1", href="javascript: void(0);", onclick="DfxStudio.Home.Dataqueries.actionsApi('objects.response');") Response
+                                            li
+                                                a(tabindex="-1", href="javascript: void(0);", onclick="DfxStudio.Home.Dataqueries.actionsApi('objects.params');") Parameters
+                                            li
+                                                a(tabindex="-1", href="javascript: void(0);", onclick="DfxStudio.Home.Dataqueries.actionsApi('objects.user');") User
+                    li
+                        a(href="javascript:DfxStudio.Home.Dataqueries.saveFilterCode({});")
+                            span.fa.fa-lg.fa-floppy-o
+                            span(style="padding-left:5px") Save
+                    li
+                        a(href="javascript:DfxStudio.Home.Dataqueries.cancelFilterCode({})")
+                            span.fa.fa-lg.fa-sign-out
+                            span(style="padding-left:5px") Close
+            pre#dfx_filter_src_query_editor(style="height:250px;")
+        div.panel.panel-primary.query-exec-filters-panel(style="margin-bottom:0px;")
+            div.panel-heading
+                h4 Execution Filters
+            div.panel-body#dfx_collapsible_filters(style='background-color: #f1f1f1;')
+                h4(style="color: inherit; padding:9px;") Pre Execution Code
+                fieldset
+                    div#dfx_add_precode.col-lg-12
+                        table#queryPreCode.table.table-condensed.table-thick-bordered(style="display:none")
+                            thead
+                                tr
+                                    th Name
+                                    th Source Code
+                                    th Order
+                                    th
+                            tbody#queryPreCodeBody
+                                tr#rowHidden(style="display:none")
+                                    td
+                                        input.form-control(type="text", name="queryNamePreCode", placeholder="Pre Execution Code Name")
+                                    td
+                                        textarea.form-control(name="queryTextPreCode", style="display:none")
+                                        a.btn.btn-link(href="javascript:", onclick="DfxStudio.Home.Dataqueries.editFilterCode(this)", style="border-radius: 4px; padding: 6px 17px;", data-filter="pre")
+                                            span.fa.fa-lg.fa-pencil-square-o
+                                    td
+                                        a.btn.btn-link.up(href="javascript:", onclick="DfxStudio.queries.changeOrder(event)", style="padding-left: 0; padding-right: 0;")
+                                            span.fa.fa-lg.fa-arrow-up
+                                        a.btn.btn-link.down(href="javascript:", onclick="DfxStudio.queries.changeOrder(event)", style="padding-left: 0;")
+                                            span.fa.fa-lg.fa-arrow-down
+                                    td
+                                        button.btn.btn-link(type="button", onclick="DfxStudio.queries.deleteParameter(event)")
+                                            span.fa.fa-lg.fa-trash-o
+                    div.col-lg-12
+                        button.btn.btn-info(type='button', onclick='DfxStudio.queries.addPreCode();')
+                            span.fa.fa-lg.fa-plus
+                            span(style="padding-left:5px") Add Pre code Execution
+                h4(style="color: inherit; padding:9px;") Post Pre Execution Code
+                fieldset
+                    div#dfx_add_postcode.col-lg-12
+                        table#queryPostCode.table.table-condensed.table-thick-bordered(style="display:none")
+                            thead
+                                tr
+                                    th Name
+                                    th Source Code
+                                    th Order
+                                    th
+                            tbody#queryPostCodeBody
+                                tr#rowHidden(style="display:none")
+                                    td
+                                        input.form-control(type="text", name="queryNamePostCode", placeholder="Post Execution Code Name")
+                                    td
+                                        textarea.form-control(name="queryTextPostCode", style="display:none")
+                                        a.btn.btn-link(href="javascript:", onclick="DfxStudio.Home.Dataqueries.editFilterCode(this)", style="border-radius: 4px; padding: 6px 17px;", data-filter="post")
+                                            span.fa.fa-lg.fa-pencil-square-o
+                                    td
+                                        a.btn.btn-link.up(href="javascript:", onclick="DfxStudio.queries.changeOrder(event)", style="padding-left: 0; padding-right: 0;")
+                                            span.fa.fa-lg.fa-arrow-up
+                                        a.btn.btn-link.down(href="javascript:", onclick="DfxStudio.queries.changeOrder(event)", style="padding-left: 0;")
+                                            span.fa.fa-lg.fa-arrow-down
+                                    td
+                                        a.btn.btn-link(type="button", onclick="DfxStudio.queries.deleteParameter(event)")
+                                            span.fa.fa-lg.fa-trash-o
+                    div.col-lg-12
+                        button.btn.btn-info(type='button', onclick='DfxStudio.queries.addPostCode();')
+                            span.fa.fa-lg.fa-plus
+                            span(style="padding-left:5px") Add Post code Execution
+        div.panel.panel-primary.query-exec-filters-panel(style="margin-bottom:0px;")
+            div.panel-heading
+                h4 Application Exceptions
+            div.panel-body#dfx_collapsible_exceptions(style='background-color: #f1f1f1;')
+                fieldset
+                    div.form-group.col-lg-12
+                        span Enter a regular expression to identify an application exception (evaluated an runtime only)
+                    div#dfx_add_regexp.col-lg-12
+                        table#queryReqExp.table.table-condensed.table-thick-bordered(style="display:none")
+                            thead
+                                tr
+                                    th Name
+                                    th ReqExp
+                                    th
+                            tbody#queryReqExpBody
+                                tr#rowHidden(style="display:none")
+                                    td
+                                        input.form-control(type="text", name="queryNameError", placeholder="Name Error")
+                                    td
+                                        input.form-control(type="text", name="queryRegExpError", placeholder="RegExp Error")
+                                    td
+                                        button.btn.btn-link(type="button", onclick="DfxStudio.queries.deleteParameter(event)")
+                                            span.fa.fa-lg.fa-trash-o
+                    div.col-lg-12
+                        button.btn.btn-info(type='button', onclick='DfxStudio.queries.addRegExp();')
+                            span.fa.fa-lg.fa-plus
+                            span(style="padding-left:5px") Add Application Exception
+    div#query-metadata.dataquery-form-panel(style="margin-top: 0px;")
+        div.panel.panel-primary(style="margin-bottom:0px;")
+            div.panel-heading
+                h4 Execution
+            div.panel-body(style='background-color: #f1f1f1;')
+                fieldset
+                    textarea#hidden_query_result(style="display:none")
+                    textarea#hidden_query_metadata(style="display:none")
+                    textarea#hidden_query_request(style="display:none")
+                div.form-group.col-12
+                    button#executeBut.btn.btn-info(type='button', onclick='DfxStudio.queries.executeQuery({});')
+                        span.fa.fa-lg.fa-play
+                        span(style="padding-left:5px") Execute
+                    button#showQueryMetaData.btn.btn-info.popup-marker.popoverThis(type='button', style="margin-left:40px;visibility:hidden")
+                        span View MetaData
+                    button#showQueryData.btn.btn-info.popup-marker.popoverThis(type='button', style="margin-left:10px;visibility:hidden")
+                        span View Result
+                    button#showQueryRequestData.btn.btn-info.popup-marker.popoverThis(type='button', style="margin-left:10px;visibility:hidden")
+                        span View Request
+                div#query_metadata_information_panel.panel(style="display:none")
+                    div#query_metadata_information_panel_body.panel-body
+                textarea#testResponse(style="display:none; margin: 0px; height:300px;")
+div#dfx-studio-query-content(style="position:fixed;left:350px;top:109px;right:10px;bottom:30px;overflow-y:auto")
+    div.apiRouteSpanName(style="color:black; font-size:1.2em; display:none; padding:10px;")
+    form#createDataqueryForm(action="javascript:void(0);")
+        div#properties-and-service-model
+            div.panel.panel-primary
+                div.panel-heading
+                    h4
+                        | Properties
+                        div.pull-right
+                            a(href="javascript:DfxStudio.switchCollapsible('properties');")
+                                span#dfx_collapsible_icon_properties.fa.fa-lg.fa-angle-down
+                div.panel-body#dfx_collapsible_properties
+                    fieldset
+                        div.form-group.col-lg-6
+                            label(for="queryName") API Service Name:
+                            input#queryName.form-control(type="text", name="queryName", placeholder="Service Name", required, onblur="javascript:DfxStudio.Home.Dataqueries.onBlurEvent(this)")
+                        div.form-group.col-lg-6
+                            label(for="queryDesc") Description:
+                            input#queryDesc.form-control(type="text", name="queryDesc", placeholder="Service Description")
+                        div.form-group.col-lg-6
+                            label(for="queryCat") Category:
+                            div.input-group
+                                select#queryCat.form-control.selectpicker(name="queryCat", placeholder="")
+                                    if (querycats && querycats.length>0)
+                                        each querycat, i in querycats
+                                            option(value="#{querycat.name}", selected = querycat.name == category) #{querycat.name}
+                                span.input-group-btn
+                                    button#queryAddQueryCat.btn.btn-info(type="button", rel="popover", onclick="DfxStudio.Home.Dataqueries.categories('create', '#{applicationName}');")
+                                        span.fa.fa-lg.fa-plus
+                                span.input-group-btn
+                                    button#queryEditQueryCat.btn.btn-info(type="button", rel="popover", onclick="DfxStudio.Home.Dataqueries.categories('edit', '#{applicationName}');")
+                                        span.fa.fa-lg.fa-pencil-square-o
+                                span.input-group-btn
+                                    button#queryRMQueryCat.btn.btn-info(type="button", rel="popover", onclick="DfxStudio.Home.Dataqueries.categories('remove', '#{applicationName}');")
+                                        span.span.fa.fa-lg.fa-trash-o
+                        div.form-group.col-lg-6
+                            label(for="queryServices") Angular Service Name:
+                            input#queryServices.form-control(type="text", name="queryServices", placeholder="Service Name")
+                        div.form-group.col-lg-6(style="display:none")
+                            label(for="queryFormat") Persistence:
+                            select#queryPersist.form-control(name="queryFormat", placeholder="")
+                                option(value="none", selected="selected") none
+                                option(value="sessions") user sessions
+                        input#queryApp(type="hidden", name="queryApp", value="#{applicationName}")
+            div.panel.panel-primary
+                div.panel-heading
+                    h4 API Routes
+                        a.pull-right(href="javascript:DfxStudio.switchCollapsible('services');")
+                            span#dfx_collapsible_icon_services.fa.fa-lg.fa-angle-down
+                div.panel-body#dfx_collapsible_services
+                    div#apiRoutes.dfx-at-treeview.hover(style="margin-left: 25px;")
+                        div.apiRoute
+                            input.dfx-at-treeview-button(type="checkbox" id="firstApiRoute" checked)
+                            label.queryApiRouteName(for="firstApiRoute" onclick="DfxStudio.Home.Dataqueries.apiRouteAction(this);") path/to/route
+                            div.col-lg-12
+                                div.apiRouteContent(style="display:none; border: 1px solid #999; width: 20%;")
+                                    div.panel.panel-danger.apiRouteRemoveButtonDiv(style="display:none")
+                    div.col-lg-12
+                        button#queryRMQueryCat.btn.btn-info(type="button", rel="popover", onclick="DfxStudio.Home.Dataqueries.addApiRoute(true);", title='Add API Route', style="margin-top: 12px;")
+                            span.fa.fa-lg.fa-plus
+                            span(style="padding-left:5px") Add
+    div#apiRouteMainControlButttons.control-button-panel(style="margin-top:20px")
+        button.btn.btn-info.save-now-submitter(type='submit', onclick='DfxStudio.Home.Dataqueries.createQuery();')
+            span.fa.fa-lg.fa-floppy-o
+            span(style="padding-left:5px") Save
+        button.btn.btn-default(type='button', onclick="DfxStudio.Dispatcher.run('#!/home/#{applicationName}/queries');", style="margin-left:10px")
+            span.fa.fa-lg.fa-undo
+            span(style="padding-left:5px") Cancel
+        button.btn.btn-success(type='button', onclick='DfxStudio.Home.Dataqueries.showCategories("#{applicationName}");', style="margin-left:10px")
+            span.fa.fa-lg.fa-magic
+            span(style="padding-left:5px") DataSources
+        button#apiRouteBackButton.btn.btn-info(type='button', onclick="DfxStudio.Home.Dataqueries.apiRouteBack();", style="margin-left:10px; display:none;")
+            span.fa.fa-lg.fa-undo
+            span(style="padding-left:5px") Back
+    div#dfx_src_query_editor_panel
+        nav.navbar.navbar-default
+            ul.nav.navbar-nav
+                li
+                    a(href="javascript:DfxStudio.queries.saveFilterCode({});")
+                        span.fa.fa-lg.fa-floppy-o
+                        span(style="padding-left:5px") Save
+                li
+                    a(href="javascript:DfxStudio.queries.cancelFilterCode({})")
+                        span.fa.fa-lg.fa-sign-out
+                        span(style="padding-left:5px") Exit
+        pre#dfx_src_query_editor

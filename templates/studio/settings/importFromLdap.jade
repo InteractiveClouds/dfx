@@ -1,0 +1,33 @@
+div.panel.panel-primary.ldapSearch(style="position: relative; height: 99%; margin-bottom: 1%;")
+    div.panel-heading
+        h4 Account details
+    div.panel-body#dbs_databases
+        form#import_search(action="javascript:void(0);", style="margin-top:10px")
+            fieldset
+                div.form-group
+                    label(for="dfx_github_settings_username") LDAP Provider:
+                    select(form="import_search", tabindex="1", required, name="provider", autofocus=(providersList.length > 1 ? true : undefined )).form-control#ldapProvider
+                        - if ( providersList.length > 1 ) {
+                            option(disabled, value="") choose a provider
+                        - }
+                        each provider, i in providersList
+                            option(value="#{provider}") #{provider}
+                div.form-group
+                    label(for="dfx_github_settings_access_token") Base:
+                    input(value="o=SurrName Inc.,dc=surr,dc=name", form="import_search", type="text", placeholder="base", tabindex="2", required, name="base", autofocus=(providersList.length > 1 ? undefined : true  )).form-control
+                div.form-group
+                    label(for="dfx_github_settings_repository") Filter:
+                    input(form="import_search", type="text", placeholder="filter", tabindex="3", name="filter").form-control
+                div.form-group
+                div.form-group
+                    label(for="dfx_github_settings_tenant_name") Attributes:
+                    input(form="import_search", type="text", placeholder="attributes", tabindex="4", name="attrs").form-control
+                div.form-group
+                    button.btn.btn-info(form="import_search", type="submit", style="display: inline-block; float: left;")
+                        span.fa.fa-lg.fa-search
+                        span(style="padding-left:5px") Search
+                div#ldapRawResultContainer(style="display: none; cursor: pointer; float: left; padding-left: 15px; padding-top: 7px;")
+                    span(style="color: #7f9aa8; border-bottom: 1px dashed lightgray;") Raw LDAP Server Answer
+                    pre#ldapRawResult(style="max-height:20em; overflow: auto;display:none;")
+        #mapRolesCont
+        #rawUsersList

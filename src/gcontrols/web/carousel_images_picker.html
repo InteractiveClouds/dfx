@@ -1,0 +1,34 @@
+<div class="second-dialog" style="display: none">
+    <div class="second-dialog-inner">
+        <md-toolbar><div class="md-toolbar-tools"><h2>Images</h2></div></md-toolbar>
+        <div class="second-dialog-content" style="padding:8px;">
+            <md-dialog-content style="max-width:825px;max-height:810px;width:825px;height:400px;">
+                <md-tabs md-dynamic-height md-border-bottom>
+                    <md-tab label="Application images" ng-if="isCreate == false">
+                        <md-content class="md-padding">
+                            <div ng-if="isLogo == true" style="display:inline-block;margin:4px;">
+                                <img src="/images/dfx_login_logo_black.png" title="/images/dfx_login_logo_black.png" ng-click="setImage('/images/dfx_login_logo_black.png', true)" style="height:auto;width:75px;cursor:pointer;" />
+                            </div>
+                            <div ng-repeat="appSrc in appImages" style="display:inline-block;margin:4px;">
+                                <img ng-src="{{appSrc}}" title="{{appSrc}}" ng-click="setImage(appSrc)" style="height:auto;width:75px;cursor:pointer;" />
+                            </div>
+                        </md-content>
+                    </md-tab>
+                    <md-tab label="Shared catalog images">
+                        <md-content class="md-padding">
+                            <div ng-if="isCreate == true" style="display:inline-block;margin:4px;">
+                                <img src="/images/dfx_login_logo_black.png" title="/images/dfx_login_logo_black.png" ng-click="setImage('/images/dfx_login_logo_black.png', true)" style="height:auto;width:75px;cursor:pointer;" />
+                            </div>
+                            <div ng-repeat="sharedSrc in sharedImages" style="display:inline-block;margin:4px;">
+                                <img ng-src="{{sharedSrc}}" title="{{sharedSrc}}" ng-click="setImage(sharedSrc)" style="height:auto;width:75px;cursor:pointer;" />
+                            </div>
+                        </md-content>
+                    </md-tab>
+                </md-tabs>
+            </md-dialog-content>
+        </div>
+        <div class="md-actions">
+            <md-button ng-click="hideDiakogImages()" class="md-primary">Cancel</md-button>
+        </div>
+    </div>
+</div>

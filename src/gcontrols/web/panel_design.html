@@ -1,0 +1,13 @@
+<section id="{{component_id}}_panel" flex="100" style="{{attributes.style.value}}" class="{{attributes.whiteframe.value}} {{attributes.classes.value}} dfx-core-gc-panel" dfx-gc-web-container>
+    <dfx-gc-toolbar-design></dfx-gc-toolbar-design>
+	<md-content ng-hide="attributes.toolbar.collapsed.designValue" style="{{attributes.bodyStyle.value}}" flex>
+		<div id="{{component_id}}_layout_0_row_{{$index}}" layout="row" layout-wrap flex="100" style="{{row.style.value}}" class="{{row.classes.value}}" ng-repeat="row in attributes.layout.rows">
+			<div id="{{component_id}}_layout_0_row_{{$parent.$index}}_column_{{$index}}" flex="{{col.autoWidth.value == true ? '' : col.width.value}}"
+             layout="{{col.orientation.value}}" layout-align="{{col.halignment.value}} {{col.valignment.value}}"
+             gc-container="layout_0_row_{{$parent.$index}}_column_{{$index}}" gc-parent="{{component_id}}"
+             style="flex-wrap:wrap; {{col.style.value}}" class="ui-placeholder dfx_visual_editor_droppable {{col.classes.value}}"
+             dfx-gc-web-droppable ng-repeat="col in row.cols">
+			</div>
+		</div>
+	</md-content>
+</section>

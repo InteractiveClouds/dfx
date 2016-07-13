@@ -1,0 +1,68 @@
+<div class="{{attributes.whiteframe.value}}">
+    <md-card class="{{attributes.classes.value}} dfx-core-gc-table" style="box-shadow:0 0 0;overflow-x:hidden;{{attributes.style.value}}">
+        <div class="dt_toolbar">
+            <div ng-show="attributes.titleVisible.value===true" class="dt_title_block">
+                <h2 class="dt_title">{{attributes.title.value | checkExpression}}</h2>
+            </div>
+            <md-input-container ng-show="attributes.filterable.value" class="dt_filter_block">
+                <label>Filter by:</label>
+                <input type="text" ng-model="attributes.filterBy.value"/>   
+                <ng-md-icon icon="search" size="21"></ng-md-icon>         
+            </md-input-container>
+        </div>
+        <div>
+            <table class="datatable" style="width:100%">
+                <thead ng-show="attributes.headerVisible.value===true">
+                <tr>
+                    <th ng-if="attributes.checkOption.value !== 'none'" class="dt_checkbox"><md-checkbox class="md-primary" aria-label="Select Row" ng-click="toggleSelectRows()" ng-checked="isSelectedRows()"></md-checkbox></th>
+                    <th ng-repeat="col in attributes.columns.value track by $index">
+                        <a ng-click="changeIndexAndSortDir($index)" href="#" style="text-decoration: none;">
+                            <span ng-if="attributes.sortedBy.value === col.value && col.isNumeric ==='true'"><md-icon ng-if="attributes.columns.value[$index].isAscending === 'false'" style="padding-top: 5px" class="fa fa-arrow-down"></md-icon><md-icon ng-if="attributes.columns.value[$index].isAscending === 'true'" style="padding-top: 5px" class="fa fa-arrow-up"></md-icon></span>
+                            <span>{{col.header | checkExpression}}</span>
+                            <span ng-if="attributes.sortedBy.value === col.value && col.isNumeric ==='false'"><md-icon ng-if="attributes.columns.value[$index].isAscending === 'false'" style="padding-top: 5px" class="fa fa-arrow-down"></md-icon><md-icon ng-if="attributes.columns.value[$index].isAscending === 'true'" style="padding-top: 5px" class="fa fa-arrow-up"></md-icon></span>
+                        </a>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="row in attributes.tableRows.value.slice(attributes.rangeStart.value -1, attributes.rangeEnd.value) track by $index">
+                        <td id="{{component_id}}_{{$index}}" ng-if="attributes.checkOption.value !== 'none'" class="dt_checkbox"><md-checkbox class="md-primary" aria-label="Select Row" ng-checked="isSelectedRows() || isSelectedRow($index)" ng-click="toggleSelectRow($index)"></md-checkbox></td>
+                        <!--td ng-repeat="col in attributes.columns" class="{{col.classes}}" ng-class="{{col.dynamicClasses}}" style="{{col.style}}">{{row[col.value]}}</td-->
+                        <td ng-repeat="col in attributes.columns.value" width="{{col.flex}}%">
+                            <span ng-switch on="col.renderer.name">
+                                <span ng-switch-when="statictext" id="{{component_id}}_column_layout_{{$parent.$index}}_{{$index}}" dfx-gc-renderer-design="statictext" component-id="{{component_id}}" column-id="{{$index}}">
+                                </span>
+                                <span ng-switch-when="html" id="{{component_id}}_column_layout_{{$parent.$index}}_{{$index}}" dfx-gc-renderer-design="html" component-id="{{component_id}}" column-id="{{$index}}">
+                                </span>
+                                <span ng-switch-when="button" id="{{component_id}}_column_layout_{{$parent.$index}}_{{$index}}" dfx-gc-renderer-design="button" component-id="{{component_id}}" column-id="{{$index}}">
+                                </span>
+                                <span ng-switch-when="fab" id="{{component_id}}_column_layout_{{$parent.$index}}_{{$index}}" dfx-gc-renderer-design="fab" component-id="{{component_id}}" column-id="{{$index}}">
+                                </span>
+                                <span ng-switch-when="image" id="{{component_id}}_column_layout_{{$parent.$index}}_{{$index}}" dfx-gc-renderer-design="image" component-id="{{component_id}}" column-id="{{$index}}">
+                                </span>
+                                <span ng-switch-when="rating" id="{{component_id}}_column_layout_{{$parent.$index}}_{{$index}}" dfx-gc-renderer-design="rating" component-id="{{component_id}}" column-id="{{$index}}">
+                                </span>
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div ng-show="attributes.paging.value===true" class="dt_footer" layout="row" layout-align="center center">
+                <div flex style="display: flex; justify-content: flex-end;"><span class="dt_footer_font" style="margin-right: 32px; padding-top: 1px">Rows per page:</span>
+                    <md-select placeholder="{{attributes.rowCount.value}}" aria-label="Row Count:" ng-model="attributes.rowCount.value">
+                        <md-option ng-repeat="count in [3, 5, 10, 15, 20, 25]" value="{{count}}">{{count}}</md-option>
+                    </md-select>
+                    <span class="dt_footer_font" style="margin-right: 32px; padding-top: 2px">{{attributes.rangeStart.value}} - {{attributes.rangeEnd.value}} of {{attributes.tableRows.value.length}}</span>
+                </div>
+                <div class="dt_nav_pages">
+                    <md-button ng-click="minusStep()" aria-label="minus-step">
+                        <md-icon class="fa fa-chevron-left"></md-icon>
+                    </md-button>
+                    <md-button ng-click="plusStep()" aria-label="plus-step">
+                        <md-icon class="fa fa-chevron-right"></md-icon>
+                    </md-button>
+                </div>
+            </div>
+        </div>
+    </md-card>
+</div>

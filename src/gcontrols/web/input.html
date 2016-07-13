@@ -1,0 +1,731 @@
+<div ng-if="attributes.binding.repeatable === false" ng-form name="inputForm" ng-show="$eval(attributes.display.value)" style="{{attributes.style.value}}" class="{{attributes.classes.value}}" ng-class="$eval(attributes.dynamicClasses.value)" >
+    <div ng-if="attributes.selectedType.value!=='number'" layout="row">
+        <div class="gc_w_input_icon_wrap_preview" flex="none" ng-if="attributes.icon.value !== '' && attributes.position.value==='left'">
+            <span class="gc_w_input_icon" style="text-align: right;">
+                <md-icon ng-if="attributes.icon.type ==='fa-icon'" class="fa {{$eval(attributes.icon.value) || 'fa-home'}}" style="font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
+            <ng-md-icon ng-if="attributes.icon.type ==='svg-icon'" icon="{{$eval(attributes.icon.value) || 'home'}}" size="{{attributes.icon.size}}" style="height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></ng-md-icon>
+            </span>
+        </div>
+        <div ng-if="attributes.icon.value !== ''" class="layout-row flex">
+            <md-input-container flex class="gc-input-icon-container">
+                <label ng-bind="$eval(attributes.label.value)"></label>
+                <input ng-if="attributes.minlength.value && attributes.maxlength.value" name="{{attributes.name.value}}" ng-model="$gcscope[attributes.binding.value]" style="padding-left: 5px"
+                   ng-disabled="$eval(attributes.disabled.value)" ng-change="$eval(attributes.onchange.value)" ng-pattern="attributes.pattern.value"
+                   ng-focus="$eval(attributes.onfocus.value)"
+                   ng-blur="$eval(attributes.onblur.value)"
+                   ng-click="$eval(attributes.onclick.value)"
+                   ng-dblclick="$eval(attributes.ondblclick.value)"
+                   ng-keypress="$eval(attributes.onkeypress.value)"
+                   ng-keydown="$eval(attributes.onkeydown.value)"
+                   ng-keyup="$eval(attributes.onkeyup.value)"
+                   ng-mouseover="$eval(attributes.onmouseover.value)"
+                   ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                   ng-mousemove="$eval(attributes.onmousemove.value)"
+                   ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                   ng-mousedown="$eval(attributes.onmousedown.value)"
+                   ng-mouseup="$eval(attributes.onmouseup.value)"
+                type="{{attributes.selectedType.value}}" minlength={{attributes.minlength.value}} md-maxlength="{{attributes.maxlength.value}}" ng-required="$eval(attributes.required.value)">
+                <input ng-if="attributes.minlength.value && !attributes.maxlength.value" name="{{attributes.name.value}}" ng-model="$gcscope[attributes.binding.value]" style="padding-left: 5px"
+                       ng-disabled="$eval(attributes.disabled.value)" ng-change="$eval(attributes.onchange.value)" ng-pattern="attributes.pattern.value"
+                       ng-focus="$eval(attributes.onfocus.value)"
+                       ng-blur="$eval(attributes.onblur.value)"
+                       ng-click="$eval(attributes.onclick.value)"
+                       ng-dblclick="$eval(attributes.ondblclick.value)"
+                       ng-keypress="$eval(attributes.onkeypress.value)"
+                       ng-keydown="$eval(attributes.onkeydown.value)"
+                       ng-keyup="$eval(attributes.onkeyup.value)"
+                       ng-mouseover="$eval(attributes.onmouseover.value)"
+                       ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                       ng-mousemove="$eval(attributes.onmousemove.value)"
+                       ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                       ng-mousedown="$eval(attributes.onmousedown.value)"
+                       ng-mouseup="$eval(attributes.onmouseup.value)"
+                       type="{{attributes.selectedType.value}}" minlength={{attributes.minlength.value}} ng-required="$eval(attributes.required.value)">
+                <input ng-if="!attributes.minlength.value && attributes.maxlength.value" name="{{attributes.name.value}}" ng-model="$gcscope[attributes.binding.value]" style="padding-left: 5px"
+                       ng-disabled="$eval(attributes.disabled.value)" ng-change="$eval(attributes.onchange.value)" ng-pattern="attributes.pattern.value"
+                       ng-focus="$eval(attributes.onfocus.value)"
+                       ng-blur="$eval(attributes.onblur.value)"
+                       ng-click="$eval(attributes.onclick.value)"
+                       ng-dblclick="$eval(attributes.ondblclick.value)"
+                       ng-keypress="$eval(attributes.onkeypress.value)"
+                       ng-keydown="$eval(attributes.onkeydown.value)"
+                       ng-keyup="$eval(attributes.onkeyup.value)"
+                       ng-mouseover="$eval(attributes.onmouseover.value)"
+                       ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                       ng-mousemove="$eval(attributes.onmousemove.value)"
+                       ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                       ng-mousedown="$eval(attributes.onmousedown.value)"
+                       ng-mouseup="$eval(attributes.onmouseup.value)"
+                       type="{{attributes.selectedType.value}}" md-maxlength="{{attributes.maxlength.value}}" ng-required="$eval(attributes.required.value)">
+                <input ng-if="!attributes.minlength.value && !attributes.maxlength.value" name="{{attributes.name.value}}" ng-model="$gcscope[attributes.binding.value]" style="padding-left: 5px"
+                       ng-disabled="$eval(attributes.disabled.value)" ng-change="$eval(attributes.onchange.value)" ng-pattern="attributes.pattern.value"
+                       ng-focus="$eval(attributes.onfocus.value)"
+                       ng-blur="$eval(attributes.onblur.value)"
+                       ng-click="$eval(attributes.onclick.value)"
+                       ng-dblclick="$eval(attributes.ondblclick.value)"
+                       ng-keypress="$eval(attributes.onkeypress.value)"
+                       ng-keydown="$eval(attributes.onkeydown.value)"
+                       ng-keyup="$eval(attributes.onkeyup.value)"
+                       ng-mouseover="$eval(attributes.onmouseover.value)"
+                       ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                       ng-mousemove="$eval(attributes.onmousemove.value)"
+                       ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                       ng-mousedown="$eval(attributes.onmousedown.value)"
+                       ng-mouseup="$eval(attributes.onmouseup.value)"
+                       type="{{attributes.selectedType.value}}" ng-required="$eval(attributes.required.value)">
+                <div ng-if="inputForm.$dirty" ng-messages="inputForm[attributes.name.value].$error">
+                    <span ng-message="required">
+                        {{$eval(attributes.label.value)}} is required.
+                    </span>
+                    <span ng-message="email">
+                        Email address is invalid.
+                    </span>
+                    <span ng-message="minlength">
+                        {{$eval(attributes.label.value)}} has to be more than {{attributes.minlength.value}} characters long.
+                    </span>
+                    <span ng-message="md-maxlength">
+                        {{$eval(attributes.label.value)}} has to be less than {{attributes.maxlength.value}} characters long.
+                    </span>
+                    <span ng-message="pattern">
+                        {{attributes.pattern.errorMessage}}
+                    </span>
+                </div>
+            </md-input-container>
+        </div>
+        <div class="gc_w_input_icon_wrap_preview" flex="none" ng-if="attributes.icon.value !== '' && attributes.position.value==='right'">
+            <span class="gc_w_input_icon">
+                <md-icon ng-if="attributes.icon.type ==='fa-icon'" class="fa {{$eval(attributes.icon.value) || 'fa-home'}}" style="font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
+            <ng-md-icon ng-if="attributes.icon.type ==='svg-icon'" icon="{{$eval(attributes.icon.value) || 'home'}}" size="{{attributes.icon.size}}" style="height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></ng-md-icon>
+            </span>
+        </div>
+        <div ng-if="attributes.icon.value === ''" class="layout-row flex">
+            <md-input-container flex ng-if="attributes.selectedType.value!=='number'">
+                <label ng-bind="$eval(attributes.label.value)"></label>
+
+                <input ng-if="attributes.minlength.value && attributes.maxlength.value" name="{{attributes.name.value}}" ng-model="$gcscope[attributes.binding.value]" style="padding-left: 5px"
+                       ng-disabled="$eval(attributes.disabled.value)" ng-change="$eval(attributes.onchange.value)" ng-pattern="attributes.pattern.value"
+                       ng-focus="$eval(attributes.onfocus.value)"
+                       ng-blur="$eval(attributes.onblur.value)"
+                       ng-click="$eval(attributes.onclick.value)"
+                       ng-dblclick="$eval(attributes.ondblclick.value)"
+                       ng-keypress="$eval(attributes.onkeypress.value)"
+                       ng-keydown="$eval(attributes.onkeydown.value)"
+                       ng-keyup="$eval(attributes.onkeyup.value)"
+                       ng-mouseover="$eval(attributes.onmouseover.value)"
+                       ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                       ng-mousemove="$eval(attributes.onmousemove.value)"
+                       ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                       ng-mousedown="$eval(attributes.onmousedown.value)"
+                       ng-mouseup="$eval(attributes.onmouseup.value)"
+                       type="{{attributes.selectedType.value}}" minlength={{attributes.minlength.value}} md-maxlength="{{attributes.maxlength.value}}" ng-required="$eval(attributes.required.value)">
+                <input ng-if="attributes.minlength.value && !attributes.maxlength.value" name="{{attributes.name.value}}" ng-model="$gcscope[attributes.binding.value]" style="padding-left: 5px"
+                       ng-disabled="$eval(attributes.disabled.value)" ng-change="$eval(attributes.onchange.value)" ng-pattern="attributes.pattern.value"
+                       ng-focus="$eval(attributes.onfocus.value)"
+                       ng-blur="$eval(attributes.onblur.value)"
+                       ng-click="$eval(attributes.onclick.value)"
+                       ng-dblclick="$eval(attributes.ondblclick.value)"
+                       ng-keypress="$eval(attributes.onkeypress.value)"
+                       ng-keydown="$eval(attributes.onkeydown.value)"
+                       ng-keyup="$eval(attributes.onkeyup.value)"
+                       ng-mouseover="$eval(attributes.onmouseover.value)"
+                       ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                       ng-mousemove="$eval(attributes.onmousemove.value)"
+                       ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                       ng-mousedown="$eval(attributes.onmousedown.value)"
+                       ng-mouseup="$eval(attributes.onmouseup.value)"
+                       type="{{attributes.selectedType.value}}" minlength={{attributes.minlength.value}} ng-required="$eval(attributes.required.value)">
+                <input ng-if="!attributes.minlength.value && attributes.maxlength.value" name="{{attributes.name.value}}" ng-model="$gcscope[attributes.binding.value]" style="padding-left: 5px"
+                       ng-disabled="$eval(attributes.disabled.value)" ng-change="$eval(attributes.onchange.value)" ng-pattern="attributes.pattern.value"
+                       ng-focus="$eval(attributes.onfocus.value)"
+                       ng-blur="$eval(attributes.onblur.value)"
+                       ng-click="$eval(attributes.onclick.value)"
+                       ng-dblclick="$eval(attributes.ondblclick.value)"
+                       ng-keypress="$eval(attributes.onkeypress.value)"
+                       ng-keydown="$eval(attributes.onkeydown.value)"
+                       ng-keyup="$eval(attributes.onkeyup.value)"
+                       ng-mouseover="$eval(attributes.onmouseover.value)"
+                       ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                       ng-mousemove="$eval(attributes.onmousemove.value)"
+                       ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                       ng-mousedown="$eval(attributes.onmousedown.value)"
+                       ng-mouseup="$eval(attributes.onmouseup.value)"
+                       type="{{attributes.selectedType.value}}" md-maxlength="{{attributes.maxlength.value}}" ng-required="$eval(attributes.required.value)">
+                <input ng-if="!attributes.minlength.value && !attributes.maxlength.value" name="{{attributes.name.value}}" ng-model="$gcscope[attributes.binding.value]" style="padding-left: 5px"
+                       ng-disabled="$eval(attributes.disabled.value)" ng-change="$eval(attributes.onchange.value)" ng-pattern="attributes.pattern.value"
+                       ng-focus="$eval(attributes.onfocus.value)"
+                       ng-blur="$eval(attributes.onblur.value)"
+                       ng-click="$eval(attributes.onclick.value)"
+                       ng-dblclick="$eval(attributes.ondblclick.value)"
+                       ng-keypress="$eval(attributes.onkeypress.value)"
+                       ng-keydown="$eval(attributes.onkeydown.value)"
+                       ng-keyup="$eval(attributes.onkeyup.value)"
+                       ng-mouseover="$eval(attributes.onmouseover.value)"
+                       ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                       ng-mousemove="$eval(attributes.onmousemove.value)"
+                       ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                       ng-mousedown="$eval(attributes.onmousedown.value)"
+                       ng-mouseup="$eval(attributes.onmouseup.value)"
+                       type="{{attributes.selectedType.value}}" ng-required="$eval(attributes.required.value)">
+                <div ng-if="inputForm.$dirty" ng-messages="inputForm[attributes.name.value].$error">
+                    <span ng-message="required">
+                        {{$eval(attributes.label.value)}} is required.
+                    </span>
+                    <span ng-message="email">
+                        Email address is invalid.
+                    </span>
+                    <span ng-message="minlength">
+                        {{$eval(attributes.label.value)}} has to be more than {{attributes.minlength.value}} characters long.
+                    </span>
+                    <span ng-message="md-maxlength">
+                        {{$eval(attributes.label.value)}} has to be less than {{attributes.maxlength.value}} characters long.
+                    </span>
+                    <span ng-message="pattern">
+                        {{attributes.pattern.errorMessage}}
+                    </span>
+                </div>
+            </md-input-container>
+        </div>
+    </div>
+
+    <div ng-if="attributes.selectedType.value==='number'" layout="row">
+        <div class="gc_w_input_icon_wrap_preview" flex="none" ng-if="attributes.icon.value !== '' && attributes.position.value==='left'">
+            <span class="gc_w_input_icon" style="text-align: right;">
+                <md-icon ng-if="attributes.icon.type ==='fa-icon'" class="fa {{$eval(attributes.icon.value) || 'fa-home'}}" style="font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
+            <ng-md-icon ng-if="attributes.icon.type ==='svg-icon'" icon="{{$eval(attributes.icon.value) || 'home'}}" size="{{attributes.icon.size}}" style="height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></ng-md-icon>
+            </span>
+        </div>
+        <div ng-if="attributes.icon.value !== ''" class="layout-row flex">
+            <md-input-container flex class="gc-input-icon-container">
+                <label ng-bind="$eval(attributes.label.value)"></label>
+                <input ng-if="attributes.minNumber.value && !attributes.maxNumber.value" name="{{attributes.name.value}}" ng-model="$gcscope[attributes.binding.value]" style="padding-left: 5px"
+                       ng-disabled="$eval(attributes.disabled.value)" ng-change="$eval(attributes.onchange.value)" ng-required="$eval(attributes.required.value)"
+                       ng-focus="$eval(attributes.onfocus.value)"
+                       ng-blur="$eval(attributes.onblur.value)"
+                       ng-click="$eval(attributes.onclick.value)"
+                       ng-dblclick="$eval(attributes.ondblclick.value)"
+                       ng-keypress="$eval(attributes.onkeypress.value)"
+                       ng-keydown="$eval(attributes.onkeydown.value)"
+                       ng-keyup="$eval(attributes.onkeyup.value)"
+                       ng-mouseover="$eval(attributes.onmouseover.value)"
+                       ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                       ng-mousemove="$eval(attributes.onmousemove.value)"
+                       ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                       ng-mousedown="$eval(attributes.onmousedown.value)"
+                       ng-mouseup="$eval(attributes.onmouseup.value)"
+                       type="number" step="any" min="{{attributes.minNumber.value}}">
+                <input ng-if="!attributes.minNumber.value && attributes.maxNumber.value" name="{{attributes.name.value}}" ng-model="$gcscope[attributes.binding.value]" style="padding-left: 5px"
+                       ng-disabled="$eval(attributes.disabled.value)" ng-change="$eval(attributes.onchange.value)" ng-required="$eval(attributes.required.value)"
+                       ng-focus="$eval(attributes.onfocus.value)"
+                       ng-blur="$eval(attributes.onblur.value)"
+                       ng-click="$eval(attributes.onclick.value)"
+                       ng-dblclick="$eval(attributes.ondblclick.value)"
+                       ng-keypress="$eval(attributes.onkeypress.value)"
+                       ng-keydown="$eval(attributes.onkeydown.value)"
+                       ng-keyup="$eval(attributes.onkeyup.value)"
+                       ng-mouseover="$eval(attributes.onmouseover.value)"
+                       ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                       ng-mousemove="$eval(attributes.onmousemove.value)"
+                       ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                       ng-mousedown="$eval(attributes.onmousedown.value)"
+                       ng-mouseup="$eval(attributes.onmouseup.value)"
+                       type="number" step="any" max="{{attributes.maxNumber.value}}">
+                <input ng-if="attributes.minNumber.value && attributes.maxNumber.value" name="{{attributes.name.value}}" ng-model="$gcscope[attributes.binding.value]" style="padding-left: 5px"
+                       ng-disabled="$eval(attributes.disabled.value)" ng-change="$eval(attributes.onchange.value)" ng-required="$eval(attributes.required.value)"
+                       ng-focus="$eval(attributes.onfocus.value)"
+                       ng-blur="$eval(attributes.onblur.value)"
+                       ng-click="$eval(attributes.onclick.value)"
+                       ng-dblclick="$eval(attributes.ondblclick.value)"
+                       ng-keypress="$eval(attributes.onkeypress.value)"
+                       ng-keydown="$eval(attributes.onkeydown.value)"
+                       ng-keyup="$eval(attributes.onkeyup.value)"
+                       ng-mouseover="$eval(attributes.onmouseover.value)"
+                       ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                       ng-mousemove="$eval(attributes.onmousemove.value)"
+                       ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                       ng-mousedown="$eval(attributes.onmousedown.value)"
+                       ng-mouseup="$eval(attributes.onmouseup.value)"
+                       type="number" step="any" min="{{attributes.minNumber.value}}" max="{{attributes.maxNumber.value}}">
+                <input ng-if="!attributes.minNumber.value && !attributes.maxNumber.value" name="{{attributes.name.value}}" ng-model="$gcscope[attributes.binding.value]" style="padding-left: 5px"
+                       ng-disabled="$eval(attributes.disabled.value)" ng-change="$eval(attributes.onchange.value)" ng-required="$eval(attributes.required.value)"
+                       ng-focus="$eval(attributes.onfocus.value)"
+                       ng-blur="$eval(attributes.onblur.value)"
+                       ng-click="$eval(attributes.onclick.value)"
+                       ng-dblclick="$eval(attributes.ondblclick.value)"
+                       ng-keypress="$eval(attributes.onkeypress.value)"
+                       ng-keydown="$eval(attributes.onkeydown.value)"
+                       ng-keyup="$eval(attributes.onkeyup.value)"
+                       ng-mouseover="$eval(attributes.onmouseover.value)"
+                       ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                       ng-mousemove="$eval(attributes.onmousemove.value)"
+                       ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                       ng-mousedown="$eval(attributes.onmousedown.value)"
+                       ng-mouseup="$eval(attributes.onmouseup.value)"
+                       type="number" step="any">
+                <div ng-if="inputForm.$dirty" ng-messages="inputForm[attributes.name.value].$error">
+                    <span ng-message="required">
+                        {{$eval(attributes.label.value)}} is required.
+                    </span>
+                    <span ng-message="min">
+                        The number has to be more than {{attributes.minNumber.value}}.
+                    </span>
+                    <span ng-message="max">
+                        The number has to be less than {{attributes.maxNumber.value}}.
+                    </span>
+                </div>
+            </md-input-container>
+        </div>
+        <div class="gc_w_input_icon_wrap_preview" flex="none" ng-if="attributes.icon.value !== '' && attributes.position.value==='right'">
+            <span class="gc_w_input_icon">
+                <md-icon ng-if="attributes.icon.type ==='fa-icon'" class="fa {{$eval(attributes.icon.value) || 'fa-home'}}" style="font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
+            <ng-md-icon ng-if="attributes.icon.type ==='svg-icon'" icon="{{$eval(attributes.icon.value) || 'home'}}" size="{{attributes.icon.size}}" style="height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></ng-md-icon>
+            </span>
+        </div>
+        <div ng-if="attributes.icon.value === ''" class="layout-row flex">
+            <md-input-container flex ng-if="attributes.selectedType.value==='number'">
+                <label ng-bind="$eval(attributes.label.value)"></label>
+                <input ng-if="attributes.minNumber.value && !attributes.maxNumber.value" name="{{attributes.name.value}}" ng-model="$gcscope[attributes.binding.value]" style="padding-left: 5px"
+                       ng-disabled="$eval(attributes.disabled.value)" ng-change="$eval(attributes.onchange.value)" ng-required="$eval(attributes.required.value)"
+                       ng-focus="$eval(attributes.onfocus.value)"
+                       ng-blur="$eval(attributes.onblur.value)"
+                       ng-click="$eval(attributes.onclick.value)"
+                       ng-dblclick="$eval(attributes.ondblclick.value)"
+                       ng-keypress="$eval(attributes.onkeypress.value)"
+                       ng-keydown="$eval(attributes.onkeydown.value)"
+                       ng-keyup="$eval(attributes.onkeyup.value)"
+                       ng-mouseover="$eval(attributes.onmouseover.value)"
+                       ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                       ng-mousemove="$eval(attributes.onmousemove.value)"
+                       ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                       ng-mousedown="$eval(attributes.onmousedown.value)"
+                       ng-mouseup="$eval(attributes.onmouseup.value)"
+                       type="number" step="any" min="{{attributes.minNumber.value}}">
+                <input ng-if="!attributes.minNumber.value && attributes.maxNumber.value" name="{{attributes.name.value}}" ng-model="$gcscope[attributes.binding.value]" style="padding-left: 5px"
+                       ng-disabled="$eval(attributes.disabled.value)" ng-change="$eval(attributes.onchange.value)" ng-required="$eval(attributes.required.value)"
+                       ng-focus="$eval(attributes.onfocus.value)"
+                       ng-blur="$eval(attributes.onblur.value)"
+                       ng-click="$eval(attributes.onclick.value)"
+                       ng-dblclick="$eval(attributes.ondblclick.value)"
+                       ng-keypress="$eval(attributes.onkeypress.value)"
+                       ng-keydown="$eval(attributes.onkeydown.value)"
+                       ng-keyup="$eval(attributes.onkeyup.value)"
+                       ng-mouseover="$eval(attributes.onmouseover.value)"
+                       ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                       ng-mousemove="$eval(attributes.onmousemove.value)"
+                       ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                       ng-mousedown="$eval(attributes.onmousedown.value)"
+                       ng-mouseup="$eval(attributes.onmouseup.value)"
+                       type="number" step="any" max="{{attributes.maxNumber.value}}">
+                <input ng-if="attributes.minNumber.value && attributes.maxNumber.value" name="{{attributes.name.value}}" ng-model="$gcscope[attributes.binding.value]" style="padding-left: 5px"
+                       ng-disabled="$eval(attributes.disabled.value)" ng-change="$eval(attributes.onchange.value)" ng-required="$eval(attributes.required.value)"
+                       ng-focus="$eval(attributes.onfocus.value)"
+                       ng-blur="$eval(attributes.onblur.value)"
+                       ng-click="$eval(attributes.onclick.value)"
+                       ng-dblclick="$eval(attributes.ondblclick.value)"
+                       ng-keypress="$eval(attributes.onkeypress.value)"
+                       ng-keydown="$eval(attributes.onkeydown.value)"
+                       ng-keyup="$eval(attributes.onkeyup.value)"
+                       ng-mouseover="$eval(attributes.onmouseover.value)"
+                       ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                       ng-mousemove="$eval(attributes.onmousemove.value)"
+                       ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                       ng-mousedown="$eval(attributes.onmousedown.value)"
+                       ng-mouseup="$eval(attributes.onmouseup.value)"
+                       type="number" step="any" min="{{attributes.minNumber.value}}" max="{{attributes.maxNumber.value}}">
+                <input ng-if="!attributes.minNumber.value && !attributes.maxNumber.value" name="{{attributes.name.value}}" ng-model="$gcscope[attributes.binding.value]" style="padding-left: 5px"
+                       ng-disabled="$eval(attributes.disabled.value)" ng-change="$eval(attributes.onchange.value)" ng-required="$eval(attributes.required.value)"
+                       ng-focus="$eval(attributes.onfocus.value)"
+                       ng-blur="$eval(attributes.onblur.value)"
+                       ng-click="$eval(attributes.onclick.value)"
+                       ng-dblclick="$eval(attributes.ondblclick.value)"
+                       ng-keypress="$eval(attributes.onkeypress.value)"
+                       ng-keydown="$eval(attributes.onkeydown.value)"
+                       ng-keyup="$eval(attributes.onkeyup.value)"
+                       ng-mouseover="$eval(attributes.onmouseover.value)"
+                       ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                       ng-mousemove="$eval(attributes.onmousemove.value)"
+                       ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                       ng-mousedown="$eval(attributes.onmousedown.value)"
+                       ng-mouseup="$eval(attributes.onmouseup.value)"
+                       type="number" step="any">
+                <div ng-if="inputForm.$dirty" ng-messages="inputForm[attributes.name.value].$error">
+                    <span ng-message="required">
+                        {{$eval(attributes.label.value)}} is required.
+                    </span>
+                    <span ng-message="min">
+                        The number has to be more than {{attributes.minNumber.value}}.
+                    </span>
+                    <span ng-message="max">
+                        The number has to be less than {{attributes.maxNumber.value}}.
+                    </span>
+                </div>
+            </md-input-container>
+        </div>
+    </div>
+</div>
+
+
+
+<div ng-if="attributes.binding.repeatable === true" ng-form name="inputForm" ng-show="$eval(attributes.display.value)" style="{{attributes.style.value}}" class="{{attributes.classes.value}}" ng-class="$eval(attributes.dynamicClasses.value)" >
+    <div ng-if="attributes.selectedType.value!=='number'" layout="row">
+        <div class="gc_w_input_icon_wrap_preview" flex="none" ng-if="attributes.icon.value !== '' && attributes.position.value==='left'">
+            <span class="gc_w_input_icon" style="text-align: right;">
+                <md-icon ng-if="attributes.icon.type ==='fa-icon'" class="fa {{$eval(attributes.icon.value) || 'fa-home'}}" style="font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
+            <ng-md-icon ng-if="attributes.icon.type ==='svg-icon'" icon="{{$eval(attributes.icon.value) || 'home'}}" size="{{attributes.icon.size}}" style="height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></ng-md-icon>
+            </span>
+        </div>
+        <div ng-if="attributes.icon.value !== ''" class="layout-row flex">
+            <md-input-container flex class="gc-input-icon-container">
+                <label ng-bind="$eval(attributes.label.value)"></label>
+                <input ng-if="attributes.minlength.value && attributes.maxlength.value" name="{{attributes.name.value}}" ng-model="$item[attributes.binding.$itemValue]" style="padding-left: 5px"
+                       ng-disabled="$eval(attributes.disabled.value)" ng-change="$eval(attributes.onchange.value)" ng-pattern="attributes.pattern.value"
+                       ng-focus="$eval(attributes.onfocus.value)"
+                       ng-blur="$eval(attributes.onblur.value)"
+                       ng-click="$eval(attributes.onclick.value)"
+                       ng-dblclick="$eval(attributes.ondblclick.value)"
+                       ng-keypress="$eval(attributes.onkeypress.value)"
+                       ng-keydown="$eval(attributes.onkeydown.value)"
+                       ng-keyup="$eval(attributes.onkeyup.value)"
+                       ng-mouseover="$eval(attributes.onmouseover.value)"
+                       ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                       ng-mousemove="$eval(attributes.onmousemove.value)"
+                       ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                       ng-mousedown="$eval(attributes.onmousedown.value)"
+                       ng-mouseup="$eval(attributes.onmouseup.value)"
+                       type="{{attributes.selectedType.value}}" minlength={{attributes.minlength.value}} md-maxlength="{{attributes.maxlength.value}}" ng-required="$eval(attributes.required.value)">
+                <input ng-if="attributes.minlength.value && !attributes.maxlength.value" name="{{attributes.name.value}}" ng-model="$item[attributes.binding.$itemValue]" style="padding-left: 5px"
+                       ng-disabled="$eval(attributes.disabled.value)" ng-change="$eval(attributes.onchange.value)" ng-pattern="attributes.pattern.value"
+                       ng-focus="$eval(attributes.onfocus.value)"
+                       ng-blur="$eval(attributes.onblur.value)"
+                       ng-click="$eval(attributes.onclick.value)"
+                       ng-dblclick="$eval(attributes.ondblclick.value)"
+                       ng-keypress="$eval(attributes.onkeypress.value)"
+                       ng-keydown="$eval(attributes.onkeydown.value)"
+                       ng-keyup="$eval(attributes.onkeyup.value)"
+                       ng-mouseover="$eval(attributes.onmouseover.value)"
+                       ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                       ng-mousemove="$eval(attributes.onmousemove.value)"
+                       ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                       ng-mousedown="$eval(attributes.onmousedown.value)"
+                       ng-mouseup="$eval(attributes.onmouseup.value)"
+                       type="{{attributes.selectedType.value}}" minlength={{attributes.minlength.value}} ng-required="$eval(attributes.required.value)">
+                <input ng-if="!attributes.minlength.value && attributes.maxlength.value" name="{{attributes.name.value}}" ng-model="$item[attributes.binding.$itemValue]" style="padding-left: 5px"
+                       ng-disabled="$eval(attributes.disabled.value)" ng-change="$eval(attributes.onchange.value)" ng-pattern="attributes.pattern.value"
+                       ng-focus="$eval(attributes.onfocus.value)"
+                       ng-blur="$eval(attributes.onblur.value)"
+                       ng-click="$eval(attributes.onclick.value)"
+                       ng-dblclick="$eval(attributes.ondblclick.value)"
+                       ng-keypress="$eval(attributes.onkeypress.value)"
+                       ng-keydown="$eval(attributes.onkeydown.value)"
+                       ng-keyup="$eval(attributes.onkeyup.value)"
+                       ng-mouseover="$eval(attributes.onmouseover.value)"
+                       ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                       ng-mousemove="$eval(attributes.onmousemove.value)"
+                       ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                       ng-mousedown="$eval(attributes.onmousedown.value)"
+                       ng-mouseup="$eval(attributes.onmouseup.value)"
+                       type="{{attributes.selectedType.value}}" md-maxlength="{{attributes.maxlength.value}}" ng-required="$eval(attributes.required.value)">
+                <input ng-if="!attributes.minlength.value && !attributes.maxlength.value" name="{{attributes.name.value}}" ng-model="$item[attributes.binding.$itemValue]" style="padding-left: 5px"
+                       ng-disabled="$eval(attributes.disabled.value)" ng-change="$eval(attributes.onchange.value)" ng-pattern="attributes.pattern.value"
+                       ng-focus="$eval(attributes.onfocus.value)"
+                       ng-blur="$eval(attributes.onblur.value)"
+                       ng-click="$eval(attributes.onclick.value)"
+                       ng-dblclick="$eval(attributes.ondblclick.value)"
+                       ng-keypress="$eval(attributes.onkeypress.value)"
+                       ng-keydown="$eval(attributes.onkeydown.value)"
+                       ng-keyup="$eval(attributes.onkeyup.value)"
+                       ng-mouseover="$eval(attributes.onmouseover.value)"
+                       ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                       ng-mousemove="$eval(attributes.onmousemove.value)"
+                       ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                       ng-mousedown="$eval(attributes.onmousedown.value)"
+                       ng-mouseup="$eval(attributes.onmouseup.value)"
+                       type="{{attributes.selectedType.value}}" ng-required="$eval(attributes.required.value)">
+                <div ng-if="inputForm.$dirty" ng-messages="inputForm[attributes.name.value].$error">
+                    <span ng-message="required">
+                        {{$eval(attributes.label.value)}} is required.
+                    </span>
+                    <span ng-message="email">
+                        Email address is invalid.
+                    </span>
+                    <span ng-message="minlength">
+                        {{$eval(attributes.label.value)}} has to be more than {{attributes.minlength.value}} characters long.
+                    </span>
+                    <span ng-message="md-maxlength">
+                        {{$eval(attributes.label.value)}} has to be less than {{attributes.maxlength.value}} characters long.
+                    </span>
+                    <span ng-message="pattern">
+                        {{attributes.pattern.errorMessage}}
+                    </span>
+                </div>
+            </md-input-container>
+        </div>
+        <div class="gc_w_input_icon_wrap_preview" flex="none" ng-if="attributes.icon.value !== '' && attributes.position.value==='right'">
+            <span class="gc_w_input_icon">
+                <md-icon ng-if="attributes.icon.type ==='fa-icon'" class="fa {{$eval(attributes.icon.value) || 'fa-home'}}" style="font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
+            <ng-md-icon ng-if="attributes.icon.type ==='svg-icon'" icon="{{$eval(attributes.icon.value) || 'home'}}" size="{{attributes.icon.size}}" style="height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></ng-md-icon>
+            </span>
+        </div>
+        <div ng-if="attributes.icon.value === ''" class="layout-row flex">
+            <md-input-container flex ng-if="attributes.selectedType.value!=='number'">
+                <label ng-bind="$eval(attributes.label.value)"></label>
+
+                <input ng-if="attributes.minlength.value && attributes.maxlength.value" name="{{attributes.name.value}}" ng-model="$item[attributes.binding.$itemValue]" style="padding-left: 5px"
+                       ng-disabled="$eval(attributes.disabled.value)" ng-change="$eval(attributes.onchange.value)" ng-pattern="attributes.pattern.value"
+                       ng-focus="$eval(attributes.onfocus.value)"
+                       ng-blur="$eval(attributes.onblur.value)"
+                       ng-click="$eval(attributes.onclick.value)"
+                       ng-dblclick="$eval(attributes.ondblclick.value)"
+                       ng-keypress="$eval(attributes.onkeypress.value)"
+                       ng-keydown="$eval(attributes.onkeydown.value)"
+                       ng-keyup="$eval(attributes.onkeyup.value)"
+                       ng-mouseover="$eval(attributes.onmouseover.value)"
+                       ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                       ng-mousemove="$eval(attributes.onmousemove.value)"
+                       ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                       ng-mousedown="$eval(attributes.onmousedown.value)"
+                       ng-mouseup="$eval(attributes.onmouseup.value)"
+                       type="{{attributes.selectedType.value}}" minlength={{attributes.minlength.value}} md-maxlength="{{attributes.maxlength.value}}" ng-required="$eval(attributes.required.value)">
+                <input ng-if="attributes.minlength.value && !attributes.maxlength.value" name="{{attributes.name.value}}" ng-model="$item[attributes.binding.$itemValue]" style="padding-left: 5px"
+                       ng-disabled="$eval(attributes.disabled.value)" ng-change="$eval(attributes.onchange.value)" ng-pattern="attributes.pattern.value"
+                       ng-focus="$eval(attributes.onfocus.value)"
+                       ng-blur="$eval(attributes.onblur.value)"
+                       ng-click="$eval(attributes.onclick.value)"
+                       ng-dblclick="$eval(attributes.ondblclick.value)"
+                       ng-keypress="$eval(attributes.onkeypress.value)"
+                       ng-keydown="$eval(attributes.onkeydown.value)"
+                       ng-keyup="$eval(attributes.onkeyup.value)"
+                       ng-mouseover="$eval(attributes.onmouseover.value)"
+                       ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                       ng-mousemove="$eval(attributes.onmousemove.value)"
+                       ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                       ng-mousedown="$eval(attributes.onmousedown.value)"
+                       ng-mouseup="$eval(attributes.onmouseup.value)"
+                       type="{{attributes.selectedType.value}}" minlength={{attributes.minlength.value}} ng-required="$eval(attributes.required.value)">
+                <input ng-if="!attributes.minlength.value && attributes.maxlength.value" name="{{attributes.name.value}}" ng-model="$item[attributes.binding.$itemValue]" style="padding-left: 5px"
+                       ng-disabled="$eval(attributes.disabled.value)" ng-change="$eval(attributes.onchange.value)" ng-pattern="attributes.pattern.value"
+                       ng-focus="$eval(attributes.onfocus.value)"
+                       ng-blur="$eval(attributes.onblur.value)"
+                       ng-click="$eval(attributes.onclick.value)"
+                       ng-dblclick="$eval(attributes.ondblclick.value)"
+                       ng-keypress="$eval(attributes.onkeypress.value)"
+                       ng-keydown="$eval(attributes.onkeydown.value)"
+                       ng-keyup="$eval(attributes.onkeyup.value)"
+                       ng-mouseover="$eval(attributes.onmouseover.value)"
+                       ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                       ng-mousemove="$eval(attributes.onmousemove.value)"
+                       ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                       ng-mousedown="$eval(attributes.onmousedown.value)"
+                       ng-mouseup="$eval(attributes.onmouseup.value)"
+                       type="{{attributes.selectedType.value}}" md-maxlength="{{attributes.maxlength.value}}" ng-required="$eval(attributes.required.value)">
+                <input ng-if="!attributes.minlength.value && !attributes.maxlength.value" name="{{attributes.name.value}}" ng-model="$item[attributes.binding.$itemValue]" style="padding-left: 5px"
+                       ng-disabled="$eval(attributes.disabled.value)" ng-change="$eval(attributes.onchange.value)" ng-pattern="attributes.pattern.value"
+                       ng-focus="$eval(attributes.onfocus.value)"
+                       ng-blur="$eval(attributes.onblur.value)"
+                       ng-click="$eval(attributes.onclick.value)"
+                       ng-dblclick="$eval(attributes.ondblclick.value)"
+                       ng-keypress="$eval(attributes.onkeypress.value)"
+                       ng-keydown="$eval(attributes.onkeydown.value)"
+                       ng-keyup="$eval(attributes.onkeyup.value)"
+                       ng-mouseover="$eval(attributes.onmouseover.value)"
+                       ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                       ng-mousemove="$eval(attributes.onmousemove.value)"
+                       ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                       ng-mousedown="$eval(attributes.onmousedown.value)"
+                       ng-mouseup="$eval(attributes.onmouseup.value)"
+                       type="{{attributes.selectedType.value}}" ng-required="$eval(attributes.required.value)">
+                <div ng-if="inputForm.$dirty" ng-messages="inputForm[attributes.name.value].$error">
+                    <span ng-message="required">
+                        {{$eval(attributes.label.value)}} is required.
+                    </span>
+                    <span ng-message="email">
+                        Email address is invalid.
+                    </span>
+                    <span ng-message="minlength">
+                        {{$eval(attributes.label.value)}} has to be more than {{attributes.minlength.value}} characters long.
+                    </span>
+                    <span ng-message="md-maxlength">
+                        {{$eval(attributes.label.value)}} has to be less than {{attributes.maxlength.value}} characters long.
+                    </span>
+                    <span ng-message="pattern">
+                        {{attributes.pattern.errorMessage}}
+                    </span>
+                </div>
+            </md-input-container>
+        </div>
+    </div>
+
+    <div ng-if="attributes.selectedType.value==='number'" layout="row">
+        <div class="gc_w_input_icon_wrap_preview" flex="none" ng-if="attributes.icon.value !== '' && attributes.position.value==='left'">
+            <span class="gc_w_input_icon" style="text-align: right;">
+                <md-icon ng-if="attributes.icon.type ==='fa-icon'" class="fa {{$eval(attributes.icon.value) || 'fa-home'}}" style="font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
+            <ng-md-icon ng-if="attributes.icon.type ==='svg-icon'" icon="{{$eval(attributes.icon.value) || 'home'}}" size="{{attributes.icon.size}}" style="height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></ng-md-icon>
+            </span>
+        </div>
+        <div ng-if="attributes.icon.value !== ''" class="layout-row flex">
+            <md-input-container flex class="gc-input-icon-container">
+                <label ng-bind="$eval(attributes.label.value)"></label>
+                <input ng-if="attributes.minNumber.value && !attributes.maxNumber.value" name="{{attributes.name.value}}" ng-model="$item[attributes.binding.$itemValue]" style="padding-left: 5px"
+                       ng-disabled="$eval(attributes.disabled.value)" ng-change="$eval(attributes.onchange.value)" ng-required="$eval(attributes.required.value)"
+                       ng-focus="$eval(attributes.onfocus.value)"
+                       ng-blur="$eval(attributes.onblur.value)"
+                       ng-click="$eval(attributes.onclick.value)"
+                       ng-dblclick="$eval(attributes.ondblclick.value)"
+                       ng-keypress="$eval(attributes.onkeypress.value)"
+                       ng-keydown="$eval(attributes.onkeydown.value)"
+                       ng-keyup="$eval(attributes.onkeyup.value)"
+                       ng-mouseover="$eval(attributes.onmouseover.value)"
+                       ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                       ng-mousemove="$eval(attributes.onmousemove.value)"
+                       ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                       ng-mousedown="$eval(attributes.onmousedown.value)"
+                       ng-mouseup="$eval(attributes.onmouseup.value)"
+                       type="number" step="any" min="{{attributes.minNumber.value}}">
+                <input ng-if="!attributes.minNumber.value && attributes.maxNumber.value" name="{{attributes.name.value}}" ng-model="$item[attributes.binding.$itemValue]" style="padding-left: 5px"
+                       ng-disabled="$eval(attributes.disabled.value)" ng-change="$eval(attributes.onchange.value)" ng-required="$eval(attributes.required.value)"
+                       ng-focus="$eval(attributes.onfocus.value)"
+                       ng-blur="$eval(attributes.onblur.value)"
+                       ng-click="$eval(attributes.onclick.value)"
+                       ng-dblclick="$eval(attributes.ondblclick.value)"
+                       ng-keypress="$eval(attributes.onkeypress.value)"
+                       ng-keydown="$eval(attributes.onkeydown.value)"
+                       ng-keyup="$eval(attributes.onkeyup.value)"
+                       ng-mouseover="$eval(attributes.onmouseover.value)"
+                       ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                       ng-mousemove="$eval(attributes.onmousemove.value)"
+                       ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                       ng-mousedown="$eval(attributes.onmousedown.value)"
+                       ng-mouseup="$eval(attributes.onmouseup.value)"
+                       type="number" step="any" max="{{attributes.maxNumber.value}}">
+                <input ng-if="attributes.minNumber.value && attributes.maxNumber.value" name="{{attributes.name.value}}" ng-model="$item[attributes.binding.$itemValue]" style="padding-left: 5px"
+                       ng-disabled="$eval(attributes.disabled.value)" ng-change="$eval(attributes.onchange.value)" ng-required="$eval(attributes.required.value)"
+                       ng-focus="$eval(attributes.onfocus.value)"
+                       ng-blur="$eval(attributes.onblur.value)"
+                       ng-click="$eval(attributes.onclick.value)"
+                       ng-dblclick="$eval(attributes.ondblclick.value)"
+                       ng-keypress="$eval(attributes.onkeypress.value)"
+                       ng-keydown="$eval(attributes.onkeydown.value)"
+                       ng-keyup="$eval(attributes.onkeyup.value)"
+                       ng-mouseover="$eval(attributes.onmouseover.value)"
+                       ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                       ng-mousemove="$eval(attributes.onmousemove.value)"
+                       ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                       ng-mousedown="$eval(attributes.onmousedown.value)"
+                       ng-mouseup="$eval(attributes.onmouseup.value)"
+                       type="number" step="any" min="{{attributes.minNumber.value}}" max="{{attributes.maxNumber.value}}">
+                <input ng-if="!attributes.minNumber.value && !attributes.maxNumber.value" name="{{attributes.name.value}}" ng-model="$item[attributes.binding.$itemValue]" style="padding-left: 5px"
+                       ng-disabled="$eval(attributes.disabled.value)" ng-change="$eval(attributes.onchange.value)" ng-required="$eval(attributes.required.value)"
+                       ng-focus="$eval(attributes.onfocus.value)"
+                       ng-blur="$eval(attributes.onblur.value)"
+                       ng-click="$eval(attributes.onclick.value)"
+                       ng-dblclick="$eval(attributes.ondblclick.value)"
+                       ng-keypress="$eval(attributes.onkeypress.value)"
+                       ng-keydown="$eval(attributes.onkeydown.value)"
+                       ng-keyup="$eval(attributes.onkeyup.value)"
+                       ng-mouseover="$eval(attributes.onmouseover.value)"
+                       ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                       ng-mousemove="$eval(attributes.onmousemove.value)"
+                       ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                       ng-mousedown="$eval(attributes.onmousedown.value)"
+                       ng-mouseup="$eval(attributes.onmouseup.value)"
+                       type="number" step="any">
+                <div ng-if="inputForm.$dirty" ng-messages="inputForm[attributes.name.value].$error">
+                    <span ng-message="required">
+                        {{$eval(attributes.label.value)}} is required.
+                    </span>
+                    <span ng-message="min">
+                        The number has to be more than {{attributes.minNumber.value}}.
+                    </span>
+                    <span ng-message="max">
+                        The number has to be less than {{attributes.maxNumber.value}}.
+                    </span>
+                </div>
+            </md-input-container>
+        </div>
+        <div class="gc_w_input_icon_wrap_preview" flex="none" ng-if="attributes.icon.value !== '' && attributes.position.value==='right'">
+            <span class="gc_w_input_icon">
+                <md-icon ng-if="attributes.icon.type ==='fa-icon'" class="fa {{$eval(attributes.icon.value) || 'fa-home'}}" style="font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
+            <ng-md-icon ng-if="attributes.icon.type ==='svg-icon'" icon="{{$eval(attributes.icon.value) || 'home'}}" size="{{attributes.icon.size}}" style="height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></ng-md-icon>
+            </span>
+        </div>
+        <div ng-if="attributes.icon.value === ''" class="layout-row flex">
+            <md-input-container flex ng-if="attributes.selectedType.value==='number'">
+                <label ng-bind="$eval(attributes.label.value)"></label>
+                <input ng-if="attributes.minNumber.value && !attributes.maxNumber.value" name="{{attributes.name.value}}" ng-model="$item[attributes.binding.$itemValue]" style="padding-left: 5px"
+                       ng-disabled="$eval(attributes.disabled.value)" ng-change="$eval(attributes.onchange.value)" ng-required="$eval(attributes.required.value)"
+                       ng-focus="$eval(attributes.onfocus.value)"
+                       ng-blur="$eval(attributes.onblur.value)"
+                       ng-click="$eval(attributes.onclick.value)"
+                       ng-dblclick="$eval(attributes.ondblclick.value)"
+                       ng-keypress="$eval(attributes.onkeypress.value)"
+                       ng-keydown="$eval(attributes.onkeydown.value)"
+                       ng-keyup="$eval(attributes.onkeyup.value)"
+                       ng-mouseover="$eval(attributes.onmouseover.value)"
+                       ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                       ng-mousemove="$eval(attributes.onmousemove.value)"
+                       ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                       ng-mousedown="$eval(attributes.onmousedown.value)"
+                       ng-mouseup="$eval(attributes.onmouseup.value)"
+                       type="number" step="any" min="{{attributes.minNumber.value}}">
+                <input ng-if="!attributes.minNumber.value && attributes.maxNumber.value" name="{{attributes.name.value}}" ng-model="$item[attributes.binding.$itemValue]" style="padding-left: 5px"
+                       ng-disabled="$eval(attributes.disabled.value)" ng-change="$eval(attributes.onchange.value)" ng-required="$eval(attributes.required.value)"
+                       ng-focus="$eval(attributes.onfocus.value)"
+                       ng-blur="$eval(attributes.onblur.value)"
+                       ng-click="$eval(attributes.onclick.value)"
+                       ng-dblclick="$eval(attributes.ondblclick.value)"
+                       ng-keypress="$eval(attributes.onkeypress.value)"
+                       ng-keydown="$eval(attributes.onkeydown.value)"
+                       ng-keyup="$eval(attributes.onkeyup.value)"
+                       ng-mouseover="$eval(attributes.onmouseover.value)"
+                       ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                       ng-mousemove="$eval(attributes.onmousemove.value)"
+                       ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                       ng-mousedown="$eval(attributes.onmousedown.value)"
+                       ng-mouseup="$eval(attributes.onmouseup.value)"
+                       type="number" step="any" max="{{attributes.maxNumber.value}}">
+                <input ng-if="attributes.minNumber.value && attributes.maxNumber.value" name="{{attributes.name.value}}" ng-model="$item[attributes.binding.$itemValue]" style="padding-left: 5px"
+                       ng-disabled="$eval(attributes.disabled.value)" ng-change="$eval(attributes.onchange.value)" ng-required="$eval(attributes.required.value)"
+                       ng-focus="$eval(attributes.onfocus.value)"
+                       ng-blur="$eval(attributes.onblur.value)"
+                       ng-click="$eval(attributes.onclick.value)"
+                       ng-dblclick="$eval(attributes.ondblclick.value)"
+                       ng-keypress="$eval(attributes.onkeypress.value)"
+                       ng-keydown="$eval(attributes.onkeydown.value)"
+                       ng-keyup="$eval(attributes.onkeyup.value)"
+                       ng-mouseover="$eval(attributes.onmouseover.value)"
+                       ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                       ng-mousemove="$eval(attributes.onmousemove.value)"
+                       ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                       ng-mousedown="$eval(attributes.onmousedown.value)"
+                       ng-mouseup="$eval(attributes.onmouseup.value)"
+                       type="number" step="any" min="{{attributes.minNumber.value}}" max="{{attributes.maxNumber.value}}">
+                <input ng-if="!attributes.minNumber.value && !attributes.maxNumber.value" name="{{attributes.name.value}}" ng-model="$item[attributes.binding.$itemValue]" style="padding-left: 5px"
+                       ng-disabled="$eval(attributes.disabled.value)" ng-change="$eval(attributes.onchange.value)" ng-required="$eval(attributes.required.value)"
+                       ng-focus="$eval(attributes.onfocus.value)"
+                       ng-blur="$eval(attributes.onblur.value)"
+                       ng-click="$eval(attributes.onclick.value)"
+                       ng-dblclick="$eval(attributes.ondblclick.value)"
+                       ng-keypress="$eval(attributes.onkeypress.value)"
+                       ng-keydown="$eval(attributes.onkeydown.value)"
+                       ng-keyup="$eval(attributes.onkeyup.value)"
+                       ng-mouseover="$eval(attributes.onmouseover.value)"
+                       ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                       ng-mousemove="$eval(attributes.onmousemove.value)"
+                       ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                       ng-mousedown="$eval(attributes.onmousedown.value)"
+                       ng-mouseup="$eval(attributes.onmouseup.value)"
+                       type="number" step="any">
+                <div ng-if="inputForm.$dirty" ng-messages="inputForm[attributes.name.value].$error">
+                    <span ng-message="required">
+                        {{$eval(attributes.label.value)}} is required.
+                    </span>
+                    <span ng-message="min">
+                        The number has to be more than {{attributes.minNumber.value}}.
+                    </span>
+                    <span ng-message="max">
+                        The number has to be less than {{attributes.maxNumber.value}}.
+                    </span>
+                </div>
+            </md-input-container>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+div.panel.panel-primary
+    div.panel-heading
+        h4 Authentication Providers
+    div.panel-body#dbs_databases
+        table#authProvidersTable.table.table-condensed.table-thick-bordered(style="margin-bottom: 0;")
+            col(width="45%")
+            col(width="45%")
+            col(width="10%")
+            thead
+                tr
+                    th Name
+                    th Auth Protocol
+                    th Action
+            tbody
+                each provider in providers
+                    tr(style="display: table-row;")
+                        td.provider-name
+                            a.dfx_table_text.btn.btn-link(href="javascript:DfxStudio.Dispatcher.run('#!/home/#{applicationName}/authentication-providers/#{provider.provider}/edit');") #{provider.provider}
+                        td #{provider.schema}
+                        td
+                            a.dfx_table_text.btn.btn-link(href="javascript:DfxStudio.Home.AuthenticationProviders.remove({applicationName:'#{applicationName}',providerName:'#{provider.provider}'});")
+                                span.fa.fa-lg.fa-trash-o
+        div.clearfix(style="height: 15px;")
+        button.btn.btn-info.save-now-submitter(onclick="DfxStudio.Home.AuthenticationProviders.create('#{applicationName}');", type='submit')
+            span.fa.fa-lg.fa-plus
+            span(style="padding-left: 5px;") Provider

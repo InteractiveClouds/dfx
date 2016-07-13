@@ -1,0 +1,18 @@
+{
+  "name": "fileStorage",
+  "version": "0.0.1",
+  "description": "simple fileStorage",
+  "main": "index.js",
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "dependencies": {
+    "q": "*"
+  },
+  "devDependencies": {
+    "mocha": "*"
+  },
+  "directories": {
+    "test": "test"
+  }
+}
