@@ -1,79 +1,32 @@
 {
   "template": 			{ "value": "default" },
-  "name": {
-    "value": "chkCheckbox1"
-  },
-  "binding": {
-    "value": ""
-  },
-  "source": {
-    "value": ""
-  },
-  "isBindingPresent": {
-    "value": false
-  },
-  "dynamicPresent": {
-    "value": false
-  },
-  "bindingBoolean": {
-    "value": ""
-  },
-  "label": {
-    "value": "'Checkbox:'"
-  },
-  "checkValue": {
-    "trueCheckValue": "",
-    "falseCheckValue": "",
-    "label": ""
-  },
-  "displayValue":{
-    "value": ""
-  },
-  "selectedIndex":{
-    "value": "",
-    "status":"overridden"
-  },
-  "counterCheck":{
-    "value": 1
-  },
-  "direction":{
-    "value": "column"
-  },
-  "staticArray":{
-  "value": [{"label":"'option1: '", "checked":"'yes'", "unchecked":"'no'", "isChecked":false}]
-  },
-  "defaultArray":{
-    "value":[]
-  },
-  "display": {
-    "value": "true"
-  },
-  "disabled": {
-    "value": "false"
-  },
-  "classes": {
-    "value": ""
-  },
-  "buttonClass":{
-    "value": "md-primary"
-  },
-  "dynamicClasses": {
-    "value": ""
-  },
-  "style": {
-    "value": ""
-  },
-  "onclick": { "value": "" },
-  "ondblclick": { "value": "" },
-  "onchange": { "value": "" },
-  "onfocus": { "value": "" },
-  "onblur": { "value": "" },
-  "onkeypress": { "value": "" },
-  "onkeydown": { "value": "" },
-  "onkeyup": { "value": "" },
-  "onmouseover": { "value": "" },
-  "onmouseenter": { "value": "" },
-  "onmousemove": { "value": "" },
-  "onmouseleave": { "value": "" },
-  "onmouseup": { "value": "" }
+  "name":           { "value": "chkCheckbox1" },
+  "binding":        { "value": "" },
+  "source":         { "value": "" },
+  "bindingBoolean": { "value": "" },
+  "label":          { "value": "'Checkbox:'" },
+  "checkValue":     { "trueCheckValue": "", "falseCheckValue": "", "label": "" },
+  "displayValue":   { "value": "" },
+  "direction":      { "value": "column" },
+  "staticArray":    { "value": [{"label":"'option1: '", "checked":"'yes'", "unchecked":"'no'", "isChecked":false}] },
+  "defaultArray":   { "value":[] },
+  "display":        { "value": "true" },
+  "disabled":       { "value": "false" },
+  "classes":        { "value": "" },
+  "buttonClass":    { "value": "" },
+  "dynamicClasses": { "value": "" },
+  "style":          { "value": "" },
+  "onclick":        { "value": "" },
+  "ondblclick":     { "value": "" },
+  "onchange":       { "value": "" },
+  "onfocus":        { "value": "" },
+  "onblur":         { "value": "" },
+  "onkeypress":     { "value": "" },
+  "onkeydown":      { "value": "" },
+  "onkeyup":        { "value": "" },
+  "onmouseover":    { "value": "" },
+  "onmouseenter":   { "value": "" },
+  "onmousemove":    { "value": "" },
+  "onmouseleave":   { "value": "" },
+  "onmouseup":      { "value": "" }
 }

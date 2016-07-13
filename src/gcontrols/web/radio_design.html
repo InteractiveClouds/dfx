@@ -1,6 +1,6 @@
 <div style="{{attributes.style.value}}" class="{{attributes.classes.value}}">
     <div class="gc-radio-label-design">{{attributes.label.value | checkExpression}}</div>
-    <md-radio-group ng-model="attributes.currentItem" ng-class="attributes.buttonClass.value" style="margin-bottom: -10px">
+    <md-radio-group ng-model="attributes.currentItem" class="md-primary" ng-class="attributes.buttonClass.value" style="margin-bottom: -10px">
         <md-radio-button class="gc-radio" ng-repeat="it in attributes.radioItems.value track by $index" ng-value="it" aria-label="{{it.value}}">{{ it.display | checkExpression }}</md-radio-button>
     </md-radio-group>
 </div>

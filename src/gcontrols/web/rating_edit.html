@@ -41,7 +41,7 @@
 					<span class="col-md-4">Range:</span>
 					<md-input-container class="col-md-8" style="padding: 0 0 4px 0">
             <md-select aria-label="rating-range" ng-model="attributes.range.value" ng-change="overrideAttribute('range')">
-              <md-option ng-repeat="option in attributes.range.values" value="{{option}}">{{option}}</md-option>
+              <md-option ng-repeat="option in [5,6,7,8,9,10]" value="{{option}}">{{option}}</md-option>
             </md-select>
           </md-input-container>
 				</li>

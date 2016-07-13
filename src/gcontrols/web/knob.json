@@ -1,72 +1,33 @@
 {
-	"template": 			{ "value": "default" },
-	"name": {
-		"value": "kbKnob1"
-	},
-	"binding": {
-	  	"value": ""
-	},
-	"label": {
-		"value": "'Knob'"
-	},
-	"showLabel": {
-	  	"value": "true"
-	},
-	"labelPosition": ["left", "center", "right"],
-	"selectedLabelPosition": {
-	  	"value": "center"
-	},
-	"min": {
-	  	"value": 0
-	},
-	"max": {
-	  	"value": 100
-	},
-	"step": {
-	  	"value": 1
-	},
-	"symbol": {
-	  	"value": ""
-	},
-	"symbolPosition": ["left", "right"],
-	"selectedSymbolPosition": {
-	  	"value": ""
-	},
-	"display": {
-		"value": "true"
-	},
-    "disabled": {
-        "value": "false"
-    },
-	"style": {
-	  	"value": ""
-	},
-	"classes": {
-		"value": ""
-	},
-	"dynamicClasses": {
-		"value": ""
-	},
-	"css": {
-		"width": "52px",
-		"height": "52px",
-		"color": "#2196F3",
-		"background": ""
-	},
-	"onlabelclick": {
-		"value": ""
-	},
-	"onchange": {
-	  	"value": ""
-	},
-    "onclick": { "value": "" },
-    "ondblclick": { "value": "" },
-    "onkeypress": { "value": "" },
-    "onkeydown": { "value": "" },
-    "onkeyup": { "value": "" },
-    "onmouseover": { "value": "" },
-    "onmouseenter": { "value": "" },
-    "onmousemove": { "value": "" },
-    "onmouseleave": { "value": "" },
-    "onmouseup": { "value": "" }
+	"template": 							{ "value": "default" },
+	"name": 									{ "value": "kbKnob1" },
+	"binding": 								{ "value": "" },
+	"label": 									{ "value": "'Knob'" },
+	"showLabel": 							{ "value": "true" },
+	"labelPosition": 					[ "left", "center", "right" ],
+	"selectedLabelPosition":  { "value": "center" },
+	"min":  									{ "value": 0 },
+	"max":  									{ "value": 100 },
+	"step": 									{ "value": 1 },
+	"symbol": 								{ "value": "" },
+	"symbolPosition": 				[ "left", "right" ],
+	"selectedSymbolPosition": { "value": "" },
+	"display": 								{ "value": "true" },
+  "disabled": 							{ "value": "false" },
+	"style": 									{ "value": "" },
+	"classes": 								{ "value": "" },
+	"dynamicClasses": 				{ "value": "" },
+	"css": 										{ "width": "52px", "height": "52px", "color": "#2196F3", "background": "" },
+	"onlabelclick": 					{ "value": "" },
+	"onchange": 							{ "value": "" },
+  "onclick": 								{ "value": "" },
+  "ondblclick": 						{ "value": "" },
+  "onkeypress": 						{ "value": "" },
+  "onkeydown": 							{ "value": "" },
+  "onkeyup": 								{ "value": "" },
+  "onmouseover": 						{ "value": "" },
+  "onmouseenter": 					{ "value": "" },
+  "onmousemove": 						{ "value": "" },
+  "onmouseleave": 					{ "value": "" },
+  "onmouseup": 							{ "value": "" }
 }
