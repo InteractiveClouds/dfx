@@ -1,7 +1,7 @@
 <div ng-show="$eval(attributes.display.value)" ng-if="attributes.isBindingPresent.value=== true"
      style="{{attributes.style.value}}" ng-class="$eval(attributes.dynamicClasses.value)" class="{{attributes.classes.value}}">
     <div class="gc-radio-label-preview"><span ng-bind="$eval(attributes.label.value)"></span></div>
-    <md-radio-group ng-if="attributes.dynamicPresent.value=== true" ng-model="$gcscope[attributes.binding.value]" ng-change="$eval(attributes.onchange.value)" ng-class="attributes.buttonClass.value">
+    <md-radio-group ng-if="attributes.dynamicPresent.value=== true" ng-model="$gcscope[attributes.binding.value]" ng-change="$eval(attributes.onchange.value)" class="md-primary" ng-class="attributes.buttonClass.value">
         <md-radio-button ng-repeat="it in $gcscope[attributes.source.value] track by $id(it)"
                          ng-focus="$eval(attributes.onfocus.value)"
                          ng-blur="$eval(attributes.onblur.value)"
@@ -20,7 +20,7 @@
                          ng-disabled="$eval(attributes.disabled.value)">{{it[attributes.propToDisplay.value]}}
         </md-radio-button>
     </md-radio-group>
-    <md-radio-group ng-if="attributes.dynamicPresent.value=== false" ng-model="attributes.empty.value" ng-change="$eval(attributes.onchange.value)" ng-class="attributes.buttonClass.value">
+    <md-radio-group ng-if="attributes.dynamicPresent.value=== false" ng-model="attributes.empty.value" ng-change="$eval(attributes.onchange.value)" class="md-primary" ng-class="attributes.buttonClass.value">
         <md-radio-button ng-repeat="it in attributes.radioItems.value "
                          ng-focus="$eval(attributes.onfocus.value)"
                          ng-blur="$eval(attributes.onblur.value)"
@@ -44,7 +44,7 @@
 <div ng-show="$eval(attributes.display.value)" ng-if="attributes.isBindingPresent.value=== false"
      style="{{attributes.style.value}}" ng-class="$eval(attributes.dynamicClasses.value)" class="{{attributes.classes.value}}">
     <div class="gc-radio-label-preview"><span ng-bind="$eval(attributes.label.value)"></span></div>
-    <md-radio-group ng-if="attributes.dynamicPresent.value=== true" ng-model="attributes.empty.value" ng-change="$eval(attributes.onchange.value)" ng-class="attributes.buttonClass.value">
+    <md-radio-group ng-if="attributes.dynamicPresent.value=== true" ng-model="attributes.empty.value" ng-change="$eval(attributes.onchange.value)" class="md-primary" ng-class="attributes.buttonClass.value">
         <md-radio-button ng-repeat="it in $gcscope[attributes.source.value] track by $id(it)"
                          ng-focus="$eval(attributes.onfocus.value)"
                          ng-blur="$eval(attributes.onblur.value)"
@@ -61,7 +61,7 @@
                          ng-mouseup="$eval(attributes.onmouseup.value)"
                          ng-value="it[attributes.bindingProperty.value] || it.$$hashKey" class="gc-radio" aria-label="{{it[attributes.propToDisplay.value]}}" ng-disabled="$eval(attributes.disabled.value)">{{it[attributes.propToDisplay.value]}}</md-radio-button>
     </md-radio-group>
-    <md-radio-group ng-if="attributes.dynamicPresent.value=== false" ng-model="attributes.currentItem" ng-change="$eval(attributes.onchange.value)" ng-class="attributes.buttonClass.value">
+    <md-radio-group ng-if="attributes.dynamicPresent.value=== false" ng-model="attributes.currentItem" ng-change="$eval(attributes.onchange.value)" class="md-primary" ng-class="attributes.buttonClass.value">
         <md-radio-button ng-repeat="it in attributes.radioItems.value track by $index"
                          ng-focus="$eval(attributes.onfocus.value)"
                          ng-blur="$eval(attributes.onblur.value)"
