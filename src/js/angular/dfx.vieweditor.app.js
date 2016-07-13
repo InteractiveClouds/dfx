@@ -180,9 +180,9 @@ dfxViewEditorApp.controller("dfx_main_controller", [ '$scope', '$rootScope', '$q
         if ($scope.closed_gc_palette) {
             $('#dfx_gc_palette_title').css('display', 'inline-block');
             $('#dfx_gc_palette_toggle > a > span').attr('class', 'fa fa-angle-double-left');
-            $('#dfx_visual_editor_left').css('width', '175px');
-            $('#dfx_visual_editor_middle').css('left','176px');
-            $('#dfx_visual_editor_workspace').css('left','176px');
+            $('#dfx_visual_editor_left').css('width', '105px');
+            $('#dfx_visual_editor_middle').css('left','106px');
+            $('#dfx_visual_editor_workspace').css('left','106px');
             $scope.closed_gc_palette = false;
         } else {
             $('#dfx_gc_palette_title').css('display', 'none');
@@ -191,7 +191,6 @@ dfxViewEditorApp.controller("dfx_main_controller", [ '$scope', '$rootScope', '$q
             $('#dfx_visual_editor_middle').css('left','19px');
             $('#dfx_visual_editor_workspace').css('left','19px');
             $scope.closed_gc_palette = true;
-
         }
     };
 
@@ -749,7 +748,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
 
     for (var cat in $scope.palette) {
         for (var gc in $scope.palette[cat]) {
-            item_fragment = '<li class="dfx_visual_editor_draggable dfx_visual_editor_gc_cat_item_draggable" gc-type="' + gc + '" gc-flex="' + $scope.palette[cat][gc].flex + '">' + '<span>' + gc + '</span></li>';
+            item_fragment = '<li class="dfx_visual_editor_draggable dfx_visual_editor_gc_cat_item_draggable" gc-type="' + gc + '" gc-flex="' + $scope.palette[cat][gc].flex + '">' + '<img class="dfx-ve-palette-icon" src="/images/vb/icons/' + cat + '_' + gc + '.png" title="' + gc + '"/></li>';
             $('ul[gc-cat=' + cat + ']').append(item_fragment);
         }
     }

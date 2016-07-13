@@ -83,6 +83,13 @@ var exports = (function () {
             dest:   pub + 'images/',
             filter: 'isFile'
         },
+        vb_icons:            {
+            expand: true,
+            cwd:    src + 'images/vb/icons',
+            src:    ['*'],
+            dest:   pub + 'images/vb/icons',
+            filter: 'isFile'
+        },
         build_fonts:             {
             expand: true,
             cwd:    src + 'fonts/',

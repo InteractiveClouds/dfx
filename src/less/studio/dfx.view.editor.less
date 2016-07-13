@@ -30,6 +30,8 @@ md-toast.md-error-toast-theme div {
 
 #dfx-ve-header {
   background-color: #353535;
+  height:30px;
+  padding-top: 4px;
 }
 
 #dfx-ve-title {
@@ -60,7 +62,7 @@ md-toast.md-error-toast-theme div {
 /* Sidenav */
 
 #dfx-ve-sidenav-left {
-  width: 170px;
+  width: 80px;
   background-color: #383838;
   color: #fff;
 }
@@ -68,6 +70,8 @@ md-toast.md-error-toast-theme div {
 #dfx-ve-sidenav-left-content {
   background-color: #383838;
   color: #fff;
+  padding: 0;
+  overflow-x: hidden;
 }
 
 #dfx_visual_editor_gc_palette_content ul {
@@ -122,7 +126,7 @@ md-toast.md-error-toast-theme div {
   margin: 0;
   padding: 0;
   font-size: 14px;
-  width: 170px;
+  width: 80px;
   background: #B1B1B1;
 }
 
@@ -134,10 +138,10 @@ md-toast.md-error-toast-theme div {
   display: none !important;
 }
 
-#dfx-ve-palette-title-text {
-  display: inline-block;
-  padding-left: 10px;
-  width: 138px;
+.dfx-ve-palette-icon {
+  border: 1px #5acaff solid;
+  border-radius: 5px;
+  width: 28px;
 }
 
 #dfx-ve-property-title {
@@ -174,6 +178,7 @@ md-toast.md-error-toast-theme div {
 
 .dfx_visual_editor_gc_cat_item_draggable {
   cursor: pointer;
+  padding: 2px;
 }
 
 #dfx_visual_editor_property_panel a {
@@ -259,6 +264,7 @@ md-toast.md-error-toast-theme div {
     & ~ label {
       cursor: pointer;
       font-weight: 700;
+      font-size: 12px;
     }
     
     //Expanded branch
