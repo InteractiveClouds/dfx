@@ -9,41 +9,20 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", layout="co
                 div#dfx-ve-palette-title
                     md-button#dfx-ve-toggle-palette.dfx-ve-toolbar-button(aria-label="palette", ng-click="toggleLeft()")
                         i#dfx-ve-toggle-palette-icon.fa.fa-angle-double-left
-                span(style="font-size:12px;margin-left:50px;margin-right:5px;margin-top:5px") Display:
-                md-button.dfx-ve-toolbar-button.dfx-ve-toolbar-button-design.md-raised.dfx-ve-toolbar-button-selected(aria-label="design", ng-click="showDesign()")
-                    i.fa.fa-eye(title="design")
-                md-button.dfx-ve-toolbar-button.dfx-ve-toolbar-button-script.md-raised(aria-label="script", ng-click="showScript()")
-                    i.fa.fa-edit(title="script")
-                md-button.dfx-ve-toolbar-button.dfx-ve-toolbar-button-styles.md-raised(aria-label="style", ng-click="showStyle()")
-                    i.fa.fa-paint-brush(title="style")
-                md-button.dfx-ve-toolbar-button.dfx-ve-toolbar-button-source.md-raised(aria-label="source", ng-click="showSource()")
-                    i.fa.fa-code(title="source")
-                span(style="font-size:12px;margin-left:30px;margin-right:5px;margin-top:5px") Actions:
-                md-button.dfx-ve-toolbar-button.md-raised(aria-label="save", ng-click="saveView()")
-                    i.fa.fa-save(title="save")
-                md-button.dfx-ve-toolbar-button.md-raised(aria-label="preview", ng-click="openPreview()")
-                    i.fa.fa-play-circle-o(title="preview")
-                div(style="text-align: center;", ng-if="waitIconShowPreview === true")
-                    md-icon.fa.fa-spinner.fa-pulse(style="font-size: 24px; color:#300000;")
-                md-button.dfx-ve-toolbar-button.md-raised(aria-label="preview", ng-click="openPreviewInPage()", ng-if="waitIconShowPreview === false")
-                    i.fa.fa-laptop(title="preview in page")
-                md-button.dfx-ve-toolbar-button.md-raised(aria-label="preview", ng-click="exitViewEditor($event)")
-                    i.fa.fa-close(title="exit")
-                span(style="font-size:12px;margin-left:30px;margin-right:5px;margin-top:5px", ng-show="design_visible") Cards:
-                md-button.dfx-ve-toolbar-button.md-raised(aria-label="addcard", ng-show="design_visible", ng-click="addCard($event)")
-                    i.fa.fa-plus(title="Add a new card")
-                md-button.dfx-ve-toolbar-button.md-raised(aria-label="removecard", ng-show="design_visible", ng-click="removeCard($event)")
-                    i.fa.fa-trash(title="Remove the current card")
-                span(style="font-size:12px;margin-left:30px;margin-right:5px;margin-top:5px", ng-show="script_visible") Script:
-                md-button.dfx-ve-toolbar-button.md-raised(aria-label="assistant", ng-click="showHelpEditor(this)", ng-show="script_visible")
-                    i.fa.fa-magic(title="Code Assistant")
-                span.flex
-                    label.pull-right(style="font-size:12px;background:#8731AB;padding: 2px 4px;color:#fff;margin-top:4px;margin-right:10px;border-radius:8px;cursor:pointer", ng-if="view_platform=='mobile'", ng-click="changeDeviceOrientation()") {{design_device_orientation}}
-                    md-menu.pull-right(style="margin-top:-3px", ng-if="view_platform=='mobile'")
-                        label(md-menu-origin, style="font-size:12px;background:#14BD39;padding: 2px 4px;color:#fff;margin-top:4px;margin-right:10px;border-radius:8px;cursor:pointer", ng-click="$mdOpenMenu($event)") {{design_selected_device.label}}
-                        md-menu-content(width="6")
-                            md-menu-item(ng-repeat="device in design_devices")
-                                md-button(ng-click="changeDevice($index)") {{device.name}}
+                span
+                    md-menu#dfx-ve-menu-view-mode
+                        label(md-menu-origin, style="font-size:12px;background:#7d7d7d;margin-left:20px;padding: 2px 4px;color:#fff;margin-top:4px;margin-right:10px;border-radius:8px;cursor:pointer", ng-click="$mdOpenMenu($event)")
+                            span(style="margin-right:5px;font-weight:700") Mode:
+                            span Edit {{design_view_mode}}
+                        md-menu-content#dfx-ve-toolbarmenu(width="4")
+                            md-menu-item
+                                md-button(ng-click="changeViewMode('design')") Design
+                            md-menu-item
+                                md-button(ng-click="changeViewMode('script')") Script
+                            md-menu-item
+                                md-button(ng-click="changeViewMode('style')") Style
+                            md-menu-item
+                                md-button(ng-click="changeViewMode('source')") Source
                 span(style="font-size:12px;margin-left:30px;margin-right:5px;margin-top:5px", ng-show="design_visible") Edit:
                 md-button.dfx-ve-toolbar-button.md-raised(aria-label="vieweditorcut", ng-show="design_visible", ng-click="viewEditorCut($event)")
                     i.fa.fa-cut(title="Cut")
@@ -53,6 +32,33 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", layout="co
                     i.fa.fa-paste(title="Paste")
                 md-button.dfx-ve-toolbar-button.md-raised(aria-label="vieweditorundo", ng-show="design_visible", ng-click="viewEditorUndo($event)")
                     i.fa.fa-undo(title="Undo")
+                span(style="font-size:12px;margin-left:30px;margin-right:5px;margin-top:5px", ng-show="design_visible") Cards:
+                md-button.dfx-ve-toolbar-button.md-raised(aria-label="addcard", ng-show="design_visible", ng-click="addCard($event)")
+                    i.fa.fa-plus(title="Add a new card")
+                md-button.dfx-ve-toolbar-button.md-raised(aria-label="removecard", ng-show="design_visible", ng-click="removeCard($event)")
+                    i.fa.fa-trash(title="Remove the current card")
+                span(style="font-size:12px;margin-left:30px;margin-right:5px;margin-top:5px", ng-show="script_visible") Script:
+                md-button.dfx-ve-toolbar-button.md-raised(aria-label="assistant", ng-click="showHelpEditor(this)", ng-show="script_visible")
+                    i.fa.fa-magic(title="Code Assistant")
+                span(style="font-size:12px;margin-left:30px;margin-right:5px;margin-top:5px") Preview:
+                md-button.dfx-ve-toolbar-button.md-raised(aria-label="preview", ng-click="openPreview()")
+                    i.fa.fa-play-circle-o(title="preview")
+                div(style="text-align: center;", ng-if="waitIconShowPreview === true")
+                    md-icon.fa.fa-spinner.fa-pulse(style="font-size: 24px; color:#300000;")
+                md-button.dfx-ve-toolbar-button.md-raised(aria-label="preview", ng-click="openPreviewInPage()", ng-if="waitIconShowPreview === false")
+                    i.fa.fa-list-alt(title="preview in page")
+                span(style="font-size:12px;margin-left:30px;margin-right:5px;margin-top:5px") Actions:
+                md-button.dfx-ve-toolbar-button.md-raised(aria-label="save", ng-click="saveView()")
+                    i.fa.fa-save(title="save")
+                md-button.dfx-ve-toolbar-button.md-raised(aria-label="preview", ng-click="exitViewEditor($event)")
+                    i.fa.fa-close(title="exit")
+                span.flex
+                    label.pull-right(style="font-size:12px;background:#8731AB;padding: 2px 4px;color:#fff;margin-top:4px;margin-right:10px;border-radius:8px;cursor:pointer", ng-if="view_platform=='mobile'", ng-click="changeDeviceOrientation()") {{design_device_orientation}}
+                    md-menu.pull-right(style="margin-top:-3px", ng-if="view_platform=='mobile'")
+                        label(md-menu-origin, style="font-size:12px;background:#14BD39;padding: 2px 4px;color:#fff;margin-top:4px;margin-right:10px;border-radius:8px;cursor:pointer", ng-click="$mdOpenMenu($event)") {{design_selected_device.label}}
+                        md-menu-content(width="6")
+                            md-menu-item(ng-repeat="device in design_devices")
+                                md-button(ng-click="changeDevice($index)") {{device.name}}
                 div#dfx-ve-property-title
                     md-button#dfx-ve-toggle-property.dfx-ve-toolbar-button(aria-label="properties", ng-click="toggleRight()")
                         i#dfx-ve-toggle-property-icon.fa.fa-angle-double-right

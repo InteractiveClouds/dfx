@@ -223,6 +223,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     $scope.style_visible = false;
     $scope.source_visible = false;
     $scope.view_category = $('#dfx_src_widget_editor').attr('data-view-cat');
+    $scope.design_view_mode = 'Display';
 
     $scope.design_devices = [
         {
@@ -322,6 +323,21 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
             $('#dfx-ve-property-title-text').addClass('dfx-ve-property-title-text-collapsed');
             $('#dfx-ve-toggle-property-icon').addClass('fa-angle-double-left');
             $('#dfx-ve-toggle-property-icon').removeClass('fa-angle-double-right');
+        }
+    };
+    $scope.changeViewMode = function (view_mode) {
+        if (view_mode=='design') {
+            $scope.design_view_mode = 'Design';
+            $scope.showDesign();
+        } else if (view_mode=='script') {
+            $scope.design_view_mode = 'Script';
+            $scope.showScript();
+        } else if (view_mode=='style') {
+            $scope.design_view_mode = 'Style';
+            $scope.showStyle();
+        } else if (view_mode=='source') {
+            $scope.design_view_mode = 'Source';
+            $scope.showSource();
         }
     };
     $scope.showDesign = function() {
