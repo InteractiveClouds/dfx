@@ -374,3 +374,84 @@ md-menu-item button.dfx-horizontalmenu-button small {
     color: #757575;
     height: 18px;
 }
+/* JSON Editor */
+.dfx-core-gc-json-input-type {
+    display: flex;
+}
+.dfx-core-gc-json-input-type md-input-container {
+    display: flex;
+    flex-grow: 1;
+    padding: 0;
+}
+input.dfx-core-gc-json-input.md-input {
+    height: 34px;
+}
+.dfx-core-gc-json-button {
+    display: inline-flex;
+    min-width:40px;
+    height: 34px;
+    min-height: 34px;
+    margin: 0 0 0 2px;
+}
+.dfx-core-gc-json-button-preview {}
+.dfx-core-gc-json-panel-type {
+    height: 400px;
+}
+.dfx-dialog-json-editor {
+    max-width: 1200px;
+}
+.dfx-dialog-json-editor md-dialog-content {
+    max-width:1200px;
+    width:1200px;
+    max-height:800px;
+    margin:0px;
+}
+.dfx-dialog-json-editor pre {
+    border: none;
+    height: 100%;    
+    margin: 0;
+}
+.dfx-web-gc-json-dialog-tabs {
+    display: flex;
+    flex-direction: row;
+    height: 400px;
+}
+.dfx-web-gc-json-dialog-tab {
+    width: 50%;
+    margin: 8px 8px 2px 0;
+    border-radius: 4px;
+    overflow: hidden;
+    display: none;
+}
+.dfx-web-gc-json-dialog-tab:first-child {
+    margin: 8px 8px 2px 8px;
+}
+.dfx-web-gc-json-dialog-tab div.jsoneditor-menu {
+    height: 36px;
+    padding: 2px;
+    background-color: #ECECEC;
+}
+.dfx-web-gc-json-dialog-tab div.jsoneditor-menu>button, .dfx-web-gc-json-dialog-tab div.jsoneditor-menu>div.jsoneditor-modes>button {
+    color: #676B6E;
+}
+.dfx-web-gc-json-dialog-tab table.jsoneditor-search div.jsoneditor-frame {
+    margin: 1px 1px 0 0;
+}
+.dfx-web-gc-json-dialog-tab table.jsoneditor-search input {
+    width: 120px;
+}
+.dfx-web-gc-json-dialog-tab table.jsoneditor-search div.jsoneditor-results {
+    margin-top: 7px;
+}
+.dfx-web-gc-json-dialog-tab table.jsoneditor-search div.jsoneditor-results {
+    color: #676B6E;
+}
+.dfx-web-gc-json-dialog-tab md-toolbar.dfx-je-toolbar {
+    background: none;
+    padding: 0;
+    min-height: 36px;
+}
+.dfx-web-gc-json-dialog-tab div.jsoneditor-outer {
+    margin: -36px 0 0 0;
+    padding: 36px 0 0 0px;
+}

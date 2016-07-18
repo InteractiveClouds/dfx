@@ -1,0 +1,11 @@
+<div ng-if="attributes.type.value==='input'" class="dfx-core-gc-json-input-type {{attributes.whiteframe.value}} {{attributes.classes.value}} dfx-gc-web-json" style="{{attributes.style.value}}">
+	<md-input-container ng-class="{'md-input-invalid':jsonError}">
+	  <input class="dfx-core-gc-json-input" ng-model="stringModel.value" ng-change="inputToJson()" />
+	</md-input-container>
+	<md-button class="dfx-core-gc-json-button dfx-core-gc-json-button-preview md-altTheme-theme md-raised md-primary">
+		<ng-md-icon icon="remove_red_eye" size="16" style="height: 16px; width:16px; color: white;"><ng-md-icon></md-button>
+	<md-button class="dfx-core-gc-json-button dfx-core-gc-json-button-edit md-altTheme-theme md-raised md-primary">
+		<ng-md-icon icon="edit" size="16" style="height: 16px; width:16px; color: white;"></ng-md-icon>
+	</md-button>
+</div>
+<div ng-if="attributes.type.value==='panel'" id="{{component_id}}_dfx_gc_web_json_panel" class="dfx-core-gc-json-panel-type {{attributes.whiteframe.value}} {{attributes.classes.value}} dfx-gc-web-json" style="{{attributes.style.value}}"></div>

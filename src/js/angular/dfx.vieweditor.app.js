@@ -724,6 +724,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
             'chips': {'default_name':'chpChips', 'flex':'true'},
             'rating': {'default_name':'rtRating', 'flex':'false'},
             'richtext': {'default_name':'rchText', 'flex':'true'},
+            'json': {'default_name':'jsnJson', 'flex':'true'},
             'progressbar': {'default_name':'progressBar', 'flex':'true'}
         },
         'menu': {
