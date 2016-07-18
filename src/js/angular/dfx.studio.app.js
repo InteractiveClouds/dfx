@@ -5367,6 +5367,8 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
                     "typerequest": "HTTP_GET",
                     "urlrandom": "0",
                     "auth_userid": "",
+                    "cache":"none",
+                    "cacheTimeExpiry" : 0,
                     "url": "",
                     "dbdriver": "",
                     "dbnames": { "database": "", "collection": "" }
@@ -5978,6 +5980,9 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
         }
 
         simulateService.url = $scope.scopeService.data.settings.url;
+        simulateService.name = $scope.scopeService.name;
+        simulateService.cache = $scope.scopeService.data.settings.cache;
+        simulateService.cacheTimeExpiry = $scope.scopeService.data.settings.cacheTimeExpiry;
         simulateService.typeRequest = $scope.scopeService.data.settings.typerequest.replace('HTTP_', '');
         simulateService.urlRandom = $scope.scopeService.data.settings.urlrandom;
         simulateService.reqbody = $scope.scopeService.data.settings.postrequestbody;
@@ -6108,6 +6113,15 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
         }, function() {
         });
     };
+
+    $scope.clearCache = function(type) {
+        var obj = {type : type, application : $scope.app_name, name : $scope.scopeService.name};
+        dfxApiServiceObjects.clearCache(obj).then(function(){
+            dfxMessaging.showMessage("Сache was successfully cleared");
+        },function(err){
+            dfxMessaging.showWarning(err);
+        });
+    }
 }]);
 
 dfxStudioApp.directive('dfxApiSoSources', ['$mdDialog', '$timeout', 'dfxApiServiceObjects', function($mdDialog, $timeout, dfxApiServiceObjects) {

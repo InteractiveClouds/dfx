@@ -2167,6 +2167,22 @@ dfxStudioApi.factory('dfxApiServiceObjects', [ '$http', '$q', function($http, $q
         return deferred.promise;
     }
 
+    api_service_objects.clearCache = function( o ) {
+        var deferred = $q.defer();
+
+        $http({
+            method: 'POST',
+            url: '/studio/query/clearCache',
+            data: { type : o.type, application : o.application, name : o.name }
+        }).then(function successCallback(response) {
+            deferred.resolve( response );
+        },function negativeCallback(err){
+            deferred.reject( err );
+        });
+
+        return deferred.promise;
+    }
+
     return api_service_objects;
 }]);
 
