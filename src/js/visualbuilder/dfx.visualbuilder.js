@@ -1231,8 +1231,24 @@ DfxVisualBuilder.findComponentAndUpdateAttributes = function (component_id, pare
  * Removes not overridden attributes
  */
 DfxVisualBuilder.removeNotOverriddenAttributes = function (updated_attributes, gc_type, attr_full_path) {
+    var template;
+
     var getGcTemplate = function (gc_type) {
         return JSON.parse( sessionStorage.getItem('dfx_' + gc_type) );
+    };
+    var getDeepValue = function(obj, path) {
+        for (var i = 0, path = path.split('.'), len = path.length; i < len; i++) {
+            obj = obj[ path[i] ];
+        }
+        return obj;
+    };
+    var hasNestedAttributes = function (obj) {
+        for (var attr in obj) {
+            if (obj.hasOwnProperty(attr) && attr != 'value' && attr != 'status') {
+                return true;
+            }
+        }
+        return false;
     };
     var isAttributeMandatory = function (attr_name) {
         if (attr_name == 'name' || attr_name == 'flex') {
@@ -1241,30 +1257,16 @@ DfxVisualBuilder.removeNotOverriddenAttributes = function (updated_attributes, g
         return false;
     };
 
-    var removeOverriddenWithDefaultValues = function (gc_type, attr_full_path, attr_updated_value, updated_attributes, attr_short_path) {
-        var getDeepValue = function(obj, path) {
-            for (var i = 0, path = path.split('.'), len = path.length; i < len; i++) {
-                obj = obj[ path[i] ];
-            }
-            return obj;
-        };
-        var hasNestedAttributes = function (obj) {
-            for (var attr in obj) {
-                if (obj.hasOwnProperty(attr) && attr != 'value' && attr != 'status') {
-                    return true;
-                }
-            }
-            return false;
-        };
-
-        var template = getGcTemplate(gc_type);
+    var removeOverriddenWithDefaultValues = function (attr_full_path, attr_updated_value, updated_attributes, attr_short_path) {
         var attr_default_value = getDeepValue(template, attr_full_path);
 
         //console.log('====== ' + gc_type);
         //console.log(attr_full_path, attr_updated_value, attr_default_value);
 
         if (attr_updated_value !== null && typeof attr_updated_value === 'object') {
-            if (attr_updated_value.value == attr_default_value.value && !hasNestedAttributes(attr_updated_value) && !isAttributeMandatory(attr_short_path)) {
+            if ((!attr_default_value || attr_updated_value.value == attr_default_value.value)
+                && !hasNestedAttributes(attr_updated_value) && !isAttributeMandatory(attr_short_path))
+            {
                 delete updated_attributes[attr_short_path];
             }
         } else {
@@ -1274,24 +1276,26 @@ DfxVisualBuilder.removeNotOverriddenAttributes = function (updated_attributes, g
         }
     };
 
-    for (var attribute in updated_attributes) {
-        if (updated_attributes.hasOwnProperty(attribute)) {
-            if (attribute != 'value' && attribute != 'status' && !Array.isArray(updated_attributes[attribute]))
-            {
-                var attr_path = attr_full_path ? attr_full_path + '.' + attribute : attribute;
+    var removeNotOverridden = function (updated_attributes, attr_full_path) {
+        for (var attribute in updated_attributes) {
+            if (updated_attributes.hasOwnProperty(attribute)) {
+                if (attribute != 'value' && attribute != 'status' && !Array.isArray(updated_attributes[attribute])) {
+                    var attr_path = attr_full_path ? attr_full_path + '.' + attribute : attribute;
 
-                if (updated_attributes[attribute] !== null && typeof updated_attributes[attribute] === 'object') {
-                    if (updated_attributes[attribute] && updated_attributes[attribute].status != 'overridden' && !isAttributeMandatory(attribute)) {
-                        delete updated_attributes[attribute];
+                    if (updated_attributes[attribute] !== null && typeof updated_attributes[attribute] === 'object') {
+                        if (updated_attributes[attribute] && updated_attributes[attribute].status != 'overridden' && !isAttributeMandatory(attribute)) {
+                            delete updated_attributes[attribute];
+                        }
+                        removeNotOverridden(updated_attributes[attribute], attr_path);
                     }
-
-                    DfxVisualBuilder.removeNotOverriddenAttributes(updated_attributes[attribute], gc_type, attr_path);
+                    removeOverriddenWithDefaultValues(attr_path, updated_attributes[attribute], updated_attributes, attribute);
                 }
-
-                removeOverriddenWithDefaultValues(gc_type, attr_path, updated_attributes[attribute], updated_attributes, attribute);
             }
         }
-    }
+    };
+
+    template = getGcTemplate(gc_type);
+    removeNotOverridden(updated_attributes, attr_full_path);
 };
 
 /**
