@@ -1206,8 +1206,11 @@ DfxVisualBuilder.findComponentAndUpdateAttributes = function (component_id, pare
                     appendCss(style);
                 }
 
-                found_it                          = true;
+                found_it = true;
+
+                DfxVisualBuilder.removeNotOverriddenAttributes(updated_attributes, ref_parent_definition[idx].type);
                 ref_parent_definition[idx].attributes = updated_attributes;
+
                 //$('#dfx_visual_editor_gc_notif').css('display', 'inline-block').hide().fadeIn().delay(3000).fadeOut();
 
                 /*DfxStudio.showNotification({
@@ -1219,6 +1222,73 @@ DfxVisualBuilder.findComponentAndUpdateAttributes = function (component_id, pare
                 break;
             } else {
                 DfxVisualBuilder.findComponentAndUpdateAttributes(component_id, ref_parent_definition[idx].children, updated_attributes, null, found_it);
+            }
+        }
+    }
+};
+
+/**
+ * Removes not overridden attributes
+ */
+DfxVisualBuilder.removeNotOverriddenAttributes = function (updated_attributes, gc_type, attr_full_path) {
+    var getGcTemplate = function (gc_type) {
+        return JSON.parse( sessionStorage.getItem('dfx_' + gc_type) );
+    };
+    var isAttributeMandatory = function (attr_name) {
+        if (attr_name == 'name' || attr_name == 'flex') {
+            return true;
+        }
+        return false;
+    };
+
+    var removeOverriddenWithDefaultValues = function (gc_type, attr_full_path, attr_updated_value, updated_attributes, attr_short_path) {
+        var getDeepValue = function(obj, path) {
+            for (var i = 0, path = path.split('.'), len = path.length; i < len; i++) {
+                obj = obj[ path[i] ];
+            }
+            return obj;
+        };
+        var hasNestedAttributes = function (obj) {
+            for (var attr in obj) {
+                if (obj.hasOwnProperty(attr) && attr != 'value' && attr != 'status') {
+                    return true;
+                }
+            }
+            return false;
+        };
+
+        var template = getGcTemplate(gc_type);
+        var attr_default_value = getDeepValue(template, attr_full_path);
+
+        //console.log('====== ' + gc_type);
+        //console.log(attr_full_path, attr_updated_value, attr_default_value);
+
+        if (attr_updated_value !== null && typeof attr_updated_value === 'object') {
+            if (attr_updated_value.value == attr_default_value.value && !hasNestedAttributes(attr_updated_value) && !isAttributeMandatory(attr_short_path)) {
+                delete updated_attributes[attr_short_path];
+            }
+        } else {
+            if (attr_updated_value == attr_default_value && !isAttributeMandatory(attr_short_path)) {
+                delete updated_attributes[attr_short_path];
+            }
+        }
+    };
+
+    for (var attribute in updated_attributes) {
+        if (updated_attributes.hasOwnProperty(attribute)) {
+            if (attribute != 'value' && attribute != 'status' && !Array.isArray(updated_attributes[attribute]))
+            {
+                var attr_path = attr_full_path ? attr_full_path + '.' + attribute : attribute;
+
+                if (updated_attributes[attribute] !== null && typeof updated_attributes[attribute] === 'object') {
+                    if (updated_attributes[attribute] && updated_attributes[attribute].status != 'overridden' && !isAttributeMandatory(attribute)) {
+                        delete updated_attributes[attribute];
+                    }
+
+                    DfxVisualBuilder.removeNotOverriddenAttributes(updated_attributes[attribute], gc_type, attr_path);
+                }
+
+                removeOverriddenWithDefaultValues(gc_type, attr_path, updated_attributes[attribute], updated_attributes, attribute);
             }
         }
     }

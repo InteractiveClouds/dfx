@@ -9,38 +9,38 @@
         <li class="col-md-12">
             <span class="col-md-6">Toolbar Visible:</span>
             <div class="col-md-6" layout="row">
-                <input class="col-md-12" type="text" ng-model="attributes.toolbar.visible.value" style="margin-left:-15px;" ng-change="overrideAttribute('toolbar')"/>
+                <input class="col-md-12" type="text" ng-model="attributes.toolbar.visible.value" style="margin-left:-15px;" ng-change="overrideAttribute('toolbar.visible')"/>
                 <dfx-ve-expression-editor></dfx-ve-expression-editor>
             </div>
         </li>
         <li class="col-md-12">
             <span class="col-md-6">Collapsible:</span>
             <div class="col-md-6" layout="row">
-                <input class="col-md-12" type="text" ng-model="attributes.toolbar.collapsible.value" style="margin-left:-15px;" ng-change="overrideAttribute('toolbar')"/>
+                <input class="col-md-12" type="text" ng-model="attributes.toolbar.collapsible.value" style="margin-left:-15px;" ng-change="overrideAttribute('toolbar.collapsible')"/>
                 <dfx-ve-expression-editor></dfx-ve-expression-editor>
             </div>
         </li>
         <li class="col-md-12">
             <span class="col-md-6">Collapsed:</span>
             <div class="col-md-6" layout="row">
-                <input class="col-md-12" type="text" ng-model="attributes.toolbar.collapsed.value" style="margin-left:-15px;" ng-change="overrideAttribute('toolbar');checkPanelBody();"/>
+                <input class="col-md-12" type="text" ng-model="attributes.toolbar.collapsed.value" style="margin-left:-15px;" ng-change="overrideAttribute('toolbar.collapsed');checkPanelBody();"/>
                 <dfx-ve-expression-editor></dfx-ve-expression-editor>
             </div>
         </li>
         <li class="col-md-12">
             <span class="col-md-6">Style:</span>
             <div class="col-md-6" layout="row">
-                <input class="col-md-12" type="text" ng-model="attributes.toolbar.style.value" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
+                <input class="col-md-12" type="text" ng-model="attributes.toolbar.style.value" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar.style')"/>
                 <dfx-ve-css-style></dfx-ve-css-style>
             </div>
         </li>
         <li class="col-md-12">
             <span class="col-md-6">Class:</span>
-            <input class="col-md-6" type="text" ng-model="attributes.toolbar.classes.value" style="padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
+            <input class="col-md-6" type="text" ng-model="attributes.toolbar.classes.value" style="padding-left: 6px" ng-change="overrideAttribute('toolbar.classes')"/>
         </li>
         <li class="col-md-12">
             <span class="col-md-6">Dynamic Class:</span>
-            <input class="col-md-6" type="text" ng-model="attributes.toolbar.dynamicClasses.value" style="padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
+            <input class="col-md-6" type="text" ng-model="attributes.toolbar.dynamicClasses.value" style="padding-left: 6px" ng-change="overrideAttribute('toolbar.dynamicClasses')"/>
         </li>
         <li class="col-md-12">
             <input class="dfx-ve-property-treeview-button" type="checkbox" aria-label="item-21" id="item-21" />
@@ -49,10 +49,10 @@
                 <li class="col-md-12">
                     <span class="col-md-12">
                         <div layout>
-                            <md-slider class="md-primary" flex ng-model="attributes.toolbar.leftMenu.flexWidth.value" step="5" min="0" max="100" aria-label="Flex width:" style="padding-left: 14px;" ng-change="overrideAttribute('toolbar')">
+                            <md-slider class="md-primary" flex ng-model="attributes.toolbar.leftMenu.flexWidth.value" step="5" min="0" max="100" aria-label="Flex width:" style="padding-left: 14px;" ng-change="overrideAttribute('toolbar.leftMenu.flexWidth')">
                             </md-slider>
                             <div flex="20" layout layout-align="center center">
-                                <input flex type="number" min="0" max="100" ng-model="attributes.toolbar.leftMenu.flexWidth.value" aria-label="blue" aria-controls="flex-width" style="margin-left:5px; text-align: center" ng-change="overrideAttribute('toolbar')">
+                                <input flex type="number" min="0" max="100" ng-model="attributes.toolbar.leftMenu.flexWidth.value" aria-label="blue" aria-controls="flex-width" style="margin-left:5px; text-align: center" ng-change="overrideAttribute('toolbar.leftMenu.flexWidth')">
                             </div>
                         </div>
                     </span>
@@ -64,33 +64,33 @@
                         <li class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px;">Visible:</span>
                             <div class="col-md-6" layout="row">
-                                <input class="col-md-12" type="text" ng-model="attributes.toolbar.leftMenu.visible.value" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
+                                <input class="col-md-12" type="text" ng-model="attributes.toolbar.leftMenu.visible.value" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar.leftMenu.visible')"/>
                                 <dfx-ve-expression-editor></dfx-ve-expression-editor>
                             </div>
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-6" style="padding: 3px 0 0 30px">Type:</span>
                             <md-input-container class="col-md-6" style="padding: 0 0 10px">
-                                <md-select aria-label="stretching" ng-model="attributes.toolbar.leftMenu.type.value" ng-change="overrideAttribute('toolbar')">
+                                <md-select aria-label="stretching" ng-model="attributes.toolbar.leftMenu.type.value" ng-change="overrideAttribute('toolbar.leftMenu.type')">
                                     <md-option ng-repeat="type in ['Buttons', 'Fab', 'Icon Bar']" ng-value="type">{{type}}</md-option>
                                 </md-select>
                             </md-input-container>
                         </li>
                         <li ng-if="attributes.toolbar.leftMenu.type.value==='Buttons'" class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px">Stretch Width:</span>
-                            <span class="col-md-6"><md-checkbox style="margin: 0" class="md-primary" ng-model="attributes.toolbar.leftMenu.equalButtonSize.value" ng-change="overrideAttribute('toolbar')" aria-label="item-stretch"></md-checkbox></span>
+                            <span class="col-md-6"><md-checkbox style="margin: 0" class="md-primary" ng-model="attributes.toolbar.leftMenu.equalButtonSize.value" ng-change="overrideAttribute('toolbar.leftMenu.equalButtonSize')" aria-label="item-stretch"></md-checkbox></span>
                         </li>
                         <li ng-if="attributes.toolbar.leftMenu.type.value==='Fab'" class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px;">Label:</span>
                             <div class="col-md-6" layout="row">
-                                <input class="col-md-12" type="text" ng-model="attributes.toolbar.leftMenu.fab.triggerButton.label" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
+                                <input class="col-md-12" type="text" ng-model="attributes.toolbar.leftMenu.fab.triggerButton.label" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar.leftMenu.fab.triggerButton.label')"/>
                                 <dfx-ve-expression-editor></dfx-ve-expression-editor>
                             </div>
                         </li>
                         <li ng-if="attributes.toolbar.leftMenu.type.value==='Fab'" class="col-md-12">
                             <span class="col-md-6" style="padding: 3px 0 0 30px">Animation Mode:</span>
                             <md-input-container class="col-md-6" style="padding: 0 0 10px">
-                                <md-select aria-label="animation" ng-model="attributes.toolbar.leftMenu.animation.value" ng-change="overrideAttribute('toolbar')">
+                                <md-select aria-label="animation" ng-model="attributes.toolbar.leftMenu.animation.value" ng-change="overrideAttribute('toolbar.leftMenu.animation')">
                                     <md-option ng-repeat="animation in [{display:'Fling', value:'md-fling'}, {display:'Scale', value:'md-scale'}]" ng-value="animation.value">{{animation.display}}</md-option>
                                 </md-select>
                             </md-input-container>
@@ -98,7 +98,7 @@
                         <li ng-if="attributes.toolbar.leftMenu.type.value==='Fab'" class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px;">Menu Icon:</span>
                             <div class="col-md-6" layout="row">
-                                <input class="col-md-12" type="text" ng-model="attributes.toolbar.leftMenu.fab.triggerButton.icon.value" style="margin-left:-15px;" ng-change="overrideAttribute('toolbar'); ifShowToolbarIconTypes(attributes.toolbar.leftMenu.fab.triggerButton.icon.value, 'leftSide', 'fabTrigger');"/>
+                                <input class="col-md-12" type="text" ng-model="attributes.toolbar.leftMenu.fab.triggerButton.icon.value" style="margin-left:-15px;" ng-change="overrideAttribute('toolbar.leftMenu.fab.triggerButton.icon'); ifShowToolbarIconTypes(attributes.toolbar.leftMenu.fab.triggerButton.icon.value, 'leftSide', 'fabTrigger');"/>
                                 <md-icon ng-click="showFontIcons($event, attributes.toolbar.leftMenu.fab.triggerButton.icon)" dfx-ve-picker-icon class="dfx-ve-picker-icon fa fa-ellipsis-h"></md-icon>
                             </div>
                         </li>
@@ -124,7 +124,7 @@
                         <li class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px;">Dynamic:</span>
                             <div class="col-md-6" layout="row">
-                                <input class="col-md-12" type="text" ng-model="attributes.toolbar.leftMenu.dynamic.value" ng-change="overrideAttribute('toolbar')" style="margin-left:-15px;"/>
+                                <input class="col-md-12" type="text" ng-model="attributes.toolbar.leftMenu.dynamic.value" ng-change="overrideAttribute('toolbar.leftMenu.dynamic')" style="margin-left:-15px;"/>
                                 <dfx-ve-expression-editor></dfx-ve-expression-editor>
                             </div>
                         </li>
@@ -137,58 +137,58 @@
                         <li class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px">Style:</span>
                             <div class="col-md-6" layout="row">
-                                <input class="col-md-12" type="text" ng-model="attributes.toolbar.leftMenu.style.value" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
+                                <input class="col-md-12" type="text" ng-model="attributes.toolbar.leftMenu.style.value" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar.leftMenu.style')"/>
                                 <dfx-ve-css-style></dfx-ve-css-style>
                             </div>
                         </li>  
                         <li class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px">Class:</span>
-                            <input class="col-md-6" type="text" ng-model="attributes.toolbar.leftMenu.classes.value" style="padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
+                            <input class="col-md-6" type="text" ng-model="attributes.toolbar.leftMenu.classes.value" style="padding-left: 6px" ng-change="overrideAttribute('toolbar.leftMenu.classes')"/>
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px">Dynamic Class:</span>
-                            <input class="col-md-6" type="text" ng-model="attributes.toolbar.leftMenu.dynamicClasses.value" style="padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
+                            <input class="col-md-6" type="text" ng-model="attributes.toolbar.leftMenu.dynamicClasses.value" style="padding-left: 6px" ng-change="overrideAttribute('toolbar.leftMenu.dynamicClasses')"/>
                         </li>                      
                         <li class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px;">Menu Style:</span>
                             <div class="col-md-6" layout="row">
-                                <input ng-if="attributes.toolbar.leftMenu.type.value==='Fab'" class="col-md-12" type="text" ng-model="attributes.toolbar.leftMenu.fab.triggerButton.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
-                                <input ng-if="attributes.toolbar.leftMenu.type.value==='Buttons'" class="col-md-12" type="text" ng-model="attributes.toolbar.leftMenu.buttons.triggerButton.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
-                                <input ng-if="attributes.toolbar.leftMenu.type.value==='Icon Bar'" class="col-md-12" type="text" ng-model="attributes.toolbar.leftMenu.iconBar.triggerButton.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
+                                <input ng-if="attributes.toolbar.leftMenu.type.value==='Fab'" class="col-md-12" type="text" ng-model="attributes.toolbar.leftMenu.fab.triggerButton.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar.leftMenu.fab.triggerButton.style')"/>
+                                <input ng-if="attributes.toolbar.leftMenu.type.value==='Buttons'" class="col-md-12" type="text" ng-model="attributes.toolbar.leftMenu.buttons.triggerButton.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar.leftMenu.buttons.triggerButton.style')"/>
+                                <input ng-if="attributes.toolbar.leftMenu.type.value==='Icon Bar'" class="col-md-12" type="text" ng-model="attributes.toolbar.leftMenu.iconBar.triggerButton.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar.leftMenu.iconBar.triggerButton.style')"/>
                                 <dfx-ve-css-style></dfx-ve-css-style>
                             </div>
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px;">Menu Class:</span>
-                            <input ng-if="attributes.toolbar.leftMenu.type.value==='Fab'" class="col-md-6" type="text" ng-model="attributes.toolbar.leftMenu.fab.triggerButton.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
-                            <input ng-if="attributes.toolbar.leftMenu.type.value==='Buttons'" class="col-md-6" type="text" ng-model="attributes.toolbar.leftMenu.buttons.triggerButton.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
-                            <input ng-if="attributes.toolbar.leftMenu.type.value==='Icon Bar'" class="col-md-6" type="text" ng-model="attributes.toolbar.leftMenu.iconBar.triggerButton.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
+                            <input ng-if="attributes.toolbar.leftMenu.type.value==='Fab'" class="col-md-6" type="text" ng-model="attributes.toolbar.leftMenu.fab.triggerButton.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar.leftMenu.fab.triggerButton.class')"/>
+                            <input ng-if="attributes.toolbar.leftMenu.type.value==='Buttons'" class="col-md-6" type="text" ng-model="attributes.toolbar.leftMenu.buttons.triggerButton.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar.leftMenu.buttons.triggerButton.class')"/>
+                            <input ng-if="attributes.toolbar.leftMenu.type.value==='Icon Bar'" class="col-md-6" type="text" ng-model="attributes.toolbar.leftMenu.iconBar.triggerButton.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar.leftMenu.iconBar.triggerButton.class')"/>
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px;">Menu Icon Size:</span>
-                            <input ng-if="attributes.toolbar.leftMenu.type.value==='Fab'" class="col-md-6" type="number" ng-model="attributes.toolbar.leftMenu.fab.triggerButton.icon.size" ng-change="overrideAttribute('toolbar')" />
-                            <input ng-if="attributes.toolbar.leftMenu.type.value==='Buttons'" class="col-md-6" type="number" ng-model="attributes.toolbar.leftMenu.buttons.triggerButton.icon.size" ng-change="overrideAttribute('toolbar')" />
-                            <input ng-if="attributes.toolbar.leftMenu.type.value==='Icon Bar'" class="col-md-6" type="number" ng-model="attributes.toolbar.leftMenu.iconBar.triggerButton.icon.size" ng-change="overrideAttribute('toolbar')" />
+                            <input ng-if="attributes.toolbar.leftMenu.type.value==='Fab'" class="col-md-6" type="number" ng-model="attributes.toolbar.leftMenu.fab.triggerButton.icon.size" ng-change="overrideAttribute('toolbar.leftMenu.fab.triggerButton.icon.size')" />
+                            <input ng-if="attributes.toolbar.leftMenu.type.value==='Buttons'" class="col-md-6" type="number" ng-model="attributes.toolbar.leftMenu.buttons.triggerButton.icon.size" ng-change="overrideAttribute('toolbar.leftMenu.buttons.triggerButton.icon.size')" />
+                            <input ng-if="attributes.toolbar.leftMenu.type.value==='Icon Bar'" class="col-md-6" type="number" ng-model="attributes.toolbar.leftMenu.iconBar.triggerButton.icon.size" ng-change="overrideAttribute('toolbar.leftMenu.iconBar.triggerButton.icon.size')" />
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px;">Menu Icon Style:</span>
                             <div class="col-md-6" layout="row">
-                                <input ng-if="attributes.toolbar.leftMenu.type.value==='Fab'" class="col-md-12" type="text" ng-model="attributes.toolbar.leftMenu.fab.triggerButton.icon.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
-                                <input ng-if="attributes.toolbar.leftMenu.type.value==='Buttons'" class="col-md-12" type="text" ng-model="attributes.toolbar.leftMenu.buttons.triggerButton.icon.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
-                                <input ng-if="attributes.toolbar.leftMenu.type.value==='Icon Bar'" class="col-md-12" type="text" ng-model="attributes.toolbar.leftMenu.iconBar.triggerButton.icon.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
+                                <input ng-if="attributes.toolbar.leftMenu.type.value==='Fab'" class="col-md-12" type="text" ng-model="attributes.toolbar.leftMenu.fab.triggerButton.icon.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar.leftMenu.fab.triggerButton.icon.style')"/>
+                                <input ng-if="attributes.toolbar.leftMenu.type.value==='Buttons'" class="col-md-12" type="text" ng-model="attributes.toolbar.leftMenu.buttons.triggerButton.icon.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar.leftMenu.buttons.triggerButton.icon.style')"/>
+                                <input ng-if="attributes.toolbar.leftMenu.type.value==='Icon Bar'" class="col-md-12" type="text" ng-model="attributes.toolbar.leftMenu.iconBar.triggerButton.icon.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar.leftMenu.iconBar.triggerButton.icon.style')"/>
                                 <dfx-ve-css-style></dfx-ve-css-style>
                             </div>
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px;">Menu Icon Class:</span>
-                            <input ng-if="attributes.toolbar.leftMenu.type.value==='Fab'" class="col-md-6" type="text" ng-model="attributes.toolbar.leftMenu.fab.triggerButton.icon.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
-                            <input ng-if="attributes.toolbar.leftMenu.type.value==='Buttons'" class="col-md-6" type="text" ng-model="attributes.toolbar.leftMenu.buttons.triggerButton.icon.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
-                            <input ng-if="attributes.toolbar.leftMenu.type.value==='Icon Bar'" class="col-md-6" type="text" ng-model="attributes.toolbar.leftMenu.iconBar.triggerButton.icon.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
+                            <input ng-if="attributes.toolbar.leftMenu.type.value==='Fab'" class="col-md-6" type="text" ng-model="attributes.toolbar.leftMenu.fab.triggerButton.icon.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar.leftMenu.fab.triggerButton.icon.class')"/>
+                            <input ng-if="attributes.toolbar.leftMenu.type.value==='Buttons'" class="col-md-6" type="text" ng-model="attributes.toolbar.leftMenu.buttons.triggerButton.icon.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar.leftMenu.buttons.triggerButton.icon.class')"/>
+                            <input ng-if="attributes.toolbar.leftMenu.type.value==='Icon Bar'" class="col-md-6" type="text" ng-model="attributes.toolbar.leftMenu.iconBar.triggerButton.icon.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar.leftMenu.iconBar.triggerButton.icon.class')"/>
                         </li>
                         <li ng-if="attributes.toolbar.leftMenu.type.value==='Fab'" class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px;">Menu Tooltip Direction:</span>
                             <md-input-container class="col-md-6" style="padding: 0 0 10px">
-                                <md-select aria-label="tooltipDirection" class="md-block" ng-model="attributes.toolbar.leftMenu.fab.triggerButton.tooltip.direction" ng-change="overrideAttribute('toolbar')" style="text-transform: capitalize;">
+                                <md-select aria-label="tooltipDirection" class="md-block" ng-model="attributes.toolbar.leftMenu.fab.triggerButton.tooltip.direction" ng-change="overrideAttribute('toolbar.leftMenu.fab.triggerButton.tooltip.direction')" style="text-transform: capitalize;">
                                     <md-option ng-repeat="tooltipDirection in ['top', 'right', 'bottom', 'left']" ng-value="tooltipDirection" style="text-transform: capitalize;">{{tooltipDirection}}</md-option>
                                 </md-select>
                             </md-input-container>
@@ -196,54 +196,54 @@
                         <li ng-if="attributes.toolbar.leftMenu.type.value==='Fab'" class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px;">Menu Tooltip Style:</span>
                             <div class="col-md-6" layout="row">
-                                <input class="col-md-12" type="text" ng-model="attributes.toolbar.leftMenu.fab.triggerButton.tooltip.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
+                                <input class="col-md-12" type="text" ng-model="attributes.toolbar.leftMenu.fab.triggerButton.tooltip.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar.leftMenu.fab.triggerButton.tooltip.style')"/>
                                 <dfx-ve-css-style></dfx-ve-css-style>
                             </div>
                         </li>
                         <li ng-if="attributes.toolbar.leftMenu.type.value==='Fab'" class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px;">Menu Tooltip Class:</span>
-                            <input class="col-md-6" type="text" ng-model="attributes.toolbar.leftMenu.fab.triggerButton.tooltip.classes" style="padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
+                            <input class="col-md-6" type="text" ng-model="attributes.toolbar.leftMenu.fab.triggerButton.tooltip.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar.leftMenu.fab.triggerButton.tooltip.class')"/>
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px;">Item Style:</span>
                             <div class="col-md-6" layout="row">
-                                <input ng-if="attributes.toolbar.leftMenu.type.value==='Fab'" class="col-md-12" type="text" ng-model="attributes.toolbar.leftMenu.fab.actionButton.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
-                                <input ng-if="attributes.toolbar.leftMenu.type.value==='Buttons'" class="col-md-12" type="text" ng-model="attributes.toolbar.leftMenu.buttons.actionButton.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
-                                <input ng-if="attributes.toolbar.leftMenu.type.value==='Icon Bar'" class="col-md-12" type="text" ng-model="attributes.toolbar.leftMenu.iconBar.actionButton.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
+                                <input ng-if="attributes.toolbar.leftMenu.type.value==='Fab'" class="col-md-12" type="text" ng-model="attributes.toolbar.leftMenu.fab.actionButton.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar.leftMenu.fab.actionButton.style')"/>
+                                <input ng-if="attributes.toolbar.leftMenu.type.value==='Buttons'" class="col-md-12" type="text" ng-model="attributes.toolbar.leftMenu.buttons.actionButton.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar.leftMenu.buttons.actionButton.style')"/>
+                                <input ng-if="attributes.toolbar.leftMenu.type.value==='Icon Bar'" class="col-md-12" type="text" ng-model="attributes.toolbar.leftMenu.iconBar.actionButton.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar.leftMenu.iconBar.actionButton.style')"/>
                                 <dfx-ve-css-style></dfx-ve-css-style>
                             </div>
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px;">Item Class:</span>
-                            <input ng-if="attributes.toolbar.leftMenu.type.value==='Fab'" class="col-md-6" type="text" ng-model="attributes.toolbar.leftMenu.fab.actionButton.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
-                            <input ng-if="attributes.toolbar.leftMenu.type.value==='Buttons'" class="col-md-6" type="text" ng-model="attributes.toolbar.leftMenu.buttons.actionButton.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
-                            <input ng-if="attributes.toolbar.leftMenu.type.value==='Icon Bar'" class="col-md-6" type="text" ng-model="attributes.toolbar.leftMenu.iconBar.actionButton.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
+                            <input ng-if="attributes.toolbar.leftMenu.type.value==='Fab'" class="col-md-6" type="text" ng-model="attributes.toolbar.leftMenu.fab.actionButton.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar.leftMenu.fab.actionButton.class')"/>
+                            <input ng-if="attributes.toolbar.leftMenu.type.value==='Buttons'" class="col-md-6" type="text" ng-model="attributes.toolbar.leftMenu.buttons.actionButton.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar.leftMenu.buttons.actionButton.class')"/>
+                            <input ng-if="attributes.toolbar.leftMenu.type.value==='Icon Bar'" class="col-md-6" type="text" ng-model="attributes.toolbar.leftMenu.iconBar.actionButton.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar.leftMenu.iconBar.actionButton.class')"/>
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px;">Item Icon Size:</span>
-                            <input ng-if="attributes.toolbar.leftMenu.type.value==='Fab'" class="col-md-6" type="number" ng-model="attributes.toolbar.leftMenu.fab.actionButton.icon.size" ng-change="overrideAttribute('toolbar')" />
-                            <input ng-if="attributes.toolbar.leftMenu.type.value==='Buttons'" class="col-md-6" type="number" ng-model="attributes.toolbar.leftMenu.buttons.actionButton.icon.size" ng-change="overrideAttribute('toolbar')" />
-                            <input ng-if="attributes.toolbar.leftMenu.type.value==='Icon Bar'" class="col-md-6" type="number" ng-model="attributes.toolbar.leftMenu.iconBar.actionButton.icon.size" ng-change="overrideAttribute('toolbar')" />
+                            <input ng-if="attributes.toolbar.leftMenu.type.value==='Fab'" class="col-md-6" type="number" ng-model="attributes.toolbar.leftMenu.fab.actionButton.icon.size" ng-change="overrideAttribute('toolbar.leftMenu.fab.actionButton.icon.size')" />
+                            <input ng-if="attributes.toolbar.leftMenu.type.value==='Buttons'" class="col-md-6" type="number" ng-model="attributes.toolbar.leftMenu.buttons.actionButton.icon.size" ng-change="overrideAttribute('toolbar.leftMenu.buttons.actionButton.icon.size')" />
+                            <input ng-if="attributes.toolbar.leftMenu.type.value==='Icon Bar'" class="col-md-6" type="number" ng-model="attributes.toolbar.leftMenu.iconBar.actionButton.icon.size" ng-change="overrideAttribute('toolbar.leftMenu.iconBar.actionButton.icon.size')" />
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px;">Item Icon Style:</span>
                             <div class="col-md-6" layout="row">
-                                <input ng-if="attributes.toolbar.leftMenu.type.value==='Fab'" class="col-md-12" type="text" ng-model="attributes.toolbar.leftMenu.fab.actionButton.icon.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
-                                <input ng-if="attributes.toolbar.leftMenu.type.value==='Buttons'" class="col-md-12" type="text" ng-model="attributes.toolbar.leftMenu.buttons.actionButton.icon.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
-                                <input ng-if="attributes.toolbar.leftMenu.type.value==='Icon Bar'" class="col-md-12" type="text" ng-model="attributes.toolbar.leftMenu.iconBar.actionButton.icon.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
+                                <input ng-if="attributes.toolbar.leftMenu.type.value==='Fab'" class="col-md-12" type="text" ng-model="attributes.toolbar.leftMenu.fab.actionButton.icon.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar.leftMenu.fab.actionButton.icon.style')"/>
+                                <input ng-if="attributes.toolbar.leftMenu.type.value==='Buttons'" class="col-md-12" type="text" ng-model="attributes.toolbar.leftMenu.buttons.actionButton.icon.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar.leftMenu.buttons.actionButton.icon.style')"/>
+                                <input ng-if="attributes.toolbar.leftMenu.type.value==='Icon Bar'" class="col-md-12" type="text" ng-model="attributes.toolbar.leftMenu.iconBar.actionButton.icon.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar.leftMenu.iconBar.actionButton.icon.style')"/>
                                 <dfx-ve-css-style></dfx-ve-css-style>
                             </div>
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px;">Item Icon Class:</span>
-                            <input ng-if="attributes.toolbar.leftMenu.type.value==='Fab'" class="col-md-6" type="text" ng-model="attributes.toolbar.leftMenu.fab.actionButton.icon.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
-                            <input ng-if="attributes.toolbar.leftMenu.type.value==='Buttons'" class="col-md-6" type="text" ng-model="attributes.toolbar.leftMenu.buttons.actionButton.icon.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
-                            <input ng-if="attributes.toolbar.leftMenu.type.value==='Icon Bar'" class="col-md-6" type="text" ng-model="attributes.toolbar.leftMenu.iconBar.actionButton.icon.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
+                            <input ng-if="attributes.toolbar.leftMenu.type.value==='Fab'" class="col-md-6" type="text" ng-model="attributes.toolbar.leftMenu.fab.actionButton.icon.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar.leftMenu.fab.actionButton.icon.class')"/>
+                            <input ng-if="attributes.toolbar.leftMenu.type.value==='Buttons'" class="col-md-6" type="text" ng-model="attributes.toolbar.leftMenu.buttons.actionButton.icon.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar.leftMenu.buttons.actionButton.icon.class')"/>
+                            <input ng-if="attributes.toolbar.leftMenu.type.value==='Icon Bar'" class="col-md-6" type="text" ng-model="attributes.toolbar.leftMenu.iconBar.actionButton.icon.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar.leftMenu.iconBar.actionButton.icon.class')"/>
                         </li> 
                         <li ng-if="attributes.toolbar.leftMenu.type.value==='Fab'" class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px;">Item Tooltip Direction:</span>
                             <md-input-container class="col-md-6" style="padding: 0 0 10px">
-                                <md-select aria-label="tooltipDirection" class="md-block" ng-model="attributes.toolbar.leftMenu.fab.actionButton.tooltip.direction" ng-change="overrideAttribute('toolbar')" style="text-transform: capitalize;">
+                                <md-select aria-label="tooltipDirection" class="md-block" ng-model="attributes.toolbar.leftMenu.fab.actionButton.tooltip.direction" ng-change="overrideAttribute('toolbar.leftMenu.fab.actionButton.tooltip.direction')" style="text-transform: capitalize;">
                                     <md-option ng-repeat="tooltipDirection in ['top', 'right', 'bottom', 'left']" ng-value="tooltipDirection" style="text-transform: capitalize;">{{tooltipDirection}}</md-option>
                                 </md-select>
                             </md-input-container>
@@ -251,13 +251,13 @@
                         <li ng-if="attributes.toolbar.leftMenu.type.value==='Fab'" class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px;">Item Tooltip Style:</span>
                             <div class="col-md-6" layout="row">
-                                <input class="col-md-12" type="text" ng-model="attributes.toolbar.leftMenu.fab.actionButton.tooltip.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
+                                <input class="col-md-12" type="text" ng-model="attributes.toolbar.leftMenu.fab.actionButton.tooltip.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar.leftMenu.fab.actionButton.tooltip.style')"/>
                                 <dfx-ve-css-style></dfx-ve-css-style>
                             </div>
                         </li>
                         <li ng-if="attributes.toolbar.leftMenu.type.value==='Fab'" class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px;">Item Tooltip Class:</span>
-                            <input class="col-md-6" type="text" ng-model="attributes.toolbar.leftMenu.fab.actionButton.tooltip.classes" style="padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
+                            <input class="col-md-6" type="text" ng-model="attributes.toolbar.leftMenu.fab.actionButton.tooltip.classes" style="padding-left: 6px" ng-change="overrideAttribute('toolbar.leftMenu.fab.actionButton.tooltip.classes')"/>
                         </li>                       
                     </ul>
                 </li>
@@ -271,10 +271,10 @@
                 <li class="col-md-12">
                     <span class="col-md-12">
                         <div layout>
-                            <md-slider class="md-primary" flex ng-model="attributes.toolbar.title.flexWidth.value" step="5" min="0" max="100" aria-label="Flex width:" style="padding-left: 14px;" ng-change="overrideAttribute('toolbar')">
+                            <md-slider class="md-primary" flex ng-model="attributes.toolbar.title.flexWidth.value" step="5" min="0" max="100" aria-label="Flex width:" style="padding-left: 14px;" ng-change="overrideAttribute('toolbar.title.flexWidth')">
                             </md-slider>
                             <div flex="20" layout layout-align="center center">
-                                <input flex type="number" min="0" max="100" ng-model="attributes.toolbar.title.flexWidth.value" aria-label="blue" aria-controls="flex-width" style="margin-left:5px; text-align: center" ng-change="overrideAttribute('toolbar')">
+                                <input flex type="number" min="0" max="100" ng-model="attributes.toolbar.title.flexWidth.value" aria-label="blue" aria-controls="flex-width" style="margin-left:5px; text-align: center" ng-change="overrideAttribute('toolbar.title.flexWidth')">
                             </div>
                         </div>
                     </span>
@@ -286,19 +286,19 @@
                         <li class="col-md-12">
                             <span class="col-md-6" style="padding: 3px 0 0 30px">Alignment:</span>
                             <md-input-container class="col-md-6" style="padding: 0 0 10px">
-                                <md-select aria-label="stretching" ng-model="attributes.toolbar.title.alignment.value" ng-change="overrideAttribute('toolbar')">
+                                <md-select aria-label="stretching" ng-model="attributes.toolbar.title.alignment.value" ng-change="overrideAttribute('toolbar.title.alignment')">
                                     <md-option ng-repeat="type in ['start', 'center', 'end']" ng-value="type">{{type}}</md-option>
                                 </md-select>
                             </md-input-container>
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px">Html:</span>
-                            <span class="col-md-6"><md-checkbox style="margin: 0" class="md-primary" ng-model="attributes.toolbar.title.isHtml.value" ng-change="overrideAttribute('toolbar')" aria-label="item-isHTML"></md-checkbox></span>
+                            <span class="col-md-6"><md-checkbox style="margin: 0" class="md-primary" ng-model="attributes.toolbar.title.isHtml.value" ng-change="overrideAttribute('toolbar.title.isHtml')" aria-label="item-isHTML"></md-checkbox></span>
                         </li>
                         <li ng-if="attributes.toolbar.title.isHtml.value" class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px">Binding Html:</span>
                             <div class="col-md-6" layout="row">
-                                <input class="col-md-12" type="text" ng-model="attributes.toolbar.title.bindingHtml.value" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
+                                <input class="col-md-12" type="text" ng-model="attributes.toolbar.title.bindingHtml.value" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar.title.bindingHtml')"/>
                                 <dfx-ve-expression-editor></dfx-ve-expression-editor>
                             </div>
                         </li>
@@ -312,14 +312,14 @@
                         <li ng-if="attributes.toolbar.title.isHtml.value === false" class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px">Title:</span>
                             <div class="col-md-6" layout="row">
-                                <input class="col-md-12" type="text" ng-model="attributes.toolbar.title.value" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
+                                <input class="col-md-12" type="text" ng-model="attributes.toolbar.title.value" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar.title')"/>
                                 <dfx-ve-expression-editor></dfx-ve-expression-editor>
                             </div>
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px">Visible:</span>
                             <div class="col-md-6" layout="row">
-                                <input class="col-md-12" type="text" ng-model="attributes.toolbar.title.visible.value" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
+                                <input class="col-md-12" type="text" ng-model="attributes.toolbar.title.visible.value" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar.title.visible')"/>
                                 <dfx-ve-expression-editor></dfx-ve-expression-editor>
                             </div>
                         </li>
@@ -332,17 +332,17 @@
                         <li class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px">Style:</span>
                             <div class="col-md-6" layout="row">
-                                <input class="col-md-12" type="text" ng-model="attributes.toolbar.title.style.value" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
+                                <input class="col-md-12" type="text" ng-model="attributes.toolbar.title.style.value" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar.title.style')"/>
                                 <dfx-ve-css-style></dfx-ve-css-style>
                             </div>
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px">Class:</span>
-                            <input class="col-md-6" type="text" ng-model="attributes.toolbar.title.classes.value" style="padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
+                            <input class="col-md-6" type="text" ng-model="attributes.toolbar.title.classes.value" style="padding-left: 6px" ng-change="overrideAttribute('toolbar.title.classes')"/>
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px">Dynamic Class:</span>
-                            <input class="col-md-6" type="text" ng-model="attributes.toolbar.title.dynamicClasses.value" style="padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
+                            <input class="col-md-6" type="text" ng-model="attributes.toolbar.title.dynamicClasses.value" style="padding-left: 6px" ng-change="overrideAttribute('toolbar.title.dynamicClasses')"/>
                         </li>
                     </ul>
                 </li>
@@ -355,10 +355,10 @@
                 <li class="col-md-12">
                     <span class="col-md-12">
                         <div layout>
-                            <md-slider class="md-primary" flex ng-model="attributes.toolbar.rightMenu.flexWidth.value" step="5" min="0" max="100" aria-label="Flex width:" style="padding-left: 14px;" ng-change="overrideAttribute('toolbar')">
+                            <md-slider class="md-primary" flex ng-model="attributes.toolbar.rightMenu.flexWidth.value" step="5" min="0" max="100" aria-label="Flex width:" style="padding-left: 14px;" ng-change="overrideAttribute('toolbar.rightMenu.flexWidth')">
                             </md-slider>
                             <div flex="20" layout layout-align="center center">
-                                <input flex type="number" min="0" max="100" ng-model="attributes.toolbar.rightMenu.flexWidth.value" aria-label="blue" aria-controls="flex-width" style="margin-left:5px; text-align: center" ng-change="overrideAttribute('toolbar')">
+                                <input flex type="number" min="0" max="100" ng-model="attributes.toolbar.rightMenu.flexWidth.value" aria-label="blue" aria-controls="flex-width" style="margin-left:5px; text-align: center" ng-change="overrideAttribute('toolbar.rightMenu.flexWidth')">
                             </div>
                         </div>
                     </span>
@@ -370,33 +370,33 @@
                         <li class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px;">Visible:</span>
                             <div class="col-md-6" layout="row">
-                                <input class="col-md-12" type="text" ng-model="attributes.toolbar.rightMenu.visible.value" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
+                                <input class="col-md-12" type="text" ng-model="attributes.toolbar.rightMenu.visible.value" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar.rightMenu.visible')"/>
                                 <dfx-ve-expression-editor></dfx-ve-expression-editor>
                             </div>
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-6" style="padding: 3px 0 0 30px">Type:</span>
                             <md-input-container class="col-md-6" style="padding: 0 0 10px">
-                                <md-select aria-label="stretching" ng-model="attributes.toolbar.rightMenu.type.value" ng-change="overrideAttribute('toolbar')">
+                                <md-select aria-label="stretching" ng-model="attributes.toolbar.rightMenu.type.value" ng-change="overrideAttribute('toolbar.rightMenu.type')">
                                     <md-option ng-repeat="type in ['Buttons', 'Fab', 'Icon Bar']" ng-value="type">{{type}}</md-option> <!--'Icon Bar', 'Links',-->
                                 </md-select>
                             </md-input-container>
                         </li>
                         <li ng-if="attributes.toolbar.rightMenu.type.value==='Buttons'" class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px">Stretch Width:</span>
-                            <span class="col-md-6"><md-checkbox style="margin: 0" class="md-primary" ng-model="attributes.toolbar.rightMenu.equalButtonSize.value" ng-change="overrideAttribute('toolbar')" aria-label="item-stretch-width"></md-checkbox></span>
+                            <span class="col-md-6"><md-checkbox style="margin: 0" class="md-primary" ng-model="attributes.toolbar.rightMenu.equalButtonSize.value" ng-change="overrideAttribute('toolbar.rightMenu.equalButtonSize')" aria-label="item-stretch-width"></md-checkbox></span>
                         </li>
                         <li ng-if="attributes.toolbar.rightMenu.type.value==='Fab'" class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px;">Label:</span>
                             <div class="col-md-6" layout="row">
-                                <input class="col-md-12" type="text" ng-model="attributes.toolbar.rightMenu.fab.triggerButton.label" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
+                                <input class="col-md-12" type="text" ng-model="attributes.toolbar.rightMenu.fab.triggerButton.label" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar.rightMenu.fab.triggerButton.label')"/>
                                 <dfx-ve-expression-editor></dfx-ve-expression-editor>
                             </div>
                         </li>
                         <li ng-if="attributes.toolbar.rightMenu.type.value==='Fab'" class="col-md-12">
                             <span class="col-md-6" style="padding: 3px 0 0 30px">Animation Mode:</span>
                             <md-input-container class="col-md-6" style="padding: 0 0 10px">
-                                <md-select aria-label="animation" ng-model="attributes.toolbar.rightMenu.animation.value" ng-change="overrideAttribute('toolbar')">
+                                <md-select aria-label="animation" ng-model="attributes.toolbar.rightMenu.animation.value" ng-change="overrideAttribute('toolbar.rightMenu.animation')">
                                     <md-option ng-repeat="animation in [{display:'Fling', value:'md-fling'}, {display:'Scale', value:'md-scale'}]" ng-value="animation.value">{{animation.display}}</md-option>
                                 </md-select>
                             </md-input-container>
@@ -404,7 +404,7 @@
                         <li ng-if="attributes.toolbar.rightMenu.type.value==='Fab'" class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px;">Menu Icon:</span>
                             <div class="col-md-6" layout="row">
-                                <input class="col-md-12" type="text" ng-model="attributes.toolbar.rightMenu.fab.triggerButton.icon.value" style="margin-left:-15px;" ng-change="overrideAttribute('toolbar'); ifShowToolbarIconTypes(attributes.toolbar.rightMenu.fab.triggerButton.icon.value, 'rightSide', 'fabTrigger');"/>
+                                <input class="col-md-12" type="text" ng-model="attributes.toolbar.rightMenu.fab.triggerButton.icon.value" style="margin-left:-15px;" ng-change="overrideAttribute('toolbar.rightMenu.fab.triggerButton.icon'); ifShowToolbarIconTypes(attributes.toolbar.rightMenu.fab.triggerButton.icon.value, 'rightSide', 'fabTrigger');"/>
                                 <md-icon ng-click="showFontIcons($event, attributes.toolbar.rightMenu.fab.triggerButton.icon)" dfx-ve-picker-icon class="dfx-ve-picker-icon fa fa-ellipsis-h"></md-icon>
                             </div>
                         </li>
@@ -412,8 +412,8 @@
                             <span class="col-md-6" style="padding-left: 30px;">Menu Icon Type:</span>
                             <div class="col-md-6" layout="row" style="padding: 0 0 8px 0">
                                 <md-radio-group ng-model="attributes.toolbar.rightMenu.fab.triggerButton.icon.type">
-                                    <md-radio-button value="svg-icon" ngChange="overrideAttribute('toolbar')" style="margin: 0;" class="md-primary">SVG Icon</md-radio-button>
-                                    <md-radio-button value="fa-icon" ngChange="overrideAttribute('toolbar')" style="margin: 0;" class="md-primary">Font Awesome Icon</md-radio-button>
+                                    <md-radio-button value="svg-icon" ngChange="overrideAttribute('toolbar.rightMenu.fab.triggerButton.icon.type')" style="margin: 0;" class="md-primary">SVG Icon</md-radio-button>
+                                    <md-radio-button value="fa-icon" ngChange="overrideAttribute('toolbar.rightMenu.fab.triggerButton.icon.type')" style="margin: 0;" class="md-primary">Font Awesome Icon</md-radio-button>
                                 </md-radio-group>
                             </div>
                         </li>
@@ -430,7 +430,7 @@
                         <li class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px;">Dynamic:</span>
                             <div class="col-md-6" layout="row">
-                                <input class="col-md-12" type="text" ng-model="attributes.toolbar.rightMenu.dynamic.value" ng-change="overrideAttribute('toolbar')" style="margin-left:-15px;"/>
+                                <input class="col-md-12" type="text" ng-model="attributes.toolbar.rightMenu.dynamic.value" ng-change="overrideAttribute('toolbar.rightMenu.dynamic')" style="margin-left:-15px;"/>
                                 <dfx-ve-expression-editor></dfx-ve-expression-editor>
                             </div>
                         </li>
@@ -444,58 +444,58 @@
                         <li class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px">Style:</span>
                             <div class="col-md-6" layout="row">
-                                <input class="col-md-12" type="text" ng-model="attributes.toolbar.rightMenu.style.value" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
+                                <input class="col-md-12" type="text" ng-model="attributes.toolbar.rightMenu.style.value" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar.rightMenu.style')"/>
                                 <dfx-ve-css-style></dfx-ve-css-style>
                             </div>
                         </li>  
                         <li class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px">Class:</span>
-                            <input class="col-md-6" type="text" ng-model="attributes.toolbar.rightMenu.classes.value" style="padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
+                            <input class="col-md-6" type="text" ng-model="attributes.toolbar.rightMenu.classes.value" style="padding-left: 6px" ng-change="overrideAttribute('toolbar.rightMenu.classes')"/>
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px">Dynamic Class:</span>
-                            <input class="col-md-6" type="text" ng-model="attributes.toolbar.rightMenu.dynamicClasses.value" style="padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
+                            <input class="col-md-6" type="text" ng-model="attributes.toolbar.rightMenu.dynamicClasses.value" style="padding-left: 6px" ng-change="overrideAttribute('toolbar.rightMenu.dynamicClasses')"/>
                         </li>                      
                         <li class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px;">Menu Style:</span>
                             <div class="col-md-6" layout="row">
-                                <input ng-if="attributes.toolbar.rightMenu.type.value==='Fab'" class="col-md-12" type="text" ng-model="attributes.toolbar.rightMenu.fab.triggerButton.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
-                                <input ng-if="attributes.toolbar.rightMenu.type.value==='Buttons'" class="col-md-12" type="text" ng-model="attributes.toolbar.rightMenu.buttons.triggerButton.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
-                                <input ng-if="attributes.toolbar.rightMenu.type.value==='Icon Bar'" class="col-md-12" type="text" ng-model="attributes.toolbar.rightMenu.iconBar.triggerButton.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
+                                <input ng-if="attributes.toolbar.rightMenu.type.value==='Fab'" class="col-md-12" type="text" ng-model="attributes.toolbar.rightMenu.fab.triggerButton.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar.rightMenu.fab.triggerButton.style')"/>
+                                <input ng-if="attributes.toolbar.rightMenu.type.value==='Buttons'" class="col-md-12" type="text" ng-model="attributes.toolbar.rightMenu.buttons.triggerButton.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar.rightMenu.buttons.triggerButton.style')"/>
+                                <input ng-if="attributes.toolbar.rightMenu.type.value==='Icon Bar'" class="col-md-12" type="text" ng-model="attributes.toolbar.rightMenu.iconBar.triggerButton.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar.rightMenu.iconBar.triggerButton.style')"/>
                                 <dfx-ve-css-style></dfx-ve-css-style>
                             </div>
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px;">Menu Class:</span>
-                            <input ng-if="attributes.toolbar.rightMenu.type.value==='Fab'" class="col-md-6" type="text" ng-model="attributes.toolbar.rightMenu.fab.triggerButton.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
-                            <input ng-if="attributes.toolbar.rightMenu.type.value==='Buttons'" class="col-md-6" type="text" ng-model="attributes.toolbar.rightMenu.buttons.triggerButton.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
-                            <input ng-if="attributes.toolbar.rightMenu.type.value==='Icon Bar'" class="col-md-6" type="text" ng-model="attributes.toolbar.rightMenu.iconBar.triggerButton.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
+                            <input ng-if="attributes.toolbar.rightMenu.type.value==='Fab'" class="col-md-6" type="text" ng-model="attributes.toolbar.rightMenu.fab.triggerButton.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar.rightMenu.fab.triggerButton.class')"/>
+                            <input ng-if="attributes.toolbar.rightMenu.type.value==='Buttons'" class="col-md-6" type="text" ng-model="attributes.toolbar.rightMenu.buttons.triggerButton.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar.rightMenu.buttons.triggerButton.class')"/>
+                            <input ng-if="attributes.toolbar.rightMenu.type.value==='Icon Bar'" class="col-md-6" type="text" ng-model="attributes.toolbar.rightMenu.iconBar.triggerButton.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar.rightMenu.iconBar.triggerButton.class')"/>
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px;">Menu Icon Size:</span>
-                            <input ng-if="attributes.toolbar.rightMenu.type.value==='Fab'" class="col-md-6" type="number" ng-model="attributes.toolbar.rightMenu.fab.triggerButton.icon.size" ng-change="overrideAttribute('toolbar')" />
-                            <input ng-if="attributes.toolbar.rightMenu.type.value==='Buttons'" class="col-md-6" type="number" ng-model="attributes.toolbar.rightMenu.buttons.triggerButton.icon.size" ng-change="overrideAttribute('toolbar')" />
-                            <input ng-if="attributes.toolbar.rightMenu.type.value==='Icon Bar'" class="col-md-6" type="number" ng-model="attributes.toolbar.rightMenu.iconBar.triggerButton.icon.size" ng-change="overrideAttribute('toolbar')" />
+                            <input ng-if="attributes.toolbar.rightMenu.type.value==='Fab'" class="col-md-6" type="number" ng-model="attributes.toolbar.rightMenu.fab.triggerButton.icon.size" ng-change="overrideAttribute('toolbar.rightMenu.fab.triggerButton.icon.size')" />
+                            <input ng-if="attributes.toolbar.rightMenu.type.value==='Buttons'" class="col-md-6" type="number" ng-model="attributes.toolbar.rightMenu.buttons.triggerButton.icon.size" ng-change="overrideAttribute('toolbar.rightMenu.buttons.triggerButton.icon.size')" />
+                            <input ng-if="attributes.toolbar.rightMenu.type.value==='Icon Bar'" class="col-md-6" type="number" ng-model="attributes.toolbar.rightMenu.iconBar.triggerButton.icon.size" ng-change="overrideAttribute('toolbar.rightMenu.iconBar.triggerButton.icon.size')" />
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px;">Menu Icon Style:</span>
                             <div class="col-md-6" layout="row">
-                                <input ng-if="attributes.toolbar.rightMenu.type.value==='Fab'" class="col-md-12" type="text" ng-model="attributes.toolbar.rightMenu.fab.triggerButton.icon.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
-                                <input ng-if="attributes.toolbar.rightMenu.type.value==='Buttons'" class="col-md-12" type="text" ng-model="attributes.toolbar.rightMenu.buttons.triggerButton.icon.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
-                                <input ng-if="attributes.toolbar.rightMenu.type.value==='Icon Bar'" class="col-md-12" type="text" ng-model="attributes.toolbar.rightMenu.iconBar.triggerButton.icon.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
+                                <input ng-if="attributes.toolbar.rightMenu.type.value==='Fab'" class="col-md-12" type="text" ng-model="attributes.toolbar.rightMenu.fab.triggerButton.icon.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar.rightMenu.fab.triggerButton.icon.style')"/>
+                                <input ng-if="attributes.toolbar.rightMenu.type.value==='Buttons'" class="col-md-12" type="text" ng-model="attributes.toolbar.rightMenu.buttons.triggerButton.icon.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar.rightMenu.buttons.triggerButton.icon.style')"/>
+                                <input ng-if="attributes.toolbar.rightMenu.type.value==='Icon Bar'" class="col-md-12" type="text" ng-model="attributes.toolbar.rightMenu.iconBar.triggerButton.icon.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar.rightMenu.iconBar.triggerButton.icon.style')"/>
                                 <dfx-ve-css-style></dfx-ve-css-style>
                             </div>
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px;">Menu Icon Class:</span>
-                            <input ng-if="attributes.toolbar.rightMenu.type.value==='Fab'" class="col-md-6" type="text" ng-model="attributes.toolbar.rightMenu.fab.triggerButton.icon.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
-                            <input ng-if="attributes.toolbar.rightMenu.type.value==='Buttons'" class="col-md-6" type="text" ng-model="attributes.toolbar.rightMenu.buttons.triggerButton.icon.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
-                            <input ng-if="attributes.toolbar.rightMenu.type.value==='Icon Bar'" class="col-md-6" type="text" ng-model="attributes.toolbar.rightMenu.iconBar.triggerButton.icon.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
+                            <input ng-if="attributes.toolbar.rightMenu.type.value==='Fab'" class="col-md-6" type="text" ng-model="attributes.toolbar.rightMenu.fab.triggerButton.icon.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar.rightMenu.fab.triggerButton.icon.class')"/>
+                            <input ng-if="attributes.toolbar.rightMenu.type.value==='Buttons'" class="col-md-6" type="text" ng-model="attributes.toolbar.rightMenu.buttons.triggerButton.icon.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar.rightMenu.buttons.triggerButton.icon.class')"/>
+                            <input ng-if="attributes.toolbar.rightMenu.type.value==='Icon Bar'" class="col-md-6" type="text" ng-model="attributes.toolbar.rightMenu.iconBar.triggerButton.icon.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar.rightMenu.iconBar.triggerButton.icon.class')"/>
                         </li>
                         <li ng-if="attributes.toolbar.rightMenu.type.value==='Fab'" class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px;">Menu Tooltip Direction:</span>
                             <md-input-container class="col-md-6" style="padding: 0 0 10px">
-                                <md-select aria-label="tooltipDirection" class="md-block" ng-model="attributes.toolbar.rightMenu.fab.triggerButton.tooltip.direction" ng-change="overrideAttribute('toolbar')" style="text-transform: capitalize;">
+                                <md-select aria-label="tooltipDirection" class="md-block" ng-model="attributes.toolbar.rightMenu.fab.triggerButton.tooltip.direction" ng-change="overrideAttribute('toolbar.rightMenu.fab.triggerButton.tooltip.direction')" style="text-transform: capitalize;">
                                     <md-option ng-repeat="tooltipDirection in ['top', 'right', 'bottom', 'left']" ng-value="tooltipDirection" style="text-transform: capitalize;">{{tooltipDirection}}</md-option>
                                 </md-select>
                             </md-input-container>
@@ -503,54 +503,54 @@
                         <li ng-if="attributes.toolbar.rightMenu.type.value==='Fab'" class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px;">Menu Tooltip Style:</span>
                             <div class="col-md-6" layout="row">
-                                <input class="col-md-12" type="text" ng-model="attributes.toolbar.rightMenu.fab.triggerButton.tooltip.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
+                                <input class="col-md-12" type="text" ng-model="attributes.toolbar.rightMenu.fab.triggerButton.tooltip.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar.rightMenu.fab.triggerButton.tooltip.style')"/>
                                 <dfx-ve-css-style></dfx-ve-css-style>
                             </div>
                         </li>
                         <li ng-if="attributes.toolbar.rightMenu.type.value==='Fab'" class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px;">Menu Tooltip Class:</span>
-                            <input class="col-md-6" type="text" ng-model="attributes.toolbar.rightMenu.fab.triggerButton.tooltip.classes" style="padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
+                            <input class="col-md-6" type="text" ng-model="attributes.toolbar.rightMenu.fab.triggerButton.tooltip.classes" style="padding-left: 6px" ng-change="overrideAttribute('toolbar.rightMenu.fab.triggerButton.tooltip.classes')"/>
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px;">Item Style:</span>
                             <div class="col-md-6" layout="row">
-                                <input ng-if="attributes.toolbar.rightMenu.type.value==='Fab'" class="col-md-12" type="text" ng-model="attributes.toolbar.rightMenu.fab.actionButton.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
-                                <input ng-if="attributes.toolbar.rightMenu.type.value==='Buttons'" class="col-md-12" type="text" ng-model="attributes.toolbar.rightMenu.buttons.actionButton.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
-                                <input ng-if="attributes.toolbar.rightMenu.type.value==='Icon Bar'" class="col-md-12" type="text" ng-model="attributes.toolbar.rightMenu.iconBar.actionButton.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
+                                <input ng-if="attributes.toolbar.rightMenu.type.value==='Fab'" class="col-md-12" type="text" ng-model="attributes.toolbar.rightMenu.fab.actionButton.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar.rightMenu.fab.actionButton.style')"/>
+                                <input ng-if="attributes.toolbar.rightMenu.type.value==='Buttons'" class="col-md-12" type="text" ng-model="attributes.toolbar.rightMenu.buttons.actionButton.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar.rightMenu.buttons.actionButton.style')"/>
+                                <input ng-if="attributes.toolbar.rightMenu.type.value==='Icon Bar'" class="col-md-12" type="text" ng-model="attributes.toolbar.rightMenu.iconBar.actionButton.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar.rightMenu.iconBar.actionButton.style')"/>
                                 <dfx-ve-css-style></dfx-ve-css-style>
                             </div>
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px;">Item Class:</span>
-                            <input ng-if="attributes.toolbar.rightMenu.type.value==='Fab'" class="col-md-6" type="text" ng-model="attributes.toolbar.rightMenu.fab.actionButton.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
-                            <input ng-if="attributes.toolbar.rightMenu.type.value==='Buttons'" class="col-md-6" type="text" ng-model="attributes.toolbar.rightMenu.buttons.actionButton.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
-                            <input ng-if="attributes.toolbar.rightMenu.type.value==='Icon Bar'" class="col-md-6" type="text" ng-model="attributes.toolbar.rightMenu.iconBar.actionButton.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
+                            <input ng-if="attributes.toolbar.rightMenu.type.value==='Fab'" class="col-md-6" type="text" ng-model="attributes.toolbar.rightMenu.fab.actionButton.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar.rightMenu.fab.actionButton.class')"/>
+                            <input ng-if="attributes.toolbar.rightMenu.type.value==='Buttons'" class="col-md-6" type="text" ng-model="attributes.toolbar.rightMenu.buttons.actionButton.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar.rightMenu.buttons.actionButton.class')"/>
+                            <input ng-if="attributes.toolbar.rightMenu.type.value==='Icon Bar'" class="col-md-6" type="text" ng-model="attributes.toolbar.rightMenu.iconBar.actionButton.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar.rightMenu.iconBar.actionButton.class')"/>
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px;">Item Icon Size:</span>
-                            <input ng-if="attributes.toolbar.rightMenu.type.value==='Fab'" class="col-md-6" type="number" ng-model="attributes.toolbar.rightMenu.fab.actionButton.icon.size" ng-change="overrideAttribute('toolbar')" />
-                            <input ng-if="attributes.toolbar.rightMenu.type.value==='Buttons'" class="col-md-6" type="number" ng-model="attributes.toolbar.rightMenu.buttons.actionButton.icon.size" ng-change="overrideAttribute('toolbar')" />
-                            <input ng-if="attributes.toolbar.rightMenu.type.value==='Icon Bar'" class="col-md-6" type="number" ng-model="attributes.toolbar.rightMenu.iconBar.actionButton.icon.size" ng-change="overrideAttribute('toolbar')" />
+                            <input ng-if="attributes.toolbar.rightMenu.type.value==='Fab'" class="col-md-6" type="number" ng-model="attributes.toolbar.rightMenu.fab.actionButton.icon.size" ng-change="overrideAttribute('toolbar.rightMenu.fab.actionButton.icon.size')" />
+                            <input ng-if="attributes.toolbar.rightMenu.type.value==='Buttons'" class="col-md-6" type="number" ng-model="attributes.toolbar.rightMenu.buttons.actionButton.icon.size" ng-change="overrideAttribute('toolbar.rightMenu.buttons.actionButton.icon.size')" />
+                            <input ng-if="attributes.toolbar.rightMenu.type.value==='Icon Bar'" class="col-md-6" type="number" ng-model="attributes.toolbar.rightMenu.iconBar.actionButton.icon.size" ng-change="overrideAttribute('toolbar.rightMenu.iconBar.actionButton.icon.size')" />
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px;">Item Icon Style:</span>
                             <div class="col-md-6" layout="row">
-                                <input ng-if="attributes.toolbar.rightMenu.type.value==='Fab'" class="col-md-12" type="text" ng-model="attributes.toolbar.rightMenu.fab.actionButton.icon.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
-                                <input ng-if="attributes.toolbar.rightMenu.type.value==='Buttons'" class="col-md-12" type="text" ng-model="attributes.toolbar.rightMenu.buttons.actionButton.icon.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
-                                <input ng-if="attributes.toolbar.rightMenu.type.value==='Icon Bar'" class="col-md-12" type="text" ng-model="attributes.toolbar.rightMenu.iconBar.actionButton.icon.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
+                                <input ng-if="attributes.toolbar.rightMenu.type.value==='Fab'" class="col-md-12" type="text" ng-model="attributes.toolbar.rightMenu.fab.actionButton.icon.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar.rightMenu.fab.actionButton.icon.style')"/>
+                                <input ng-if="attributes.toolbar.rightMenu.type.value==='Buttons'" class="col-md-12" type="text" ng-model="attributes.toolbar.rightMenu.buttons.actionButton.icon.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar.rightMenu.buttons.actionButton.icon.style')"/>
+                                <input ng-if="attributes.toolbar.rightMenu.type.value==='Icon Bar'" class="col-md-12" type="text" ng-model="attributes.toolbar.rightMenu.iconBar.actionButton.icon.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar.rightMenu.iconBar.actionButton.icon.style')"/>
                                 <dfx-ve-css-style></dfx-ve-css-style>
                             </div>
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px;">Item Icon Class:</span>
-                            <input ng-if="attributes.toolbar.rightMenu.type.value==='Fab'" class="col-md-6" type="text" ng-model="attributes.toolbar.rightMenu.fab.actionButton.icon.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
-                            <input ng-if="attributes.toolbar.rightMenu.type.value==='Buttons'" class="col-md-6" type="text" ng-model="attributes.toolbar.rightMenu.buttons.actionButton.icon.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
-                            <input ng-if="attributes.toolbar.rightMenu.type.value==='Icon Bar'" class="col-md-6" type="text" ng-model="attributes.toolbar.rightMenu.iconBar.actionButton.icon.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
+                            <input ng-if="attributes.toolbar.rightMenu.type.value==='Fab'" class="col-md-6" type="text" ng-model="attributes.toolbar.rightMenu.fab.actionButton.icon.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar.rightMenu.fab.actionButton.icon.class')"/>
+                            <input ng-if="attributes.toolbar.rightMenu.type.value==='Buttons'" class="col-md-6" type="text" ng-model="attributes.toolbar.rightMenu.buttons.actionButton.icon.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar.rightMenu.buttons.actionButton.icon.class')"/>
+                            <input ng-if="attributes.toolbar.rightMenu.type.value==='Icon Bar'" class="col-md-6" type="text" ng-model="attributes.toolbar.rightMenu.iconBar.actionButton.icon.class" style="padding-left: 6px" ng-change="overrideAttribute('toolbar.rightMenu.iconBar.actionButton.icon.class')"/>
                         </li>
                         <li ng-if="attributes.toolbar.rightMenu.type.value==='Fab'" class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px;">Item Tooltip Direction:</span>
                             <md-input-container class="col-md-6" style="padding: 0 0 10px">
-                                <md-select aria-label="tooltipDirection" class="md-block" ng-model="attributes.toolbar.rightMenu.fab.actionButton.tooltip.direction" ng-change="overrideAttribute('toolbar')" style="text-transform: capitalize;">
+                                <md-select aria-label="tooltipDirection" class="md-block" ng-model="attributes.toolbar.rightMenu.fab.actionButton.tooltip.direction" ng-change="overrideAttribute('toolbar.rightMenu.fab.actionButton.tooltip.direction')" style="text-transform: capitalize;">
                                     <md-option ng-repeat="tooltipDirection in ['top', 'right', 'bottom', 'left']" ng-value="tooltipDirection" style="text-transform: capitalize;">{{tooltipDirection}}</md-option>
                                 </md-select>
                             </md-input-container>
@@ -558,13 +558,13 @@
                         <li ng-if="attributes.toolbar.rightMenu.type.value==='Fab'" class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px;">Item Tooltip Style:</span>
                             <div class="col-md-6" layout="row">
-                                <input class="col-md-12" type="text" ng-model="attributes.toolbar.rightMenu.fab.actionButton.tooltip.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
+                                <input class="col-md-12" type="text" ng-model="attributes.toolbar.rightMenu.fab.actionButton.tooltip.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar.rightMenu.fab.actionButton.tooltip.style')"/>
                                 <dfx-ve-css-style></dfx-ve-css-style>
                             </div>
                         </li>
                         <li ng-if="attributes.toolbar.rightMenu.type.value==='Fab'" class="col-md-12">
                             <span class="col-md-6" style="padding-left: 30px;">Item Tooltip Class:</span>
-                            <input class="col-md-6" type="text" ng-model="attributes.toolbar.rightMenu.fab.actionButton.tooltip.classes" style="padding-left: 6px" ng-change="overrideAttribute('toolbar')"/>
+                            <input class="col-md-6" type="text" ng-model="attributes.toolbar.rightMenu.fab.actionButton.tooltip.classes" style="padding-left: 6px" ng-change="overrideAttribute('toolbar.rightMenu.fab.actionButton.tooltip.classes')"/>
                         </li>  
                     </ul>
                 </li>

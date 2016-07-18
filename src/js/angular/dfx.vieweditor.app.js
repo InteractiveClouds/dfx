@@ -1020,36 +1020,52 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     };
 
     $scope.overrideAttribute = function(attribute_name) {
-        $scope.gc_selected.attributes[attribute_name].status = 'overridden';
+        function setAttibutesChainStatus(path, obj) {
+            var schema = obj,
+                pList = path.split('.');
+            
+            for (var i = 0; i < pList.length; i++) {
+                var elem = pList[i];
+                if (! schema[elem]) {
+                    schema[elem] = {};
+                }
+                schema = schema[elem];
+                if (schema !== null && typeof schema === 'object') {
+                    schema.status = 'overridden';   
+                }
+            }
+        }
+
+        setAttibutesChainStatus(attribute_name, $scope.gc_selected.attributes);
     };
 
     // Functions implementing UNDO in view editor - START
     $scope.cacheAttributeOldValue = function (attribute_name, $event, attribute_value) {
-        if ($event && $event.relatedTarget.textContent == 'Save') return;//called from picker using $.focus() by clicking Save button
+        /*if ($event && $event.relatedTarget.textContent == 'Save') return;//called from picker using $.focus() by clicking Save button
         
         if (attribute_value) {
             $scope.attribute_temp_old_value = {value: attribute_value};
         } else {
             $scope.attribute_temp_old_value = angular.copy($scope.gc_selected.attributes[attribute_name]);
-        }
+        }*/
     };
 
     $scope.cacheAttributeNewValue = function (attribute_name) {
-        var attribute_new_value = $scope.gc_selected.attributes[attribute_name].value;
+        /*var attribute_new_value = $scope.gc_selected.attributes[attribute_name].value;
         var attribute_old_value = $scope.attribute_temp_old_value ?  $scope.attribute_temp_old_value.value : '';
 
         if (attribute_new_value !== attribute_old_value) {
             $scope.view_editor_actions_stack = $scope.view_editor_actions_stack || [];
             $scope.view_editor_actions_stack.unshift({ component_id: $scope.gc_selected.id, attribute_name: attribute_name, attribute_old_value: angular.copy(attribute_old_value) });
-        }
+        }*/
     };
 
     $scope.viewEditorUndo = function() {
-        if ($scope.view_editor_actions_stack && $scope.view_editor_actions_stack.length > 0) {
+        /*if ($scope.view_editor_actions_stack && $scope.view_editor_actions_stack.length > 0) {
             var action_for_undo = $scope.view_editor_actions_stack.shift();
             var gc_for_undo = $scope.gc_instances[ action_for_undo.component_id ];
             gc_for_undo.attributes[ action_for_undo.attribute_name ].value = action_for_undo.attribute_old_value;
-        }
+        }*/
     };
     // Functions implementing UNDO in view editor - END
 
