@@ -288,11 +288,12 @@ DfxVisualBuilder.initGraphicalControls = function () {
             $('.dfx_visual_editor_gc_layout_selected_row').removeClass('dfx_visual_editor_gc_layout_selected_row');
             $('.dfx_visual_editor_gc_layout_selected_layout').removeClass('dfx_visual_editor_gc_layout_selected_layout');
         },
-        helper:            function (event) {
-            var gc_type         = $(this).attr('gc-type');
-            var helper_fragment = '<div style="height:24px; width:80px; color: #333" class="text-center">' + gc_type + '</div>';
-            return helper_fragment;
-        },
+        helper: function (event) {
+                    var gc_cat         = $(this).attr('gc-cat');
+                    var gc_type         = $(this).attr('gc-type');
+                    var helper_fragment = '<img style="width:36px;" src="/images/vb/icons/' + gc_cat + '_' + gc_type + '.png"/>';
+                    return helper_fragment;
+                },
         connectToSortable: ".dfx_visual_editor_droppable"
     });
 
