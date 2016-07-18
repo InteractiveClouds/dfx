@@ -143,7 +143,7 @@
                     </md-select>
                 </md-input-container>
                 <md-input-container class="input-select-aligned" style="width:25%;margin-right:14px;" ng-if="scopeService.data.settings.cache != 'none'">
-                    <label>Time expiry(seconds):</label>
+                    <label>Expiration time (seconds):</label>
                     <input name="cacheTimeExpiry" ng-model="scopeService.data.settings.cacheTimeExpiry" placeholder="3600" required="" ng-pattern="/^0|[1-9]\d*$/">
                     <div ng-messages="scopeService.data.settings.cacheTimeExpiry.$error" role="alert" multiple="">
                         <div ng-message="pattern" ng-hide="scopeService.data.settings.cacheTimeExpiry" class="my-message">Value must be numeric</div>
