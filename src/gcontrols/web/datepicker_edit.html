@@ -40,11 +40,11 @@
                 </li>
                 <li class="col-md-12" ng-if="attributes.selectedType.value === 'ranged'">
                     <span class="col-md-4">Months before:</span>
-                    <input type="number" min="1" class="col-md-8" ng-model="attributes.ranged.monthsBefore" ng-change="overrideAttribute('ranged')"/>
+                    <input type="number" min="1" class="col-md-8" ng-model="attributes.ranged.monthsBefore" ng-change="overrideAttribute('ranged.monthsBefore')"/>
                 </li>
                 <li class="col-md-12" ng-if="attributes.selectedType.value === 'ranged'">
                     <span class="col-md-4">Months after:</span>
-                    <input type="number" min="1" class="col-md-8" ng-model="attributes.ranged.monthsAfter" ng-change="overrideAttribute('ranged')"/>
+                    <input type="number" min="1" class="col-md-8" ng-model="attributes.ranged.monthsAfter" ng-change="overrideAttribute('ranged.monthsAfter')"/>
                 </li>
                 <li class="col-md-12">
                     <span class="col-md-4" style="margin-top: 5px">Required:</span>

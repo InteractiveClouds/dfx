@@ -57,11 +57,11 @@
                 </li>
                 <li class="col-md-12" ng-show="$eval(attributes.checkValue.value)">
                     <span class="col-md-4">Checked value:</span>
-                    <input class="col-md-8" type="text" ng-model="attributes.checkValue.trueCheckValue" ng-change="overrideAttribute('checkValue')"/>
+                    <input class="col-md-8" type="text" ng-model="attributes.checkValue.trueCheckValue" ng-change="overrideAttribute('checkValue.trueCheckValue')"/>
                 </li>
                 <li class="col-md-12" ng-show="$eval(attributes.checkValue.value)">
                     <span class="col-md-4">Unchecked value:</span>
-                    <input class="col-md-8" type="text" ng-model="attributes.checkValue.falseCheckValue" ng-change="overrideAttribute('checkValue')"/>
+                    <input class="col-md-8" type="text" ng-model="attributes.checkValue.falseCheckValue" ng-change="overrideAttribute('checkValue.falseCheckValue')"/>
                 </li>
                 <li class="col-md-12" dfx-gc-property="display">
                     <span class="col-md-4">Display:</span>
