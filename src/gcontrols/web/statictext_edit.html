@@ -61,11 +61,11 @@
             <ul class="dfx-ve-property-treeview-content">
                 <li class="col-md-12">
                     <span class="col-md-4">Tooltip text:</span>
-                    <input class="col-md-8" type="text" ng-model="attributes.tooltipProperties.toolTipText" ng-change="overrideAttribute('tooltipProperties')"/>
+                    <input class="col-md-8" type="text" ng-model="attributes.tooltipProperties.toolTipText" ng-change="overrideAttribute('tooltipProperties.toolTipText')"/>
                 </li>
                 <li class="col-md-12">
                     <span class="col-md-4">Tooltip direction:</span>
-                    <md-radio-group class="col-md-8" ng-model="attributes.tooltipProperties.direction"  ng-change="overrideAttribute('tooltipProperties')">
+                    <md-radio-group class="col-md-8" ng-model="attributes.tooltipProperties.direction"  ng-change="overrideAttribute('tooltipProperties.direction')">
                         <md-radio-button class="gc_tooltip_direction md-primary" value="left"> Left </md-radio-button>
                         <md-radio-button class="gc_tooltip_direction md-primary" value="top">Top</md-radio-button>
                         <md-radio-button class="gc_tooltip_direction md-primary" value="bottom">Bottom</md-radio-button>

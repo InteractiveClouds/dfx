@@ -41,8 +41,8 @@
                     <span class="col-md-6">Icon Type:</span>
                     <div class="col-md-6" layout="row" style="padding: 0 0 8px 0">
                         <md-radio-group ng-model="attributes.icon.type">
-                            <md-radio-button value="fa-icon" ngChange="overrideAttribute('icon')" style="margin: 0;" class="md-primary">Font Awesome Icon</md-radio-button>
-                            <md-radio-button value="svg-icon" ngChange="overrideAttribute('icon')" style="margin: 0;" class="md-primary">SVG Icon</md-radio-button>
+                            <md-radio-button value="fa-icon" ngChange="overrideAttribute('icon.type')" style="margin: 0;" class="md-primary">Font Awesome Icon</md-radio-button>
+                            <md-radio-button value="svg-icon" ngChange="overrideAttribute('icon.type')" style="margin: 0;" class="md-primary">SVG Icon</md-radio-button>
                         </md-radio-group>
                     </div>
                 </li>
@@ -121,7 +121,7 @@
                         <li class="col-md-12">
                             <span class="col-md-1"></span>
                             <span class="col-md-5">error message:</span>
-                            <input class="col-md-6" type="text" ng-model="attributes.pattern.errorMessage" ng-change="overrideAttribute('pattern')"/>
+                            <input class="col-md-6" type="text" ng-model="attributes.pattern.errorMessage" ng-change="overrideAttribute('pattern.errorMessage')"/>
                         </li>
                     </ul>
                 </li>
@@ -147,7 +147,7 @@
                 </li>
                 <li class="col-md-12">
                     <span class="col-md-6">Icon Size:</span>
-                    <input class="col-md-6" type="number" ng-model="attributes.icon.size" ng-change="overrideAttribute('icon')" />
+                    <input class="col-md-6" type="number" ng-model="attributes.icon.size" ng-change="overrideAttribute('icon.size')" />
                 </li>   
                 <li class="col-md-12">
                     <span class="col-md-6">Style:</span>

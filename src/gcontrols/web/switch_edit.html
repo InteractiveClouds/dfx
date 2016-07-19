@@ -57,11 +57,11 @@
 				</li>
 				<li class="col-md-12" ng-show="$eval(attributes.switchValue.value)">
 					<span class="col-md-4">True value:</span>
-					<input class="col-md-8" type="text" ng-model="attributes.switchValue.trueSwitchValue" ng-change="overrideAttribute('switchValue')"/>
+					<input class="col-md-8" type="text" ng-model="attributes.switchValue.trueSwitchValue" ng-change="overrideAttribute('switchValue.trueSwitchValue')"/>
 				</li>
 				<li class="col-md-12" ng-show="$eval(attributes.switchValue.value)">
 					<span class="col-md-4">False value:</span>
-					<input class="col-md-8" type="text" ng-model="attributes.switchValue.falseSwitchValue" ng-change="overrideAttribute('switchValue')"/>
+					<input class="col-md-8" type="text" ng-model="attributes.switchValue.falseSwitchValue" ng-change="overrideAttribute('switchValue.falseSwitchValue')"/>
 				</li>
 				<li class="col-md-12" dfx-gc-property="display">
 					<span class="col-md-4">Display:</span>
