@@ -216,10 +216,12 @@ out.start = function () {
 
                 }).then(function () {
                     const
-                        tenants  = require('./lib/dfx_sysadmin/tenants'),
-                        cache    = require('./lib/dfx_cache').init({
-                                log : new Log.Instance({label:'CACHE'})
-                            });
+                        tenants = require('./lib/dfx_sysadmin/tenants'),
+                        cache   = require('./lib/dfx_cache').init({
+                                log : new Log.Instance({label:'CACHE'}),
+                                selectDatabase : SETTINGS.selectRedisDatabase
+
+                            }).client;
 
                     if (SETTINGS.studio) {
                         const _storage = require('./lib/mdbw')(SETTINGS.mdbw_options);
@@ -229,7 +231,11 @@ out.start = function () {
                         require('./lib/dfx_sysadmin/authProviders').init({ storage: _storage });
                         require('./lib/dfx_sysadmin/dbDrivers').init({ storage: _storage });
 
-                        require('./lib/dfx_queries').init({ storage: _storage });
+                        require('./lib/dfx_queries').init({
+                            storage : _storage,
+                            cache   : cache
+                        });
+
                         require('./lib/authRequest_mod').oAuth2AccessTokens.init({ storage: _storage });
                         require('./lib/dfx_resources').api.init({ storage: _storage });
 
@@ -250,7 +256,6 @@ out.start = function () {
                             });
                     } else {
                         return initFileStorage(fsdbFolder).then(function(_storage) {
-
                             tenants.init({ storage: _storage });
 
                             require('./lib/dfx_sysadmin/authProviders').init({ storage: _storage });
@@ -261,7 +266,11 @@ out.start = function () {
                                 return _storage._updateAllCollectionsDocsLists();
                             }
 
-                            require('./lib/dfx_queries').init({ storage: _storage });
+                            require('./lib/dfx_queries').init({
+                                storage : _storage,
+                                cache   : cache
+                            });
+
                             require('./lib/authRequest_mod').oAuth2AccessTokens.init({ storage: _storage });
                             require('./lib/dfx_resources').api.init({ storage: _storage });
 

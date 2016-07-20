@@ -79,35 +79,35 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", layout="co
                             li
                                 input#palette-item-0.dfx-ve-palette-treeview-button(type="checkbox")
                                 label(for="palette-item-0") Basic
-                                ul.dfx-ve-palette-treeview-content(gc-cat="basic")
+                                ul.dfx-ve-palette-treeview-content(gc-cat="basic", style="margin-bottom:5px")
                             li
-                                input#palette-item-1.dfx-ve-palette-treeview-button(type="checkbox")
+                                input#palette-item-1.dfx-ve-palette-treeview-button(type="checkbox", checked)
                                 label(for="palette-item-1") Input
-                                ul.dfx-ve-palette-treeview-content(gc-cat="input")
+                                ul.dfx-ve-palette-treeview-content(gc-cat="input", style="margin-bottom:5px")
                             li
-                                input#palette-item-2.dfx-ve-palette-treeview-button(type="checkbox")
+                                input#palette-item-2.dfx-ve-palette-treeview-button(type="checkbox", checked)
                                 label(for="palette-item-2") Menu
-                                ul.dfx-ve-palette-treeview-content(gc-cat="menu")
+                                ul.dfx-ve-palette-treeview-content(gc-cat="menu", style="margin-bottom:5px")
                             li
-                                input#palette-item-3.dfx-ve-palette-treeview-button(type="checkbox")
+                                input#palette-item-3.dfx-ve-palette-treeview-button(type="checkbox", checked)
                                 label(for="palette-item-3") Selection
-                                ul.dfx-ve-palette-treeview-content(gc-cat="selection")
+                                ul.dfx-ve-palette-treeview-content(gc-cat="selection", style="margin-bottom:5px")
                             li
-                                input#palette-item-4.dfx-ve-palette-treeview-button(type="checkbox")
+                                input#palette-item-4.dfx-ve-palette-treeview-button(type="checkbox", checked)
                                 label(for="palette-item-4") Table
-                                ul.dfx-ve-palette-treeview-content(gc-cat="table")
+                                ul.dfx-ve-palette-treeview-content(gc-cat="table", style="margin-bottom:5px")
                             li
-                                input#palette-item-5.dfx-ve-palette-treeview-button(type="checkbox")
+                                input#palette-item-5.dfx-ve-palette-treeview-button(type="checkbox", checked)
                                 label(for="palette-item-5") Chart
-                                ul.dfx-ve-palette-treeview-content(gc-cat="chart")
+                                ul.dfx-ve-palette-treeview-content(gc-cat="chart", style="margin-bottom:5px")
                             li
-                                input#palette-item-6.dfx-ve-palette-treeview-button(type="checkbox")
+                                input#palette-item-6.dfx-ve-palette-treeview-button(type="checkbox", checked)
                                 label(for="palette-item-6") Layout
-                                ul.dfx-ve-palette-treeview-content(gc-cat="layout")
+                                ul.dfx-ve-palette-treeview-content(gc-cat="layout", style="margin-bottom:5px")
                             li(style="display:none")
-                                input#palette-item-7.dfx-ve-palette-treeview-button(type="checkbox")
+                                input#palette-item-7.dfx-ve-palette-treeview-button(type="checkbox", checked)
                                 label(for="palette-item-7") Custom
-                                ul.dfx-ve-palette-treeview-content(gc-cat="custom")
+                                ul.dfx-ve-palette-treeview-content(gc-cat="custom", style="margin-bottom:5px")
             md-content#dfx-ve-main-content(flex, ng-click="unselectComponent()")
                 md-tabs.md-dynamic-height(md-selected="view_card_select_index")
                     md-tab(ng-repeat="card in view_cards", label="{{card.name}}")

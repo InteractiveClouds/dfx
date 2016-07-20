@@ -318,28 +318,42 @@ dfxAppServices.factory('dfxApiRoutes', [ 'dfxUtil', function(dfxUtil) {
     return api_route;
 }]);
 
-dfxAppServices.factory('dfxApiServices', [ function() {
+dfxAppServices.factory('dfxApiServices', [ 'dfxApiServiceObjects',  function( dfxApiServiceObjects ) {
 
     var api_services = {};
 
-    api_services.get = function( scope, route, req_data, callback, object_path, assigned_variable ) {
+    api_services.get = function( scope, route, req_data, cache) {
+        if (cache) req_data.cache = cache;
         return requestAPIRoute({
             url:route,
             type:'get',
-            data:req_data || {}
+            data: {
+                data  : req_data || {},
+                cache : cache ? cache : null
+            }
         });
     };
 
-    api_services.post = function( scope, route, req_params, req_body, callback ) {
+    api_services.post = function( scope, route, req_params, req_body, cache) {
         return requestAPIRoute({
             url:route,
             type:'post',
             data:{
                 params : req_params || {},
-                body : req_body || {}
+                body : req_body || {},
+                cache : cache ? cache : null
             }
         });
     };
+
+    api_services.clearCache = function(o) {
+        var obj = {
+            type : o.type,
+            application : o.application,
+            name : o.name
+        };
+        return dfxApiServiceObjects.clearCache(obj);
+    }
 
     return api_services;
 }]);

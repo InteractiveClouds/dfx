@@ -7,7 +7,7 @@
 	</h4>
 	<div layout="row">
 		<md-button ng-if="serviceMode === 'serviceAdd'" ng-click="saveApiSo()" class="md-primary" ng-disabled="validNameResult === 'failed' || validUrlResult === 'failed'">Save</md-button>
-		<md-button ng-if="serviceMode === 'serviceEdit'" ng-click="updateApiSo()" class="md-primary" ng-disabled="validNameResult === 'failed' || validUrlResult === 'failed'">Save</md-button>		
+		<md-button ng-if="serviceMode === 'serviceEdit'" ng-click="updateApiSo()" class="md-primary" ng-disabled="validNameResult === 'failed' || validUrlResult === 'failed'">Save</md-button>
 		<md-button ng-click="leaveApiSoEditor()" class="md-primary">Cancel</md-button>
 	</div>	
 </div>
@@ -134,6 +134,28 @@
 				  <label>Request Body:</label>
 				  <textarea ng-model="scopeService.data.settings.postrequestbody" class="textarea-gray" style="min-height:100px;padding:0 8px;" aria-label="scopeService.data.settings.postrequestbody"></textarea>
 				</md-input-container>
+                <md-input-container class="input-select-aligned margin-select" style="width:25%;margin-right:14px;">
+                    <label>Cache response:</label>
+                    <md-select ng-model="scopeService.data.settings.cache">
+                        <md-option value="none">none</md-option>
+                        <md-option value="user">per user</md-option>
+                        <md-option value="tenant">per tenant</md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container class="input-select-aligned" style="width:25%;margin-right:14px;" ng-if="scopeService.data.settings.cache != 'none'">
+                    <label>Expiration time (seconds):</label>
+                    <input name="cacheTimeExpiry" ng-model="scopeService.data.settings.cacheTimeExpiry" placeholder="3600" required="" ng-pattern="/^0|[1-9]\d*$/">
+                    <div ng-messages="scopeService.data.settings.cacheTimeExpiry.$error" role="alert" multiple="">
+                        <div ng-message="pattern" ng-hide="scopeService.data.settings.cacheTimeExpiry" class="my-message">Value must be numeric</div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container ng-if="scopeService.data.settings.cache == 'user'">
+                    <md-button class="md-raised md-warn" ng-click="clearCache('user')">clear</md-button>
+                </md-input-container>
+                <md-input-container ng-if="scopeService.data.settings.cache == 'tenant'">
+                    <md-button class="md-raised md-warn" ng-click="clearCache('tenant')">clear</md-button>
+                </md-input-container>
 			</md-content>
 		</md-tab>
 		<md-tab label="Parameters">
