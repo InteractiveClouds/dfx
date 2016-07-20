@@ -730,6 +730,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
             'chips': {'default_name':'chpChips', 'flex':'true'},
             'rating': {'default_name':'rtRating', 'flex':'false'},
             'richtext': {'default_name':'rchText', 'flex':'true'},
+            'json': {'default_name':'jsnJson', 'flex':'true'},
             'progressbar': {'default_name':'progressBar', 'flex':'true'}
         },
         'menu': {
@@ -1063,7 +1064,10 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     $scope.viewEditorCut = function() {
         var component_id = $scope.gc_selected.id;
 
-        $scope.view_editor_cached_component = angular.copy( $scope.gc_selected );// put component in memory
+        var view_definition = DfxVisualBuilder.movingComponentHelper.getViewDefinition();
+        var component_definition = DfxVisualBuilder.getComponentDefinition($scope.gc_selected.id, view_definition.definition);
+
+        $scope.view_editor_cached_component = component_definition;// put component in memory
 
         // remove component
         delete $scope.gc_instances[component_id];
@@ -1071,13 +1075,15 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     };
 
     $scope.viewEditorCopy = function() {
-        $scope.view_editor_cached_component = angular.copy( $scope.gc_selected );// put component in memory
+        var view_definition = DfxVisualBuilder.movingComponentHelper.getViewDefinition();
+        var component_definition = DfxVisualBuilder.getComponentDefinition($scope.gc_selected.id, view_definition.definition);
+
+        $scope.view_editor_cached_component = component_definition;// put component in memory
     };
 
     $scope.viewEditorPaste = function() {
-        if ($scope.view_editor_cached_component && DfxVisualBuilder.movingComponentHelper.isContainer($scope.gc_selected)) {
-            DfxVisualBuilder.pasteComponent($scope.view_editor_cached_component, $scope.gc_selected, $scope.view_card_selected);
-            delete $scope.view_editor_cached_component;// paste only once, otherwise it overrides puts in definition all attributes and not only overridden
+        if ($scope.view_editor_cached_component && $scope.gc_selected) {
+            DfxVisualBuilder.pasteComponent(angular.copy($scope.view_editor_cached_component), $scope.gc_selected, $scope.view_card_selected);
         }
     };
     // Functions implementing Cut/Copy/Paste in view editor - END

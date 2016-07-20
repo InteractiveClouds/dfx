@@ -1,0 +1,15 @@
+<div ng-if="attributes.type.value==='input'" ng-show="$eval(attributes.display.value)" class="dfx-core-gc-json-input-type {{attributes.whiteframe.value}} {{attributes.classes.value}} dfx-gc-web-json" style="{{attributes.style.value}}">
+	<md-input-container ng-form="inputJsonEditor" class="flex" ng-class="!inputJsonEditor.editorInput.$valid ? 'md-input-invalid' : ''">
+		<label ng-bind="$eval(attributes.label.value)"></label>
+	  <input id="{{component_id}}_scopeInput" class="dfx-core-gc-json-input" name="editorInput" ng-model="stringModel.value" ng-change="inputToJson()" ng-disabled="$eval(attributes.disabled.value)" ng-class="!inputJsonEditor.editorInput.$valid ? 'ng-invalid' : 'ng-valid'"/>
+	  <div ng-if="!inputJsonEditor.editorInput.$valid" ng-messages="inputJsonEditor.editorInput.$error">      
+      <span style="font-size:12px;">Json string is invalid.</span>      
+  	</div>
+	</md-input-container>
+	<md-button ng-click="showJsonDialog($event);viewDialog.mode=true" class="dfx-core-gc-json-button flex dfx-core-gc-json-button-preview">
+		<ng-md-icon icon="remove_red_eye" size="21"><ng-md-icon></md-button>
+	<md-button ng-click="showJsonDialog($event);viewDialog.mode=false" class="dfx-core-gc-json-button flex dfx-core-gc-json-button-edit" ng-disabled="$eval(attributes.disabled.value)">
+		<ng-md-icon icon="edit" size="21"></ng-md-icon>
+	</md-button>
+</div>
+<div ng-if="attributes.type.value==='panel'" ng-show="$eval(attributes.display.value)" id="{{component_id}}_dfx_gc_web_json_panel" class="dfx-core-gc-json-panel-type {{attributes.whiteframe.value}} {{attributes.classes.value}} dfx-gc-web-json" style="{{attributes.style.value}}"></div>

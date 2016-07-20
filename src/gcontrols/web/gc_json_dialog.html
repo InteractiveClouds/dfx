@@ -1,0 +1,25 @@
+<md-dialog class="dfx-dialog-json-editor" aria-label="dialog-json-editor" ng-cloak>
+    <form>
+        <md-toolbar ng-if="!$eval(attributes.disabled.value)">
+            <div class="md-toolbar-tools"><h2 ng-bind="$eval(attributes.title.value)"></h2></div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div ng-if="viewDialog.mode">
+                <div class="md-whiteframe-1dp" style="margin:8px">
+                    <pre ng-if="attributes.binding.value!==''">{{$gcscope[attributes.binding.value] | json}}</pre>
+                    <pre ng-if="attributes.binding.value===''">{{attributes.content.value | json}}</pre>
+                </div>
+            </div>
+            <div ng-if="!$eval(attributes.disabled.value) && !viewDialog.mode" class="dfx-web-gc-json-dialog-tabs">
+                <div id="{{component_id}}_dfx_json_editor_dialog_panel" class="dfx-web-gc-json-dialog-tab md-whiteframe-1dp"></div>
+                <div class="dfx-web-gc-json-dialog-tab md-whiteframe-1dp">
+                    <pre ng-if="attributes.binding.value!==''">{{$gcscope[attributes.binding.value] | json}}</pre>
+                    <pre ng-if="attributes.binding.value===''">{{attributes.content.value | json}}</pre>
+                </div>
+            </div>
+        </md-dialog-content>
+        <div class="md-actions" ng-if="!$eval(attributes.disabled.value)">
+            <md-button ng-click="closeJsonDialog()" class="md-primary">Close</md-button>
+        </div>
+    </form>
+</md-dialog>
