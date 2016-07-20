@@ -379,19 +379,23 @@ md-menu-item button.dfx-horizontalmenu-button small {
     display: flex;
 }
 .dfx-core-gc-json-input-type md-input-container {
-    display: flex;
     flex-grow: 1;
-    padding: 0;
-}
-input.dfx-core-gc-json-input.md-input {
-    height: 34px;
+    padding: 2px 5px 2px 2px;
 }
 .dfx-core-gc-json-button {
     display: inline-flex;
-    min-width:40px;
-    height: 34px;
-    min-height: 34px;
-    margin: 0 0 0 2px;
+    padding: 0;
+    min-width:21px;
+    max-width: 21px;
+    height: 21px;
+    min-height: 21px;
+    margin: auto 0px;
+}
+.dfx-core-gc-json-button ng-md-icon {
+    color: #757575;
+}
+button[disabled="disabled"].dfx-core-gc-json-button ng-md-icon {
+    color: #bfbfbf;    
 }
 .dfx-core-gc-json-button-preview {}
 .dfx-core-gc-json-panel-type {

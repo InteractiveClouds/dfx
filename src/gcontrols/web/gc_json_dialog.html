@@ -1,6 +1,8 @@
 <md-dialog class="dfx-dialog-json-editor" aria-label="dialog-json-editor" ng-cloak>
     <form>
-        <md-toolbar ng-if="!$eval(attributes.disabled.value)"><div class="md-toolbar-tools"><h2>DFX JSON Editor</h2></div></md-toolbar>
+        <md-toolbar ng-if="!$eval(attributes.disabled.value)">
+            <div class="md-toolbar-tools"><h2 ng-bind="$eval(attributes.title.value)"></h2></div>
+        </md-toolbar>
         <md-dialog-content>
             <div ng-if="viewDialog.mode">
                 <div class="md-whiteframe-1dp" style="margin:8px">
