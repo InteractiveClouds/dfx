@@ -6,14 +6,11 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", layout="co
     div#dfx-ve-toolbar
         md-toolbar.dfx-ve-toolbar
             div.dfx-ve-toolbar-tools.md-toolbar-tools
-                div#dfx-ve-palette-title
-                    md-button#dfx-ve-toggle-palette.dfx-ve-toolbar-button(aria-label="palette", ng-click="toggleLeft()")
-                        i#dfx-ve-toggle-palette-icon.fa.fa-angle-double-left
                 span
-                    md-menu#dfx-ve-menu-view-mode
-                        label(md-menu-origin, style="font-size:12px;background:#7d7d7d;margin-left:20px;padding: 2px 4px;color:#fff;margin-top:4px;margin-right:10px;border-radius:8px;cursor:pointer", ng-click="$mdOpenMenu($event)")
+                    md-menu#dfx-ve-menu-view-mode(md-offset="0 34")
+                        label(md-menu-origin, style="font-size:12px;background: #4CD5F3;margin-left: 10px;padding: 4px 8px;color:#1f1f1f;margin-top:4px;margin-right:10px;cursor:pointer", ng-click="$mdOpenMenu($event)")
                             span(style="margin-right:5px;font-weight:700") Mode:
-                            span Edit {{design_view_mode}}
+                            span {{design_view_mode}}
                         md-menu-content#dfx-ve-toolbarmenu(width="4")
                             md-menu-item
                                 md-button(ng-click="changeViewMode('design')") Design
@@ -23,36 +20,65 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", layout="co
                                 md-button(ng-click="changeViewMode('style')") Style
                             md-menu-item
                                 md-button(ng-click="changeViewMode('source')") Source
-                span(style="font-size:12px;margin-left:30px;margin-right:5px;margin-top:5px", ng-show="design_visible") Edit:
-                md-button.dfx-ve-toolbar-button.md-raised(aria-label="vieweditorcut", ng-show="design_visible", ng-click="viewEditorCut($event)")
-                    i.fa.fa-cut(title="Cut")
-                md-button.dfx-ve-toolbar-button.md-raised(aria-label="vieweditorcopy", ng-show="design_visible", ng-click="viewEditorCopy($event)")
-                    i.fa.fa-copy(title="Copy")
-                md-button.dfx-ve-toolbar-button.md-raised(aria-label="vieweditorpaste", ng-show="design_visible", ng-click="viewEditorPaste($event)")
-                    i.fa.fa-paste(title="Paste")
-                md-button.dfx-ve-toolbar-button.md-raised(aria-label="vieweditorundo", ng-show="design_visible", ng-click="viewEditorUndo($event)")
-                    i.fa.fa-undo(title="Undo")
-                span(style="font-size:12px;margin-left:30px;margin-right:5px;margin-top:5px", ng-show="design_visible") Cards:
-                md-button.dfx-ve-toolbar-button.md-raised(aria-label="addcard", ng-show="design_visible", ng-click="addCard($event)")
-                    i.fa.fa-plus(title="Add a new card")
-                md-button.dfx-ve-toolbar-button.md-raised(aria-label="removecard", ng-show="design_visible", ng-click="removeCard($event)")
-                    i.fa.fa-trash(title="Remove the current card")
-                span(style="font-size:12px;margin-left:30px;margin-right:5px;margin-top:5px", ng-show="script_visible") Script:
-                md-button.dfx-ve-toolbar-button.md-raised(aria-label="assistant", ng-click="showHelpEditor(this)", ng-show="script_visible")
-                    i.fa.fa-magic(title="Code Assistant")
-                span(style="font-size:12px;margin-left:30px;margin-right:5px;margin-top:5px") Preview:
-                md-button.dfx-ve-toolbar-button.md-raised(aria-label="preview", ng-click="openPreview()")
-                    i.fa.fa-play-circle-o(title="preview")
-                div(style="text-align: center;", ng-if="waitIconShowPreview === true")
-                    md-icon.fa.fa-spinner.fa-pulse(style="font-size: 24px; color:#300000;")
-                md-button.dfx-ve-toolbar-button.md-raised(aria-label="preview", ng-click="openPreviewInPage()", ng-if="waitIconShowPreview === false")
-                    i.fa.fa-list-alt(title="preview in page")
-                span(style="font-size:12px;margin-left:30px;margin-right:5px;margin-top:5px") Actions:
-                md-button.dfx-ve-toolbar-button.md-raised(aria-label="save", ng-click="saveView()")
-                    i.fa.fa-save(title="save")
-                md-button.dfx-ve-toolbar-button.md-raised(aria-label="preview", ng-click="exitViewEditor($event)")
-                    i.fa.fa-close(title="exit")
+                span(style="font-size: 12px;background: #4a4a4a;line-height: 48px;color: #fff;padding: 0 8px;border-left: 1px #6b6a6a solid;border-right: 1px #6b6a6a solid;", ng-show="design_visible")
+                    span(style="margin-right:5px") Edit:
+                    img(src="/images/vb/icons/edit_cut.png", ng-show="design_visible", class="dfx-ve-toolbar-icon", ng-click="viewEditorCut($event)", title="cut")
+                    img(src="/images/vb/icons/edit_copy.png", ng-show="design_visible", class="dfx-ve-toolbar-icon", ng-click="viewEditorCopy($event)", title="copy")
+                    img(src="/images/vb/icons/edit_paste.png", ng-show="design_visible", class="dfx-ve-toolbar-icon", ng-click="viewEditorPaste($event)", title="paste")
+                    img(src="/images/vb/icons/edit_undo.png", ng-show="design_visible", class="dfx-ve-toolbar-icon", ng-click="viewEditorUndo($event)", title="undo")
+                span(style="font-size: 12px;margin-left: 1px;background: #4a4a4a;line-height: 48px;color: #fff;padding: 0 8px;border-left: 1px #6b6a6a solid;border-right: 1px #6b6a6a solid;", ng-show="design_visible")
+                    span(style="margin-right:5px") Cards:
+                    img(src="/images/vb/icons/cards_add.png", ng-show="design_visible", class="dfx-ve-toolbar-icon", ng-click="addCard($event)", title="Add a new card")
+                    img(src="/images/vb/icons/cards_subtract.png", ng-show="design_visible", class="dfx-ve-toolbar-icon", ng-click="removeCard($event)", title="Remove the current card")
+                span(style="font-size: 12px;margin-left: 1px;background: #4a4a4a;line-height: 48px;color: #fff;padding: 0 8px;border-left: 1px #6b6a6a solid;border-right: 1px #6b6a6a solid;", ng-show="script_visible")
+                    span(style="margin-right:5px") Script:
+                    img(src="/images/vb/icons/script_assistant.png", class="dfx-ve-toolbar-icon", ng-click="showHelpEditor(this)", title="Code Assistant")
+                    md-menu#dfx-ve-menu-script-theme
+                        span(md-menu-origin, style="background:#368798;margin-left:5px;padding:6px;cursor:pointer;", ng-click="$mdOpenMenu($event)") Theme: {{script_theme}}
+                        md-menu-content(width="4")
+                            md-menu-item
+                                md-button(ng-click="changeScriptTheme('3024-day')") 3024-day
+                            md-menu-item
+                                md-button(ng-click="changeScriptTheme('3024-dark')") 3024-dark
+                            md-menu-item
+                                md-button(ng-click="changeScriptTheme('ambiance')") ambiance
+                            md-menu-item
+                                md-button(ng-click="changeScriptTheme('blackboard')") blackboard
+                            md-menu-item
+                                md-button(ng-click="changeScriptTheme('dracula')") dracula
+                            md-menu-item
+                                md-button(ng-click="changeScriptTheme('eclipse')") eclipse
+                            md-menu-item
+                                md-button(ng-click="changeScriptTheme('erlang-dark')") erlang-dark
+                            md-menu-item
+                                md-button(ng-click="changeScriptTheme('icecoder')") icecoder
+                            md-menu-item
+                                md-button(ng-click="changeScriptTheme('material')") material
+                            md-menu-item
+                                md-button(ng-click="changeScriptTheme('monokai')") monokai
+                            md-menu-item
+                                md-button(ng-click="changeScriptTheme('neo')") neo
+                            md-menu-item
+                                md-button(ng-click="changeScriptTheme('rubyblue')") rubyblue
+                            md-menu-item
+                                md-button(ng-click="changeScriptTheme('solarized light')") solarized light
+                            md-menu-item
+                                md-button(ng-click="changeScriptTheme('solarized dark')") solarized dark
+                span(style="font-size: 12px;margin-left: 1px;background: #4a4a4a;line-height: 48px;color: #fff;padding: 0 8px;border-left: 1px #6b6a6a solid;border-right: 1px #6b6a6a solid;", ng-show="script_visible")
+                    span(style="margin-right:5px") Edit:
+                    img(src="/images/vb/icons/script_search.png", class="dfx-ve-toolbar-icon", ng-click="searchScript($event)", title="Search")
+                    img(src="/images/vb/icons/script_replace.png", class="dfx-ve-toolbar-icon", ng-click="replaceScript($event)", title="Replace")
                 span.flex
+                    span(style="font-size: 12px;margin-left: 1px;background: #4a4a4a;line-height: 48px;color: #fff;padding: 0 8px;border-left: 1px #6b6a6a solid;border-right: 1px #6b6a6a solid;", class="pull-right")
+                        span(style="margin-right:5px") Actions:
+                        img(src="/images/vb/icons/action_save.png", class="dfx-ve-toolbar-icon", ng-click="saveView()", title="Save")
+                        img(src="/images/vb/icons/action_exit.png", class="dfx-ve-toolbar-icon", ng-click="exitViewEditor($event)", title="Exit the editor")
+                    span(style="font-size: 12px;margin-left: 1px;background: #4a4a4a;line-height: 48px;color: #fff;padding: 0 8px;border-left: 1px #6b6a6a solid;border-right: 1px #6b6a6a solid;", class="pull-right")
+                        span(style="margin-right:5px") Preview:
+                        img(src="/images/vb/icons/preview_local.png", class="dfx-ve-toolbar-icon", ng-click="openPreview()", title="Preview")
+                        img(src="/images/vb/icons/preview_global.png", class="dfx-ve-toolbar-icon", ng-click="openPreviewInPage()", ng-if="waitIconShowPreview === false", title="Preview in page")
+                        div(style="text-align: center;", ng-if="waitIconShowPreview === true")
+                            md-icon.fa.fa-spinner.fa-pulse(style="font-size: 24px; color:#300000;")
                     label.pull-right(style="font-size:12px;background:#8731AB;padding: 2px 4px;color:#fff;margin-top:4px;margin-right:10px;border-radius:8px;cursor:pointer", ng-if="view_platform=='mobile'", ng-click="changeDeviceOrientation()") {{design_device_orientation}}
                     md-menu.pull-right(style="margin-top:-3px", ng-if="view_platform=='mobile'")
                         label(md-menu-origin, style="font-size:12px;background:#14BD39;padding: 2px 4px;color:#fff;margin-top:4px;margin-right:10px;border-radius:8px;cursor:pointer", ng-click="$mdOpenMenu($event)") {{design_selected_device.label}}
@@ -78,35 +104,43 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", layout="co
                         ul
                             li
                                 input#palette-item-0.dfx-ve-palette-treeview-button(type="checkbox")
-                                label(for="palette-item-0") Basic
+                                label(for="palette-item-0")
+                                    span Basic
                                 ul.dfx-ve-palette-treeview-content(gc-cat="basic", style="margin-bottom:5px")
                             li
                                 input#palette-item-1.dfx-ve-palette-treeview-button(type="checkbox", checked)
-                                label(for="palette-item-1") Input
+                                label(for="palette-item-1")
+                                    span Input
                                 ul.dfx-ve-palette-treeview-content(gc-cat="input", style="margin-bottom:5px")
                             li
                                 input#palette-item-2.dfx-ve-palette-treeview-button(type="checkbox", checked)
-                                label(for="palette-item-2") Menu
+                                label(for="palette-item-2")
+                                    span Menu
                                 ul.dfx-ve-palette-treeview-content(gc-cat="menu", style="margin-bottom:5px")
                             li
                                 input#palette-item-3.dfx-ve-palette-treeview-button(type="checkbox", checked)
-                                label(for="palette-item-3") Selection
+                                label(for="palette-item-3")
+                                    span Selection
                                 ul.dfx-ve-palette-treeview-content(gc-cat="selection", style="margin-bottom:5px")
                             li
                                 input#palette-item-4.dfx-ve-palette-treeview-button(type="checkbox", checked)
-                                label(for="palette-item-4") Table
+                                label(for="palette-item-4")
+                                    span Table
                                 ul.dfx-ve-palette-treeview-content(gc-cat="table", style="margin-bottom:5px")
                             li
                                 input#palette-item-5.dfx-ve-palette-treeview-button(type="checkbox", checked)
-                                label(for="palette-item-5") Chart
+                                label(for="palette-item-5")
+                                    span Chart
                                 ul.dfx-ve-palette-treeview-content(gc-cat="chart", style="margin-bottom:5px")
                             li
                                 input#palette-item-6.dfx-ve-palette-treeview-button(type="checkbox", checked)
-                                label(for="palette-item-6") Layout
+                                label(for="palette-item-6")
+                                    span Layout
                                 ul.dfx-ve-palette-treeview-content(gc-cat="layout", style="margin-bottom:5px")
                             li(style="display:none")
                                 input#palette-item-7.dfx-ve-palette-treeview-button(type="checkbox", checked)
-                                label(for="palette-item-7") Custom
+                                label(for="palette-item-7")
+                                    span Custom
                                 ul.dfx-ve-palette-treeview-content(gc-cat="custom", style="margin-bottom:5px")
             md-content#dfx-ve-main-content(flex, ng-click="unselectComponent()")
                 md-tabs.md-dynamic-height(md-selected="view_card_select_index")
@@ -115,7 +149,7 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", layout="co
                             div#dfx-ve-platform(dfx-ve-platform)
                                 div(id="dfx_visual_editor_workspace_{{card.name}}", dfx-card="{{card.name}}", dfx-ve-workspace, style="height:100%;overflow:auto")
             md-sidenav#dfx-ve-sidenav-right.md-sidenav-right.md-whiteframe-z2(md-component-id="right", md-is-locked-open="$mdMedia('gt-md')", ng-show="property_visible")
-                md-content#dfx-ve-sidenav-right-content(layout-padding show-gt-md)
+                md-content#dfx-ve-sidenav-right-content(show-gt-md)
                     div(ng-show="gc_selected==null") Select a Graphical Control
                     div#dfx_visual_editor_property(ng-show="gc_selected!=null")
                         a#dfx_visual_editor_property_title

@@ -223,7 +223,8 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     $scope.style_visible = false;
     $scope.source_visible = false;
     $scope.view_category = $('#dfx_src_widget_editor').attr('data-view-cat');
-    $scope.design_view_mode = 'Display';
+    $scope.design_view_mode = 'Design';
+    $scope.script_theme = (localStorage.getItem('DFX_script_theme')!=null) ? localStorage.getItem('DFX_script_theme') : 'monokai';
 
     $scope.design_devices = [
         {
@@ -296,21 +297,6 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     $scope.design_selected_device = $scope.design_devices[0];
     $scope.design_device_orientation = 'Portrait';
 
-
-    $scope.toggleLeft = function() {
-        $scope.palette_visible = !$scope.palette_visible;
-        if ($scope.palette_visible) {
-            $('#dfx-ve-toggle-palette-icon').addClass('fa-angle-double-left');
-            $('#dfx-ve-toggle-palette-icon').removeClass('fa-angle-double-right');
-            $('#dfx-ve-palette-title').removeClass('dfx-ve-palette-title-collapsed');
-            $('#dfx-ve-palette-title-text').removeClass('dfx-ve-palette-title-text-collapsed');
-        } else {
-            $('#dfx-ve-palette-title').addClass('dfx-ve-palette-title-collapsed');
-            $('#dfx-ve-palette-title-text').addClass('dfx-ve-palette-title-text-collapsed');
-            $('#dfx-ve-toggle-palette-icon').removeClass('fa-angle-double-left');
-            $('#dfx-ve-toggle-palette-icon').addClass('fa-angle-double-right');
-        }
-    };
     $scope.toggleRight = function() {
         $scope.property_visible = !$scope.property_visible;
         if ($scope.property_visible) {
@@ -339,6 +325,16 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
             $scope.design_view_mode = 'Source';
             $scope.showSource();
         }
+    };
+    $scope.changeScriptTheme = function (script_theme) {
+        $scope.script_theme = script_theme;
+        localStorage.setItem('DFX_script_theme', script_theme);
+        var editor = $('#dfx_src_editor')[0].CodeMirror;
+        editor.setOption('theme', $scope.script_theme);
+        editor = $('#dfx_styles_editor')[0].CodeMirror;
+        editor.setOption('theme', $scope.script_theme);
+        editor = $('#dfx_script_editor')[0].CodeMirror;
+        editor.setOption('theme', $scope.script_theme);
     };
     $scope.showDesign = function() {
         $scope.design_visible = true;
@@ -431,6 +427,16 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     $scope.changeDeviceOrientation = function() {
         $scope.design_device_orientation = ($scope.design_device_orientation=='Portrait') ? 'Landscape' : 'Portrait';
         $scope.refreshDevice();
+    };
+
+    $scope.searchScript = function(ev) {
+        var editor = $('#dfx_script_editor')[0].CodeMirror;
+        editor.execCommand('find');
+    };
+
+    $scope.replaceScript = function(ev) {
+        var editor = $('#dfx_script_editor')[0].CodeMirror;
+        editor.execCommand('replace');
     };
 
     $scope.unselectComponent = function() {
