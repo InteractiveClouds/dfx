@@ -791,22 +791,29 @@ DfxVisualBuilder.reindexLayoutChildComponents = function (removed_row_index, rem
 /** 
  * Pastes a component to the selected container
  */
-DfxVisualBuilder.pasteComponent = function (component_definition, container_definition, card) {
-    DfxVisualBuilder.movingComponentHelper.setComponentsNewIdsAndNames(component_definition, card, DfxVisualBuilder.movingComponentHelper.getViewDefinition());
+DfxVisualBuilder.pasteComponent = function (component_to_paste_definition, current_selected_component, card) {
+    var container_definition = DfxVisualBuilder.movingComponentHelper.getTargetContainerDefinition(component_to_paste_definition, current_selected_component);
 
-    DfxVisualBuilder.movingComponentHelper.addComponentToDefinition(component_definition, container_definition, card, true);
+    if (container_definition) {
+        DfxVisualBuilder.movingComponentHelper.setComponentsNewIdsAndNames(component_to_paste_definition, card, DfxVisualBuilder.movingComponentHelper.getViewDefinition());
 
-    DfxVisualBuilder.movingComponentHelper.addComponentToScope(component_definition, container_definition.id, card);
+        DfxVisualBuilder.movingComponentHelper.addComponentToDefinition(component_to_paste_definition, container_definition, card, true);
+
+        DfxVisualBuilder.movingComponentHelper.addComponentToScope(component_to_paste_definition, container_definition, card);
+    }
 };
 
 DfxVisualBuilder.movingComponentHelper = (function () {
     var api = {};
 
     api.replaceLayoutIndex = function (component_definition, newIndex) {
-        var rowIndexPosition = component_definition.container.indexOf('_row_');
+        if (! component_definition.container) {// root panel does not have container
+            component_definition.container = 'layout_0_row_0_column_0';
+            return;
+        }
 
-        component_definition.container = 'layout_' + parseInt(newIndex) +
-            component_definition.container.substring(rowIndexPosition);
+        var rowIndexPosition = component_definition.container.indexOf('_row_');
+        component_definition.container = 'layout_' + parseInt(newIndex) + component_definition.container.substring(rowIndexPosition);
     };
 
     api.getViewDefinition = function () {
@@ -815,7 +822,7 @@ DfxVisualBuilder.movingComponentHelper = (function () {
     };
 
     api.removeDefaultAttributes = function (component_definition) {
-        for (attribute in component_definition.attributes) {
+        for (var attribute in component_definition.attributes) {
             if (component_definition.attributes[attribute].status!='overridden') {
                 delete component_definition.attributes[attribute];
             }
@@ -823,11 +830,15 @@ DfxVisualBuilder.movingComponentHelper = (function () {
     };
 
     api.changeTabOrWizardStepIndex = function (component_definition, container_definition) {
+        var index_value = 0;
+
         if (container_definition.type == 'tabs') {
-            api.replaceLayoutIndex(component_definition, container_definition.attributes.tabIndex.value);
+            index_value = container_definition.attributes.tabIndex ? container_definition.attributes.tabIndex.value : index_value;
         } else if (container_definition.type == 'wizard') {
-            api.replaceLayoutIndex(component_definition, container_definition.attributes.stepIndex.value);
+            index_value = container_definition.attributes.stepIndex ? container_definition.attributes.stepIndex.value : index_value;
         }
+
+        api.replaceLayoutIndex(component_definition, index_value);
     };
 
     api.setComponentsNewIdsAndNames = function (component_definition, card, wgt_definition) {
@@ -851,15 +862,33 @@ DfxVisualBuilder.movingComponentHelper = (function () {
         editor.setValue(JSON.stringify(wgt_definition, null, '\t'));
     };
 
-    api.addComponentToScope = function(component_definition, container_id, card) {
-        var gc_container_fake_definition = {id: container_id};
+    api.addComponentToScope = function(component_definition, container_definition, card) {
         var ve_scope = angular.element(document.getElementById('dfx_src_widget_editor')).scope();
-        ve_scope.addComponent(component_definition, gc_container_fake_definition, card);
+        ve_scope.addComponent(component_definition, container_definition, card);
     };
     
     api.isContainer = function(component_definition) {
         var attributes = component_definition.attributes;
-        return attributes.layout || attributes.steps || attributes.tabs;
+        var is_container = attributes.layout || attributes.steps || attributes.tabs ? true : false;
+        return is_container;
+    };
+
+    api.getComponentContainerDefinition = function(component_definition) {
+        var parent_id = $('#' + component_definition.id).closest('[gc-parent]').attr('gc-parent');
+        var container_definition = DfxVisualBuilder.getComponentDefinition(parent_id, api.getViewDefinition().definition);
+        return container_definition;
+    };
+
+    api.getTargetContainerDefinition = function(component_to_paste_definition, current_selected_component) {
+        if ( api.isContainer(current_selected_component) ) {
+            if (current_selected_component.id !== component_to_paste_definition.id) {
+                return current_selected_component;
+            } else {
+                return api.getComponentContainerDefinition(current_selected_component);
+            }
+        } else {
+            return api.getComponentContainerDefinition(current_selected_component);
+        }
     };
 
     return api;
