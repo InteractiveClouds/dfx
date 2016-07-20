@@ -16,10 +16,24 @@
                     <span class="col-md-4">Name:</span>
                     <input class="col-md-8" type="text" ng-model="attributes.name.value" ng-change="overrideAttribute('name')"/>
                 </li>
-                <li class="col-md-12" dfx-property-attribute="text">
+                <li class="col-md-12" dfx-property-attribute="binding">
                     <span class="col-md-4">Binding:</span>
                     <div class="col-md-8" layout="row">
                         <input class="col-md-12" type="text" ng-model="attributes.binding.value" style="margin-left:-15px;" ng-change="overrideAttribute('binding')"/>
+                        <dfx-ve-expression-editor></dfx-ve-expression-editor>
+                    </div>
+                </li>
+                <li class="col-md-12" ng-show="attributes.type.value==='input'">
+                    <span class="col-md-4">Label:</span>
+                    <div class="col-md-8" layout="row">
+                        <input class="col-md-12" type="text" ng-model="attributes.label.value" style="margin-left:-15px;" ng-change="overrideAttribute('label')"/>
+                        <dfx-ve-expression-editor></dfx-ve-expression-editor>
+                    </div>
+                </li>
+                <li class="col-md-12" ng-show="attributes.type.value==='input'">
+                    <span class="col-md-4">Dialog Editor Title:</span>
+                    <div class="col-md-8" layout="row">
+                        <input class="col-md-12" type="text" ng-model="attributes.title.value" style="margin-left:-15px;" ng-change="overrideAttribute('title')"/>
                         <dfx-ve-expression-editor></dfx-ve-expression-editor>
                     </div>
                 </li>
