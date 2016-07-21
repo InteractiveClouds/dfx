@@ -68,8 +68,11 @@ exports.run = function (cfg, opts) {
                                 var wgt_definition = wgt_src_json.definition;
                                 for (var definition in wgt_definition) {
                                     if (wgt_definition.hasOwnProperty(definition)) {
-                                        removeNotOverriddenAttributes(wgt_definition[definition][0].attributes, wgt_definition[definition][0].type);
-                                        treatChildrenGCs( wgt_definition[definition][0].children );
+                                        var next_def = wgt_definition[definition][0];
+                                        if (next_def) {
+                                            removeNotOverriddenAttributes(next_def.attributes, next_def.type);
+                                            treatChildrenGCs( next_def.children );
+                                        }
                                     }
                                 }
 
