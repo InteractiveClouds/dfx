@@ -1900,6 +1900,7 @@ dfxStudioApp.controller("dfx_studio_samples_controller", [ '$scope', '$http', '$
                 url: '/studio/resources/simulate_upload/' + $scope.selected_application + '/' + resource_cat,
                 type: 'POST',
                 data: form_data,
+                headers : {'X-DREAMFACE-TENANT' : $('body').attr('data-tenantid')},
                 processData: false,
                 contentType: false 
             });
@@ -5573,19 +5574,19 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
         $scope.parameters = parameters;
         $scope.body = body;
 
-        $.get('/api/tenant/get?tenantid=' + $('body').attr('data-tenantid'))
+        dfxApiServiceObjects.getTenant( $('body').attr('data-tenantid'))
             .then(function(tenant) {
-                if (tenant.data.databaseTokens) {
+                if (tenant.data.data.databaseTokens) {
                     var str = "curl -i ";
                         str += "-H 'Content-Type:application/json' ";
-                        str += "-H 'Authorization:Basic " + btoa($('body').attr('data-tenantid') + ":" + Object.keys(tenant.data.databaseTokens)[0]) + "==' ";
+                        str += "-H 'Authorization:Basic " + btoa($('body').attr('data-tenantid') + ":" + Object.keys(tenant.data.data.databaseTokens)[0]) + "==' ";
                         str += "-d '{}' ";
                         str += window.location.origin + '/api/' + $scope.app_name + '/apiRoute/' + serviceItem.name;
                     $scope.curlItemContent = str;
 
                     var str = "curl -i ";
                     str += "-H 'Content-Type:application/json' ";
-                    str += "-H 'Authorization:Basic " + btoa($('body').attr('data-tenantid') + ":" + Object.keys(tenant.data.databaseTokens)[0]) + "==' ";
+                    str += "-H 'Authorization:Basic " + btoa($('body').attr('data-tenantid') + ":" + Object.keys(tenant.data.data.databaseTokens)[0]) + "==' ";
                     str += "-d '" + JSON.stringify(queryString) + "' ";
                     str += window.location.origin + '/api/' + $scope.app_name + '/apiRoute/' + serviceItem.name;
                     $scope.curlItemContentWithParameters = str;
@@ -5594,12 +5595,12 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
 
                     $scope.postmanUrl = window.location.origin + '/api/' + $scope.app_name + '/apiRoute/' + serviceItem.name;
                     $scope.postmanUsername = $('body').attr('data-tenantid');
-                    $scope.postmanPassword = Object.keys(tenant.data.databaseTokens)[0];
+                    $scope.postmanPassword = Object.keys(tenant.data.data.databaseTokens)[0];
                 } else {
                     $scope.curlItemContent = "Can't get tenant token from server";
                 }
 
-            }).fail(function(err) {
+            },function(err) {
                 $scope.curlItemContent = "Can't get tenant token from server." + err;
             });
         var sideNavInstance = $mdSidenav('side_nav_curl');
@@ -5992,7 +5993,12 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
         simulateService.application = $scope.app_name;
         simulateService._ = $scope.serviceTimeStamp;
 
-        $.get('/studio/query/execute', simulateService)
+        $.ajax({
+            url: '/studio/query/execute',
+            data: simulateService,
+            type: 'GET',
+            headers : {'X-DREAMFACE-TENANT' : $('body').attr('data-tenantid')}
+        })
             .then(function(data) {
                 $scope.simulatedMeta = JSON.stringify(data.metadata, null, '\t');
                 $scope.simulatedResult = JSON.stringify(data.data, null, '\t');

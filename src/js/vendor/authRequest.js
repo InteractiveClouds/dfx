@@ -179,6 +179,10 @@ var authRequest =  (function(){
 
         sign(params);
 
+        params.headers = {'X-DREAMFACE-TENANT' : sessionStorage.dfx_tenantid};
+
+        document.cookie = "X-DREAMFACE-TENANT=" + sessionStorage.dfx_tenantid + ";path=/;";
+
         $.ajax(params).then(
             function ( data, textStatus, jqXHR ) {
                 if ( data.result !== 'success' ) {
