@@ -113,6 +113,8 @@ DfxVisualBuilder.init = function () {
         }
     });
 
+    var script_theme = localStorage.getItem('DFX_script_theme')!=null ? localStorage.getItem('DFX_script_theme') : 'monokai';
+    
     // Initialization of dfx_src_editor
 
     var htmlTextArea = document.getElementById('dfx_src_editor');
@@ -123,11 +125,14 @@ DfxVisualBuilder.init = function () {
             lineNumbers: true,
             value: $('#dfx_src_editor').text(),
             mode: {name: 'application/json', globalVars: true},
+            theme: script_theme,
             matchBrackets: true,
             highlightSelectionMatches: {showToken: /\w/},
             styleActiveLine: true,
             viewportMargin : Infinity,
-            extraKeys: {"Alt-F": "findPersistent", "Ctrl-Space": "autocomplete"}
+            extraKeys: {"Alt-F": "findPersistent", "Ctrl-Space": "autocomplete"},
+            foldGutter: true,
+            gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
         });
     srcEditor.setSize(null, window.innerHeight - 59);
     $(srcEditor.getWrapperElement()).attr("id", "dfx_src_editor");
@@ -143,11 +148,14 @@ DfxVisualBuilder.init = function () {
             lineNumbers: true,
             value: $('#dfx_script_editor').text(),
             mode: {name: 'javascript', globalVars: true},
+            theme: script_theme,
             matchBrackets: true,
             highlightSelectionMatches: {showToken: /\w/},
             styleActiveLine: true,
             viewportMargin : Infinity,
-            extraKeys: {"Alt-F": "findPersistent", "Ctrl-Space": "autocomplete"}
+            extraKeys: {"Alt-F": "findPersistent", "Ctrl-Space": "autocomplete"},
+            foldGutter: true,
+            gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
         });
     scriptEditor.setSize(null, window.innerHeight - 59);
     $(scriptEditor.getWrapperElement()).attr("id", "dfx_script_editor");
@@ -163,11 +171,14 @@ DfxVisualBuilder.init = function () {
             lineNumbers: true,
             value: $('#dfx_styles_editor').text(),
             mode: {name: 'css', globalVars: true},
+            theme: script_theme,
             matchBrackets: true,
             highlightSelectionMatches: {showToken: /\w/},
             styleActiveLine: true,
             viewportMargin : Infinity,
-            extraKeys: {"Alt-F": "findPersistent", "Ctrl-Space": "autocomplete"}
+            extraKeys: {"Alt-F": "findPersistent", "Ctrl-Space": "autocomplete"},
+            foldGutter: true,
+            gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
         });
     stylesEditor.setSize(null, window.innerHeight - 59);
     $(stylesEditor.getWrapperElement()).attr("id", "dfx_styles_editor");
@@ -291,7 +302,7 @@ DfxVisualBuilder.initGraphicalControls = function () {
         helper: function (event) {
                     var gc_cat         = $(this).attr('gc-cat');
                     var gc_type         = $(this).attr('gc-type');
-                    var helper_fragment = '<img style="width:36px;" src="/images/vb/icons/' + gc_cat + '_' + gc_type + '.png"/>';
+                    var helper_fragment = '<img style="width:36px;" src="/images/vb/icons/' + gc_cat + '_' + gc_type + '_drag.png"/>';
                     return helper_fragment;
                 },
         connectToSortable: ".dfx_visual_editor_droppable"

@@ -52,9 +52,9 @@ md-toast.md-error-toast-theme div {
 }
 
 #dfx-ve-toggle-property {
-  background: #B1B1B1;
-  margin: 0px !important;
-  height: 32px;
+  background: #4CD5F3;
+  margin: 0 0 0 5px!important;
+  height: 20px;
   color: #383838;
   padding: 0;
 }
@@ -62,7 +62,7 @@ md-toast.md-error-toast-theme div {
 /* Sidenav */
 
 #dfx-ve-sidenav-left {
-  width: 80px;
+  width: 85px;
   background-color: #383838;
   color: #fff;
 }
@@ -98,15 +98,16 @@ md-toast.md-error-toast-theme div {
 /* Toolbar */
 
 .dfx-ve-toolbar {
-  background-color: #ececec !important;
+  background-color: #383838 !important;
   color: #000 !important;
-  min-height: 36px !important;
+  min-height: 48px !important;
+  border-top: 1px #6b6a6a solid;
 }
 
 .dfx-ve-toolbar-tools {
   padding: 0;
-  height: 36px !important;
-  max-height: 36px !important;
+  height: 48px !important;
+  max-height: 48px !important;
 }
 
 .dfx-ve-toolbar-button {
@@ -125,36 +126,24 @@ md-toast.md-error-toast-theme div {
 
 /* GC Palette & Property Panel */
 
-#dfx-ve-palette-title {
-  height: 36px;
-  line-height: 36px;
-  margin: 0;
-  padding: 0;
-  font-size: 14px;
-  width: 80px;
-  background: #B1B1B1;
-}
-
-.dfx-ve-palette-title-collapsed {
-  width: 32px !important;
-}
-
-.dfx-ve-palette-title-text-collapsed {
-  display: none !important;
-}
-
 .dfx-ve-palette-icon {
   width: 36px;
 }
 
+.dfx-ve-toolbar-icon {
+  width: 32px;
+  cursor: pointer;
+}
+
 #dfx-ve-property-title {
-  height: 36px;
-  line-height: 36px;
+  height: 48px;
+  line-height: 48px;
   margin: 0;
   padding: 0;
   font-size: 14px;
   width: 430px;
-  background: #B1B1B1;
+  background: #4a4a4a;
+  color: #fff;
 }
 
 .dfx-ve-property-title-collapsed {
@@ -168,7 +157,7 @@ md-toast.md-error-toast-theme div {
 #dfx-ve-property-title-text {
   display: inline-block;
   padding-left: 10px;
-  width: 398px;
+  width: 388px;
 }
 
 #dfx-ve-sidenav-left {
@@ -269,11 +258,40 @@ md-toast.md-error-toast-theme div {
       font-weight: 700;
       font-size: 12px;
       padding: 10px;
-      width: 80px;
+      width: 85px;
       text-align: center;
-      border-top: 1px #ccc solid;
-      border-bottom: 1px #ccc solid;
+      border-top: 1px #6b6a6a solid;
+      border-bottom: 1px #6b6a6a solid;
       background: #4a4a4a;
+    }
+
+    //Expanded branch
+    & ~ label span:before {
+      content: '';
+      width: 0;
+      height: 0;
+      position: absolute;
+      margin-left: -1em;
+      margin-top: 0.55em;
+      border-width: 4px;
+      border-style: solid;
+      border-top-color: @defaultColor;
+      border-right-color: transparent;
+      border-bottom-color: transparent;
+      border-left-color: transparent;
+      .transition-property(opacity);
+      .transition-duration;
+    }
+
+    //Collapsed branch
+    &:checked ~ label span:before {
+      margin-left: -0.8em;
+      margin-top: 0.45em;
+      border-width: 4px;
+      border-top-color: transparent;
+      border-right-color: transparent;
+      border-bottom-color: transparent;
+      border-left-color: @defaultColor;
     }
   }
 }
@@ -312,7 +330,7 @@ md-dialog .dfx-ve-property-treeview {
   ul {
     .transition-duration;
     list-style: none;
-    padding-left: 1em;
+    padding-left: 0px;
     
     li {
       padding-left:0px;
@@ -344,6 +362,14 @@ md-dialog .dfx-ve-property-treeview {
     & ~ label {
       cursor: pointer;
       font-weight: 700;
+      font-size: 12px;
+      padding: 10px;
+      padding-left: 15px;
+      width: 430px;
+      text-align: left;
+      border-top: 1px #6b6a6a solid;
+      border-bottom: 1px #6b6a6a solid;
+      background: #4a4a4a;
     }
     
     //Expanded branch
@@ -353,12 +379,12 @@ md-dialog .dfx-ve-property-treeview {
       height: 0;
       position: absolute;
       margin-left: -1em;
-      margin-top: 0.4em;
+      margin-top: 0.55em;
       border-width: 4px;
       border-style: solid;
-      border-top-color: transparent;
-      border-right-color: @defaultColor;
-      border-bottom-color: @defaultColor;
+      border-top-color: @defaultColor;
+      border-right-color: transparent;
+      border-bottom-color: transparent;
       border-left-color: transparent;
       .transition-property(opacity);
       .transition-duration;
@@ -367,7 +393,8 @@ md-dialog .dfx-ve-property-treeview {
     //Collapsed branch
     &:checked ~ label:before {
       margin-left: -0.8em;
-      border-width: 5px;
+      margin-top: 0.45em;
+      border-width: 4px;
       border-top-color: transparent;
       border-right-color: transparent;
       border-bottom-color: transparent;
@@ -493,17 +520,26 @@ div[gc-type="panel"] > .dfx-ve-gc-handle-duplicate {
 }
 
 .dfx-ve-property-treeview-content md-input-container span.md-select-icon {
-  color: #333;
+  color: #fff;
 }
 
 .dfx-ve-property-treeview-content input {
-  border:1px #ddd solid;
-  color: #333;
+  border:1px #6b6a6a solid;
+  color: #fff;
+  background: transparent;
+}
+
+.dfx-ve-property-treeview-content md-select {
+  padding: 2px 0;
+  background: #383838;
 }
 
 .dfx-ve-property-treeview-content md-select-value {
   height: 24px;
   padding: 0 0 0 8px !important;
+  border:1px #6b6a6a solid;
+  color: #fff;
+  background: #383838;
 }
 
 

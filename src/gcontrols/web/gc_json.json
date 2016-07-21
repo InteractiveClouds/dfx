@@ -4,6 +4,8 @@
   "type":             { "value": "panel" },
   "binding":          { "value": "" },
   "content":          { "value": { "name": "Mr A. Payne", "address": { "street": "30 Commercial Road", "city area/district": "Fratton" }}},
+  "label":            { "value": "'Input type label'" },
+  "title":            { "value": "'Dialog Editor Title'" },
   "mode":             { "value": "code" },    
   "whiteframe":       { "value": "" },
   "display":          { "value": "true" },
