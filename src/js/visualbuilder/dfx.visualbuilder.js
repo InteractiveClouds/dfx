@@ -1264,6 +1264,7 @@ DfxVisualBuilder.removeNotOverriddenAttributes = function (updated_attributes, g
     var template;
 
     var getGcTemplate = function (gc_type) {
+        gc_type = (gc_type == 'datatable') ? 'table' : gc_type;
         return JSON.parse( sessionStorage.getItem('dfx_' + gc_type) );
     };
     var getDeepValue = function(obj, path) {
