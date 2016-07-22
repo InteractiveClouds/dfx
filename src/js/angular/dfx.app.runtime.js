@@ -671,7 +671,7 @@ dfxAppRuntime.directive('dfxGcCompiled', [ '$rootScope', '$compile', function($r
                             $('[dfx-gc-compiled-child]',$element).each( function(i, child_element) {
                                 var regexp_child = /(^\')(.*)(\'$)/gm;
                                 $.each(this.attributes, function(j, attrib) {
-                                    if (attrib.name.startsWith('dfx-ng')) {
+                                    if (attrib!=null && attrib.name.startsWith('dfx-ng')) {
                                         var attribute_instance = attrib.value.split(',');
                                         $(child_element).removeAttr(attrib.name);
                                         if (gc_attributes[attribute_instance[1]].value !='') {
