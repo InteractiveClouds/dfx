@@ -862,6 +862,109 @@ md-icon.dfx-ve-picker-icon {
   line-height: 36px;
 }
 
+/* Code Assistant */
+md-dialog .dfx-ca-property-treeview {
+  float: none;
+}
+.dfx-ca-property-treeview {
+  float: left; //Prevent 100% width
+  .user-select; //Prevent accidental selection on dbl click to fast expand/collapse
+
+  //Fade back to default
+  &:hover input ~ label:before,
+  &.hover input ~ label:before{
+    opacity: 1.0;
+    .transition-duration(0.5s);
+  }
+  
+  ul {
+    .transition-duration;
+    list-style: none;
+    padding-left: 10px;
+    
+    li {
+      padding-left:0px;
+      padding-right:0px;
+      //Fade back to default
+      span{
+        .transition-property(color);
+        .transition-duration;
+      
+        //Highlight on hover
+        &:hover {
+          color: @hoverColor;
+          .transition-duration(0.3s);
+        }
+      }
+    }
+  }
+  
+  //Hide checkboxes
+  input.dfx-ca-property-treeview-button {
+    display: none;
+    
+    //Hide collapsed branches
+    &:checked ~ ul {
+      display: none;
+    }
+     
+    //Show pointer on collapsible rows
+    & ~ label {
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 12px;
+      padding: 5px 5px 5px 15px;
+      text-align: left;
+      margin: 0;
+    }
+    
+    //Expanded branch
+    & ~ label:before {
+      content: '';
+      width: 0;
+      height: 0;
+      position: absolute;
+      margin-left: -1em;
+      margin-top: 0.55em;
+      border-width: 4px;
+      border-style: solid;
+      border-top-color: @defaultColor;
+      border-right-color: transparent;
+      border-bottom-color: transparent;
+      border-left-color: transparent;
+      .transition-property(opacity);
+      .transition-duration;
+    }
+
+    //Collapsed branch
+    &:checked ~ label:before {
+      margin-left: -0.8em;
+      margin-top: 0.45em;
+      border-width: 4px;
+      border-top-color: transparent;
+      border-right-color: transparent;
+      border-bottom-color: transparent;
+      border-left-color: @defaultColor;
+    }
+  }
+}
+
+md-dialog .dfx-ca-property-treeview label:before {
+  margin-top: 3px !important;
+}
+
+.dfx-ca-property-treeview-content {
+  padding-left: 0px !important;
+  margin-left: 10px !important;
+}
+
+.dfx-ca-property-treeview-content span {
+  padding-left: 5px;
+  font-family: "Open Sans",Arial,sans-serif;
+  font-size: 12px;
+  line-height: 25px;
+}
+
 .CodeMirror-dialog-top button {
   background-color: #2196F3 !important;
   color: #fff !important;
