@@ -7,6 +7,7 @@
   "label":            { "value": "'Input type label'" },
   "title":            { "value": "'Dialog Editor Title'" },
   "mode":             { "value": "code" },    
+  "headerVisible":    { "value": true },    
   "whiteframe":       { "value": "" },
   "display":          { "value": "true" },
   "disabled":         { "value": "false" },

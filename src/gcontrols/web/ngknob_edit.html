@@ -113,11 +113,25 @@
 			<ul class="dfx-ve-property-treeview-content">
 				<li class="col-md-12">
 					<input class="dfx-ve-property-treeview-button" type="checkbox" checked aria-label="item-30" id="item-30" />
-					<label for="item-30" class="col-md-12" style="font-weight:600;padding-left: 30px; margin-top: 5px;">General Styles</label>
+					<label for="item-30" class="col-md-12" style="font-weight:600;padding-left: 30px; margin-top: 5px;">Main Styles</label>
 					<ul class="dfx-ve-property-treeview-content">
 						<li class="col-md-12">
 							<span class="col-md-4">Size:</span>
 							<input class="col-md-8" type="number" ng-model="attributes.options.value.size" ng-change="overrideAttribute('options')" />
+						</li>
+						<li class="col-md-12">
+							<span class="col-md-4">Bar Width:</span>
+							<input class="col-md-8" type="number" ng-model="attributes.options.value.barWidth" ng-change="overrideAttribute('options')" />
+						</li>						
+						<li class="col-md-12">
+							<span class="col-md-4">Bar Color:</span>
+							<div class="col-md-8 dfx-knob-panel-color-picker" layout="row" style="padding:0;">
+								<dfx-ve-color-picker name="bar-color" class="col-md-11" ng-model="attributes.options.value.barColor"></dfx-ve-color-picker>
+							</div>
+						</li>
+						<li class="col-md-12">
+							<span class="col-md-4">Bar Cap:</span>
+							<input class="col-md-8" type="number" ng-model="attributes.options.value.barCap" ng-change="overrideAttribute('options')" />
 						</li>
 						<li class="col-md-12">
 							<span class="col-md-4">Track Width:</span>
@@ -128,21 +142,7 @@
 							<div class="col-md-8 dfx-knob-panel-color-picker" layout="row" style="padding:0;">
 								<dfx-ve-color-picker name="track-color" class="col-md-11" ng-model="attributes.options.value.trackColor"></dfx-ve-color-picker>
 							</div>
-						</li>
-						<li class="col-md-12">
-							<span class="col-md-4">Bar Width:</span>
-							<input class="col-md-8" type="number" ng-model="attributes.options.value.barWidth" ng-change="overrideAttribute('options')" />
-						</li>
-						<li class="col-md-12">
-							<span class="col-md-4">Bar Cap:</span>
-							<input class="col-md-8" type="number" ng-model="attributes.options.value.barCap" ng-change="overrideAttribute('options')" />
-						</li>
-						<li class="col-md-12">
-							<span class="col-md-4">Bar Color:</span>
-							<div class="col-md-8 dfx-knob-panel-color-picker" layout="row" style="padding:0;">
-								<dfx-ve-color-picker name="bar-color" class="col-md-11" ng-model="attributes.options.value.barColor"></dfx-ve-color-picker>
-							</div>
-						</li>
+						</li>						
 						<li class="col-md-12">
 							<span class="col-md-4">Previous Bar Color:</span>
 							<div class="col-md-8 dfx-knob-panel-color-picker" layout="row" style="padding:0;">
@@ -288,14 +288,14 @@
 						<li class="col-md-12">
 							<span class="col-md-4" style="padding-left: 30px">Width:</span>
 							<input class="col-md-8" type="number" ng-model="attributes.options.value.scale.width" style="padding-left: 6px" ng-change="overrideAttribute('options')"/>
+						</li>						
+						<li class="col-md-12">
+							<span class="col-md-4" style="padding-left: 30px">Height:</span>
+							<input class="col-md-8" type="number" ng-model="attributes.options.value.scale.height" style="padding-left: 6px" ng-change="overrideAttribute('options')"/>
 						</li>
 						<li class="col-md-12">
 							<span class="col-md-4" style="padding-left: 30px">Quantity:</span>
 							<input class="col-md-8" type="number" ng-model="attributes.options.value.scale.quantity" style="padding-left: 6px" ng-change="overrideAttribute('options')"/>
-						</li>
-						<li class="col-md-12">
-							<span class="col-md-4" style="padding-left: 30px">Height:</span>
-							<input class="col-md-8" type="number" ng-model="attributes.options.value.scale.height" style="padding-left: 6px" ng-change="overrideAttribute('options')"/>
 						</li>
 						<li class="col-md-12">
 							<span class="col-md-4" style="padding-left: 30px">Space Width:</span>
