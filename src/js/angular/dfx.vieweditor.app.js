@@ -1365,7 +1365,7 @@ dfxViewEditorApp.directive('dfxVePickerIcon', ['$q', '$http', '$mdDialog', '$tim
         replace: true,
         link: function(scope, element, attrs) {
             scope.showFontIcons = function(ev, iconObj) {
-                scope.$parent.cacheAttributeOldValue(attrs.dfxPickerProperty);// needed for UNDO functionality
+                //scope.$parent.cacheAttributeOldValue(attrs.dfxPickerProperty);// needed for UNDO functionality
                 
                 scope.iconObj = iconObj;
                 scope.faIcons = [];                
@@ -1420,7 +1420,7 @@ dfxViewEditorApp.directive('dfxVePickerIcon', ['$q', '$http', '$mdDialog', '$tim
                 scope.iconObj.type = type;
                 scope.closeVeIconsDialog();
 
-                scope.$parent.cacheAttributeNewValue(attrs.dfxPickerProperty);// needed for UNDO functionality
+                //scope.$parent.cacheAttributeNewValue(attrs.dfxPickerProperty);// needed for UNDO functionality
             }
             scope.closeVeIconsDialog = function(){
                 $('.dfx-ve-icons-dialog').removeClass('active');
