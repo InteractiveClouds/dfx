@@ -727,6 +727,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
             'select': {'default_name':'selSelect', 'flex':'true'},
             'slider': {'default_name':'sldSlider', 'flex':'true'},
             'knob': {'default_name':'kbKnob', 'flex':'false'},
+            'ngknob': {'default_name':'ngKnob', 'flex':'false'},
             'chips': {'default_name':'chpChips', 'flex':'true'},
             'rating': {'default_name':'rtRating', 'flex':'false'},
             'richtext': {'default_name':'rchText', 'flex':'true'},
