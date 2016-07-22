@@ -62,6 +62,7 @@
     "mkdirp": "^0.5.1",
     "mongodb": "2.0.14",
     "ng-quill": "^1.4.3",
+    "ng-knob": "https://github.com/RadMie/ng-knob.git",
     "node-uuid": ">= 1.4.0",
     "node.extend": "*",
     "nodemailer": "*",

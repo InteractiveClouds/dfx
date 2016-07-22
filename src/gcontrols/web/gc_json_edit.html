@@ -61,6 +61,10 @@
                         </md-select>
                     </md-input-container>
                 </li>
+                <li class="col-md-12">
+                    <span class="col-md-4">Header Visible:</span>
+                    <span class="col-md-8"><md-checkbox style="margin: 0" class="md-primary" ng-model="attributes.headerVisible.value" ng-change="overrideAttribute('headerVisible');checkHeaderVisibility()" aria-label="headerVisible"></md-checkbox></span>
+                </li>   
                 <li class="col-md-12" dfx-gc-property="whiteframe">
                     <span class="col-md-4">Whiteframe:</span>
                     <md-input-container class="col-md-8" style="padding: 0 0 10px">
