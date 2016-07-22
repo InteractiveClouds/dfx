@@ -1,6 +1,6 @@
 {
 	"template": 			{ "value": "default" },
-	"name": 					{ "value": "ngKnob1" },
+	"name": 					{ "value": "nnbKnob1" },
 	"binding": 				{ "value": "" },
 	"label": 					{ "value": "'Knob'" },
 	"showLabel": 			{ "value": "true" },

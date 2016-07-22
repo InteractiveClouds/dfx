@@ -13,12 +13,8 @@
      ng-mouseleave="$eval(attributes.onmouseleave.value)"
      ng-mousedown="$eval(attributes.onmousedown.value)"
      ng-mouseup="$eval(attributes.onmouseup.value)">
-    <md-input-container class="md-input-has-messages md-input-has-value" style="display: block;" ng-show="$eval(attributes.showLabel.value)">
-        <label ng-click="$eval(attributes.onlabelclick.value)" ng-bind="$eval(attributes.label.value)">
-            {{attributes.label.value}}
-        </label>
+    <md-input-container class="md-input-has-messages md-input-has-value" style="display: block;;text-align: {{attributes.labelPosition.value}}" ng-show="$eval(attributes.showLabel.value)">
+    	<label ng-click="$eval(attributes.onlabelclick.value)" ng-bind="$eval(attributes.label.value)" style="{{attributes.labelStyle.value}}"></label>
     </md-input-container>
-    <input type="text" class="knob" style="display: inline;"
-           ng-model="$gcscope[attributes.binding.value]"
-           ng-disabled="$eval(attributes.disabled.value)">
+    <div id="{{component_id}}_dfx_ng_knob"></div>
 </div>
