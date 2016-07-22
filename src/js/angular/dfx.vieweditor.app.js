@@ -1083,6 +1083,8 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
         var view_definition = DfxVisualBuilder.movingComponentHelper.getViewDefinition();
         var component_definition = DfxVisualBuilder.getComponentDefinition($scope.gc_selected.id, view_definition.definition);
 
+        component_definition.attributes = angular.copy($scope.gc_selected.attributes);// if comp attributes changed and not saved, it's only in scope at the moment of cut/copy
+
         $scope.view_editor_cached_component = component_definition;// put component in memory
 
         // remove component
@@ -1093,6 +1095,8 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     $scope.viewEditorCopy = function() {
         var view_definition = DfxVisualBuilder.movingComponentHelper.getViewDefinition();
         var component_definition = DfxVisualBuilder.getComponentDefinition($scope.gc_selected.id, view_definition.definition);
+
+        component_definition.attributes = angular.copy($scope.gc_selected.attributes);// if comp attributes changed and not saved, it's only in scope at the moment of cut/copy
 
         $scope.view_editor_cached_component = component_definition;// put component in memory
     };
