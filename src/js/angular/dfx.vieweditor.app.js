@@ -1831,6 +1831,7 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                 if (scope.attributes.layoutType.value === 'wizard' || scope.attributes.layoutType.value === 'tabs' || scope.attributes.layoutType.value === 'panel'){
                     var side = $($($(ev.target).parent().parent())).attr('side');
                     if (side === 'left'){
+                        scope.$parent.overrideAttribute('toolbar.leftMenu.menuItems');
                         scope.menuItems = scope.attributes.toolbar.leftMenu.menuItems;                                                                    
                         if (scope.attributes.toolbar.leftMenu.type.value === 'Icon Bar'){
                             scope.statable.value = true;
@@ -1846,6 +1847,7 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                             scope.isFabToolbar.value = true;
                         }                                    
                     } else {
+                        scope.$parent.overrideAttribute('toolbar.rightMenu.menuItems');
                         scope.menuItems = scope.attributes.toolbar.rightMenu.menuItems;  
                         if (scope.attributes.toolbar.rightMenu.type.value === 'Icon Bar'){
                             scope.statable.value = true;
