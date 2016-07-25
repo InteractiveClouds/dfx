@@ -2039,7 +2039,9 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                                 }
                             }
                             $timeout(function() {
-                                scope.waitableItem.value = scope.menu.hasOwnProperty('waiting') ? true : false;
+                                if (scope.menu) {
+                                    scope.waitableItem.value = scope.menu.hasOwnProperty('waiting') ? true : false;
+                                }
                             }, 250);
                         } 
                         Array.prototype.move = function(from,to){
