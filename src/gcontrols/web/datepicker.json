@@ -15,6 +15,7 @@
   "disabled":           { "value": "false" },
   "classes":            { "value": "" },
   "dynamicClasses":     { "value": "" },
+  "flex":               { "value": 20 },
   "style":              { "value": "" },
   "formName":           { "value": "" },
   "onclick":            { "value": "" },
