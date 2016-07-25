@@ -1033,7 +1033,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
             
             for (var i = 0; i < pList.length; i++) {
                 var elem = pList[i];
-                if (! schema[elem]) {
+                if (!schema[elem] && schema[elem] !== '') {
                     schema[elem] = {};
                 }
                 schema = schema[elem];
