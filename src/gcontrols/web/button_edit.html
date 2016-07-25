@@ -118,14 +118,14 @@
                 <li class="col-md-12">
                     <span class="col-md-4">Icon Style:</span>
                     <div class="col-md-8" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.waiting.icon.style" style="margin-left:-15px;"/>
+                        <input class="col-md-12" type="text" ng-model="attributes.waiting.icon.style" ng-change="overrideAttribute('waiting.icon.style')" style="margin-left:-15px;"/>
                         <dfx-ve-css-style></dfx-ve-css-style>
                     </div>
                 </li>
                 <li class="col-md-12">
                     <span class="col-md-4">Icon Class:</span>
                     <div class="col-md-8" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.waiting.icon.class" style="margin-left:-15px;"/>
+                        <input class="col-md-12" type="text" ng-model="attributes.waiting.icon.class" ng-change="overrideAttribute('waiting.icon.class')" style="margin-left:-15px;"/>
                         <dfx-ve-menu-expression></dfx-ve-menu-expression>
                     </div>
                 </li>                
