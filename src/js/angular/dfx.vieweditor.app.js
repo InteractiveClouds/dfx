@@ -1830,7 +1830,6 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                 scope.isFabToolbar = {"value": false};
                 if (scope.attributes.layoutType.value === 'wizard' || scope.attributes.layoutType.value === 'tabs' || scope.attributes.layoutType.value === 'panel'){
                     var side = $($($(ev.target).parent().parent())).attr('side');
-                    side = 'right';
                     if (side === 'left'){
                         scope.$parent.overrideAttribute('toolbar.leftMenu.menuItems');
 
