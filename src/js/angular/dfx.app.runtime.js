@@ -658,7 +658,11 @@ dfxAppRuntime.directive('dfxGcCompiled', [ '$rootScope', '$compile', function($r
                                         expression = null;
                                     }
                                     if (expression!=null) {
-                                        $element.attr( attribute_instance[0], gc_attributes[attribute_instance[1]].value.substr( 1, gc_attributes[attribute_instance[1]].value.length-2 ) );
+                                        if (attribute_instance[0]=='ng-bind') {
+                                            $element.attr( attribute_instance[0], gc_attributes[attribute_instance[1]].value );
+                                        } else {
+                                            $element.attr( attribute_instance[0], gc_attributes[attribute_instance[1]].value.substr( 1, gc_attributes[attribute_instance[1]].value.length-2 ) );
+                                        }
                                     } else if (attribute_instance[0]=='ng-src') {
                                         $element.attr( attribute_instance[0], '{{' + gc_attributes[attribute_instance[1]].value + '}}' );
                                     } else {
@@ -681,7 +685,11 @@ dfxAppRuntime.directive('dfxGcCompiled', [ '$rootScope', '$compile', function($r
                                                 expression = null;
                                             }
                                             if (expression!=null) {
-                                                $(child_element).attr( attribute_instance[0], gc_attributes[attribute_instance[1]].value.substr( 1, gc_attributes[attribute_instance[1]].value.length-2 ) );
+                                                if (attribute_instance[0]=='ng-bind') {
+                                                    $(child_element).attr( attribute_instance[0], gc_attributes[attribute_instance[1]].value );
+                                                } else {
+                                                    $(child_element).attr( attribute_instance[0], gc_attributes[attribute_instance[1]].value.substr( 1, gc_attributes[attribute_instance[1]].value.length-2 ) );
+                                                }
                                             } else if (attribute_instance[0]=='ng-src') {
                                                 $(child_element).attr( attribute_instance[0], '{{' + gc_attributes[attribute_instance[1]].value + '}}' );
                                             } else {
