@@ -16,6 +16,7 @@
   "pattern":        { "value": ".*", "errorMessage": "The value is invalid" },
   "temporary":      { "value": "" },
   "classes":        { "value": "" },
+  "flex":           { "value": 50 },
   "dynamicClasses": { "value": "" },
   "style":          { "value": "" },
   "onclick":        { "value": "" },

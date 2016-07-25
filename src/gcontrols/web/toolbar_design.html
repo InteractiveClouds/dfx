@@ -1,7 +1,7 @@
 <md-toolbar ng-if="$eval(attributes.toolbar.visible.value)" style="{{attributes.toolbar.style.value}}" class="gc-toolbar dfx-core-gc-toolbar md-altTheme-theme {{attributes.toolbar.classes.value}}">
     <div style="min-height:48px;" layout="row" flex="100">
         <!--leftMenu-->
-        <div flex="{{attributes.toolbar.leftMenu.flexWidth.value}}" layout="column" layout-align="center start" ng-show="$eval(attributes.toolbar.leftMenu.visible.value)" style="{{attributes.toolbar.leftMenu.style.value}}">
+        <div flex="{{attributes.toolbar.leftMenu.flexWidth.value}}" layout="column" layout-align="center start" ng-if="$eval(attributes.toolbar.leftMenu.visible.value)" style="{{attributes.toolbar.leftMenu.style.value}}">
             <div id="{{component_id}}_toolbar_left_menu" ng-show="$eval(attributes.toolbar.leftMenu.visible.value)" ng-style="{'width': attributes.toolbar.leftMenu.type.value === 'Buttons' && attributes.toolbar.leftMenu.equalButtonSize.value ? '100%':''}" class="{{attributes.toolbar.leftMenu.classes.value}}">
                 <!--fab-->
                 <md-fab-speed-dial ng-if="attributes.toolbar.leftMenu.type.value === 'Fab'" md-direction="{{attributes.toolbar.leftMenu.fabDirection.value}}" ng-class="attributes.toolbar.leftMenu.animation.value">
@@ -46,7 +46,7 @@
         </div>
 
         <!--Title-->
-        <div flex="{{attributes.toolbar.title.flexWidth.value}}" layout="column" layout-align="center {{attributes.toolbar.title.alignment.value}}" ng-show="$eval(attributes.toolbar.title.visible.value)" style="{{attributes.toolbar.title.style.value}}" >
+        <div flex="{{(attributes.toolbar.leftMenu.visible.value!=='false' || attributes.toolbar.rightMenu.visible.value!=='false') ? attributes.toolbar.title.flexWidth.value : 100}}" layout="column" layout-align="center {{attributes.toolbar.title.alignment.value}}" ng-if="$eval(attributes.toolbar.title.visible.value)" style="{{attributes.toolbar.title.style.value}}" >
             <div ng-if="attributes.toolbar.title.isHtml.value === false" layout="column" layout-align="center" class="{{attributes.toolbar.title.classes.value}} layout-align-center layout-column">
                 <span>{{attributes.toolbar.title.value | checkExpression}}</span>
             </div>
@@ -57,7 +57,7 @@
         </div>
 
         <!--RightMenu-->
-        <div flex="{{attributes.toolbar.rightMenu.flexWidth.value}}" layout="column" layout-align="center end" style="{{attributes.toolbar.rightMenu.style.value}}">
+        <div flex="{{attributes.toolbar.rightMenu.flexWidth.value}}" layout="column" layout-align="center end" ng-if="$eval(attributes.toolbar.rightMenu.visible.value)" style="{{attributes.toolbar.rightMenu.style.value}}">
             <div id="{{component_id}}_toolbar_right_menu" ng-show="$eval(attributes.toolbar.rightMenu.visible.value)" ng-style="{'width': attributes.toolbar.rightMenu.type.value === 'Buttons' && attributes.toolbar.rightMenu.equalButtonSize.value ? '100%':''}" class="{{attributes.toolbar.rightMenu.classes.value}}">
                 <!--fab-->
                 <md-fab-speed-dial ng-if="attributes.toolbar.rightMenu.type.value === 'Fab'" md-direction="{{attributes.toolbar.rightMenu.fabDirection.value}}" ng-class="attributes.toolbar.rightMenu.animation.value">
