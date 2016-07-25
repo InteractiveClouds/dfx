@@ -13,6 +13,7 @@
   "color":                { "value": "" },
   "classes":              { "value": "" },
   "dynamicClasses":       { "value": "" },
+  "flex":                 { "value": 100 },
   "style":                { "value": "" },
   "onclick":              { "value": "" },
   "ondblclick":           { "value": "" },
