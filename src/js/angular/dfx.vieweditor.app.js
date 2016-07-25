@@ -2300,7 +2300,7 @@ dfxViewEditorApp.directive('dfxVeMenuExpression', [ '$timeout', '$compile', func
                     $scope.targetMenuExpValue = angular.element($scope.targetMenuExpression).data('$ngModelController').$viewValue;
                     $("textarea.expression-textarea").val($scope.targetMenuExpValue);                
                     $('#' + $scope.component_id + '_md_dialog .second-dialog').fadeIn(250);                    
-                }, 0);
+                }, 250);
             }
             $scope.addExpression = function(ev) {
                 var cursorPos = document.getElementById($scope.component_id+"_expression_textarea").selectionStart,                                
