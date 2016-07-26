@@ -1832,7 +1832,6 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                     var side = $($($(ev.target).parent().parent())).attr('side');
                     if (side === 'left'){
                         scope.$parent.overrideAttribute('toolbar.leftMenu.menuItems');
-
                         scope.menuItems = scope.attributes.toolbar.leftMenu.menuItems;                                                                    
                         if (scope.attributes.toolbar.leftMenu.type.value === 'Icon Bar'){
                             scope.statable.value = true;
@@ -1849,7 +1848,6 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                         }                                    
                     } else {
                         scope.$parent.overrideAttribute('toolbar.rightMenu.menuItems');
-
                         scope.menuItems = scope.attributes.toolbar.rightMenu.menuItems;  
                         if (scope.attributes.toolbar.rightMenu.type.value === 'Icon Bar'){
                             scope.statable.value = true;
@@ -2302,7 +2300,7 @@ dfxViewEditorApp.directive('dfxVeMenuExpression', [ '$timeout', '$compile', func
                     $scope.targetMenuExpValue = angular.element($scope.targetMenuExpression).data('$ngModelController').$viewValue;
                     $("textarea.expression-textarea").val($scope.targetMenuExpValue);                
                     $('#' + $scope.component_id + '_md_dialog .second-dialog').fadeIn(250);                    
-                }, 0);
+                }, 250);
             }
             $scope.addExpression = function(ev) {
                 var cursorPos = document.getElementById($scope.component_id+"_expression_textarea").selectionStart,                                
