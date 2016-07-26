@@ -1272,12 +1272,23 @@ DfxVisualBuilder.findComponentAndUpdateAttributes = function (component_id, pare
  * Removes not overridden attributes
  */
 DfxVisualBuilder.removeNotOverriddenAttributes = function (updated_attributes, gc_type, attr_full_path) {
-    var template;
-
-    var getGcTemplate = function (gc_type) {
+    var getGcTemplate = function (gc_type, callback) {
         gc_type = (gc_type == 'datatable') ? 'table' : gc_type;
         gc_type = (gc_type == 'json') ? 'gc_json' : gc_type;
-        return JSON.parse( sessionStorage.getItem('dfx_' + gc_type) );
+
+        var template = JSON.parse( sessionStorage.getItem('dfx_' + gc_type) );
+
+        if (template != null) {
+            callback(template);
+        }
+        else {
+            var app_body = angular.element(document.querySelector('body'));
+            var app_scope = angular.element(app_body).scope();
+
+            app_scope.getGCDefaultAttributes(gc_type).then(function (default_attributes) {
+                callback(default_attributes);
+            });
+        }
     };
     var getDeepValue = function(obj, path) {
         for (var i = 0, path = path.split('.'), len = path.length; i < len; i++) {
@@ -1300,7 +1311,7 @@ DfxVisualBuilder.removeNotOverriddenAttributes = function (updated_attributes, g
         return false;
     };
 
-    var removeOverriddenWithDefaultValues = function (attr_full_path, attr_updated_value, updated_attributes, attr_short_path) {
+    var removeOverriddenWithDefaultValues = function (attr_full_path, attr_updated_value, updated_attributes, attr_short_path, template) {
         var attr_default_value = getDeepValue(template, attr_full_path);
 
         //console.log('====== ' + gc_type);
@@ -1319,7 +1330,7 @@ DfxVisualBuilder.removeNotOverriddenAttributes = function (updated_attributes, g
         }
     };
 
-    var removeNotOverridden = function (updated_attributes, attr_full_path) {
+    var removeNotOverridden = function (updated_attributes, attr_full_path, template) {
         for (var attribute in updated_attributes) {
             if (updated_attributes.hasOwnProperty(attribute)) {
                 if (attribute != 'value' && attribute != 'status' && !Array.isArray(updated_attributes[attribute])) {
@@ -1329,16 +1340,17 @@ DfxVisualBuilder.removeNotOverriddenAttributes = function (updated_attributes, g
                         if (updated_attributes[attribute] && updated_attributes[attribute].status != 'overridden' && !isAttributeMandatory(attribute)) {
                             delete updated_attributes[attribute];
                         }
-                        removeNotOverridden(updated_attributes[attribute], attr_path);
+                        removeNotOverridden(updated_attributes[attribute], attr_path, template);
                     }
-                    removeOverriddenWithDefaultValues(attr_path, updated_attributes[attribute], updated_attributes, attribute);
+                    removeOverriddenWithDefaultValues(attr_path, updated_attributes[attribute], updated_attributes, attribute, template);
                 }
             }
         }
     };
 
-    template = getGcTemplate(gc_type);
-    removeNotOverridden(updated_attributes, attr_full_path);
+    getGcTemplate(gc_type, function(template) {
+        removeNotOverridden(updated_attributes, attr_full_path, template);
+    });
 };
 
 /**
