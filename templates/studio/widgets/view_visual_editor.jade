@@ -32,6 +32,7 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", layout="co
                 span(style="font-size: 12px;margin-left: 1px;background: #4a4a4a;line-height: 48px;color: #fff;padding: 0 8px;border-left: 1px #6b6a6a solid;border-right: 1px #6b6a6a solid;", ng-show="script_visible")
                     span(style="margin-right:5px") Script:
                     img(src="/images/vb/icons/script_assistant.png", class="dfx-ve-toolbar-icon", ng-click="showHelpEditor(this)", title="Code Assistant")
+                    img(src="/images/vb/icons/script_dependencies.png", class="dfx-ve-toolbar-icon", ng-click="configureDependenciesScript($event)", title="Configure Dependencies")
                     md-menu#dfx-ve-menu-script-theme
                         span(md-menu-origin, style="background:#368798;margin-left:5px;padding:6px;cursor:pointer;", ng-click="$mdOpenMenu($event)") Theme: {{script_theme}}
                         md-menu-content(width="4")
