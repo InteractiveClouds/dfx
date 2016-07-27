@@ -24,7 +24,7 @@
                             <th width="15%" ng-if="entity !== 'apiServices'">Platform</th>
                             <th width="15%">Category</th>
                             <th width="30%">{{ entity === 'pages' ? 'Title' : 'Description'}}</th>
-                            <th>Actions</th>
+                            <th style="text-align:center">Actions</th>
                         </tr>
                     </thead>
                 </table>
@@ -37,8 +37,16 @@
                                 <td width="15%" ng-if="entity !== 'apiServices'" style="text-transform:capitalize;">{{item.platform === 'web' ? 'Desktop' : item.platform}}</td>
                                 <td width="15%">{{item.category }}</td>
                                 <td width="30%">{{entity === 'pages' ? item.title : item.description}}</td>
-                                <td>
-                                    <md-button ng-click="edit(item)" style="margin: 0; padding: 0; min-width: 20px" aria-label="edit-element"><md-icon class="fa fa-edit" style="font-size:20px; padding-top: 5px;"></md-icon></md-button>
+                                <td style="text-align:center">
+                                    <md-button ng-click="edit(item)" style="margin: 0; padding: 0; min-width: 20px" aria-label="edit-element" title="Edit component">
+                                        <md-icon class="fa fa-edit" style="font-size:20px; padding-top: 5px;"></md-icon>
+                                    </md-button>
+                                    <md-button ng-click="copyEntity(item)" style="margin: 0; padding: 0; min-width: 20px" aria-label="copy-element" title="Copy component">
+                                        <md-icon class="fa fa-copy" style="font-size:20px; padding-top: 5px;"></md-icon>
+                                    </md-button>
+                                    <md-button ng-click="removeEntity(item, $event)" style="margin: 0; padding: 0; min-width: 20px" aria-label="remove-element" title="Remove component">
+                                        <md-icon class="fa fa-trash" style="font-size:20px; padding-top: 5px;"></md-icon>
+                                    </md-button>
                                 </td>
                             </tr>
                         </tbody>
