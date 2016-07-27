@@ -1010,6 +1010,10 @@ DfxVisualBuilder.removeComponentConfirmed = function (component_id, card) {
         editor.setValue(JSON.stringify(wgt_definition, null, '\t'));
         //editor.gotoLine(1);
         $('#dfx_visual_editor_middle #dfx_visual_editor_workspace').click();
+
+        // hide property panel of removed component
+        var ve_scope = angular.element(document.getElementById('dfx_src_widget_editor')).scope();
+        ve_scope.unselectComponent();
     }
 
 };
