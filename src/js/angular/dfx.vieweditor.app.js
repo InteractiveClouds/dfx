@@ -1932,6 +1932,17 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
             return '/gcontrols/web/picker_menu.html';
         },
         link: function(scope, element, attrs) {
+            if(attrs.side){
+                if(attrs.side==='left'){
+                    $(element).attr('side','left');
+                    $(element).find('span').attr('side','left');
+                    $(element).find('md-icon').attr('side','left');
+                } else {
+                    $(element).attr('side','right');
+                    $(element).find('span').attr('side','right');
+                    $(element).find('md-icon').attr('side','right');
+                }
+            }
             scope.showMenuEditor = function(ev) {
                 scope.menu = {};
                 if(scope.attributes.layoutType.value === 'none' ){
@@ -1943,7 +1954,7 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                 scope.waitableItem = { "value": false};
                 scope.isFabToolbar = {"value": false};
                 if (scope.attributes.layoutType.value === 'wizard' || scope.attributes.layoutType.value === 'tabs' || scope.attributes.layoutType.value === 'panel'){
-                    var side = $($($(ev.target).parent().parent())).attr('side');
+                    var side = $(ev.target).attr('side');
                     if (side === 'left'){
                         scope.$parent.overrideAttribute('toolbar.leftMenu.menuItems');
                         scope.menuItems = scope.attributes.toolbar.leftMenu.menuItems;                                                                    
