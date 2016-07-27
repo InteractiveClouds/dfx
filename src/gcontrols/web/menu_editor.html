@@ -54,7 +54,7 @@
                                             <md-option value="standard">Standard</md-option>
                                             <md-option value="title">Title</md-option>
                                             <md-option value="divider">Divider</md-option>
-                                            <md-option value="selection" ng-if="statable.value" ng-click="menuEditorTabs.activeTab = !menu.state.value ? 1 : 0; checkMenuIconTypes();">Selection</md-option>
+                                            <md-option value="selection" ng-if="statable.value" ng-click="checkMenuIconTypes();">Selection</md-option>
                                         </md-select>
                                   </md-input-container>
                                 </li>   
@@ -127,7 +127,7 @@
                             </md-menu-content>
                         </div>
                     </md-tab>
-                    <md-tab label="State Properties" ng-if="statable.value && !waitable.value">
+                    <md-tab label="State Properties" ng-if="statable.value && !waitable.value" ng-disabled="menuEditorItem.type!=='selection'">
                         <div class="dfx-ve-property-treeview hover clearfix" style="padding:8px 16px 12px 12px;margin:0 -8px;">
                             <ul class="dfx-ve-property-picker-content" style="margin:0;padding:0">
                                 <li class="col-md-12" ng-if="menu.state.value">
