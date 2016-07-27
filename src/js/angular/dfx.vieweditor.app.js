@@ -1999,10 +1999,16 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                             }                            
                             if ( scope.statable.value && scope.menu.state && scope.menu.state.value ) {
                                 scope.ifShowMenuIconTypes( scope.menu.state.checkedIcon.value, 'checked' );                      
-                                scope.ifShowMenuIconTypes( scope.menu.state.uncheckedIcon.value, 'unchecked' );                      
+                                scope.ifShowMenuIconTypes( scope.menu.state.uncheckedIcon.value, 'unchecked' );
+                                $timeout(function() {
+                                    scope.menuEditorTabs.activeTab = 1;
+                                }, 100);                      
                             }
                             if ( scope.waitable.value && scope.menu.waiting && scope.menu.waiting.value ) {
                                 scope.ifShowMenuIconTypes( scope.menu.waiting.icon.value, 'waiting' );
+                                $timeout(function() {
+                                    scope.menuEditorTabs.activeTab = 1;
+                                }, 100);
                             }
                         }, 0);
                         $timeout(function() {
@@ -2067,8 +2073,11 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                             if ( scope.statable.value && scope.menu.state && scope.menu.state.value ) {
                                 scope.ifShowMenuIconTypes( scope.menu.state.checkedIcon.value, 'checked' );                      
                                 scope.ifShowMenuIconTypes( scope.menu.state.uncheckedIcon.value, 'unchecked' );                      
+                                $timeout(function() {
+                                    scope.menuEditorTabs.activeTab = 1;
+                                }, 100);
                             }
-                            if ( scope.menuEditorTabs.activeTab !== 0 ) { scope.menuEditorTabs.activeTab = 0; }
+                            // if ( scope.menuEditorTabs.activeTab !== 0 ) { scope.menuEditorTabs.activeTab = 0; }
                             scope.setMenuItemType();
                             scope.waitableItem.value = scope.menu.hasOwnProperty('waiting') ? true : false;
                             if ( scope.waitable.value && scope.menu.waiting && scope.menu.waiting.value ) {
@@ -2279,20 +2288,22 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                             }
                         } 
                         scope.setMenuItemType = function( menuType ) {
-                            if ( menuType ) {
-                                switch ( menuType ) {
-                                    case 'title':       scope.menu.title = true;  scope.menu.divider = false; scope.menu.state.value = false; break;
-                                    case 'divider':     scope.menu.title = false; scope.menu.divider = true;  scope.menu.state.value = false; break;
-                                    case 'selection':   scope.menu.title = false; scope.menu.divider = false; scope.menu.state.value = true;  break;
-                                    default:            scope.menu.title = false; scope.menu.divider = false; scope.menu.state.value = false;
+                            $timeout(function() {
+                                if ( menuType ) {
+                                    switch ( menuType ) {
+                                        case 'title':       scope.menu.title = true;  scope.menu.divider = false; scope.menu.state.value = false; break;
+                                        case 'divider':     scope.menu.title = false; scope.menu.divider = true;  scope.menu.state.value = false; break;
+                                        case 'selection':   scope.menu.title = false; scope.menu.divider = false; scope.menu.state.value = true; scope.menuEditorTabs.activeTab = 1; break;
+                                        default:            scope.menu.title = false; scope.menu.divider = false; scope.menu.state.value = false;
+                                    }
+                                } else {
+                                    scope.menuEditorItem = { "type": "" };
+                                    if ( scope.menu.title === true ) { scope.menuEditorItem.type = 'title'; }
+                                    else if ( scope.menu.divider === true ) { scope.menuEditorItem.type = 'divider'; }
+                                    else if ( scope.statable.value && scope.menu.state && scope.menu.state.value === true ) { scope.menuEditorItem.type = 'selection'; scope.menuEditorTabs.activeTab = 1; }
+                                    else { scope.menuEditorItem.type = 'standard'; }
                                 }
-                            } else {
-                                scope.menuEditorItem = { "type": "" };
-                                if ( scope.menu.title === true ) { scope.menuEditorItem.type = 'title'; }
-                                else if ( scope.menu.divider === true ) { scope.menuEditorItem.type = 'divider'; }
-                                else if ( scope.statable.value && scope.menu.state && scope.menu.state.value === true ) { scope.menuEditorItem.type = 'selection'; }
-                                else { scope.menuEditorItem.type = 'standard'; }
-                            }
+                            }, 0);
                         }
                         scope.closeDialog = function() {
                             $mdDialog.hide();
