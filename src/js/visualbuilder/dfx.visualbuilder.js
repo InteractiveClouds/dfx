@@ -971,31 +971,19 @@ DfxVisualBuilder.__addComponentToDefinition = function (component_id, parent_id,
 };
 
 /**
+ * Gets Visual Editor scope from HTML page
+ *
+ */
+DfxVisualBuilder.getVeScopeFromHtml = function () {
+    return angular.element(document.getElementById('dfx_src_widget_editor')).scope();
+};
+
+/**
  * Removes a component
  *
  */
 DfxVisualBuilder.removeComponent = function (component_id) {
-    var ve_scope = angular.element(document.getElementById('dfx_src_widget_editor')).scope();
-    ve_scope.removeComponent(component_id);
-    /*var gc_role        = $('.dfx_visual_editor_selected_box').attr('gc-role');
-    var gc_selected_id = $('.dfx_visual_editor_selected_box').attr('gc-selected-id');
-    var from_parent_id = $('#' + gc_selected_id).closest('[gc-parent]').attr('gc-parent');
-    var editor         = $('#dfx_src_editor.CodeMirror')[0].CodeMirror;
-    var wgt_definition = JSON.parse(editor.getValue());
-
-    if (gc_role == 'control-child') {
-        var gc_type                = $('.dfx_visual_editor_selected_box').attr('gc-type');
-        var gc_control_id          = $('#' + gc_selected_id).attr('gc-control-id');
-        var gc_control_child_index = $('#' + gc_selected_id).attr('gc-child-index');
-        gc_factory.removeChildComponent(gc_type, gc_control_id, gc_control_child_index, wgt_definition.definition);
-    } else {
-        DfxVisualBuilder.findParentAndRemoveComponent(gc_selected_id, from_parent_id, wgt_definition.definition, false);
-        $('#' + gc_selected_id).remove();
-    }
-    editor.setValue(JSON.stringify(wgt_definition, null, '\t'), 0);
-    editor.gotoLine(1);
-
-    $('#dfx_visual_editor_middle #dfx_visual_editor_workspace').click();*/
+    DfxVisualBuilder.getVeScopeFromHtml().removeComponent(component_id);
 };
 
 DfxVisualBuilder.removeComponentConfirmed = function (component_id, card) {
@@ -1011,9 +999,7 @@ DfxVisualBuilder.removeComponentConfirmed = function (component_id, card) {
         //editor.gotoLine(1);
         $('#dfx_visual_editor_middle #dfx_visual_editor_workspace').click();
 
-        // hide property panel of removed component
-        var ve_scope = angular.element(document.getElementById('dfx_src_widget_editor')).scope();
-        ve_scope.unselectComponent();
+        DfxVisualBuilder.getVeScopeFromHtml().unselectComponent();// hide property panel of removed component
     }
 
 };
