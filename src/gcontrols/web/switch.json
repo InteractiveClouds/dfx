@@ -7,6 +7,7 @@
   "label":          { "value": "'Switch:'" },
   "switchValue":    { "trueSwitchValue": "", "falseSwitchValue": "", "label": "" },
   "direction":      { "value": "column" },
+  "optionsType":    { "value": "static" },
   "staticArray":    { "value": [{"label":"'option1: '", "checked":"'yes'", "unchecked":"'no'", "isChecked":false}] },
   "defaultArray":   { "value":[] },
   "display":        { "value": "true" },

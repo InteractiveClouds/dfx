@@ -9,6 +9,7 @@
   "source":               { "value": "" },
   "currentItem":          { "value": "", "display": "" },  
   "radioItems":           { "value": [{"display":"'yes'", "value":"true"}, {"display":"'no'", "value": "false"}] },
+  "optionsType":          { "value": "static" },
   "direction":            { "value": "column" },
   "display":              { "value": "true" },
   "disabled":             { "value": "false" },
