@@ -8,6 +8,7 @@
   "classes":      { "value": "" },
   "style":        { "value": "" },
   "bodyStyle":    { "value": "" },
+  "dynamicClasses": { "value": "" },
   "flex":         { "value": "100" },
   "display":      { "value": "true" },
   "title":        { "value": "'This is a title'" },
