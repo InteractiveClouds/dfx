@@ -1125,8 +1125,13 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
             .cancel('No')
             .ok('Yes');
         $mdDialog.show(confirm).then(function() {
-            delete $scope.gc_instances[component_id];
-            DfxVisualBuilder.removeComponentConfirmed(component_id, $scope.view_card_selected);
+            var parent_id = $('#'+component_id).closest('[gc-parent]').attr('gc-parent');
+            if (parent_id) {
+                delete $scope.gc_instances[component_id];
+                DfxVisualBuilder.removeComponentConfirmed(component_id, $scope.view_card_selected);
+            } else {
+                dfxMessaging.showWarning('Root panel can not be removed');
+            }
         });
     };
 
@@ -1183,17 +1188,22 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     // Functions implementing Cut/Copy/Paste in view editor - START
     $scope.viewEditorCut = function() {
         var component_id = $scope.gc_selected.id;
+        var parent_id = $('#'+component_id).closest('[gc-parent]').attr('gc-parent');
 
-        var view_definition = DfxVisualBuilder.movingComponentHelper.getViewDefinition();
-        var component_definition = DfxVisualBuilder.getComponentDefinition($scope.gc_selected.id, view_definition.definition);
+        if (parent_id) {
+            var view_definition = DfxVisualBuilder.movingComponentHelper.getViewDefinition();
+            var component_definition = DfxVisualBuilder.getComponentDefinition($scope.gc_selected.id, view_definition.definition);
 
-        component_definition.attributes = angular.copy($scope.gc_selected.attributes);// if comp attributes changed and not saved, it's only in scope at the moment of cut/copy
+            component_definition.attributes = angular.copy($scope.gc_selected.attributes);// if comp attributes changed and not saved, it's only in scope at the moment of cut/copy
 
-        $scope.view_editor_cached_component = component_definition;// put component in memory
+            $scope.view_editor_cached_component = component_definition;// put component in memory
 
-        // remove component
-        delete $scope.gc_instances[component_id];
-        DfxVisualBuilder.removeComponentConfirmed(component_id, $scope.view_card_selected);
+            // remove component
+            delete $scope.gc_instances[component_id];
+            DfxVisualBuilder.removeComponentConfirmed(component_id, $scope.view_card_selected);
+        } else {
+            dfxMessaging.showWarning('Root panel can not be cut');
+        }
     };
 
     $scope.viewEditorCopy = function() {

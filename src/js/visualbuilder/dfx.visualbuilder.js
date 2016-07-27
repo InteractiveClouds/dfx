@@ -983,7 +983,8 @@ DfxVisualBuilder.getVeScopeFromHtml = function () {
  *
  */
 DfxVisualBuilder.removeComponent = function (component_id) {
-    DfxVisualBuilder.getVeScopeFromHtml().removeComponent(component_id);
+    var ve_scope = DfxVisualBuilder.getVeScopeFromHtml();
+    ve_scope.removeComponent(component_id);
 };
 
 DfxVisualBuilder.removeComponentConfirmed = function (component_id, card) {
@@ -991,15 +992,18 @@ DfxVisualBuilder.removeComponentConfirmed = function (component_id, card) {
     var wgt_definition = JSON.parse(editor.getValue());
 
     var parent_id = $('#'+component_id).closest('[gc-parent]').attr('gc-parent');
-    $('#'+component_id).remove();
 
-    if (parent_id != null) {
+    if (parent_id) {
+        $('#'+component_id).remove();
+
         DfxVisualBuilder.findParentAndRemoveComponent(component_id, parent_id, wgt_definition.definition, card, false);
         editor.setValue(JSON.stringify(wgt_definition, null, '\t'));
         //editor.gotoLine(1);
         $('#dfx_visual_editor_middle #dfx_visual_editor_workspace').click();
 
-        DfxVisualBuilder.getVeScopeFromHtml().unselectComponent();// hide property panel of removed component
+        // hide property panel of removed component
+        var ve_scope = DfxVisualBuilder.getVeScopeFromHtml();
+        ve_scope.unselectComponent();
     }
 
 };
