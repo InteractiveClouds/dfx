@@ -439,6 +439,110 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
         editor.execCommand('replace');
     };
 
+    $scope.configureDependenciesScript = function(ev) {
+        var parentEl = angular.element(document.body);
+        $mdDialog.show({
+            parent: parentEl,
+            targetEvent: ev,
+            template:
+            '<md-dialog aria-label="List dialog">' +
+            '   <md-toolbar>' +
+            '       <div class="md-toolbar-tools">' +
+            '           <h2>Dependency Injection</h2>' +
+            '       </div>' +
+            '   </md-toolbar>' +
+            '   <md-dialog-content style="width:500px;min-height:400px;padding:20px">'+
+            '           <div ng-repeat="dependency in dependencies">'+
+            '               <md-checkbox ng-checked="dependencyExists(dependency, selectedDependencies)" ng-click="toggleDependency(dependency, selectedDependencies)">' +
+            '                   {{dependency}}' +
+            '               </md-checkbox>' +
+            '           </div>'+
+            '   </md-dialog-content>' +
+            '   <md-dialog-actions>' +
+            '       <md-button ng-click="saveConfigureDependenciesScriptDialog()" class="md-primary">' +
+            '           Save' +
+            '       </md-button>' +
+            '       <md-button ng-click="closeConfigureDependenciesScriptDialog()" class="md-primary">' +
+            '           Cancel' +
+            '       </md-button>' +
+            '   </md-dialog-actions>' +
+            '</md-dialog>',
+            locals: {
+                dependencies: $scope.dependencies
+            },
+            controller: DialogController
+        });
+        function DialogController($scope, $mdDialog) {
+            $scope.dependencies = ['$rootScope','$scope', 'dfxApiServices', 'dfxDialog', 'dfxSidenav', 'dfxBottomSheet', 'dfxChangeCard'];
+            $scope.selectedDependencies = [];
+            $scope.additionalDependencies = [];
+            
+            var regexDependencies = /(controller(.*?)\[)(.*)(?=function)/;
+            var regexDependenciesArgs = /(function(.*?))(.*)(?=\{)/;
+            var editor_script = $('#dfx_script_editor.CodeMirror')[0].CodeMirror;
+            var text_script = editor_script.getValue();
+            
+            var m;
+ 
+            if ((m = regexDependencies.exec(text_script)) !== null) {
+                if (m.index === regexDependencies.lastIndex) {
+                    regexDependencies.lastIndex++;
+                }
+                var arr_dependencies = m[3].split(',');
+                for (dependency in arr_dependencies) {
+                    if (arr_dependencies[dependency].trim() != '') {
+                        var current_dependency =
+                            arr_dependencies[dependency].substring(
+                                arr_dependencies[dependency].indexOf('\'')+1,
+                                arr_dependencies[dependency].length-1
+                            ).trim();
+                        if ($scope.dependencies.indexOf(current_dependency)>-1) {
+                            $scope.selectedDependencies.push( current_dependency );
+                        } else {
+                            $scope.additionalDependencies.push( current_dependency );
+                        }
+                    }
+                }
+                console.log($scope.selectedDependencies);
+            }
+
+            $scope.dependencyExists = function(item, list) {
+                return list.indexOf(item) > -1;
+            };
+
+            $scope.toggleDependency = function(item, list) {
+                var idx = list.indexOf(item);
+                if (idx > -1) {
+                    list.splice(idx, 1);
+                }
+                else {
+                    list.push(item);
+                }
+            };
+
+            $scope.saveConfigureDependenciesScriptDialog = function() {
+                var text_dependencies = '';
+                var text_dependencies_args = '';
+                $scope.selectedDependencies = $scope.selectedDependencies.concat($scope.additionalDependencies);
+                for (var i=0; i<$scope.selectedDependencies.length; i++) {
+                    text_dependencies += '\'' + $scope.selectedDependencies[i] + '\', ';
+                    text_dependencies_args += $scope.selectedDependencies[i] + ', ';
+                }
+                text_dependencies_args = text_dependencies_args.substr( 0, text_dependencies_args.length-2 );
+                var new_script = text_script.replace(regexDependencies, m[1 ] + text_dependencies);
+
+                new_script = new_script.replace( regexDependenciesArgs, 'function ( ' + text_dependencies_args + ' ) ' );
+                
+                editor_script.setValue(new_script);
+                $mdDialog.hide();
+            }
+
+            $scope.closeConfigureDependenciesScriptDialog = function() {
+                $mdDialog.hide();
+            }
+        }
+    };
+
     $scope.unselectComponent = function() {
         if ($scope.gc_selected != null) {
             $('#'+$scope.gc_selected.id).css('border', '0px');
@@ -1021,8 +1125,13 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
             .cancel('No')
             .ok('Yes');
         $mdDialog.show(confirm).then(function() {
-            delete $scope.gc_instances[component_id];
-            DfxVisualBuilder.removeComponentConfirmed(component_id, $scope.view_card_selected);
+            var parent_id = $('#'+component_id).closest('[gc-parent]').attr('gc-parent');
+            if (parent_id) {
+                delete $scope.gc_instances[component_id];
+                DfxVisualBuilder.removeComponentConfirmed(component_id, $scope.view_card_selected);
+            } else {
+                dfxMessaging.showWarning('Root panel can not be removed');
+            }
         });
     };
 
@@ -1079,17 +1188,22 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     // Functions implementing Cut/Copy/Paste in view editor - START
     $scope.viewEditorCut = function() {
         var component_id = $scope.gc_selected.id;
+        var parent_id = $('#'+component_id).closest('[gc-parent]').attr('gc-parent');
 
-        var view_definition = DfxVisualBuilder.movingComponentHelper.getViewDefinition();
-        var component_definition = DfxVisualBuilder.getComponentDefinition($scope.gc_selected.id, view_definition.definition);
+        if (parent_id) {
+            var view_definition = DfxVisualBuilder.movingComponentHelper.getViewDefinition();
+            var component_definition = DfxVisualBuilder.getComponentDefinition($scope.gc_selected.id, view_definition.definition);
 
-        component_definition.attributes = angular.copy($scope.gc_selected.attributes);// if comp attributes changed and not saved, it's only in scope at the moment of cut/copy
+            component_definition.attributes = angular.copy($scope.gc_selected.attributes);// if comp attributes changed and not saved, it's only in scope at the moment of cut/copy
 
-        $scope.view_editor_cached_component = component_definition;// put component in memory
+            $scope.view_editor_cached_component = component_definition;// put component in memory
 
-        // remove component
-        delete $scope.gc_instances[component_id];
-        DfxVisualBuilder.removeComponentConfirmed(component_id, $scope.view_card_selected);
+            // remove component
+            delete $scope.gc_instances[component_id];
+            DfxVisualBuilder.removeComponentConfirmed(component_id, $scope.view_card_selected);
+        } else {
+            dfxMessaging.showWarning('Root panel can not be cut');
+        }
     };
 
     $scope.viewEditorCopy = function() {
@@ -1818,6 +1932,17 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
             return '/gcontrols/web/picker_menu.html';
         },
         link: function(scope, element, attrs) {
+            if(attrs.side){
+                if(attrs.side==='left'){
+                    $(element).attr('side','left');
+                    $(element).find('span').attr('side','left');
+                    $(element).find('md-icon').attr('side','left');
+                } else {
+                    $(element).attr('side','right');
+                    $(element).find('span').attr('side','right');
+                    $(element).find('md-icon').attr('side','right');
+                }
+            }
             scope.showMenuEditor = function(ev) {
                 scope.menu = {};
                 if(scope.attributes.layoutType.value === 'none' ){
@@ -1829,7 +1954,7 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                 scope.waitableItem = { "value": false};
                 scope.isFabToolbar = {"value": false};
                 if (scope.attributes.layoutType.value === 'wizard' || scope.attributes.layoutType.value === 'tabs' || scope.attributes.layoutType.value === 'panel'){
-                    var side = $($($(ev.target).parent().parent())).attr('side');
+                    var side = $(ev.target).attr('side');
                     if (side === 'left'){
                         scope.$parent.overrideAttribute('toolbar.leftMenu.menuItems');
                         scope.menuItems = scope.attributes.toolbar.leftMenu.menuItems;                                                                    
@@ -1885,10 +2010,16 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                             }                            
                             if ( scope.statable.value && scope.menu.state && scope.menu.state.value ) {
                                 scope.ifShowMenuIconTypes( scope.menu.state.checkedIcon.value, 'checked' );                      
-                                scope.ifShowMenuIconTypes( scope.menu.state.uncheckedIcon.value, 'unchecked' );                      
+                                scope.ifShowMenuIconTypes( scope.menu.state.uncheckedIcon.value, 'unchecked' );
+                                $timeout(function() {
+                                    scope.menuEditorTabs.activeTab = 1;
+                                }, 100);                      
                             }
                             if ( scope.waitable.value && scope.menu.waiting && scope.menu.waiting.value ) {
                                 scope.ifShowMenuIconTypes( scope.menu.waiting.icon.value, 'waiting' );
+                                $timeout(function() {
+                                    scope.menuEditorTabs.activeTab = 1;
+                                }, 100);
                             }
                         }, 0);
                         $timeout(function() {
@@ -1953,8 +2084,11 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                             if ( scope.statable.value && scope.menu.state && scope.menu.state.value ) {
                                 scope.ifShowMenuIconTypes( scope.menu.state.checkedIcon.value, 'checked' );                      
                                 scope.ifShowMenuIconTypes( scope.menu.state.uncheckedIcon.value, 'unchecked' );                      
+                                $timeout(function() {
+                                    scope.menuEditorTabs.activeTab = 1;
+                                }, 100);
                             }
-                            if ( scope.menuEditorTabs.activeTab !== 0 ) { scope.menuEditorTabs.activeTab = 0; }
+                            // if ( scope.menuEditorTabs.activeTab !== 0 ) { scope.menuEditorTabs.activeTab = 0; }
                             scope.setMenuItemType();
                             scope.waitableItem.value = scope.menu.hasOwnProperty('waiting') ? true : false;
                             if ( scope.waitable.value && scope.menu.waiting && scope.menu.waiting.value ) {
@@ -2165,20 +2299,22 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                             }
                         } 
                         scope.setMenuItemType = function( menuType ) {
-                            if ( menuType ) {
-                                switch ( menuType ) {
-                                    case 'title':       scope.menu.title = true;  scope.menu.divider = false; scope.menu.state.value = false; break;
-                                    case 'divider':     scope.menu.title = false; scope.menu.divider = true;  scope.menu.state.value = false; break;
-                                    case 'selection':   scope.menu.title = false; scope.menu.divider = false; scope.menu.state.value = true;  break;
-                                    default:            scope.menu.title = false; scope.menu.divider = false; scope.menu.state.value = false;
+                            $timeout(function() {
+                                if ( menuType ) {
+                                    switch ( menuType ) {
+                                        case 'title':       scope.menu.title = true;  scope.menu.divider = false; scope.menu.state.value = false; break;
+                                        case 'divider':     scope.menu.title = false; scope.menu.divider = true;  scope.menu.state.value = false; break;
+                                        case 'selection':   scope.menu.title = false; scope.menu.divider = false; scope.menu.state.value = true; scope.menuEditorTabs.activeTab = 1; break;
+                                        default:            scope.menu.title = false; scope.menu.divider = false; scope.menu.state.value = false;
+                                    }
+                                } else {
+                                    scope.menuEditorItem = { "type": "" };
+                                    if ( scope.menu.title === true ) { scope.menuEditorItem.type = 'title'; }
+                                    else if ( scope.menu.divider === true ) { scope.menuEditorItem.type = 'divider'; }
+                                    else if ( scope.statable.value && scope.menu.state && scope.menu.state.value === true ) { scope.menuEditorItem.type = 'selection'; scope.menuEditorTabs.activeTab = 1; }
+                                    else { scope.menuEditorItem.type = 'standard'; }
                                 }
-                            } else {
-                                scope.menuEditorItem = { "type": "" };
-                                if ( scope.menu.title === true ) { scope.menuEditorItem.type = 'title'; }
-                                else if ( scope.menu.divider === true ) { scope.menuEditorItem.type = 'divider'; }
-                                else if ( scope.statable.value && scope.menu.state && scope.menu.state.value === true ) { scope.menuEditorItem.type = 'selection'; }
-                                else { scope.menuEditorItem.type = 'standard'; }
-                            }
+                            }, 0);
                         }
                         scope.closeDialog = function() {
                             $mdDialog.hide();

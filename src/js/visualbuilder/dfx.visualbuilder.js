@@ -971,31 +971,20 @@ DfxVisualBuilder.__addComponentToDefinition = function (component_id, parent_id,
 };
 
 /**
+ * Gets Visual Editor scope from HTML page
+ *
+ */
+DfxVisualBuilder.getVeScopeFromHtml = function () {
+    return angular.element(document.getElementById('dfx_src_widget_editor')).scope();
+};
+
+/**
  * Removes a component
  *
  */
 DfxVisualBuilder.removeComponent = function (component_id) {
-    var ve_scope = angular.element(document.getElementById('dfx_src_widget_editor')).scope();
+    var ve_scope = DfxVisualBuilder.getVeScopeFromHtml();
     ve_scope.removeComponent(component_id);
-    /*var gc_role        = $('.dfx_visual_editor_selected_box').attr('gc-role');
-    var gc_selected_id = $('.dfx_visual_editor_selected_box').attr('gc-selected-id');
-    var from_parent_id = $('#' + gc_selected_id).closest('[gc-parent]').attr('gc-parent');
-    var editor         = $('#dfx_src_editor.CodeMirror')[0].CodeMirror;
-    var wgt_definition = JSON.parse(editor.getValue());
-
-    if (gc_role == 'control-child') {
-        var gc_type                = $('.dfx_visual_editor_selected_box').attr('gc-type');
-        var gc_control_id          = $('#' + gc_selected_id).attr('gc-control-id');
-        var gc_control_child_index = $('#' + gc_selected_id).attr('gc-child-index');
-        gc_factory.removeChildComponent(gc_type, gc_control_id, gc_control_child_index, wgt_definition.definition);
-    } else {
-        DfxVisualBuilder.findParentAndRemoveComponent(gc_selected_id, from_parent_id, wgt_definition.definition, false);
-        $('#' + gc_selected_id).remove();
-    }
-    editor.setValue(JSON.stringify(wgt_definition, null, '\t'), 0);
-    editor.gotoLine(1);
-
-    $('#dfx_visual_editor_middle #dfx_visual_editor_workspace').click();*/
 };
 
 DfxVisualBuilder.removeComponentConfirmed = function (component_id, card) {
@@ -1003,13 +992,18 @@ DfxVisualBuilder.removeComponentConfirmed = function (component_id, card) {
     var wgt_definition = JSON.parse(editor.getValue());
 
     var parent_id = $('#'+component_id).closest('[gc-parent]').attr('gc-parent');
-    $('#'+component_id).remove();
 
-    if (parent_id != null) {
+    if (parent_id) {
+        $('#'+component_id).remove();
+
         DfxVisualBuilder.findParentAndRemoveComponent(component_id, parent_id, wgt_definition.definition, card, false);
         editor.setValue(JSON.stringify(wgt_definition, null, '\t'));
         //editor.gotoLine(1);
         $('#dfx_visual_editor_middle #dfx_visual_editor_workspace').click();
+
+        // hide property panel of removed component
+        var ve_scope = DfxVisualBuilder.getVeScopeFromHtml();
+        ve_scope.unselectComponent();
     }
 
 };
@@ -1272,12 +1266,23 @@ DfxVisualBuilder.findComponentAndUpdateAttributes = function (component_id, pare
  * Removes not overridden attributes
  */
 DfxVisualBuilder.removeNotOverriddenAttributes = function (updated_attributes, gc_type, attr_full_path) {
-    var template;
-
-    var getGcTemplate = function (gc_type) {
+    var getGcTemplate = function (gc_type, callback) {
         gc_type = (gc_type == 'datatable') ? 'table' : gc_type;
         gc_type = (gc_type == 'json') ? 'gc_json' : gc_type;
-        return JSON.parse( sessionStorage.getItem('dfx_' + gc_type) );
+
+        var template = JSON.parse( sessionStorage.getItem('dfx_' + gc_type) );
+
+        if (template != null) {
+            callback(template);
+        }
+        else {
+            var app_body = angular.element(document.querySelector('body'));
+            var app_scope = angular.element(app_body).scope();
+
+            app_scope.getGCDefaultAttributes(gc_type).then(function (default_attributes) {
+                callback(default_attributes);
+            });
+        }
     };
     var getDeepValue = function(obj, path) {
         for (var i = 0, path = path.split('.'), len = path.length; i < len; i++) {
@@ -1300,7 +1305,7 @@ DfxVisualBuilder.removeNotOverriddenAttributes = function (updated_attributes, g
         return false;
     };
 
-    var removeOverriddenWithDefaultValues = function (attr_full_path, attr_updated_value, updated_attributes, attr_short_path) {
+    var removeOverriddenWithDefaultValues = function (attr_full_path, attr_updated_value, updated_attributes, attr_short_path, template) {
         var attr_default_value = getDeepValue(template, attr_full_path);
 
         //console.log('====== ' + gc_type);
@@ -1319,7 +1324,7 @@ DfxVisualBuilder.removeNotOverriddenAttributes = function (updated_attributes, g
         }
     };
 
-    var removeNotOverridden = function (updated_attributes, attr_full_path) {
+    var removeNotOverridden = function (updated_attributes, attr_full_path, template) {
         for (var attribute in updated_attributes) {
             if (updated_attributes.hasOwnProperty(attribute)) {
                 if (attribute != 'value' && attribute != 'status' && !Array.isArray(updated_attributes[attribute])) {
@@ -1329,16 +1334,17 @@ DfxVisualBuilder.removeNotOverriddenAttributes = function (updated_attributes, g
                         if (updated_attributes[attribute] && updated_attributes[attribute].status != 'overridden' && !isAttributeMandatory(attribute)) {
                             delete updated_attributes[attribute];
                         }
-                        removeNotOverridden(updated_attributes[attribute], attr_path);
+                        removeNotOverridden(updated_attributes[attribute], attr_path, template);
                     }
-                    removeOverriddenWithDefaultValues(attr_path, updated_attributes[attribute], updated_attributes, attribute);
+                    removeOverriddenWithDefaultValues(attr_path, updated_attributes[attribute], updated_attributes, attribute, template);
                 }
             }
         }
     };
 
-    template = getGcTemplate(gc_type);
-    removeNotOverridden(updated_attributes, attr_full_path);
+    getGcTemplate(gc_type, function(template) {
+        removeNotOverridden(updated_attributes, attr_full_path, template);
+    });
 };
 
 /**

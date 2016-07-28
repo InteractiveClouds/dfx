@@ -455,7 +455,7 @@ dfxStudioApp.controller("dfx_studio_controller", [ '$scope', '$rootScope', '$mdD
         }
     }
 
-    $scope.copyToBtn = function($event) {
+    $scope.copyToBtn = function($event, callback) {
         var parentEl = angular.element(document.body);
 
         $mdDialog.show({
@@ -548,6 +548,9 @@ dfxStudioApp.controller("dfx_studio_controller", [ '$scope', '$rootScope', '$mdD
                                 case 'apiso': dfxMessaging.showMessage( 'API Service Object ' + $scope.toCopy.name + ' has been copyied successfully' ); break;
                             }
                             $scope.getAll();
+                            if (callback != null) {
+                                callback();
+                            }
                             $mdDialog.hide();
                         }
                     });
@@ -1484,7 +1487,7 @@ dfxStudioApp.controller("dfx_studio_developers_controller", [ '$scope', 'dfxPlat
 }]);
 
 
-dfxStudioApp.controller("dfx_studio_home_controller", [ '$scope', 'dfxStats', '$timeout', '$compile', '$window', '$routeParams', 'dfxApplications', '$location', function($scope, dfxStats, $timeout, $compile, $window, $routeParams, dfxApplications, $location) {
+dfxStudioApp.controller("dfx_studio_home_controller", [ '$scope', 'dfxStats', '$timeout', '$compile', '$window', '$route', '$routeParams', '$mdDialog', 'dfxApplications', 'dfxViews', 'dfxPages', 'dfxApiServiceObjects', 'dfxMessaging', '$location', function($scope, dfxStats, $timeout, $compile, $window, $route, $routeParams, $mdDialog, dfxApplications, dfxViews, dfxPages, dfxApiServiceObjects, dfxMessaging, $location) {
     $scope.display_activity_panel = false;
     $scope.platform_stats = {};
     $scope.chart_pages_data = [];
@@ -1642,9 +1645,79 @@ dfxStudioApp.controller("dfx_studio_home_controller", [ '$scope', 'dfxStats', '$
     $scope.edit = function( item ) {
         switch ( $scope.entity ) {
             case 'pages':       $location.path('/page/update/' + $scope.appname + '/' + item.platform + '/' + item.name); break;
-            case 'views':       $location.path('/view/update/' + $scope.appname + '/' + item.platform + '/' + item.name); break;
+            //case 'views':       $location.path('/view/update/' + $scope.appname + '/' + item.platform + '/' + item.name); break;
+            case 'views':
+                window.localStorage.removeItem('pagePreviewName');
+                $window.open( '/studio/widget/' + item.platform + '/' + $scope.appname + '/' + item.name + '/index.html', '_blank' );
+                break;
             case 'apiServices': $location.path('/api_so/update/' + $scope.appname + '/' + item.name); break;
         }
+    };
+
+    $scope.copyEntity = function( item ) {
+        $scope.$parent.targetComponent = {
+            "name":        item.name,
+            "application": $scope.appname,
+            "category":    item.category,
+        }
+        if ($scope.entity=='views') {
+            $scope.$parent.targetComponent.type = 'view';
+            $scope.$parent.targetComponent.platform = item.platform;
+        } else if ($scope.entity=='pages') {
+            $scope.$parent.targetComponent.type = 'page';
+            $scope.$parent.targetComponent.platform = item.platform;
+        } else {
+            $scope.$parent.targetComponent.type = 'apiso';
+        }
+        $scope.copyToBtn(null, function() {
+            $route.reload();
+        });
+    };
+
+    $scope.removeEntity = function( item, ev ) {
+        $scope.$parent.targetComponent = {
+            "name":        item.name,
+            "application": $scope.appname,
+            "category":    item.category,
+        }
+        if ($scope.entity=='views') {
+            $scope.$parent.targetComponent.type = 'view';
+            $scope.$parent.targetComponent.platform = item.platform;
+        } else if ($scope.entity=='pages') {
+            $scope.$parent.targetComponent.type = 'page';
+            $scope.$parent.targetComponent.platform = item.platform;
+        } else {
+            $scope.$parent.targetComponent.type = 'apiso';
+        }
+        var confirm = $mdDialog.confirm()
+            .title('Are you sure you want delete this component?')
+            .textContent('The component will be removed permanently from the repository.')
+            .ariaLabel('delete component')
+            .targetEvent(ev)
+            .cancel('Cancel')
+            .ok('OK');
+        $mdDialog.show(confirm).then(function() {
+            if ($scope.entity=='views') {
+                dfxViews.delete( $scope, $scope.$parent.targetComponent ).then( function(data) {
+                    dfxMessaging.showMessage( 'The view has been deleted' );
+                    $scope.getAll();
+                    $route.reload();
+                });
+            } else if ($scope.entity=='pages') {
+                dfxPages.delete( $scope, $scope.$parent.targetComponent ).then( function(data) {
+                    dfxMessaging.showMessage( 'The page has been deleted' );
+                    $scope.getAll();
+                    $route.reload();
+                });
+            } else {
+                dfxApiServiceObjects.deleteSo( $scope, $scope.$parent.targetComponent ).then( function(data) {
+                    dfxMessaging.showMessage( 'The API Service Object has been deleted' );
+                    $scope.getAll();
+                    $route.reload();
+                });
+            }
+        }, function() {
+        });
     };
 
     $timeout(function(){
