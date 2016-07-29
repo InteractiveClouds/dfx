@@ -281,7 +281,7 @@ dfxPageEditorApp.controller("dfx_page_editor_controller", [ '$scope', '$rootScop
     };
 
     $scope.savePageDefinition = function() {
-        var editor = $('#dfx_pe_script_editor')[0].CodeMirror;;
+        var editor = $('#dfx_pe_script_editor')[0].CodeMirror;
         $scope.selected_page.script = editor.getValue();
         dfxPages.update( $scope, $scope.selected_page ).then( function(data) {
             dfxMessaging.showMessage( 'The page ' + $scope.selected_page.name + ' has been saved' );
@@ -429,9 +429,9 @@ dfxPageEditorApp.directive('dfxPageTemplate', ['$compile', '$mdSidenav', functio
             // Body
             tpl_snippet += '<div layout="column" style="background:inherit;z-index: 51;border:1px #37474F solid;overflow:auto;" layout-padding class="content-wrapper" flex id="pagebody">';
             
-            tpl_snippet += '<div layout="row" style="" flex ng-repeat="row in selected_page.layout.rows">';
-            tpl_snippet += '<div layout="column" flex="{{col.width}}" class="dfx-page-droppable-column" dfx-page-droppable-column data-row="{{$parent.$index}}" data-column="{{$index}}" ng-repeat="col in row.columns" style="border:1px #999 solid;min-height:50px">';
-            tpl_snippet += '<div ng-repeat="view in col.views" dfx-page-sortable-view class="{{(view.fit==\'content\') ? \'\' : \'flex\'}} md-whiteframe-3dp" style="letter-spacing:0.2em;background:#607D8B;color:#fff;cursor:pointer;min-height:150px" layout="row" layout-align="center center" data-view-id="{{view.id}}" data-view="{{view.name}}"><div class= "dfx-pe-view-menu"><span>{{view.name}}</span><a ng-click="loadViewMenu($event, $parent.$parent.$index, $parent.$index, view.id)" class="dfx-pe-view-menu-item"><i class="fa fa-gear"></i></a></div></div>';
+            tpl_snippet += '<div layout="row" style="" flex="{{row.height}}" ng-repeat="row in selected_page.layout.rows">';
+            tpl_snippet += '<div layout="column" flex="{{col.width}}" class="dfx-page-droppable-column" dfx-page-droppable-column data-row="{{$parent.$index}}" data-column="{{$index}}" ng-repeat="col in row.columns" style="border:1px #999 solid;">';
+            tpl_snippet += '<div ng-repeat="view in col.views" dfx-page-sortable-view class="{{(view.fit==\'content\') ? \'\' : \'flex\'}} md-whiteframe-3dp" style="letter-spacing:0.2em;background:#607D8B;color:#fff;cursor:pointer;" layout="row" layout-align="center center" data-view-id="{{view.id}}" data-view="{{view.name}}"><div class= "dfx-pe-view-menu"><span>{{view.name}}</span><a ng-click="loadViewMenu($event, $parent.$parent.$index, $parent.$index, view.id)" class="dfx-pe-view-menu-item"><i class="fa fa-gear"></i></a></div></div>';
             tpl_snippet += '</div>';
             tpl_snippet += '</div>';
             
