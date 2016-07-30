@@ -1479,7 +1479,7 @@ dfxStudioApi.factory('dfxPages', [ '$http', '$q', function($http, $q) {
     }
 
     api_pages.create = function( scope, page ) {
-        // Если нет то add page.platform
+        // If no, then add page.platform
         var deferred = $q.defer();
         
         $http({

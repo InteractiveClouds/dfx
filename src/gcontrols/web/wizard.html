@@ -1,5 +1,5 @@
-<div flex layout="row" layout-align="center center" ng-show="$eval(attributes.display.value)">
-    <div style="{{attributes.style.value}}" class="{{attributes.classes.value}} {{attributes.whiteframe.value}} flex" ng-class="$eval(attributes.dynamicClasses.value)"
+<div flex layout="row" layout-align="center center" ng-show="$eval(attributes.display.value)" ng-class="$eval(attributes.dynamicClasses.value)">
+    <div style="{{attributes.style.value}}" class="{{attributes.classes.value}} {{attributes.whiteframe.value}} flex"
          ng-focus="$eval(attributes.onfocus.value)"
          ng-blur="$eval(attributes.onblur.value)"
          ng-click="$eval(attributes.onclick.value)"

@@ -13,6 +13,17 @@
 							<span class="pull-right"><a href="#" ng-click="deleteLayoutRow($index)" title="Remove the row"><i class="fa fa-minus"></i></a></span>
 							<span class="pull-right"><a href="#" ng-click="addLayoutColumn($index)" title="Add a new column"><i class="fa fa-plus"></i></a></span>
 							<ul class="dfx-pe-property-treeview-content">
+								<li class="col-md-12">
+									<div layout>
+										<md-slider class="md-primary" flex ng-model="row.height" step="5" min="0" max="100" aria-label="Flex height:">
+										</md-slider>
+										<div flex="20" layout layout-align="center center">
+											<input flex type="text" ng-model="row.height" aria-label="blue" aria-controls="row-height" style="margin-left:5px">
+										</div>
+									</div>
+								</li>
+							</ul>
+							<ul class="dfx-pe-property-treeview-content">
 								<li ng-repeat="column in row.columns">
 									<ul>
 										<li>
