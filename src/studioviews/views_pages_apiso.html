@@ -1,8 +1,8 @@
 <div layout="row" layout-align="space-between center" style="background:#DCDCDC">
     <h4 style="padding: 5px 10px 4px;">
-        <span ng-if="entity === 'pages'">Pages</span>
-        <span ng-if="entity === 'views'">Views</span>
-        <span ng-if="entity === 'apiServices'">API Service Objects</span>
+        <span ng-if="entity === 'pages'">{{appname}} > Pages</span>
+        <span ng-if="entity === 'views'">{{appname}} > Views</span>
+        <span ng-if="entity === 'apiServices'">{{appname}} > API Service Objects</span>
     </h4>
     <div layout="row">
         <md-button ng-click="addEntity('Default')" class="md-primary">+
@@ -18,12 +18,12 @@
             <md-card-content style="padding:0;">
                 <table class="datatable" style="width:100%;">
                     <thead>
-                        <tr style="border-bottom:1px solid #C7C7C7;">
+                        <tr style="background:#4bcdff;color:#0f518e;border-bottom: 1px solid #999;">
                             <th width="15%">Name</th>
                             <th width="15%">App</th>
                             <th width="15%" ng-if="entity !== 'apiServices'">Platform</th>
                             <th width="15%">Category</th>
-                            <th width="30%">{{ entity === 'pages' ? 'Title' : 'Description'}}</th>
+                            <th width="25%">{{ entity === 'pages' ? 'Title' : 'Description'}}</th>
                             <th style="text-align:center">Actions</th>
                         </tr>
                     </thead>
@@ -36,10 +36,13 @@
                                 <td width="15%">{{appname}}</td>
                                 <td width="15%" ng-if="entity !== 'apiServices'" style="text-transform:capitalize;">{{item.platform === 'web' ? 'Desktop' : item.platform}}</td>
                                 <td width="15%">{{item.category }}</td>
-                                <td width="30%">{{entity === 'pages' ? item.title : item.description}}</td>
+                                <td width="25%">{{entity === 'pages' ? item.title : item.description}}</td>
                                 <td style="text-align:center">
                                     <md-button ng-click="edit(item)" style="margin: 0; padding: 0; min-width: 20px" aria-label="edit-element" title="Edit component">
                                         <md-icon class="fa fa-edit" style="font-size:20px; padding-top: 5px;"></md-icon>
+                                    </md-button>
+                                    <md-button ng-if="entity === 'views'" ng-click="infoEntity(item)" style="margin: 0; padding: 0; min-width: 20px" aria-label="copy-element" title="Information">
+                                        <md-icon class="fa fa-info" style="font-size:20px; padding-top: 5px;"></md-icon>
                                     </md-button>
                                     <md-button ng-click="copyEntity(item)" style="margin: 0; padding: 0; min-width: 20px" aria-label="copy-element" title="Copy component">
                                         <md-icon class="fa fa-copy" style="font-size:20px; padding-top: 5px;"></md-icon>

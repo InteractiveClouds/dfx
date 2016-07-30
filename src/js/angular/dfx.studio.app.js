@@ -1,4 +1,4 @@
-var dfxStudioApp = angular.module("dfxStudioApp", ['ngRoute', 'ngMaterial', 'dfxStudioApi', 'nvd3', 'monospaced.qrcode']);
+var dfxStudioApp = angular.module("dfxStudioApp", ['ngRoute', 'ngMaterial', 'dfxStudioApi', 'nvd3', 'monospaced.qrcode', 'nsPopover']);
 
 dfxStudioApp.config([ '$routeProvider', '$mdThemingProvider', function($routeProvider, $mdThemingProvider) {
 
@@ -1673,6 +1673,11 @@ dfxStudioApp.controller("dfx_studio_home_controller", [ '$scope', 'dfxStats', '$
             $route.reload();
         });
     };
+
+    $scope.infoEntity = function( item ) {
+        $location.path('/view/update/' + $scope.appname + '/' + item.platform + '/' + item.name);
+    };
+
 
     $scope.removeEntity = function( item, ev ) {
         $scope.$parent.targetComponent = {

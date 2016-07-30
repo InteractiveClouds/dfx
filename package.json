@@ -67,6 +67,7 @@
     "node.extend": "*",
     "nodemailer": "*",
     "npm": "*",
+    "ns-popover": "*",
     "oauth": ">= 0.9.10",
     "oauth-signature": "*",
     "openid": "*",
