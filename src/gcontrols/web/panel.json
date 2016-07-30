@@ -133,6 +133,7 @@
   "layout": {
     "rows": [
       {
+        "height":          { "value": "100" },
         "cols": [
           {
             "width":          { "value": "100" },

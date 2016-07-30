@@ -287,7 +287,15 @@ dfxAppRuntime.controller('dfx_view_controller', [ '$scope', '$rootScope', '$comp
         $scope.gc_instances[component.id] = component;
         var gc_instance = {};
         var flex_container_attr = (component.attributes.flex!=null) ? ' flex="{{attributes.flex.value}}"' : '';
-        gc_instance.fragment = $compile('<div id="' + component.id + '" dfx-gc-web-base dfx-gc-web-' + component.type + ' gc-role="control" gc-parent="' + parent_id + '" view-id="' + view_id + '"' + flex_container_attr + '></div>')($scope);
+        var is_panel = ( component.type == 'panel' ) ? ' layout="column"' : '';
+        gc_instance.fragment = $compile(
+            '<div id="' + component.id +
+            '" dfx-gc-web-base dfx-gc-web-' + component.type +
+            ' gc-role="control" gc-parent="' + parent_id +
+            '" view-id="' + view_id +
+            '"' + flex_container_attr +
+            is_panel +
+            '></div>')($scope);
         gc_instance.id = component.id;
         return gc_instance;
     };
@@ -490,7 +498,7 @@ dfxAppRuntime.directive('dfxViewWrapper', [ '$http', '$compile', function($http,
         },
         priority: 100000,
         link: function($scope, $element, $attrs) {
-            var wrapper_snippet = '<div id="' + $scope.wrapper_view_id + '" dfx-view="' + $scope.wrapper_view_name + '" dfx-view-card="default" ng-controller="dfx_view_controller" style="width:100%" layout="column"></div>';
+            var wrapper_snippet = '<div id="' + $scope.wrapper_view_id + '" dfx-view="' + $scope.wrapper_view_name + '" dfx-view-card="default" ng-controller="dfx_view_controller" style="width:100%" layout="column" flex></div>';
             $element.attr('ng-controller', $scope.wrapper_view_name + 'Controller');
             $element.append(wrapper_snippet);
             $element.removeAttr('dfx-view-wrapper');
