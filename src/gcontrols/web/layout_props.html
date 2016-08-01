@@ -27,6 +27,12 @@
 							</div>
 						</li>
 						<li class="col-md-12">
+							<span class="col-md-6">Auto height:</span>
+							<div class="col-md-6" layout="row">
+								<md-checkbox ng-model="row.autoHeight.value" class="md-primary" ng-change="overrideAttribute('layout')" aria-label="row.autoHeight.value"/>
+							</div>
+						</li>
+						<li class="col-md-12">
 							<span class="col-md-6">Style:</span>
 							<div class="col-md-6" layout="row">
 								<input class="col-md-12" type="text" ng-model="row.style.value" style="margin-left:-15px;" ng-change="overrideAttribute('layout')"/>

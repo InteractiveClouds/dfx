@@ -134,6 +134,7 @@
     "rows": [
       {
         "height":          { "value": "100" },
+        "autoHeight":      { "value": false },
         "cols": [
           {
             "width":          { "value": "100" },
