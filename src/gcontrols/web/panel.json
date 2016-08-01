@@ -79,6 +79,33 @@
             "menuItems": { "value": [] }
           }
         ]
+      },
+      "menuItemsType":  { "value": "static" },
+      "menuItemNames": {
+        "value": {
+          "main": {
+            "source": "",
+            "label": "",
+            "type": "",
+            "icon": {"value": "", "name":"", "type":""},
+            "shortcut": "",
+            "notification": "",
+            "display": "",
+            "disabled": "",
+            "onclick": "",
+            "scopeItems": ""
+          },
+          "state": {
+            "binding": "",
+            "checkedIcon": {"value":"","type":"","style":"","class":""},
+            "uncheckedIcon": {"value":"","type":"","style":"","class":""}
+          },
+          "waiting": {
+            "binding":"",
+            "autoDisabled":"",
+            "icon": {"value":"","type":"","style":"","class":""}
+          }
+        }
       }
     },
     "rightMenu": {
@@ -127,6 +154,33 @@
             "menuItems": { "value": [] }
           }
         ]
+      },
+      "menuItemsType":  { "value": "static" },
+      "menuItemNames": {
+        "value": {
+          "main": {
+            "source": "sdfgsdfgsf",
+            "label": "",
+            "type": "",
+            "icon": {"value": "", "name":"", "type":""},
+            "shortcut": "",
+            "notification": "",
+            "display": "",
+            "disabled": "",
+            "onclick": "",
+            "scopeItems": ""
+          },
+          "state": {
+            "binding": "",
+            "checkedIcon": {"value":"","type":"","style":"","class":""},
+            "uncheckedIcon": {"value":"","type":"","style":"","class":""}
+          },
+          "waiting": {
+            "binding":"",
+            "autoDisabled":"",
+            "icon": {"value":"","type":"","style":"","class":""}
+          }
+        }
       }
     }
   },

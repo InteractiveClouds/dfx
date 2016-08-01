@@ -1,6 +1,6 @@
 <div ng-if="attributes.isBindingPresent.value=== true" ng-show="$eval(attributes.display.value)" class="{{attributes.classes.value}}" ng-class="$eval(attributes.dynamicClasses.value)" style="{{attributes.style.value}}">
     <div class="gc-true-checkbox-label-preview"><span ng-bind="$eval(attributes.label.value)"></span></div>
-    <div ng-if="attributes.dynamicPresent.value=== true" ng-repeat="item in $gcscope[attributes.source.value] track by $index" ng-style="{'margin-top' : $index > 0 && attributes.direction.value ==='column' ? '21px' : '4px', 'display': attributes.direction.value ==='column' ? 'block' : 'inline-block', 'margin-right':'15px'}">
+    <div ng-if="attributes.optionsType.value==='dynamic'" ng-repeat="item in $gcscope[attributes.source.value] track by $index" ng-style="{'margin-top' : $index > 0 && attributes.direction.value ==='column' ? '21px' : '4px', 'display': attributes.direction.value ==='column' ? 'block' : 'inline-block', 'margin-right':'15px'}">
         <div style="display: inline-block;">
             <md-checkbox ng-model="attributes.bindingBoolean.value[$index]" style="margin: 0 0 0 5px" class="md-primary" ng-class="attributes.buttonClass.value" ng-disabled="$eval(attributes.disabled.value)"
                          ng-click="ngClickFunc();sendId(component_id)"
@@ -27,7 +27,7 @@
         <!--{{item}}-->
     </div>
 
-    <div ng-if="attributes.dynamicPresent.value=== false" ng-repeat="item in attributes.staticArray.value track by $index" ng-style="{'margin-top' : $index > 0 && attributes.direction.value ==='column' ? '21px' : '4px', 'display': attributes.direction.value ==='column' ? 'block' : 'inline-block', 'margin-right':'15px'}">
+    <div ng-if="attributes.optionsType.value==='static'" ng-repeat="item in attributes.staticArray.value track by $index" ng-style="{'margin-top' : $index > 0 && attributes.direction.value ==='column' ? '21px' : '4px', 'display': attributes.direction.value ==='column' ? 'block' : 'inline-block', 'margin-right':'15px'}">
         <div style="display: inline-block;">
             <md-checkbox ng-model="attributes.bindingBoolean.value[$index]" style="margin: 0 0 0 5px" class="md-primary" ng-class="attributes.buttonClass.value" ng-disabled="$eval(attributes.disabled.value)"
                          ng-click="ngClickFunc();sendId(component_id)"
@@ -57,7 +57,7 @@
 
 <div ng-if="attributes.isBindingPresent.value=== false" ng-show="$eval(attributes.display.value)" class="{{attributes.classes.value}}" ng-class="$eval(attributes.dynamicClasses.value)" style="{{attributes.style.value}}">
     <div class="gc-true-checkbox-label-preview"><span ng-bind="$eval(attributes.label.value)"></span></div>
-    <div ng-if="attributes.dynamicPresent.value=== true" ng-repeat="item in $gcscope[attributes.source.value] track by $index" ng-style="{'margin-top' : $index > 0 && attributes.direction.value ==='column' ? '21px' : '4px', 'display': attributes.direction.value ==='column' ? 'block' : 'inline-block', 'margin-right':'15px'}">
+    <div ng-if="attributes.optionsType.value==='dynamic'" ng-repeat="item in $gcscope[attributes.source.value] track by $index" ng-style="{'margin-top' : $index > 0 && attributes.direction.value ==='column' ? '21px' : '4px', 'display': attributes.direction.value ==='column' ? 'block' : 'inline-block', 'margin-right':'15px'}">
         <div style="display: inline-block;">
             <md-checkbox ng-model="attributes.bindingBoolean.value[$index]" style="margin: 0 0 0 5px" class="md-primary" ng-class="attributes.buttonClass.value" ng-disabled="$eval(attributes.disabled.value)"
                          ng-click="ngClickFunc()"
@@ -82,7 +82,7 @@
             <div ng-if="!attributes.bindingBoolean.value[$index]">{{item[attributes.checkValue.falseCheckValue]}}</div>
         </div>
     </div>
-    <div ng-if="attributes.dynamicPresent.value=== false" ng-repeat="item in attributes.staticArray.value track by $index" ng-style="{'margin-top' : $index > 0 && attributes.direction.value ==='column' ? '21px' : '4px', 'display': attributes.direction.value ==='column' ? 'block' : 'inline-block', 'margin-right':'15px'}">
+    <div ng-if="attributes.optionsType.value==='static'" ng-repeat="item in attributes.staticArray.value track by $index" ng-style="{'margin-top' : $index > 0 && attributes.direction.value ==='column' ? '21px' : '4px', 'display': attributes.direction.value ==='column' ? 'block' : 'inline-block', 'margin-right':'15px'}">
         <div style="display: inline-block;">
             <md-checkbox ng-model="item.isChecked" style="margin: 0 0 0 5px" class="md-primary" ng-class="attributes.buttonClass.value" ng-disabled="$eval(attributes.disabled.value)"
                          ng-click="ngClickFunc()"

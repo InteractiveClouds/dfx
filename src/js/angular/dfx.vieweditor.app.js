@@ -1943,6 +1943,8 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                     $(element).find('md-icon').attr('side','right');
                 }
             }
+            scope.menuItemsType = {"value":"static"};   
+            scope.menuItemNames = {"value":""};
             scope.showMenuEditor = function(ev) {
                 scope.menu = {};
                 if(scope.attributes.layoutType.value === 'none' ){
@@ -1954,10 +1956,14 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                 scope.waitableItem = { "value": false};
                 scope.isFabToolbar = {"value": false};
                 if (scope.attributes.layoutType.value === 'wizard' || scope.attributes.layoutType.value === 'tabs' || scope.attributes.layoutType.value === 'panel'){
-                    var side = $(ev.target).attr('side');
-                    if (side === 'left'){
+                    scope.toolbarSide = $(ev.target).attr('side');
+                    if (scope.toolbarSide === 'left'){
                         scope.$parent.overrideAttribute('toolbar.leftMenu.menuItems');
-                        scope.menuItems = scope.attributes.toolbar.leftMenu.menuItems;                                                                    
+                        scope.$parent.overrideAttribute('toolbar.leftMenu.menuItemsType');
+                        scope.$parent.overrideAttribute('toolbar.leftMenu.menuItemNames');
+                        scope.menuItemsType.value = scope.attributes.toolbar.leftMenu.menuItemsType.value;
+                        scope.menuItemNames.value = scope.attributes.toolbar.leftMenu.menuItemNames.value;
+                        scope.menuItems = scope.attributes.toolbar.leftMenu.menuItems;    
                         if (scope.attributes.toolbar.leftMenu.type.value === 'Icon Bar'){
                             scope.statable.value = true;
                             scope.waitable.value = false; 
@@ -1973,6 +1979,11 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                         }                                    
                     } else {
                         scope.$parent.overrideAttribute('toolbar.rightMenu.menuItems');
+                        scope.$parent.overrideAttribute('toolbar.rightMenu.menuItemsType');
+                        scope.$parent.overrideAttribute('toolbar.rightMenu.menuItemNames');
+                        scope.menuItemsType.value = scope.attributes.toolbar.rightMenu.menuItemsType.value;
+                        scope.menuItemNames.value = scope.attributes.toolbar.rightMenu.menuItemNames.value;
+                        scope.menuItemNames.value = scope.attributes.toolbar.rightMenu.menuItemNames.value;
                         scope.menuItems = scope.attributes.toolbar.rightMenu.menuItems;  
                         if (scope.attributes.toolbar.rightMenu.type.value === 'Icon Bar'){
                             scope.statable.value = true;
@@ -2032,6 +2043,17 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                     },
                     controller: function(){
                         scope.menuEditorItem = {};
+                        scope.setMenuItemsType = function( type ){
+                            console.log(type);
+                            console.log(scope.toolbarSide);
+                            if(scope.toolbarSide === 'left'){
+                                scope.attributes.toolbar.leftMenu.menuItemsType.value = type;
+                            }else if(scope.toolbarSide === 'right'){
+                                scope.attributes.toolbar.rightMenu.menuItemsType.value = type;
+                            }
+                            console.log(scope.attributes.toolbar.leftMenu.menuItemsType.value);
+                            console.log(scope.attributes.toolbar.rightMenu.menuItemsType.value);
+                        }
                         scope.checkMenuIconTypes = function() {
                             if ( scope.statable.value && scope.menu.state && scope.menu.state.value ) {
                                 scope.ifShowMenuIconTypes( scope.menu.state.checkedIcon.value, 'checked' );                      
@@ -2707,6 +2729,12 @@ dfxViewEditorApp.directive('dfxGcToolbarDesign', function($sce, $compile, $timeo
             }
             
             $timeout(function() {
+                if(scope.attributes.toolbar.leftMenu.hasOwnProperty('menuItemsType')){
+                    scope.attributes.toolbar.rightMenu.menuItemsType = { "value": "static" };
+                }   
+                if(scope.attributes.toolbar.rightMenu.hasOwnProperty('menuItemsType')){
+                    scope.attributes.toolbar.rightMenu.menuItemsType = { "value": "static" };
+                }
                 rebuildIcons( scope.attributes.toolbar.leftMenu.menuItems.value );
                 rebuildIcons( scope.attributes.toolbar.rightMenu.menuItems.value );
                 scope.cleanFabClasses(scope.attributes.toolbar.leftMenu.fab.triggerButton);
@@ -2935,7 +2963,7 @@ dfxViewEditorApp.directive('dfxGcToolbarDesign', function($sce, $compile, $timeo
 
             scope.iconbarBuilder = function( side ) {
                 $timeout(function() {
-                    if ( side === 'left' ) {
+                    if ( side === 'left' ) {                        
                         if ( scope.attributes.toolbar.leftMenu.type.value === 'Icon Bar' ) {
                             toolbarType='iconBar';
                             scope.leftRootMenuItem = '<button ng-click="{{itemClick}}" ng-show="{{itemDisplay}}" menu-index="{{itemIndex}}" ng-disabled="{{itemDisabled}}" style="{{attributes.toolbar.leftMenu.iconBar.triggerButton.style}}" aria-label="md-icon-button" class="md-icon-button {{attributes.toolbar.leftMenu.iconBar.triggerButton.class}}">'+
@@ -2989,7 +3017,7 @@ dfxViewEditorApp.directive('dfxGcToolbarDesign', function($sce, $compile, $timeo
                         } else {
                             scope.iconBar = '<md-menu-bar>';
                         }
-                    } else if ( side === 'right' ) {
+                    } else if ( side === 'right' ) {                        
                         if ( scope.attributes.toolbar.rightMenu.type.value === 'Icon Bar' ) {
                             toolbarType='iconBar';
                             scope.rightRootMenuItem = '<button ng-click="{{itemClick}}" ng-show="{{itemDisplay}}" menu-index="{{itemIndex}}" ng-disabled="{{itemDisabled}}" style="{{attributes.toolbar.rightMenu.iconBar.triggerButton.style}}" aria-label="md-icon-button" class="md-icon-button {{attributes.toolbar.rightMenu.iconBar.triggerButton.class}}">'+
