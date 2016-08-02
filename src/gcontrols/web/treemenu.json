@@ -20,6 +20,23 @@
       }
     ]
   },
+  "menuItemsType":  { "value": "static" },
+  "menuItemNames": {
+    "value": {
+      "main": {
+        "source": "",
+        "label": "",
+        "type": "",
+        "icon": {"value": "", "name":"", "type":""},
+        "shortcut": "",
+        "notification": "",
+        "display": "",
+        "disabled": "",
+        "onclick": "",
+        "scopeItems": ""
+      }
+    }
+  },
   "static": { "value": "" },
   "dynamic": { "value": "" },
   "style": { "value": "" },

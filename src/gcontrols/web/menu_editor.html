@@ -277,13 +277,6 @@
                                         <dfx-ve-menu-expression></dfx-ve-menu-expression>
                                     </div>
                                 </li>                        
-                                <li class="col-md-12">
-                                    <span class="col-md-4">Label:</span>
-                                    <div class="col-md-8" layout="row">
-                                        <input class="col-md-12" type="text" ng-model="menuItemNames.value.main.label"/>
-                                        <dfx-ve-menu-expression></dfx-ve-menu-expression>
-                                    </div>
-                                </li>
                                 <li class="col-md-12" ng-if="!isFabToolbar.value">
                                     <span class="col-md-4">Type:</span>
                                     <div class="col-md-8" layout="row">
@@ -291,6 +284,13 @@
                                         <dfx-ve-menu-expression></dfx-ve-menu-expression>
                                     </div>
                                 </li>   
+                                <li class="col-md-12">
+                                    <span class="col-md-4">Label:</span>
+                                    <div class="col-md-8" layout="row">
+                                        <input class="col-md-12" type="text" ng-model="menuItemNames.value.main.label"/>
+                                        <dfx-ve-menu-expression></dfx-ve-menu-expression>
+                                    </div>
+                                </li>                                
                                 <li class="col-md-12">
                                     <span class="col-md-4">Icon Object Name:</span>
                                     <div class="col-md-8" layout="row">
@@ -361,6 +361,13 @@
                         <div class="dfx-ve-property-treeview hover clearfix" style="padding:16px 12px;width:75%;">
                             <ul class="dfx-ve-property-picker-content" style="margin:0;padding:0">
                                 <li class="col-md-12">
+                                    <span class="col-md-4">State Object Name:</span>
+                                    <div class="col-md-8" layout="row">
+                                        <input class="col-md-12" type="text" ng-model="menuItemNames.value.state.name"/>
+                                        <dfx-ve-menu-expression></dfx-ve-menu-expression>
+                                    </div>
+                                </li>
+                                <li class="col-md-12">
                                     <span class="col-md-4">Binding:</span>
                                     <div class="col-md-8" layout="row">
                                         <input class="col-md-12" type="text" ng-model="menuItemNames.value.state.binding"/>
@@ -368,9 +375,16 @@
                                     </div>
                                 </li>
                                 <li class="col-md-12">
-                                    <span class="col-md-4">Checked Icon:</span>
+                                    <span class="col-md-4">Checked Icon Object Name:</span>
                                     <div class="col-md-8" layout="row">
                                         <input class="col-md-12" type="text" ng-model="menuItemNames.value.state.checkedIcon.value"/>
+                                        <dfx-ve-menu-expression></dfx-ve-menu-expression>
+                                    </div>                                    
+                                </li> 
+                                <li class="col-md-12">
+                                    <span class="col-md-4">Checked Icon Name:</span>
+                                    <div class="col-md-8" layout="row">
+                                        <input class="col-md-12" type="text" ng-model="menuItemNames.value.state.checkedIcon.name"/>
                                         <dfx-ve-menu-expression></dfx-ve-menu-expression>
                                     </div>                                    
                                 </li> 
@@ -394,11 +408,18 @@
                                         <input class="col-md-12" type="text" ng-model="menuItemNames.value.state.checkedIcon.class"/>
                                         <dfx-ve-menu-expression></dfx-ve-menu-expression>
                                     </div>
-                                </li>
-                                 <li class="col-md-12">
-                                    <span class="col-md-4">Unchecked Icon:</span>
+                                </li> 
+                                <li class="col-md-12">
+                                    <span class="col-md-4">Unchecked Icon Object Name:</span>
                                     <div class="col-md-8" layout="row">
                                         <input class="col-md-12" type="text" ng-model="menuItemNames.value.state.uncheckedIcon.value"/>
+                                        <dfx-ve-menu-expression></dfx-ve-menu-expression>
+                                    </div>                                    
+                                </li> 
+                                <li class="col-md-12">
+                                    <span class="col-md-4">Unchecked Icon Name:</span>
+                                    <div class="col-md-8" layout="row">
+                                        <input class="col-md-12" type="text" ng-model="menuItemNames.value.state.uncheckedIcon.name"/>
                                         <dfx-ve-menu-expression></dfx-ve-menu-expression>
                                     </div>                                    
                                 </li> 
@@ -422,13 +443,20 @@
                                         <input class="col-md-12" type="text" ng-model="menuItemNames.value.state.uncheckedIcon.class"/>
                                         <dfx-ve-menu-expression></dfx-ve-menu-expression>
                                     </div>
-                                </li>
+                                </li>                                
                             </ul>
                         </div>
                     </md-tab>
                     <md-tab label="Wait Properties" ng-if="waitable.value">
                         <div class="dfx-ve-property-treeview hover clearfix" style="padding:16px 12px;width:75%;">
                             <ul class="dfx-ve-property-picker-content" style="margin:0;padding:0">
+                                <li class="col-md-12">
+                                    <span class="col-md-4">Wait Object Name:</span>
+                                    <div class="col-md-8" layout="row">
+                                        <input class="col-md-12" type="text" ng-model="menuItemNames.value.waiting.name"/>
+                                        <dfx-ve-menu-expression></dfx-ve-menu-expression>
+                                    </div>
+                                </li>
                                 <li class="col-md-12">
                                     <span class="col-md-4">Binding:</span>
                                     <div class="col-md-8" layout="row">
@@ -444,15 +472,22 @@
                                     </div>
                                 </li>                
                                 <li class="col-md-12">
-                                    <span class="col-md-4">Icon:</span>
+                                    <span class="col-md-4">Icon Object Name:</span>
                                     <div class="col-md-8" layout="row">
                                         <input class="col-md-12" type="text" ng-model="menuItemNames.value.waiting.icon.value"/>
                                         <dfx-ve-menu-expression></dfx-ve-menu-expression>
                                     </div>
                                 </li>
                                 <li class="col-md-12">
+                                    <span class="col-md-4">Icon Name:</span>
+                                    <div class="col-md-8" layout="row">
+                                        <input class="col-md-12" type="text" ng-model="menuItemNames.value.waiting.icon.name"/>
+                                        <dfx-ve-menu-expression></dfx-ve-menu-expression>
+                                    </div>
+                                </li>
+                                <li class="col-md-12">
                                     <span class="col-md-4">Icon Type:</span>
-                                    <div class="col-md-8" layout="row" style="padding: 0 0 8px 0">
+                                    <div class="col-md-8" layout="row">
                                         <input class="col-md-12" type="text" ng-model="menuItemNames.value.waiting.icon.type"/>
                                         <dfx-ve-menu-expression></dfx-ve-menu-expression>
                                     </div>

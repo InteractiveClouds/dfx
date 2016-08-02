@@ -96,14 +96,16 @@
             "scopeItems": ""
           },
           "state": {
+            "name": "",
             "binding": "",
-            "checkedIcon": {"value":"","type":"","style":"","class":""},
-            "uncheckedIcon": {"value":"","type":"","style":"","class":""}
+            "checkedIcon": {"value":"","name":"","type":"","style":"","class":""},
+            "uncheckedIcon": {"value":"","name":"","type":"","style":"","class":""}
           },
           "waiting": {
+            "name": "",
             "binding":"",
             "autoDisabled":"",
-            "icon": {"value":"","type":"","style":"","class":""}
+            "icon": {"value":"","name":"","type":"","style":"","class":""}
           }
         }
       }
@@ -159,7 +161,7 @@
       "menuItemNames": {
         "value": {
           "main": {
-            "source": "sdfgsdfgsf",
+            "source": "",
             "label": "",
             "type": "",
             "icon": {"value": "", "name":"", "type":""},
@@ -171,14 +173,16 @@
             "scopeItems": ""
           },
           "state": {
+            "name": "",
             "binding": "",
-            "checkedIcon": {"value":"","type":"","style":"","class":""},
-            "uncheckedIcon": {"value":"","type":"","style":"","class":""}
+            "checkedIcon": {"value":"","name":"","type":"","style":"","class":""},
+            "uncheckedIcon": {"value":"","name":"","type":"","style":"","class":""}
           },
           "waiting": {
+            "name": "",
             "binding":"",
             "autoDisabled":"",
-            "icon": {"value":"","type":"","style":"","class":""}
+            "icon": {"value":"","name":"","type":"","style":"","class":""}
           }
         }
       }

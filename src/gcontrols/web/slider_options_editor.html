@@ -39,18 +39,18 @@
 					</md-toolbar>
 					<md-content layout-padding flex style="">
 						<div class="dfx-ve-property-treeview hover clearfix" style="padding:8px 16px 12px 12px;margin:0 -8px;">
-							<ul class="dfx-ve-property-picker-content" style="margin:0;padding:0">
-								<li class="col-md-12">
-									<span class="col-md-4">Label:</span>
-									<div class="col-md-8" layout="row">
-										<input class="col-md-12" type="text" ng-model="attributes.currentItem.label" style="margin-left:-15px;"/>
-										<dfx-ve-menu-expression></dfx-ve-menu-expression>
-									</div>
-								</li>
+							<ul class="dfx-ve-property-picker-content" style="margin:0;padding:0">								
 								<li class="col-md-12">
 									<span class="col-md-4">Value:</span>
 									<div class="col-md-8" layout="row">
 										<input class="col-md-12" type="text" ng-model="attributes.currentItem.value" style="margin-left:-15px;"/>
+										<dfx-ve-menu-expression></dfx-ve-menu-expression>
+									</div>
+								</li>
+								<li class="col-md-12">
+									<span class="col-md-4">Label:</span>
+									<div class="col-md-8" layout="row">
+										<input class="col-md-12" type="text" ng-model="attributes.currentItem.label" style="margin-left:-15px;"/>
 										<dfx-ve-menu-expression></dfx-ve-menu-expression>
 									</div>
 								</li>
@@ -75,18 +75,18 @@
 										<input class="col-md-12" type="text" ng-model="attributes.source.value" style="margin-left:-15px;" ng-change="overrideAttribute('source')"/>
                     <dfx-ve-menu-expression></dfx-ve-menu-expression>
 									</div>
+								</li>								
+								<li class="col-md-12">
+									<span class="col-md-4">Value:</span>
+									<div class="col-md-8" layout="row">
+										<input class="col-md-12" type="text" ng-model="attributes.displayValue.value" ng-change="overrideAttribute('displayValue')" style="margin-left:-15px;"/>
+										<dfx-ve-menu-expression></dfx-ve-menu-expression>
+									</div>
 								</li>
 								<li class="col-md-12">
 									<span class="col-md-4">Label:</span>
 									<div class="col-md-8" layout="row">
 										<input class="col-md-12" type="text" ng-model="attributes.bindingLabel.value" ng-change="overrideAttribute('bindingLabel')" style="margin-left:-15px;"/>
-										<dfx-ve-menu-expression></dfx-ve-menu-expression>
-									</div>
-								</li>
-								<li class="col-md-12">
-									<span class="col-md-4">Value:</span>
-									<div class="col-md-8" layout="row">
-										<input class="col-md-12" type="text" ng-model="attributes.displayValue.value" ng-change="overrideAttribute('displayValue')" style="margin-left:-15px;"/>
 										<dfx-ve-menu-expression></dfx-ve-menu-expression>
 									</div>
 								</li>

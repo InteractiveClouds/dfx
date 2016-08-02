@@ -1958,12 +1958,12 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                 if (scope.attributes.layoutType.value === 'wizard' || scope.attributes.layoutType.value === 'tabs' || scope.attributes.layoutType.value === 'panel'){
                     scope.toolbarSide = $(ev.target).attr('side');
                     if (scope.toolbarSide === 'left'){
-                        scope.$parent.overrideAttribute('toolbar.leftMenu.menuItems');
-                        scope.$parent.overrideAttribute('toolbar.leftMenu.menuItemsType');
-                        scope.$parent.overrideAttribute('toolbar.leftMenu.menuItemNames');
                         scope.menuItemsType.value = scope.attributes.toolbar.leftMenu.menuItemsType.value;
                         scope.menuItemNames.value = scope.attributes.toolbar.leftMenu.menuItemNames.value;
                         scope.menuItems = scope.attributes.toolbar.leftMenu.menuItems;    
+                        scope.$parent.overrideAttribute('toolbar.leftMenu.menuItems');
+                        scope.$parent.overrideAttribute('toolbar.leftMenu.menuItemsType');
+                        scope.$parent.overrideAttribute('toolbar.leftMenu.menuItemNames');
                         if (scope.attributes.toolbar.leftMenu.type.value === 'Icon Bar'){
                             scope.statable.value = true;
                             scope.waitable.value = false; 
@@ -1978,13 +1978,12 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                             scope.isFabToolbar.value = true;
                         }                                    
                     } else {
+                        scope.menuItemsType.value = scope.attributes.toolbar.rightMenu.menuItemsType.value;
+                        scope.menuItemNames.value = scope.attributes.toolbar.rightMenu.menuItemNames.value;
+                        scope.menuItems = scope.attributes.toolbar.rightMenu.menuItems;  
                         scope.$parent.overrideAttribute('toolbar.rightMenu.menuItems');
                         scope.$parent.overrideAttribute('toolbar.rightMenu.menuItemsType');
                         scope.$parent.overrideAttribute('toolbar.rightMenu.menuItemNames');
-                        scope.menuItemsType.value = scope.attributes.toolbar.rightMenu.menuItemsType.value;
-                        scope.menuItemNames.value = scope.attributes.toolbar.rightMenu.menuItemNames.value;
-                        scope.menuItemNames.value = scope.attributes.toolbar.rightMenu.menuItemNames.value;
-                        scope.menuItems = scope.attributes.toolbar.rightMenu.menuItems;  
                         if (scope.attributes.toolbar.rightMenu.type.value === 'Icon Bar'){
                             scope.statable.value = true;
                             scope.waitable.value = false; 
@@ -2001,7 +2000,8 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                     }
                 } else {
                     scope.menuItems = scope.attributes.menuItems;
-                    scope.gc_selected.type === 'iconbar' ? scope.statable.value = true : scope.statable.value = false; 
+                    scope.gc_selected.type === 'iconbar' ? scope.statable.value = true : scope.statable.value = false;
+                    scope.menuItemNames.value = scope.attributes.menuItemNames.value; 
                 }
                 $mdDialog.show({
                     scope: scope.$new(),
@@ -2010,7 +2010,7 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                     clickOutsideToClose:true,
                     ariaLabel: 'menu-editor',
                     templateUrl: '/gcontrols/web/menu_editor.html',
-                    onComplete: function() {  
+                    onComplete: function() { 
                         $timeout(function(){                            
                             scope.menu = scope.menuItems.value[0];
                             scope.indexMenuItem = '';
@@ -2044,15 +2044,16 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                     controller: function(){
                         scope.menuEditorItem = {};
                         scope.setMenuItemsType = function( type ){
-                            console.log(type);
-                            console.log(scope.toolbarSide);
                             if(scope.toolbarSide === 'left'){
                                 scope.attributes.toolbar.leftMenu.menuItemsType.value = type;
+                                scope.$parent.overrideAttribute('toolbar.leftMenu.menuItemsType');
                             }else if(scope.toolbarSide === 'right'){
                                 scope.attributes.toolbar.rightMenu.menuItemsType.value = type;
+                                scope.$parent.overrideAttribute('toolbar.rightMenu.menuItemsType');
+                            } else {
+                                scope.attributes.menuItemsType.value = type;
+                                scope.$parent.overrideAttribute('menuItemsType');
                             }
-                            console.log(scope.attributes.toolbar.leftMenu.menuItemsType.value);
-                            console.log(scope.attributes.toolbar.rightMenu.menuItemsType.value);
                         }
                         scope.checkMenuIconTypes = function() {
                             if ( scope.statable.value && scope.menu.state && scope.menu.state.value ) {
@@ -2324,10 +2325,26 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                             $timeout(function() {
                                 if ( menuType ) {
                                     switch ( menuType ) {
-                                        case 'title':       scope.menu.title = true;  scope.menu.divider = false; scope.menu.state.value = false; break;
-                                        case 'divider':     scope.menu.title = false; scope.menu.divider = true;  scope.menu.state.value = false; break;
-                                        case 'selection':   scope.menu.title = false; scope.menu.divider = false; scope.menu.state.value = true; scope.menuEditorTabs.activeTab = 1; break;
-                                        default:            scope.menu.title = false; scope.menu.divider = false; scope.menu.state.value = false;
+                                        case 'title':       
+                                            scope.menu.title = true;  
+                                            scope.menu.divider = false; 
+                                            if(scope.menu.state){scope.menu.state.value = false;}
+                                            break;
+                                        case 'divider':     
+                                            scope.menu.title = false; 
+                                            scope.menu.divider = true;  
+                                            if(scope.menu.state){scope.menu.state.value = false;}
+                                            break;
+                                        case 'selection':   
+                                            scope.menu.title = false; 
+                                            scope.menu.divider = false; 
+                                            if(scope.menu.state){scope.menu.state.value = true;}
+                                            scope.menuEditorTabs.activeTab = 1; 
+                                            break;
+                                        default:            
+                                            scope.menu.title = false; 
+                                            scope.menu.divider = false; 
+                                            if(scope.menu.state){scope.menu.state.value = false;}
                                     }
                                 } else {
                                     scope.menuEditorItem = { "type": "" };
@@ -2788,12 +2805,8 @@ dfxViewEditorApp.directive('dfxGcToolbarDesign', function($sce, $compile, $timeo
                     }                    
                     delete scope.attributes.toolbar.rightMenu.buttonStyle;
                     delete scope.attributes.toolbar.rightMenu.iconStyle;
-                }                
+                }
             }, 250);
-
-            var setState = function( stateObject ) {
-                stateObject.icon = stateObject.checkedIcon;
-            }    
 
             var buildNextLevel = function ( nextLevel, road ) {
                 for ( var i = 0; i < nextLevel.length; i++ ) {
@@ -2806,6 +2819,8 @@ dfxViewEditorApp.directive('dfxGcToolbarDesign', function($sce, $compile, $timeo
                     } else {
                         if ( nextLevel[i].divider === true ) {
                             scope.iconBar = scope.iconBar + '<md-menu-divider></md-menu-divider>';
+                        } else if ( nextLevel[i].title === true ) {
+                            scope.iconBar = scope.iconBar + '<md-menu-item class="tree-menu-title"><div>'+'{{'+nextLevel[i].label+' | checkExpression}}'+'</div></md-menu-item>';
                         } else {
                             var iconbarItem = iconbarMenuItem.replace('{{itemDisplay}}', true);
                             scope.iconBar = scope.iconBar + iconbarItem;
@@ -2843,22 +2858,20 @@ dfxViewEditorApp.directive('dfxGcToolbarDesign', function($sce, $compile, $timeo
                         dfxMenuItem.state = {
                             "value":           false,
                             "binding":         "true",
-                            "icon":          { "value": "'thumb_up'", "type": "svg-icon", "style": "", "class": "" },
                             "checkedIcon":   { "value": "'thumb_up'", "type": "svg-icon", "style": "", "class": "" },
                             "uncheckedIcon": { "value": "'thumb_down'", "type": "svg-icon", "style": "", "class": "" }
                         };
                     } 
-                    if ( dfxMenuItem.state.value ) { setState( dfxMenuItem.state ); }
                     tempPropObject.ifFaIcon =               dfxMenuItem.icon.value.length > 0 && dfxMenuItem.icon.type === 'fa-icon' && !dfxMenuItem.state.value ? true : false;
                     tempPropObject.ifSvgIcon =              dfxMenuItem.icon.value.length > 0 && dfxMenuItem.icon.type === 'svg-icon' && !dfxMenuItem.state.value ? true : false;
-                    tempPropObject.ifStateFaIcon =          dfxMenuItem.icon.value.length > 0 && dfxMenuItem.icon.type === 'fa-icon' && dfxMenuItem.state.value ? true : false;
-                    tempPropObject.ifStateSvgIcon =         dfxMenuItem.icon.value.length > 0 && dfxMenuItem.icon.type === 'svg-icon' && dfxMenuItem.state.value ? true : false;
-                    tempPropObject.stateFaIcon =            dfxMenuItem.state.icon.value.indexOf("'") == -1 ? 'fa-thumbs-up' : eval(dfxMenuItem.state.icon.value);
-                    tempPropObject.stateSvgIcon =           dfxMenuItem.state.icon.value.indexOf("'") == -1 ? 'thumb_up' : eval(dfxMenuItem.state.icon.value);
-                    tempPropObject.stateFaIconStyle =       dfxMenuItem.state.icon.style;
-                    tempPropObject.stateSvgIconStyle =      dfxMenuItem.state.icon.style;
-                    tempPropObject.stateFaIconClass =       dfxMenuItem.state.icon.class;
-                    tempPropObject.stateSvgIconClass =      dfxMenuItem.state.icon.class;
+                    tempPropObject.ifStateFaIcon =          dfxMenuItem.state.checkedIcon.value.length > 0 && dfxMenuItem.state.checkedIcon.type === 'fa-icon' && dfxMenuItem.state.value ? true : false;
+                    tempPropObject.ifStateSvgIcon =         dfxMenuItem.state.checkedIcon.value.length > 0 && dfxMenuItem.state.checkedIcon.type === 'svg-icon' && dfxMenuItem.state.value ? true : false;
+                    tempPropObject.stateFaIcon =            dfxMenuItem.state.checkedIcon.value.indexOf("'") == -1 ? 'fa-thumbs-up' : eval(dfxMenuItem.state.checkedIcon.value);
+                    tempPropObject.stateSvgIcon =           dfxMenuItem.state.checkedIcon.value.indexOf("'") == -1 ? 'thumb_up' : eval(dfxMenuItem.state.checkedIcon.value);
+                    tempPropObject.stateFaIconStyle =       dfxMenuItem.state.checkedIcon.style;
+                    tempPropObject.stateSvgIconStyle =      dfxMenuItem.state.checkedIcon.style;
+                    tempPropObject.stateFaIconClass =       dfxMenuItem.state.checkedIcon.class;
+                    tempPropObject.stateSvgIconClass =      dfxMenuItem.state.checkedIcon.class;
                 } else if (  toolbarType==='buttons' ) {
                     scope.waitableItem = { "value": false };
                     if ( dfxMenuItem.hasOwnProperty('state')) { delete dfxMenuItem.state; }
