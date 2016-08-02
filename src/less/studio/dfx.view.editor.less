@@ -973,3 +973,24 @@ md-dialog .dfx-ca-property-treeview label:before {
   margin-top: -2px;
   text-decoration: none;
 }
+
+/*view editor workspace cards*/
+md-content#dfx-ve-main-content > md-tabs {
+  height: 100%;
+
+  > md-tabs-content-wrapper {
+    flex: 100;
+
+    > md-tab-content {
+      height: 100%;
+
+      > div {
+        height: 100%;
+
+        > md-content {
+          height: 100%;
+        }
+      }
+    }
+  }
+}
