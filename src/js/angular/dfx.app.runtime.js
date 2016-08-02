@@ -287,16 +287,19 @@ dfxAppRuntime.controller('dfx_view_controller', [ '$scope', '$rootScope', '$comp
         $scope.gc_instances[component.id] = component;
         var gc_instance = {};
         var flex_container_attr = (component.attributes.flex!=null) ? ' flex="{{attributes.flex.value}}"' : '';
-        var is_panel = ( component.type == 'panel' ) ? ' layout="column"' : '';
+
+        var panel_layout = (component.type == 'panel' && (!component.attributes.autoHeight ||  component.attributes.autoHeight.value != true)) ? ' style="height:100%;" layout="column" ' : '';
+
         gc_instance.fragment = $compile(
             '<div id="' + component.id +
             '" dfx-gc-web-base dfx-gc-web-' + component.type +
             ' gc-role="control" gc-parent="' + parent_id +
             '" view-id="' + view_id +
             '"' + flex_container_attr +
-            is_panel +
+            panel_layout +
             '></div>')($scope);
         gc_instance.id = component.id;
+        if (gc_instance.id == '2019') console.log(gc_instance);
         return gc_instance;
     };
 
@@ -547,6 +550,7 @@ dfxAppRuntime.directive('dfxGcWeb', ['$compile', function($compile) {
         restrict: 'A',
         link: function($scope, $element, $attrs) {
             var component = $scope.gc_instances[$attrs.id];
+
             if ( component.attributes.repeat_title && component.attributes.repeat_title.value ) {
                 var inherited = {
                     "halignment": $scope.$parent.col.halignment.value,
@@ -580,6 +584,7 @@ dfxAppRuntime.directive('dfxGcRenderer', ['$compile', function($compile) {
             var viewId = $('#'+$attrs.componentId).attr('view-id');
             var angular_snippet = $compile('<div id="'+$attrs.componentId+'_renderer_'+$attrs.rowId+'_'+$attrs.columnId+'" dfx-gc-web-base dfx-gc-web-'+$attrs.dfxGcRenderer+' dfx-gc-renderer-content="'+$attrs.componentId+'" view-id="' + viewId + '"></div>')($scope);
             $element.append(angular_snippet);
+            if ($attrs.id == '2019') console.log('2.angular_snippet: ', angular_snippet);
         }
     }
 }]);
