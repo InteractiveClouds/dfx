@@ -1,4 +1,4 @@
-var dfxViewEditorApp = angular.module("dfxViewEditorApp", ['ngMaterial', 'ngMdIcons', 'dfxGControls', 'dfxStudioApi']);
+var dfxViewEditorApp = angular.module("dfxViewEditorApp", ['ngMaterial', 'ngMdIcons', 'dfxGControls', 'dfxStudioApi', 'nsPopover']);
 
 dfxViewEditorApp.config(function($mdThemingProvider) {
     $mdThemingProvider.theme('altTheme')
