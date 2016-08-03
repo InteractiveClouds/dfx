@@ -25,11 +25,14 @@ var cookieParser = require('cookie-parser');
 var path = require('path');
 var fs = require('fs');
 var QFS = require('q-io/fs');
+var CHANNELS = require('./lib/channels').channels;
 var Q = require('q');
 var sockets = require('./lib/dfx_sockets');
 var version = require('./package.json').version;
 var isPortFree = require('./lib/utils/isPortFree');
 var pmx = require('pmx');
+var watcher = require('./lib/utils/watcher');
+var activator = require('./lib/utils/activator');
 
 var out = module.exports = {},
     Log,
@@ -490,6 +493,49 @@ function _start () {
         Log.init.server(settings);
         Log.startServer();
     }
+
+    app.use(function(req, res, next) {
+        var cookies = watcher.parseCookies(req);
+        var tenantId = cookies['X-DREAMFACE-TENANT'];
+        if (tenantId) {
+            var inactiveTenants = watcher.getInactiveTenants();
+            var enableTenants = activator.getAll();
+            if (((inactiveTenants.indexOf(tenantId) != -1) || (enableTenants.indexOf(tenantId) == -1)) && watcher.verifyAuthRequest(req.url)) {
+                res.status(SETTINGS.loadBalancing.disabledRequestsStatus).send();
+            } else {
+                watcher.setRequestRun(tenantId);
+                res.on('finish', function () {
+                    watcher.setRequestStop(tenantId);
+                });
+                next();
+            }
+
+        } else {
+            next();
+        }
+    });
+
+    // Graceful Shutdown START
+
+    process.on("SIGINT", shutdown);
+
+    process.on('SIGTERM', shutdown);
+
+    function shutdown() {
+        function cbFunction() {
+            log.ok('All requests are finished!')
+            CHANNELS.root.unsubscribe('allTenantsRequestAreFinished', cbFunction);
+            process.exit();
+        }
+        if (watcher.isAllRequestsAreFinished()) {
+            cbFunction();
+        } else {
+            CHANNELS.root.subscribe('allTenantsRequestAreFinished', cbFunction);
+        }
+    }
+
+    // Graceful Shutdown END
+
 
     app.set('views', path.join(__dirname, 'templates'));
     app.set('view engine', 'jade');
