@@ -25,7 +25,7 @@
 					<ul class="dfx-ve-property-treeview-content">
 						<li class="col-md-12">
 							<div layout>
-								<md-slider class="md-primary" flex ng-model="row.height.value" step="5" min="0" max="100" aria-label="Flex height:">
+								<md-slider class="md-primary" flex ng-model="row.height.value" ng-disabled="attributes.autoHeight && attributes.autoHeight.value" step="5" min="0" max="100" aria-label="Flex height:">
 								</md-slider>
 								<div flex="20" layout layout-align="center center">
 									<input flex type="text" ng-model="row.height.value" aria-label="blue" aria-controls="row-height" style="margin-left:5px" ng-change="overrideAttribute('layout')">
