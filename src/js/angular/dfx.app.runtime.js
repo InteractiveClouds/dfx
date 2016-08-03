@@ -365,7 +365,7 @@ dfxAppRuntime.directive('dfxPageTemplate', ['$compile', '$mdSidenav', function($
             // Body
             tpl_snippet += '<div layout="column" style="background:inherit;overflow:auto" layout-padding flex id="pagebody">';
             
-            tpl_snippet += '<div layout="row" flex="{{row.height}}" style="" ng-repeat="row in selected_page.layout.rows">';
+            tpl_snippet += '<div layout="row" flex="{{row.autoHeight != true ? row.height : \'\'}}" style="" ng-repeat="row in selected_page.layout.rows">';
             tpl_snippet += '<div layout="column" flex="{{col.width}}" data-row="{{$parent.$index}}" data-column="{{$index}}" ng-repeat="col in row.columns" style="padding:5px">';
             tpl_snippet += '<div layout="column" flex ng-repeat="view in col.views">';
             tpl_snippet += '<div id="wrapper" dfx-view-wrapper="view.name" dfx-view-wrapper-id="view.id" flex layout="column">';

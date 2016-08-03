@@ -336,48 +336,12 @@ dfxPageEditorApp.controller("dfx_page_editor_controller", [ '$scope', '$rootScop
         $scope.closeViewMenu();
         var snippet = '<md-whiteframe style="left:'+($event.x-5)+'px;top:'+($event.y-5)+'px;width:175px;" class="md-whiteframe-4dp dfx-view-menu" ng-mouseleave="closeViewMenu()">';
         snippet += '<div><a ng-click="removeView(' + row_id + ', ' + col_id + ', ' + view_id + ')">Remove the view</a></div>';
-        snippet += '<div><a ng-click="configureView(' + row_id + ', ' + col_id + ', ' + view_id + ', $event)">Configure the view</a></div>';
         snippet += '</md-whiteframe>';
         angular.element(document.getElementById('dfx_page_editor')).append($compile(snippet)($scope));
     };
 
     $scope.closeViewMenu = function($event) {
         $('.dfx-view-menu').remove();
-    };
-
-    $scope.configureView = function(row_id, col_id, view_id, $event) {
-        $scope.closeViewMenu();
-
-        var arr_ref = $scope.selected_page.layout.rows[row_id].columns[col_id].views;
-        for (var i=0; i<arr_ref.length; i++) {
-            if (arr_ref[i].id==view_id) {
-                $scope.selected_view = arr_ref[i];
-                break;
-            }
-        }
-
-        var parentEl = angular.element(document.body);
-
-        $mdDialog.show({
-            parent: parentEl,
-            targetEvent: $event,
-            clickOutsideToClose: true,
-            scope: $scope.$new(),
-            templateUrl: '/studio/studioviews/config_view_dialog.html',
-            controller: DialogController
-        });
-        
-        function DialogController($scope, $mdDialog) {
-            
-            $scope.closeDialog = function() {
-                $mdDialog.hide();
-            }
-        }
-        /*$timeout( function() {
-            
-            // The following line forces to recalculate the ng-repeat
-            $scope.selected_page.layout.rows[row_id].columns[col_id].views = angular.copy($scope.selected_page.layout.rows[row_id].columns[col_id].views);
-        }, 0);*/
     };
 
     $scope.removeView = function(row_id, col_id, view_id) {
@@ -429,7 +393,7 @@ dfxPageEditorApp.directive('dfxPageTemplate', ['$compile', '$mdSidenav', functio
             // Body
             tpl_snippet += '<div layout="column" style="background:inherit;z-index: 51;border:1px #37474F solid;overflow:auto;" layout-padding class="content-wrapper" flex id="pagebody">';
             
-            tpl_snippet += '<div layout="row" style="" flex="{{row.height}}" ng-repeat="row in selected_page.layout.rows">';
+            tpl_snippet += '<div layout="row" style="" flex="{{row.autoHeight != true ? row.height : \'\'}}" ng-repeat="row in selected_page.layout.rows">';
             tpl_snippet += '<div layout="column" flex="{{col.width}}" class="dfx-page-droppable-column" dfx-page-droppable-column data-row="{{$parent.$index}}" data-column="{{$index}}" ng-repeat="col in row.columns" style="border:1px #999 solid;">';
             tpl_snippet += '<div ng-repeat="view in col.views" dfx-page-sortable-view class="{{(view.fit==\'content\') ? \'\' : \'flex\'}} md-whiteframe-3dp" style="letter-spacing:0.2em;background:#607D8B;color:#fff;cursor:pointer;" layout="row" layout-align="center center" data-view-id="{{view.id}}" data-view="{{view.name}}"><div class= "dfx-pe-view-menu"><span>{{view.name}}</span><a ng-click="loadViewMenu($event, $parent.$parent.$index, $parent.$index, view.id)" class="dfx-pe-view-menu-item"><i class="fa fa-gear"></i></a></div></div>';
             tpl_snippet += '</div>';
