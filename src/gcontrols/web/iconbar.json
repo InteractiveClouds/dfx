@@ -24,6 +24,29 @@
 			}
 		]
 	},
+  "menuItemsType":  { "value": "static" },
+  "menuItemNames": {
+    "value": {
+      "main": {
+        "source": "",
+        "label": "",
+        "type": "",
+        "icon": {"value": "", "name":"", "type":""},
+        "shortcut": "",
+        "notification": "",
+        "display": "",
+        "disabled": "",
+        "onclick": "",
+        "scopeItems": ""
+      },
+      "state": {
+        "name": "",
+        "binding": "",
+        "checkedIcon": {"value":"","name":"","type":"","style":"","class":""},
+        "uncheckedIcon": {"value":"","name":"","type":"","style":"","class":""}
+      }
+    }
+  },
 	"static":         { "value": "" },
 	"dynamic":        { "value": "" },  
   "style":          { "value": "" },

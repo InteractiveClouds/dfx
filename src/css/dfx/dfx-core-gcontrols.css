@@ -115,6 +115,9 @@ md-toolbar.dfx-core-gc-toolbar:not(.md-menu-toolbar){
     transform: rotate(90deg)
 }
 /* Fab */
+md-fab-speed-dial {
+    overflow: hidden;
+}
 .dfx-core-gc-fab.md-button.md-fab {
     width: 40px;
     height: 40px;
