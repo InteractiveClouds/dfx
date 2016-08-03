@@ -9,6 +9,7 @@
   "displayValue":   { "value": "" },
   "direction":      { "value": "column" },
   "staticArray":    { "value": [{"label":"'option1: '", "checked":"'yes'", "unchecked":"'no'", "isChecked":false}] },
+  "optionsType":    { "value": "static" },
   "defaultArray":   { "value":[] },
   "display":        { "value": "true" },
   "disabled":       { "value": "false" },

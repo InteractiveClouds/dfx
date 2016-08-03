@@ -12,6 +12,7 @@
   "maxValue":        { "value": 5 },
   "discrete":        { "value": "" },
   "inputVisible":    { "value": "" },
+  "optionsType":     { "value": "static" },
   "slidersArray":    { "value": [{"label":"'parameter 1: '", "value": 3}] },
   "direction":       { "value": "column" },
   "display":         { "value": "true" },

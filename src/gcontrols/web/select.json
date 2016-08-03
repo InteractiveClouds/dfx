@@ -3,6 +3,7 @@
   "name":                 { "value": "sltSelect1" },
   "binding":              { "value": "" },  
   "label":                { "value": "'Select option'" },
+  "optionsType":          { "value": "static" },
   "options":              { "source": "", "display": "", "value": "" },    
   "staticOptions":        { "value": [{"display":"'yes'", "value":"true"}, {"display":"'no'", "value": "false"}] },
   "currentItem":          { "value": "", "display": "" },

@@ -4,7 +4,7 @@
      style="{{attributes.style.value}}"
      ng-show="$eval(attributes.display.value)">
     <div class="gc-checkbox-label-preview">{{$eval(attributes.label.value)}}</div>
-    <div ng-if="attributes.dynamicPresent.value=== true" layout="row">
+    <div ng-if="attributes.optionsType.value==='dynamic'" layout="row">
         <div ng-if="attributes.direction.value === 'column'" layout="column" style="margin-right: 5px">
             <div ng-repeat="item in $gcscope[attributes.source.value] track by $index" layout layout-align="start center"
                  style="padding-left: 5px;margin-bottom: 3px;"
@@ -82,7 +82,7 @@
             </div>
         </div>
     </div>
-    <div ng-if="attributes.dynamicPresent.value=== false" layout="row">
+    <div ng-if="attributes.optionsType.value==='static'" layout="row">
         <div ng-if="attributes.direction.value === 'column'" layout="column" style="margin-right: 5px">
             <div ng-repeat="item in attributes.slidersArray.value track by $index" layout layout-align="start center"
                  style="padding-left: 5px;margin-bottom: 3px;"
@@ -167,7 +167,7 @@
      style="{{attributes.style.value}}"
      ng-show="$eval(attributes.display.value)">
     <div class="gc-checkbox-label-preview">{{$eval(attributes.label.value)}}</div>
-    <div ng-if="attributes.dynamicPresent.value=== true" layout="row">
+    <div ng-if="attributes.optionsType.value==='dynamic'" layout="row">
         <div ng-if="attributes.direction.value === 'column'" layout="column" style="margin-right: 5px">
             <div ng-repeat="item in $gcscope[attributes.source.value] track by $index" layout layout-align="start center"
                  style="padding-left: 5px;margin-bottom: 3px;"
@@ -244,7 +244,7 @@
             </div>
         </div>
     </div>
-    <div ng-if="attributes.dynamicPresent.value=== false" layout="row">
+    <div ng-if="attributes.optionsType.value==='static'" layout="row">
         <div ng-if="attributes.direction.value === 'column'" layout="column" style="margin-right: 5px">
             <div ng-repeat="item in attributes.slidersArray.value track by $index" layout layout-align="start center"
                  style="padding-left: 5px;margin-bottom: 3px;"
