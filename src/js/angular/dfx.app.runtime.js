@@ -299,7 +299,6 @@ dfxAppRuntime.controller('dfx_view_controller', [ '$scope', '$rootScope', '$comp
             panel_layout +
             '></div>')($scope);
         gc_instance.id = component.id;
-        if (gc_instance.id == '2019') console.log(gc_instance);
         return gc_instance;
     };
 
@@ -558,7 +557,9 @@ dfxAppRuntime.directive('dfxGcWeb', ['$compile', function($compile) {
                     "valignment": $scope.$parent.col.valignment.value,
                     "width": $scope.$parent.col.width.value
                 };
-                var ifLayout = ( $scope.$parent.col.orientation.value === 'row' ) ? ' layout="row" style="flex-wrap: wrap;' : ' style="width:100%;max-height:100%;flex-direction: column;display: flex;"';
+                var panel_height = (component.type == 'panel' && (!component.attributes.autoHeight ||  component.attributes.autoHeight.value != true)) ? ' height:100%;' : '';
+                var ifLayout = ( $scope.$parent.col.orientation.value === 'row' ) ? ' layout="row" style="flex-wrap: wrap;' : ' style="width:100%;max-height:100%;flex-direction: column;display: flex;';
+                ifLayout = ifLayout + panel_height + '"';
                 var angular_snippet = $compile(
                     '<div id="'+$attrs.id+
                     '" dfx-gc-web-base dfx-gc-web-'+$attrs.dfxGcWeb+
@@ -570,7 +571,8 @@ dfxAppRuntime.directive('dfxGcWeb', ['$compile', function($compile) {
                     '"></div>')($scope);
             } else {
                 var flex_container_attr = (component.attributes.flex!=null) ? ' flex="{{attributes.flex.value}}"' : '';
-                var angular_snippet = $compile('<div id="'+$attrs.id+'" dfx-gc-web-base dfx-gc-web-'+$attrs.dfxGcWeb+' gc-role="control" gc-parent="'+$attrs.gcParent+'" view-id="'+$attrs.viewId+'"' + flex_container_attr + '></div>')($scope);
+                var panel_layout = (component.type == 'panel' && (!component.attributes.autoHeight ||  component.attributes.autoHeight.value != true)) ? ' style="height:100%;" ' : '';
+                var angular_snippet = $compile('<div id="'+$attrs.id+'" dfx-gc-web-base dfx-gc-web-'+$attrs.dfxGcWeb+' gc-role="control" gc-parent="'+$attrs.gcParent+'" view-id="'+$attrs.viewId+'"' + flex_container_attr + panel_layout + '></div>')($scope);
             }
             $element.replaceWith(angular_snippet);
         }
@@ -584,7 +586,6 @@ dfxAppRuntime.directive('dfxGcRenderer', ['$compile', function($compile) {
             var viewId = $('#'+$attrs.componentId).attr('view-id');
             var angular_snippet = $compile('<div id="'+$attrs.componentId+'_renderer_'+$attrs.rowId+'_'+$attrs.columnId+'" dfx-gc-web-base dfx-gc-web-'+$attrs.dfxGcRenderer+' dfx-gc-renderer-content="'+$attrs.componentId+'" view-id="' + viewId + '"></div>')($scope);
             $element.append(angular_snippet);
-            if ($attrs.id == '2019') console.log('2.angular_snippet: ', angular_snippet);
         }
     }
 }]);
