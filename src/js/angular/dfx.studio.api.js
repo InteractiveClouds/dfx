@@ -1968,6 +1968,29 @@ dfxStudioApi.factory('dfxApiServiceObjects', [ '$http', '$q', function($http, $q
 
     var api_service_objects = {};
 
+    //api_service_objects.execute = function( simulateService ) {
+    //    var deferred = $q.defer();
+    //
+    //    $http.get('/studio/query/execute', { 'params' : simulateService }).then(function successCallback(response) {
+    //        deferred.resolve( response );
+    //    });
+    //
+    //    return deferred.promise;
+    //}
+
+    api_service_objects.getTenant = function(tenantId) {
+        var deferred = $q.defer();
+
+        $http({
+            method: 'GET',
+            url: '/api/tenant/get?tenantid=' + tenantId
+        }).then(function successCallback(response) {
+            deferred.resolve( response );
+        });
+
+        return deferred.promise;
+    }
+
     api_service_objects.getAll = function( scope, app_name ) {
         var deferred = $q.defer();
         
