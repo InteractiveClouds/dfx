@@ -287,7 +287,17 @@ dfxAppRuntime.controller('dfx_view_controller', [ '$scope', '$rootScope', '$comp
         $scope.gc_instances[component.id] = component;
         var gc_instance = {};
         var flex_container_attr = (component.attributes.flex!=null) ? ' flex="{{attributes.flex.value}}"' : '';
-        gc_instance.fragment = $compile('<div id="' + component.id + '" dfx-gc-web-base dfx-gc-web-' + component.type + ' gc-role="control" gc-parent="' + parent_id + '" view-id="' + view_id + '"' + flex_container_attr + '></div>')($scope);
+
+        var panel_layout = (component.type == 'panel' && (!component.attributes.autoHeight ||  component.attributes.autoHeight.value != true)) ? ' style="height:100%;" layout="column" ' : '';
+
+        gc_instance.fragment = $compile(
+            '<div id="' + component.id +
+            '" dfx-gc-web-base dfx-gc-web-' + component.type +
+            ' gc-role="control" gc-parent="' + parent_id +
+            '" view-id="' + view_id +
+            '"' + flex_container_attr +
+            panel_layout +
+            '></div>')($scope);
         gc_instance.id = component.id;
         return gc_instance;
     };
@@ -355,7 +365,7 @@ dfxAppRuntime.directive('dfxPageTemplate', ['$compile', '$mdSidenav', function($
             // Body
             tpl_snippet += '<div layout="column" style="background:inherit;overflow:auto" layout-padding flex id="pagebody">';
             
-            tpl_snippet += '<div layout="row" flex="{{row.height}}" style="" ng-repeat="row in selected_page.layout.rows">';
+            tpl_snippet += '<div layout="row" flex="{{row.autoHeight != true ? row.height : \'\'}}" style="" ng-repeat="row in selected_page.layout.rows">';
             tpl_snippet += '<div layout="column" flex="{{col.width}}" data-row="{{$parent.$index}}" data-column="{{$index}}" ng-repeat="col in row.columns" style="padding:5px">';
             tpl_snippet += '<div layout="column" flex ng-repeat="view in col.views">';
             tpl_snippet += '<div id="wrapper" dfx-view-wrapper="view.name" dfx-view-wrapper-id="view.id" flex layout="column">';
@@ -490,7 +500,7 @@ dfxAppRuntime.directive('dfxViewWrapper', [ '$http', '$compile', function($http,
         },
         priority: 100000,
         link: function($scope, $element, $attrs) {
-            var wrapper_snippet = '<div id="' + $scope.wrapper_view_id + '" dfx-view="' + $scope.wrapper_view_name + '" dfx-view-card="default" ng-controller="dfx_view_controller" style="width:100%" layout="column"></div>';
+            var wrapper_snippet = '<div id="' + $scope.wrapper_view_id + '" dfx-view="' + $scope.wrapper_view_name + '" dfx-view-card="default" ng-controller="dfx_view_controller" style="width:100%" layout="column" flex></div>';
             $element.attr('ng-controller', $scope.wrapper_view_name + 'Controller');
             $element.append(wrapper_snippet);
             $element.removeAttr('dfx-view-wrapper');
@@ -539,6 +549,7 @@ dfxAppRuntime.directive('dfxGcWeb', ['$compile', function($compile) {
         restrict: 'A',
         link: function($scope, $element, $attrs) {
             var component = $scope.gc_instances[$attrs.id];
+
             if ( component.attributes.repeat_title && component.attributes.repeat_title.value ) {
                 var inherited = {
                     "halignment": $scope.$parent.col.halignment.value,
@@ -546,7 +557,9 @@ dfxAppRuntime.directive('dfxGcWeb', ['$compile', function($compile) {
                     "valignment": $scope.$parent.col.valignment.value,
                     "width": $scope.$parent.col.width.value
                 };
-                var ifLayout = ( $scope.$parent.col.orientation.value === 'row' ) ? ' layout="row" style="flex-wrap: wrap;' : ' style="width:100%;max-height:100%;flex-direction: column;display: flex;"';
+                var panel_height = (component.type == 'panel' && (!component.attributes.autoHeight ||  component.attributes.autoHeight.value != true)) ? ' height:100%;' : '';
+                var ifLayout = ( $scope.$parent.col.orientation.value === 'row' ) ? ' layout="row" style="flex-wrap: wrap;' : ' style="width:100%;max-height:100%;flex-direction: column;display: flex;';
+                ifLayout = ifLayout + panel_height + '"';
                 var angular_snippet = $compile(
                     '<div id="'+$attrs.id+
                     '" dfx-gc-web-base dfx-gc-web-'+$attrs.dfxGcWeb+
@@ -558,7 +571,8 @@ dfxAppRuntime.directive('dfxGcWeb', ['$compile', function($compile) {
                     '"></div>')($scope);
             } else {
                 var flex_container_attr = (component.attributes.flex!=null) ? ' flex="{{attributes.flex.value}}"' : '';
-                var angular_snippet = $compile('<div id="'+$attrs.id+'" dfx-gc-web-base dfx-gc-web-'+$attrs.dfxGcWeb+' gc-role="control" gc-parent="'+$attrs.gcParent+'" view-id="'+$attrs.viewId+'"' + flex_container_attr + '></div>')($scope);
+                var panel_layout = (component.type == 'panel' && (!component.attributes.autoHeight ||  component.attributes.autoHeight.value != true)) ? ' style="height:100%;" ' : '';
+                var angular_snippet = $compile('<div id="'+$attrs.id+'" dfx-gc-web-base dfx-gc-web-'+$attrs.dfxGcWeb+' gc-role="control" gc-parent="'+$attrs.gcParent+'" view-id="'+$attrs.viewId+'"' + flex_container_attr + panel_layout + '></div>')($scope);
             }
             $element.replaceWith(angular_snippet);
         }

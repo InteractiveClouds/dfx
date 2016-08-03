@@ -974,6 +974,27 @@ md-dialog .dfx-ca-property-treeview label:before {
   text-decoration: none;
 }
 
+/*view editor workspace cards*/
+md-content#dfx-ve-main-content > md-tabs {
+  height: 100%;
+
+  > md-tabs-content-wrapper {
+    flex: 100;
+
+    > md-tab-content {
+      height: 100%;
+
+      > div {
+        height: 100%;
+
+        > md-content {
+          height: 100%;
+        }
+      }
+    }
+  }
+}
+
 /* Options Editor Dialog Radiobuttons */
 md-radio-group.dfx-ve-options-editor-radio-group {
   margin-left: 16px;
@@ -996,6 +1017,7 @@ md-radio-group.dfx-ve-menu-editor-radio-group {
     text-transform: uppercase;
     &>div.md-container {
       margin-top: 1px;
+
     }
   }
 }

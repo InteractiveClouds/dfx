@@ -1091,8 +1091,12 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
         $scope.gc_instances[component.id] = component;
         var gc_instance = {};
         var flex_container_attr = (component.flex=='true' || (component.attributes!=null && component.attributes.flex!=null)) ? ' flex="{{attributes.flex.value}}"' : '';
-        gc_instance.fragment = $compile('<div id="' + component.id + '" dfx-gc-web-base dfx-gc-web-' + component.type + ' dfx-gc-design gc-type="' + component.type + '" gc-role="control"' + flex_container_attr + '></div>')($scope);
+
+        var panel_layout = (component.type == 'panel' && (!component.attributes.autoHeight ||  component.attributes.autoHeight.value != true)) ? ' style="height:100%;" layout="column" ' : '';
+
+        gc_instance.fragment = $compile('<div id="' + component.id + '" dfx-gc-web-base dfx-gc-web-' + component.type + ' dfx-gc-design gc-type="' + component.type + '" gc-role="control"' + flex_container_attr + panel_layout + '></div>')($scope);
         gc_instance.id = component.id;
+
         return gc_instance;
     };
 
@@ -1249,7 +1253,7 @@ dfxViewEditorApp.directive('dfxGcWebDroppable', [ '$timeout', function($timeout)
                             gc_id  = Math.floor(Math.random() * 100000);
                             var view_editor = document.querySelector('#dfx_src_widget_editor');
                             var view_editor_scope = angular.element(view_editor).scope();
-                            var gc = view_editor_scope.renderGraphicalControl({id: gc_id, type: gc_type, flex: gc_flex});
+                            var gc = view_editor_scope.renderGraphicalControl({id: gc_id, type: gc_type, flex: gc_flex, just_dropped: true});
                             $(ui.item).replaceWith(gc.fragment);
                         } else {
                             // Move component

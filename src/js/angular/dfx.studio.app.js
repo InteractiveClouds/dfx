@@ -4238,7 +4238,7 @@ dfxStudioApp.controller("dfx_studio_page_create_controller", [ '$scope', '$route
         "category": "Default",
         "script": "dfxAppRuntime.controller('dfx_page_controller', [ '$scope', '$rootScope', function( $scope, $rootScope) {\n\t// Insert your code here\n}]);",
         "layout": {
-            "rows" : [ { "height" : "100", "columns" : [ {"width" : "100", "views" : []} ] } ]
+            "rows" : [ { "height" : "100", "autoHeight": false, "columns" : [ {"width" : "100", "views" : []} ] } ]
         }
     };
 

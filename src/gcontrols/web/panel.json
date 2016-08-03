@@ -10,6 +10,7 @@
   "bodyStyle":    { "value": "" },
   "dynamicClasses": { "value": "" },
   "flex":         { "value": "100" },
+  "autoHeight":   { "value": false },
   "display":      { "value": "true" },
   "title":        { "value": "'This is a title'" },
   "titleVisible": { "value": true },
@@ -191,6 +192,7 @@
   "layout": {
     "rows": [
       {
+        "height":          { "value": "100" },
         "cols": [
           {
             "width":          { "value": "100" },

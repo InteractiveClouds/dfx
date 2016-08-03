@@ -45,7 +45,7 @@ html(ng-app="dfx_preview_app")
         script(type="text/javascript").
             {{source_script}}
     body(ng-controller="dfx_app_controller", dfx-app="dfx_preview_app", dfx-platform="#{platform}")
-        div(layout="column")
+        div(layout="column", style="height:100%;")
             div(layout="row", style="height:40px;background-color: #353535;border-bottom: 1px #d2d2d2 solid;padding:2px")
                 img(src="/images/df_logo_blanc_1029x223.png" style="width:90px;height:20px;margin-top:7px;margin-left:10px")
                 div(style="color: #fff;font-size: 13px;font-style: italic;display: inline-block;margin-left:10px;line-height:33px")
@@ -70,6 +70,6 @@ html(ng-app="dfx_preview_app")
                     - var dyn_res = dyn_fn({ "widget": wclass.definition, "wid": "abc", "appname": appname, "tenantid": tenantid})
                     | !{dyn_res}
                 - } else if (wclass.definition.wtype=='visual') {
-                    div#dfx_view_preview_main_container(ng-controller="#{widgetname}Controller", layout="row", layout-align="center start")
-                        div#dfx_view_preview_container(dfx-view-preview="#{widgetname}", dfx-ve-platform="#{platform}", ng-controller="dfx_view_controller", dfx-view-card="default")
+                    div#dfx_view_preview_main_container(ng-controller="#{widgetname}Controller", layout="row", layout-align="center start", style="height:100%;")
+                        div#dfx_view_preview_container(dfx-view-preview="#{widgetname}", dfx-ve-platform="#{platform}", ng-controller="dfx_view_controller", dfx-view-card="default", style="height:100%;")
                 - }
