@@ -36,7 +36,7 @@ md-toast.md-error-toast-theme div {
 
 #dfx-ve-title {
   font-size: 16px;
-  padding-top: 1px; 
+  padding-top: 1px;
 }
 
 #dfx_src_widget_editor_title {
@@ -124,15 +124,15 @@ md-toast.md-error-toast-theme div {
   border-bottom: 2px red solid;
 }
 
+.dfx-ve-toolbar-icon {
+  width: 32px;
+  cursor: pointer;
+}
+
 /* GC Palette & Property Panel */
 
 .dfx-ve-palette-icon {
   width: 36px;
-}
-
-.dfx-ve-toolbar-icon {
-  width: 32px;
-  cursor: pointer;
 }
 
 #dfx-ve-property-title {
@@ -261,12 +261,12 @@ md-toast.md-error-toast-theme div {
     opacity: 1.0;
     .transition-duration(0.5s);
   }
-  
+
   ul {
     .transition-duration;
     list-style: none;
     padding-left: 1em;
-    
+
     li {
       padding-left:0px;
       text-align:center;
@@ -274,7 +274,7 @@ md-toast.md-error-toast-theme div {
       span{
         .transition-property(color);
         .transition-duration;
-      
+
         //Highlight on hover
         &:hover {
           color: @hoverColor;
@@ -283,16 +283,16 @@ md-toast.md-error-toast-theme div {
       }
     }
   }
-  
+
   //Hide checkboxes
   input.dfx-ve-palette-treeview-button {
     display: none;
-    
+
     //Hide collapsed branches
     &:checked ~ ul {
       display: none;
     }
-     
+
     //Show pointer on collapsible rows
     & ~ label {
       cursor: pointer;
@@ -367,12 +367,12 @@ md-dialog .dfx-ve-property-treeview {
     opacity: 1.0;
     .transition-duration(0.5s);
   }
-  
+
   ul {
     .transition-duration;
     list-style: none;
     padding-left: 0px;
-    
+
     li {
       padding-left:0px;
       padding-right:0px;
@@ -380,7 +380,7 @@ md-dialog .dfx-ve-property-treeview {
       span{
         .transition-property(color);
         .transition-duration;
-      
+
         //Highlight on hover
         &:hover {
           color: @hoverColor;
@@ -389,16 +389,16 @@ md-dialog .dfx-ve-property-treeview {
       }
     }
   }
-  
+
   //Hide checkboxes
   input.dfx-ve-property-treeview-button {
     display: none;
-    
+
     //Hide collapsed branches
     &:checked ~ ul {
       display: none;
     }
-     
+
     //Show pointer on collapsible rows
     & ~ label {
       cursor: pointer;
@@ -412,7 +412,7 @@ md-dialog .dfx-ve-property-treeview {
       border-bottom: 1px #6b6a6a solid;
       background: #4a4a4a;
     }
-    
+
     //Expanded branch
     & ~ label:before {
       content: '';
@@ -618,7 +618,7 @@ div[gc-type="panel"] > .dfx-ve-gc-handle-duplicate {
 md-icon.dfx-ve-picker-icon {
   font-size: 16px;
   color:#97CFFF;
-  width: 13px;  
+  width: 13px;
   height:18px;
   margin:2px 0 0 15px;
   cursor:pointer;
@@ -678,10 +678,10 @@ md-icon.dfx-ve-picker-icon {
   width: 200px;
   min-width: 200px;
   padding: 8px 16px;
-  height: 500px;  
+  height: 500px;
 }
 .dfx-ve-icons-categories ul {
-  padding: 0;  
+  padding: 0;
 }
 .dfx-ve-icons-categories li {
   list-style: none;
@@ -707,9 +707,9 @@ md-icon.dfx-ve-picker-icon {
 }
 .dfx-ve-icon-item {
   display:inline-flex;
-  align-items:center; 
-  cursor:pointer; 
-  width:210px; 
+  align-items:center;
+  cursor:pointer;
+  width:210px;
   margin:5px 0px 0 5px;
 }
 .dfx-ve-icon-item {
@@ -734,7 +734,7 @@ md-icon.dfx-ve-picker-icon {
   &:hover {
     span, md-icon, ng-md-icon {
       color: #73cbff;
-    }  
+    }
   }
 }
 .dfx-second-dialog-icons {
@@ -773,7 +773,7 @@ md-icon.dfx-ve-picker-icon {
   width: 100%;
   height: 100%;
   background: rgba(33,33,33,1.0);
-  opacity: 0.5; 
+  opacity: 0.5;
 }
 .dfx-ve-css-style-editor {
   position: absolute;
@@ -823,7 +823,7 @@ md-icon.dfx-ve-picker-icon {
   background-color: #fff;
   background-image: linear-gradient(45deg,#ddd 25%,transparent 25%,transparent 75%,#ddd 75%,#ddd),linear-gradient(45deg,#ddd 25%,transparent 25%,transparent 75%,#ddd 75%,#ddd);
   background-size: 8px 8px;
-  background-position: 4px 0,8px 4px; 
+  background-position: 4px 0,8px 4px;
   border-top: 0px solid #ffffff;
   border-right: 58px solid #ffffff;
   border-bottom: 10px solid #ffffff;
@@ -840,7 +840,7 @@ md-icon.dfx-ve-picker-icon {
   background: #fff;
   -webkit-box-shadow: inset 0px 3px 5px -3px rgba(0,0,0,0.2);
   -moz-box-shadow: inset 0px 3px 5px -3px rgba(0,0,0,0.2);
-  box-shadow: inset 0px 3px 5px -3px rgba(0,0,0,0.2);   
+  box-shadow: inset 0px 3px 5px -3px rgba(0,0,0,0.2);
 }
 .dfx-css-style-preview-inner {
   text-align: center;
@@ -876,12 +876,12 @@ md-dialog .dfx-ca-property-treeview {
     opacity: 1.0;
     .transition-duration(0.5s);
   }
-  
+
   ul {
     .transition-duration;
     list-style: none;
     padding-left: 10px;
-    
+
     li {
       padding-left:0px;
       padding-right:0px;
@@ -889,7 +889,7 @@ md-dialog .dfx-ca-property-treeview {
       span{
         .transition-property(color);
         .transition-duration;
-      
+
         //Highlight on hover
         &:hover {
           color: @hoverColor;
@@ -898,16 +898,16 @@ md-dialog .dfx-ca-property-treeview {
       }
     }
   }
-  
+
   //Hide checkboxes
   input.dfx-ca-property-treeview-button {
     display: none;
-    
+
     //Hide collapsed branches
     &:checked ~ ul {
       display: none;
     }
-     
+
     //Show pointer on collapsible rows
     & ~ label {
       cursor: pointer;
@@ -917,7 +917,7 @@ md-dialog .dfx-ca-property-treeview {
       text-align: left;
       margin: 0;
     }
-    
+
     //Expanded branch
     & ~ label:before {
       content: '';
