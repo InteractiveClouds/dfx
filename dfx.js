@@ -33,6 +33,7 @@ var isPortFree = require('./lib/utils/isPortFree');
 var pmx = require('pmx');
 var watcher = require('./lib/utils/watcher');
 var activator = require('./lib/utils/activator');
+var pathParse = require('path-parse');
 
 var out = module.exports = {},
     Log,
@@ -588,7 +589,7 @@ function _start () {
     //app.use("/css/dfx", express.static(path.join(__dirname, 'public/css/dfx')));
     //app.use("/css/visualbuilder", express.static(path.join(__dirname, 'public/css/visualbuilder')));
     app.use("/tmp", express.static(path.join(__dirname, 'tmp')));
-    app.use("/" + path.parse(path.join(__dirname, SETTINGS.tempDir)).base, express.static(path.join(__dirname, SETTINGS.tempDir)));
+    app.use("/" + pathParse(path.join(__dirname, SETTINGS.tempDir)).base, express.static(path.join(__dirname, SETTINGS.tempDir)));
     app.use("/fonts", express.static(path.join(__dirname, 'public/fonts')));
     app.use("/img", express.static(path.join(__dirname, 'public/images')));
     app.use("/images", express.static(path.join(__dirname, 'public/images')));
