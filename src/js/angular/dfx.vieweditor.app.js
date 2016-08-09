@@ -225,6 +225,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     $scope.view_category = $('#dfx_src_widget_editor').attr('data-view-cat');
     $scope.design_view_mode = 'Design';
     $scope.script_theme = (localStorage.getItem('DFX_script_theme')!=null) ? localStorage.getItem('DFX_script_theme') : 'monokai';
+    $scope.preview_wait_icon_visible = false;
 
     $scope.design_devices = [
         {
@@ -746,14 +747,77 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     };
 
     $scope.openPreview = function() {
-        //$scope.saveView();
         var editor = $('#dfx_src_editor.CodeMirror')[0].CodeMirror;
         window.localStorage.setItem( 'dfx_' + $scope.view_name, editor.getValue() );
         $window.open('/studio/widget/' + $scope.view_platform + '/preview-auth/' + $scope.application_name + '/' + $scope.view_name + '/' + $scope.view_platform + '/desktop', '_blank');
         //$window.open('/studio/widget/web/preview-auth/' + $scope.application_name + '/' + $scope.view_name + '/web/desktop', '_blank');
     };
 
-    $scope.waitIconShowPreview = false;
+    $scope.openPreviewSettings = function(ev) {
+        var parentEl = angular.element(document.body);
+        $mdDialog.show({
+            parent: parentEl,
+            targetEvent: ev,
+            template:
+            '<md-dialog aria-label="Preview Settings">' +
+            '   <md-toolbar>' +
+            '       <div class="md-toolbar-tools">' +
+            '           <h2>Preview Settings</h2>' +
+            '       </div>' +
+            '   </md-toolbar>' +
+            '   <md-dialog-content style="width:500px;min-height:400px;padding:20px">'+
+            '       <h4 style="padding-bottom:10px">Login credentials:</h4>' +
+            '       <form layout="column">' +
+            '           <md-input-container>' +
+            '               <label>User ID</label>' +
+            '               <input name="userid" ng-model="dfx_ve_login_userid" type="text" />' +
+            '           </md-input-container>' +
+            '           <md-input-container>' +
+            '               <label>Password</label>' +
+            '               <input name="password" ng-model="dfx_ve_login_password" type="password" />' +
+            '           </md-input-container>' +
+            '       </form>' +
+            '   </md-dialog-content>' +
+            '   <md-dialog-actions>' +
+            '       <md-button ng-click="savePreviewSettings()" class="md-primary">' +
+            '           Save' +
+            '       </md-button>' +
+            '       <md-button ng-click="clearPreviewSettings()" class="md-primary">' +
+            '           Clear' +
+            '       </md-button>' +
+            '       <md-button ng-click="closePreviewSettingsDialog()" class="md-primary">' +
+            '           Cancel' +
+            '       </md-button>' +
+            '   </md-dialog-actions>' +
+            '</md-dialog>',
+            locals: {
+            },
+            controller: DialogController
+        });
+        function DialogController($scope, $mdDialog) {
+            $scope.dfx_ve_login_userid = localStorage.getItem( 'DFX_ve_login_userid' )==null ? '' : localStorage.getItem( 'DFX_ve_login_userid' );
+            $scope.dfx_ve_login_password = localStorage.getItem( 'DFX_ve_login_password' )==null ? '' : localStorage.getItem( 'DFX_ve_login_password' );
+            
+            $scope.savePreviewSettings = function() {
+                localStorage.setItem( 'DFX_ve_login_userid', $scope.dfx_ve_login_userid );
+                localStorage.setItem( 'DFX_ve_login_password', $scope.dfx_ve_login_password );
+                $mdDialog.hide();
+            }
+
+            $scope.clearPreviewSettings = function() {
+                localStorage.removeItem( 'DFX_app_tokens' );
+                localStorage.removeItem( 'DFX_ve_login_userid' );
+                localStorage.removeItem( 'DFX_ve_login_password' );
+                $scope.dfx_ve_login_userid = '';
+                $scope.dfx_ve_login_password = '';
+                dfxDialog.showMessage( 'Preview Settings Cleared' );
+            }
+
+            $scope.closePreviewSettingsDialog = function() {
+                $mdDialog.hide();
+            }
+        }
+    };
 
     $scope.openPreviewInPage = function() {
         $timeout(function(){
@@ -786,21 +850,21 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
                     }
                     $scope.show = function() {
                         window.localStorage.setItem('pagePreviewName', $scope.selectedPage.value);
-                        $scope.waitIconShowPreview = true;
+                        $scope.preview_wait_icon_visible = true;
                         $mdDialog.hide();
 
                         $http({
                             method : 'GET',
                             url : '/studio/screen/preview/' + $scope.application_name + '/' + $scope.selectedPage.value + '/' + $scope.view_platform
                         }).then(function(response){
-                                $scope.waitIconShowPreview = false;
+                                $scope.preview_wait_icon_visible = false;
                                 if (response.data.indexOf('http') > -1) {
                                     $window.open(response.data, '_blank');
                                 } else {
                                     dfxMessaging.showWarning(response.data);
                                 }
                             },function(err){
-                                $scope.waitIconShowPreview = false;
+                                $scope.preview_wait_icon_visible = false;
                                 dfxMessaging.showWarning("Something went wrong. See server logs for more details");
                             })
                     }

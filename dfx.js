@@ -33,6 +33,7 @@ var isPortFree = require('./lib/utils/isPortFree');
 var pmx = require('pmx');
 var watcher = require('./lib/utils/watcher');
 var activator = require('./lib/utils/activator');
+var pathParse = require('path-parse');
 
 var out = module.exports = {},
     Log,
@@ -123,6 +124,18 @@ out.init = function ( settings ) {
     }
     log = new Log.Instance({label:'DFX_MAIN'});
 
+    // Verify if all folders name not empty in settings
+    if (!SETTINGS.tempDir) log.fatal('You must set tempDir in settings!');
+
+    if (SETTINGS.studio) {
+        if (!SETTINGS.tempDirForTemplates) log.fatal('You must set tempDirForTemplates in settings!');
+        if (!SETTINGS.app_build_path) log.fatal('You must set app_build_path in settings!');
+        if (!SETTINGS.resources_development_path) log.fatal('You must set resources_development_path in settings!');
+    } else {
+        if (!SETTINGS.fsdb_path) log.fatal('You must set fsdb_path in settings!');
+        if (!SETTINGS.deploy_path) log.fatal('You must set deploy_path in settings!');
+    }
+
     log.info('this URL is : ' + SETTINGS.EXTERNAL_URL);
 
     require('./lib/utils/tempdir').init({
@@ -194,7 +207,7 @@ out.start = function () {
         }
 
     }).then(function(){
-            var tokenFolder = path.join(__dirname, 'tmp/apptokens');
+            var tokenFolder = path.join(__dirname, SETTINGS.tempDir + '/apptokens');
             var fsdbFolder = SETTINGS.fsdb_path;
 
             return QFS.exists( tokenFolder )
@@ -531,6 +544,7 @@ function _start () {
             cbFunction();
         } else {
             CHANNELS.root.subscribe('allTenantsRequestAreFinished', cbFunction);
+            setTimeout(cbFunction, SETTINGS.loadBalancing.pendingRequestsTimeOut);
         }
     }
 
@@ -551,9 +565,12 @@ function _start () {
             next();
         }
     })());
-    app.use("/deploy", express.static( SETTINGS.deploy_path ));
-    app.use("/resources", express.static(path.join(__dirname, SETTINGS.resources_deploy_path )));
-    app.use("/resources/development", express.static(SETTINGS.resources_development_path));
+    if (SETTINGS.studio) {
+        app.use("/resources/development", express.static(SETTINGS.resources_development_path));
+    } else {
+        app.use("/deploy", express.static( SETTINGS.deploy_path ));
+        app.use("/resources", express.static(path.join(__dirname, 'resources' )));
+    }
     app.use("/widgets", express.static(path.join(__dirname, 'widgets')));
     app.use("/css", express.static(path.join(__dirname, 'public', 'css')));
     app.use("/js", express.static(path.join(__dirname, 'public', 'js')));
@@ -571,6 +588,7 @@ function _start () {
     //app.use("/css/dfx", express.static(path.join(__dirname, 'public/css/dfx')));
     //app.use("/css/visualbuilder", express.static(path.join(__dirname, 'public/css/visualbuilder')));
     app.use("/tmp", express.static(path.join(__dirname, 'tmp')));
+    app.use("/" + pathParse(path.join(__dirname, SETTINGS.tempDir)).base, express.static(path.join(__dirname, SETTINGS.tempDir)));
     app.use("/fonts", express.static(path.join(__dirname, 'public/fonts')));
     app.use("/img", express.static(path.join(__dirname, 'public/images')));
     app.use("/images", express.static(path.join(__dirname, 'public/images')));
