@@ -393,7 +393,7 @@ dfxPageEditorApp.directive('dfxPageTemplate', ['$compile', '$mdSidenav', functio
             // Body
             tpl_snippet += '<div layout="column" style="background:inherit;z-index: 51;border:1px #37474F solid;overflow:auto;" layout-padding class="content-wrapper" flex id="pagebody">';
             
-            tpl_snippet += '<div layout="row" style="" flex="{{row.autoHeight != true ? row.height : \'\'}}" ng-repeat="row in selected_page.layout.rows">';
+            tpl_snippet += '<div layout="row" style="" flex="{{selected_page.autoHeight != true ? row.height : \'\'}}" ng-repeat="row in selected_page.layout.rows">';
             tpl_snippet += '<div layout="column" flex="{{col.width}}" class="dfx-page-droppable-column" dfx-page-droppable-column data-row="{{$parent.$index}}" data-column="{{$index}}" ng-repeat="col in row.columns" style="border:1px #999 solid;">';
             tpl_snippet += '<div ng-repeat="view in col.views" dfx-page-sortable-view class="{{(view.fit==\'content\') ? \'\' : \'flex\'}} md-whiteframe-3dp" style="letter-spacing:0.2em;background:#607D8B;color:#fff;cursor:pointer;" layout="row" layout-align="center center" data-view-id="{{view.id}}" data-view="{{view.name}}"><div class= "dfx-pe-view-menu"><span>{{view.name}}</span><a ng-click="loadViewMenu($event, $parent.$parent.$index, $parent.$index, view.id)" class="dfx-pe-view-menu-item"><i class="fa fa-gear"></i></a></div></div>';
             tpl_snippet += '</div>';
