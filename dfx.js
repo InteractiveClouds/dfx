@@ -134,7 +134,6 @@ out.init = function ( settings ) {
     } else {
         if (!SETTINGS.fsdb_path) log.fatal('You must set fsdb_path in settings!');
         if (!SETTINGS.deploy_path) log.fatal('You must set deploy_path in settings!');
-        if (!SETTINGS.resources_deploy_path) log.fatal('You must set resources_deploy_path in settings!');
     }
 
     log.info('this URL is : ' + SETTINGS.EXTERNAL_URL);
@@ -570,7 +569,7 @@ function _start () {
         app.use("/resources/development", express.static(SETTINGS.resources_development_path));
     } else {
         app.use("/deploy", express.static( SETTINGS.deploy_path ));
-        app.use("/resources", express.static(path.join(__dirname, SETTINGS.resources_deploy_path )));
+        app.use("/resources", express.static(path.join(__dirname, 'resources' )));
     }
     app.use("/widgets", express.static(path.join(__dirname, 'widgets')));
     app.use("/css", express.static(path.join(__dirname, 'public', 'css')));
