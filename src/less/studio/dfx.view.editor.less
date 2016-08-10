@@ -995,6 +995,24 @@ md-content#dfx-ve-main-content > md-tabs {
   }
 }
 
+/*view editor tabs gc*/
+md-tabs[dfx-gc-tabs-design] > md-tabs-content-wrapper {
+  top: 0 !important;
+  flex: 100;
+
+  > md-tab-content {
+    height: 100%;
+
+    > div {
+      height: 100%;
+
+      > md-content {
+        height: 100%;
+      }
+    }
+  }
+}
+
 /* Options Editor Dialog Radiobuttons */
 md-radio-group.dfx-ve-options-editor-radio-group {
   margin-left: 16px;
