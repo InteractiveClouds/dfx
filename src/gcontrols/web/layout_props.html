@@ -6,9 +6,9 @@
 	</label>
 	<ul class="dfx-ve-property-treeview-content dfx-ve-property-treeview-content-level-1">
 		<li class="col-md-12">
-			<span class="col-md-6">Auto height:</span>
+			<span class="col-md-6">Auto Height:</span>
 			<div class="col-md-6" layout="row">
-				<md-checkbox ng-model="attributes.autoHeight.value" class="md-primary" ng-change="overrideAttribute('autoHeight')" aria-label="attributes.autoHeight.value"/>
+				<md-checkbox ng-model="attributes.autoHeight.value" class="md-primary" ng-change="overrideAttribute('autoHeight');" aria-label="attributes.autoHeight.value"/>
 			</div>
 		</li>
 		<li class="col-md-12" ng-repeat="row in $parent.gc_selected.attributes.layout.rows">
@@ -25,6 +25,7 @@
 					<ul class="dfx-ve-property-treeview-content">
 						<li class="col-md-12">
 							<div layout>
+								<span class="col-md-3" style="margin-top:10px;">Flex Height:</span>
 								<md-slider class="md-primary" flex ng-model="row.height.value" ng-disabled="attributes.autoHeight && attributes.autoHeight.value" step="5" min="0" max="100" aria-label="Flex height:">
 								</md-slider>
 								<div flex="20" layout layout-align="center center">
@@ -60,6 +61,7 @@
 									<ul class="dfx-ve-property-treeview-content">
 										<li class="col-md-12">
 											<div layout>
+												<span class="col-md-3" style="margin-top:10px;">Flex Width:</span>
 												<md-slider class="md-primary" flex ng-model="column.width.value" step="5" min="0" max="100" aria-label="Flex width:">
 							  					</md-slider>
 												<div flex="20" layout layout-align="center center">
@@ -68,7 +70,7 @@
 							  				</div>
 										</li>
 										<li class="col-md-12">
-											<span class="col-md-6">Auto width:</span>
+											<span class="col-md-6">Auto Width:</span>
 											<div class="col-md-6" layout="row">
 												<md-checkbox ng-model="column.autoWidth.value" class="md-primary" ng-change="overrideAttribute('layout')" aria-label="column.autoWidth.value"/>
 											</div>
