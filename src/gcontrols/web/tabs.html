@@ -21,7 +21,7 @@
                         <div ng-repeat="row in tab.layout.rows track by $index" id="{{component_id}}_layout_{{$parent.$index}}_row_{{$index}}" layout="row" layout-wrap flex="{{row.height.value}}">
                             <div ng-repeat="col in row.cols track by $index" id="{{component_id}}_layout_{{$parent.$parent.$index}}_row_{{$parent.$index}}_column_{{$index}}" flex="{{col.width.value}}"
                                  gc-container="layout_{{$parent.$parent.$index}}_row_{{$parent.$index}}_column_{{$index}}" gc-parent="{{component_id}}"
-                                 style="{{col.style.value}}" ng-style="{'flex-wrap': col.orientation.value ==='row' ? 'wrap' : 'nowrap'}"
+                                 style="overflow:auto;padding:1px;{{col.style.value}}" ng-style="{'flex-wrap': col.orientation.value ==='row' ? 'wrap' : 'nowrap'}"
                                  layout="{{col.orientation.value}}" layout-align="{{col.halignment.value}} {{col.valignment.value}}"
                                  class="ui-placeholder dfx_visual_editor_droppable {{col.classes.value}}" ng-class="$eval(col.dynamicClasses.value)">
                                 <div id="{{gcontrol.id}}" dfx-gc-web="{{gcontrol.type}}" gc-role="control" gc-parent="{{component_id}}" view-id="{{view_id}}" ng-repeat="gcontrol in children['layout_' + $parent.$parent.$index + '_row_'+ $parent.$index+'_column_'+$index]"></div>
