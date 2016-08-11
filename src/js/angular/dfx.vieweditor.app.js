@@ -706,6 +706,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
                 }
             }
             var widget_definition = JSON.parse(editor.getValue());
+            widget_definition.definition[$scope.view_card_selected][0].animation = $scope.view_card_animation;
             DfxVisualBuilder.findComponentAndUpdateAttributes(component.id, widget_definition.definition, component.attributes, $scope.view_card_selected, false);
             editor.setValue(JSON.stringify(widget_definition, null, '\t'), 0);
         }
@@ -960,6 +961,17 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
       in: 'fadeIn',
       out: 'slideOutLeft'
     }
+    $scope.animation_in_list = ['bounce','flash','pulse','rubberBand','shake', 'headShake', 'swing', 'tada', 'wobble', 'jello', 'bounceIn', 'bounceInUp', 'bounceInDown',
+      'bounceInLeft', 'bounceInRight', 'fadeIn', 'fadeInDown', 'fadeInDownBig', 'fadeInLeft',
+      'fadeInLeftBig', 'fadeInRight', 'fadeInRightBig', 'fadeInUp', 'fadeInUpBig', 'flipInX', 'flipInY', 'lightSpeedIn', 'rotateIn', 'rotateInDownLeft',
+      'rotateInDownRight', 'rotateInUpLeft', 'rotateInUpRight', 'hinge',
+      'rollIn', 'zoomIn', 'zoomInDown', 'zoomInLeft', 'zoomInRight', 'zoomInUp', 'slideInDown',
+      'slideInLeft', 'slideInRight', 'slideInUp' ];
+
+    $scope.animation_out_list = ['bounce','flash','pulse','rubberBand','shake', 'headShake', 'swing', 'tada', 'wobble', 'jello','bounceOut', 'bounceOutDown', 'bounceOutLeft',
+      'bounceOutRight', 'bounceOutUp', 'fadeOut', 'fadeOutDown', 'fadeOutDownBig', 'fadeOutLeft', 'fadeOutLeftBig', 'fadeOutRight',
+      'fadeOutRightBig', 'fadeOutUp', 'fadeOutUpBig', 'flipOutX', 'flipOutY', 'lightSpeedOut', 'rotateOut', 'rotateOutDownLeft', 'rotateOutDownRight', 'rotateOutUpLeft',
+      'rotateOutUpRight', 'hinge', 'rollOut', 'zoomOut', 'zoomOutDown', 'zoomOutLeft', 'zoomOutRight', 'zoomOutUp', 'slideOutDown', 'slideOutLeft', 'slideOutRight', 'slideOutUp' ];
 
     $scope.$watch('view_card_select_index', function(current, old){
         if (current!=old) {
@@ -1251,7 +1263,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
 
     $scope.cacheAttributeNewValue = function (attribute_name) {
         if (! $scope.gc_selected.attributes[attribute_name]) return;
-        
+
         var attribute_new_value = $scope.gc_selected.attributes[attribute_name].value;
         var attribute_old_value = $scope.attribute_temp_old_value ?  $scope.attribute_temp_old_value.value : '';
 
