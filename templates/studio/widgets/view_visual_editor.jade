@@ -169,7 +169,19 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", layout="co
                                 div(id="dfx_visual_editor_workspace_{{card.name}}", dfx-card="{{card.name}}", dfx-ve-workspace, style="height:100%;overflow:auto")
             md-sidenav#dfx-ve-sidenav-right.md-sidenav-right.md-whiteframe-z2(md-component-id="right", md-is-locked-open="$mdMedia('gt-md')", ng-show="property_visible")
                 md-content#dfx-ve-sidenav-right-content(show-gt-md)
-                    div(ng-show="gc_selected==null", style="padding-left:10px") Select a Graphical Control
+                    div(ng-show="gc_selected==null")
+                      div.dfx-ve-property-treeview.hover
+                        ul
+                          li
+                            input.dfx-ve-property-treeview-button(type="checkbox", id="item-0")
+                            label(for="item-0") Card Properties
+                            ul.dfx-ve-property-treeview-content
+                              li.col-md-12
+                                span.col-md-5 Animation In:
+                                input.col-md-7(type="text", ng-model="view_card_animation.in")
+                              li.col-md-12
+                                span.col-md-5 Animation Out:
+                                input.col-md-7(type="text", ng-model="view_card_animation.out")
                     div#dfx_visual_editor_property(ng-show="gc_selected!=null")
                         a#dfx_visual_editor_property_title
                         div#dfx_visual_editor_property_panel
