@@ -539,17 +539,36 @@ dfxAppRuntime.directive('dfxView', [ '$http', '$timeout', function($http, $timeo
                 $scope.view_id = $attrs.id;
                 $scope.$parent.view_id = $attrs.id;
                 $scope.$parent.dfxViewCard = $attrs.dfxViewCard;
-                $scope.$watch('dfxViewCard', function() {
-                    angular.element($('#' + $scope.view_id)).html('');
-                    var page_scope = $scope.$parent.$parent.$parent.$parent;
-                    if (page_scope && page_scope.page_preview) {
-                        $http.get( '/studio/widget/item/' + page_scope.$parent.app_name + '/' + $attrs.dfxView + '/' + page_scope.$parent.platform ).success(function(response) {
-                            $scope.addComponents( (JSON.parse(response.src)).definition, { "id": $scope.view_id }, '', $scope.dfxViewCard, $scope.view_id );
-                        });
-                    } else {
-                        $http.get( 'views/' + $attrs.dfxView + '.json' ).success(function(response) {
-                            $scope.addComponents( (JSON.parse(response.src)).definition, { "id": $scope.view_id }, '', $scope.dfxViewCard, $scope.view_id );
-                        });
+                $scope.$watch('dfxViewCard', function(new_card, old_card) {
+                    if (new_card!=null) {
+                        var page_scope = $scope.$parent.$parent.$parent.$parent;
+                        if (page_scope && page_scope.page_preview) {
+                            $http.get( '/studio/widget/item/' + page_scope.$parent.app_name + '/' + $attrs.dfxView + '/' + page_scope.$parent.platform ).success(function(response) {
+                                var view_definition = JSON.parse(response.src);
+                                var animation = (view_definition.definition[new_card][0].animation) ? view_definition.definition[new_card][0].animation : {
+                                  in: 'fadeIn',
+                                  out: 'slideOutLeft'
+                                };
+                                $('#' + $scope.view_id).removeClass().addClass('animated ' + animation.out).one('animationend', function(eventOne) {
+                                  angular.element($('#' + $scope.view_id)).html('');
+                                  $('#' + $scope.view_id).removeClass().addClass('animated ' + animation.in);
+                                  $scope.addComponents( view_definition.definition, { "id": $scope.view_id }, '', $scope.dfxViewCard, $scope.view_id );
+                                });
+                            });
+                        } else {
+                            $http.get( 'views/' + $attrs.dfxView + '.json' ).success(function(response) {
+                                var view_definition = JSON.parse(response.src);
+                                var animation = (view_definition.definition[new_card][0].animation) ? view_definition.definition[new_card][0].animation : {
+                                  in: 'fadeIn',
+                                  out: 'slideOutLeft'
+                                };
+                                $('#' + $scope.view_id).removeClass().addClass('animated ' + animation.out).one('animationend', function(eventOne) {
+                                  angular.element($('#' + $scope.view_id)).html('');
+                                  $('#' + $scope.view_id).removeClass().addClass('animated ' + animation.in);
+                                  $scope.addComponents( view_definition.definition, { "id": $scope.view_id }, '', $scope.dfxViewCard, $scope.view_id );
+                                });
+                            });
+                        }
                     }
                 });
             }, 0);
