@@ -75,6 +75,12 @@
             <label for="item-1">Steps</label>
             <ul class="dfx-ve-property-treeview-content">
                 <li class="col-md-12">
+                    <span class="col-md-6">Auto Height:</span>
+                    <div class="col-md-6" layout="row">
+                        <md-checkbox ng-model="attributes.autoHeight.value" class="md-primary" ng-change="overrideAttribute('autoHeight')" aria-label="attributes.autoHeight.value"/>
+                    </div>
+                </li>
+                <li class="col-md-12">
                     <input class="dfx-ve-property-treeview-button" type="checkbox" id="item-6" />
                     <label for="item-6" class="col-md-3" style="font-weight:600;padding-left: 16px; margin-top: 5px;">Step</label>
                     <span class="col-md-1" style="padding-left: 11px;"><a ng-click="addStep()" href="#"><md-icon class="fa fa-plus" style="padding-top: 10px;"></md-icon></a></span>
@@ -111,6 +117,16 @@
                                         <a ng-if="$index > 0" class="pull-right" ng-click="moveUpRow($index)" href="#" title="Move up" ><md-icon class="fa fa-arrow-up" style="padding-top: 10px; width:16px; text-align: center;"></md-icon></a>
                                     </span>
                                     <ul class="dfx-ve-property-treeview-content">
+                                        <li class="col-md-12">
+                                            <div layout>
+                                                <span class="col-md-3" style="margin-top:10px;margin-left:-5px;">Flex Height:</span>
+                                                <md-slider class="md-primary" flex ng-model="row.height.value" ng-disabled="attributes.autoHeight && attributes.autoHeight.value" step="5" min="0" max="100" aria-label="Flex height:">
+                                                </md-slider>
+                                                <div flex="20" layout layout-align="center center">
+                                                    <input flex type="text" ng-model="row.height.value" aria-label="blue" aria-controls="row-height" style="margin-left:5px" ng-change="overrideAttribute('steps')">
+                                                </div>
+                                            </div>
+                                        </li>
                                         <li class="col-md-12" ng-repeat="col in row.cols track by $index">
                                             <input class="dfx-ve-property-treeview-button" type="checkbox" id="item-layout-row-{{$parent.$index}}-{{$index}}"/>
                                             <span class="col-md-1"></span>
@@ -125,6 +141,7 @@
                                                 <li class="col-md-12">
                                                     <span class="col-md-12">
                                                         <div layout>
+                                                            <span class="col-md-3" style="margin-top:10px;margin-left:-5px;">Flex Width:</span>
                                                             <md-slider class="md-primary" flex ng-model="col.width.value" step="5" min="0" max="100" aria-label="Flex width:" style="padding-left: 40px;" ng-change="overrideAttribute('steps')">
                                                             </md-slider>
                                                             <div flex="20" layout layout-align="center center">
