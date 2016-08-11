@@ -1169,7 +1169,9 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
         var gc_instance = {};
         var flex_container_attr = (component.flex=='true' || (component.attributes!=null && component.attributes.flex!=null)) ? ' flex="{{attributes.flex.value}}"' : '';
 
-        var panel_layout = (component.type == 'panel' && component.attributes && (!component.attributes.autoHeight ||  component.attributes.autoHeight.value != true)) ? ' style="height:100%;" layout="column" ' : '';
+        var panel_layout = ((component.type == 'panel' || component.type == 'tabs') &&
+            component.attributes && (!component.attributes.autoHeight || component.attributes.autoHeight.value != true)) ?
+                ' style="height:100%;" layout="column" ' : '';
 
         gc_instance.fragment = $compile('<div id="' + component.id + '" dfx-gc-web-base dfx-gc-web-' + component.type + ' dfx-gc-design gc-type="' + component.type + '" gc-role="control"' + flex_container_attr + panel_layout + '></div>')($scope);
         gc_instance.id = component.id;
@@ -1238,7 +1240,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
 
     // Functions implementing UNDO in view editor - START
     $scope.cacheAttributeOldValue = function (attribute_name, $event, attribute_value) {
-        if ($event && $event.relatedTarget.textContent == 'Save') return;//called from picker using $.focus() by clicking Save button
+        if ($event && $event.relatedTarget && $event.relatedTarget.textContent == 'Save') return;//called from picker using $.focus() by clicking Save button
 
         if (attribute_value) {
             $scope.attribute_temp_old_value = {value: attribute_value};
@@ -1248,6 +1250,8 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     };
 
     $scope.cacheAttributeNewValue = function (attribute_name) {
+        if (! $scope.gc_selected.attributes[attribute_name]) return;
+        
         var attribute_new_value = $scope.gc_selected.attributes[attribute_name].value;
         var attribute_old_value = $scope.attribute_temp_old_value ?  $scope.attribute_temp_old_value.value : '';
 
