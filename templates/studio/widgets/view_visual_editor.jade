@@ -177,11 +177,15 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", layout="co
                             label(for="item-0") Card Properties
                             ul.dfx-ve-property-treeview-content
                               li.col-md-12
-                                span.col-md-5 Animation In:
-                                input.col-md-7(type="text", ng-model="view_card_animation.in")
+                                span.col-md-4(style="margin-top: 3px") Animation In:
+                                md-input-container.col-md-8(style="padding: 0 0 4px 0")
+                                  md-select(aria-label="Animation In", ng-model="view_card_animation.in")
+                                    md-option(ng-repeat="animation in animation_in_list", value="{{animation}}") {{animation}}
                               li.col-md-12
-                                span.col-md-5 Animation Out:
-                                input.col-md-7(type="text", ng-model="view_card_animation.out")
+                                span.col-md-4(style="margin-top: 3px") Animation Out:
+                                md-input-container.col-md-8(style="padding: 0 0 4px 0")
+                                  md-select(aria-label="Animation Out", ng-model="view_card_animation.out")
+                                    md-option(ng-repeat="animation in animation_out_list", value="{{animation}}") {{animation}}
                     div#dfx_visual_editor_property(ng-show="gc_selected!=null")
                         a#dfx_visual_editor_property_title
                         div#dfx_visual_editor_property_panel
