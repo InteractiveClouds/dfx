@@ -2099,7 +2099,6 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                     scope.menuItems = scope.attributes.menuItems;
                     scope.gc_selected.type === 'iconbar' ? scope.statable.value = true : scope.statable.value = false;
                     scope.menuItemNames.value = scope.attributes.menuItemNames.value;
-                    console.log(scope.gc_selected.type);
                 }
                 $mdDialog.show({
                     scope: scope.$new(),
