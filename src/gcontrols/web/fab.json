@@ -29,6 +29,19 @@
       }
     ]
   },
+  "menuItemsType":  { "value": "static" },
+  "menuItemNames": {
+    "value": {
+      "main": {
+        "source": "",
+        "label": "",
+        "icon": {"value": "", "name":"", "type":""},
+        "display": "",
+        "disabled": "",
+        "onclick": ""
+      }
+    }
+  },
   "display":        { "value": "true" },
   "disabled":       { "value": "false" },
   "layoutType":     { "value": "none" },

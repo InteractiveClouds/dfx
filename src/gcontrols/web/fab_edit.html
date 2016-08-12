@@ -56,6 +56,10 @@
                     </div>
                 </li>
                 <li class="col-md-12">
+                    <span class="col-md-5">Menu Items:</span>
+                    <dfx-ve-menu-editor></dfx-ve-menu-editor>
+                </li>
+                <li class="col-md-12">
                     <span class="col-md-5">Display:</span>
                     <div class="col-md-7" layout="row">
                         <input class="col-md-12" type="text" ng-model="attributes.display.value" style="margin-left:-15px;" ng-change="overrideAttribute('display')"/>
@@ -66,23 +70,6 @@
                     <span class="col-md-5">Disabled:</span>
                     <div class="col-md-7" layout="row">
                         <input class="col-md-12" type="text" ng-model="attributes.disabled.value" style="margin-left:-15px;" ng-change="overrideAttribute('disabled')"/>
-                        <dfx-ve-expression-editor></dfx-ve-expression-editor>
-                    </div>
-                </li>
-            </ul>
-        </li>
-        <li>
-            <input class="dfx-ve-property-treeview-button" type="checkbox" id="item-1" />
-            <label for="item-1">Menu items</label>
-            <ul class="dfx-ve-property-treeview-content">
-                <li class="col-md-12" side="right">
-                    <span class="col-md-5">Static:</span>
-                    <dfx-ve-menu-editor></dfx-ve-menu-editor>
-                </li>
-                <li class="col-md-12">
-                    <span class="col-md-5">Dynamic:</span>
-                    <div class="col-md-7" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.dynamic.value" ng-change="overrideAttribute('dynamic')" style="margin-left:-15px;"/>
                         <dfx-ve-expression-editor></dfx-ve-expression-editor>
                     </div>
                 </li>

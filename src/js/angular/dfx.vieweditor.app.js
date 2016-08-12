@@ -2107,28 +2107,30 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                     clickOutsideToClose:true,
                     ariaLabel: 'menu-editor',
                     templateUrl: '/gcontrols/web/menu_editor.html',
-                    onComplete: function() {
+                    onComplete: function() { 
                         $timeout(function(){
-                            scope.menu = scope.menuItems.value[0];
-                            scope.indexMenuItem = '';
-                            if ( scope.menu ) {
-                                scope.ifShowMenuIconTypes(scope.menu.icon.value);
-                                scope.setMenuItemType();
-                                scope.waitableItem.value = scope.menu.hasOwnProperty('waiting') ? true : false;
-                            }
-                            if ( scope.statable.value && scope.menu.state && scope.menu.state.value ) {
-                                scope.ifShowMenuIconTypes( scope.menu.state.checkedIcon.value, 'checked' );
-                                scope.ifShowMenuIconTypes( scope.menu.state.uncheckedIcon.value, 'unchecked' );
-                                $timeout(function() {
-                                    scope.menuEditorTabs.activeTab = 1;
-                                }, 100);
-                            }
-                            if ( scope.waitable.value && scope.menu.waiting && scope.menu.waiting.value ) {
-                                scope.ifShowMenuIconTypes( scope.menu.waiting.icon.value, 'waiting' );
-                                $timeout(function() {
-                                    scope.menuEditorTabs.activeTab = 1;
-                                }, 100);
-                            }
+                            if(scope.menuItems.value.length>0) {
+                                scope.menu = scope.menuItems.value[0];
+                                scope.indexMenuItem = '';
+                                if ( scope.menu ) {
+                                    scope.ifShowMenuIconTypes(scope.menu.icon.value);    
+                                    scope.setMenuItemType();
+                                    scope.waitableItem.value = scope.menu.hasOwnProperty('waiting') ? true : false;
+                                }                            
+                                if ( scope.statable.value && scope.menu.state && scope.menu.state.value ) {
+                                    scope.ifShowMenuIconTypes( scope.menu.state.checkedIcon.value, 'checked' );                      
+                                    scope.ifShowMenuIconTypes( scope.menu.state.uncheckedIcon.value, 'unchecked' );
+                                    $timeout(function() {
+                                        scope.menuEditorTabs.activeTab = 1;
+                                    }, 100);                      
+                                }
+                                if ( scope.waitable.value && scope.menu.waiting && scope.menu.waiting.value ) {
+                                    scope.ifShowMenuIconTypes( scope.menu.waiting.icon.value, 'waiting' );
+                                    $timeout(function() {
+                                        scope.menuEditorTabs.activeTab = 1;
+                                    }, 100);
+                                }
+                            }                            
                         }, 0);
                         $timeout(function() {
                             scope.indexMenuItem = 0;
