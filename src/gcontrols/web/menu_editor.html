@@ -277,7 +277,7 @@
                                         <dfx-ve-menu-expression></dfx-ve-menu-expression>
                                     </div>
                                 </li>                        
-                                <li class="col-md-12" ng-if="!isFabToolbar.value">
+                                <li class="col-md-12" ng-if="!isFabToolbar.value" ng-hide="gc_selected.type==='fab'">
                                     <span class="col-md-4" style="padding-left:16px;">Type:</span>
                                     <div class="col-md-8" layout="row">
                                         <input class="col-md-12" type="text" ng-model="menuItemNames.value.main.type"/>
@@ -312,14 +312,14 @@
                                         <dfx-ve-menu-expression></dfx-ve-menu-expression>
                                     </div>
                                 </li>
-                                <li class="col-md-12" ng-if="!isFabToolbar.value">
+                                <li class="col-md-12" ng-if="!isFabToolbar.value" ng-hide="gc_selected.type==='fab'">
                                     <span class="col-md-4" style="padding-left:16px;">Shortcut:</span>
                                     <div class="col-md-8" layout="row">
                                         <input class="col-md-12" type="text" ng-model="menuItemNames.value.main.shortcut"/>
                                         <dfx-ve-menu-expression></dfx-ve-menu-expression>
                                     </div>
                                 </li>                                
-                                <li class="col-md-12" ng-if="!isFabToolbar.value">
+                                <li class="col-md-12" ng-if="!isFabToolbar.value" ng-hide="gc_selected.type==='fab'">
                                     <span class="col-md-4" style="padding-left:16px;">Notification:</span>
                                     <div class="col-md-8" layout="row">
                                         <input class="col-md-12" type="text" ng-model="menuItemNames.value.main.notification"/>
@@ -347,7 +347,7 @@
                                         <dfx-ve-menu-expression></dfx-ve-menu-expression>
                                     </div>                                    
                                 </li> 
-                                <li class="col-md-12" ng-if="!isFabToolbar.value">
+                                <li class="col-md-12" ng-if="!isFabToolbar.value" ng-hide="gc_selected.type==='fab'">
                                     <span class="col-md-4" style="padding-left:16px;">Children Items:</span>
                                     <div class="col-md-8" layout="row">
                                         <input class="col-md-12" type="text" ng-model="menuItemNames.value.main.scopeItems"/>
