@@ -8,7 +8,8 @@
                 <md-tab ng-repeat="step in attributes.steps.value track by $index" label="{{step.label | checkExpression}}">
                     <md-content flex="100" layout="row" layout-padding style="{{step.style.value}}" class="{{step.classes.value}}">
                         <div flex id="{{component_id}}_step_{{$index}}" layout="column">
-                            <div ng-repeat="row in step.layout.rows track by $index" id="{{component_id}}_layout_{{$parent.$index}}_row_{{$index}}" layout="row" layout-wrap flex="{{row.height.value}}">
+                            <div ng-repeat="row in step.layout.rows track by $index" id="{{component_id}}_layout_{{$parent.$index}}_row_{{$index}}" layout="row" layout-wrap
+                                flex="{{(!attributes.autoHeight || attributes.autoHeight.value != true) ? row.height.value : 'none'}}">
                                 <div ng-repeat="col in row.cols track by $index" id="{{component_id}}_layout_{{$parent.$parent.$index}}_row_{{$parent.$index}}_column_{{$index}}" flex="{{col.width.value}}"
                                      layout="{{col.orientation.value}}" layout-align="{{col.halignment.value}} {{col.valignment.value}}"
                                      gc-container="layout_{{$parent.$parent.$index}}_row_{{$parent.$index}}_column_{{$index}}" gc-parent="{{component_id}}"

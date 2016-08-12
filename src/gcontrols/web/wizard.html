@@ -23,7 +23,7 @@
                         <div ng-form name="stepForm{{$index}}" id="form_{{component_id}}_step_{{$index}}" layout="column" flex>
                             <md-content flex="100" layout="row" layout-padding style="{{step.style.value}}" class="{{step.classes.value}}" ng-class="$eval(step.dynamicClasses.value)">
                                 <div flex id="{{component_id}}_step_{{$index}}" layout="column">
-                                    <div ng-repeat="row in step.layout.rows track by $index" id="{{component_id}}_layout_{{$parent.$index}}_row_{{$index}}" layout="row" layout-wrap flex="{{row.height.value}}">
+                                    <div ng-repeat="row in step.layout.rows track by $index" id="{{component_id}}_layout_{{$parent.$index}}_row_{{$index}}" layout="row" layout-wrap flex="{{(!attributes.autoHeight || attributes.autoHeight.value != true) ? row.height.value : 'none'}}">
                                         <div ng-repeat="col in row.cols track by $index" id="{{component_id}}_layout_{{$parent.$parent.$index}}_row_{{$parent.$index}}_column_{{$index}}" flex="{{col.width.value}}"
                                              gc-container="layout_{{$parent.$parent.$index}}_row_{{$parent.$index}}_column_{{$index}}" gc-parent="{{component_id}}"
                                              style="overflow:auto;padding:1px;{{col.style.value}}" ng-style="{'flex-wrap': col.orientation.value ==='row' ? 'wrap' : 'nowrap'}"

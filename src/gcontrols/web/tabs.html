@@ -18,7 +18,7 @@
             <md-tab ng-repeat="tab in attributes.tabs.value track by $index" label="{{$eval(tab.label)}}" ng-disabled="$eval(tab.disabled.value)"> <!--md-on-select="$eval(attributes.onSelect.value)" md-on-deselect="$eval(attributes.onDeselect.value)"-->
                 <md-content flex="100" layout="row" layout-padding style="{{tab.style.value}}" class="{{tab.classes.value}}" ng-class="$eval(tab.dynamicClasses.value)">
                     <div flex id="{{component_id}}_tab_{{$index}}" layout="column">
-                        <div ng-repeat="row in tab.layout.rows track by $index" id="{{component_id}}_layout_{{$parent.$index}}_row_{{$index}}" layout="row" layout-wrap flex="{{row.height.value}}">
+                        <div ng-repeat="row in tab.layout.rows track by $index" id="{{component_id}}_layout_{{$parent.$index}}_row_{{$index}}" layout="row" layout-wrap flex="{{(!attributes.autoHeight || attributes.autoHeight.value != true) ? row.height.value : 'none'}}">
                             <div ng-repeat="col in row.cols track by $index" id="{{component_id}}_layout_{{$parent.$parent.$index}}_row_{{$parent.$index}}_column_{{$index}}" flex="{{col.width.value}}"
                                  gc-container="layout_{{$parent.$parent.$index}}_row_{{$parent.$index}}_column_{{$index}}" gc-parent="{{component_id}}"
                                  style="overflow:auto;padding:1px;{{col.style.value}}" ng-style="{'flex-wrap': col.orientation.value ==='row' ? 'wrap' : 'nowrap'}"
