@@ -3455,6 +3455,20 @@ dfxViewEditorApp.directive('dfxGcToolbarDesign', function($sce, $compile, $timeo
                     }, 0);
                 }
             });
+            scope.$watch('attributes.toolbar.leftMenu.visible.value', function(newValue){
+                if(newValue){
+                    if(newValue !== '' && newValue !== 'false' && scope.attributes.toolbar.leftMenu.type.value !== 'fab' ){
+                        scope.iconbarBuilder('left');
+                    }
+                }
+            });
+            scope.$watch('attributes.toolbar.rightMenu.visible.value', function(newValue){
+                if(newValue){
+                    if(newValue !== '' && newValue !== 'false' && scope.attributes.toolbar.rightMenu.type.value !== 'fab' ){
+                        scope.iconbarBuilder('right');
+                    }
+                }
+            });
         }
     }
 });
