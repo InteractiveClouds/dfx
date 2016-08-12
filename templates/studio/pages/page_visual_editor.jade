@@ -19,17 +19,17 @@ div#dfx_page_editor(ng-cloak, ng-controller="dfx_page_editor_controller", layout
                             md-button(ng-click="changeViewMode('script')")
                                 ng-md-icon(icon="code")
                                 span(style="padding-left:10px") Script
+            span.flex
+            span(style="font-size: 12px;margin-left: 1px;background: #4a4a4a;line-height: 48px;color: #fff;padding: 0 8px;border-left: 1px #6b6a6a solid;border-right: 1px #6b6a6a solid;", class="pull-right")
+                span(style="margin-right:5px") Preview:
+                img(src="/images/vb/icons/preview_local.png", class="dfx-pe-toolbar-icon", ng-click="openPreview()", title="Preview")
+            div(style="color:#fff;font-size: 14px;", ng-if="preview_wait_icon_visible === true")
+                md-icon.fa.fa-spinner.fa-pulse
+                span(style="padding-left:10px;padding-right:10px") compiling
             span(style="font-size: 12px;margin-left: 1px;background: #4a4a4a;line-height: 48px;color: #fff;padding: 0 8px;border-left: 1px #6b6a6a solid;border-right: 1px #6b6a6a solid;", class="pull-right")
                 span(style="margin-right:5px") Actions:
                 img(src="/images/vb/icons/action_save.png", class="dfx-pe-toolbar-icon", ng-click="savePageDefinition()", title="Save")
                 img(src="/images/vb/icons/action_exit.png", class="dfx-pe-toolbar-icon", ng-click="exitPageEditor($event)", title="Exit the editor")
-            span(style="font-size: 12px;margin-left: 1px;background: #4a4a4a;line-height: 48px;color: #fff;padding: 0 8px;border-left: 1px #6b6a6a solid;border-right: 1px #6b6a6a solid;", class="pull-right")
-                span(style="margin-right:5px") Preview:
-                img(src="/images/vb/icons/preview_local.png", class="dfx-pe-toolbar-icon", ng-click="openPreview()", title="Preview")
-            div(style="color:#fff;font-size: 16px;", ng-if="preview_wait_icon_visible === true")
-                md-icon.fa.fa-spinner.fa-pulse
-                span(style="padding-left:10px") compiling
-            span.flex
             div#dfx-pe-property-title
                 md-button#dfx-pe-toggle-property.dfx-pe-toolbar-button(aria-label="properties", ng-click="toggleRight()")
                     i#dfx-pe-toggle-property-icon.fa.fa-angle-double-right
