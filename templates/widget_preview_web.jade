@@ -50,8 +50,7 @@ html(ng-app="dfx_preview_app")
                 img(src="/images/df_logo_blanc_1029x223.png" style="width:90px;height:20px;margin-top:7px;margin-left:10px")
                 div(style="color: #fff;font-size: 13px;font-style: italic;display: inline-block;margin-left:10px;line-height:33px")
                     span Preview the view {{view_name}}
-                div(style="color: #212121;font-size: 13px;line-height:30px;display: inline-block;height:31px;margin-top:2px;margin-left:20px;margin-right:20px;padding-left:5px; padding-right:5px; background:#A2F321;border-radius:3px;cursor:pointer;outline: none" ng-click="logout()")
-                    md-tooltip(md-direction="bottom") Logout
+                div(style="color: #212121;font-size: 13px;line-height:30px;display: inline-block;height:31px;margin-top:2px;margin-left:20px;margin-right:20px;padding-left:5px; padding-right:5px; background:#A2F321;border-radius:3px;outline: none")
                     span(style="line-height:25px;") Logged as {{app_user.firstName + ' ' + app_user.lastName}}
                 span.flex
                     label.pull-right(style="font-size:12px;background:#8731AB;padding: 2px 4px;color:#fff;margin-top:6px;margin-right:10px;border-radius:8px;cursor:pointer", ng-if="platform=='mobile'", ng-click="changeDeviceOrientation()") {{design_device_orientation}}
@@ -71,5 +70,5 @@ html(ng-app="dfx_preview_app")
                     | !{dyn_res}
                 - } else if (wclass.definition.wtype=='visual') {
                     div#dfx_view_preview_main_container(ng-controller="#{widgetname}Controller", layout="row", layout-align="center start", style="height:100%;")
-                        div#dfx_view_preview_container(dfx-view-preview="#{widgetname}", dfx-ve-platform="#{platform}", ng-controller="dfx_view_controller", dfx-view-card="default", style="height:100%;")
+                        div#dfx_view_preview_container.animated(dfx-view-preview="#{widgetname}", dfx-ve-platform="#{platform}", ng-controller="dfx_view_controller", dfx-view-card="default", style="height:100%;")
                 - }

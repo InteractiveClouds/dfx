@@ -5,6 +5,12 @@
 			<label for="item-props">Page Properties</label>
 			<span class="pull-right"><a href="#" ng-click="addLayoutRow()" title="Add a row"><i class="fa fa-plus"></i></a></span>
 			<ul class="dfx-pe-property-treeview-content" style="margin-left:10px">
+				<li class="col-md-12">
+					<span class="col-md-6">Auto height:</span>
+					<div class="col-md-6" layout="row">
+						<md-checkbox ng-model="selected_page.autoHeight" class="md-primary" aria-label="Auto height"/>
+					</div>
+				</li>
 				<li class="col-md-12" ng-repeat="row in selected_page.layout.rows">
 					<ul>
 						<li>
@@ -15,7 +21,7 @@
 							<ul class="dfx-pe-property-treeview-content">
 								<li class="col-md-12">
 									<div layout>
-										<md-slider class="md-primary" flex ng-model="row.height" ng-disabled="row.autoHeight" step="5" min="0" max="100" aria-label="Flex height:">
+										<md-slider class="md-primary" flex ng-model="row.height" ng-disabled="selected_page.autoHeight" step="5" min="0" max="100" aria-label="Flex height:">
 										</md-slider>
 										<div flex="20" layout layout-align="center center">
 											<input flex type="text" ng-model="row.height" aria-label="blue" aria-controls="row-height" style="margin-left:5px">
@@ -23,12 +29,6 @@
 									</div>
 								</li>
 							</ul>
-							<li class="col-md-12">
-								<span class="col-md-6">Auto height:</span>
-								<div class="col-md-6" layout="row">
-									<md-checkbox ng-model="row.autoHeight" class="md-primary" ng-change="overrideAttribute('autoHeight')" aria-label="row.autoHeight"/>
-								</div>
-							</li>
 							<ul class="dfx-pe-property-treeview-content">
 								<li ng-repeat="column in row.columns">
 									<ul>

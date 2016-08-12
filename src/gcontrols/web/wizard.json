@@ -2,6 +2,7 @@
   "template": 		{ "value": "default" },
   "name":         { "value": "wzrdWizard" },
   "display":      { "value": "true" },
+  "autoHeight":   { "value": false },
   "stepAlign":    { "value": "top" },
   "stretching":   { "value": "always" },
   "inkBar":       { "value": "enabled" },
@@ -215,6 +216,7 @@
         "layout": {
           "rows": [
             {
+              "height":          { "value": "100" },
               "cols": [
                 {
                   "width":          { "value": 100 },
@@ -246,6 +248,7 @@
         "layout": {
           "rows": [
             {
+              "height":          { "value": "100" },
               "cols": [
                 {
                   "width":          { "value": 100 },

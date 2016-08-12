@@ -14,14 +14,20 @@ var fs = require('fs');
 
 var dreamface = require('./dfx')
 .init({
-    studio_version: 3,
+  studio_version: 3,
 	server_port: 3000,
 	auth_conf_path : path.resolve(__dirname, './lib/auth/.auth.conf'),
+  app_build_path: path.resolve(__dirname, './app_builds'),
+  tempDirForTemplates: path.resolve(__dirname, './temp'),
+  tempDir : 'tmp',
+  resources_deploy_path: 'resources',
+  resources_development_path: path.resolve(__dirname, '..', './resources'),
+  fsdb_path: path.resolve(__dirname, '..', './app_fsdb'),
+  deploy_path: path.resolve(__dirname, '..', './deploy'),
 	log_pmx: false,
-	app_build_path: path.resolve(__dirname, './app_builds'),
 	edition: 'development',
 	storage: 'mongod',
 	deployment_server_host: 'localhost',
-	deployment_server_port: 3030,
+	deployment_server_port: 3030
 })
 .start();
