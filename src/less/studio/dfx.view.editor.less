@@ -1002,8 +1002,24 @@ md-tabs[dfx-gc-tabs-design] > md-tabs-content-wrapper {
   > md-tab-content {
     height: 100%;
 
-    > div {
+    > div[md-tabs-template] {
       height: 100%;
+
+      > md-content {
+        height: 100%;
+      }
+    }
+  }
+}
+
+/*view editor wizard gc*/
+md-tabs[dfx-gc-wizard-design] > md-tabs-content-wrapper {
+  top: 0 !important;
+  flex: 100;
+
+  > md-tab-content {
+
+    > div[md-tabs-template] {
 
       > md-content {
         height: 100%;

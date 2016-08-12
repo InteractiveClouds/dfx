@@ -1,16 +1,18 @@
 <div class="layout-row layout-align-center-center flex">
-    <div style="{{attributes.style.value}}" class="{{attributes.classes.value}} {{attributes.whiteframe.value}} flex-100">
+    <div style="height:100%;{{attributes.style.value}}" class="{{attributes.classes.value}} {{attributes.whiteframe.value}} flex-100" layout="column">
         <dfx-gc-toolbar-design></dfx-gc-toolbar-design>
-        <md-content flex style="{{attributes.bodyStyle.value}}" ng-hide="attributes.toolbar.collapsed.designValue">
+        <md-content flex style="{{attributes.bodyStyle.value}}" ng-hide="attributes.toolbar.collapsed.designValue" layout="column">
             <md-tabs md-no-ink-bar="{{attributes.inkBar.value==='disabled' ? 'true': 'false'}}" md-center-tabs="{{attributes.centerSteps.value===true ? 'true': 'false'}}"
-                     md-dynamic-height md-border-bottom md-selected="attributes.stepIndex.value" md-align-tabs="{{attributes.stepAlign.value}}" md-stretch-tabs="{{attributes.stretching.value}}">
+                     md-dynamic-height md-border-bottom md-selected="attributes.stepIndex.value" md-align-tabs="{{attributes.stepAlign.value}}" md-stretch-tabs="{{attributes.stretching.value}}"
+                     flex layout="column" dfx-gc-wizard-design>
                 <md-tab ng-repeat="step in attributes.steps.value track by $index" label="{{step.label | checkExpression}}">
                     <md-content flex="100" layout="row" layout-padding style="{{step.style.value}}" class="{{step.classes.value}}">
-                        <div flex id="{{component_id}}_step_{{$index}}">
-                            <div ng-repeat="row in step.layout.rows track by $index" id="{{component_id}}_layout_{{$parent.$index}}_row_{{$index}}" layout="row" layout-wrap flex="100">
+                        <div flex id="{{component_id}}_step_{{$index}}" layout="column">
+                            <div ng-repeat="row in step.layout.rows track by $index" id="{{component_id}}_layout_{{$parent.$index}}_row_{{$index}}" layout="row" layout-wrap flex="{{row.height.value}}">
                                 <div ng-repeat="col in row.cols track by $index" id="{{component_id}}_layout_{{$parent.$parent.$index}}_row_{{$parent.$index}}_column_{{$index}}" flex="{{col.width.value}}"
                                      layout="{{col.orientation.value}}" layout-align="{{col.halignment.value}} {{col.valignment.value}}"
-                                     gc-container="layout_{{$parent.$parent.$index}}_row_{{$parent.$index}}_column_{{$index}}" gc-parent="{{component_id}}" style="{{col.style.value}}"
+                                     gc-container="layout_{{$parent.$parent.$index}}_row_{{$parent.$index}}_column_{{$index}}" gc-parent="{{component_id}}"
+                                     style="overflow:auto;{{col.style.value}}"
                                      class="ui-placeholder dfx_visual_editor_droppable {{col.classes.value}}" dfx-gc-web-droppable>
                                 </div>
                             </div>
