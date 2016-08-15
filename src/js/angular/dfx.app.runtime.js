@@ -608,8 +608,11 @@ dfxAppRuntime.directive('dfxGcWeb', ['$compile', function($compile) {
             } else {
                 var flex_container_attr = (component.attributes.flex!=null) ? ' flex="{{attributes.flex.value}}"' : '';
 
-                // exception for Input and HTML GCs when parent layout is column, otherwise GC takes all avaialable height
-                if ($element.parent().attr('layout') == 'column' && (component.type == 'input' || component.type == 'html')) {
+                // exception for some GCs when parent layout is column, otherwise GC takes all avaialable height
+                if ($element.parent().attr('layout') == 'column' &&
+                    (component.type == 'input' || component.type == 'html' || component.type == 'textarea' || component.type == 'datepicker' ||
+                     component.type == 'select' || component.type == 'slider' || component.type == 'chips' || component.type == 'treemenu' || component.type == 'horizontalmenu'))
+                {
                     flex_container_attr = '';
                 }
 
