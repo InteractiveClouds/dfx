@@ -1071,6 +1071,9 @@ md-input-container {
     color: #fff;
     text-shadow: 0 1px 1px rgba(0,0,0,.4);
 }
+.dfx-carousel-item .dfx-carousel-item-text > div {
+    margin: 16px;
+}
 
 /* Helper Styles */
 * {

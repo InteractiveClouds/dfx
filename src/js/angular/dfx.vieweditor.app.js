@@ -3393,7 +3393,7 @@ dfxViewEditorApp.directive('dfxGcToolbarDesign', function($sce, $compile, $timeo
                 if(newVal){
                     if (newVal != null && !angular.equals(newVal, oldVal)) {
                         $timeout(function() {
-                            if(scope.attributes.toolbar.leftMenu.type.value === 'Icon Bar' || scope.attributes.toolbar.leftMenu.type.value === 'Buttons'){
+                            if(scope.attributes.toolbar.leftMenu.type.value !== 'Fab'){
                                 scope.iconbarBuilder('left');
                             }
                         }, 0);
@@ -3405,7 +3405,7 @@ dfxViewEditorApp.directive('dfxGcToolbarDesign', function($sce, $compile, $timeo
                 if(newVal){
                     if (newVal != null && !angular.equals(newVal, oldVal)) {
                         $timeout(function() {
-                            if(scope.attributes.toolbar.rightMenu.type.value === 'Icon Bar' || scope.attributes.toolbar.rightMenu.type.value === 'Buttons') {
+                            if(scope.attributes.toolbar.rightMenu.type.value !== 'Fab') {
                                 scope.iconbarBuilder('right');
                             }
                         }, 0);
@@ -3457,14 +3457,14 @@ dfxViewEditorApp.directive('dfxGcToolbarDesign', function($sce, $compile, $timeo
             });
             scope.$watch('attributes.toolbar.leftMenu.visible.value', function(newValue){
                 if(newValue){
-                    if(newValue !== '' && newValue !== 'false' && scope.attributes.toolbar.leftMenu.type.value !== 'fab' ){
+                    if(newValue !== '' && newValue !== 'false' && scope.attributes.toolbar.leftMenu.type.value !== 'Fab' ){
                         scope.iconbarBuilder('left');
                     }
                 }
             });
             scope.$watch('attributes.toolbar.rightMenu.visible.value', function(newValue){
                 if(newValue){
-                    if(newValue !== '' && newValue !== 'false' && scope.attributes.toolbar.rightMenu.type.value !== 'fab' ){
+                    if(newValue !== '' && newValue !== 'false' && scope.attributes.toolbar.rightMenu.type.value !== 'Fab' ){
                         scope.iconbarBuilder('right');
                     }
                 }

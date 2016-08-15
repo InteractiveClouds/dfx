@@ -48,6 +48,14 @@
 					</div>
 				</li>
 				<li class="col-md-12">
+					<span class="col-md-4">Class:</span>
+					<input class="col-md-8" type="text" ng-model="attributes.classes.value" ng-change="overrideAttribute('classes')" ng-focus="cacheAttributeOldValue('classes', $event)" ng-blur="cacheAttributeNewValue('classes')"/>
+				</li>
+				<li class="col-md-12">
+					<span class="col-md-4">Dynamic Class:</span>
+					<input class="col-md-8" type="text" ng-model="attributes.dynamicClasses.value" ng-change="overrideAttribute('dynamicClasses')" ng-focus="cacheAttributeOldValue('dynamicClasses', $event)" ng-blur="cacheAttributeNewValue('dynamicClasses')"/>
+				</li>
+				<li class="col-md-12">
 					<span class="col-md-4">Image style:</span>
 					<div class="col-md-8" layout="row">
 						<input class="col-md-12" type="text" ng-model="attributes.imageStyle.value" style="margin-left:-15px;" ng-change="overrideAttribute('imageStyle')" ng-focus="cacheAttributeOldValue('imageStyle', $event)" ng-blur="cacheAttributeNewValue('imageStyle')"/>
@@ -55,12 +63,12 @@
 					</div>
 				</li>
 				<li class="col-md-12">
-					<span class="col-md-4">Class:</span>
-					<input class="col-md-8" type="text" ng-model="attributes.classes.value" ng-change="overrideAttribute('classes')" ng-focus="cacheAttributeOldValue('classes', $event)" ng-blur="cacheAttributeNewValue('classes')"/>
+					<span class="col-md-4">Image Class:</span>
+					<input class="col-md-8" type="text" ng-model="attributes.imageClasses.value" ng-change="overrideAttribute('imageClasses')" ng-focus="cacheAttributeOldValue('imageClasses', $event)" ng-blur="cacheAttributeNewValue('imageClasses')"/>
 				</li>
 				<li class="col-md-12">
-					<span class="col-md-4">Dynamic Class:</span>
-					<input class="col-md-8" type="text" ng-model="attributes.dynamicClasses.value" ng-change="overrideAttribute('dynamicClasses')" ng-focus="cacheAttributeOldValue('dynamicClasses', $event)" ng-blur="cacheAttributeNewValue('dynamicClasses')"/>
+					<span class="col-md-4">Image Dynamic Class:</span>
+					<input class="col-md-8" type="text" ng-model="attributes.imageDynamicClasses.value" ng-change="overrideAttribute('imageDynamicClasses')" ng-focus="cacheAttributeOldValue('imageDynamicClasses', $event)" ng-blur="cacheAttributeNewValue('imageDynamicClasses')"/>
 				</li>
 			</ul>
 		</li>
