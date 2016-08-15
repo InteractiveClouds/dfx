@@ -607,6 +607,12 @@ dfxAppRuntime.directive('dfxGcWeb', ['$compile', function($compile) {
                     '"></div>')($scope);
             } else {
                 var flex_container_attr = (component.attributes.flex!=null) ? ' flex="{{attributes.flex.value}}"' : '';
+
+                // exception for Input and HTML GCs when parent layout is column, otherwise GC takes all avaialable height
+                if ($element.parent().attr('layout') == 'column' && (component.type == 'input' || component.type == 'html')) {
+                    flex_container_attr = '';
+                }
+
                 var gc_layout = '';
                 if (!component.attributes.autoHeight || component.attributes.autoHeight.value != true) {
                     if (component.type == 'panel') {

@@ -29,7 +29,7 @@
 						<span style="padding-left:0">
 							<md-icon class="fa fa-edit" style="font-size:14px;height:16px;color:inherit;"></md-icon>Edit
 						</span>
-					</a>					
+					</a>
 				</li>
 				<li class="col-md-12" dfx-gc-property="display">
 					<span class="col-md-4">Display:</span>
@@ -56,8 +56,8 @@
         <li class="col-md-12">
 					<span class="col-md-12">
 						<div layout>
+							<span class="col-md-3" style="margin-top:10px;margin-left:-5px;">Flex Width:</span>
               <md-slider class="md-primary" flex ng-model="attributes.flex.value" step="5" min="0" max="100" aria-label="Flex width:" ng-change="overrideAttribute('flex');changeWidth()" ng-model-options="{ debounce: 500 }">
-
               </md-slider>
               <div flex="20" layout layout-align="center center">
 				<input flex type="number" step="5" min="0" max="100" ng-model="attributes.flex.value" aria-label="blue" aria-controls="flex-width" style="margin-left:5px" ng-change="overrideAttribute('flex');changeWidth()">
