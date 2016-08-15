@@ -27,7 +27,7 @@
                 <li class="col-md-12" ng-if="attributes.autoSlide.value === 'true'">
                     <span class="col-md-4">Slide Interval:</span>
                     <input class="col-md-8" type="text" ng-model="attributes.slideInterval.value" ng-change="overrideAttribute('slideInterval');rebuildCarousel();" ng-model-options="{ updateOn: 'blur'}" />
-                </li>                
+                </li>
                 <li class="col-md-12">
                     <span class="col-md-4">Display:</span>
                     <div class="col-md-8" layout="row">
@@ -72,6 +72,7 @@
                 <li class="col-md-12">
 					<span class="col-md-12">
 						<div layout>
+                            <span class="col-md-3" style="margin-top:10px;margin-left:-5px;">Flex Width:</span>
                             <md-slider class="md-primary" flex ng-model="attributes.flex.value" step="5" min="0" max="100" aria-label="Flex width:" ng-change="overrideAttribute('flex');changeWidth();rebuildCarousel();" ng-model-options="{ debounce: 500 }">
                             </md-slider>
                             <div flex="20" layout layout-align="center center">
