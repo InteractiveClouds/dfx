@@ -35,5 +35,6 @@
   "onmouseenter":     { "value": "" },
   "onmousemove":      { "value": "" },
   "onmouseleave":     { "value": "" },
-  "onmouseup":        { "value": "" }
+  "onmouseup":        { "value": "" },
+  "onmousedown":      { "value": "" }
 }
