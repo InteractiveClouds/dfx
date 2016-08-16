@@ -797,7 +797,7 @@ md-icon.dfx-ve-picker-icon {
   }
   md-content {
     padding: 8px;
-    .dfx-ve-property-treeview > ul {
+    .dfx-ve-style-treeview > ul {
       height: 320px;
       overflow: auto;
       margin: 0px;
@@ -814,6 +814,111 @@ md-icon.dfx-ve-picker-icon {
     justify-content: flex-end;
   }
 }
+
+.dfx-ve-style-treeview {
+  float: left; //Prevent 100% width
+  .user-select; //Prevent accidental selection on dbl click to fast expand/collapse
+
+  //Fade back to default
+  &:hover input ~ label:before,
+  &.hover input ~ label:before{
+    opacity: 1.0;
+    .transition-duration(0.5s);
+  }
+
+  ul {
+    .transition-duration;
+    list-style: none;
+    padding-left: 0px;
+
+    li {
+      padding-left:0px;
+      padding-right:0px;
+      //Fade back to default
+      span{
+        .transition-property(color);
+        .transition-duration;
+
+        //Highlight on hover
+        &:hover {
+          color: @hoverColor;
+          .transition-duration(0.3s);
+        }
+      }
+    }
+  }
+
+  //Hide checkboxes
+  input.dfx-ve-style-treeview-button {
+    display: none;
+
+    //Hide collapsed branches
+    &:checked ~ ul {
+      display: none;
+    }
+
+    //Show pointer on collapsible rows
+    & ~ label {
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 12px;
+      padding: 10px;
+      padding-left: 15px;
+      width: 430px;
+      text-align: left;
+      background: #fff;
+    }
+
+    //Expanded branch
+    & ~ label:before {
+      content: '';
+      width: 0;
+      height: 0;
+      position: absolute;
+      margin-left: -1em;
+      margin-top: 0.55em;
+      border-width: 4px;
+      border-style: solid;
+      border-top-color: @defaultColor;
+      border-right-color: transparent;
+      border-bottom-color: transparent;
+      border-left-color: transparent;
+      .transition-property(opacity);
+      .transition-duration;
+    }
+
+    //Collapsed branch
+    &:checked ~ label:before {
+      margin-left: -0.8em;
+      margin-top: 0.45em;
+      border-width: 4px;
+      border-top-color: transparent;
+      border-right-color: transparent;
+      border-bottom-color: transparent;
+      border-left-color: @defaultColor;
+    }
+  }
+}
+
+.dfx-ve-style-treeview-content md-input-container {
+  margin: 0;
+  border:0px;
+  color: #383838;
+  background: #fff;
+  padding: 0px !important;
+  margin-bottom: 2px;
+}
+
+.dfx-ve-style-treeview-content md-input-container span.md-select-icon {
+  color: #383838;
+}
+
+.dfx-ve-style-treeview-content input {
+  border:1px #6b6a6a solid;
+  color: #383838;
+  background: transparent;
+}
+
 .dfx-css-style-preview-box {
   position: relative;
   z-index: 10;
