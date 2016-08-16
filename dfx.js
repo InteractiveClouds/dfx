@@ -42,6 +42,9 @@ var out = module.exports = {},
     host_app,
     server;
 
+var k = 0;
+var x = 0;
+
 var key = process.argv[2];
 
 process.env['NODE_ENV'] = 'development';
@@ -253,6 +256,10 @@ out.start = function () {
                         });
 
                         require('./lib/utils/activator').initModule({
+                            cache   : cache
+                        });
+
+                        require('./lib/utils/watcher').initModule({
                             cache   : cache
                         });
 
@@ -515,22 +522,18 @@ function _start () {
         var cookies = watcher.parseCookies(req);
         var tenantId = cookies['X-DREAMFACE-TENANT'];
         if (tenantId) {
-            var inactiveTenants = watcher.getInactiveTenants();
-            var enableTenants = activator.getAll();
-            activator.getAll().then(function( tenants ) {
-                console.log("HERE");
-                console.log(tenants);
-                if (((inactiveTenants.indexOf(tenantId) != -1) || (tenants.indexOf(tenantId) == -1)) && watcher.verifyAuthRequest(req.url)) {
-                    console.log("HERE1");
-                    res.status(SETTINGS.loadBalancing.disabledRequestsStatus).send();
-                } else {
-                    watcher.setRequestRun(tenantId);
-                    res.on('finish', function () {
-                        watcher.setRequestStop(tenantId);
-                    });
-                    console.log("HERE2");
-                    next();
-                }
+            watcher.getInactiveTenants().then(function(inactiveTenants) {
+                activator.getAll().then(function (tenants) {
+                    if (((inactiveTenants.indexOf(tenantId) != -1) || (tenants.indexOf(tenantId) == -1)) && watcher.verifyAuthRequest(req.url)) {
+                        res.status(SETTINGS.loadBalancing.disabledRequestsStatus).send();
+                    } else {
+                        watcher.setRequestRun(tenantId);
+                        res.on('finish', function () {
+                            watcher.setRequestStop(tenantId);
+                        });
+                        next();
+                    }
+                })
             })
 
         } else {
