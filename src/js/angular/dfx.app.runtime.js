@@ -606,25 +606,25 @@ dfxAppRuntime.directive('dfxGcWeb', ['$compile', function($compile) {
                     '" layout-align="' + inherited.halignment + ' ' + inherited.valignment +
                     '"></div>')($scope);
             } else {
-                var flex_container_attr = (component.attributes.flex!=null) ? ' flex="{{attributes.flex.value}}"' : '';
+              var flex_container_attr = '', container_style = '';
+              if (component.attributes.flex != null) {
+                  if ($scope.$parent.col.orientation.value == 'row') {
+                      flex_container_attr = ' flex="{{attributes.flex.value}}"';
+                  } else if ($scope.$parent.col.orientation.value == 'column') {
+                      container_style = 'width:{{attributes.flex.value}}%;';
+                  }
+              }
 
-                // exception for some GCs when parent layout is column, otherwise GC takes all avaialable height
-                if ($element.parent().attr('layout') == 'column' &&
-                    (component.type == 'input' || component.type == 'html' || component.type == 'textarea' || component.type == 'datepicker' ||
-                     component.type == 'select' || component.type == 'slider' || component.type == 'chips' || component.type == 'treemenu' || component.type == 'horizontalmenu'))
-                {
-                    flex_container_attr = '';
-                }
-
-                var gc_layout = '';
-                if (!component.attributes.autoHeight || component.attributes.autoHeight.value != true) {
-                    if (component.type == 'panel') {
-                        gc_layout = ' style="height:100%;" ';
-                    } else if (component.type == 'tabs' || component.type == 'wizard') {
-                        gc_layout = ' style="height:100%;" layout="column" ';
-                    }
-                }
-                var angular_snippet = $compile('<div id="'+$attrs.id+'" dfx-gc-web-base dfx-gc-web-'+$attrs.dfxGcWeb+' gc-role="control" gc-parent="'+$attrs.gcParent+'" view-id="'+$attrs.viewId+'"' + flex_container_attr + gc_layout + '></div>')($scope);
+              var gc_layout = '';
+              if (!component.attributes.autoHeight || component.attributes.autoHeight.value != true) {
+                  if (component.type == 'panel') {
+                      container_style += 'height:100%;';
+                  } else if (component.type == 'tabs' || component.type == 'wizard') {
+                      container_style += 'height:100%;';
+                      gc_layout = ' layout="column" ';
+                  }
+              }
+              var angular_snippet = $compile('<div id="'+$attrs.id+'" dfx-gc-web-base dfx-gc-web-'+$attrs.dfxGcWeb+' gc-role="control" gc-parent="'+$attrs.gcParent+'" view-id="'+$attrs.viewId+'"' + flex_container_attr + ' style="' + container_style + '" ' + gc_layout + '></div>')($scope);
             }
             $element.replaceWith(angular_snippet);
         }
