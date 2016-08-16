@@ -80,6 +80,7 @@
     "prettyjson": "*",
     "q": "*",
     "q-io": "*",
+    "quill": "^0.20.1",
     "redis": "*",
     "replace": "^0.3.0",
     "request": "2.58.0",
