@@ -583,6 +583,10 @@ dfxAppRuntime.directive('dfxGcWeb', ['$compile', function($compile) {
         restrict: 'A',
         link: function($scope, $element, $attrs) {
             var component = $scope.gc_instances[$attrs.id];
+            var gc_ng_hide = '';
+            if ( component.attributes.display && component.attributes.display.value !=='' ) {
+                gc_ng_hide = ' ng-class="{\'ng-hide\': !' + component.attributes.display.value + '}" ';
+            }
 
             if ( component.attributes.repeat_title && component.attributes.repeat_title.value ) {
                 var inherited = {
@@ -624,7 +628,7 @@ dfxAppRuntime.directive('dfxGcWeb', ['$compile', function($compile) {
                         gc_layout = ' style="height:100%;" layout="column" ';
                     }
                 }
-                var angular_snippet = $compile('<div id="'+$attrs.id+'" dfx-gc-web-base dfx-gc-web-'+$attrs.dfxGcWeb+' gc-role="control" gc-parent="'+$attrs.gcParent+'" view-id="'+$attrs.viewId+'"' + flex_container_attr + gc_layout + '></div>')($scope);
+                var angular_snippet = $compile('<div id="'+$attrs.id+'" dfx-gc-web-base dfx-gc-web-'+$attrs.dfxGcWeb+' gc-role="control" gc-parent="'+$attrs.gcParent+'" view-id="'+$attrs.viewId+'"' + flex_container_attr + gc_layout + gc_ng_hide + '></div>')($scope);
             }
             $element.replaceWith(angular_snippet);
         }
