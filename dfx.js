@@ -252,6 +252,10 @@ out.start = function () {
                             cache   : cache
                         });
 
+                        require('./lib/utils/activator').initModule({
+                            cache   : cache
+                        });
+
                         require('./lib/authRequest_mod').oAuth2AccessTokens.init({ storage: _storage });
                         require('./lib/dfx_resources').api.init({ storage: _storage });
 
@@ -513,15 +517,21 @@ function _start () {
         if (tenantId) {
             var inactiveTenants = watcher.getInactiveTenants();
             var enableTenants = activator.getAll();
-            if (((inactiveTenants.indexOf(tenantId) != -1) || (enableTenants.indexOf(tenantId) == -1)) && watcher.verifyAuthRequest(req.url)) {
-                res.status(SETTINGS.loadBalancing.disabledRequestsStatus).send();
-            } else {
-                watcher.setRequestRun(tenantId);
-                res.on('finish', function () {
-                    watcher.setRequestStop(tenantId);
-                });
-                next();
-            }
+            activator.getAll().then(function( tenants ) {
+                console.log("HERE");
+                console.log(tenants);
+                if (((inactiveTenants.indexOf(tenantId) != -1) || (tenants.indexOf(tenantId) == -1)) && watcher.verifyAuthRequest(req.url)) {
+                    console.log("HERE1");
+                    res.status(SETTINGS.loadBalancing.disabledRequestsStatus).send();
+                } else {
+                    watcher.setRequestRun(tenantId);
+                    res.on('finish', function () {
+                        watcher.setRequestStop(tenantId);
+                    });
+                    console.log("HERE2");
+                    next();
+                }
+            })
 
         } else {
             next();
