@@ -255,11 +255,7 @@ out.start = function () {
                             cache   : cache
                         });
 
-                        require('./lib/utils/activator').initModule({
-                            cache   : cache
-                        });
-
-                        require('./lib/utils/watcher').initModule({
+                        require('./lib/utils/redisLayer').init({
                             cache   : cache
                         });
 
