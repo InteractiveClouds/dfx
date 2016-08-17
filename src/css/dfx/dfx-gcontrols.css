@@ -411,8 +411,8 @@ md-input-container label{
 }
 
 .gc-input-icon-container{
-    padding-left: 5px !important;
-    padding-right: 0 !important;
+    /*padding-left: 5px !important;*/
+    /*padding-right: 0 !important;*/
     /*width: 136px !important;*/
 }
 
