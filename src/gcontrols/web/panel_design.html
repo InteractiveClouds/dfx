@@ -5,7 +5,9 @@
 			<div id="{{component_id}}_layout_0_row_{{$parent.$index}}_column_{{$index}}" flex="{{col.autoWidth.value == true ? '' : col.width.value}}"
              layout="{{col.orientation.value}}" layout-align="{{col.halignment.value}} {{col.valignment.value}}"
              gc-container="layout_0_row_{{$parent.$index}}_column_{{$index}}" gc-parent="{{component_id}}"
-             style="flex-wrap:wrap; {{col.style.value}}" class="ui-placeholder dfx_visual_editor_droppable {{col.classes.value}}"
+             style="{{col.style.value}}"
+             ng-style="{'flex-wrap': col.orientation.value ==='row' ? 'wrap' : 'nowrap'}"
+             class="ui-placeholder dfx_visual_editor_droppable {{col.classes.value}}"
              dfx-gc-web-droppable ng-repeat="col in row.cols">
 			</div>
 		</div>
