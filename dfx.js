@@ -507,6 +507,15 @@ function _start () {
         Log.startServer();
     }
 
+    if ( SETTINGS['X-DREAMFACE-SERVER'] ) (function(){
+        const SERVER_NAME = SETTINGS['X-DREAMFACE-SERVER'];
+        log.info('the X-DREAMFACE-SERVER HTTP header is set to "' + SERVER_NAME + '"');
+        app.use(function(req, res, next){
+            res.set('X-DREAMFACE-SERVER', SERVER_NAME);
+            next();
+        });
+    })();
+
     app.use(function(req, res, next) {
         var cookies = watcher.parseCookies(req);
         var tenantId = cookies['X-DREAMFACE-TENANT'];
