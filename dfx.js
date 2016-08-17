@@ -542,22 +542,25 @@ function _start () {
     });
 
     // Graceful Shutdown START
+    if (SETTINGS.enableGracefulShutdown) {
 
-    process.on("SIGINT", shutdown);
+        process.on("SIGINT", shutdown);
+        process.on('SIGTERM', shutdown);
 
-    process.on('SIGTERM', shutdown);
+        function shutdown() {
+            function cbFunction() {
+                log.ok('All requests are finished!');
+                CHANNELS.root.unsubscribe('allTenantsRequestAreFinished', cbFunction);
+                process.exit();
+            }
 
-    function shutdown() {
-        function cbFunction() {
-            log.ok('All requests are finished!')
-            CHANNELS.root.unsubscribe('allTenantsRequestAreFinished', cbFunction);
-            process.exit();
-        }
-        if (watcher.isAllRequestsAreFinished()) {
-            cbFunction();
-        } else {
-            CHANNELS.root.subscribe('allTenantsRequestAreFinished', cbFunction);
-            setTimeout(cbFunction, SETTINGS.loadBalancing.pendingRequestsTimeOut);
+            if (watcher.isAllRequestsAreFinished()) {
+                cbFunction();
+            } else {
+                log.warn('You have some unfinished requests. Wait until finish or ' + SETTINGS.loadBalancing.pendingRequestsTimeOut / 1000 + ' seconds');
+                CHANNELS.root.subscribe('allTenantsRequestAreFinished', cbFunction);
+                setTimeout(cbFunction, SETTINGS.loadBalancing.pendingRequestsTimeOut);
+            }
         }
     }
 
