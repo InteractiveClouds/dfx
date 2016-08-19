@@ -68,8 +68,8 @@
             </ul>
         </li>
     </ul>
-    <ul dfx-gc-toolbar-property style="margin-top: -10px;"></ul>
-    <ul style="margin-top: -10px;">
+    <ul dfx-gc-toolbar-property></ul>
+    <ul>
         <li>
             <input class="dfx-ve-property-treeview-button" type="checkbox" checked id="item-1" />
             <label for="item-1">
@@ -105,32 +105,32 @@
                     </label>                   
                     <ul class="dfx-ve-property-treeview-content">
                         <li class="col-md-12">
-                            <span class="col-md-6" style="padding-left: 20px">Label:</span>
+                            <span class="col-md-6">Label:</span>
                             <div class="col-md-6" layout="row">
                                 <input class="col-md-12" type="text" ng-model="attributes.steps.value[attributes.stepIndex.value].label" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('steps')"/>
                                 <dfx-ve-expression-editor></dfx-ve-expression-editor>
                             </div>
                         </li>
                         <li class="col-md-12">
-                            <span class="col-md-6" style="padding-right:0; padding-left: 20px">Disabled:</span>
+                            <span class="col-md-6">Disabled:</span>
                             <div class="col-md-6" layout="row">
                                 <input class="col-md-12" type="text" ng-model="attributes.steps.value[attributes.stepIndex.value].disabled.value" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('steps')"/>
                                 <dfx-ve-expression-editor></dfx-ve-expression-editor>
                             </div>
                         </li>
                         <li class="col-md-12">
-                            <span class="col-md-6" style="padding-right:0; padding-left: 20px">Style:</span>
+                            <span class="col-md-6">Style:</span>
                             <div class="col-md-6" layout="row">
                                 <input class="col-md-12" type="text" ng-model="attributes.steps.value[attributes.stepIndex.value].style.value" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('steps')"/>
                                 <dfx-ve-css-style></dfx-ve-css-style>
                             </div>
                         </li>
                         <li class="col-md-12">
-                            <span class="col-md-6" style="padding-right:0; padding-left: 20px">Class:</span>
+                            <span class="col-md-6">Class:</span>
                             <input class="col-md-6" type="text" ng-model="attributes.steps.value[attributes.stepIndex.value].classes.value" style="padding-left: 6px" ng-change="overrideAttribute('steps')"/>
                         </li>
                         <li class="col-md-12">
-                            <span class="col-md-6" style="padding-right:0; padding-left: 20px">Dynamic Class:</span>
+                            <span class="col-md-6">Dynamic Class:</span>
                             <input class="col-md-6" type="text" ng-model="attributes.steps.value[attributes.stepIndex.value].dynamicClasses.value" style="padding-left: 6px" ng-change="overrideAttribute('steps')"/>
                         </li>
                         <li class="col-md-12">
@@ -230,11 +230,17 @@
                         </li>                        
                     </ul>
                 </li>
-            </ul>
+            </ul>            
+        </li>
+    </ul>
+    <ul>
+        <li>
+            <input class="dfx-ve-property-treeview-button" type="checkbox" checked id="item-buttons-1" />
+            <label for="item-buttons-1"><span>Navigation Buttons</span></label>            
             <ul class="dfx-ve-property-treeview-content">
                 <li class="col-md-12">
-                    <input class="dfx-ve-property-treeview-button" type="checkbox" checked id="item-11" />
-                    <label for="item-11" class="dfx-ve-property-title-level-1"><span>Previous Button</span></label>
+                    <input class="dfx-ve-property-treeview-button" type="checkbox" checked id="item-buttons-11" />
+                    <label for="item-buttons-11" class="dfx-ve-property-title-level-1"><span>Previous Button</span></label>
                     <ul class="dfx-ve-property-treeview-content">
                         <li class="col-md-12">
                             <span class="col-md-6">Label:</span>
@@ -259,8 +265,11 @@
                             <input class="col-md-6" type="text" ng-model="attributes.previousButton.dynamicClasses.value" style="padding-left: 6px" ng-change="overrideAttribute('previousButton.dynamicClasses')"/>
                         </li>
                         <li class="col-md-12">
-                            <span class="col-md-6">Onclick:</span>
-                            <input class="col-md-6" type="text" ng-model="attributes.previousButton.onclick.value" style="padding-left: 6px" ng-change="overrideAttribute('previousButton.onclick')"/>
+                            <span class="col-md-6">Onclick:</span>                            
+                            <div class="col-md-6" layout="row">
+                                <input class="col-md-12" type="text" ng-model="attributes.previousButton.onclick.value" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('previousButton.onclick')"/>
+                                <dfx-ve-expression-editor></dfx-ve-expression-editor>
+                            </div>
                         </li>
                     </ul>
                 </li>
@@ -292,7 +301,10 @@
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-6">Onclick:</span>
-                            <input class="col-md-6" type="text" ng-model="attributes.nextButton.onclick.value" style="padding-left: 6px" ng-change="overrideAttribute('nextButton.onclick')"/>
+                            <div class="col-md-6" layout="row">
+                                <input class="col-md-12" type="text" ng-model="attributes.nextButton.onclick.value" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('nextButton.onclick')"/>
+                                <dfx-ve-expression-editor></dfx-ve-expression-editor>
+                            </div>
                         </li>
                     </ul>
                 </li>
@@ -324,14 +336,17 @@
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-6">Onclick:</span>
-                            <input class="col-md-6" type="text" ng-model="attributes.submitButton.onclick.value" style="padding-left: 6px" ng-change="overrideAttribute('submitButton.onclick')"/>
+                            <div class="col-md-6" layout="row">
+                                <input class="col-md-12" type="text" ng-model="attributes.submitButton.onclick.value" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('submitButton.onclick')"/>
+                                <dfx-ve-expression-editor></dfx-ve-expression-editor>
+                            </div>
                         </li>
                     </ul>
                 </li>
             </ul>
         </li>
     </ul>
-    <ul style="margin-top: -10px;">
+    <ul>
         <li>
             <input class="dfx-ve-property-treeview-button" type="checkbox" checked id="item-2" />
             <label for="item-2">Styling Attributes</label>
@@ -373,7 +388,7 @@
             </ul>
         </li>
     </ul>
-    <ul style="margin-top: -10px;">
+    <ul>
         <li>
             <input class="dfx-ve-property-treeview-button" type="checkbox" checked id="item-10" />
             <label for="item-10">Events</label>
