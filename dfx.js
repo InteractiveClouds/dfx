@@ -34,6 +34,7 @@ var pmx = require('pmx');
 var watcher = require('./lib/utils/watcher');
 var activator = require('./lib/utils/activator');
 var pathParse = require('path-parse');
+var cache;
 
 var out = module.exports = {},
     Log,
@@ -126,6 +127,17 @@ out.init = function ( settings ) {
         Log.init.file(  SETTINGS.logging.file);
     }
     log = new Log.Instance({label:'DFX_MAIN'});
+
+    cache   = require('./lib/dfx_cache').init({
+        log : new Log.Instance({label:'CACHE'}),
+        selectDatabase : SETTINGS.selectRedisDatabase
+
+    }).client;
+
+    require('./lib/utils/redisLayer').init({
+        cache   : cache
+    });
+
 
     // Verify if all folders name not empty in settings
     if (!SETTINGS.tempDir) log.fatal('You must set tempDir in settings!');
@@ -235,12 +247,7 @@ out.start = function () {
 
                 }).then(function () {
                     const
-                        tenants = require('./lib/dfx_sysadmin/tenants'),
-                        cache   = require('./lib/dfx_cache').init({
-                                log : new Log.Instance({label:'CACHE'}),
-                                selectDatabase : SETTINGS.selectRedisDatabase
-
-                            }).client;
+                        tenants = require('./lib/dfx_sysadmin/tenants');
 
                     if (SETTINGS.studio) {
                         const _storage = require('./lib/mdbw')(SETTINGS.mdbw_options);
@@ -250,14 +257,13 @@ out.start = function () {
                         require('./lib/dfx_sysadmin/authProviders').init({ storage: _storage });
                         require('./lib/dfx_sysadmin/dbDrivers').init({ storage: _storage });
 
-                        require('./lib/dfx_queries').init({
-                            storage : _storage,
-                            cache   : cache
+                        cache.select(SETTINGS.selectRedisDatabase).then(function(){
+                            require('./lib/dfx_queries').init({
+                                storage : _storage,
+                                cache   : cache
+                            });
                         });
 
-                        require('./lib/utils/redisLayer').init({
-                            cache   : cache
-                        });
 
                         require('./lib/authRequest_mod').oAuth2AccessTokens.init({ storage: _storage });
                         require('./lib/dfx_resources').api.init({ storage: _storage });
