@@ -33,7 +33,6 @@ var isPortFree = require('./lib/utils/isPortFree');
 var pmx = require('pmx');
 var watcher = require('./lib/utils/watcher');
 var activator = require('./lib/utils/activator');
-var pathParse = require('path-parse');
 
 var out = module.exports = {},
     Log,
@@ -124,17 +123,26 @@ out.init = function ( settings ) {
     }
     log = new Log.Instance({label:'DFX_MAIN'});
 
-    // Verify if all folders name not empty in settings
-    if (!SETTINGS.tempDir) log.fatal('You must set tempDir in settings!');
 
+    // Verify if all obligate settings are set
+    var
+        settingsErrors = [],
+        obligateSETTINGS = ['auth_conf_path', 'tempDir'];
     if (SETTINGS.studio) {
-        if (!SETTINGS.tempDirForTemplates) log.fatal('You must set tempDirForTemplates in settings!');
-        if (!SETTINGS.app_build_path) log.fatal('You must set app_build_path in settings!');
-        if (!SETTINGS.resources_development_path) log.fatal('You must set resources_development_path in settings!');
+        obligateSETTINGS = obligateSETTINGS.concat(['tempDirForTemplates', 'app_build_path', 'resources_development_path']);
     } else {
-        if (!SETTINGS.fsdb_path) log.fatal('You must set fsdb_path in settings!');
-        if (!SETTINGS.deploy_path) log.fatal('You must set deploy_path in settings!');
+        obligateSETTINGS = obligateSETTINGS.concat(['fsdb_path', 'deploy_path']);
     }
+    obligateSETTINGS.forEach(function(name){
+        if ( !SETTINGS.hasOwnProperty(name) || !isPathAbsolute(SETTINGS[name]) ) {
+            settingsErrors.push(name);
+        }
+    });
+    if ( settingsErrors.length ) log.fatal(
+        'Obligate settings are not set or are not absolute pathes : ' +
+        JSON.stringify(settingsErrors)
+    );
+
 
     log.info('this URL is : ' + SETTINGS.EXTERNAL_URL);
 
@@ -207,7 +215,7 @@ out.start = function () {
         }
 
     }).then(function(){
-            var tokenFolder = path.join(__dirname, SETTINGS.tempDir + '/apptokens');
+            var tokenFolder = path.join(SETTINGS.tempDir + '/apptokens');
             var fsdbFolder = SETTINGS.fsdb_path;
 
             return QFS.exists( tokenFolder )
@@ -596,8 +604,7 @@ function _start () {
     //app.use("/css/vendor", express.static(path.join(__dirname, 'public/css/vendor')));
     //app.use("/css/dfx", express.static(path.join(__dirname, 'public/css/dfx')));
     //app.use("/css/visualbuilder", express.static(path.join(__dirname, 'public/css/visualbuilder')));
-    app.use("/tmp", express.static(path.join(__dirname, 'tmp')));
-    app.use("/" + pathParse(path.join(__dirname, SETTINGS.tempDir)).base, express.static(path.join(__dirname, SETTINGS.tempDir)));
+    app.use("/tmp", express.static(SETTINGS.tempDir));
     app.use("/fonts", express.static(path.join(__dirname, 'public/fonts')));
     app.use("/img", express.static(path.join(__dirname, 'public/images')));
     app.use("/images", express.static(path.join(__dirname, 'public/images')));
@@ -705,3 +712,7 @@ function setServerInfo (mdbw, SETTINGS) {
 }
 
 if ( !module.parent ) out.start();
+
+function isPathAbsolute ( a ) {
+    return path.resolve(a) === path.normalize(a).replace(/[\/\\]+$/, '');
+}
