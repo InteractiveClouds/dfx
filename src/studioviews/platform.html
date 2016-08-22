@@ -175,7 +175,7 @@
             <md-button class="md-primary" ng-click="cloud.bluemix.saveImage()" ng-disabled="cloud.bluemix.disabled_button === true">Save</md-button>
             <md-button class="md-primary" ng-click="cloud.bluemix.closeSidenav()" ng-disabled="cloud.bluemix.disabled_button === true">Cancel</md-button>
         </div>
-        <md-progress-linear ng-if="cloud.bluemix.disabled_button === true" md-mode="indeterminate"></md-progress-linear>
+        <md-progress-linear class="md-altTheme-theme" ng-if="cloud.bluemix.disabled_button === true" md-mode="indeterminate"></md-progress-linear>
     </div>
 </md-sidenav>
 

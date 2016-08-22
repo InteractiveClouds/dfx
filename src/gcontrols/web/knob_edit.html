@@ -52,13 +52,13 @@
 						<dfx-ve-expression-editor></dfx-ve-expression-editor>
 					</div>
 				</li>
-				<li class="col-md-12">
+				<!-- <li class="col-md-12">
 					<span class="col-md-4">Disabled:</span>
 					<div class="col-md-8" layout="row">
 						<input class="col-md-12" type="text" ng-model="attributes.options.value.readOnly" ng-change="overrideAttribute('options')" style="margin-left:-15px;"/>
 						<dfx-ve-expression-editor></dfx-ve-expression-editor>
 					</div>
-				</li>
+				</li> -->
 			</ul>
 		</li>
 	</ul>
@@ -102,7 +102,11 @@
 				<!-- <li class="col-md-12">
           <span class="col-md-4">Dynamic Options:</span>
           <span class="col-md-8"><md-checkbox style="margin: 0" class="md-primary" ng-model="attributes.options.value.dynamicOptions" ng-change="overrideAttribute('options')" aria-label="options"></md-checkbox></span>
-      </li> -->							
+      </li> -->		
+      	<li class="col-md-12">
+					<span class="col-md-4">Read Only:</span>
+					<span class="col-md-8"><md-checkbox style="margin: 0" class="md-primary" ng-model="attributes.options.value.readOnly" ng-change="overrideAttribute('options')" aria-label="options"></md-checkbox></span>
+				</li>					
 			</ul>
 		</li>
 	</ul>
@@ -113,7 +117,7 @@
 			<ul class="dfx-ve-property-treeview-content">
 				<li class="col-md-12">
 					<input class="dfx-ve-property-treeview-button" type="checkbox" checked aria-label="item-30" id="item-30" />
-					<label for="item-30" class="col-md-12" style="font-weight:600;padding-left: 30px; margin-top: 5px;">Main Styles</label>
+					<label for="item-30" class="dfx-ve-property-title-level-1"><span>Main Styles</span></label>
 					<ul class="dfx-ve-property-treeview-content">
 						<li class="col-md-12">
 							<span class="col-md-4">Size:</span>
@@ -191,10 +195,10 @@
 				</li>
 				<li class="col-md-12">
 					<input class="dfx-ve-property-treeview-button" type="checkbox" checked aria-label="item-31" id="item-31" />
-					<label for="item-31" class="col-md-12" style="font-weight:600;padding-left: 30px; margin-top: 5px;">Skin</label>
+					<label for="item-31" class="dfx-ve-property-title-level-1"><span>Skin</span></label>
 					<ul class="dfx-ve-property-treeview-content">
 						<li class="col-md-12">
-							<span class="col-md-4" style="padding-left: 30px">Type:</span>
+							<span class="col-md-4">Type:</span>
 							<md-input-container class="col-md-8" style="padding: 0 0 10px">
 								<md-select aria-label="Type" ng-model="attributes.options.value.skin.type" ng-change="overrideAttribute('options')">
 									<md-option ng-repeat="skin in ['simple', 'tron']" value="{{skin}}">{{skin}}</md-option>
@@ -202,35 +206,35 @@
 							</md-input-container>
 						</li>
 						<li class="col-md-12">
-							<span class="col-md-4" style="padding-left: 30px">Width:</span>
+							<span class="col-md-4">Width:</span>
 							<input class="col-md-8" type="number" ng-model="attributes.options.value.skin.width" style="padding-left: 6px" ng-change="overrideAttribute('options')"/>
 						</li>
 						<li class="col-md-12">
-							<span class="col-md-4" style="padding-left: 30px">Color:</span>
+							<span class="col-md-4">Color:</span>
 							<div class="col-md-8 dfx-knob-panel-color-picker" layout="row" style="padding:0;">
 								<dfx-ve-color-picker name="" class="col-md-11" ng-model="attributes.options.value.skin.color"></dfx-ve-color-picker>
 							</div>
 						</li>
 						<li class="col-md-12">
-							<span class="col-md-4" style="padding-left: 30px">Space Width:</span>
+							<span class="col-md-4">Space Width:</span>
 							<input class="col-md-8" type="number" ng-model="attributes.options.value.skin.spaceWidth" style="padding-left: 6px" ng-change="overrideAttribute('options')"/>
 						</li>
 					</ul>
 				</li>
-		        <li class="col-md-12">
+	        <li class="col-md-12">
 					<input class="dfx-ve-property-treeview-button" type="checkbox" checked aria-label="item-32" id="item-32" />
-					<label for="item-32" class="col-md-12" style="font-weight:600;padding-left: 30px; margin-top: 5px;">Animate</label>
+					<label for="item-32" class="dfx-ve-property-title-level-1"><span>Animate</span></label>
 					<ul class="dfx-ve-property-treeview-content">
 						<li class="col-md-12">
-							<span class="col-md-4" style="padding-left: 30px">Enabled:</span>
+							<span class="col-md-4">Enabled:</span>
 							<span class="col-md-8"><md-checkbox style="margin: 0" class="md-primary" ng-model="attributes.options.value.animate.enabled" ng-change="overrideAttribute('options')" aria-label="options"></md-checkbox></span>
 						</li>
 						<li class="col-md-12">
-							<span class="col-md-4" style="padding-left: 30px">Duration:</span>
+							<span class="col-md-4">Duration:</span>
 							<input class="col-md-8" type="number" ng-model="attributes.options.value.animate.duration" style="padding-left: 6px" ng-change="overrideAttribute('options')"/>							
 						</li>
 						<li class="col-md-12">
-							<span class="col-md-4" style="padding-left: 30px">Ease:</span>
+							<span class="col-md-4">Ease:</span>
 							<md-input-container class="col-md-8" style="padding: 0 0 10px">
 								<md-select aria-label="Ease" ng-model="attributes.options.value.animate.ease" ng-change="overrideAttribute('options')">
 									<md-option ng-repeat="labelPos in ['linear', 'bounce', 'sin', 'cubic', 'quad', 'exp', 'circle']" value="{{labelPos}}">{{labelPos}}</md-option>
@@ -241,38 +245,38 @@
 		        </li>
 				<li class="col-md-12">
 					<input class="dfx-ve-property-treeview-button" type="checkbox" checked aria-label="item-33" id="item-33" />
-					<label for="item-33" class="col-md-12" style="font-weight:600;padding-left: 30px; margin-top: 5px;">Sub Text</label>
+					<label for="item-33" class="dfx-ve-property-title-level-1"><span>Sub Text</span></label>
 					<ul class="dfx-ve-property-treeview-content">
 						<li class="col-md-12">
-							<span class="col-md-4" style="padding-left: 30px">Enabled:</span>
+							<span class="col-md-4">Enabled:</span>
 							<span class="col-md-8"><md-checkbox style="margin: 0" class="md-primary" ng-model="attributes.options.value.subText.enabled" ng-change="overrideAttribute('options')" aria-label="options"></md-checkbox></span>
 						</li>
 						<li class="col-md-12">
-							<span class="col-md-4" style="padding-left: 30px">Text:</span>
+							<span class="col-md-4">Text:</span>
 							<input class="col-md-8" type="text" ng-model="attributes.options.value.subText.text" style="padding-left: 6px" ng-change="overrideAttribute('options')"/>
 						</li>
 						<li class="col-md-12">
-							<span class="col-md-4" style="padding-left: 30px">Color:</span>
+							<span class="col-md-4">Color:</span>
 							<div class="col-md-8 dfx-knob-panel-color-picker" layout="row" style="padding:0;">
 								<dfx-ve-color-picker name="sub-text-color" class="col-md-11" ng-model="attributes.options.value.subText.color"></dfx-ve-color-picker>
 							</div>
 						</li>
 						<li class="col-md-12">
-							<span class="col-md-4" style="padding-left: 30px">Font:</span>
+							<span class="col-md-4">Font:</span>
 							<input class="col-md-8" type="text" ng-model="attributes.options.value.subText.font" style="padding-left: 6px" ng-change="overrideAttribute('options')"/>
 						</li>
 					</ul>
         		</li>
 				<li class="col-md-12">
 					<input class="dfx-ve-property-treeview-button" type="checkbox" checked aria-label="item-34" id="item-34" />
-					<label for="item-34" class="col-md-12" style="font-weight:600;padding-left: 30px; margin-top: 5px;">Scale</label>
+					<label for="item-34" class="dfx-ve-property-title-level-1"><span>Scale</span></label>
 					<ul class="dfx-ve-property-treeview-content">
 						<li class="col-md-12">
-							<span class="col-md-4" style="padding-left: 30px">Enabled:</span>
+							<span class="col-md-4">Enabled:</span>
 							<span class="col-md-8"><md-checkbox style="margin: 0" class="md-primary" ng-model="attributes.options.value.scale.enabled" ng-change="overrideAttribute('options')" aria-label="options"></md-checkbox></span>
 						</li>
 						<li class="col-md-12">
-							<span class="col-md-4" style="padding-left: 30px">Type:</span>
+							<span class="col-md-4">Type:</span>
 							<md-input-container class="col-md-8" style="padding: 0 0 10px">
 								<md-select aria-label="Ease" ng-model="attributes.options.value.scale.type" ng-change="overrideAttribute('options')">
 									<md-option ng-repeat="scale in ['dots', 'lines']" value="{{scale}}">{{scale}}</md-option>
@@ -280,25 +284,25 @@
 							</md-input-container>
 						</li>
 						<li class="col-md-12">
-							<span class="col-md-4" style="padding-left: 30px">Color:</span>
+							<span class="col-md-4">Color:</span>
 							<div class="col-md-8 dfx-knob-panel-color-picker" layout="row" style="padding:0;">
 								<dfx-ve-color-picker name="" class="col-md-11" ng-model="attributes.options.value.scale.color"></dfx-ve-color-picker>
 							</div>
 						</li>
 						<li class="col-md-12">
-							<span class="col-md-4" style="padding-left: 30px">Width:</span>
+							<span class="col-md-4">Width:</span>
 							<input class="col-md-8" type="number" ng-model="attributes.options.value.scale.width" style="padding-left: 6px" ng-change="overrideAttribute('options')"/>
 						</li>						
 						<li class="col-md-12">
-							<span class="col-md-4" style="padding-left: 30px">Height:</span>
+							<span class="col-md-4">Height:</span>
 							<input class="col-md-8" type="number" ng-model="attributes.options.value.scale.height" style="padding-left: 6px" ng-change="overrideAttribute('options')"/>
 						</li>
 						<li class="col-md-12">
-							<span class="col-md-4" style="padding-left: 30px">Quantity:</span>
+							<span class="col-md-4">Quantity:</span>
 							<input class="col-md-8" type="number" ng-model="attributes.options.value.scale.quantity" style="padding-left: 6px" ng-change="overrideAttribute('options')"/>
 						</li>
 						<li class="col-md-12">
-							<span class="col-md-4" style="padding-left: 30px">Space Width:</span>
+							<span class="col-md-4">Space Width:</span>
 							<input class="col-md-8" type="number" ng-model="attributes.options.value.scale.spaceWidth" style="padding-left: 6px" ng-change="overrideAttribute('options')"/>
 						</li>
 					</ul>

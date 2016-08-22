@@ -2,7 +2,7 @@
   "template":       { "value": "default" },
   "name":           { "value": "inpInput1" },
   "label":          { "value": "'Input label'" },
-  "icon":           { "value": "", "type": "svg-icon", "size": 21 },
+  "icon":           { "value": "", "type": "svg-icon", "size": 21, "style": "", "class": "" },
   "position":       { "value": "left" },
   "binding" :       { "value" : "", "repeatable" : false, "$itemValue": "" },
   "selectedType":   { "value": "text" },

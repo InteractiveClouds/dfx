@@ -88,11 +88,17 @@ md-toast.md-error-toast-theme div {
   max-width: 430px;
   background-color: #383838;
   color: #fff;
+  div.dfx-ve-property-treeview.hover {
+    width: 100%;
+  }
 }
 
 #dfx-ve-sidenav-right-content {
   background-color: #383838;
   color: #fff;
+  .dfx-ve-property-treeview.hover>ul:not(:first-child) {
+    margin-top: -10px;    
+  }
 }
 
 /* Toolbar */
@@ -185,17 +191,24 @@ md-toast.md-error-toast-theme div {
   border-left: 1px #6b6a6a solid;
   padding: 5px 10px 5px 15px !important;
 }
-
-.dfx-ve-property-title-level-2:before {
+.dfx-ve-property-title-level-3 {
+  width: 400px!important;
+  border-left: 1px #6b6a6a solid;
+  padding: 5px 10px 5px 15px !important;
+}
+.dfx-ve-property-title-level-4 {
+  width: 390px!important;
+  border-left: 1px #6b6a6a solid;
+  padding: 5px 10px 5px 15px !important;
+}
+.dfx-ve-property-title-level-2:before, .dfx-ve-property-title-level-3:before, .dfx-ve-property-title-level-4:before {
   margin-left: -0.55em !important;
   margin-top: 0.95em !important;
 }
-
-&:checked ~ .dfx-ve-property-title-level-2:before {
+&:checked ~ .dfx-ve-property-title-level-2:before, &:checked ~ .dfx-ve-property-title-level-3:before, &:checked ~ .dfx-ve-property-title-level-4:before {
   margin-left: -0.30em !important;
   margin-top: 0.75em !important;
 }
-
 
 .dfx-ve-property-title-text-level-2 {
   width: 380px;

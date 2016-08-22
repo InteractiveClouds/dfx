@@ -585,7 +585,7 @@ dfxAppRuntime.directive('dfxGcWeb', ['$compile', function($compile) {
             var component = $scope.gc_instances[$attrs.id];
             var gc_ng_hide = '';
             if ( component.attributes.display && component.attributes.display.value !=='' ) {
-                gc_ng_hide = ' ng-class="{\'ng-hide\': !' + component.attributes.display.value + '}" ';
+                gc_ng_hide = ' ng-class="' + component.attributes.display.value + ' ? \'\' : \'ng-hide\'" ';
             }
 
             if ( component.attributes.repeat_title && component.attributes.repeat_title.value ) {
