@@ -33,6 +33,7 @@ var isPortFree = require('./lib/utils/isPortFree');
 var pmx = require('pmx');
 var watcher = require('./lib/utils/watcher');
 var activator = require('./lib/utils/activator');
+var AR;
 
 var out = module.exports = {},
     Log,
@@ -656,7 +657,22 @@ function _start () {
     proxy.initialize(app);
 
     if ( !host_app ) {
-        server.listen(SETTINGS.server_port, SETTINGS.server_host);
+        server.listen(
+            SETTINGS.server_port,
+            SETTINGS.server_host,
+            function(error, data){
+                if ( !SETTINGS.notify_on_start_URL ) return;
+
+                require('./lib/authRequest').getRequestInstance({}).get({
+                    url : SETTINGS.notify_on_start_URL +
+                            '?servertype=' + (SETTINGS.studio ? 'dev' : 'dep') +
+                            '&servername=' + SETTINGS['X-DREAMFACE-SERVER']
+                })
+                .fail(function(error){
+                    log.fata('could not notify after start. error : ', error);
+                });
+            }
+        );
         console.log( 'DreamFace starts ' + ( process.env.DFX_HTTPS ? 'HTTPS' : 'HTTP' ) + ' listener.');
     }
 
