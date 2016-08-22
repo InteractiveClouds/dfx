@@ -604,7 +604,7 @@ dfxAppRuntime.directive('dfxGcWeb', ['$compile', function($compile) {
                     '<div id="'+$attrs.id+
                     '" dfx-gc-web-base dfx-gc-web-'+$attrs.dfxGcWeb+
                     ' gc-role="control" gc-parent="'+$attrs.gcParent+
-                    '" view-id="'+$attrs.viewId + gc_ng_hide + 
+                    '" view-id="'+$attrs.viewId + gc_ng_hide +
                     '" flex="100"' +
                     ifLayout +
                     '" layout-align="' + inherited.halignment + ' ' + inherited.valignment +
