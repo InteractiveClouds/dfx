@@ -22,7 +22,7 @@
   "disabled":        { "value": "false" },
   "classes":         { "value": "" },
   "dynamicClasses":  { "value": "" },
-  "flex":            { "value": "100" },
+  "flex":            { "value": 100 },
   "style":           { "value": "" },
   "onclick":         { "value": "" },
   "ondblclick":      { "value": "" },

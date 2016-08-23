@@ -2020,7 +2020,7 @@ dfxViewEditorApp.directive('dfxVeExpressionEditor', [ '$mdDialog', function($mdD
     }
 }]);
 
-dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http', '$timeout', function($mdDialog, $mdToast, $http, $timeout) {
+dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http', '$timeout', '$compile', function($mdDialog, $mdToast, $http, $timeout, $compile) {
     return {
         restrict: 'E',
         transclude: true,
@@ -2042,6 +2042,7 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
             }
             scope.menuItemsType = {"value":"static"};
             scope.menuItemNames = {"value":""};
+            scope.dialogGcType = '';
             scope.showMenuEditor = function(ev) {
                 scope.menu = {};
                 if(scope.attributes.layoutType.value === 'none' ){
@@ -2065,14 +2066,17 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                             scope.statable.value = true;
                             scope.waitable.value = false;
                             scope.isFabToolbar.value = false;
+                            scope.dialogGcType = 'iconbar';
                         } else if (scope.attributes.toolbar.leftMenu.type.value === 'Buttons') {
                             scope.statable.value = false;
                             scope.waitable.value = true;
                             scope.isFabToolbar.value = false;
+                            scope.dialogGcType = 'button';
                         } else if (scope.attributes.toolbar.leftMenu.type.value === 'Fab') {
                             scope.statable.value = false;
                             scope.waitable.value = false;
                             scope.isFabToolbar.value = true;
+                            scope.dialogGcType = 'fab';
                         }
                     } else {
                         scope.menuItemsType.value = scope.attributes.toolbar.rightMenu.menuItemsType.value;
@@ -2085,20 +2089,24 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                             scope.statable.value = true;
                             scope.waitable.value = false;
                             scope.isFabToolbar.value = false;
+                            scope.dialogGcType = 'iconbar';
                         } else if (scope.attributes.toolbar.rightMenu.type.value === 'Buttons') {
                             scope.statable.value = false;
                             scope.waitable.value = true;
                             scope.isFabToolbar.value = false;
+                            scope.dialogGcType = 'button';
                         } else if (scope.attributes.toolbar.rightMenu.type.value === 'Fab') {
                             scope.statable.value = false;
                             scope.waitable.value = false;
                             scope.isFabToolbar.value = true;
+                            scope.dialogGcType = 'fab';
                         }
                     }
                 } else {
                     scope.menuItems = scope.attributes.menuItems;
                     scope.gc_selected.type === 'iconbar' ? scope.statable.value = true : scope.statable.value = false;
                     scope.menuItemNames.value = scope.attributes.menuItemNames.value;
+                    scope.dialogGcType = scope.gc_selected.type;
                 }
                 $mdDialog.show({
                     scope: scope.$new(),
@@ -2107,22 +2115,22 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                     clickOutsideToClose:true,
                     ariaLabel: 'menu-editor',
                     templateUrl: '/gcontrols/web/menu_editor.html',
-                    onComplete: function() { 
+                    onComplete: function() {
                         $timeout(function(){
                             if(scope.menuItems.value.length>0) {
                                 scope.menu = scope.menuItems.value[0];
                                 scope.indexMenuItem = '';
                                 if ( scope.menu ) {
-                                    scope.ifShowMenuIconTypes(scope.menu.icon.value);    
+                                    scope.ifShowMenuIconTypes(scope.menu.icon.value);
                                     scope.setMenuItemType();
                                     scope.waitableItem.value = scope.menu.hasOwnProperty('waiting') ? true : false;
-                                }                            
+                                }
                                 if ( scope.statable.value && scope.menu.state && scope.menu.state.value ) {
-                                    scope.ifShowMenuIconTypes( scope.menu.state.checkedIcon.value, 'checked' );                      
+                                    scope.ifShowMenuIconTypes( scope.menu.state.checkedIcon.value, 'checked' );
                                     scope.ifShowMenuIconTypes( scope.menu.state.uncheckedIcon.value, 'unchecked' );
                                     $timeout(function() {
                                         scope.menuEditorTabs.activeTab = 1;
-                                    }, 100);                      
+                                    }, 100);
                                 }
                                 if ( scope.waitable.value && scope.menu.waiting && scope.menu.waiting.value ) {
                                     scope.ifShowMenuIconTypes( scope.menu.waiting.icon.value, 'waiting' );
@@ -2130,7 +2138,7 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                                         scope.menuEditorTabs.activeTab = 1;
                                     }, 100);
                                 }
-                            }                            
+                            }
                         }, 0);
                         $timeout(function() {
                             scope.indexMenuItem = 0;
@@ -2454,8 +2462,19 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                                 }
                             }, 0);
                         }
+                        scope.showSamples = function(){
+                            console.log(scope.dialogGcType);
+                            $('#' + scope.component_id + '_md_dialog .second-dialog-box').load('/gcontrols/web/gcs_json_samples.html');
+                            $timeout(function() {
+                                $compile($('.second-dialog-box').contents())(scope);
+                                $('#' + scope.component_id + '_md_dialog .second-dialog').fadeIn(250);
+                            }, 250);
+                        }
                         scope.closeDialog = function() {
                             $mdDialog.hide();
+                        }
+                        scope.closeSamples = function() {
+                            $(".second-dialog").fadeOut('250', function() { $(this).remove(); });
                         }
                     }
                 })

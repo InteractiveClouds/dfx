@@ -19,7 +19,7 @@ var dreamface = require('./dfx')
 	auth_conf_path : path.resolve(__dirname, './lib/auth/.auth.conf'),
   app_build_path: path.resolve(__dirname, './app_builds'),
   tempDirForTemplates: path.resolve(__dirname, './temp'),
-  tempDir : 'tmp',
+  tempDir : path.resolve(__dirname, 'tmp'),
   resources_deploy_path: 'resources',
   resources_development_path: path.resolve(__dirname, '..', './resources'),
   fsdb_path: path.resolve(__dirname, '..', './app_fsdb'),

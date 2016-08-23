@@ -95,7 +95,7 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", layout="co
                                     md-button(ng-click="openPreviewInPage()")
                                         ng-md-icon(icon="ondemand_video")
                                         span(style="padding-left:10px") Preview in Page
-                        div(style="color:#fff", ng-if="preview_wait_icon_visible === true")
+                        div(style="color:#fff;display: inline-block;margin-left: 10px;", ng-if="preview_wait_icon_visible === true")
                             md-icon.fa.fa-spinner.fa-pulse(style="font-size: 24px;")
                             span(style="padding-left:10px") compiling
                     label.pull-right(style="font-size:12px;background:#8731AB;padding: 2px 4px;color:#fff;margin-top:4px;margin-right:10px;border-radius:8px;cursor:pointer", ng-if="view_platform=='mobile'", ng-click="changeDeviceOrientation()") {{design_device_orientation}}

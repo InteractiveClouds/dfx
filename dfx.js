@@ -33,8 +33,8 @@ var isPortFree = require('./lib/utils/isPortFree');
 var pmx = require('pmx');
 var watcher = require('./lib/utils/watcher');
 var activator = require('./lib/utils/activator');
-var pathParse = require('path-parse');
 var cache;
+
 
 var out = module.exports = {},
     Log,
@@ -127,7 +127,7 @@ out.init = function ( settings ) {
         Log.init.file(  SETTINGS.logging.file);
     }
     log = new Log.Instance({label:'DFX_MAIN'});
-
+    
     cache   = require('./lib/dfx_cache').init({
         log : new Log.Instance({label:'CACHE'}),
         selectDatabase : SETTINGS.selectRedisDatabase
@@ -142,14 +142,25 @@ out.init = function ( settings ) {
     // Verify if all folders name not empty in settings
     if (!SETTINGS.tempDir) log.fatal('You must set tempDir in settings!');
 
+    // Verify if all obligate settings are set
+    var
+        settingsErrors = [],
+        obligateSETTINGS = ['auth_conf_path', 'tempDir'];
     if (SETTINGS.studio) {
-        if (!SETTINGS.tempDirForTemplates) log.fatal('You must set tempDirForTemplates in settings!');
-        if (!SETTINGS.app_build_path) log.fatal('You must set app_build_path in settings!');
-        if (!SETTINGS.resources_development_path) log.fatal('You must set resources_development_path in settings!');
+        obligateSETTINGS = obligateSETTINGS.concat(['tempDirForTemplates', 'app_build_path', 'resources_development_path']);
     } else {
-        if (!SETTINGS.fsdb_path) log.fatal('You must set fsdb_path in settings!');
-        if (!SETTINGS.deploy_path) log.fatal('You must set deploy_path in settings!');
+        obligateSETTINGS = obligateSETTINGS.concat(['fsdb_path', 'deploy_path']);
     }
+    obligateSETTINGS.forEach(function(name){
+        if ( !SETTINGS.hasOwnProperty(name) || !isPathAbsolute(SETTINGS[name]) ) {
+            settingsErrors.push(name);
+        }
+    });
+    if ( settingsErrors.length ) log.fatal(
+        'Obligate settings are not set or are not absolute pathes : ' +
+        JSON.stringify(settingsErrors)
+    );
+
 
     log.info('this URL is : ' + SETTINGS.EXTERNAL_URL);
 
@@ -222,7 +233,7 @@ out.start = function () {
         }
 
     }).then(function(){
-            var tokenFolder = path.join(__dirname, SETTINGS.tempDir + '/apptokens');
+            var tokenFolder = path.join(SETTINGS.tempDir + '/apptokens');
             var fsdbFolder = SETTINGS.fsdb_path;
 
             return QFS.exists( tokenFolder )
@@ -520,6 +531,15 @@ function _start () {
         Log.startServer();
     }
 
+    if ( SETTINGS['X-DREAMFACE-SERVER'] ) (function(){
+        const SERVER_NAME = SETTINGS['X-DREAMFACE-SERVER'];
+        log.info('the X-DREAMFACE-SERVER HTTP header is set to "' + SERVER_NAME + '"');
+        app.use(function(req, res, next){
+            res.set('X-DREAMFACE-SERVER', SERVER_NAME);
+            next();
+        });
+    })();
+
     app.use(function(req, res, next) {
         var cookies = watcher.parseCookies(req);
         var tenantId = cookies['X-DREAMFACE-TENANT'];
@@ -605,8 +625,7 @@ function _start () {
     //app.use("/css/vendor", express.static(path.join(__dirname, 'public/css/vendor')));
     //app.use("/css/dfx", express.static(path.join(__dirname, 'public/css/dfx')));
     //app.use("/css/visualbuilder", express.static(path.join(__dirname, 'public/css/visualbuilder')));
-    app.use("/tmp", express.static(path.join(__dirname, 'tmp')));
-    app.use("/" + pathParse(path.join(__dirname, SETTINGS.tempDir)).base, express.static(path.join(__dirname, SETTINGS.tempDir)));
+    app.use("/tmp", express.static(SETTINGS.tempDir));
     app.use("/fonts", express.static(path.join(__dirname, 'public/fonts')));
     app.use("/img", express.static(path.join(__dirname, 'public/images')));
     app.use("/images", express.static(path.join(__dirname, 'public/images')));
@@ -658,7 +677,22 @@ function _start () {
     proxy.initialize(app);
 
     if ( !host_app ) {
-        server.listen(SETTINGS.server_port, SETTINGS.server_host);
+        server.listen(
+            SETTINGS.server_port,
+            SETTINGS.server_host,
+            function(error, data){
+                if ( !SETTINGS.notify_on_start_URL ) return;
+
+                require('./lib/authRequest').getRequestInstance({}).get({
+                    url : SETTINGS.notify_on_start_URL +
+                            '?servertype=' + (SETTINGS.studio ? 'dev' : 'dep') +
+                            '&servername=' + SETTINGS['X-DREAMFACE-SERVER']
+                })
+                .fail(function(error){
+                    log.fata('could not notify after start. error : ', error);
+                });
+            }
+        );
         console.log( 'DreamFace starts ' + ( process.env.DFX_HTTPS ? 'HTTPS' : 'HTTP' ) + ' listener.');
     }
 
@@ -714,3 +748,7 @@ function setServerInfo (mdbw, SETTINGS) {
 }
 
 if ( !module.parent ) out.start();
+
+function isPathAbsolute ( a ) {
+    return path.resolve(a) === path.normalize(a).replace(/[\/\\]+$/, '');
+}

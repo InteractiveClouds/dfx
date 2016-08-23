@@ -2,7 +2,7 @@
   "template": 			{ "value": "default" },
   "name":           { "value": "txtTextarea" },
   "label":          { "value": "'Textarea label'" },
-  "icon":           { "value": "", "type": "fa-icon", "size": 21 },
+  "icon":           { "value": "", "type": "fa-icon", "size": 21, "style": "", "class": "" },
   "position":       { "value": "left" },
   "binding":        { "value" : "" },
   "display":        { "value": "true" },

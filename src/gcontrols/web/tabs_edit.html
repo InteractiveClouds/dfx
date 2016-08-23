@@ -71,8 +71,11 @@
     <ul dfx-gc-toolbar-property></ul>
     <ul>
         <li>
-            <input class="dfx-ve-property-treeview-button" type="checkbox" id="item-1" />
-            <label for="item-1">Tabs</label>
+            <input class="dfx-ve-property-treeview-button" type="checkbox" checked id="item-1" />
+            <label for="item-1">
+                <span>Tabs</span>
+                <span class="pull-right"><a ng-click="addTab()" href="#">Add tab</a></span>
+            </label>
             <ul class="dfx-ve-property-treeview-content">
                 <li class="col-md-12">
                     <span class="col-md-6">Auto Height:</span>
@@ -81,41 +84,65 @@
                     </div>
                 </li>
                 <li class="col-md-12">
-                    <input class="dfx-ve-property-treeview-button" type="checkbox" id="item-6" />
-                    <label for="item-6" class="col-md-3" style="font-weight:500;padding-left: 16px; margin-top: 5px;">Tab</label>
-                    <span class="col-md-1" style="padding-left: 11px;"><a ng-click="addTab()" href="#"><md-icon class="fa fa-plus" style="padding-top: 10px;"></md-icon></a></span>
-                    <span class="col-md-1" style="padding-left: 11px;"><a href="#" ng-click="removeTab()"><md-icon class="fa fa-minus" style="padding-top: 10px;"></md-icon></a></span>
-                    <span class="col-md-1"></span>
+                    <span class="col-md-6">Auto Height:</span>
                     <md-input-container class="col-md-6" style="padding: 0 0 10px">
                         <md-select aria-label="Input type:" ng-model="attributes.tabIndex.value" ng-change="overrideAttribute('tabIndex')">
                             <md-option ng-repeat="tab in attributes.tabs.value track by $index" value="{{$index}}">{{tab.label}}</md-option>
                         </md-select>
                     </md-input-container>
+                </li>                
+                <li class="col-md-12">
+                    <input class="dfx-ve-property-treeview-button" type="checkbox" checked id="item-6" />
+                    <label for="item-6" class="dfx-ve-property-title-level-1">
+                        <span>{{attributes.tabs.value[attributes.tabIndex.value].label}}</span>
+                        <span class="pull-right"><a href="#" ng-click="removeTab()">Remove tab</a></span>                        
+                    </label>                    
                     <ul class="dfx-ve-property-treeview-content">
                         <li class="col-md-12">
-                            <span class="col-md-6" style="padding-left: 20px">Label:</span>
+                            <span class="col-md-6">Label:</span>
                             <div class="col-md-6" layout="row">
                                 <input class="col-md-12" type="text" ng-model="attributes.tabs.value[attributes.tabIndex.value].label" style="margin-left:-15px;" ng-change="overrideAttribute('tabs')"/>
                                 <dfx-ve-expression-editor></dfx-ve-expression-editor>
                             </div>
                         </li>
                         <li class="col-md-12">
-                            <input class="dfx-ve-property-treeview-button" type="checkbox" id="item-7" />
-                            <label for="item-7" class="col-md-6" style="font-weight:500; padding-left: 30px; margin-top: 5px;">Layout Properties</label>
-                            <span class="col-md-5"></span>
-                            <span class="col-md-1" style="padding-left: 11px;"><a ng-click="addLayoutRow(attributes.tabIndex.value)" href="#"><md-icon class="fa fa-plus" style="padding-top: 10px;"></md-icon></a></span>
+                            <span class="col-md-6">Disabled:</span>
+                            <div class="col-md-6" layout="row">
+                                <input class="col-md-12" type="text" ng-model="attributes.tabs.value[attributes.tabIndex.value].disabled.value" style="margin-left:-15px;" ng-change="overrideAttribute('tabs')"/>
+                                <dfx-ve-expression-editor></dfx-ve-expression-editor>
+                            </div>
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-6">Style:</span>
+                            <div class="col-md-6" layout="row">
+                                <input class="col-md-12" type="text" ng-model="attributes.tabs.value[attributes.tabIndex.value].style.value" style="margin-left:-15px;" ng-change="overrideAttribute('tabs')"/>
+                                <dfx-ve-css-style></dfx-ve-css-style>
+                            </div>
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-6">Class:</span>
+                            <input class="col-md-6" type="text" ng-model="attributes.tabs.value[attributes.tabIndex.value].classes.value" ng-change="overrideAttribute('tabs')"/>
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-6">Dynamic Class:</span>
+                            <input class="col-md-6" type="text" ng-model="attributes.tabs.value[attributes.tabIndex.value].dynamicClasses.value" ng-change="overrideAttribute('tabs')"/>
+                        </li>
+                        <li class="col-md-12">
+                            <input class="dfx-ve-property-treeview-button" type="checkbox" checked id="item-7" />
+                            <label for="item-7" class="dfx-ve-property-title-level-2">
+                                <span>Layout Properties</span>                                
+                                <span class="pull-right"><a ng-click="addLayoutRow(attributes.tabIndex.value)" href="#">Add row</a></span>
+                            </label>
                             <ul class="dfx-ve-property-treeview-content">
                                 <li class="col-md-12" ng-repeat="row in attributes.tabs.value[attributes.tabIndex.value].layout.rows track by $index">
-                                    <input class="dfx-ve-property-treeview-button" type="checkbox" id="item-layout-row-{{$index}}" />
-                                    <span class="col-md-1"></span>
-                                    <label for="item-layout-row-{{$index}}" class="col-md-5" style="font-weight:500; margin-top: 5px;">Row {{$index}}</label>
-                                    <span class="col-md-2"></span>
-                                    <span class="col-md-4" style="padding-right: 7px;">
-                                        <a class="pull-right" ng-click="deleteLayoutRow($index)" title="Remove the row" href="#"><md-icon class="fa fa-minus" style="padding-top: 10px; width:16px; text-align: center;"></md-icon></a>
-                                        <a class="pull-right" ng-click="addLayoutColumn($index)" title="Add a new column" href="#"><md-icon class="fa fa-plus" style="padding-top: 10px; width:16px; text-align: center;"></md-icon></a>
-                                        <a ng-if="$index < attributes.tabs.value[attributes.tabIndex.value].layout.rows.length - 1" title="Move down" class="pull-right" ng-click="moveDownRow($index)" href="#"><md-icon class="fa fa-arrow-down" style="padding-top: 10px; width:16px; text-align: center;"></md-icon></a>
-                                        <a ng-if="$index > 0" class="pull-right" ng-click="moveUpRow($index)" title="Move up" href="#"><md-icon class="fa fa-arrow-up" style="padding-top: 10px; width:16px; text-align: center;"></md-icon></a>
-                                    </span>
+                                    <input class="dfx-ve-property-treeview-button" type="checkbox" checked id="item-layout-row-{{$index}}" />                                    
+                                    <label for="item-layout-row-{{$index}}" class="dfx-ve-property-title-level-3">
+                                        <span>Row {{$index}}</span>                                    
+                                        <span class="pull-right"><a ng-click="deleteLayoutRow($index)" title="Remove row" href="#">Remove row</a></span>
+                                        <span class="pull-right"><a ng-click="addLayoutColumn($index)" title="Add a new column" href="#">Add column</a></span>
+                                        <span class="pull-right" ng-if="$index < attributes.tabs.value[attributes.tabIndex.value].layout.rows.length - 1"><a title="Move down" ng-click="moveDownRow($index)" href="#"><i class="fa fa-arrow-down"></i></a></span>
+                                        <span class="pull-right" ng-if="$index > 0"><a ng-click="moveUpRow($index)" title="Move up" href="#"><i class="fa fa-arrow-up"></i></a></span>
+                                    </label>
                                     <ul class="dfx-ve-property-treeview-content">
                                         <li class="col-md-12">
                                             <div layout>
@@ -128,16 +155,14 @@
                                             </div>
                                         </li>
                                         <li class="col-md-12" ng-repeat="col in row.cols track by $index">
-                                            <input class="dfx-ve-property-treeview-button" type="checkbox" id="item-layout-row-{{$parent.$index}}-{{$index}}"/>
-                                            <span class="col-md-1"></span>
-                                            <label for="item-layout-row-{{$parent.$index}}-{{$index}}" class="col-md-5" style="font-weight:500; margin-top: 5px; padding-left: 27px">Column {{$index}}</label>
-                                            <!--<span class="col-md-1" style="padding-left: 11px;"><a ng-click="deleteLayoutColumn($parent.$index, $index)" href="#"><md-icon class="fa fa-minus" style="padding-top: 10px;"></md-icon></a></span>-->
-                                            <span class="col-md-2"></span>
-                                            <span class="col-md-4" style="padding-right: 7px;">
-                                                <a class="pull-right" ng-click="deleteLayoutColumn($parent.$index, $index)" title="Delete the column" href="#"><md-icon class="fa fa-minus" style="padding-top: 10px;width:16px; text-align: center;"></md-icon></a>
-                                                <a ng-if="$index < attributes.tabs.value[attributes.tabIndex.value].layout.rows[$parent.$index].cols.length - 1" title="Move right" class="pull-right" ng-click="moveRightCol($parent.$parent.$index, $index)" href="#"><md-icon class="fa fa-arrow-right" style="padding-top: 10px; width:16px; text-align: center;"></md-icon></a>
-                                                <a ng-if="$index > 0" class="pull-right" ng-click="moveLeftCol($parent.$parent.$index, $index)" title="Move left"  href="#"><md-icon class="fa fa-arrow-left" style="padding-top: 10px; width:16px; text-align: center;"></md-icon></a>
-                                            </span>
+                                            <input class="dfx-ve-property-treeview-button" type="checkbox" checked id="item-layout-row-{{$parent.$index}}-{{$index}}"/>                                            
+                                            <label for="item-layout-row-{{$parent.$index}}-{{$index}}" class="dfx-ve-property-title-level-4">
+                                                <span>Column {{$index}}</span>                                            
+                                                <span class="pull-right"><a ng-click="deleteLayoutColumn($parent.$index, $index)" title="Delete the column" href="#">Remove column</a>
+                                                <span ng-if="$index < attributes.tabs.value[attributes.tabIndex.value].layout.rows[$parent.$index].cols.length - 1" class="pull-right"><a title="Move right" ng-click="moveRightCol($parent.$parent.$index, $index)" href="#"><i class="fa fa-arrow-right"></i></a></span>
+                                                <span ng-if="$index > 0" class="pull-right"><a ng-click="moveLeftCol($parent.$parent.$index, $index)" title="Move left"  href="#"><i class="fa fa-arrow-left"></i></a></span>
+                                                </span>
+                                            </label>
                                             <ul class="dfx-ve-property-treeview-content">
                                                 <li class="col-md-12">
                                                     <span class="col-md-12">
@@ -151,49 +176,43 @@
                                                         </div>
                                                     </span>
                                                 </li>
-                                                <li class="col-md-12">
-                                                    <span class="col-md-1"></span>
-                                                    <span class="col-md-5" style="padding: 3px 0 0 28px">Layout Direction:</span>
+                                                <li class="col-md-12">                                                    
+                                                    <span class="col-md-6">Layout Direction:</span>
                                                     <md-input-container class="col-md-6" style="padding: 0 0 10px">
                                                         <md-select aria-label="direction" ng-model="col.orientation.value" ng-change="overrideAttribute('tabs')">
                                                             <md-option ng-repeat="dir in ['row', 'column']" ng-value="dir">{{dir}}</md-option>
                                                         </md-select>
                                                     </md-input-container>
                                                 </li>
-                                                <li class="col-md-12">
-                                                    <span class="col-md-1"></span>
-                                                    <span class="col-md-5" style="padding: 3px 0 0 28px">Hor.Alignment:</span>
+                                                <li class="col-md-12">                                                    
+                                                    <span class="col-md-6">Hor.Alignment:</span>
                                                     <md-input-container class="col-md-6" style="padding: 0 0 10px">
                                                         <md-select aria-label="h_alignment" ng-model="col.halignment.value" ng-change="overrideAttribute('tabs')">
                                                             <md-option ng-repeat="h_al in ['start', 'center','end', 'space-around', 'space-between']" ng-value="h_al">{{h_al}}</md-option>
                                                         </md-select>
                                                     </md-input-container>
                                                 </li>
-                                                <li class="col-md-12">
-                                                    <span class="col-md-1"></span>
-                                                    <span class="col-md-5" style="padding: 3px 0 0 28px">Ver.Alignment:</span>
+                                                <li class="col-md-12">                                                    
+                                                    <span class="col-md-6">Ver.Alignment:</span>
                                                     <md-input-container class="col-md-6" style="padding: 0 0 10px">
                                                         <md-select aria-label="v_alignment" ng-model="col.valignment.value" ng-change="overrideAttribute('tabs')">
                                                             <md-option ng-repeat="v_al in ['start', 'center', 'end']" ng-value="v_al">{{v_al}}</md-option>
                                                         </md-select>
                                                     </md-input-container>
                                                 </li>
-                                                <li class="col-md-12">
-                                                    <span class="col-md-1"></span>
-                                                    <span class="col-md-5" style="padding-right:0; padding-left: 28px">Style:</span>
+                                                <li class="col-md-12">                                                    
+                                                    <span class="col-md-6">Style:</span>
                                                     <div class="col-md-6" layout="row">
                                                         <input class="col-md-12" type="text" ng-model="col.style.value" style="margin-left:-15px;" ng-change="overrideAttribute('tabs')"/>
                                                         <dfx-ve-css-style></dfx-ve-css-style>
                                                     </div>
                                                 </li>
-                                                <li class="col-md-12">
-                                                    <span class="col-md-1"></span>
-                                                    <span class="col-md-5" style="padding-right:0; padding-left: 28px">Class:</span>
+                                                <li class="col-md-12">                                                    
+                                                    <span class="col-md-6">Class:</span>
                                                     <input class="col-md-6" type="text" ng-model="col.classes.value" ng-change="overrideAttribute('tabs')"/>
                                                 </li>
-                                                <li class="col-md-12">
-                                                    <span class="col-md-1"></span>
-                                                    <span class="col-md-5" style="padding-right:0; padding-left: 28px">Dynamic Class:</span>
+                                                <li class="col-md-12">                                                    
+                                                    <span class="col-md-6">Dynamic Class:</span>
                                                     <input class="col-md-6" type="text" ng-model="col.dynamicClasses.value" ng-change="overrideAttribute('tabs')"/>
                                                 </li>
                                             </ul>
@@ -201,29 +220,7 @@
                                     </ul>
                                 </li>
                             </ul>
-                        </li>
-                        <li class="col-md-12">
-                            <span class="col-md-6" style="padding-right:0; padding-left: 20px">Disabled:</span>
-                            <div class="col-md-6" layout="row">
-                                <input class="col-md-12" type="text" ng-model="attributes.tabs.value[attributes.tabIndex.value].disabled.value" style="margin-left:-15px;" ng-change="overrideAttribute('tabs')"/>
-                                <dfx-ve-expression-editor></dfx-ve-expression-editor>
-                            </div>
-                        </li>
-                        <li class="col-md-12">
-                            <span class="col-md-6" style="padding-right:0; padding-left: 20px">Style:</span>
-                            <div class="col-md-6" layout="row">
-                                <input class="col-md-12" type="text" ng-model="attributes.tabs.value[attributes.tabIndex.value].style.value" style="margin-left:-15px;" ng-change="overrideAttribute('tabs')"/>
-                                <dfx-ve-css-style></dfx-ve-css-style>
-                            </div>
-                        </li>
-                        <li class="col-md-12">
-                            <span class="col-md-6" style="padding-right:0; padding-left: 20px">Class:</span>
-                            <input class="col-md-6" type="text" ng-model="attributes.tabs.value[attributes.tabIndex.value].classes.value" ng-change="overrideAttribute('tabs')"/>
-                        </li>
-                        <li class="col-md-12">
-                            <span class="col-md-6" style="padding-right:0; padding-left: 20px">Dynamic Class:</span>
-                            <input class="col-md-6" type="text" ng-model="attributes.tabs.value[attributes.tabIndex.value].dynamicClasses.value" ng-change="overrideAttribute('tabs')"/>
-                        </li>
+                        </li>                        
                     </ul>
                 </li>
             </ul>
@@ -231,7 +228,7 @@
     </ul>
     <ul>
         <li>
-            <input class="dfx-ve-property-treeview-button" type="checkbox" id="item-2" />
+            <input class="dfx-ve-property-treeview-button" type="checkbox" checked id="item-2" />
             <label for="item-2">Styling Attributes</label>
             <ul class="dfx-ve-property-treeview-content">
                 <li class="col-md-12">
