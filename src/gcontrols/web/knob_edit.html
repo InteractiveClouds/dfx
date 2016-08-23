@@ -52,13 +52,13 @@
 						<dfx-ve-expression-editor></dfx-ve-expression-editor>
 					</div>
 				</li>
-				<li class="col-md-12">
+				<!-- <li class="col-md-12">
 					<span class="col-md-4">Disabled:</span>
 					<div class="col-md-8" layout="row">
 						<input class="col-md-12" type="text" ng-model="attributes.options.value.readOnly" ng-change="overrideAttribute('options')" style="margin-left:-15px;"/>
 						<dfx-ve-expression-editor></dfx-ve-expression-editor>
 					</div>
-				</li>
+				</li> -->
 			</ul>
 		</li>
 	</ul>
@@ -102,7 +102,11 @@
 				<!-- <li class="col-md-12">
           <span class="col-md-4">Dynamic Options:</span>
           <span class="col-md-8"><md-checkbox style="margin: 0" class="md-primary" ng-model="attributes.options.value.dynamicOptions" ng-change="overrideAttribute('options')" aria-label="options"></md-checkbox></span>
-      </li> -->							
+      </li> -->		
+      	<li class="col-md-12">
+					<span class="col-md-4">Read Only:</span>
+					<span class="col-md-8"><md-checkbox style="margin: 0" class="md-primary" ng-model="attributes.options.value.readOnly" ng-change="overrideAttribute('options')" aria-label="options"></md-checkbox></span>
+				</li>					
 			</ul>
 		</li>
 	</ul>
