@@ -6127,7 +6127,18 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
     $scope.viewResult = function() {
         // var editor = $('#executedResult.CodeMirror')[0].CodeMirror;
         // editor.setValue( $scope.simulatedResult );
-        $("#executedResult").val( $scope.simulatedResult );
+        $scope.showFullResult = false;
+        if ($scope.simulatedResult.length > 1000) {
+            $scope.showFullResult = true;
+        }
+        $("#executedResult").val( $scope.simulatedResult.slice(0,1000) );
+        $("#showResults").css('opacity',1);
+    }
+
+    $scope.showFullResultAction = function() {
+        $scope.showFullResult = false;
+        $("#executedResult").val("") ;
+        $("#executedResult").val( $scope.simulatedResult ) ;
         $("#showResults").css('opacity',1);
     }
 
