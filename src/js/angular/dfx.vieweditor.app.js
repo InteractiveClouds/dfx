@@ -1183,7 +1183,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
 
         var gc_layout = ((component.type == 'panel' || component.type == 'tabs' || component.type == 'wizard') &&
             component.attributes && (!component.attributes.autoHeight || component.attributes.autoHeight.value != true)) ?
-                ' style="height:100%;" layout="column" ' : '';
+                ' layout="column" ' : '';
 
         gc_instance.fragment = $compile('<div id="' + component.id + '" dfx-gc-web-base dfx-gc-web-' + component.type + ' dfx-gc-design gc-type="' + component.type + '" gc-role="control"' + flex_container_attr + gc_layout + '></div>')($scope);
         gc_instance.id = component.id;
