@@ -33,7 +33,8 @@ var isPortFree = require('./lib/utils/isPortFree');
 var pmx = require('pmx');
 var watcher = require('./lib/utils/watcher');
 var activator = require('./lib/utils/activator');
-var AR;
+var cache;
+
 
 var out = module.exports = {},
     Log,
@@ -41,6 +42,9 @@ var out = module.exports = {},
     isInited = false,
     host_app,
     server;
+
+var k = 0;
+var x = 0;
 
 var key = process.argv[2];
 
@@ -123,7 +127,20 @@ out.init = function ( settings ) {
         Log.init.file(  SETTINGS.logging.file);
     }
     log = new Log.Instance({label:'DFX_MAIN'});
+    
+    cache   = require('./lib/dfx_cache').init({
+        log : new Log.Instance({label:'CACHE'}),
+        selectDatabase : SETTINGS.selectRedisDatabase
 
+    }).client;
+
+    require('./lib/utils/redisLayer').init({
+        cache   : cache
+    });
+
+
+    // Verify if all folders name not empty in settings
+    if (!SETTINGS.tempDir) log.fatal('You must set tempDir in settings!');
 
     // Verify if all obligate settings are set
     var
@@ -241,12 +258,7 @@ out.start = function () {
 
                 }).then(function () {
                     const
-                        tenants = require('./lib/dfx_sysadmin/tenants'),
-                        cache   = require('./lib/dfx_cache').init({
-                                log : new Log.Instance({label:'CACHE'}),
-                                selectDatabase : SETTINGS.selectRedisDatabase
-
-                            }).client;
+                        tenants = require('./lib/dfx_sysadmin/tenants');
 
                     if (SETTINGS.studio) {
                         const _storage = require('./lib/mdbw')(SETTINGS.mdbw_options);
@@ -256,10 +268,13 @@ out.start = function () {
                         require('./lib/dfx_sysadmin/authProviders').init({ storage: _storage });
                         require('./lib/dfx_sysadmin/dbDrivers').init({ storage: _storage });
 
-                        require('./lib/dfx_queries').init({
-                            storage : _storage,
-                            cache   : cache
+                        cache.select(SETTINGS.selectRedisDatabase).then(function(){
+                            require('./lib/dfx_queries').init({
+                                storage : _storage,
+                                cache   : cache
+                            });
                         });
+
 
                         require('./lib/authRequest_mod').oAuth2AccessTokens.init({ storage: _storage });
                         require('./lib/dfx_resources').api.init({ storage: _storage });
@@ -529,17 +544,19 @@ function _start () {
         var cookies = watcher.parseCookies(req);
         var tenantId = cookies['X-DREAMFACE-TENANT'];
         if (tenantId) {
-            var inactiveTenants = watcher.getInactiveTenants();
-            var enableTenants = activator.getAll();
-            if (((inactiveTenants.indexOf(tenantId) != -1) || (enableTenants.indexOf(tenantId) == -1)) && watcher.verifyAuthRequest(req.url)) {
-                res.status(SETTINGS.loadBalancing.disabledRequestsStatus).send();
-            } else {
-                watcher.setRequestRun(tenantId);
-                res.on('finish', function () {
-                    watcher.setRequestStop(tenantId);
-                });
-                next();
-            }
+            watcher.getInactiveTenants().then(function(inactiveTenants) {
+                activator.getAll().then(function (tenants) {
+                    if (((inactiveTenants.indexOf(tenantId) != -1) || (tenants.indexOf(tenantId) == -1)) && watcher.verifyAuthRequest(req.url)) {
+                        res.status(SETTINGS.loadBalancing.disabledRequestsStatus).send();
+                    } else {
+                        watcher.setRequestRun(tenantId);
+                        res.on('finish', function () {
+                            watcher.setRequestStop(tenantId);
+                        });
+                        next();
+                    }
+                })
+            })
 
         } else {
             next();
@@ -547,22 +564,25 @@ function _start () {
     });
 
     // Graceful Shutdown START
+    if (SETTINGS.enableGracefulShutdown) {
 
-    process.on("SIGINT", shutdown);
+        process.on("SIGINT", shutdown);
+        process.on('SIGTERM', shutdown);
 
-    process.on('SIGTERM', shutdown);
+        function shutdown() {
+            function cbFunction() {
+                log.ok('All requests are finished!');
+                CHANNELS.root.unsubscribe('allTenantsRequestAreFinished', cbFunction);
+                process.exit();
+            }
 
-    function shutdown() {
-        function cbFunction() {
-            log.ok('All requests are finished!')
-            CHANNELS.root.unsubscribe('allTenantsRequestAreFinished', cbFunction);
-            process.exit();
-        }
-        if (watcher.isAllRequestsAreFinished()) {
-            cbFunction();
-        } else {
-            CHANNELS.root.subscribe('allTenantsRequestAreFinished', cbFunction);
-            setTimeout(cbFunction, SETTINGS.loadBalancing.pendingRequestsTimeOut);
+            if (watcher.isAllRequestsAreFinished()) {
+                cbFunction();
+            } else {
+                log.warn('You have some unfinished requests. Wait until finish or ' + SETTINGS.loadBalancing.pendingRequestsTimeOut / 1000 + ' seconds');
+                CHANNELS.root.subscribe('allTenantsRequestAreFinished', cbFunction);
+                setTimeout(cbFunction, SETTINGS.loadBalancing.pendingRequestsTimeOut);
+            }
         }
     }
 
