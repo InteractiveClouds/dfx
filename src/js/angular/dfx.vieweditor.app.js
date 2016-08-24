@@ -38,7 +38,7 @@ dfxViewEditorApp.controller("dfx_main_controller", [ '$scope', '$rootScope', '$q
     };
 
     $scope.showHelpEditor = function(ev) {
-        $(ev).animateCss('pulse');
+        $(ev.srcElement).animateCss('pulse');
         var $parentScope = $scope;
         var $editorScope = angular.element(document.getElementById('dfx_src_widget_editor')).scope()
         $mdDialog.show({
