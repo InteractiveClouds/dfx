@@ -6127,12 +6127,18 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
     $scope.viewResult = function() {
         // var editor = $('#executedResult.CodeMirror')[0].CodeMirror;
         // editor.setValue( $scope.simulatedResult );
-        $scope.showFullResult = false;
-        if ($scope.simulatedResult.length > 1000) {
-            $scope.showFullResult = true;
-        }
-        $("#executedResult").val( $scope.simulatedResult.slice(0,1000) );
-        $("#showResults").css('opacity',1);
+        dfxApiServiceObjects.getSettings().then(function( response ){
+            var settings = response.data;
+            $scope.showFullResult = false;
+            if ((settings.API_SO_Response_max_size == 0) || ($scope.simulatedResult.length < settings.API_SO_Response_max_size)) {
+                $("#executedResult").val( $scope.simulatedResult );
+            } else {
+                $scope.showFullResult = true;
+                $scope.numberOfCutedChars = settings.API_SO_Response_max_size;
+                $("#executedResult").val( $scope.simulatedResult.slice(0,settings.API_SO_Response_max_size) );
+            }
+            $("#showResults").css('opacity',1);
+        });
     }
 
     $scope.showFullResultAction = function() {

@@ -1991,6 +1991,19 @@ dfxStudioApi.factory('dfxApiServiceObjects', [ '$http', '$q', function($http, $q
         return deferred.promise;
     }
 
+    api_service_objects.getSettings = function() {
+        var deferred = $q.defer();
+
+        $http({
+            method: 'GET',
+            url: '/studio/settings'
+        }).then(function successCallback(response) {
+            deferred.resolve( response );
+        });
+
+        return deferred.promise;
+    }
+
     api_service_objects.getAll = function( scope, app_name ) {
         var deferred = $q.defer();
         
