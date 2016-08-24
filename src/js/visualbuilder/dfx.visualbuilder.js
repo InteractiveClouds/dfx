@@ -114,7 +114,7 @@ DfxVisualBuilder.init = function () {
     });
 
     var script_theme = localStorage.getItem('DFX_script_theme')!=null ? localStorage.getItem('DFX_script_theme') : 'monokai';
-    
+
     // Initialization of dfx_src_editor
 
     var htmlTextArea = document.getElementById('dfx_src_editor');
@@ -742,7 +742,7 @@ DfxVisualBuilder.moveComponentFromRemovedLayout = function (component_id, card, 
  */
 DfxVisualBuilder.reindexLayoutChildComponents = function (removed_row_index, removed_column_index, removed_layout_id, parent_definition, card, found_it) {
     var container_definition = (card!=null) ? parent_definition[card] : parent_definition;
-    
+
     var getLayoutRowColumnIndex = function (container) {
         var rowIndexPosition = container.indexOf('_row_');
         var columnIndexPosition = container.indexOf('_column_');
@@ -772,10 +772,8 @@ DfxVisualBuilder.reindexLayoutChildComponents = function (removed_row_index, rem
     if (!found_it) {
         for (var i = 0; i < container_definition.length; i++) {
             var next_layout = container_definition[i];
-
             if (next_layout.id == removed_layout_id) {
                 found_it = true;
-
                 for (var j = 0; j < next_layout.children.length; j++) {
                     var next_layout_child = next_layout.children[j];
                     if (next_layout_child) {
@@ -793,7 +791,7 @@ DfxVisualBuilder.reindexLayoutChildComponents = function (removed_row_index, rem
 
                 break;
             } else {
-                DfxVisualBuilder.reindexLayoutChildComponents(removed_row_index, removed_col_index, removed_layout_id, container_definition[idx].children, card, found_it);
+                DfxVisualBuilder.reindexLayoutChildComponents(removed_row_index, removed_column_index, removed_layout_id, container_definition[i].children, null, found_it);
             }
         }
     }
@@ -877,7 +875,7 @@ DfxVisualBuilder.movingComponentHelper = (function () {
         var ve_scope = angular.element(document.getElementById('dfx_src_widget_editor')).scope();
         ve_scope.addComponent(component_definition, container_definition, card);
     };
-    
+
     api.isContainer = function(component_definition) {
         var attributes = component_definition.attributes;
         var is_container = attributes.layout || attributes.steps || attributes.tabs ? true : false;
