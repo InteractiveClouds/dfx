@@ -191,7 +191,7 @@ out.init = function ( settings ) {
     
             if ( !a.hasOwnProperty(param) ) {
                 console.log(
-                    'WARN   : Unknown parameter '         +
+                    'WARN   : Unknown parameter ' +
                     path.concat(param).join('.') +
                     ' is added to SETTINGS.'
                 );
@@ -681,15 +681,23 @@ function _start () {
             SETTINGS.server_port,
             SETTINGS.server_host,
             function(error, data){
-                if ( !SETTINGS.notify_on_start_URL ) return;
+                if ( !SETTINGS.notify_on_start.url ) return;
+
+                const url = SETTINGS.notify_on_start.url +
+                        '?servertype=' + (SETTINGS.studio ? 'dev' : 'dep') +
+                        '&servername=' + SETTINGS['X-DREAMFACE-SERVER'] +
+                        '&notifyid=' + SETTINGS.notify_on_start.id
+
+                log.info('sending startup notification to ', url);
 
                 require('./lib/authRequest').getRequestInstance({}).get({
-                    url : SETTINGS.notify_on_start_URL +
-                            '?servertype=' + (SETTINGS.studio ? 'dev' : 'dep') +
-                            '&servername=' + SETTINGS['X-DREAMFACE-SERVER']
+                    url : url
+                })
+                .then(function(){
+                    log.ok('notifications sent');
                 })
                 .fail(function(error){
-                    log.fata('could not notify after start. error : ', error);
+                    log.fatal('could not notify after start. error : ', error);
                 });
             }
         );
