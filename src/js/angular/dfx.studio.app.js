@@ -6130,12 +6130,12 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
         dfxApiServiceObjects.getSettings().then(function( response ){
             var settings = response.data;
             $scope.showFullResult = false;
-            if ((settings.API_SO_Response_max_size == 0) || ($scope.simulatedResult.length < settings.API_SO_Response_max_size)) {
+            if ((settings.api_so_response_max_size == 0) || ($scope.simulatedResult.length < settings.api_so_response_max_size)) {
                 $("#executedResult").val( $scope.simulatedResult );
             } else {
                 $scope.showFullResult = true;
-                $scope.numberOfCutedChars = settings.API_SO_Response_max_size;
-                $("#executedResult").val( $scope.simulatedResult.slice(0,settings.API_SO_Response_max_size) );
+                $scope.numberOfCutedChars = settings.api_so_response_max_size;
+                $("#executedResult").val( $scope.simulatedResult.slice(0,settings.api_so_response_max_size) );
             }
             $("#showResults").css('opacity',1);
         });
