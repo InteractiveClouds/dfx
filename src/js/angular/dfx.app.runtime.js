@@ -515,7 +515,7 @@ dfxAppRuntime.directive('dfxViewWrapper', [ '$http', '$compile', function($http,
         },
         priority: 100000,
         link: function($scope, $element, $attrs) {
-            var wrapper_snippet = '<div id="' + $scope.wrapper_view_id + '" dfx-view="' + $scope.wrapper_view_name + '" dfx-view-card="default" ng-controller="dfx_view_controller" style="width:100%" layout="column" flex></div>';
+            var wrapper_snippet = '<div id="' + $scope.wrapper_view_id + '" dfx-view="' + $scope.wrapper_view_name + '" dfx-view-card="default" ng-controller="dfx_view_controller" style="width:100%" layout="column" flex="100"></div>';
             $element.attr('ng-controller', $scope.wrapper_view_name + 'Controller');
             $element.append(wrapper_snippet);
             $element.removeAttr('dfx-view-wrapper');
@@ -564,9 +564,9 @@ dfxAppRuntime.directive('dfxView', [ '$http', '$timeout', function($http, $timeo
                                   in: 'fadeIn',
                                   out: 'slideOutLeft'
                                 };
-                                $('#' + $scope.view_id).removeClass().addClass('animated ' + animation.out).one('animationend', function(eventOne) {
+                                $('#' + $scope.view_id).removeClass().addClass('animated ' + animation.out + ' flex layout-column').one('animationend', function(eventOne) {
                                   angular.element($('#' + $scope.view_id)).html('');
-                                  $('#' + $scope.view_id).removeClass().addClass('animated ' + animation.in);
+                                  $('#' + $scope.view_id).removeClass().addClass('animated ' + animation.in + ' flex layout-column');
                                   $scope.addComponents( view_definition.definition, { "id": $scope.view_id }, '', $scope.dfxViewCard, $scope.view_id );
                                 });
                             });

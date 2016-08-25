@@ -815,14 +815,41 @@ DfxVisualBuilder.pasteComponent = function (component_to_paste_definition, curre
 DfxVisualBuilder.movingComponentHelper = (function () {
     var api = {};
 
-    api.replaceLayoutIndex = function (component_definition, newIndex) {
+    api.getLayoutRowColumnIndex = function (container) {
+        var row_index_position = container.indexOf('_row_');
+        var column_index_position = container.indexOf('_column_');
+
+        var row_index_value = container.substring(row_index_position + 5, column_index_position);
+        var column_index_value = container.substring(column_index_position + 8);
+
+        return {row_index: parseInt(row_index_value), column_index: parseInt(column_index_value)};
+    };
+
+    api.containerHasRowColumn = function (container_definition, row_column_index) {
+        if (container_definition.type == 'tabs' || container_definition.type == 'wizard') return false;
+
+        var row_definition = container_definition.attributes.layout.rows[row_column_index.row_index];
+        if (row_definition) {
+            if (row_definition.cols[row_column_index.column_index]) {
+                return true;
+            }
+        }
+        return false;
+    };
+
+    api.replaceLayoutIndex = function (component_definition, new_index) {
         if (! component_definition.container) {// root panel does not have container
             component_definition.container = 'layout_0_row_0_column_0';
             return;
         }
 
-        var rowIndexPosition = component_definition.container.indexOf('_row_');
-        component_definition.container = 'layout_' + parseInt(newIndex) + component_definition.container.substring(rowIndexPosition);
+        var row_index_position = component_definition.container.indexOf('_row_');
+        component_definition.container = 'layout_' + parseInt(new_index) + component_definition.container.substring(row_index_position);
+    };
+
+    api.replaceLayoutRowColumnIndex = function (component_definition) {
+        var row_index_position = component_definition.container.indexOf('_row_');
+        component_definition.container = component_definition.container.substring(0, row_index_position) + '_row_0_column_0';
     };
 
     api.getViewDefinition = function () {
@@ -850,6 +877,14 @@ DfxVisualBuilder.movingComponentHelper = (function () {
         api.replaceLayoutIndex(component_definition, index_value);
     };
 
+    api.changeRowColumnIndex = function (component_definition, container_definition) {
+        var row_column_index = api.getLayoutRowColumnIndex(component_definition.container);
+        var row_column_exists = api.containerHasRowColumn(container_definition, row_column_index);
+        if (! row_column_exists) {
+            api.replaceLayoutRowColumnIndex(component_definition);
+        }
+    };
+
     api.setComponentsNewIdsAndNames = function (component_definition, card, wgt_definition) {
         var platform = $('#dfx_visual_editor').attr('platform');
         component_definition.id = Math.floor(Math.random() * 100000);
@@ -866,6 +901,7 @@ DfxVisualBuilder.movingComponentHelper = (function () {
 
         api.removeDefaultAttributes(component_definition);
         api.changeTabOrWizardStepIndex(component_definition, container_definition);
+        api.changeRowColumnIndex(component_definition, container_definition);
 
         DfxVisualBuilder.findParentAndAddComponent(component_definition.id, container_definition.id, component_definition, wgt_definition.definition, card, false, add_component_to_end);
         editor.setValue(JSON.stringify(wgt_definition, null, '\t'));

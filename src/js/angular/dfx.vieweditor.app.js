@@ -1296,6 +1296,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     // Functions implementing Cut/Copy/Paste in view editor - START
     $scope.viewEditorCut = function(event) {
         $(event.srcElement).animateCss('pulse');
+
         var component_id = $scope.gc_selected.id;
         var parent_id = $('#'+component_id).closest('[gc-parent]').attr('gc-parent');
 
@@ -1317,6 +1318,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
 
     $scope.viewEditorCopy = function(event) {
         $(event.srcElement).animateCss('pulse');
+
         var view_definition = DfxVisualBuilder.movingComponentHelper.getViewDefinition();
         var component_definition = DfxVisualBuilder.getComponentDefinition($scope.gc_selected.id, view_definition.definition);
 
@@ -1324,11 +1326,25 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
 
         $scope.view_editor_cached_component = component_definition;// put component in memory
     };
-
+    
     $scope.viewEditorPaste = function(event) {
         $(event.srcElement).animateCss('pulse');
-        if ($scope.view_editor_cached_component && $scope.gc_selected) {
-            DfxVisualBuilder.pasteComponent(angular.copy($scope.view_editor_cached_component), $scope.gc_selected, $scope.view_card_selected);
+        
+        var getSelectedComponent = function () {
+            if ($scope.gc_selected) {
+                return $scope.gc_selected;
+            } else { // get root panel from current card
+                var view_definition = DfxVisualBuilder.movingComponentHelper.getViewDefinition();
+                var current_card_root_panel_id = view_definition.definition[$scope.view_card_selected][0].id;
+                var current_card_root_panel_full_definition = $scope.gc_instances[current_card_root_panel_id];
+                return current_card_root_panel_full_definition;
+            }
+        };
+
+        if ($scope.view_editor_cached_component) {
+            var selected_component = getSelectedComponent();
+            var cached_component_copy = angular.copy($scope.view_editor_cached_component);
+            DfxVisualBuilder.pasteComponent(cached_component_copy, selected_component, $scope.view_card_selected);
         }
     };
     // Functions implementing Cut/Copy/Paste in view editor - END
