@@ -38,6 +38,7 @@ dfxViewEditorApp.controller("dfx_main_controller", [ '$scope', '$rootScope', '$q
     };
 
     $scope.showHelpEditor = function(ev) {
+        $(ev.srcElement).animateCss('pulse');
         var $parentScope = $scope;
         var $editorScope = angular.element(document.getElementById('dfx_src_widget_editor')).scope()
         $mdDialog.show({
@@ -431,16 +432,19 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     };
 
     $scope.searchScript = function(ev) {
+        $(ev.srcElement).animateCss('pulse');
         var editor = $('#dfx_script_editor')[0].CodeMirror;
         editor.execCommand('find');
     };
 
     $scope.replaceScript = function(ev) {
+        $(ev.srcElement).animateCss('pulse');
         var editor = $('#dfx_script_editor')[0].CodeMirror;
         editor.execCommand('replace');
     };
 
     $scope.configureDependenciesScript = function(ev) {
+        $(ev.srcElement).animateCss('pulse');
         var parentEl = angular.element(document.body);
         $mdDialog.show({
             parent: parentEl,
@@ -552,6 +556,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     };
 
     $scope.addCard = function(ev) {
+        $(ev.srcElement).animateCss('pulse');
         $mdDialog.show({
             controller: DialogController,
             templateUrl: '/gcontrols/web/cards_add.html',
@@ -593,6 +598,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     };
 
     $scope.removeCard = function(ev) {
+        $(ev.srcElement).animateCss('pulse');
         if ($scope.view_card_select_index>0) {
             var confirm = $mdDialog.confirm()
                 .title('Remove Card')
@@ -662,6 +668,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     };
 
     $scope.exitViewEditor = function(ev) {
+        $(ev.srcElement).animateCss('pulse');
         var confirm = $mdDialog.confirm()
           .title('Exit')
           .textContent('Do you confirm you want to exit the editor?')
@@ -692,7 +699,8 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     };
 
 
-    $scope.saveView = function() {
+    $scope.saveView = function(event) {
+        $(event.srcElement).animateCss('pulse');
         /*DfxStudio.updateWidgetSource({
             widgetName:'#{widget.name}',
             category:'#{widget.category}',
@@ -752,7 +760,8 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
 
     };
 
-    $scope.openPreview = function() {
+    $scope.openPreview = function(event) {
+        $(event.srcElement).animateCss('pulse');
         var editor = $('#dfx_src_editor.CodeMirror')[0].CodeMirror;
         window.localStorage.setItem( 'dfx_' + $scope.view_name, editor.getValue() );
         $window.open('/studio/widget/' + $scope.view_platform + '/preview-auth/' + $scope.application_name + '/' + $scope.view_name + '/' + $scope.view_platform + '/desktop', '_blank');
@@ -760,6 +769,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     };
 
     $scope.openPreviewSettings = function(ev) {
+        $(ev.srcElement).animateCss('pulse');
         var parentEl = angular.element(document.body);
         $mdDialog.show({
             parent: parentEl,
@@ -1273,7 +1283,8 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
         }
     };
 
-    $scope.viewEditorUndo = function() {
+    $scope.viewEditorUndo = function(event) {
+        $(event.srcElement).animateCss('pulse');
         if ($scope.view_editor_actions_stack && $scope.view_editor_actions_stack.length > 0) {
             var action_for_undo = $scope.view_editor_actions_stack.shift();
             var gc_for_undo = $scope.gc_instances[ action_for_undo.component_id ];
@@ -1283,8 +1294,8 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     // Functions implementing UNDO in view editor - END
 
     // Functions implementing Cut/Copy/Paste in view editor - START
-    $scope.viewEditorCut = function() {
-        if (!$scope.gc_selected) return;
+    $scope.viewEditorCut = function(event) {
+        $(event.srcElement).animateCss('pulse');
 
         var component_id = $scope.gc_selected.id;
         var parent_id = $('#'+component_id).closest('[gc-parent]').attr('gc-parent');
@@ -1305,8 +1316,8 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
         }
     };
 
-    $scope.viewEditorCopy = function() {
-        if (!$scope.gc_selected) return;
+    $scope.viewEditorCopy = function(event) {
+        $(event.srcElement).animateCss('pulse');
 
         var view_definition = DfxVisualBuilder.movingComponentHelper.getViewDefinition();
         var component_definition = DfxVisualBuilder.getComponentDefinition($scope.gc_selected.id, view_definition.definition);
@@ -1315,8 +1326,10 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
 
         $scope.view_editor_cached_component = component_definition;// put component in memory
     };
-
-    $scope.viewEditorPaste = function() {
+    
+    $scope.viewEditorPaste = function(event) {
+        $(event.srcElement).animateCss('pulse');
+        
         var getSelectedComponent = function () {
             if ($scope.gc_selected) {
                 return $scope.gc_selected;
@@ -1381,7 +1394,7 @@ dfxViewEditorApp.directive('dfxGcWebDroppable', [ '$timeout', function($timeout)
     }
 }]);
 
-dfxViewEditorApp.directive('dfxGcLayoutProperty', ['$mdToast', function($mdToast) {
+dfxViewEditorApp.directive('dfxGcLayoutProperty', ['$mdToast', 'dfxMessaging', function($mdToast, dfxMessaging) {
     return {
         restrict: 'A',
         templateUrl: function( el, attrs ) {
@@ -1471,64 +1484,65 @@ dfxViewEditorApp.directive('dfxGcLayoutProperty', ['$mdToast', function($mdToast
             };
 
             $scope.deleteLayoutColumn = function(row_index, col_index) {
-                if ($('#'+$scope.$parent.gc_selected.id+'_layout_0_row_'+row_index+'_column_'+col_index).children().length>0) {
-
-                    // move components from removed row to the first row or to the second (in case when first row is removed)
-                    var container_id = $scope.$parent.gc_selected.id;
-
-                    var to_layout_id = col_index == 0 ? 'layout_0_row_'+row_index+'_column_1' : 'layout_0_row_'+row_index+'_column_0';
-
-                    var column_children = $('#'+$scope.$parent.gc_selected.id+'_layout_0_row_'+row_index+'_column_'+col_index).children();
-                    if (column_children.length > 0) {
-
-                        for (var i = 0; i < column_children.length; i++) {
-                            var next_gc_id = column_children[i].id;
-
-                            // Move component
-                            DfxVisualBuilder.moveComponentFromRemovedLayout(next_gc_id, $scope.$parent.view_card_selected, container_id, to_layout_id);
-                        }
-                    }
-
-                    //$mdToast.show(
-                    //    $mdToast.simple()
-                    //        .content('The column must be empty to be deleted!')
-                    //        .position('top right')
-                    //        .hideDelay(3000)
-                    //);
-                }
-
                 var component = $scope.$parent.gc_selected;
-                component.attributes.layout.status = "overridden";
-                component.attributes.layout.rows[row_index].cols.splice(col_index, 1);
+                var row_cols = component.attributes.layout.rows[row_index].cols;
 
-                // reindex layout children
-                var editor = $('#dfx_src_editor.CodeMirror')[0].CodeMirror;
-                var wgt_definition = JSON.parse(editor.getValue());
-                DfxVisualBuilder.reindexLayoutChildComponents(row_index, col_index, container_id, wgt_definition.definition, $scope.$parent.view_card_selected, false);
-                editor.setValue(JSON.stringify(wgt_definition, null, '\t'));
+                if (col_index===0 && row_cols.length===1) {
+
+                  dfxMessaging.showWarning('The layout row must contain at least one column');
+
+                } else {
+
+                  if ($('#'+$scope.$parent.gc_selected.id+'_layout_0_row_'+row_index+'_column_'+col_index).children().length>0) {
+
+                      // move components from removed row to the first row or to the second (in case when first row is removed)
+                      var container_id = $scope.$parent.gc_selected.id;
+
+                      var to_layout_id = col_index == 0 ? 'layout_0_row_'+row_index+'_column_1' : 'layout_0_row_'+row_index+'_column_0';
+
+                      var column_children = $('#'+$scope.$parent.gc_selected.id+'_layout_0_row_'+row_index+'_column_'+col_index).children();
+                      if (column_children.length > 0) {
+
+                          for (var i = 0; i < column_children.length; i++) {
+                              var next_gc_id = column_children[i].id;
+
+                              // Move component
+                              DfxVisualBuilder.moveComponentFromRemovedLayout(next_gc_id, $scope.$parent.view_card_selected, container_id, to_layout_id);
+                          }
+                      }
+                  }
+
+                  component.attributes.layout.status = "overridden";
+                  component.attributes.layout.rows[row_index].cols.splice(col_index, 1);
+
+                  // reindex layout children
+                  var editor = $('#dfx_src_editor.CodeMirror')[0].CodeMirror;
+                  var wgt_definition = JSON.parse(editor.getValue());
+                  DfxVisualBuilder.reindexLayoutChildComponents(row_index, col_index, container_id, wgt_definition.definition, $scope.$parent.view_card_selected, false);
+                  editor.setValue(JSON.stringify(wgt_definition, null, '\t'));
+
+                }
             };
 
             $scope.deleteLayoutRow = function(row_index) {
                 var component = $scope.$parent.gc_selected;
                 var row_cols = component.attributes.layout.rows[row_index].cols;
-                var empty = true;
-                for (var i=0; i<row_cols.length; i++) {
-                    if ($('#'+$scope.$parent.gc_selected.id+'_layout_0_row_'+row_index+'_column_'+i).children().length>0) {
-                        empty=false;
-                        break;
-                    }
-                }
 
-                // move components from removed row to the first row or to the second (in case when first row is removed)
-                var container_id = $scope.$parent.gc_selected.id;
+                if (row_index===0 && component.attributes.layout.rows.length===1) {
 
-                if (!empty) {
-                    var to_layout_id = row_index == 0 ? 'layout_0_row_1_column_0' : 'layout_0_row_0_column_0';
+                  dfxMessaging.showWarning('The layout must contain at least one row');
+
+                } else {
+
+                    // move components from removed row to the first row or to the second (in case when first row is removed)
+                    var container_id = $scope.$parent.gc_selected.id;
+
+
+                    var to_layout_id = row_index == 0 ? 'layout_0_row_1_column_0' : 'layout_0_row_' + (row_index-1) + '_column_0';
 
                     for (var i = 0; i < row_cols.length; i++) {
                         var column_children = $('#'+$scope.$parent.gc_selected.id+'_layout_0_row_'+row_index+'_column_'+i).children();
                         if (column_children.length > 0) {
-
                             for (var j = 0; j < column_children.length; j++) {
                                 var next_gc_id = column_children[j].id;
 
@@ -1538,22 +1552,16 @@ dfxViewEditorApp.directive('dfxGcLayoutProperty', ['$mdToast', function($mdToast
                         }
                     }
 
-                    //$mdToast.show(
-                    //    $mdToast.simple()
-                    //        .content('The row must be empty to be deleted!')
-                    //        .position('top right')
-                    //        .hideDelay(3000)
-                    //);
+                    component.attributes.layout.status = "overridden";
+                    component.attributes.layout.rows.splice(row_index, 1);
+
+                    // reindex layout children
+                    var editor = $('#dfx_src_editor.CodeMirror')[0].CodeMirror;
+                    var wgt_definition = JSON.parse(editor.getValue());
+                    DfxVisualBuilder.reindexLayoutChildComponents(row_index, null, container_id, wgt_definition.definition, $scope.$parent.view_card_selected, false);
+                    editor.setValue(JSON.stringify(wgt_definition, null, '\t'));
+
                 }
-
-                component.attributes.layout.status = "overridden";
-                component.attributes.layout.rows.splice(row_index, 1);
-
-                // reindex layout children
-                var editor = $('#dfx_src_editor.CodeMirror')[0].CodeMirror;
-                var wgt_definition = JSON.parse(editor.getValue());
-                DfxVisualBuilder.reindexLayoutChildComponents(row_index, null, container_id, wgt_definition.definition, $scope.$parent.view_card_selected, false);
-                editor.setValue(JSON.stringify(wgt_definition, null, '\t'));
             };
         }
     }

@@ -16,15 +16,18 @@ var dreamface = require('./dfx')
 .init({
   studio_version: 3,
 	server_port: 3000,
-	auth_conf_path : path.resolve(__dirname, './lib/auth/.auth.conf'),
-  app_build_path: path.resolve(__dirname, './app_builds'),
-  tempDirForTemplates: path.resolve(__dirname, './temp'),
-  tempDir : path.resolve(__dirname, 'tmp'),
-  resources_deploy_path: 'resources',
-  resources_development_path: path.resolve(__dirname, '..', './resources'),
-  fsdb_path: path.resolve(__dirname, '..', './app_fsdb'),
-  deploy_path: path.resolve(__dirname, '..', './deploy'),
-	log_pmx: false,
+  auth_conf_path : '/Users/olivier/Documents/Dev/ic/workspace/.auth.conf',
+
+  fsdb_path: '/Users/olivier/Documents/Dev/ic/workspace/app_fsdb',
+	deploy_path: '/Users/olivier/Documents/Dev/ic/workspace/deploy',
+  app_build_path: '/Users/olivier/Documents/Dev/ic/workspace/build',
+
+  tempDir: '/Users/olivier/Documents/Dev/ic/workspace/tmp',
+  tempDirForTemplates: '/Users/olivier/Documents/Dev/ic/workspace/temp',
+
+  resources_development_path: '/Users/olivier/Documents/Dev/ic/workspace/resources',
+
+  log_pmx: false,
 	edition: 'development',
 	storage: 'mongod',
 	deployment_server_host: 'localhost',

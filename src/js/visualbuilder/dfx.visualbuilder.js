@@ -772,10 +772,8 @@ DfxVisualBuilder.reindexLayoutChildComponents = function (removed_row_index, rem
     if (!found_it) {
         for (var i = 0; i < container_definition.length; i++) {
             var next_layout = container_definition[i];
-
             if (next_layout.id == removed_layout_id) {
                 found_it = true;
-
                 for (var j = 0; j < next_layout.children.length; j++) {
                     var next_layout_child = next_layout.children[j];
                     if (next_layout_child) {
@@ -793,7 +791,7 @@ DfxVisualBuilder.reindexLayoutChildComponents = function (removed_row_index, rem
 
                 break;
             } else {
-                DfxVisualBuilder.reindexLayoutChildComponents(removed_row_index, removed_col_index, removed_layout_id, container_definition[idx].children, card, found_it);
+                DfxVisualBuilder.reindexLayoutChildComponents(removed_row_index, removed_column_index, removed_layout_id, container_definition[i].children, null, found_it);
             }
         }
     }
