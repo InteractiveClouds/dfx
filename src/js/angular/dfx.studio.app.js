@@ -6004,7 +6004,7 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
                 $scope.updateApiSo();
             }
             $scope.editFilterTitle = null;
-        }, 0);
+        }, 500);
 
     }
 
