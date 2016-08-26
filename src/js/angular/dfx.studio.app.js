@@ -6079,9 +6079,9 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
             headers : {'X-DREAMFACE-TENANT' : $('body').attr('data-tenantid')}
         })
             .then(function(data) {
-                $scope.simulatedMeta = JSON.stringify(data.metadata, null, '\t');
-                $scope.simulatedResult = JSON.stringify(data.data, null, '\t');
-                $scope.simulatedRequest = JSON.stringify(data.requestData, null, '\t');
+                $scope.simulatedMeta = data.metadata;
+                $scope.simulatedResult = data.data;
+                $scope.simulatedRequest = data.requestData;
                 $timeout(function() {
                     $scope.isExecuted = true;
                 }, 0);
@@ -6115,26 +6115,34 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
         //     executedMirror.refresh();
         // }, 0);
         sidenav.find("#executedResult").css( "height", sidenavHeight-245 );
+        var container = document.getElementById('executedResult'),
+            options = { mode: 'code', modes: ['tree','form','code','text','view'], history: true }
+        $timeout(function(){
+            if(!$scope.dfxSampleJsonEditor) $scope.dfxSampleJsonEditor = new JSONEditor(container, options, $scope.simulatedResult);
+        },0);
     }
 
     $scope.viewMetaData = function() {
         // var editor = $('#executedResult.CodeMirror')[0].CodeMirror;
         // editor.setValue( $scope.simulatedMeta );
-        $("#executedResult").val( $scope.simulatedMeta );
+        // $("#executedResult").val( $scope.simulatedMeta );
+        $scope.dfxSampleJsonEditor.set($scope.simulatedMeta);
         $("#showResults").css('opacity',1);
     }
 
     $scope.viewResult = function() {
         // var editor = $('#executedResult.CodeMirror')[0].CodeMirror;
         // editor.setValue( $scope.simulatedResult );
-        $("#executedResult").val( $scope.simulatedResult );
+        // $("#executedResult").val( $scope.simulatedResult );
+        $scope.dfxSampleJsonEditor.set($scope.simulatedResult);   
         $("#showResults").css('opacity',1);
     }
 
     $scope.viewRequest = function() {
         // var editor = $('#executedResult.CodeMirror')[0].CodeMirror;
         // editor.setValue( $scope.simulatedRequest );
-        $("#executedResult").val( $scope.simulatedRequest );
+        // $("#executedResult").val( $scope.simulatedRequest );
+        $scope.dfxSampleJsonEditor.set($scope.simulatedRequest);
         $("#showResults").css('opacity',1);
     }
 
