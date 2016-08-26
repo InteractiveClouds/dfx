@@ -2065,7 +2065,7 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                     $(element).find('md-icon').attr('side','right');
                 }
             }
-            scope.menuItemsType = {"value":"static"};
+            scope.menuItemsType = {"value":""};
             scope.menuItemNames = {"value":""};
             scope.dialogGcType = '';            
             scope.showMenuEditor = function(ev) {
@@ -2515,7 +2515,7 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                                 case 'icon': if(!scope.tempItemNames.main.hasOwnProperty('icon')){scope.tempItemNames.main.icon = {"value": "icon"};} break;
                                 case 'scopeItems': if(!scope.tempItemNames.main.hasOwnProperty('scopeItems')){scope.tempItemNames.main.scopeItems = 'scopeItems';} break;
                                 case 'state': if(!scope.tempItemNames.hasOwnProperty('state')){scope.tempItemNames.state = {"name": "state"};} break;
-                                case 'wait': if(!scope.tempItemNames.hasOwnProperty('wait')){scope.tempItemNames.wait = {"name": "wait"};} break;
+                                case 'waiting': if(!scope.tempItemNames.hasOwnProperty('waiting')){scope.tempItemNames.waiting = {"name": "waiting"};} break;
                             }
                         }
                         scope.checkIconNames = function( icon, iconModeType ){
@@ -2529,9 +2529,9 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                                     case 'uncheckedIcon': 
                                         if(!scope.tempItemNames.state.hasOwnProperty('uncheckedIcon')) scope.tempItemNames.state.uncheckedIcon = {"value": "uncheckedIcon"};
                                         if(!scope.tempItemNames.state.uncheckedIcon.hasOwnProperty(iconProp)) scope.tempItemNames.state.uncheckedIcon[iconProp] = iconProp; break;
-                                    case 'wait': 
-                                        if(!scope.tempItemNames.wait.hasOwnProperty('icon')) scope.tempItemNames.wait.icon = {"value": "icon"};
-                                        if(!scope.tempItemNames.wait.icon.hasOwnProperty(iconProp)) scope.tempItemNames.wait.icon[iconProp] = iconProp; break;
+                                    case 'waiting': 
+                                        if(!scope.tempItemNames.waiting.hasOwnProperty('icon')) scope.tempItemNames.waiting.icon = {"value": "icon"};
+                                        if(!scope.tempItemNames.waiting.icon.hasOwnProperty(iconProp)) scope.tempItemNames.waiting.icon[iconProp] = iconProp; break;
                                 }
                             });
                         }
@@ -2546,12 +2546,19 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                                 }
                             });
                         }
-                        scope.checkWaitNames = function( wait ){
-                            Object.getOwnPropertyNames(wait).forEach(function(waitProp) {
-                                if(!scope.tempItemNames.wait.hasOwnProperty(waitProp)) scope.tempItemNames.wait[waitProp] = waitProp;
+                        scope.checkWaitingNames = function( waiting ){
+                            Object.getOwnPropertyNames(waiting).forEach(function(waitingProp) {
+                                if(!scope.tempItemNames.waiting.hasOwnProperty(waitingProp)) {
+                                    switch(waitingProp){
+                                        case 'binding': scope.tempItemNames.waiting[waitingProp] = waitingProp; break;
+                                        case 'autoDisabled': scope.tempItemNames.waiting[waitingProp] = waitingProp;; break;
+                                        case 'icon': scope.checkIconNames( waiting.icon, 'waiting' ); break;
+                                    }
+                                }
                             });
                         }                        
                         scope.checkItemNames = function( item ) {
+                            console.log(item);
                             if(item.hasOwnProperty('type')){scope.checkMainNames('type');}
                             if(item.hasOwnProperty('label')){scope.checkMainNames('label');}
                             if(item.hasOwnProperty('title')){scope.checkMainNames('title');}
@@ -2571,10 +2578,20 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                             }
                             if(item.hasOwnProperty('icon')){ scope.checkMainNames('icon'); scope.checkIconNames(item.icon, 'main'); }
                             if(item.hasOwnProperty('state')){ scope.checkMainNames('state'); scope.checkStateNames(item.state); }
-                            if(item.hasOwnProperty('wait')){ scope.checkMainNames('wait'); scope.checkWaitNames(item.wait); }
-                            $q.all([ scope.checkItemNames, scope.checkMainNames, scope.checkIconNames, scope.checkStateNames, scope.checkWaitNames ]).then(function(){
+                            if(item.hasOwnProperty('waiting')){ scope.checkMainNames('waiting'); scope.checkWaitingNames(item.waiting); }
+                            $q.all([ scope.checkItemNames, scope.checkMainNames, scope.checkIconNames, scope.checkStateNames, scope.checkWaitingNames ]).then(function(){
                                 scope.menuItemNames.value = scope.tempItemNames;
-                                scope.attributes.menuItemNames.value = scope.tempItemNames;
+                                if(scope.toolbarSide){
+                                    if(scope.toolbarSide ==='left'){
+                                        scope.attributes.toolbar.leftMenu.menuItemNames.value = scope.tempItemNames;
+                                    }else{
+                                        scope.attributes.toolbar.rightMenu.menuItemNames.value = scope.tempItemNames;                                        
+                                    }
+                                }else{
+                                    scope.attributes.menuItemNames.value = scope.tempItemNames;
+                                }
+                                console.log('scope.dialogGcType', scope.dialogGcType);
+                                console.log('scope.menuItemNames.value', scope.menuItemNames.value);
                             });
                         }
                         scope.fillPropertiesNames = function(sampleJson){for(var i = 0; i<sampleJson.length; i++){scope.checkItemNames(sampleJson[i]);};}
