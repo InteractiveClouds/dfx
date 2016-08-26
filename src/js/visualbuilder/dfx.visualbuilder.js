@@ -1300,7 +1300,7 @@ DfxVisualBuilder.findComponentAndUpdateAttributes = function (component_id, pare
  * Removes not overridden attributes
  */
 DfxVisualBuilder.removeNotOverriddenAttributes = function (updated_attributes, gc_type, attr_full_path) {
-    var getGcTemplate = function (gc_type, callback) {
+    var getGcDefaultTemplate = function (gc_type, callback) {
         gc_type = (gc_type == 'datatable') ? 'table' : gc_type;
         gc_type = (gc_type == 'json') ? 'gc_json' : gc_type;
 
@@ -1376,7 +1376,7 @@ DfxVisualBuilder.removeNotOverriddenAttributes = function (updated_attributes, g
         }
     };
 
-    getGcTemplate(gc_type, function(template) {
+    getGcDefaultTemplate(gc_type, function(template) {
         removeNotOverridden(updated_attributes, attr_full_path, template);
     });
 };

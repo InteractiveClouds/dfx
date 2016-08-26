@@ -10,7 +10,7 @@
         </li>
 		<li class="col-md-12" dfx-gc-property="template">
 			<span class="col-md-4">Template:</span>
-			<input class="col-md-8" type="text" ng-model="attributes.template.value" ng-change="overrideAttribute('template')" disabled/>
+			<input class="col-md-8" type="text" ng-model="attributes.template.value" ng-change="overrideAttribute('template')"/>
 		</li>
         <li class="col-md-12" dfx-gc-property="name">
 					<span class="col-md-4">Name:</span>
@@ -86,12 +86,12 @@
                         <input class="col-md-12" type="text" ng-model="attributes.waiting.autoDisabled" ng-change="overrideAttribute('waiting.autoDisabled')" style="margin-left:-15px;"/>
                         <dfx-ve-expression-editor></dfx-ve-expression-editor>
                     </div>
-                </li>                
+                </li>
                 <li class="col-md-12">
                     <span class="col-md-4">Icon:</span>
                     <div class="col-md-8" layout="row">
                         <input class="col-md-12" type="text" ng-model="attributes.waiting.icon.value" ng-change="overrideAttribute('waiting.icon');ifShowIconTypes(attributes.waiting.icon.value, 'waiting')" style="margin-left:-15px;"/>
-                        <md-icon ng-click="showFontIcons($event, attributes.waiting.icon)" dfx-ve-picker-icon class="dfx-ve-picker-icon fa fa-ellipsis-h"></md-icon>                        
+                        <md-icon ng-click="showFontIcons($event, attributes.waiting.icon)" dfx-ve-picker-icon class="dfx-ve-picker-icon fa fa-ellipsis-h"></md-icon>
                     </div>
                 </li>
                 <li class="col-md-12" ng-if="showWaitingIconTypes">
@@ -116,7 +116,7 @@
                         <input class="col-md-12" type="text" ng-model="attributes.waiting.icon.class" ng-change="overrideAttribute('waiting.icon.class')" style="margin-left:-15px;"/>
                         <dfx-ve-menu-expression></dfx-ve-menu-expression>
                     </div>
-                </li>                
+                </li>
             </ul>
         </li>
     </ul>
@@ -178,7 +178,7 @@
                 <li class="col-md-12">
                     <span class="col-md-4">Item Icon Class:</span>
                     <input class="col-md-8" type="text" ng-model="attributes.singleMenu.icon.class" ng-change="overrideAttribute('singleMenu.icon.class')"/>
-                </li>  
+                </li>
 			</ul>
 		</li>
 	</ul>

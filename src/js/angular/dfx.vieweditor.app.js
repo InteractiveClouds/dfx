@@ -1326,10 +1326,10 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
 
         $scope.view_editor_cached_component = component_definition;// put component in memory
     };
-    
+
     $scope.viewEditorPaste = function(event) {
         $(event.srcElement).animateCss('pulse');
-        
+
         var getSelectedComponent = function () {
             if ($scope.gc_selected) {
                 return $scope.gc_selected;
@@ -1348,6 +1348,48 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
         }
     };
     // Functions implementing Cut/Copy/Paste in view editor - END
+
+    $scope.saveComponentAsTemplate = function(event) {
+        $(event.srcElement).animateCss('pulse');
+
+        $mdDialog.show({
+            controller: DialogController,
+            templateUrl: '/gcontrols/web/template_save.html',
+            parent: angular.element(document.body),
+            targetEvent: event
+        })
+        .then(function(template) {
+            var template_definition = angular.copy($scope.gc_selected);
+            DfxVisualBuilder.removeNotOverriddenAttributes(template_definition.attributes, template_definition.type);
+
+            console.log('save template: ', template_definition);
+
+            //1) save template to mongo
+            //2) template must have 'template' property
+            //3) we don't have to see template values in source or in properties panel
+            //4) select templates in GC property
+            //5) apply it to design time
+            //6) rename old (file) template functions to storeGcDefaultTemplate() instead of storeGcTemplate()
+            //7) do not forget to uncomment gc_button->menuItemNames
+
+            console.log('template: ', template);
+
+            console.log('view definition: ', DfxVisualBuilder.movingComponentHelper.getViewDefinition());
+        }, function() {
+            // do nothing
+        });
+
+        function DialogController($scope, $mdDialog) {
+            $scope.template = {"name": ""};
+            $scope.saveTemplateConfirm = function(answer) {
+                $mdDialog.hide($scope.template);
+            };
+
+            $scope.saveTemplateCancel = function() {
+                $mdDialog.cancel();
+            };
+        }
+    };
 
     DfxVisualBuilder.init();
 }]);
@@ -1376,7 +1418,7 @@ dfxViewEditorApp.directive('dfxGcWebDroppable', [ '$timeout', function($timeout)
                             gc_id  = Math.floor(Math.random() * 100000);
                             var view_editor = document.querySelector('#dfx_src_widget_editor');
                             var view_editor_scope = angular.element(view_editor).scope();
-                            var gc = view_editor_scope.renderGraphicalControl({id: gc_id, type: gc_type, flex: gc_flex, just_dropped: true});
+                            var gc = view_editor_scope.renderGraphicalControl({id: gc_id, type: gc_type, flex: gc_flex});
                             $(ui.item).replaceWith(gc.fragment);
                         } else {
                             // Move component
@@ -1682,8 +1724,8 @@ dfxViewEditorApp.directive('dfxVeCssStyle', ['$timeout', '$compile', function($t
             return '/gcontrols/web/css_style.html';
         },
         link: function(scope, element, attrs) {
-            scope.attributes.style.status = "overridden";
             scope.showCssStyles = function(ev) {
+                scope.attributes.style.status = "overridden"; // must be here, no need to override before clicking on the picker
                 var dfxCssStyleDialog = '<div class="dfx-ve-dialog"></div>';
                 $('body').append(dfxCssStyleDialog);
                 $('.dfx-ve-dialog').load('/gcontrols/web/css_styles_tree.html', function(response,status,xhr){
