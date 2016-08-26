@@ -40,6 +40,10 @@
         <table class="datatable" style="width:100%;">
             <tbody>
             <tr class="ng-scope" role="button" tabindex="0">
+                <td width="40%" class="ng-binding">Method</td>
+                <td width="60%" class="ng-binding"><b>POST</b></td>
+            </tr>
+            <tr class="ng-scope" role="button" tabindex="0">
                 <td width="40%" class="ng-binding">URL</td>
                 <td width="60%" class="ng-binding">{{postmanUrl}}</td>
             </tr>
@@ -402,6 +406,7 @@
 				<md-button ng-click="viewMetaData()" ng-show="isExecuted" class="md-raised">View MetaData</md-button>
 				<md-button ng-click="viewRequest()" ng-show="isExecuted" class="md-raised">View Request</md-button>
 				<div id="showResults" style="padding-top:16px;opacity:0;">
+                    <!-- <p ng-show="showFullResult" style="color:red">The response was cut by {{numberOfCutedChars}} characters click <b><a ng-click="showFullResultAction()" style="cursor:pointer;">here</a></b> to see full response</p> -->
 						<div style="border:1px solid #dddddd;">
 		        	<!-- <textarea id="executedResult" style="white-space:pre;width:100%;border:none;outline:none!important;"></textarea> -->
 		        	<div id="executedResult" style="white-space:pre;width:100%;border:none;outline:none!important;"></div>						

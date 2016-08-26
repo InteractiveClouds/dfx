@@ -59,7 +59,7 @@ html(ng-app="dfx_preview_app")
                         md-menu-content(width="6")
                             md-menu-item(ng-repeat="device in design_devices")
                                 md-button(ng-click="changeDevice($index)") {{device.name}}
-            div(id="PreviewContent", flex)
+            div(id="PreviewContent", flex="100")
                 - var widgetname = wclass.name;
                 - if (wclass.definition.wtype=='builder') {
                     - var children = wclass.definition.parameters.widgetDefinition.definition[0].children;

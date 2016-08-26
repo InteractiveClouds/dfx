@@ -137,23 +137,23 @@ md-fab-speed-dial {
     min-height: 30px;
     line-height: 0px;
     margin: 6px 2px;
-    background-color: #f5f5f5;  
+    background-color: #f5f5f5;
 }
 .dfx-core-gc-fab-item.md-button.md-fab .dfx-core-gc-fab-item-icon {
-    color: #757575; 
+    color: #757575;
     font-size: 20px;
     width: 20px;
     height: 20px;
 }
-.dfx-core-gc-fab.md-button.md-fab:not([disabled]).md-focused, 
-.dfx-core-gc-fab.md-button.md-fab:not([disabled]):hover, 
+.dfx-core-gc-fab.md-button.md-fab:not([disabled]).md-focused,
+.dfx-core-gc-fab.md-button.md-fab:not([disabled]):hover,
 .dfx-core-gc-fab-item.md-button.md-fab:not([disabled]).md-focused,
 .dfx-core-gc-fab-item.md-button.md-fab:not([disabled]):hover {
     background-color: #f5f5f5;
 }
 md-tooltip.dfx-core-gc-fab-tooltip, md-tooltip.dfx-core-gc-fab-tooltip-item {
     background: rgba(0,0,0,0.5);
-} 
+}
 md-tooltip.dfx-core-gc-fab-tooltip .md-content, md-tooltip.dfx-core-gc-fab-tooltip-item .md-content {
     background: none;
 }
@@ -236,7 +236,7 @@ button[disabled="disabled"].dfx-core-gc-button.md-button md-icon, button[disable
     width: 100%;
     padding: 0;
     margin: 0;
-    list-style: none;   
+    list-style: none;
 }
 .dfx-core-gc-treemenu > ul > li li {
     background-color: rgba(153,153,153,.15);
@@ -278,7 +278,7 @@ button[disabled="disabled"].dfx-core-gc-button.md-button md-icon, button[disable
     -webkit-transform: rotate(90deg);
     transform: rotate(90deg);
 }
-.dfx-core-gc-treemenu button > small {    
+.dfx-core-gc-treemenu button > small {
     background-color: #707070;
 }
 .dfx-core-gc-treemenu button[disabled="disabled"] > small {
@@ -293,12 +293,12 @@ button[disabled="disabled"].dfx-core-gc-button.md-button md-icon, button[disable
 .tree-menu-title {
     font-size: 15px;
     font-weight: 700;
-    color: #707070;    
+    color: #707070;
     background-color: rgba(0,0,0,0.15);
     transition: all .5s;
 }
 .tree-menu-title > div {
-    transition: all .5s;    
+    transition: all .5s;
 }
 /* Horizontal Menu */
 .dfx-core-gc-horizontalmenu md-menu-bar {
@@ -337,6 +337,14 @@ md-menu-item button.dfx-horizontalmenu-button small {
 .dfx-core-gc-panel > md-content {
     padding: 8px;
 }
+
+div[dfx-gc-web-panel] > section > md-content > div {
+    overflow: auto;
+}
+div[dfx-gc-web-panel] > div > section > md-content > div > div {
+    overflow: auto;
+}
+
 /* Editor */
 .dfx-core-gc-richtext .ql-container {
     min-height: 200px;
@@ -398,7 +406,7 @@ md-menu-item button.dfx-horizontalmenu-button small {
     color: #757575;
 }
 button[disabled="disabled"].dfx-core-gc-json-button ng-md-icon {
-    color: #bfbfbf;    
+    color: #bfbfbf;
 }
 .dfx-core-gc-json-button-preview {}
 .dfx-core-gc-json-panel-type {
@@ -415,7 +423,7 @@ button[disabled="disabled"].dfx-core-gc-json-button ng-md-icon {
 }
 .dfx-dialog-json-editor pre {
     border: none;
-    height: 100%;    
+    height: 100%;
     margin: 0;
 }
 .dfx-web-gc-json-dialog-tabs {

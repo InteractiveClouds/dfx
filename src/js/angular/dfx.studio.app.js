@@ -6004,7 +6004,7 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
                 $scope.updateApiSo();
             }
             $scope.editFilterTitle = null;
-        }, 0);
+        }, 500);
 
     }
 
@@ -6086,9 +6086,9 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
                     $scope.isExecuted = true;
                 }, 0);
             }).fail(function(data) {
-                $scope.simulatedMeta = JSON.stringify(data, null, '\t');
-                $scope.simulatedResult = JSON.stringify(JSON.parse(data.responseText), null, '\t');
-                $scope.simulatedRequest = JSON.stringify(data, null, '\t');
+                $scope.simulatedMeta = data;
+                $scope.simulatedResult = data.responseText;
+                $scope.simulatedRequest = data;
                 $timeout(function() {
                     $scope.isExecuted = true;
                 }, 0);
@@ -6135,8 +6135,26 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
         // editor.setValue( $scope.simulatedResult );
         // $("#executedResult").val( $scope.simulatedResult );
         $scope.dfxSampleJsonEditor.set($scope.simulatedResult);   
+        // dfxApiServiceObjects.getSettings().then(function( response ){
+        //     var settings = response.data;
+        //     $scope.showFullResult = false;
+        //     if ((settings.api_so_response_max_size == 0) || ($scope.simulatedResult.length < settings.api_so_response_max_size)) {
+        //         $("#executedResult").val( $scope.simulatedResult );
+        //     } else {
+        //         $scope.showFullResult = true;
+        //         $scope.numberOfCutedChars = settings.api_so_response_max_size;
+        //         $("#executedResult").val( $scope.simulatedResult.slice(0,settings.api_so_response_max_size) );
+        //     }
+        // });
         $("#showResults").css('opacity',1);
     }
+
+    // $scope.showFullResultAction = function() {
+    //     $scope.showFullResult = false;
+    //     $("#executedResult").val("") ;
+    //     $("#executedResult").val( $scope.simulatedResult ) ;
+    //     $("#showResults").css('opacity',1);
+    // }
 
     $scope.viewRequest = function() {
         // var editor = $('#executedResult.CodeMirror')[0].CodeMirror;

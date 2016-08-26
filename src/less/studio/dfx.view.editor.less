@@ -63,6 +63,7 @@ md-toast.md-error-toast-theme div {
 
 #dfx-ve-sidenav-left {
   width: 85px;
+  min-width: 85px;
   background-color: #383838;
   color: #fff;
 }
@@ -85,7 +86,7 @@ md-toast.md-error-toast-theme div {
 
 #dfx-ve-sidenav-right {
   width: 430px;
-  max-width: 430px;
+  min-width: 430px;
   background-color: #383838;
   color: #fff;
   div.dfx-ve-property-treeview.hover {
@@ -97,7 +98,7 @@ md-toast.md-error-toast-theme div {
   background-color: #383838;
   color: #fff;
   .dfx-ve-property-treeview.hover>ul:not(:first-child) {
-    margin-top: -10px;    
+    margin-top: -10px;
   }
 }
 
@@ -1160,11 +1161,13 @@ md-tabs[dfx-gc-wizard-design] > md-tabs-content-wrapper {
   flex: 100;
 
   > md-tab-content {
+    height: 100%;
 
     > div[md-tabs-template] {
+      height: 100%;
 
       > md-content {
-        height: 100%;
+        //height: 100%;
       }
     }
   }

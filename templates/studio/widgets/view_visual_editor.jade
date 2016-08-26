@@ -29,17 +29,17 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", layout="co
                                     span(style="padding-left:10px") Source
                 span(style="font-size: 12px;background: #4a4a4a;line-height: 48px;color: #fff;padding: 0 8px;border-left: 1px #6b6a6a solid;border-right: 1px #6b6a6a solid;", ng-show="design_visible")
                     span(style="margin-right:5px") Edit:
-                    img(src="/images/vb/icons/edit_cut.png", ng-show="design_visible", class="dfx-ve-toolbar-icon", ng-click="viewEditorCut($event)", title="cut")
-                    img(src="/images/vb/icons/edit_copy.png", ng-show="design_visible", class="dfx-ve-toolbar-icon", ng-click="viewEditorCopy($event)", title="copy")
-                    img(src="/images/vb/icons/edit_paste.png", ng-show="design_visible", class="dfx-ve-toolbar-icon", ng-click="viewEditorPaste($event)", title="paste")
-                    img(src="/images/vb/icons/edit_undo.png", ng-show="design_visible", class="dfx-ve-toolbar-icon", ng-click="viewEditorUndo($event)", title="undo")
+                    img(src="/images/vb/icons/edit_cut.png", ng-show="design_visible", class="dfx-ve-toolbar-icon animated", ng-click="viewEditorCut($event)", title="cut")
+                    img(src="/images/vb/icons/edit_copy.png", ng-show="design_visible", class="dfx-ve-toolbar-icon animated", ng-click="viewEditorCopy($event)", title="copy")
+                    img(src="/images/vb/icons/edit_paste.png", ng-show="design_visible", class="dfx-ve-toolbar-icon animated", ng-click="viewEditorPaste($event)", title="paste")
+                    img(src="/images/vb/icons/edit_undo.png", ng-show="design_visible", class="dfx-ve-toolbar-icon animated", ng-click="viewEditorUndo($event)", title="undo")
                 span(style="font-size: 12px;margin-left: 1px;background: #4a4a4a;line-height: 48px;color: #fff;padding: 0 8px;border-left: 1px #6b6a6a solid;border-right: 1px #6b6a6a solid;", ng-show="design_visible")
                     span(style="margin-right:5px") Cards:
                     img(src="/images/vb/icons/cards_add.png", ng-show="design_visible", class="dfx-ve-toolbar-icon", ng-click="addCard($event)", title="Add a new card")
                     img(src="/images/vb/icons/cards_subtract.png", ng-show="design_visible", class="dfx-ve-toolbar-icon", ng-click="removeCard($event)", title="Remove the current card")
                 span(style="font-size: 12px;margin-left: 1px;background: #4a4a4a;line-height: 48px;color: #fff;padding: 0 8px;border-left: 1px #6b6a6a solid;border-right: 1px #6b6a6a solid;", ng-show="script_visible")
                     span(style="margin-right:5px") Script:
-                    img(src="/images/vb/icons/script_assistant.png", class="dfx-ve-toolbar-icon", ng-click="showHelpEditor(this)", title="Code Assistant")
+                    img(src="/images/vb/icons/script_assistant.png", class="dfx-ve-toolbar-icon", ng-click="showHelpEditor($event)", title="Code Assistant")
                     img(src="/images/vb/icons/script_dependencies.png", class="dfx-ve-toolbar-icon", ng-click="configureDependenciesScript($event)", title="Configure Dependencies")
                     md-menu#dfx-ve-menu-script-theme
                         span(md-menu-origin, style="background:#368798;margin-left:5px;padding:6px;cursor:pointer;", ng-click="$mdOpenMenu($event)") Theme: {{script_theme}}
@@ -79,11 +79,11 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", layout="co
                 span.flex
                     span(style="font-size: 12px;margin-left: 1px;background: #4a4a4a;line-height: 48px;color: #fff;padding: 0 8px;border-left: 1px #6b6a6a solid;border-right: 1px #6b6a6a solid;", class="pull-right")
                         span(style="margin-right:5px") Actions:
-                        img(src="/images/vb/icons/action_save.png", class="dfx-ve-toolbar-icon", ng-click="saveView()", title="Save")
+                        img(src="/images/vb/icons/action_save.png", class="dfx-ve-toolbar-icon", ng-click="saveView($event)", title="Save")
                         img(src="/images/vb/icons/action_exit.png", class="dfx-ve-toolbar-icon", ng-click="exitViewEditor($event)", title="Exit the editor")
                     span(style="font-size: 12px;margin-left: 1px;background: #4a4a4a;line-height: 48px;color: #fff;padding: 0 8px;border-left: 1px #6b6a6a solid;border-right: 1px #6b6a6a solid;", class="pull-right")
                         span(style="margin-right:5px") Preview:
-                        img(src="/images/vb/icons/preview_local.png", class="dfx-ve-toolbar-icon", ng-click="openPreview()", title="Preview")
+                        img(src="/images/vb/icons/preview_local.png", class="dfx-ve-toolbar-icon", ng-click="openPreview($event)", title="Preview")
                         md-menu#dfx-ve-menu-preview(md-offset="0 36")
                             img(src="/images/vb/icons/preview_global.png", class="dfx-ve-toolbar-icon", ng-click="$mdOpenMenu($event)", title="Settings")
                             md-menu-content(width="4")
@@ -116,7 +116,7 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", layout="co
                             span(style="margin-left:5px;margin-right:5px") >
                             a#dfx-ve-property-title-selected-renderer-text(href="#") Renderer
     div(layout="column", flex, ng-show="!script_visible && !style_visible && !source_visible", style="height:100%")
-        section(layout="row", flex)
+        section(layout="row", flex="100")
             md-sidenav#dfx-ve-sidenav-left.md-sidenav-left.md-whiteframe-z2(md-component-id="left", md-is-locked-open="$mdMedia('gt-md')", ng-show="palette_visible")
                 md-content#dfx-ve-sidenav-left-content(layout-padding show-gt-md)
                     div#dfx_visual_editor_gc_palette_content.dfx-ve-palette-treeview.hover
@@ -161,12 +161,12 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", layout="co
                                 label(for="palette-item-7")
                                     span Custom
                                 ul.dfx-ve-palette-treeview-content(gc-cat="custom", style="margin-bottom:5px")
-            md-content#dfx-ve-main-content(flex, style="height:100%;", ng-click="unselectComponent()")
+            md-content#dfx-ve-main-content(flex="100", ng-click="unselectComponent()")
                 md-tabs.md-dynamic-height(layout="column", md-selected="view_card_select_index")
                     md-tab(ng-repeat="card in view_cards", label="{{card.name}}")
                         md-content(style="padding:10px;background-color:#efefef", layout="column", layout-align="center start")
-                            div#dfx-ve-platform(layout="column", flex, dfx-ve-platform)
-                                div(id="dfx_visual_editor_workspace_{{card.name}}", dfx-card="{{card.name}}", dfx-ve-workspace, style="height:100%;overflow:auto")
+                            div#dfx-ve-platform(layout="column", flex="100", dfx-ve-platform)
+                                div(id="dfx_visual_editor_workspace_{{card.name}}", dfx-card="{{card.name}}", dfx-ve-workspace, style="overflow:auto", flex="100", layout="column")
             md-sidenav#dfx-ve-sidenav-right.md-sidenav-right.md-whiteframe-z2(md-component-id="right", md-is-locked-open="$mdMedia('gt-md')", ng-show="property_visible")
                 md-content#dfx-ve-sidenav-right-content(show-gt-md)
                     div(ng-show="gc_selected==null")
