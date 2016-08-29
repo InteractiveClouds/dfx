@@ -215,7 +215,7 @@ dfxViewEditorApp.controller("dfx_main_controller", [ '$scope', '$rootScope', '$q
 
 }]);
 
-dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScope', '$compile', '$timeout', '$mdDialog', '$mdToast', '$mdSidenav', '$log', '$mdMedia', '$window', '$http', 'dfxMessaging', function($scope, $rootScope, $compile, $timeout, $mdDialog, $mdToast, $mdSidenav, $log, $mdMedia, $window, $http, dfxMessaging) {
+dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScope', '$compile', '$timeout', '$mdDialog', '$mdToast', '$mdSidenav', '$log', '$mdMedia', '$window', '$http', 'dfxMessaging', 'dfxGcTemplates', function($scope, $rootScope, $compile, $timeout, $mdDialog, $mdToast, $mdSidenav, $log, $mdMedia, $window, $http, dfxMessaging, dfxGcTemplates) {
 
     $scope.palette_visible = true;
     $scope.property_visible = true;
@@ -1215,6 +1215,8 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
         $('#dfx-ve-property-title-selected-gc').css('display', 'inline-block');
         $('#dfx-ve-property-title-selected-gc-text').text(component.attributes.name.value);
         $('#dfx-ve-property-title-selected-gc-text').attr('component-id', component.id);
+
+        $scope.loadGcTemplates();
     };
 
     $scope.reloadPropertyPanel = function() {
@@ -1358,29 +1360,38 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
             parent: angular.element(document.body),
             targetEvent: event
         })
-        .then(function(template) {
-            var template_definition = angular.copy($scope.gc_selected);
-            DfxVisualBuilder.removeNotOverriddenAttributes(template_definition.attributes, template_definition.type);
+        .then(function(gc_template) {
+            var gc_selected = angular.copy($scope.gc_selected);
+            DfxVisualBuilder.removeNotOverriddenAttributes(gc_selected.attributes, gc_selected.type);
 
-            console.log('save template: ', template_definition);
+            gc_template.type = gc_selected.type;
+            gc_template.definition = gc_selected.attributes;
+            gc_template.application = $scope.application_name;
+            delete gc_template.definition.name; // remove because it's always overridden anyway
 
+            //- default values to remove when inheritance from TEMPLATE not from default
+            //  - also why icon is in src of the view??
+            //0) refactoring code duplication in dfxGcWebBase.initAttributes()
             //1) save template to mongo
             //2) template must have 'template' property
             //3) we don't have to see template values in source or in properties panel
             //4) select templates in GC property
-            //5) apply it to design time
+            //5) apply it to design time - for just dropped component, when selecting template in drop-down
             //6) rename old (file) template functions to storeGcDefaultTemplate() instead of storeGcTemplate()
             //7) do not forget to uncomment gc_button->menuItemNames
+            //8) prevent cross-linking from templates to each other
 
-            console.log('template: ', template);
+            dfxGcTemplates.create( $scope, gc_template )
+                .then( function() {
+                   dfxMessaging.showMessage( 'The template ' + gc_template.name + ' has been created' );
+                });
 
-            console.log('view definition: ', DfxVisualBuilder.movingComponentHelper.getViewDefinition());
         }, function() {
             // do nothing
         });
 
         function DialogController($scope, $mdDialog) {
-            $scope.template = {"name": ""};
+            $scope.template = {"name": "", "description": ""};
             $scope.saveTemplateConfirm = function(answer) {
                 $mdDialog.hide($scope.template);
             };
@@ -1389,6 +1400,16 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
                 $mdDialog.cancel();
             };
         }
+    };
+
+    $scope.loadGcTemplates = function() {
+        $scope.gc_templates = {};
+        dfxGcTemplates.getByType( $scope, $scope.application_name, $scope.gc_selected.type )
+            .then( function(gc_templates) {
+                gc_templates = gc_templates || {};
+                gc_templates.unshift({ 'name': 'default' });
+                $scope.gc_templates = gc_templates;
+            });
     };
 
     DfxVisualBuilder.init();

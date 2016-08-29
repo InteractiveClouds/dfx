@@ -39,7 +39,7 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", layout="co
                     img(src="/images/vb/icons/cards_subtract.png", ng-show="design_visible", class="dfx-ve-toolbar-icon", ng-click="removeCard($event)", title="Remove the current card")
                 span(style="font-size: 12px;margin-left: 1px;background: #4a4a4a;line-height: 48px;color: #fff;padding: 0 8px;border-left: 1px #6b6a6a solid;border-right: 1px #6b6a6a solid;", ng-show="design_visible")
                     span(style="margin-right:5px") Templates:
-                    img(src="/images/vb/icons/action_save.png", ng-show="design_visible", class="dfx-ve-toolbar-icon", ng-click="saveComponentAsTemplate($event)", title="Save Component as Template")                    
+                    img(src="/images/vb/icons/action_save.png", ng-show="design_visible", class="dfx-ve-toolbar-icon", ng-click="saveComponentAsTemplate($event)", title="Save Component as Template")
                 span(style="font-size: 12px;margin-left: 1px;background: #4a4a4a;line-height: 48px;color: #fff;padding: 0 8px;border-left: 1px #6b6a6a solid;border-right: 1px #6b6a6a solid;", ng-show="script_visible")
                     span(style="margin-right:5px") Script:
                     img(src="/images/vb/icons/script_assistant.png", class="dfx-ve-toolbar-icon", ng-click="showHelpEditor($event)", title="Code Assistant")
@@ -165,6 +165,8 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", layout="co
                                     span Custom
                                 ul.dfx-ve-palette-treeview-content(gc-cat="custom", style="margin-bottom:5px")
             md-content#dfx-ve-main-content(flex="100", ng-click="unselectComponent()")
+                div(style="background-color:lightgray;width:100%;height:30px;") template icons here:
+                    img(ng-repeat="gc_template in gc_templates", ng-if="$index > 0", src="/images/vb/icons/edit_cut.png", class="dfx-ve-toolbar-icon", style="padding:2px;", title="{{gc_template.name}}")
                 md-tabs.md-dynamic-height(layout="column", md-selected="view_card_select_index")
                     md-tab(ng-repeat="card in view_cards", label="{{card.name}}")
                         md-content(style="padding:10px;background-color:#efefef", layout="column", layout-align="center start")
