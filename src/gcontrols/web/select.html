@@ -19,7 +19,7 @@
                ng-mouseup="$eval(attributes.onmouseup.value)"
              ng-disabled="$eval(attributes.disabled.value)" aria-label="GC Select">
         <md-option ng-repeat="option in $gcscope[attributes.options.source] track by $index" value="{{option[attributes.options.value] || $index}}">
-          {{option[attributes.options.display]}}
+          {{$eval(option[attributes.options.display]) || option[attributes.options.display]}}
         </md-option>
     </md-select>
     <md-select ng-if="attributes.optionsType.value==='static'" ng-model="$gcscope[attributes.binding.value]" class="md-altTheme-theme glyph"
@@ -65,7 +65,7 @@
                ng-mouseup="$eval(attributes.onmouseup.value)"
                ng-disabled="$eval(attributes.disabled.value)" aria-label="GC Select">
         <md-option ng-repeat="option in $gcscope[attributes.options.source] track by $index" value="{{option[attributes.options.value] || $index}}">
-            {{option[attributes.options.display]}}
+            {{$eval(option[attributes.options.display]) || option[attributes.options.display]}}
         </md-option>
     </md-select>
     <md-select ng-if="attributes.optionsType.value==='static'" ng-model="attributes.currentItem.value" class="md-altTheme-theme glyph"
