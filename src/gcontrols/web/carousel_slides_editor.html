@@ -132,6 +132,7 @@
             <div class="second-dialog-box"></div>
         </md-dialog-content>
         <div class="md-actions">
+            <md-button ng-show="attributes.optionsType.value === 'dynamic'" ng-click="showSamples()" id="samples-btn" class="md-primary" md-autofocus="attributes.optionsType.value === 'dynamic'">Samples</md-button> 
             <md-button ng-click="closeDialog()" class="md-primary">Close</md-button>
         </div>
     </form>
