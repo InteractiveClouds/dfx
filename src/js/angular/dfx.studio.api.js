@@ -1639,18 +1639,18 @@ dfxStudioApi.factory('dfxGcTemplates', [ '$http', '$q', function($http, $q) {
 
     var api_gc_templates = {};
 
-    /*api_templates.getOne = function( scope, app_name, template_name ) {
+    api_gc_templates.getOne = function( scope, app_name, template_name ) {
         var deferred = $q.defer();
 
         $http({
             method: 'GET',
-            url: '/studio/screentemplates/item/' + template_name + '/' + app_name
+            url: '/studio/gctemplates/item/' + template_name + '/' + app_name
         }).then(function successCallback(response) {
-            deferred.resolve(response.data.screenTemplate);
+            deferred.resolve(response.data.gc_template);
         });
 
         return deferred.promise;
-    };*/
+    };
 
     api_gc_templates.getAll = function( scope, app_name ) {
         var deferred = $q.defer();

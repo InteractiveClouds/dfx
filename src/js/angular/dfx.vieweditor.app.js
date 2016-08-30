@@ -31,7 +31,7 @@ dfxViewEditorApp.controller("dfx_main_controller", [ '$scope', '$rootScope', '$q
             });
         }
         return deferred.promise;
-    }
+    };
 
     $scope.loadView = function() {
         return '/studio/widget/editui/' + $scope.application_name + '/' + $scope.view_name + '/' + $scope.view_platform;
@@ -1365,19 +1365,17 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
             DfxVisualBuilder.removeNotOverriddenAttributes(gc_selected.attributes, gc_selected.type);
 
             gc_template.type = gc_selected.type;
-            gc_template.definition = gc_selected.attributes;
             gc_template.application = $scope.application_name;
-            delete gc_template.definition.name; // remove because it's always overridden anyway
 
-            //- default values to remove when inheritance from TEMPLATE not from default
+            gc_template.definition = gc_selected.attributes;
+            delete gc_template.definition.name; // remove because it's always overridden anyway
+            gc_template.definition.template = gc_template.definition.template || {};
+            gc_template.definition.template.value = gc_template.definition.template.value || 'default';
+
+            //1) default values to remove when inheritance from TEMPLATE not from default
             //  - also why icon is in src of the view??
-            //0) refactoring code duplication in dfxGcWebBase.initAttributes()
-            //1) save template to mongo
-            //2) template must have 'template' property
-            //3) we don't have to see template values in source or in properties panel
-            //4) select templates in GC property
             //5) apply it to design time - for just dropped component, when selecting template in drop-down
-            //6) rename old (file) template functions to storeGcDefaultTemplate() instead of storeGcTemplate()
+            //  - also, refresh scope.gc_templates when new temlate is saved
             //7) do not forget to uncomment gc_button->menuItemNames
             //8) prevent cross-linking from templates to each other
 
