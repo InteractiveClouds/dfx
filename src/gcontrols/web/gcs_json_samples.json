@@ -117,7 +117,27 @@
     		]
     	}
     ],
-	"fab": [],
+	"fab": [
+		{
+			"name": "Example 1",
+			"value": [
+				{
+					"label": "'My Button Label'",
+					"icon": {"name": "'star'", "type": "svg-icon"},        
+					"display": "true",
+					"disabled": "false",
+					"onclick": "toggleScopeState()"
+				},
+				{
+					"label": "'My Button Label'",
+					"icon": {"name": "'stars'", "type": "svg-icon"},        
+					"display": "true",
+					"disabled": "false",
+					"onclick": "toggleScopeState()"					
+				}
+			]	
+		}		
+	],
 	"iconbar": [
 		{
 			"name": "Example 1",

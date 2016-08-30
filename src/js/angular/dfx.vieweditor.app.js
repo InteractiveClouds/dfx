@@ -2558,7 +2558,6 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                             });
                         }                        
                         scope.checkItemNames = function( item ) {
-                            console.log(item);
                             if(item.hasOwnProperty('type')){scope.checkMainNames('type');}
                             if(item.hasOwnProperty('label')){scope.checkMainNames('label');}
                             if(item.hasOwnProperty('title')){scope.checkMainNames('title');}
@@ -2590,8 +2589,6 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                                 }else{
                                     scope.attributes.menuItemNames.value = scope.tempItemNames;
                                 }
-                                console.log('scope.dialogGcType', scope.dialogGcType);
-                                console.log('scope.menuItemNames.value', scope.menuItemNames.value);
                             });
                         }
                         scope.fillPropertiesNames = function(sampleJson){for(var i = 0; i<sampleJson.length; i++){scope.checkItemNames(sampleJson[i]);};}
@@ -2625,6 +2622,7 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                             scope.fillPropertiesNames(scope.gcJsonSample.value);                           
                             var sampleGet = scope.dfxSampleJsonEditor.get(),
                                 sampleStringified = JSON.stringify(sampleGet, null, '\t'),
+                                sampleStringified = sampleStringified.split("\n").join("\n\t"),
                                 scriptEditor = $('#dfx_script_editor.CodeMirror')[0].CodeMirror;
                             $q.all([ scope.fillPropertiesNames ]).then(function(){                                
                                 scope.tempItemNames.main.source = scope.scriptSampleName;
@@ -2646,6 +2644,8 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                                     );
                                     scope.closeDialog();
                                     scope.tempItemNames = {};
+                                    $('body .dfx_notification_counter').remove();
+                                    $timeout(function(){$('body .dfx_notification_counter').remove();},0);
                                 }, 250);                                                        
                             });
                         }
