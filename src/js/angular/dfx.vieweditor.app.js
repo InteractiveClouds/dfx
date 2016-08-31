@@ -2654,7 +2654,7 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                             $('.dfx-ve-content-dialog').removeClass('active');
                             angular.element($('.dfx-ve-dialog')).remove();
                             $('.sp-container').remove();                            
-                        }
+                        }                        
                     }
                 })
             };
