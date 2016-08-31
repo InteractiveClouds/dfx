@@ -100,15 +100,17 @@ md-toolbar.dfx-core-gc-toolbar:not(.md-menu-toolbar){
     background-color: rgb(255,215,64);
 }
 .panel-body-collapser {
+    display: flex;
     width: 50px;
-    float: right;
-    padding: 10px 0 0 20px;
 }
 .panel-body-collapser md-icon.collapser-trigger {
-    width: 15px;
+    width: 20px;
     height: 20px;
     cursor: pointer;
     transition: all .5s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .panel-body-collapser md-icon.collapser-trigger.expanded {
     -webkit-transform: rotate(90deg);
