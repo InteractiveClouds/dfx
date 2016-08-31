@@ -8,7 +8,7 @@ dfxViewEditorApp.config(function($mdThemingProvider) {
     $mdThemingProvider.setDefaultTheme('altTheme');
 });
 
-dfxViewEditorApp.controller("dfx_main_controller", [ '$scope', '$rootScope', '$q', '$http', '$mdDialog', '$compile', function($scope, $rootScope, $q, $http, $mdDialog, $compile) {
+dfxViewEditorApp.controller("dfx_main_controller", [ '$scope', '$rootScope', '$q', '$http', '$mdDialog', '$compile', '$timeout', function($scope, $rootScope, $q, $http, $mdDialog, $compile, $timeout) {
     $rootScope.message = "Welcome to the View Editor";
     $scope.application_name = $('#dfx-view-editor-body').attr('data-application');
     $scope.view_name = $('#dfx-view-editor-body').attr('data-widget');
@@ -402,22 +402,23 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     };
 
     $scope.refreshDevice = function() {
+        var dfx_ve_platform = $('div[dfx-ve-platform]');
         if ($scope.design_device_orientation=='Portrait') {
-            $('#dfx-ve-platform').css('width', $scope.design_selected_device.portrait['width']);
-            $('#dfx-ve-platform').css('height', $scope.design_selected_device.portrait['height']);
-            $('#dfx-ve-platform').css('padding-top', $scope.design_selected_device.portrait['padding-top']);
-            $('#dfx-ve-platform').css('padding-left', $scope.design_selected_device.portrait['padding-left']);
-            $('#dfx-ve-platform').css('padding-right', $scope.design_selected_device.portrait['padding-right']);
-            $('#dfx-ve-platform').css('padding-bottom', $scope.design_selected_device.portrait['padding-bottom']);
-            $('#dfx-ve-platform').css( 'background', 'url(/images/' + $scope.design_selected_device.portrait['image'] + ') no-repeat' );
+            dfx_ve_platform.css('width', $scope.design_selected_device.portrait['width']);
+            dfx_ve_platform.css('height', $scope.design_selected_device.portrait['height']);
+            dfx_ve_platform.css('padding-top', $scope.design_selected_device.portrait['padding-top']);
+            dfx_ve_platform.css('padding-left', $scope.design_selected_device.portrait['padding-left']);
+            dfx_ve_platform.css('padding-right', $scope.design_selected_device.portrait['padding-right']);
+            dfx_ve_platform.css('padding-bottom', $scope.design_selected_device.portrait['padding-bottom']);
+            dfx_ve_platform.css( 'background', 'url(/images/' + $scope.design_selected_device.portrait['image'] + ') no-repeat' );
         } else {
-            $('#dfx-ve-platform').css('width', $scope.design_selected_device.landscape['width']);
-            $('#dfx-ve-platform').css('height', $scope.design_selected_device.landscape['height']);
-            $('#dfx-ve-platform').css('padding-top', $scope.design_selected_device.landscape['padding-top']);
-            $('#dfx-ve-platform').css('padding-left', $scope.design_selected_device.landscape['padding-left']);
-            $('#dfx-ve-platform').css('padding-right', $scope.design_selected_device.landscape['padding-right']);
-            $('#dfx-ve-platform').css('padding-bottom', $scope.design_selected_device.landscape['padding-bottom']);
-            $('#dfx-ve-platform').css( 'background', 'url(/images/' + $scope.design_selected_device.landscape['image'] + ') no-repeat' );
+            dfx_ve_platform.css('width', $scope.design_selected_device.landscape['width']);
+            dfx_ve_platform.css('height', $scope.design_selected_device.landscape['height']);
+            dfx_ve_platform.css('padding-top', $scope.design_selected_device.landscape['padding-top']);
+            dfx_ve_platform.css('padding-left', $scope.design_selected_device.landscape['padding-left']);
+            dfx_ve_platform.css('padding-right', $scope.design_selected_device.landscape['padding-right']);
+            dfx_ve_platform.css('padding-bottom', $scope.design_selected_device.landscape['padding-bottom']);
+            dfx_ve_platform.css( 'background', 'url(/images/' + $scope.design_selected_device.landscape['image'] + ') no-repeat' );
         }
     };
 
@@ -666,7 +667,6 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
         $scope.view_card_selected = card;
         $scope.unselectComponent();
         $scope.addComponents(widget_definition.definition, null, card);
-
     };
 
     $scope.exitViewEditor = function(ev) {
