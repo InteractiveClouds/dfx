@@ -343,9 +343,9 @@ DfxStudio.initNotifCounter = function () {
 DfxStudio.refreshNotifCounter = function () {
     $(DfxStudio.hiddenNotifCounter).html("" + DfxStudio.pendingNotifications.length);
     if (DfxStudio.pendingNotifications.length != 0) {
-        $(DfxStudio.hiddenNotifCounter).css('opacity', 1);
+        $(DfxStudio.hiddenNotifCounter).css({'opacity': 1, "height": "auto", "overflow": "auto"});
     } else {
-        $(DfxStudio.hiddenNotifCounter).css('opacity', 0);
+        $(DfxStudio.hiddenNotifCounter).css({'opacity': 0, "height": 0, "overflow": "hidden"});
     }
 };
 
