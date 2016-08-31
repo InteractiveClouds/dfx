@@ -6075,7 +6075,7 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
         $.ajax({
             url: '/studio/query/execute',
             data: simulateService,
-            type: 'GET',
+            type: 'POST',
             headers : {'X-DREAMFACE-TENANT' : $('body').attr('data-tenantid')}
         })
             .then(function(data) {
