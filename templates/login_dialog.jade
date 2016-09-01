@@ -23,7 +23,7 @@ html
                 document.cookie = "X-DREAMFACE-TENANT=" + $('#tenantid').val() + ";path=/;";
 
                 $.ajax(obj).then(function (data) {
-                        window.location.href = "/studio/landing.html";
+                    window.location.href = "/studio/landing.html";
                 });
 
                 function deleteCookie(name) {
@@ -31,6 +31,11 @@ html
                     document.cookie = name + "=; path=/; expires=" + date.toUTCString();
                 }
             }
+            $(document).keyup(function(e) { 
+                if (e.which === 13 && $(document.activeElement).attr('id') !=='sign-in-button') consoleLogin();
+                e.preventDefault();
+                e.stopPropagation();
+            });
 
     body(style="margin:0;", ng-app="dfxStudioLandingApp", ng-controller="dfx_studio_login_controller")
         div.layout-row(style="height:100%;")
@@ -67,5 +72,5 @@ html
                                     a.text2-font-family(href="#" style="font-size:13px;color:#1BC2E8;") Forgot Password?
                             div.layout-row.layout-align-end-center(style="margin-top:10px;")
                                 div
-                                    button.md-button(onclick="consoleLogin()" style="background: #383838;color: white;width:130px;margin:10px 0 0 0;") Sign in
+                                    button.md-button(id="sign-in-button" onclick="consoleLogin()" style="background: #383838;color: white;width:130px;margin:10px 0 0 0;") Sign in
 

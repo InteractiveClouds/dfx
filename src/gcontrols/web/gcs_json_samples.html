@@ -1,0 +1,28 @@
+<div class="dfx-ve-content-dialog">
+    <md-toolbar><div class="md-toolbar-tools"><h2>Dynamic Options JSON Samples</h2></div></md-toolbar>
+    <md-content class="dfx-ve-content-container">
+        <div class="dfx-ve-content-categories">            
+            <h3 class="dfx-ve-content-categories-title">List of Samples</h3>                   
+            <ul class="clearfix"> 
+                <li ng-repeat="sampleItem in gcSamplesArray track by $index" class="col-md-12">
+                    <span ng-click="selectSample($event, sampleItem)">{{sampleItem.name}}</span>
+                </li>
+            </ul>                       
+        </div>
+        <div class="dfx-ve-content-data">            
+            <md-content flex class="dfx-ve-sample" id="dfx-ve-sample-json"></md-content>
+            <md-input-container ng-form="dfxSampleForm" style="padding-left:8px;width:80%" ng-class="dfxSampleForm.dfxJsonSampleInput.$valid ? '' : 'md-input-invalid'">
+                <label>Scope variable name for the Sample:</label>
+                <input type="text" name="dfxJsonSampleInput" id="dfx-json-sample-name" ng-model="scriptSampleName" ng-change="validateSampleName()" ng-pattern="/^[a-zA-Z_][a-zA-Z0-9_]+$/" />
+                <div ng-messages="dfxSampleForm.dfxJsonSampleInput.$error">
+                    <div ng-message="pattern">Variable name can have only letters, numbers, underscore. Must consist at least of two symbols and not start with number.</div>
+                </div>                
+            </md-input-container>     
+        </div>
+    </md-content>        
+    <div class="dfx-ve-actions">
+        <md-button ng-click="addSampleToScript()" id="dfx-copy-sample-btn" ng-disabled="!dfxSampleForm.dfxJsonSampleInput.$valid || scriptSampleName===''" class="md-primary">Add variable to the Script</md-button>
+        <md-button ng-click="closeSamples()" class="md-primary">Back</md-button>
+    </div>
+</div>
+<div class="dfx-ve-backdrop" ng-click="closeSamples()"></div>

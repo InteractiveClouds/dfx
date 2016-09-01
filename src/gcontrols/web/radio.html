@@ -17,7 +17,7 @@
                          ng-mousedown="$eval(attributes.onmousedown.value)"
                          ng-mouseup="$eval(attributes.onmouseup.value)"
                          ng-value="it[attributes.bindingProperty.value] || it.$$hashKey" class="gc-radio" aria-label="{{it[attributes.bindingProperty.value]}}"
-                         ng-disabled="$eval(attributes.disabled.value)">{{it[attributes.propToDisplay.value]}}
+                         ng-disabled="$eval(attributes.disabled.value)">{{$eval(it[attributes.propToDisplay.value]) || it[attributes.propToDisplay.value]}}
         </md-radio-button>
     </md-radio-group>
     <md-radio-group ng-if="attributes.optionsType.value==='static'" ng-model="$gcscope[attributes.binding.value]" ng-change="$eval(attributes.onchange.value)" class="md-primary" ng-class="attributes.buttonClass.value">
@@ -59,7 +59,7 @@
                          ng-mouseleave="$eval(attributes.onmouseleave.value)"
                          ng-mousedown="$eval(attributes.onmousedown.value)"
                          ng-mouseup="$eval(attributes.onmouseup.value)"
-                         ng-value="it[attributes.bindingProperty.value] || it.$$hashKey" class="gc-radio" aria-label="{{it[attributes.propToDisplay.value]}}" ng-disabled="$eval(attributes.disabled.value)">{{it[attributes.propToDisplay.value]}}</md-radio-button>
+                         ng-value="it[attributes.bindingProperty.value] || it.$$hashKey" class="gc-radio" aria-label="{{it[attributes.propToDisplay.value]}}" ng-disabled="$eval(attributes.disabled.value)">{{$eval(it[attributes.propToDisplay.value]) || it[attributes.propToDisplay.value]}}</md-radio-button>
     </md-radio-group>
     <md-radio-group ng-if="attributes.optionsType.value==='static'" ng-model="attributes.currentItem" ng-change="$eval(attributes.onchange.value)" class="md-primary" ng-class="attributes.buttonClass.value">
         <md-radio-button ng-repeat="it in attributes.radioItems.value track by $index"

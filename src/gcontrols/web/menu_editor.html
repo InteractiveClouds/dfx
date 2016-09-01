@@ -6,7 +6,7 @@
 <md-dialog-content id="{{component_id}}_md_dialog" layout="column" style="max-width:880px;max-height:810px;width:880px;margin:0px;padding:8px 8px 2px 8px;min-height:480px;">
     <md-radio-group ng-model="menuItemsType.value" ng-change="setMenuItemsType(menuItemsType.value)" class="dfx-ve-menu-editor-radio-group">
         <md-radio-button class="dfx-ve-menu-editor-radio-button md-primary" value="static" aria-label="Static options">Static options</md-radio-button>
-        <md-radio-button class="dfx-ve-menu-editor-radio-button md-primary" value="dynamic" aria-label="Dynamic options">Dynamic options</md-radio-button>
+        <md-radio-button class="dfx-ve-menu-editor-radio-button md-primary" value="dynamic" aria-label="Dynamic options" ng-click="focusSamples()">Dynamic options</md-radio-button>
     </md-radio-group>
 	<div ng-show="menuItemsType.value === 'static'" style="display:flex;flex-direction:row;flex-wrap:wrap;justify-content:space-between;">
 		<section id="{{component_id}}_menu_structure" class="md-whiteframe-1dp" style="width:49.5%;border-radius:4px;overflow:hidden;">
@@ -516,7 +516,7 @@
     <div class="second-dialog-box"></div>   
 </md-dialog-content>
 <div class="md-actions"> 
-<!-- <md-button ng-show="menuItemsType.value === 'dynamic'" ng-click="showSamples()" class="md-primary" md-autofocus="menuItemsType.value === 'dynamic'">Samples</md-button>  -->
+<md-button ng-show="menuItemsType.value === 'dynamic'" ng-click="showSamples()" id="samples-btn" class="md-primary" md-autofocus="menuItemsType.value === 'dynamic'">Samples</md-button> 
 <md-button ng-click="closeDialog()" class="md-primary" md-autofocus="menuItemsType.value === 'static'">Close</md-button> 
 </div> 
 </form>

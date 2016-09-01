@@ -6075,20 +6075,20 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
         $.ajax({
             url: '/studio/query/execute',
             data: simulateService,
-            type: 'GET',
+            type: 'POST',
             headers : {'X-DREAMFACE-TENANT' : $('body').attr('data-tenantid')}
         })
             .then(function(data) {
-                $scope.simulatedMeta = JSON.stringify(data.metadata, null, '\t');
-                $scope.simulatedResult = JSON.stringify(data.data, null, '\t');
-                $scope.simulatedRequest = JSON.stringify(data.requestData, null, '\t');
+                $scope.simulatedMeta = data.metadata;
+                $scope.simulatedResult = data.data;
+                $scope.simulatedRequest = data.requestData;
                 $timeout(function() {
                     $scope.isExecuted = true;
                 }, 0);
             }).fail(function(data) {
-                $scope.simulatedMeta = JSON.stringify(data, null, '\t');
-                $scope.simulatedResult = JSON.stringify(JSON.parse(data.responseText), null, '\t');
-                $scope.simulatedRequest = JSON.stringify(data, null, '\t');
+                $scope.simulatedMeta = data;
+                $scope.simulatedResult = data.responseText;
+                $scope.simulatedRequest = data;
                 $timeout(function() {
                     $scope.isExecuted = true;
                 }, 0);
@@ -6115,43 +6115,52 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
         //     executedMirror.refresh();
         // }, 0);
         sidenav.find("#executedResult").css( "height", sidenavHeight-245 );
+        var container = document.getElementById('executedResult'),
+            options = { mode: 'code', modes: ['tree','form','code','text','view'], history: true }
+        $timeout(function(){
+            if(!$scope.dfxSampleJsonEditor) $scope.dfxSampleJsonEditor = new JSONEditor(container, options, $scope.simulatedResult);
+        },0);
     }
 
     $scope.viewMetaData = function() {
         // var editor = $('#executedResult.CodeMirror')[0].CodeMirror;
         // editor.setValue( $scope.simulatedMeta );
-        $("#executedResult").val( $scope.simulatedMeta );
+        // $("#executedResult").val( $scope.simulatedMeta );
+        $scope.dfxSampleJsonEditor.set($scope.simulatedMeta);
         $("#showResults").css('opacity',1);
     }
 
     $scope.viewResult = function() {
         // var editor = $('#executedResult.CodeMirror')[0].CodeMirror;
         // editor.setValue( $scope.simulatedResult );
-        dfxApiServiceObjects.getSettings().then(function( response ){
-            var settings = response.data;
-            $scope.showFullResult = false;
-            if ((settings.api_so_response_max_size == 0) || ($scope.simulatedResult.length < settings.api_so_response_max_size)) {
-                $("#executedResult").val( $scope.simulatedResult );
-            } else {
-                $scope.showFullResult = true;
-                $scope.numberOfCutedChars = settings.api_so_response_max_size;
-                $("#executedResult").val( $scope.simulatedResult.slice(0,settings.api_so_response_max_size) );
-            }
-            $("#showResults").css('opacity',1);
-        });
-    }
-
-    $scope.showFullResultAction = function() {
-        $scope.showFullResult = false;
-        $("#executedResult").val("") ;
-        $("#executedResult").val( $scope.simulatedResult ) ;
+        // $("#executedResult").val( $scope.simulatedResult );
+        $scope.dfxSampleJsonEditor.set($scope.simulatedResult);   
+        // dfxApiServiceObjects.getSettings().then(function( response ){
+        //     var settings = response.data;
+        //     $scope.showFullResult = false;
+        //     if ((settings.api_so_response_max_size == 0) || ($scope.simulatedResult.length < settings.api_so_response_max_size)) {
+        //         $("#executedResult").val( $scope.simulatedResult );
+        //     } else {
+        //         $scope.showFullResult = true;
+        //         $scope.numberOfCutedChars = settings.api_so_response_max_size;
+        //         $("#executedResult").val( $scope.simulatedResult.slice(0,settings.api_so_response_max_size) );
+        //     }
+        // });
         $("#showResults").css('opacity',1);
     }
+
+    // $scope.showFullResultAction = function() {
+    //     $scope.showFullResult = false;
+    //     $("#executedResult").val("") ;
+    //     $("#executedResult").val( $scope.simulatedResult ) ;
+    //     $("#showResults").css('opacity',1);
+    // }
 
     $scope.viewRequest = function() {
         // var editor = $('#executedResult.CodeMirror')[0].CodeMirror;
         // editor.setValue( $scope.simulatedRequest );
-        $("#executedResult").val( $scope.simulatedRequest );
+        // $("#executedResult").val( $scope.simulatedRequest );
+        $scope.dfxSampleJsonEditor.set($scope.simulatedRequest);
         $("#showResults").css('opacity',1);
     }
 
