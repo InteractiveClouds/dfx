@@ -2646,8 +2646,6 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                                     );
                                     scope.closeDialog();
                                     scope.tempItemNames = {};
-                                    $('body .dfx_notification_counter').remove();
-                                    $timeout(function(){$('body .dfx_notification_counter').remove();},0);
                                 }, 250);
                             });
                         }

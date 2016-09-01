@@ -4,6 +4,8 @@
   "display":              { "value": "true" },
   "dynamic":              { "value": "" },
   "static":               { "value": [] },
+  "treeItemsType":        { "value": "static" },
+  "selected":             { "value": "" },
   "label":                { "value": "" },
   "repeatable_property":  { "value": "" },
   "style":                { "value": "" },
