@@ -1367,6 +1367,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
 
             gc_template.type = gc_selected.type;
             gc_template.application = $scope.application_name;
+            gc_template.platform = $scope.view_platform;
 
             gc_template.definition = gc_selected.attributes;
             delete gc_template.definition.name; // remove because it's always overridden anyway
@@ -1404,7 +1405,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
 
     $scope.loadGcTemplates = function() {
         $scope.gc_templates = {};
-        dfxGcTemplates.getByType( $scope, $scope.application_name, $scope.gc_selected.type )
+        dfxGcTemplates.getByType( $scope, $scope.application_name, $scope.gc_selected.type, $scope.view_platform )
             .then( function(gc_templates) {
                 gc_templates = gc_templates || {};
                 gc_templates.unshift({ 'name': 'default' });
@@ -1412,10 +1413,10 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
             });
     };
 
-    $scope.reinitComponentWithTemplate = function(gc_component_id) {
-        //console.log('gc_component_id: ', gc_component_id, ', gc_template_name: ', gc_template_name, ', $scope: ', $scope);
+    $scope.reinitComponentWithTemplate = function() {
+        return;//TODO: temporarily not used
 
-        var gc_element = $('#'+gc_component_id);
+        var gc_element = $('#' + $scope.gc_selected.id);
         var gc_element_scope = angular.element(gc_element).scope();
 
         //console.log('gc_element_scope: ', gc_element_scope);

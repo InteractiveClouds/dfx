@@ -167,7 +167,7 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", layout="co
             md-content#dfx-ve-main-content(flex="100", ng-click="unselectComponent()")
                 div(style="width:100%;")
                     md-chips.dfx-ve-templates(ng-model="gc_templates", readonly="true", style="color:#fff;font-size:13px;")
-                        md-chip-template(ng-if="$index > 0") {{$chip.name}}
+                        md-chip-template {{$chip.name}}
                 md-tabs.md-dynamic-height(layout="column", md-selected="view_card_select_index")
                     md-tab(ng-repeat="card in view_cards", label="{{card.name}}")
                         md-content(style="padding:10px;background-color:#efefef", layout="column", layout-align="center start")

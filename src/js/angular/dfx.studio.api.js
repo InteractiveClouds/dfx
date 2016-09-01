@@ -1639,12 +1639,12 @@ dfxStudioApi.factory('dfxGcTemplates', [ '$http', '$q', function($http, $q) {
 
     var api_gc_templates = {};
 
-    api_gc_templates.getOne = function( scope, app_name, template_name ) {
+    api_gc_templates.getOne = function( scope, app_name, template_name, template_platform ) {
         var deferred = $q.defer();
 
         $http({
             method: 'GET',
-            url: '/studio/gctemplates/item/' + template_name + '/' + app_name
+            url: '/studio/gctemplates/item/' + template_name + '/' + app_name + '/' + template_platform
         }).then(function successCallback(response) {
             deferred.resolve(response.data.gc_template);
         });
@@ -1652,12 +1652,12 @@ dfxStudioApi.factory('dfxGcTemplates', [ '$http', '$q', function($http, $q) {
         return deferred.promise;
     };
 
-    api_gc_templates.getAll = function( scope, app_name ) {
+    api_gc_templates.getAll = function( scope, app_name, template_platform ) {
         var deferred = $q.defer();
 
         $http({
             method: 'GET',
-            url: '/studio/gctemplates/list/' + app_name
+            url: '/studio/gctemplates/list/' + app_name + '/' + template_platform
         }).then(function successCallback(response) {
             deferred.resolve(response.data.gc_templates);
         });
@@ -1665,12 +1665,12 @@ dfxStudioApi.factory('dfxGcTemplates', [ '$http', '$q', function($http, $q) {
         return deferred.promise;
     };
 
-    api_gc_templates.getByType = function( scope, app_name, type ) {
+    api_gc_templates.getByType = function( scope, app_name, type, template_platform ) {
         var deferred = $q.defer();
 
         $http({
             method: 'GET',
-            url: '/studio/gctemplates/type/' + type + '/' + app_name
+            url: '/studio/gctemplates/type/' + type + '/' + app_name + '/' + template_platform
         }).then(function successCallback(response) {
             deferred.resolve(response.data.gc_templates);
         });
