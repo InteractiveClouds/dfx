@@ -75,6 +75,10 @@ dfxStudioApp.config([ '$routeProvider', '$mdThemingProvider', function($routePro
             controller: 'dfx_studio_view_category_controller',
             templateUrl: 'studioviews/views_categories.html'
         })
+        .when('/gc_templates/:app_name/:platform', {
+            controller: 'dfx_studio_gc_template_controller',
+            templateUrl: 'studioviews/gc_templates.html'
+        })
         .when('/api_so/create/:appname', {
             controller: 'dfx_studio_api_so_controller',
             templateUrl: 'studioviews/api_so.html'
@@ -160,7 +164,7 @@ dfxStudioApp.controller("dfx_studio_controller", [ '$scope', '$rootScope', '$mdD
 
     $scope.redirectDocumentation = function(){
         $window.open("http://interactive-clouds.com/documentation/", "_blank") ;
-    };    
+    };
 
     $scope.signOut = function(path) {
         $window.location.href = '/studio/' + $scope.tenant_id + '/login';
@@ -230,6 +234,7 @@ dfxStudioApp.controller("dfx_studio_controller", [ '$scope', '$rootScope', '$mdD
             snippet +=  '<md-menu-item><md-button ng-href="#/page/create/'+element+'/'+platform+'"><md-icon class="fa fa-plus" aria-label="Create Page"></md-icon>Create Page</md-button></md-menu-item><md-menu-item><md-button ng-href="#/pages_categories/'+element+'/'+platform+'"><md-icon class="fa fa-list" aria-label="Manage Categories"></md-icon>Manage Categories</md-button></md-menu-item>';
         } else if (entity=='view') {
             snippet +=  '<md-menu-item><md-button ng-href="#/view/create/'+element+'/'+platform+'"><md-icon class="fa fa-plus" aria-label="Create View"></md-icon>Create View</md-button></md-menu-item><md-menu-item><md-button ng-href="#/views_categories/'+element+'/'+platform+'"><md-icon class="fa fa-list" aria-label="Manage Categories"></md-icon>Manage Categories</md-button></md-menu-item>';
+            snippet +=  '<md-menu-item><md-button ng-href="#/gc_templates/'+element+'/'+platform+'"><md-icon class="fa fa-list" aria-label="Manage GC Templates"></md-icon>Manage GC Templates</md-button></md-menu-item>';
         } else if (entity=='api_so') {
             snippet +=  '<md-menu-item><md-button ng-href="#/api_so/create/'+element+'"><md-icon class="fa fa-plus" aria-label="Create API Service Object"></md-icon>Create API Service Object</md-button></md-menu-item><md-menu-item><md-button ng-href="#/api_so_categories/'+element+'"><md-icon class="fa fa-list" aria-label="Manage Categories"></md-icon>Manage Categories</md-button></md-menu-item>';
         } else if (entity=='category') {
@@ -267,7 +272,7 @@ dfxStudioApp.controller("dfx_studio_controller", [ '$scope', '$rootScope', '$mdD
                                              '<md-menu-item><md-button ng-click="copyCatBtn($event)"><md-icon class="fa fa-copy" aria-label="Copy"></md-icon>Copy Category to ...</md-button></md-menu-item>' +
                                              '<md-menu-item><md-button ng-click="confirmDelete($event)"><md-icon class="fa fa-trash" aria-label="Delete"></md-icon>Delete Category</md-button></md-menu-item>'; break;
                 }
-            }            
+            }
         } else if (entity === 'menuItem') {
             $scope.targetComponent = {
                 "name":        name,
@@ -300,7 +305,7 @@ dfxStudioApp.controller("dfx_studio_controller", [ '$scope', '$rootScope', '$mdD
 
     $scope.renameCategoryBtn = function($event) {
         var parentEl = angular.element(document.body);
-        
+
         $mdDialog.show({
             parent: parentEl,
             targetEvent: $event,
@@ -309,14 +314,14 @@ dfxStudioApp.controller("dfx_studio_controller", [ '$scope', '$rootScope', '$mdD
             templateUrl: 'studioviews/category_rename.html',
             controller: DialogController
         });
-        
+
         function DialogController($scope, $mdDialog) {
             $scope.renameCategory = function( newName ) {
                 if ( (newName !== '') && (/^[-a-zA-Z0-9_]+$/.test( newName )) ) {
-                    if ( $scope.cat_type === 'page' ) {                
+                    if ( $scope.cat_type === 'page' ) {
                         dfxPages.editCategory( $scope, $scope.cat_name, newName, $scope.cat_app, $scope.cat_platform ).then(function( data ) {
                             if ( data.data.data !== 'Current category name already exists!' ) {
-                                dfxMessaging.showMessage(data.data.data);                                
+                                dfxMessaging.showMessage(data.data.data);
                                 $scope.getAll();
                                 $route.reload();
                                 $mdDialog.hide();
@@ -324,10 +329,10 @@ dfxStudioApp.controller("dfx_studio_controller", [ '$scope', '$rootScope', '$mdD
                                 dfxMessaging.showWarning(data.data.data);
                             }
                         });
-                    } else if ( $scope.cat_type === 'view' ) {                
+                    } else if ( $scope.cat_type === 'view' ) {
                         dfxViews.editCategory( $scope, $scope.cat_name, newName, $scope.cat_app, $scope.cat_platform ).then(function( data ) {
                             if ( data.data.data !== 'Current category name already exists!' ) {
-                                dfxMessaging.showMessage(data.data.data);                                
+                                dfxMessaging.showMessage(data.data.data);
                                 $scope.getAll();
                                 $route.reload();
                                 $mdDialog.hide();
@@ -335,10 +340,10 @@ dfxStudioApp.controller("dfx_studio_controller", [ '$scope', '$rootScope', '$mdD
                                 dfxMessaging.showWarning(data.data.data);
                             }
                         });
-                    } else if ( $scope.cat_type === 'apiso' ) {                
-                        dfxApiServiceObjects.editCategory( $scope, $scope.cat_name, newName, $scope.cat_app ).then(function( data ) {                            
+                    } else if ( $scope.cat_type === 'apiso' ) {
+                        dfxApiServiceObjects.editCategory( $scope, $scope.cat_name, newName, $scope.cat_app ).then(function( data ) {
                             if ( data.data.data !== 'Current category name already exists!' ) {
-                                dfxMessaging.showMessage(data.data.data);                                
+                                dfxMessaging.showMessage(data.data.data);
                                 $scope.getAll();
                                 $route.reload();
                                 $mdDialog.hide();
@@ -351,7 +356,7 @@ dfxStudioApp.controller("dfx_studio_controller", [ '$scope', '$rootScope', '$mdD
                     dfxMessaging.showWarning('Not valid Category Name');
                 }
             }
-            
+
             $scope.closeDialog = function() {
                 $mdDialog.hide();
             }
@@ -369,7 +374,7 @@ dfxStudioApp.controller("dfx_studio_controller", [ '$scope', '$rootScope', '$mdD
                     dfxMessaging.showWarning(data.data.data);
                 }
             });
-        } else if ( $scope.cat_type === 'view' ) {                
+        } else if ( $scope.cat_type === 'view' ) {
             dfxViews.removeCategory( $scope, $scope.cat_name, $scope.cat_app, $scope.cat_platform ).then(function( data ) {
                 if ( data.status && data.status === 200 ) {
                     dfxMessaging.showMessage(data.data.data);
@@ -379,7 +384,7 @@ dfxStudioApp.controller("dfx_studio_controller", [ '$scope', '$rootScope', '$mdD
                     dfxMessaging.showWarning(data.data.data);
                 }
             });
-        } else if ( $scope.cat_type === 'apiso' ) {                
+        } else if ( $scope.cat_type === 'apiso' ) {
             dfxApiServiceObjects.removeCategory( $scope, $scope.cat_name, $scope.cat_app ).then(function( data ) {
                 if ( data.status && data.status === 200 ) {
                     dfxMessaging.showMessage(data.data.data);
@@ -870,7 +875,7 @@ dfxStudioApp.controller("dfx_studio_category_controller", [ '$scope', '$routePar
             $scope.table_data = data.data[$scope.entity][$scope.cat_platform][$scope.category];
         }
     });
-    
+
     $scope.edit = function( name ) {
         switch ( $scope.entity ) {
             case 'pages':       $location.path('/page/update/' + $scope.app_name + '/' + $scope.cat_platform + '/'+ name); break;
@@ -1771,7 +1776,7 @@ dfxStudioApp.controller("dfx_studio_stackoverflow_controller", [ '$scope', '$win
 }]);
 
 dfxStudioApp.controller("dfx_studio_samples_controller", [ '$scope', '$http', '$window', '$mdDialog', 'dfxMessaging', 'dfxSamples', 'dfxApplications', 'dfxViews', function($scope, $http, $window, $mdDialog, dfxMessaging, dfxSamples, dfxApplications, dfxViews) {
-    
+
     $scope.categories = [];
     $scope.samples = [];
     $scope.isCategoriesLoaded = false;
@@ -1811,7 +1816,7 @@ dfxStudioApp.controller("dfx_studio_samples_controller", [ '$scope', '$http', '$
             for (var i=0; i<contents.data.length; i++) {
                 if (contents.data[i].type=='file') {
                     dfxSamples.contents( $scope, contents.data[i].path ).then( function(file_contents) {
-                       $scope.loadFile( file_contents.data.url, $scope.samples, sample_name, cat_name ); 
+                       $scope.loadFile( file_contents.data.url, $scope.samples, sample_name, cat_name );
                     });
                 }
             }
@@ -1897,7 +1902,7 @@ dfxStudioApp.controller("dfx_studio_samples_controller", [ '$scope', '$http', '$
                 var resource_cat;
                 var re = /[.]\w+$/;
                 var m;
-                 
+
                 if ((m = re.exec(resources.data[0].name)) !== null) {
                     if (m.index === re.lastIndex) {
                         re.lastIndex++;
@@ -1941,20 +1946,20 @@ dfxStudioApp.controller("dfx_studio_samples_controller", [ '$scope', '$http', '$
                             break;
                     }
                 }
-                
+
                 $scope.installSampleResource( resources.data[i].name, resources.data[i].path, mime_type, resource_cat );
             }
         });
-        
+
 
     };
 
     $scope.installSampleResource = function(resource_name, resource_path, mime_type, resource_cat) {
-        
+
         dfxSamples.contents( $scope, resource_path ).then( function(resource_content) {
-            
+
             var form_data = new FormData();
-            
+
             var bytes;
 
             if (resource_cat=='assets') {
@@ -1970,7 +1975,7 @@ dfxStudioApp.controller("dfx_studio_samples_controller", [ '$scope', '$http', '$
                 // Convert the string to bytes
                 bytes = atob(resource_content.data.content);
             }
-            
+
             var blob = new Blob([bytes], { type: mime_type});
             form_data.append( 'file', blob, resource_content.data.name);
 
@@ -1980,7 +1985,7 @@ dfxStudioApp.controller("dfx_studio_samples_controller", [ '$scope', '$http', '$
                 data: form_data,
                 headers : {'X-DREAMFACE-TENANT' : $('body').attr('data-tenantid')},
                 processData: false,
-                contentType: false 
+                contentType: false
             });
 
         });
@@ -4022,7 +4027,7 @@ dfxStudioApp.controller("dfx_studio_view_create_controller", [ '$scope', '$route
                 dfxMessaging.showWarning( data.data.error.message );
             });
         } else {
-            dfxMessaging.showWarning('Not valid View Name'); 
+            dfxMessaging.showWarning('Not valid View Name');
             $("#view-name").focus();
         }
     };
@@ -4124,7 +4129,130 @@ dfxStudioApp.controller("dfx_studio_view_category_controller", [ '$scope', '$rou
             });
         } else if ( newName === $scope.scopeCategory.name ) {
             dfxMessaging.showWarning('Category with such name already exist!');
-            
+
+        } else {
+            dfxMessaging.showWarning('Not valid Category Name');
+        }
+    }
+
+    $scope.deleteCategory = function( category_name ) {
+        dfxViews.removeCategory( $scope, category_name, $scope.app_name, $scope.view_platform ).then(function( data ) {
+            if ( data.status && data.status === 200 ) {
+                dfxMessaging.showMessage(data.data.data);
+                $scope.app_categories = [];
+                dfxViews.getCategories( $scope, $scope.app_name, $scope.view_platform ).then(function( data ) {
+                    for ( var i = 0; i < data.data[$scope.view_platform].length; i++ ) {
+                        $scope.app_categories.push(data.data[$scope.view_platform][i]);
+                    }
+                    $scope.getAll();
+                });
+            } else {
+                dfxMessaging.showWarning(data.data.data);
+            }
+        });
+    }
+
+    $scope.confirmDelete = function( ev, category_name ) {
+        var confirm = $mdDialog.confirm()
+            .title('Are you sure you want to remove this category?')
+            .textContent('Category will be removed from the repository.')
+            .ariaLabel('remove service')
+            .targetEvent(ev)
+            .cancel('Cancel')
+            .ok('OK');
+        $mdDialog.show(confirm).then(function() {
+            $scope.deleteCategory( category_name );
+        }, function() {
+        });
+    };
+
+    $scope.closeSidenav = function() {
+        var sideNavInstance = $mdSidenav('side_nav_view_category');
+        sideNavInstance.toggle();
+    }
+}]);
+
+dfxStudioApp.controller("dfx_studio_gc_template_controller", [ '$scope', '$routeParams', '$location', '$mdSidenav', '$mdDialog', '$timeout', 'dfxMessaging', 'dfxApplications', 'dfxAuthProviders', 'dfxGcTemplates', function( $scope, $routeParams, $location, $mdSidenav, $mdDialog, $timeout, dfxMessaging, dfxApplications, dfxAuthProviders, dfxGcTemplates) {
+    $scope.app_name = $routeParams.app_name;
+    $scope.view_platform = $routeParams.platform;
+
+    dfxViews.getCategories( $scope, $scope.app_name, $scope.view_platform ).then(function( data ) {
+        $scope.app_categories = [];
+        for ( var i = 0; i < data.data[$scope.view_platform].length; i++ ) {
+            $scope.app_categories.push(data.data[$scope.view_platform][i]);
+        }
+    });
+
+    var bodyHeight = parseFloat($("body").css('height'));
+    $timeout(function() {
+        var scopeSourceTable = document.getElementById('scope-source-table');
+        $(scopeSourceTable).css('max-height', bodyHeight-260);
+    }, 0);
+
+    $scope.addCategoryBtn = function() {
+        $scope.scopeCategory = {};
+        $scope.categoryMode = 'addCategory';
+        var sideNavInstance = $mdSidenav('side_nav_view_category');
+        sideNavInstance.toggle();
+    }
+
+    $scope.createCategory = function() {
+        var regexp = /([a-z0-9_])(\w*)/gi;
+        res = regexp.exec( $scope.scopeCategory.name );
+        if ( res && $scope.scopeCategory.name && $scope.scopeCategory.name !== '' ) {
+            dfxViews.createCategory( $scope, $scope.scopeCategory.name, $scope.app_name, $scope.view_platform ).then(function( data ) {
+                if ( data.status && data.status === 200 && data.data.data !== 'Current category name already exists' ) {
+                    dfxMessaging.showMessage(data.data.data);
+                    $scope.app_categories = [];
+                    dfxViews.getCategories( $scope, $scope.app_name, $scope.view_platform ).then(function( data ) {
+                        for ( var i = 0; i < data.data[$scope.view_platform].length; i++ ) {
+                            $scope.app_categories.push(data.data[$scope.view_platform][i]);
+                        }
+                        $scope.getAll();
+                    });
+                    var sideNavInstance = $mdSidenav('side_nav_view_category');
+                    sideNavInstance.toggle();
+                } else {
+                    dfxMessaging.showWarning(data.data.data);
+                }
+            });
+        } else {
+            dfxMessaging.showWarning('Not valid Category Name');
+        }
+    }
+
+    $scope.editCategoryBtn = function( category ) {
+        $scope.categoryMode = 'editCategory';
+        $scope.scopeCategory = category;
+        $scope.toEdit = {};
+        var sideNavInstance = $mdSidenav('side_nav_view_category');
+        sideNavInstance.toggle();
+    }
+
+    $scope.editCategory = function( edited ) {
+        var newName = edited.name;
+        var regexp = /([a-z0-9_])(\w*)/gi;
+        res = regexp.exec( newName );
+        if ( res && newName && newName !== $scope.scopeCategory.name && newName !== '' ) {
+            dfxViews.editCategory( $scope, $scope.scopeCategory.name, newName, $scope.app_name, $scope.view_platform ).then(function( data ) {
+                if ( data.data.data !== 'Current category name already exists!' ) {
+                    dfxMessaging.showMessage(data.data.data);
+                    $scope.app_categories = [];
+                    dfxViews.getCategories( $scope, $scope.app_name, $scope.view_platform ).then(function( data ) {
+                        for ( var i = 0; i < data.data[$scope.view_platform].length; i++ ) {
+                            $scope.app_categories.push(data.data[$scope.view_platform][i]);
+                        }
+                        $scope.getAll();
+                    });
+                    var sideNavInstance = $mdSidenav('side_nav_view_category');
+                    sideNavInstance.toggle();
+                } else {
+                    dfxMessaging.showWarning(data.data.data);
+                }
+            });
+        } else if ( newName === $scope.scopeCategory.name ) {
+            dfxMessaging.showWarning('Category with such name already exist!');
+
         } else {
             dfxMessaging.showWarning('Not valid Category Name');
         }
@@ -4284,7 +4412,7 @@ dfxStudioApp.controller("dfx_studio_page_create_controller", [ '$scope', '$route
                 dfxMessaging.showWarning( data.data.error.message );
             });
         } else {
-            dfxMessaging.showWarning('Not valid Page Name'); 
+            dfxMessaging.showWarning('Not valid Page Name');
             $("#page-name").focus();
         }
     };
@@ -4386,7 +4514,7 @@ dfxStudioApp.controller("dfx_studio_page_category_controller", [ '$scope', '$rou
             });
         } else if ( newName === $scope.scopeCategory.name ) {
             dfxMessaging.showWarning('Category with such name already exist!');
-            
+
         } else {
             dfxMessaging.showWarning('Not valid Category Name');
         }
@@ -6331,11 +6459,11 @@ dfxStudioApp.controller("dfx_studio_api_so_category_controller", [ '$scope', '$r
     }
 
     $scope.editCategory = function( edited ) {
-        var newName = edited.name; 
+        var newName = edited.name;
         var regexp = /([a-z0-9_])(\w*)/gi;
         res = regexp.exec( newName );
         if ( res && newName && newName !== $scope.scopeCategory.name ) {
-            dfxApiServiceObjects.editCategory( $scope, $scope.scopeCategory.name, newName, $scope.app_name ).then(function( data ) {                
+            dfxApiServiceObjects.editCategory( $scope, $scope.scopeCategory.name, newName, $scope.app_name ).then(function( data ) {
                 if ( data.data.data !== 'Current category name already exists!' ) {
                     dfxMessaging.showMessage(data.data.data);
                     dfxApiServiceObjects.getCategories( $scope, $scope.app_name ).then(function( data ) {
@@ -6350,7 +6478,7 @@ dfxStudioApp.controller("dfx_studio_api_so_category_controller", [ '$scope', '$r
             });
         } else if ( newName === $scope.scopeCategory.name ) {
             dfxMessaging.showWarning('Category with such name already exist!');
-            
+
         } else {
             dfxMessaging.showWarning('Not valid Category Name');
         }

@@ -1351,6 +1351,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     };
     // Functions implementing Cut/Copy/Paste in view editor - END
 
+    // Functions to work with GC Templates - START
     $scope.saveComponentAsTemplate = function(event) {
         $(event.srcElement).animateCss('pulse');
 
@@ -1376,6 +1377,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
             //  - also why icon is in src of the view??
             //5) apply it to design time - for just dropped component, when selecting template in drop-down
             //  - also, refresh scope.gc_templates when new temlate is saved
+            //  - reinit adds properties to source, but should not
             //7) do not forget to uncomment gc_button->menuItemNames
             //8) prevent cross-linking from templates to each other
 
@@ -1409,6 +1411,22 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
                 $scope.gc_templates = gc_templates;
             });
     };
+
+    $scope.reinitComponentWithTemplate = function(gc_component_id) {
+        //console.log('gc_component_id: ', gc_component_id, ', gc_template_name: ', gc_template_name, ', $scope: ', $scope);
+
+        var gc_element = $('#'+gc_component_id);
+        var gc_element_scope = angular.element(gc_element).scope();
+
+        //console.log('gc_element_scope: ', gc_element_scope);
+
+        var gc_component = gc_element_scope.getComponent(gc_element);
+        //scope.attributes = null;
+        //basectrl.init(scope, element, component, attrs, 'button').then(function() {
+        var gc_attrs = {dfxGcEdit: '', dfxGcWebBase: '', dfxGcWebButton: ''};
+        gc_element_scope.reinitAttributes(gc_element_scope, gc_element, gc_component, gc_attrs, 'button');
+    };
+    // Functions to work with GC Templates - END
 
     DfxVisualBuilder.init();
 }]);
