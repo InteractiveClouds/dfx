@@ -1021,6 +1021,10 @@ md-input-container {
 }
 /* Empty menu container fix */
 .md-open-menu-container md-menu-content.md-menu-bar-menu:empty { display: none !important; }
+/* Fixed menu container padding */
+div._md.md-open-menu-container {
+    padding: 0px !important;
+}
 /* GC Carousel */
 @font-face {
     font-family: 'Material Icons';

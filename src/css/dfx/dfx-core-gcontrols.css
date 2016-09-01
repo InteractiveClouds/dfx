@@ -298,6 +298,31 @@ button[disabled="disabled"].dfx-core-gc-button.md-button md-icon, button[disable
     height: 1px;
     background-color: rgba(0,0,0,0.12);
 }
+md-menu-bar.dfx-cascade-menu-bar {
+    padding: 0;
+    width: 48px;
+}
+button.dfx-cascade-trigger.md-button {
+    padding: 0px !important;
+    min-width: 48px;
+    min-height: 48px;
+    margin: 0;
+    justify-content: center;
+    border-radius: 0;
+}
+md-menu-item .md-button .dfx-cascade-trigger-icon {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.dfx-cascade-menu-content {
+    padding-left: 0px !important;
+}
+button.dfx-cascade-button.md-button {
+    padding: 0 16px !important;
+    line-height: 32px;
+}
 /* Menu editor */
 .tree-menu-title {
     font-size: 15px;

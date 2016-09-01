@@ -7,10 +7,22 @@
             </span>
         </div>
         <div class="layout-row flex">
-            <md-input-container flex class="gc-input-icon-container">
+            <md-input-container flex class="gc-input-icon-container" >
                 <label ng-bind="$eval(attributes.label.value)"></label>
-                <input name="{{attributes.name.value}}" type="{{attributes.selectedType.value}}" 
-                    ng-model="$gcscope[attributes.binding.value]" ng-change="$eval(attributes.onchange.value)" 
+                <input ng-if="!isRepeatable.value" name="{{attributes.name.value}}" type="{{attributes.selectedType.value}}" 
+                    ng-model="$parent_scope[attributes.binding.value]" ng-change="$eval(attributes.onchange.value)" 
+                    minlength="{{attributes.minlength.value}}" md-maxlength="{{attributes.maxlength.value}}" 
+                    ng-pattern="attributes.pattern.value" ng-required="$eval(attributes.required.value)"
+                    ng-disabled="$eval(attributes.disabled.value)" style="padding-left: 5px"
+                    ng-focus="$eval(attributes.onfocus.value)" ng-blur="$eval(attributes.onblur.value)"
+                    ng-click="$eval(attributes.onclick.value)" ng-dblclick="$eval(attributes.ondblclick.value)"
+                    ng-keypress="$eval(attributes.onkeypress.value)" ng-keydown="$eval(attributes.onkeydown.value)"
+                    ng-keyup="$eval(attributes.onkeyup.value)" ng-mouseover="$eval(attributes.onmouseover.value)"
+                    ng-mouseenter="$eval(attributes.onmouseenter.value)" ng-mousemove="$eval(attributes.onmousemove.value)"
+                    ng-mouseleave="$eval(attributes.onmouseleave.value)" ng-mousedown="$eval(attributes.onmousedown.value)"
+                    ng-mouseup="$eval(attributes.onmouseup.value)">                
+                <input ng-if="isRepeatable.value" name="{{attributes.name.value}}" type="{{attributes.selectedType.value}}" 
+                    dfx-dynamic-ng-model ng-change="$eval(attributes.onchange.value)" 
                     minlength="{{attributes.minlength.value}}" md-maxlength="{{attributes.maxlength.value}}" 
                     ng-pattern="attributes.pattern.value" ng-required="$eval(attributes.required.value)"
                     ng-disabled="$eval(attributes.disabled.value)" style="padding-left: 5px"
@@ -39,10 +51,21 @@
             </span>
         </div>
         <div class="layout-row flex">
-            <md-input-container flex class="gc-input-icon-container">
+            <md-input-container flex class="gc-input-icon-container" >
                 <label ng-bind="$eval(attributes.label.value)"></label>
-                <input name="{{attributes.name.value}}" type="number" 
-                    ng-model="$gcscope[attributes.binding.value]" ng-change="$eval(attributes.onchange.value)" 
+                <input ng-if="!isRepeatable.value" name="{{attributes.name.value}}" type="number" 
+                    ng-model="$parent_scope[attributes.binding.value]" ng-change="$eval(attributes.onchange.value)" 
+                    min="{{attributes.minNumber.value}}" max="{{attributes.maxNumber.value}}" step="any" 
+                    ng-disabled="$eval(attributes.disabled.value)" ng-required="$eval(attributes.required.value)"
+                    style="padding-left: 5px" ng-focus="$eval(attributes.onfocus.value)"
+                    ng-blur="$eval(attributes.onblur.value)" ng-click="$eval(attributes.onclick.value)"
+                    ng-dblclick="$eval(attributes.ondblclick.value)" ng-keypress="$eval(attributes.onkeypress.value)"
+                    ng-keydown="$eval(attributes.onkeydown.value)" ng-keyup="$eval(attributes.onkeyup.value)"
+                    ng-mouseover="$eval(attributes.onmouseover.value)" ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                    ng-mousemove="$eval(attributes.onmousemove.value)" ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                    ng-mousedown="$eval(attributes.onmousedown.value)" ng-mouseup="$eval(attributes.onmouseup.value)">
+                <input ng-if="isRepeatable.value" name="{{attributes.name.value}}" type="number" 
+                    dfx-dynamic-ng-model ng-change="$eval(attributes.onchange.value)" 
                     min="{{attributes.minNumber.value}}" max="{{attributes.maxNumber.value}}" step="any" 
                     ng-disabled="$eval(attributes.disabled.value)" ng-required="$eval(attributes.required.value)"
                     style="padding-left: 5px" ng-focus="$eval(attributes.onfocus.value)"

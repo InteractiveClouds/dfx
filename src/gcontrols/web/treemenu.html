@@ -18,15 +18,15 @@
                     <small ng-if="menuItem.notification && !attributes.dynamicPresent.value" style="{{attributes.notificationStyle.value}}" ng-bind="$eval(menuItem.notification)"></small>
                     <md-icon ng-if="menuItem.menuItems.value.length > 0" class="fa fa-angle-right trigger-icon" style="{{attributes.itemStyle.value}}"></md-icon>
                 </md-button>
-                <md-menu-bar>
-                    <md-menu style="padding: 0; width: 48px; display: flex; align-items: center; justify-content: center; margin: 0;">
-                        <md-button ng-click="$mdOpenMenu()" style="width: 48px; min-width: 48px; height: 48px; min-height: 48px; margin: 0; padding-top: 0px;padding-right: 0px;padding-bottom: 0px;padding-left: 0px; display: flex; align-items: center; justify-content: center; border-radius: 0;">
-                            <md-icon class="fa fa-bars" style="width: 16px; height: 16px; margin: 0; min-width: 16px; min-height: 16px;"></md-icon>
+                <md-menu-bar class="dfx-cascade-menu-bar">
+                    <md-menu class="dfx-cascade-menu">
+                        <md-button class="dfx-cascade-trigger" ng-click="$mdOpenMenu()">
+                            <md-icon class="dfx-cascade-trigger-icon fa fa-bars"></md-icon>
                         </md-button>
-                        <md-menu-content width="2" style="padding-left:0px;">
-                            <md-menu-item><md-button>Cascade item with long name</md-button></md-menu-item>
-                            <md-menu-item><md-button>Cascade item</md-button></md-menu-item>
-                            <md-menu-item><md-button>Cascade item</md-button></md-menu-item>
+                        <md-menu-content class="dfx-cascade-menu-content" width="2">
+                            <md-menu-item><md-button class="dfx-cascade-button">Cascade item with long name</md-button></md-menu-item>
+                            <md-menu-item><md-button class="dfx-cascade-button">Cascade item</md-button></md-menu-item>
+                            <md-menu-item><md-button class="dfx-cascade-button">Cascade item</md-button></md-menu-item>
                         </md-menu-content>
                     </md-menu>
                 </md-menu-bar>
