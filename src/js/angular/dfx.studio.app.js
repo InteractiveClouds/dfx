@@ -4172,9 +4172,16 @@ dfxStudioApp.controller("dfx_studio_view_category_controller", [ '$scope', '$rou
     }
 }]);
 
-dfxStudioApp.controller("dfx_studio_gc_template_controller", [ '$scope', '$routeParams', '$location', '$mdSidenav', '$mdDialog', '$timeout', 'dfxMessaging', 'dfxApplications', 'dfxAuthProviders', 'dfxGcTemplates', function( $scope, $routeParams, $location, $mdSidenav, $mdDialog, $timeout, dfxMessaging, dfxApplications, dfxAuthProviders, dfxGcTemplates) {
+dfxStudioApp.controller("dfx_studio_gc_template_controller", [ '$scope', '$routeParams', '$location', '$mdSidenav', '$mdDialog', '$timeout', 'dfxMessaging', 'dfxGcTemplates', function( $scope, $routeParams, $location, $mdSidenav, $mdDialog, $timeout, dfxMessaging, dfxGcTemplates) {
     $scope.app_name = $routeParams.app_name;
     $scope.view_platform = $routeParams.platform;
+
+    dfxGcTemplates.getAll( $scope, $scope.app_name, $scope.view_platform ).then(function( data ) {
+        $scope.gc_templates = [];
+        for ( var i = 0; i < data.length; i++ ) {
+            $scope.gc_templates.push(data[i]);
+        }
+    });
 
     $scope.addGcTemplateBtn = function() {
         $scope.scopeGcTemplate = {};
@@ -4220,18 +4227,18 @@ dfxStudioApp.controller("dfx_studio_gc_template_controller", [ '$scope', '$route
     }
 
     $scope.deleteGcTemplate = function( gc_template_name ) {
-        dfxGcTemplates.removeCategory( $scope, gc_template_name, $scope.app_name, $scope.view_platform ).then(function( data ) {
+        dfxGcTemplates.remove( $scope, gc_template_name, $scope.app_name, $scope.view_platform ).then(function( data ) {
             if ( data.status && data.status === 200 ) {
-                dfxMessaging.showMessage(data.data.data);
-                $scope.app_gc_templates = [];
+                dfxMessaging.showMessage("Template " + gc_template_name + " was successfully deleted!");
+                $scope.gc_templates = [];
                 dfxGcTemplates.getAll( $scope, $scope.app_name, $scope.view_platform ).then(function( data ) {
-                    for ( var i = 0; i < data.data[$scope.view_platform].length; i++ ) {
-                        $scope.app_gc_templates.push(data.data[$scope.view_platform][i]);
+                    for ( var i = 0; i < data.length; i++ ) {
+                        $scope.gc_templates.push(data[i]);
                     }
                     $scope.getAll();
                 });
             } else {
-                dfxMessaging.showWarning(data.data.data);
+                dfxMessaging.showWarning(data.data);
             }
         });
     }

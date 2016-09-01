@@ -1692,7 +1692,7 @@ dfxStudioApi.factory('dfxGcTemplates', [ '$http', '$q', function($http, $q) {
         });
 
         return deferred.promise;
-    }
+    };
 
     /*api_templates.update = function( scope, template ) {
         var deferred = $q.defer();
@@ -1709,6 +1709,20 @@ dfxStudioApi.factory('dfxGcTemplates', [ '$http', '$q', function($http, $q) {
 
         return deferred.promise;
     }*/
+
+    api_gc_templates.remove = function( scope, template_name, app_name, platform ) {
+        var deferred = $q.defer();
+
+        $http({
+            method: 'POST',
+            url: '/studio/gctemplates/delete',
+            data: { name: template_name , ownerId: "", application: app_name, platform: platform }
+        }).then(function successCallback(response) {
+            deferred.resolve( response );
+        });
+
+        return deferred.promise;
+    }
 
     return api_gc_templates;
 }]);
