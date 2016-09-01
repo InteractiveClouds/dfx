@@ -10,6 +10,7 @@
                 icon="{{ $eval(attributes.isOpened.value) || 'expand_more'}} " size="16"></ng-md-icon>
             <ng-md-icon ng-if="!node.expanded && node.children.length > 0 && attributes.isClosed.type ==='svg-icon'" ng-click="toggleNode($event, node)" style="color: {{attributes.color.value}}" class="node-trigger" 
                 icon="{{ $eval(attributes.isClosed.value) || 'chevron_right' }}" size="16"></ng-md-icon>
+            <md-checkbox ng-if="attributes.selected.value!==''" ng-model="isChecked" class="dfx-core-gc-treeview-checkbox md-altTheme-theme md-primary" aria-label="Tree Item checkbox"></md-checkbox>
             <a href="#">{{ node.name | checkExpression }}</a>
             <ul ng-if="node.children.length > 0" ng-show="node.expanded">
                 <li ng-repeat="node in node.children track by $index" class="tree-view-item" ng-include="'{{component_id}}_tree_view'"></li>

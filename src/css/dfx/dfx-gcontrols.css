@@ -882,12 +882,9 @@ md-menu button small {
     border-radius: 50%;
     text-align: center;
 }
-md-content.menu-structure, md-content.tree-structure {
-    max-height: 300px;
+md-content.menu-structure.options-editor, md-content.tree-structure.options-editor, md-content.tree-structure {
+    max-height: 260px;
     overflow-y: auto;
-}
-md-content.menu-structure.options-editor, md-content.tree-structure.options-editor {
-  max-height: 268px;
 }
 md-content.menu-structure ul, md-content.tree-structure ul {
   padding: 0px;

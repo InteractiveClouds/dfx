@@ -371,17 +371,22 @@ div[dfx-gc-web-panel] > div > section > md-content > div > div {
     padding: 16px;
 }
 .dfx-core-gc-treeview ul {
-    padding: 0 0 0 18px;
+    padding: 0 0 0 20px;
     margin: 0;
 }
 .dfx-core-gc-treeview li {
     list-style: none;
 }
+.dfx-core-gc-treeview li a {
+    display: inline-block;
+    padding: 3px 0;
+}
 .dfx-core-gc-treeview .node-trigger {
-    width: 18px;
-    min-width: 18px;
+    width: 20px;
+    min-width: 20px;
     height: auto;
-    margin-left: -18px;
+    float: left;
+    margin: 6px 0 0 -20px;
     cursor: pointer;
 }
 .dfx-core-gc-treeview ng-md-icon.node-trigger {
@@ -392,6 +397,12 @@ div[dfx-gc-web-panel] > div > section > md-content > div > div {
     min-height: 14px;
     text-align: center;
     color: #757575;
+}
+md-checkbox.dfx-core-gc-treeview-checkbox {
+    margin-bottom: 0px;
+    width: 20px;
+    margin-right: 6px;
+    margin-left: 6px;
 }
 /* JSON Editor */
 .dfx-core-gc-json-input-type {

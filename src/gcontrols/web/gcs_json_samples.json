@@ -278,6 +278,46 @@
 			]
 		}
 	],
+	"treeview": [
+		{
+			"name": "Example 1",
+			"value": [
+				{
+					"name": "'Products'",
+					"children": [
+						{
+							"name": "'Printers'",
+							"children": [
+								{ "name": "'Canon'" },
+								{ "name": "'HP'" },
+								{ "name": "'Samsung'" }
+							]
+						},
+						{
+							"name": "'Smartphones'",
+							"children": [
+								{
+									"name": "'Apple'",
+									"children": [
+										{ "name": "'iPhone 5s'" },
+										{ "name": "'iPhone 6s'" }
+									]
+								},
+								{	"name": "'Samsung'"	  },
+								{
+									"name": "'Xiaomi'",
+									"children": [
+										{ "name": "'Redmi 3S'" },
+										{ "name": "'Redmi Note 3'" }
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	],
 	"select": [
     	{
     		"name": "Example 1",
