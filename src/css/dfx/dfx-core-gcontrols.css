@@ -272,9 +272,16 @@ button[disabled="disabled"].dfx-core-gc-button.md-button md-icon, button[disable
     flex-grow:1;
 }
 .dfx-core-gc-treemenu button .trigger-icon {
-    width:5px;
+    /*width:5px;
     height:16px;
-    margin:auto 0;
+    margin:auto 0;*/
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    min-width: 16px;
+    min-height: 16px;
+    display: flex;
+    justify-content: center;
 }
 .dfx-core-gc-treemenu button.opened .trigger-icon {
     -webkit-transform: rotate(90deg);
