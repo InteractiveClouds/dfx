@@ -9,7 +9,7 @@
         <md-radio-button class="dfx-ve-menu-editor-radio-button md-primary" value="dynamic" aria-label="Dynamic options" ng-click="focusSamples()">Dynamic options</md-radio-button>
     </md-radio-group>
 	<div ng-show="menuItemsType.value === 'static'" style="display:flex;flex-direction:row;flex-wrap:wrap;justify-content:space-between;">
-		<section id="{{component_id}}_menu_structure" class="md-whiteframe-1dp" style="width:49.5%;border-radius:4px;overflow:hidden;">
+		<section ng-show="!cascadeMode.value" id="{{component_id}}_menu_structure" class="md-whiteframe-1dp" style="width:49.5%;border-radius:4px;overflow:hidden;">
 			<md-toolbar style="min-height:36px;background:rgba(128,128,128,0.46);">
 				<div class="md-toolbar-tools" style="height:36px;max-height:36px">
 					<h3 style="font-size:16px;">Menu structure</h3>
@@ -23,17 +23,17 @@
 				<a href="#" class="fa fa-indent" ng-click="indentMenuItem()" style="color:#676B6E;text-decoration:none;margin:auto 7px;" title="Indent menu item"></a>
 				<a href="#" class="fa fa-outdent" ng-click="outdentMenuItem()" style="color:#676B6E;text-decoration:none;margin:auto 7px;" title="Outdent menu item"></a>
 			</md-toolbar>
-      <md-content class="menu-structure" layout-padding flex style="">
-          <script type="text/ng-template" id="menuTree">
-              <a href="#" ng-click="selectMenuItem($event, menuItem)">{{ menuItem.label | checkExpression }}</a>
-              <ul ng-if="menuItem.menuItems.value">
-                  <li ng-repeat="menuItem in menuItem.menuItems.value track by $index"  class="menu-tree-item" parent-index="{{$parent.$parent.$index}}" self-index="{{$index}}" ng-include="'menuTree'"></li>
-              </ul>
-          </script>
-          <ul><li ng-repeat="menuItem in menuItems.value track by $index"  class="menu-tree-item" parent-index="{{$parent.$parent.$index}}" self-index="{{$parent.$index}}" ng-include="'menuTree'"></li></ul>
-      </md-content>
+            <md-content class="menu-structure" layout-padding flex style="">
+                <script type="text/ng-template" id="menuTree">
+                    <a href="#" ng-click="selectMenuItem($event, menuItem)">{{ menuItem.label | checkExpression }}</a>
+                    <ul ng-if="menuItem.menuItems.value">
+                    <li ng-repeat="menuItem in menuItem.menuItems.value track by $index"  class="menu-tree-item" parent-index="{{$parent.$parent.$index}}" self-index="{{$index}}" ng-include="'menuTree'"></li>
+                    </ul>
+                </script>
+                <ul><li ng-repeat="menuItem in menuItems.value track by $index"  class="menu-tree-item" parent-index="{{$parent.$parent.$index}}" self-index="{{$parent.$index}}" ng-include="'menuTree'"></li></ul>
+            </md-content>
 		</section>
-		<section id="{{component_id}}_menu_item_properties" class="md-whiteframe-1dp" style="width:49.5%;border-radius:4px;overflow:hidden;">
+		<section ng-show="!cascadeMode.value" id="{{component_id}}_menu_item_properties" class="md-whiteframe-1dp" style="width:49.5%;border-radius:4px;overflow:hidden;">
 			<md-toolbar style="min-height:36px;background:rgba(128,128,128,0.46);">
 				<div class="md-toolbar-tools" style="height:36px;max-height:36px">
 					<h3 style="font-size:16px;">Menu item properties</h3>
@@ -88,6 +88,10 @@
                                         <input class="col-md-12" type="text" ng-model="menu.notification" style="margin-left:-15px;"/>
                                         <dfx-ve-menu-expression></dfx-ve-menu-expression>
                                     </div>
+                                </li>
+                                <li class="col-md-12" ng-if="gc_selected.type==='treemenu'" ng-hide="menu.divider || menu.title">
+                                    <span class="col-md-4">Cascade:</span>
+                                    <md-checkbox class="md-primary" ng-model="menu.cascade.value" ng-change="checkCascading(menu)" style="margin:2px 0 0 0;" aria-label="Cascade"></md-checkbox>
                                 </li>
                                 <li class="col-md-12" ng-hide="menu.divider">
                                     <span class="col-md-4">Display:</span>
@@ -254,9 +258,163 @@
                             </ul>
                         </div>
                     </md-tab>
+                    <md-tab label="Cascade Section" ng-if="menu.cascade.value===true">
+                        <div class="dfx-ve-property-treeview hover clearfix" style="padding:8px 16px 12px 12px;margin:0 -8px;">
+                            <ul class="dfx-ve-property-picker-content" style="margin:0;padding:0">
+                                <li class="col-md-12">
+                                    <span class="col-md-4">Trigger Icon:</span>
+                                    <div class="col-md-8" layout="row">
+                                        <input class="col-md-12" type="text" ng-model="menu.cascade.icon.value" ng-change="ifShowMenuIconTypes(menu.cascade.icon.value, 'cascade')" style="margin-left:-15px;"/>
+                                        <md-icon ng-click="showFontIcons($event, menu.cascade.icon)" dfx-ve-picker-icon class="dfx-ve-picker-icon fa fa-ellipsis-h"></md-icon>                        
+                                    </div>
+                                </li>
+                                <li class="col-md-12" ng-if="showCascadeIconTypes">
+                                    <span class="col-md-4">Trigger Icon Type:</span>
+                                    <div class="col-md-8" layout="row" style="padding: 0 0 8px 16px">
+                                        <md-radio-group ng-model="menu.cascade.icon.type">
+                                            <md-radio-button value="svg-icon" style="margin: 0;" class="md-primary">SVG Icon</md-radio-button>
+                                            <md-radio-button value="fa-icon" style="margin: 0;" class="md-primary">Font Awesome Icon</md-radio-button>
+                                        </md-radio-group>
+                                    </div>
+                                </li>
+                                <li class="col-md-12">
+                                    <span class="col-md-4">Trigger Icon Style:</span>
+                                    <div class="col-md-8" layout="row">
+                                        <input class="col-md-12" type="text" ng-model="menu.cascade.icon.style" />
+                                        <dfx-ve-css-style></dfx-ve-css-style>
+                                    </div>
+                                </li>
+                                <li class="col-md-12">
+                                    <span class="col-md-4">Trigger Icon Class:</span>
+                                    <div class="col-md-8" layout="row">
+                                        <input class="col-md-12" type="text" ng-model="menu.cascade.icon.class" />
+                                        <dfx-ve-menu-expression></dfx-ve-menu-expression>
+                                    </div>
+                                </li> 
+                                <li class="col-md-12">
+                                    <span class="col-md-4">Cascade Items:</span>
+                                    <a ng-click="setCascadeMode()" style="font-size:12px;color:#97CFFF;text-decoration:none;cursor:pointer;color:#3ea4f5;"><span style="padding-left:0"><md-icon class="fa fa-edit" style="font-size:14px;height:16px;min-height: 14px;color: #3ea4f5;min-width: 18px;width: 18px;"></md-icon>Edit</span></a>
+                                </li>
+                                <li class="col-md-12">
+                                    <span class="col-md-4">Action:</span>
+                                    <div class="col-md-8" layout="row">
+                                        <input class="col-md-12" type="text" ng-model="menu.cascade.onclick" ng-model-options="{ updateOn: 'blur'}"  style="margin-left:-15px;"/>
+                                        <dfx-ve-menu-expression></dfx-ve-menu-expression>
+                                    </div>                                    
+                                </li>
+                            </ul>
+                        </div>
+                    </md-tab>
                 </md-tabs>
 			</md-content>
 		</section>
+        <section ng-show="cascadeMode.value" id="{{component_id}}_cascade_items" class="md-whiteframe-1dp" style="width:49.5%;border-radius:4px;overflow:hidden;">
+            <md-toolbar style="min-height:36px;background:rgba(128,128,128,0.46);">
+                <div class="md-toolbar-tools" style="height:36px;max-height:36px">
+                    <h3 style="font-size:16px;">Cascade Items</h3>
+                </div>
+            </md-toolbar>
+            <md-toolbar style="min-height:30px;background:#ECECEC;font-size:14px;display:flex;flex-direction:row;align-items:center;padding:0 9px;">
+                <a href="#" class="fa fa-plus" ng-click="addCascadeItem()" style="color:#676B6E;text-decoration:none;margin:auto 7px;" title="Add Cascade Item"></a>
+                <a href="#" class="fa fa-minus" ng-click="deleteCascadeItem()" style="color:#676B6E;text-decoration:none;margin:auto 7px;" title="Remove Cascade Item"></a>
+                <a href="#" class="fa fa-arrow-up" ng-click="moveUpCascadeItem()" style="color:#676B6E;text-decoration:none;margin:auto 7px;" title="Move up Cascade Item"></a>
+                <a href="#" class="fa fa-arrow-down" ng-click="moveDownCascadeItem()" style="color:#676B6E;text-decoration:none;margin:auto 7px;" title="Move down Cascade Item"></a>
+                <!-- <a href="#" class="fa fa-indent" ng-click="indentcascadeItem()" style="color:#676B6E;text-decoration:none;margin:auto 7px;" title="Indent menu item"></a> -->
+                <!-- <a href="#" class="fa fa-outdent" ng-click="outdentcascadeItem()" style="color:#676B6E;text-decoration:none;margin:auto 7px;" title="Outdent menu item"></a> -->
+            </md-toolbar>
+            <md-content class="menu-structure" layout-padding flex style="max-height:382px;height:382px;">
+                <script type="text/ng-template" id="cascadeTree">
+                    <a href="#" ng-click="selectCascadeItem($event, cascadeItem)">{{ cascadeItem.label | checkExpression }}</a>
+                    <ul ng-if="cascadeItem.cascadeItems">
+                    <li ng-repeat="cascadeItem in menu.cascade.cascadeItems track by $index"  class="menu-tree-item" parent-index="{{$parent.$parent.$index}}" self-index="{{$index}}" ng-include="'cascadeTree'"></li>
+                    </ul>
+                </script>
+                <ul><li ng-repeat="cascadeItem in menu.cascade.cascadeItems track by $index"  class="cascade-tree-item" parent-index="{{$parent.$parent.$index}}" self-index="{{$parent.$index}}" ng-include="'cascadeTree'"></li></ul>
+            </md-content>
+        </section>
+        <section ng-show="cascadeMode.value" id="{{component_id}}_cascade_item_properties" class="md-whiteframe-1dp" style="width:49.5%;border-radius:4px;overflow:hidden;">
+            <md-toolbar style="min-height:36px;background:rgba(128,128,128,0.46);">
+                <div class="md-toolbar-tools" style="height:36px;max-height:36px">
+                    <h3 style="font-size:16px;">Cascade Item Properties</h3>
+                </div>
+            </md-toolbar>
+            <md-content flex style="">                            
+                <div class="dfx-ve-property-treeview hover clearfix" style="border-bottom:1px solid #E5E5E5;padding:8px 16px">
+                    <ul class="dfx-ve-property-picker-content" style="margin:0;padding:0">
+                        <li class="col-md-12" ng-hide="cascadeObject.type==='divider'">
+                            <span class="col-md-4">Label:</span>
+                            <div class="col-md-8" layout="row">
+                                <input class="col-md-12" type="text" ng-model="cascadeObject.label" style="margin-left:-15px;"/>
+                                <dfx-ve-menu-expression></dfx-ve-menu-expression>
+                            </div>
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-4">Type:</span>
+                            <md-input-container class="col-md-8" style="padding: 0 0 4px 0">
+                                <md-select ng-model="cascadeObject.type" aria-label="Cascade item type">
+                                    <md-option value="standard">Standard</md-option>
+                                    <md-option value="title">Title</md-option>
+                                    <md-option value="divider">Divider</md-option>
+                                </md-select>
+                          </md-input-container>
+                        </li>   
+                        <li class="col-md-12" ng-hide="cascadeObject.type!=='standard'">
+                            <span class="col-md-4">Icon:</span>
+                            <div class="col-md-8" layout="row">
+                                <input class="col-md-12" type="text" ng-model="cascadeObject.icon.value" ng-change="ifShowMenuIconTypes(cascadeObject.icon.value)" style="margin-left:-15px;"/>
+                                <md-icon ng-click="showFontIcons($event, cascadeObject.icon)" dfx-ve-picker-icon class="dfx-ve-picker-icon fa fa-ellipsis-h"></md-icon>
+                            </div>
+                        </li>
+                        <li class="col-md-12" ng-if="cascadeObject.type==='standard'" ng-show="showCascadeObjectIconTypes">
+                            <span class="col-md-4">Icon Type:</span>
+                            <div class="col-md-8" layout="row" style="padding: 0 0 8px 0">
+                                <md-radio-group ng-model="cascadeObject.icon.type">
+                                    <md-radio-button value="svg-icon" style="margin: 0;" class="md-primary">SVG Icon</md-radio-button>
+                                    <md-radio-button value="fa-icon" style="margin: 0;" class="md-primary">Font Awesome Icon</md-radio-button>
+                                </md-radio-group>
+                            </div>
+                        </li>                                                                        
+                        <li class="col-md-12" ng-hide="cascadeObject.type==='divider'">
+                            <span class="col-md-4">Display:</span>
+                            <div class="col-md-8" layout="row">
+                                <input class="col-md-12" type="text" ng-model="cascadeObject.display" ng-model-options="{ updateOn: 'blur'}" style="margin-left:-15px;"/>
+                                <dfx-ve-menu-expression></dfx-ve-menu-expression>
+                            </div>
+                        </li>
+                        <li class="col-md-12" ng-hide="cascadeObject.type==='divider'">
+                            <span class="col-md-4">Disabled:</span>
+                            <div class="col-md-8" layout="row">
+                                <input class="col-md-12" type="text" ng-model="cascadeObject.disabled" ng-model-options="{ updateOn: 'blur'}" style="margin-left:-15px;"/>
+                                <dfx-ve-menu-expression></dfx-ve-menu-expression>
+                            </div>
+                        </li>
+                        <li class="col-md-12" ng-hide="cascadeObject.type==='divider'">
+                            <span class="col-md-4">Action:</span>
+                            <div class="col-md-8" layout="row">
+                                <input class="col-md-12" type="text" ng-model="cascadeObject.onclick" ng-model-options="{ updateOn: 'blur'}"  style="margin-left:-15px;"/>
+                                <dfx-ve-menu-expression></dfx-ve-menu-expression>
+                            </div>                                    
+                        </li>
+                    </ul>
+                </div>
+                <div class="menu-item-preview" style="padding:8px 0;margin: 16px 30px 12px;box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);">
+                    <md-menu-content class="md-menu-bar-menu md-dense md-altTheme-theme" width="5">
+                        <md-menu-divider ng-if="cascadeObject.type==='divider'" style="height:1px;"></md-menu-divider>
+                        <md-menu-item ng-if="cascadeObject.type==='title'" class="tree-menu-title">
+                            <div>{{cascadeObject.label}}</div>
+                        </md-menu-item>
+                        <md-menu-item ng-if="cascadeObject.type==='standard'">
+                            <button class="md-button md-ink-ripple md-focused" style="line-height:32px;">
+                                <md-icon ng-if="cascadeObject.icon.value && cascadeObject.icon.type === 'fa-icon'" class="fa {{$eval(cascadeObject.icon.value) || 'fa-home'}}" style="display:flex;height:auto;width:16px;text-align:center;" aria-hidden="false"></md-icon>
+                                <ng-md-icon ng-if="cascadeObject.icon.value && cascadeObject.icon.type === 'svg-icon'" icon="{{$eval(cascadeObject.icon.value) || 'home'}}" size="16" style="color: #757575;margin:auto 16px auto 0;"></ng-md-icon>
+                                <span>{{cascadeObject.label}}</span>                                            
+                                <div class="md-ripple-container"></div>
+                            </button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </div>                                
+            </md-content>
+        </section>
 	</div>
     <div ng-show="menuItemsType.value === 'dynamic'">
         <section id="{{component_id}}_dynamic_properties" class="md-whiteframe-1dp" style="border-radius:4px;overflow:hidden;">
@@ -517,7 +675,8 @@
 </md-dialog-content>
 <div class="md-actions"> 
 <md-button ng-show="menuItemsType.value === 'dynamic'" ng-click="showSamples()" id="samples-btn" class="md-primary" md-autofocus="menuItemsType.value === 'dynamic'">Samples</md-button> 
-<md-button ng-click="closeDialog()" class="md-primary" md-autofocus="menuItemsType.value === 'static'">Close</md-button> 
+<md-button ng-show="!cascadeMode.value" ng-click="closeDialog()" class="md-primary" md-autofocus="menuItemsType.value === 'static'">Close</md-button> 
+<md-button ng-show="cascadeMode.value" ng-click="leaveCascadeMode()" class="md-primary" md-autofocus="menuItemsType.value === 'static'">Close</md-button> 
 </div> 
 </form>
 </md-dialog>

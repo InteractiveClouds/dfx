@@ -2070,6 +2070,7 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
             scope.menuItemsType = {"value":""};
             scope.menuItemNames = {"value":""};
             scope.dialogGcType = '';
+            scope.cascadeMode = {"value": false};
             scope.showMenuEditor = function(ev) {
                 scope.menu = {};
                 if(scope.attributes.layoutType.value === 'none' ){
@@ -2444,6 +2445,8 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                                     case 'checked': icon.indexOf("'fa-") === 0 ? scope.menu.state.checkedIcon.type = 'fa-icon' : scope.menu.state.checkedIcon.type = 'svg-icon'; break;
                                     case 'unchecked': icon.indexOf("'fa-") === 0 ? scope.menu.state.uncheckedIcon.type = 'fa-icon' : scope.menu.state.uncheckedIcon.type = 'svg-icon'; break;
                                     case 'waiting': icon.indexOf("'fa-") === 0 ? scope.menu.waiting.icon.type = 'fa-icon' : scope.menu.waiting.icon.type = 'svg-icon'; break;
+                                    case 'cascade': icon.indexOf("'fa-") === 0 ? scope.menu.cascade.icon.type = 'fa-icon' : scope.menu.cascade.icon.type = 'svg-icon'; break;
+                                    case 'cascadeObjecct': icon.indexOf("'fa-") === 0 ? scope.cascadeObject.icon.type = 'fa-icon' : scope.cascadeObject.icon.type = 'svg-icon'; break;
                                 }
                             }
                             if ( !type ) {
@@ -2453,6 +2456,8 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                                     case 'checked': scope.showCheckedIconTypes = filtered ? false : true; break;
                                     case 'unchecked': scope.showUncheckedIconTypes = filtered ? false : true; break;
                                     case 'waiting': scope.showWaitingIconTypes = filtered ? false : true; break;
+                                    case 'cascade': scope.showCascadeIconTypes = filtered ? false : true; break;
+                                    case 'cascadeObject': scope.showCascadeObjectIconTypes = filtered ? false : true; break;
                                 }
                             }
                         }
@@ -2489,6 +2494,45 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                                     else { scope.menuEditorItem.type = 'standard'; }
                                 }
                             }, 0);
+                        }
+                        scope.checkCascading = function(menu){
+                            if(!menu.cascade.hasOwnProperty('icon')) menu.cascade.icon = {"value": "", "type": "", "style": "", "class": ""};
+                            if(!menu.cascade.hasOwnProperty('cascadeItems')) menu.cascade.cascadeItems = [];
+                            if(!menu.cascade.hasOwnProperty('onclick')) menu.cascade.onclick = "";
+                        }
+                        scope.setCascadeMode = function(){
+                            scope.cascadeMode.value=true;
+                            scope.cascadeObject = scope.menu.cascade.cascadeItems[0];
+                            console.log(scope.menu.cascade);
+                            $timeout(function(){
+                                if(scope.menu.cascade.cascadeItems.length>0) {
+                                    scope.cascadeObject = scope.menu.cascade.cascadeItems[0];
+                                    scope.indexCascadeItem = '';
+                                    if ( scope.cascadeObject ) scope.ifShowMenuIconTypes(scope.cascadeObject.icon.value, 'cascadeObject');
+                                }
+                                scope.indexMenuItem = 0;
+                                scope.arrayElement = scope.menuItems.value;
+                                scope.gcMenuItems = $("md-content.menu-structure").find('li');
+                                $("md-content.menu-structure > ul > li:first-child").addClass('active');
+                                scope.parentMenuItem = $("md-content.menu-structure").find('li.active');
+                            }, 0);
+                        }
+                        scope.addCascadeItem = function() {
+                            var cascadeItemTemplate = {
+                                "label": "'New cascade item'",
+                                "type": "standard",
+                                "icon": { "value": "'home'", "type": "svg-icon" },
+                                "display": "true",
+                                "disabled": "false",
+                                "onclick": ""
+                            }
+                            scope.menu.cascade.cascadeItems.push(cascadeItemTemplate);
+                            console.log(scope.menu);
+
+                        }
+                        scope.leaveCascadeMode = function(){
+                            console.log(scope.menu.cascade);
+                            scope.cascadeMode.value=false;
                         }
                         scope.gcJsonSample = {};
                         scope.gcSamplesArray = {};
