@@ -1,6 +1,6 @@
 <md-input-container ng-if="attributes.isBindingPresent.value=== true" ng-show="$eval(attributes.display.value)" style="{{attributes.style.value}}" class="md-block {{attributes.classes.value}} dfx-core-gc-select" ng-class="$eval(attributes.dynamicClasses.value)">
     <label ng-bind="$eval(attributes.label.value)"></label>
-    <md-select ng-if="attributes.optionsType.value==='dynamic'" ng-model="$gcscope[attributes.binding.value]" class="md-altTheme-theme glyph"
+    <md-select ng-if="attributes.optionsType.value==='dynamic'" ng-model="$parent_scope[attributes.binding.value]" class="md-altTheme-theme glyph"
                md-on-open="$eval(attributes.onopen.value)"
                md-on-close="$eval(attributes.onclose.value)"
                ng-change="$eval(attributes.onchange.value)"
@@ -18,11 +18,11 @@
                ng-mousedown="$eval(attributes.onmousedown.value)"
                ng-mouseup="$eval(attributes.onmouseup.value)"
              ng-disabled="$eval(attributes.disabled.value)" aria-label="GC Select">
-        <md-option ng-repeat="option in $gcscope[attributes.options.source] track by $index" value="{{option[attributes.options.value] || $index}}">
-          {{$eval(option[attributes.options.display]) || option[attributes.options.display]}}
+        <md-option ng-repeat="option in $gcscope[attributes.options.source] track by $index" value="{{$eval('option.' + attributes.options.value)}}">
+            {{$eval('option.' + attributes.options.display)}}
         </md-option>
     </md-select>
-    <md-select ng-if="attributes.optionsType.value==='static'" ng-model="$gcscope[attributes.binding.value]" class="md-altTheme-theme glyph"
+    <md-select ng-if="attributes.optionsType.value==='static'" ng-model="$parent_scope[attributes.binding.value]" class="md-altTheme-theme glyph"
                md-on-open="$eval(attributes.onopen.value)"
                md-on-close="$eval(attributes.onclose.value)"
                ng-change="$eval(attributes.onchange.value)"
@@ -64,8 +64,8 @@
                ng-mousedown="$eval(attributes.onmousedown.value)"
                ng-mouseup="$eval(attributes.onmouseup.value)"
                ng-disabled="$eval(attributes.disabled.value)" aria-label="GC Select">
-        <md-option ng-repeat="option in $gcscope[attributes.options.source] track by $index" value="{{option[attributes.options.value] || $index}}">
-            {{$eval(option[attributes.options.display]) || option[attributes.options.display]}}
+        <md-option ng-repeat="option in $gcscope[attributes.options.source] track by $index" value="{{$eval('option.' + attributes.options.value)}}">
+            {{$eval('option.' + attributes.options.display)}}
         </md-option>
     </md-select>
     <md-select ng-if="attributes.optionsType.value==='static'" ng-model="attributes.currentItem.value" class="md-altTheme-theme glyph"
