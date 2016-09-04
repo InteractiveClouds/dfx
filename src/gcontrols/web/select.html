@@ -18,7 +18,7 @@
                ng-mousedown="$eval(attributes.onmousedown.value)"
                ng-mouseup="$eval(attributes.onmouseup.value)"
              ng-disabled="$eval(attributes.disabled.value)" aria-label="GC Select">
-        <md-option ng-repeat="option in $gcscope[attributes.options.source] track by $index" value="{{$eval('option.' + attributes.options.value)}}">
+        <md-option ng-repeat="option in $parent_scope[attributes.options.source] track by $index" value="{{$eval('option.' + attributes.options.value)}}">
             {{$eval('option.' + attributes.options.display)}}
         </md-option>
     </md-select>
@@ -64,7 +64,7 @@
                ng-mousedown="$eval(attributes.onmousedown.value)"
                ng-mouseup="$eval(attributes.onmouseup.value)"
                ng-disabled="$eval(attributes.disabled.value)" aria-label="GC Select">
-        <md-option ng-repeat="option in $gcscope[attributes.options.source] track by $index" value="{{$eval('option.' + attributes.options.value)}}">
+        <md-option ng-repeat="option in $parent_scope[attributes.options.source] track by $index" value="{{$eval('option.' + attributes.options.value)}}">
             {{$eval('option.' + attributes.options.display)}}
         </md-option>
     </md-select>
