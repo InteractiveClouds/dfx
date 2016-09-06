@@ -243,7 +243,7 @@ button[disabled="disabled"].dfx-core-gc-button.md-button md-icon, button[disable
 .dfx-core-gc-treemenu > ul > li li {
     background-color: rgba(153,153,153,.15);
 }
-.dfx-core-gc-treemenu button {
+.dfx-core-gc-treemenu button, button.treemenu-actionbar-item-button {
     color: #707070;
     display:inline-flex;
     flex-direction:row;
@@ -261,20 +261,19 @@ button[disabled="disabled"].dfx-core-gc-button.md-button md-icon, button[disable
 .dfx-core-gc-treemenu button, .dfx-core-gc-treemenu button * {
     transition: all .5s;
 }
-.dfx-core-gc-treemenu button .tree-menu-icon {
+.dfx-core-gc-treemenu button .tree-menu-icon, .dfx-core-gc-treemenu button .tree-menu-action-icon {
     color: inherit;
     width: 16px;
     height:16px;
+    min-width: 16px;
+    min-height:16px;
     margin:auto 16px auto 0;
     text-align: center;
 }
 .dfx-core-gc-treemenu button .tree-menu-label {
     flex-grow:1;
 }
-.dfx-core-gc-treemenu button .trigger-icon {
-    /*width:5px;
-    height:16px;
-    margin:auto 0;*/
+.dfx-core-gc-treemenu button .trigger-icon {    
     width: 16px;
     height: 16px;
     margin: 0;
@@ -298,11 +297,17 @@ button[disabled="disabled"].dfx-core-gc-button.md-button md-icon, button[disable
     height: 1px;
     background-color: rgba(0,0,0,0.12);
 }
-md-menu-bar.dfx-cascade-menu-bar {
+md-menu-content.md-menu-bar-menu md-menu-divider.dfx-menu-item-divider {
+    display: block;
+    height: 1px;
+    background-color: rgba(0,0,0,.12);
+    margin: 0;
+}
+md-menu-bar.treemenu-actionbar {
     padding: 0;
     width: 48px;
 }
-button.dfx-cascade-trigger.md-button {
+button.treemenu-actionbar-button.md-button {
     padding: 0px !important;
     min-width: 48px;
     min-height: 48px;
@@ -310,21 +315,29 @@ button.dfx-cascade-trigger.md-button {
     justify-content: center;
     border-radius: 0;
 }
-md-menu-item .md-button .dfx-cascade-trigger-icon {
+md-icon.treemenu-actionbar-button-icon, ng-md-icon.treemenu-actionbar-button-icon {
     margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.dfx-cascade-menu-content {
+md-icon.treemenu-actionbar-item-icon, ng-md-icon.treemenu-actionbar-item-icon {
+    margin: auto 16px auto 0;
+    min-width: 16px;
+    min-height: 16px;
+    display: flex;
+    justify-content: center;
+    color: #757575;
+}
+.treemenu-actionbar-menu-content {
     padding-left: 0px !important;
 }
-button.dfx-cascade-button.md-button {
+button.treemenu-actionbar-item-button {
     padding: 0 16px !important;
     line-height: 32px;
 }
 /* Menu editor */
-.tree-menu-title {
+.tree-menu-title, md-menu-content md-menu-item.tree-menu-title {
     font-size: 15px;
     font-weight: 700;
     color: #707070;

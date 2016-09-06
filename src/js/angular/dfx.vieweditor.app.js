@@ -2070,7 +2070,7 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
             scope.menuItemsType = {"value":""};
             scope.menuItemNames = {"value":""};
             scope.dialogGcType = '';
-            scope.cascadeMode = {"value": false};
+            scope.actionsMode = {"value": false};
             scope.showMenuEditor = function(ev) {
                 scope.menu = {};
                 if(scope.attributes.layoutType.value === 'none' ){
@@ -2445,8 +2445,8 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                                     case 'checked': icon.indexOf("'fa-") === 0 ? scope.menu.state.checkedIcon.type = 'fa-icon' : scope.menu.state.checkedIcon.type = 'svg-icon'; break;
                                     case 'unchecked': icon.indexOf("'fa-") === 0 ? scope.menu.state.uncheckedIcon.type = 'fa-icon' : scope.menu.state.uncheckedIcon.type = 'svg-icon'; break;
                                     case 'waiting': icon.indexOf("'fa-") === 0 ? scope.menu.waiting.icon.type = 'fa-icon' : scope.menu.waiting.icon.type = 'svg-icon'; break;
-                                    case 'cascade': icon.indexOf("'fa-") === 0 ? scope.menu.cascade.icon.type = 'fa-icon' : scope.menu.cascade.icon.type = 'svg-icon'; break;
-                                    case 'cascadeObjecct': icon.indexOf("'fa-") === 0 ? scope.cascadeObject.icon.type = 'fa-icon' : scope.cascadeObject.icon.type = 'svg-icon'; break;
+                                    case 'actions': icon.indexOf("'fa-") === 0 ? scope.menu.actions.icon.type = 'fa-icon' : scope.menu.actions.icon.type = 'svg-icon'; break;
+                                    case 'actionItem': icon.indexOf("'fa-") === 0 ? scope.actionItem.icon.type = 'fa-icon' : scope.actionItem.icon.type = 'svg-icon'; break;
                                 }
                             }
                             if ( !type ) {
@@ -2456,8 +2456,8 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                                     case 'checked': scope.showCheckedIconTypes = filtered ? false : true; break;
                                     case 'unchecked': scope.showUncheckedIconTypes = filtered ? false : true; break;
                                     case 'waiting': scope.showWaitingIconTypes = filtered ? false : true; break;
-                                    case 'cascade': scope.showCascadeIconTypes = filtered ? false : true; break;
-                                    case 'cascadeObject': scope.showCascadeObjectIconTypes = filtered ? false : true; break;
+                                    case 'actions': scope.showActionsIconTypes = filtered ? false : true; break;
+                                    case 'actionItem': scope.showActionItemIconTypes = filtered ? false : true; break;
                                 }
                             }
                         }
@@ -2495,44 +2495,73 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                                 }
                             }, 0);
                         }
-                        scope.checkCascading = function(menu){
-                            if(!menu.cascade.hasOwnProperty('icon')) menu.cascade.icon = {"value": "", "type": "", "style": "", "class": ""};
-                            if(!menu.cascade.hasOwnProperty('cascadeItems')) menu.cascade.cascadeItems = [];
-                            if(!menu.cascade.hasOwnProperty('onclick')) menu.cascade.onclick = "";
+                        scope.checkActions = function(menu){
+                            if(!menu.actions.hasOwnProperty('icon')) menu.actions.icon = {"value": "", "type": "", "style": "", "class": ""};
+                            if(!menu.actions.hasOwnProperty('actionItems')) menu.actions.actionItems = [];
+                            if(!menu.actions.hasOwnProperty('onclick')) menu.actions.onclick = "";
                         }
-                        scope.setCascadeMode = function(){
-                            scope.cascadeMode.value=true;
-                            scope.cascadeObject = scope.menu.cascade.cascadeItems[0];
-                            console.log(scope.menu.cascade);
-                            $timeout(function(){
-                                if(scope.menu.cascade.cascadeItems.length>0) {
-                                    scope.cascadeObject = scope.menu.cascade.cascadeItems[0];
-                                    scope.indexCascadeItem = '';
-                                    if ( scope.cascadeObject ) scope.ifShowMenuIconTypes(scope.cascadeObject.icon.value, 'cascadeObject');
-                                }
-                                scope.indexMenuItem = 0;
-                                scope.arrayElement = scope.menuItems.value;
-                                scope.gcMenuItems = $("md-content.menu-structure").find('li');
-                                $("md-content.menu-structure > ul > li:first-child").addClass('active');
-                                scope.parentMenuItem = $("md-content.menu-structure").find('li.active');
-                            }, 0);
+                        scope.setActiveActionItem = function(index){
+                            if(scope.menu.actions.actionItems.length>0){                                
+                                scope.actionActiveIndex = index;
+                                scope.actionItem = scope.menu.actions.actionItems[index];
+                                $timeout(function() {
+                                    $('.actions-structure li').removeClass('active');
+                                    $('.actions-structure li').eq(index).addClass('active');
+                                    scope.ifShowMenuIconTypes(scope.actionItem.icon.value, 'actionItem');
+                                }, 0);
+                            }else{
+                                scope.actionItem = {};
+                            }
                         }
-                        scope.addCascadeItem = function() {
-                            var cascadeItemTemplate = {
-                                "label": "'New cascade item'",
+                        scope.addActionItem = function() {
+                            var actionItemTemplate = {
+                                "label": "'New action item'",
                                 "type": "standard",
                                 "icon": { "value": "'home'", "type": "svg-icon" },
                                 "display": "true",
                                 "disabled": "false",
                                 "onclick": ""
                             }
-                            scope.menu.cascade.cascadeItems.push(cascadeItemTemplate);
-                            console.log(scope.menu);
-
+                            if(scope.menu.actions.actionItems.length>0){
+                                ++scope.actionActiveIndex;
+                                scope.menu.actions.actionItems.splice(scope.actionActiveIndex, 0, actionItemTemplate);
+                            }else{
+                                scope.menu.actions.actionItems.push(actionItemTemplate);
+                            }
+                            scope.setActiveActionItem(scope.actionActiveIndex);
                         }
-                        scope.leaveCascadeMode = function(){
-                            console.log(scope.menu.cascade);
-                            scope.cascadeMode.value=false;
+                        scope.deleteActionItem = function(){
+                            if(scope.menu.actions.actionItems.length>0){
+                                scope.menu.actions.actionItems.splice(scope.actionActiveIndex, 1);
+                                if(scope.actionActiveIndex===scope.menu.actions.actionItems.length && scope.actionActiveIndex>0) --scope.actionActiveIndex;
+                                scope.setActiveActionItem(scope.actionActiveIndex);
+                            }
+                        }
+                        scope.moveUpActionItem = function(){
+                            if(scope.menu.actions.actionItems.length>1 && scope.actionActiveIndex>0){
+                                var tempActiveItem = scope.actionItem;
+                                scope.menu.actions.actionItems.splice(scope.actionActiveIndex, 1);
+                                --scope.actionActiveIndex;
+                                scope.menu.actions.actionItems.splice(scope.actionActiveIndex, 0, tempActiveItem);
+                                scope.setActiveActionItem(scope.actionActiveIndex);
+                            }
+                        }
+                        scope.moveDownActionItem = function(){
+                            if(scope.menu.actions.actionItems.length>0 && scope.actionActiveIndex<scope.menu.actions.actionItems.length-1){
+                                var tempActiveItem = scope.actionItem;
+                                scope.menu.actions.actionItems.splice(scope.actionActiveIndex, 1);
+                                ++scope.actionActiveIndex;
+                                scope.menu.actions.actionItems.splice(scope.actionActiveIndex, 0, tempActiveItem);
+                                scope.setActiveActionItem(scope.actionActiveIndex);
+                            }
+                        }
+                        scope.setActionsMode = function(){
+                            scope.actionsMode.value=true;                            
+                            scope.actionActiveIndex = 0;
+                            if(scope.menu.actions.actionItems.length>0) scope.setActiveActionItem(scope.actionActiveIndex);
+                        }
+                        scope.leaveActionsMode = function(){
+                            scope.actionsMode.value=false;
                         }
                         scope.gcJsonSample = {};
                         scope.gcSamplesArray = {};
@@ -2562,6 +2591,7 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                                 case 'scopeItems': if(!scope.tempItemNames.main.hasOwnProperty('scopeItems')){scope.tempItemNames.main.scopeItems = 'scopeItems';} break;
                                 case 'state': if(!scope.tempItemNames.hasOwnProperty('state')){scope.tempItemNames.state = {"name": "state"};} break;
                                 case 'waiting': if(!scope.tempItemNames.hasOwnProperty('waiting')){scope.tempItemNames.waiting = {"name": "waiting"};} break;
+                                case 'actions': if(!scope.tempItemNames.hasOwnProperty('actions')){scope.tempItemNames.actions = {"name": "actions"};} break;
                             }
                         }
                         scope.checkIconNames = function( icon, iconModeType ){
@@ -2578,6 +2608,12 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                                     case 'waiting':
                                         if(!scope.tempItemNames.waiting.hasOwnProperty('icon')) scope.tempItemNames.waiting.icon = {"value": "icon"};
                                         if(!scope.tempItemNames.waiting.icon.hasOwnProperty(iconProp)) scope.tempItemNames.waiting.icon[iconProp] = iconProp; break;
+                                    case 'actionObject':
+                                        if(!scope.tempItemNames.actions.hasOwnProperty('icon')) scope.tempItemNames.actions.icon = {"value": "icon"};
+                                        if(!scope.tempItemNames.actions.icon.hasOwnProperty(iconProp)) scope.tempItemNames.actions.icon[iconProp] = iconProp; break;
+                                    case 'actionItem':
+                                        if(!scope.tempItemNames.actions.actionItems.hasOwnProperty('icon')) scope.tempItemNames.actions.actionItems.icon = {"value": "icon"};
+                                        if(!scope.tempItemNames.actions.actionItems.icon.hasOwnProperty(iconProp)) scope.tempItemNames.actions.actionItems.icon[iconProp] = iconProp; break;
                                 }
                             });
                         }
@@ -2603,6 +2639,40 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                                 }
                             });
                         }
+                        scope.checkActionItemNames = function( actionItem ){
+                            Object.getOwnPropertyNames(actionItem).forEach(function(actionItemProp) {
+                                if(!scope.tempItemNames.actions.actionItems.hasOwnProperty(actionItemProp)) {
+                                    switch(actionItemProp){
+                                        case 'type': scope.tempItemNames.actions.actionItems[actionItemProp] = actionItemProp; break;
+                                        case 'label': scope.tempItemNames.actions.actionItems[actionItemProp] = actionItemProp; break;
+                                        case 'display': scope.tempItemNames.actions.actionItems[actionItemProp] = actionItemProp; break;
+                                        case 'disabled': scope.tempItemNames.actions.actionItems[actionItemProp] = actionItemProp; break;
+                                        case 'onclick': scope.tempItemNames.actions.actionItems[actionItemProp] = actionItemProp; break;
+                                        case 'icon': scope.checkIconNames( actionItem.icon, 'actionItem' ); break;
+                                    }
+                                }
+                            });    
+                        }
+                        scope.checkActionsNames = function( actionObject ){
+                            Object.getOwnPropertyNames(actionObject).forEach(function(actionObjectProp) {
+                                if(!scope.tempItemNames.actions.hasOwnProperty(actionObjectProp)) {
+                                    switch(actionObjectProp){
+                                        case 'icon': scope.checkIconNames( actionObject.icon, 'actionObject' ); break;
+                                        case 'display': scope.tempItemNames.actions[actionObjectProp] = actionObjectProp; break;
+                                        case 'disabled': scope.tempItemNames.actions[actionObjectProp] = actionObjectProp; break;
+                                        case 'onclick': scope.tempItemNames.actions[actionObjectProp] = actionObjectProp; break;
+                                        case 'actionItems': 
+                                            if(!scope.tempItemNames.actions.hasOwnProperty('actionItems')) scope.tempItemNames.actions.actionItems = {"name": actionObjectProp};
+                                            if(actionObject.actionItems.length>0){
+                                                for (var i = 0; i < actionObject.actionItems.length; i++) {
+                                                    scope.checkActionItemNames(actionObject.actionItems[i]);
+                                                };
+                                            }
+                                            break;
+                                    }
+                                }
+                            });
+                        }
                         scope.checkItemNames = function( item ) {
                             if(item.hasOwnProperty('type')){scope.checkMainNames('type');}
                             if(item.hasOwnProperty('label')){scope.checkMainNames('label');}
@@ -2624,7 +2694,8 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                             if(item.hasOwnProperty('icon')){ scope.checkMainNames('icon'); scope.checkIconNames(item.icon, 'main'); }
                             if(item.hasOwnProperty('state')){ scope.checkMainNames('state'); scope.checkStateNames(item.state); }
                             if(item.hasOwnProperty('waiting')){ scope.checkMainNames('waiting'); scope.checkWaitingNames(item.waiting); }
-                            $q.all([ scope.checkItemNames, scope.checkMainNames, scope.checkIconNames, scope.checkStateNames, scope.checkWaitingNames ]).then(function(){
+                            if(item.hasOwnProperty('actions')){ scope.checkMainNames('actions'); scope.checkActionsNames(item.actions); }
+                            $q.all([ scope.checkItemNames, scope.checkMainNames, scope.checkIconNames, scope.checkStateNames, scope.checkWaitingNames, scope.checkActionsNames, scope.checkActionItemNames ]).then(function(){
                                 scope.menuItemNames.value = scope.tempItemNames;
                                 if(scope.toolbarSide){
                                     if(scope.toolbarSide ==='left'){

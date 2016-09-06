@@ -4,29 +4,41 @@
      ng-mousedown="$eval(attributes.onmousedown.value)" ng-mouseup="$eval(attributes.onmouseup.value)">
 	<div ng-if="attributes.menuItemsType.value==='static'">
         <script type="text/ng-template" id="treeMenu">
-            <md-menu-divider ng-if="menuItem.divider === true"></md-menu-divider>
-            <md-menu-item ng-if="menuItem.title === true && menuItem.divider === false" class="tree-menu-title" style="{{attributes.titleStyle.value}}">
+            <md-menu-divider ng-if="menuItem.divider === true" style="{{attributes.itemStyle.divider.style}}" class="{{attributes.itemStyle.divider.class}}"></md-menu-divider>
+            <md-menu-item ng-if="menuItem.title === true && menuItem.divider === false" class="tree-menu-title {{attributes.itemStyle.title.class}}" style="{{attributes.itemStyle.title.style}}">
                 <div ng-bind="$eval(menuItem.label)"></div>
             </md-menu-item>
             <md-menu-item ng-if="menuItem.divider !== true && menuItem.title !== true" ng-show="$eval(menuItem.display)">
-                <md-button style="{{attributes.itemStyle.value}}" ng-disabled="$eval(menuItem.disabled)" ng-click="menuItem.menuItems.value.length > 0 ? menuToggle($event) : '';$eval(menuItem.onclick)">
-                    <md-icon ng-if="menuItem.icon.value && menuItem.icon.type ==='fa-icon'" class="fa {{$eval(menuItem.icon.value) || 'fa-home'}} tree-menu-icon"></md-icon>
-                    <ng-md-icon ng-if="menuItem.icon.value && menuItem.icon.type ==='svg-icon'" icon="{{$eval(menuItem.icon.value) || 'home'}}" size="16" class=" tree-menu-icon"></ng-md-icon>
+                <md-button style="{{attributes.itemStyle.button.style}}" class="{{attributes.itemStyle.button.class}}" ng-disabled="$eval(menuItem.disabled)" ng-click="menuItem.menuItems.value.length > 0 ? menuToggle($event) : '';$eval(menuItem.onclick)">
+                    <md-icon ng-if="menuItem.icon.value && menuItem.icon.type ==='fa-icon'" style="{{attributes.itemStyle.icon.style}};font-size:{{attributes.itemStyle.icon.size}}px;width:{{attributes.itemStyle.icon.size}}px;height:{{attributes.itemStyle.icon.size}}px;" class="fa {{$eval(menuItem.icon.value) || 'fa-home'}} tree-menu-icon {{attributes.itemStyle.icon.class}}"></md-icon>
+                    <ng-md-icon ng-if="menuItem.icon.value && menuItem.icon.type ==='svg-icon'" icon="{{$eval(menuItem.icon.value) || 'home'}}" size="{{attributes.itemStyle.icon.size}}" style="{{attributes.itemStyle.icon.style}}" class=" tree-menu-icon {{attributes.itemStyle.icon.class}}"></ng-md-icon>
                     <span class="tree-menu-label" ng-bind="$eval(menuItem.label)"></span>
                     <span class="md-alt-text">{{menuItem.shortcut}}</span>
-                    <small ng-if="menuItem.notification && attributes.dynamicPresent.value" style="{{attributes.notificationStyle.value}}">{{menuItem.notification}}</small>
-                    <small ng-if="menuItem.notification && !attributes.dynamicPresent.value" style="{{attributes.notificationStyle.value}}" ng-bind="$eval(menuItem.notification)"></small>
+                    <small ng-if="menuItem.notification" style="{{attributes.itemStyle.notification.style}}" class="{{attributes.itemStyle.notification.class}}">
+                        {{$eval(menuItem.notification) || menuItem.notification}}
+                    </small>                    
                     <md-icon ng-if="menuItem.menuItems.value.length > 0" class="fa fa-angle-right trigger-icon" style="{{attributes.itemStyle.value}}"></md-icon>
                 </md-button>
-                <md-menu-bar class="dfx-cascade-menu-bar">
-                    <md-menu class="dfx-cascade-menu">
-                        <md-button class="dfx-cascade-trigger" ng-click="$mdOpenMenu()">
-                            <md-icon class="dfx-cascade-trigger-icon fa fa-bars"></md-icon>
+                <md-menu-bar ng-if="menuItem.actions" class="treemenu-actionbar">
+                    <md-menu class="treemenu-actionbar-menu">
+                        <md-button style="{{attributes.triggerStyle.button.style}}" class="treemenu-actionbar-button {{attributes.triggerStyle.button.class}}" ng-click="$mdOpenMenu(); $eval(menuItem.actions.onclick);">
+                            <md-icon ng-if="menuItem.actions.icon.value && menuItem.actions.icon.type ==='fa-icon'" style="{{attributes.triggerStyle.icon.style}};font-size:{{attributes.triggerStyle.icon.size}}px;width:{{attributes.triggerStyle.icon.size}}px;height:{{attributes.triggerStyle.icon.size}}px;" class="fa {{$eval(menuItem.actions.icon.value)}} treemenu-actionbar-button-icon {{attributes.triggerStyle.icon.class}}"></md-icon>
+                            <ng-md-icon ng-if="menuItem.actions.icon.value && menuItem.actions.icon.type ==='svg-icon'" icon="{{$eval(menuItem.actions.icon.value)}}" size="{{attributes.triggerStyle.icon.size}}" style="{{attributes.triggerStyle.icon.style}}" class="treemenu-action-button-icon {{attributes.triggerStyle.icon.class}}"></ng-md-icon>
                         </md-button>
-                        <md-menu-content class="dfx-cascade-menu-content" width="2">
-                            <md-menu-item><md-button class="dfx-cascade-button">Cascade item with long name</md-button></md-menu-item>
-                            <md-menu-item><md-button class="dfx-cascade-button">Cascade item</md-button></md-menu-item>
-                            <md-menu-item><md-button class="dfx-cascade-button">Cascade item</md-button></md-menu-item>
+                        <md-menu-content class="treemenu-actionbar-menu-content" width="2">
+                            <div ng-repeat="actionItem in menuItem.actions.actionItems track by $index">
+                                <md-menu-item ng-if="actionItem.type!=='title' && actionItem.type!=='divider'">
+                                    <md-button style="{{attributes.actionStyle.button.style}}" class="treemenu-actionbar-item-button {{attributes.actionStyle.button.class}}" ng-click="$eval(actionItem.onclick);">
+                                        <md-icon ng-if="actionItem.icon.value && actionItem.icon.type ==='fa-icon'" style="{{attributes.actionStyle.icon.style}};font-size:{{attributes.actionStyle.icon.size}}px;width:{{attributes.actionStyle.icon.size}}px;height:{{attributes.actionStyle.icon.size}}px;" class="fa {{$eval(actionItem.icon.value)}} treemenu-actionbar-item-icon {{attributes.actionStyle.icon.class}}"></md-icon>
+                                        <ng-md-icon ng-if="actionItem.icon.value && actionItem.icon.type ==='svg-icon'" icon="{{$eval(actionItem.icon.value)}}" size="{{attributes.actionStyle.icon.size}}" style="{{attributes.actionStyle.icon.style}}" class=" treemenu-actionbar-item-icon {{attributes.actionStyle.icon.class}}"></ng-md-icon>
+                                        <div ng-bind="$eval(actionItem.label)"></div>
+                                    </md-button>
+                                </md-menu-item>
+                                <md-menu-divider ng-if="actionItem.type==='divider'" style="{{attributes.actionStyle.divider.style}}" class="dfx-menu-item-divider {{attributes.actionStyle.divider.class}}"></md-menu-divider>
+                                <md-menu-item ng-if="actionItem.type==='title'" class="tree-menu-title {{attributes.actionStyle.title.class}}" style="{{attributes.actionStyle.title.style}}">
+                                    <div ng-bind="$eval(actionItem.label)"></div>
+                                </md-menu-item>
+                            </div>
                         </md-menu-content>
                     </md-menu>
                 </md-menu-bar>
@@ -39,19 +51,42 @@
     </div>
     <div ng-if="attributes.menuItemsType.value==='dynamic'">
         <script type="text/ng-template" id="treeMenu">
-            <md-menu-divider ng-if="menuItem[attributes.menuItemNames.value.main.type] === 'divider'"></md-menu-divider>
-            <md-menu-item ng-if="menuItem[attributes.menuItemNames.value.main.type] === 'title'" class="tree-menu-title" style="{{attributes.titleStyle.value}}">
+            <md-menu-divider ng-if="menuItem[attributes.menuItemNames.value.main.type] === 'divider'" style="{{attributes.itemStyle.divider.style}}" class="{{attributes.itemStyle.divider.class}}"></md-menu-divider>
+            <md-menu-item ng-if="menuItem[attributes.menuItemNames.value.main.type] === 'title'" class="tree-menu-title {{attributes.itemStyle.title.class}}" style="{{attributes.itemStyle.title.style}}">
                 <div ng-bind="$eval(menuItem[attributes.menuItemNames.value.main.label])"></div>
             </md-menu-item>
             <md-menu-item ng-if="!(menuItem[attributes.menuItemNames.value.main.type] === 'title' || menuItem[attributes.menuItemNames.value.main.type] === 'divider')" ng-show="attributes.menuItemNames.value.main.display ? $eval(menuItem[attributes.menuItemNames.value.main.display]) : true">                
-                <md-button style="{{attributes.itemStyle.value}}" ng-disabled="$eval(menuItem[attributes.menuItemNames.value.main.disabled])" ng-click="menuItem[attributes.menuItemNames.value.main.scopeItems].length > 0 ? menuToggle($event) : '';$eval(menuItem[attributes.menuItemNames.value.main.onclick])">
-                    <md-icon ng-if="menuItem[attributes.menuItemNames.value.main.icon.value][attributes.menuItemNames.value.main.icon.name] && menuItem[attributes.menuItemNames.value.main.icon.value][attributes.menuItemNames.value.main.icon.type] ==='fa-icon'" class="fa {{$eval(menuItem[attributes.menuItemNames.value.main.icon.value][attributes.menuItemNames.value.main.icon.name]) || 'fa-home'}} tree-menu-icon"></md-icon>
-                    <ng-md-icon ng-if="menuItem[attributes.menuItemNames.value.main.icon.value][attributes.menuItemNames.value.main.icon.name] && menuItem[attributes.menuItemNames.value.main.icon.value][attributes.menuItemNames.value.main.icon.type]==='svg-icon'" icon="{{$eval(menuItem[attributes.menuItemNames.value.main.icon.value][attributes.menuItemNames.value.main.icon.name]) || 'home'}}" size="16" class=" tree-menu-icon"></ng-md-icon>
+                <md-button style="{{attributes.itemStyle.button.style}}" class="{{attributes.itemStyle.button.class}}" ng-disabled="$eval(menuItem[attributes.menuItemNames.value.main.disabled])" ng-click="menuItem[attributes.menuItemNames.value.main.scopeItems].length > 0 ? menuToggle($event) : '';$eval(menuItem[attributes.menuItemNames.value.main.onclick])">
+                    <md-icon ng-if="menuItem[attributes.menuItemNames.value.main.icon.value][attributes.menuItemNames.value.main.icon.name] && menuItem[attributes.menuItemNames.value.main.icon.value][attributes.menuItemNames.value.main.icon.type] ==='fa-icon'" style="{{attributes.itemStyle.icon.style}};font-size:{{attributes.itemStyle.icon.size}}px;width:{{attributes.itemStyle.icon.size}}px;height:{{attributes.itemStyle.icon.size}}px;" class="fa {{$eval(menuItem[attributes.menuItemNames.value.main.icon.value][attributes.menuItemNames.value.main.icon.name]) || 'fa-home'}} tree-menu-icon{{attributes.itemStyle.icon.class}} "></md-icon>
+                    <ng-md-icon ng-if="menuItem[attributes.menuItemNames.value.main.icon.value][attributes.menuItemNames.value.main.icon.name] && menuItem[attributes.menuItemNames.value.main.icon.value][attributes.menuItemNames.value.main.icon.type]==='svg-icon'" icon="{{$eval(menuItem[attributes.menuItemNames.value.main.icon.value][attributes.menuItemNames.value.main.icon.name]) || 'home'}}" size="{{attributes.itemStyle.icon.size}}" style="{{attributes.itemStyle.icon.style}}" class=" tree-menu-icon {{attributes.itemStyle.icon.class}}"></ng-md-icon>
                     <span class="tree-menu-label" ng-bind="$eval(menuItem[attributes.menuItemNames.value.main.label])"></span>
                     <span class="md-alt-text">{{menuItem[attributes.menuItemNames.value.main.shortcut]}}</span>
-                    <small ng-if="menuItem[attributes.menuItemNames.value.main.notification]" style="{{attributes.notificationStyle.value}}">{{menuItem[attributes.menuItemNames.value.main.notification]}}</small>
+                    <small ng-if="menuItem[attributes.menuItemNames.value.main.notification]" style="{{attributes.itemStyle.notification.style}}" class="{{attributes.itemStyle.notification.class}}">{{menuItem[attributes.menuItemNames.value.main.notification]}}</small>
                     <md-icon ng-if="menuItem[attributes.menuItemNames.value.main.scopeItems].length > 0" class="fa fa-angle-right trigger-icon" style="{{attributes.itemStyle.value}}"></md-icon>
                 </md-button>
+                <md-menu-bar ng-if="menuItem[attributes.menuItemNames.value.actions.name]" ng-show="attributes.menuItemNames.value.actions.display ? $eval(menuItem[attributes.menuItemNames.value.actions.display]) : true" class="treemenu-actionbar">
+                    <md-menu class="treemenu-actionbar-menu">
+                        <md-button style="{{attributes.triggerStyle.button.style}}" class="treemenu-actionbar-button {{attributes.triggerStyle.button.class}}" ng-disabled="$eval(menuItem[attributes.menuItemNames.value.actions.disabled])" ng-click="$mdOpenMenu(); $eval(menuItem[attributes.menuItemNames.value.actions.name][attributes.menuItemNames.value.actions.onclick]);" aria-label="Action Trigger Button">
+                            <md-icon ng-if="menuItem[attributes.menuItemNames.value.actions.name][attributes.menuItemNames.value.actions.icon.value][attributes.menuItemNames.value.actions.icon.name] && menuItem[attributes.menuItemNames.value.actions.name][attributes.menuItemNames.value.actions.icon.value][attributes.menuItemNames.value.actions.icon.type] ==='fa-icon'" style="{{attributes.triggerStyle.icon.style}};font-size:{{attributes.triggerStyle.icon.size}}px;width:{{attributes.triggerStyle.icon.size}}px;height:{{attributes.triggerStyle.icon.size}}px;" class="fa {{$eval(menuItem[attributes.menuItemNames.value.actions.name][attributes.menuItemNames.value.actions.icon.value][attributes.menuItemNames.value.actions.icon.name])}} treemenu-actionbar-button-icon {{attributes.triggerStyle.icon.class}}"></md-icon>
+                            <ng-md-icon ng-if="menuItem[attributes.menuItemNames.value.actions.name][attributes.menuItemNames.value.actions.icon.value][attributes.menuItemNames.value.actions.icon.name] && menuItem[attributes.menuItemNames.value.actions.name][attributes.menuItemNames.value.actions.icon.value][attributes.menuItemNames.value.actions.icon.type] ==='svg-icon'" icon="{{$eval(menuItem[attributes.menuItemNames.value.actions.name][attributes.menuItemNames.value.actions.icon.value][attributes.menuItemNames.value.actions.icon.name])}}" size="{{attributes.triggerStyle.icon.size}}" style="{{attributes.triggerStyle.icon.style}}" class="treemenu-action-button-icon {{attributes.triggerStyle.icon.class}}"></ng-md-icon>
+                        </md-button>
+                        <md-menu-content class="treemenu-actionbar-menu-content" width="2">
+                            <div ng-repeat="actionItem in menuItem[attributes.menuItemNames.value.actions.name][attributes.menuItemNames.value.actions.actionItems.name] track by $index">
+                                <md-menu-item ng-if="actionItem[attributes.menuItemNames.value.actions.actionItems.type]!=='title' && actionItem[attributes.menuItemNames.value.actions.actionItems.type]!=='divider'" ng-show="attributes.menuItemNames.value.actions.actionItems.display ? $eval(actionItem[attributes.menuItemNames.value.actions.actionItems.display]) : true">
+                                    <md-button style="{{attributes.actionStyle.button.style}}" class="treemenu-actionbar-item-button {{attributes.actionStyle.button.class}}" ng-disabled="$eval(actionItem[attributes.menuItemNames.value.actions.actionItems.disabled])" ng-click="$eval(actionItem[attributes.menuItemNames.value.actions.actionItems.onclick]);" aria-label="Action Item Button">
+                                        <md-icon ng-if="actionItem[attributes.menuItemNames.value.actions.actionItems.icon.value][attributes.menuItemNames.value.actions.actionItems.icon.name] && actionItem[attributes.menuItemNames.value.actions.actionItems.icon.value][attributes.menuItemNames.value.actions.actionItems.icon.type] ==='fa-icon'" style="{{attributes.actionStyle.icon.style}};font-size:{{attributes.actionStyle.icon.size}}px;width:{{attributes.actionStyle.icon.size}}px;height:{{attributes.actionStyle.icon.size}}px;" class="fa {{$eval(actionItem[attributes.menuItemNames.value.actions.actionItems.icon.value][attributes.menuItemNames.value.actions.actionItems.icon.name])}} treemenu-actionbar-item-icon {{attributes.actionStyle.icon.class}}"></md-icon>
+                                        <ng-md-icon ng-if="actionItem[attributes.menuItemNames.value.actions.actionItems.icon.value][attributes.menuItemNames.value.actions.actionItems.icon.name] && actionItem[attributes.menuItemNames.value.actions.actionItems.icon.value][attributes.menuItemNames.value.actions.actionItems.icon.type] ==='svg-icon'" icon="{{$eval(actionItem[attributes.menuItemNames.value.actions.actionItems.icon.value][attributes.menuItemNames.value.actions.actionItems.icon.name])}}" size="{{attributes.actionStyle.icon.size}}" style="{{attributes.actionStyle.icon.style}}" class=" treemenu-actionbar-item-icon {{attributes.actionStyle.icon.class}}"></ng-md-icon>
+                                        <div ng-bind="$eval(actionItem[attributes.menuItemNames.value.actions.actionItems.label])"></div>
+                                    </md-button>
+                                </md-menu-item>
+                                <md-menu-divider ng-if="actionItem[attributes.menuItemNames.value.actions.actionItems.type]==='divider'" style="{{attributes.actionStyle.divider.style}}" class="dfx-menu-item-divider {{attributes.actionStyle.divider.class}}"></md-menu-divider>
+                                <md-menu-item ng-if="actionItem[attributes.menuItemNames.value.actions.actionItems.type]==='title'" class="tree-menu-title {{attributes.actionStyle.title.class}}" style="{{attributes.actionStyle.title.style}}">
+                                    <div ng-bind="$eval(actionItem[attributes.menuItemNames.value.actions.actionItems.label])"></div>
+                                </md-menu-item>
+                            </div>
+                        </md-menu-content>
+                    </md-menu>
+                </md-menu-bar>
             </md-menu-item>
             <ul ng-if="menuItem[attributes.menuItemNames.value.main.scopeItems]" style="display:none;">
                 <li ng-repeat="menuItem in menuItem[attributes.menuItemNames.value.main.scopeItems] track by $index" class="tree-menu-item" ng-include="'treeMenu'"></li>

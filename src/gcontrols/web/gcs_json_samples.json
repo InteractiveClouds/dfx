@@ -276,6 +276,55 @@
 					]
 				}
 			]
+		},
+		{
+			"name": "Example 2",
+			"value": [
+				{
+					"label": "'Accounts'",
+					"icon": { "name": "'account_balance'", "type": "svg-icon" },
+					"scopeItems": [
+						{
+							"label": "'Financial'",
+							"type": "title"
+						},
+						{
+							"label": "'GBP'",
+							"icon": { "name": "'fa-gbp'", "type": "fa-icon" }
+						},
+						{
+							"label": "'EURO'",
+							"icon": { "name": "'fa-euro'", "type": "fa-icon" }
+						},
+						{
+							"label": "'USD'",
+							"icon": { "name": "'fa-usd'", "type": "fa-icon" }
+						},
+						{	"type": "divider"   },
+						{
+							"label": "'Bitcoin'",
+							"icon": { "name": "'fa-bitcoin'", "type": "fa-icon" }
+						}
+					],
+					"actions": {
+						"icon": { "name": "'view_list'", "type": "svg-icon" },
+						"onclick": "triggerFunc()",
+						"actionItems": [
+							{	"label": "'Title'", "type": "title"	},
+							{
+								"label": "'Standard'",
+								"icon": { "name": "'star'", "type": "svg-icon" },
+								"onclick": "actionFunc()"
+							},
+							{	"type": "divider"	},
+							{
+								"label": "'Standard'",
+								"icon": { "name": "'stars'", "type": "svg-icon" }
+							}
+						]
+					}
+				}
+			]
 		}
 	],
 	"treeview": [
