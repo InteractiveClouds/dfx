@@ -6001,7 +6001,11 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
                 dfxMessaging.showWarning("Filter name can't be empty");
                 $scope.selected_service_tab = 2;
             } else {
-                $scope.updateApiSo();
+                if (typeof codeValue != 'undefined') {
+                    $scope.updateApiSo();
+                } else {
+                    $scope.saveActions();
+                }
             }
             $scope.editFilterTitle = null;
         }, 500);
