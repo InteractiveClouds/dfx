@@ -310,6 +310,14 @@
                                     <a ng-click="setActionsMode()" style="font-size:12px;color:#97CFFF;text-decoration:none;cursor:pointer;color:#3ea4f5;"><span style="padding-left:0"><md-icon class="fa fa-edit" style="font-size:14px;height:16px;min-height: 14px;color: #3ea4f5;min-width: 18px;width: 18px;"></md-icon>Edit</span></a>
                                 </li>
                                 <li class="col-md-12">
+                                    <span class="col-md-4">Display:</span>
+                                    <input class="col-md-8" type="text" ng-model="menu.actions.display" ng-model-options="{ updateOn: 'blur'}"  style="margin-left:-15px;"/>                                    
+                                </li>
+                                <li class="col-md-12">
+                                    <span class="col-md-4">Disabled:</span>
+                                    <input class="col-md-8" type="text" ng-model="menu.actions.disabled" ng-model-options="{ updateOn: 'blur'}"  style="margin-left:-15px;"/>                                    
+                                </li>
+                                <li class="col-md-12">
                                     <span class="col-md-4">Onclick Event:</span>
                                     <div class="col-md-8" layout="row">
                                         <input class="col-md-12" type="text" ng-model="menu.actions.onclick" ng-model-options="{ updateOn: 'blur'}"  style="margin-left:-15px;"/>

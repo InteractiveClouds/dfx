@@ -311,12 +311,12 @@ button.treemenu-actionbar-button.md-button {
     padding: 0px !important;
     min-width: 48px;
     min-height: 48px;
-    margin: 0;
+    margin: 0 !important;
     justify-content: center;
     border-radius: 0;
 }
 md-icon.treemenu-actionbar-button-icon, ng-md-icon.treemenu-actionbar-button-icon {
-    margin: 0;
+    margin: 0 !important;
     display: flex;
     justify-content: center;
     align-items: center;
