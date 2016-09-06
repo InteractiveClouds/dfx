@@ -25,7 +25,7 @@
 			</md-toolbar>
             <md-content class="menu-structure" layout-padding flex style="">
                 <script type="text/ng-template" id="menuTree">
-                    <a href="#" ng-click="selectMenuItem($event, menuItem)">{{ menuItem.label | checkExpression }}</a>
+                    <a href="#" ng-click="selectMenuItem($event, menuItem)">{{ (menuItem.label | checkExpression) || 'no-label' }}</a>
                     <ul ng-if="menuItem.menuItems.value">
                     <li ng-repeat="menuItem in menuItem.menuItems.value track by $index"  class="menu-tree-item" parent-index="{{$parent.$parent.$index}}" self-index="{{$index}}" ng-include="'menuTree'"></li>
                     </ul>
@@ -340,7 +340,7 @@
             </md-toolbar>
             <md-content class="actions-structure" layout-padding flex style="max-height:382px;height:382px;">
                 <script type="text/ng-template" id="actionsTree">
-                    <a href="#" ng-click="setActiveActionItem($index)">{{ actionObj.label | checkExpression }}</a>
+                    <a href="#" ng-click="setActiveActionItem($index)">{{ (actionObj.label | checkExpression) || 'no-label' }}</a>
                     <ul ng-if="actionObj.actionItems">
                     <li ng-repeat="actionObj in menu.actions.actionItems track by $index" class="action-tree-item" ng-include="'actionsTree'"></li>
                     </ul>

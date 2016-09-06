@@ -25,7 +25,7 @@
                     </md-toolbar>
                     <md-content class="tree-structure" layout-padding flex style="">
                         <script type="text/ng-template" id="treeView">
-                            <a href="#" ng-click="selectTreeItem($event, node)">{{ node.name | checkExpression }}</a>
+                            <a href="#" ng-click="selectTreeItem($event, node)">{{ (node.name | checkExpression) || 'no-label' }}</a>
                             <ul ng-if="node.children.length > 0">
                                 <li ng-repeat="node in node.children track by $index"  class="tree-view-item" parent-index="{{$parent.$parent.$index}}" self-index="{{$index}}" ng-include="'treeView'"></li>
                             </ul>

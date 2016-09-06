@@ -1970,6 +1970,8 @@ dfxViewEditorApp.filter('checkExpression', [ function() {
 
         if ( input && ( input.indexOf('+') >= 0 ) ) {
             filtered = false;
+        } else if ( input === '' ) {
+            filtered = true;
         }
 
         return filtered ? input : '{expression}';
