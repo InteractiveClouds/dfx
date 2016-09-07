@@ -2,14 +2,26 @@
     <div ng-if="attributes.selectedType.value!=='number'" layout="row" ng-style="{'flex-direction': attributes.icon.value !=='' && attributes.position.value === 'right' ? 'row-reverse' : 'row'}">
         <div class="gc_w_input_icon_wrap_preview" flex="none" ng-if="attributes.icon.value !== ''">
             <span class="gc_w_input_icon">
-                <md-icon ng-if="attributes.icon.type ==='fa-icon'" class="fa {{$eval(attributes.icon.value) || 'fa-home'}} {{attributes.icon.class}}" style="{{attributes.icon.style}}; font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
-                <ng-md-icon ng-if="attributes.icon.type ==='svg-icon'" icon="{{$eval(attributes.icon.value) || 'home'}}" size="{{attributes.icon.size}}" style="{{attributes.icon.style}}; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;" class="{{attributes.icon.class}}"></ng-md-icon>
+                <md-icon ng-if="attributes.icon.type ==='fa-icon'" class="fa {{$eval($eval(attributes.icon.value))}} {{attributes.icon.class}}" style="{{attributes.icon.style}}; font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
+                <ng-md-icon ng-if="attributes.icon.type ==='svg-icon'" icon="{{$eval($eval(attributes.icon.value))}}" size="{{attributes.icon.size}}" style="{{attributes.icon.style}}; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;" class="{{attributes.icon.class}}"></ng-md-icon>
             </span>
         </div>
         <div class="layout-row flex">
             <md-input-container flex class="gc-input-icon-container" >
                 <label ng-bind="$eval(attributes.label.value)"></label>
-                <input ng-if="!isComplexBinding.value" name="{{attributes.name.value}}" type="{{attributes.selectedType.value}}" 
+                <input ng-if="bindingType.value==='noBinding'" name="{{attributes.name.value}}" type="{{attributes.selectedType.value}}" 
+                    ng-model="attributes.binding.value" ng-change="$eval(attributes.onchange.value)" 
+                    minlength="{{attributes.minlength.value}}" md-maxlength="{{attributes.maxlength.value}}" 
+                    ng-pattern="attributes.pattern.value" ng-required="$eval(attributes.required.value)"
+                    ng-disabled="$eval(attributes.disabled.value)" style="padding-left: 5px"
+                    ng-focus="$eval(attributes.onfocus.value)" ng-blur="$eval(attributes.onblur.value)"
+                    ng-click="$eval(attributes.onclick.value)" ng-dblclick="$eval(attributes.ondblclick.value)"
+                    ng-keypress="$eval(attributes.onkeypress.value)" ng-keydown="$eval(attributes.onkeydown.value)"
+                    ng-keyup="$eval(attributes.onkeyup.value)" ng-mouseover="$eval(attributes.onmouseover.value)"
+                    ng-mouseenter="$eval(attributes.onmouseenter.value)" ng-mousemove="$eval(attributes.onmousemove.value)"
+                    ng-mouseleave="$eval(attributes.onmouseleave.value)" ng-mousedown="$eval(attributes.onmousedown.value)"
+                    ng-mouseup="$eval(attributes.onmouseup.value)">
+                <input ng-if="bindingType.value==='simpleBinding'" name="{{attributes.name.value}}" type="{{attributes.selectedType.value}}" 
                     ng-model="$parent_scope[attributes.binding.value]" ng-change="$eval(attributes.onchange.value)" 
                     minlength="{{attributes.minlength.value}}" md-maxlength="{{attributes.maxlength.value}}" 
                     ng-pattern="attributes.pattern.value" ng-required="$eval(attributes.required.value)"
@@ -20,8 +32,9 @@
                     ng-keyup="$eval(attributes.onkeyup.value)" ng-mouseover="$eval(attributes.onmouseover.value)"
                     ng-mouseenter="$eval(attributes.onmouseenter.value)" ng-mousemove="$eval(attributes.onmousemove.value)"
                     ng-mouseleave="$eval(attributes.onmouseleave.value)" ng-mousedown="$eval(attributes.onmousedown.value)"
-                    ng-mouseup="$eval(attributes.onmouseup.value)">                
-                <input ng-if="isComplexBinding.value" name="{{attributes.name.value}}" type="{{attributes.selectedType.value}}" 
+                    ng-mouseup="$eval(attributes.onmouseup.value)">
+                <div ng-if="bindingType.value==='complexBinding'">                    
+                <input name="{{attributes.name.value}}" type="{{attributes.selectedType.value}}" 
                     dfx-complex-ng-model ng-change="$eval(attributes.onchange.value)" 
                     minlength="{{attributes.minlength.value}}" md-maxlength="{{attributes.maxlength.value}}" 
                     ng-pattern="attributes.pattern.value" ng-required="$eval(attributes.required.value)"
@@ -33,6 +46,7 @@
                     ng-mouseenter="$eval(attributes.onmouseenter.value)" ng-mousemove="$eval(attributes.onmousemove.value)"
                     ng-mouseleave="$eval(attributes.onmouseleave.value)" ng-mousedown="$eval(attributes.onmousedown.value)"
                     ng-mouseup="$eval(attributes.onmouseup.value)">                
+                </div>
                 <div ng-if="inputForm.$dirty" ng-messages="inputForm[attributes.name.value].$error">
                     <span ng-message="required">{{$eval(attributes.label.value)}} is required.</span>
                     <span ng-message="email">Email address is invalid.</span>
@@ -46,14 +60,25 @@
     <div ng-if="attributes.selectedType.value==='number'" layout="row" ng-style="{'flex-direction': attributes.icon.value !=='' && attributes.position.value === 'right' ? 'row-reverse' : 'row'}">
         <div class="gc_w_input_icon_wrap_preview" flex="none" ng-if="attributes.icon.value !== ''">
             <span class="gc_w_input_icon">
-                <md-icon ng-if="attributes.icon.type ==='fa-icon'" class="fa {{$eval(attributes.icon.value) || 'fa-home'}} {{attributes.icon.class}}" style="{{attributes.icon.style}}; font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
-                <ng-md-icon ng-if="attributes.icon.type ==='svg-icon'" icon="{{$eval(attributes.icon.value) || 'home'}}" size="{{attributes.icon.size}}" style="{{attributes.icon.style}}; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;" class="{{attributes.icon.class}}"></ng-md-icon>
+                <md-icon ng-if="attributes.icon.type ==='fa-icon'" class="fa {{$eval($eval(attributes.icon.value))}} {{attributes.icon.class}}" style="{{attributes.icon.style}}; font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
+                <ng-md-icon ng-if="attributes.icon.type ==='svg-icon'" icon="{{$eval($eval(attributes.icon.value))}}" size="{{attributes.icon.size}}" style="{{attributes.icon.style}}; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;" class="{{attributes.icon.class}}"></ng-md-icon>
             </span>
         </div>
         <div class="layout-row flex">
             <md-input-container flex class="gc-input-icon-container" >
                 <label ng-bind="$eval(attributes.label.value)"></label>
-                <input ng-if="!isComplexBinding.value" name="{{attributes.name.value}}" type="number" 
+                <input ng-if="bindingType.value==='noBinding'" name="{{attributes.name.value}}" type="number" 
+                    ng-model="attributes.binding.value" ng-change="$eval(attributes.onchange.value)" 
+                    min="{{attributes.minNumber.value}}" max="{{attributes.maxNumber.value}}" step="any" 
+                    ng-disabled="$eval(attributes.disabled.value)" ng-required="$eval(attributes.required.value)"
+                    style="padding-left: 5px" ng-focus="$eval(attributes.onfocus.value)"
+                    ng-blur="$eval(attributes.onblur.value)" ng-click="$eval(attributes.onclick.value)"
+                    ng-dblclick="$eval(attributes.ondblclick.value)" ng-keypress="$eval(attributes.onkeypress.value)"
+                    ng-keydown="$eval(attributes.onkeydown.value)" ng-keyup="$eval(attributes.onkeyup.value)"
+                    ng-mouseover="$eval(attributes.onmouseover.value)" ng-mouseenter="$eval(attributes.onmouseenter.value)"
+                    ng-mousemove="$eval(attributes.onmousemove.value)" ng-mouseleave="$eval(attributes.onmouseleave.value)"
+                    ng-mousedown="$eval(attributes.onmousedown.value)" ng-mouseup="$eval(attributes.onmouseup.value)">
+                <input ng-if="bindingType.value==='simpleBinding'" name="{{attributes.name.value}}" type="number" 
                     ng-model="$parent_scope[attributes.binding.value]" ng-change="$eval(attributes.onchange.value)" 
                     min="{{attributes.minNumber.value}}" max="{{attributes.maxNumber.value}}" step="any" 
                     ng-disabled="$eval(attributes.disabled.value)" ng-required="$eval(attributes.required.value)"
@@ -64,7 +89,8 @@
                     ng-mouseover="$eval(attributes.onmouseover.value)" ng-mouseenter="$eval(attributes.onmouseenter.value)"
                     ng-mousemove="$eval(attributes.onmousemove.value)" ng-mouseleave="$eval(attributes.onmouseleave.value)"
                     ng-mousedown="$eval(attributes.onmousedown.value)" ng-mouseup="$eval(attributes.onmouseup.value)">
-                <input ng-if="isComplexBinding.value" name="{{attributes.name.value}}" type="number" 
+                <div ng-if="bindingType.value==='complexBinding'">                    
+                <input name="{{attributes.name.value}}" type="number" 
                     dfx-complex-ng-model ng-change="$eval(attributes.onchange.value)" 
                     min="{{attributes.minNumber.value}}" max="{{attributes.maxNumber.value}}" step="any" 
                     ng-disabled="$eval(attributes.disabled.value)" ng-required="$eval(attributes.required.value)"
@@ -75,6 +101,7 @@
                     ng-mouseover="$eval(attributes.onmouseover.value)" ng-mouseenter="$eval(attributes.onmouseenter.value)"
                     ng-mousemove="$eval(attributes.onmousemove.value)" ng-mouseleave="$eval(attributes.onmouseleave.value)"
                     ng-mousedown="$eval(attributes.onmousedown.value)" ng-mouseup="$eval(attributes.onmouseup.value)">
+                </div>
                 <div ng-if="inputForm.$dirty" ng-messages="inputForm[attributes.name.value].$error">
                     <span ng-message="required">{{$eval(attributes.label.value)}} is required.</span>
                     <span ng-message="min">The number has to be not less than {{attributes.minNumber.value}}.</span>
@@ -88,8 +115,8 @@
     <div ng-if="attributes.selectedType.value!=='number'" layout="row" ng-style="{'flex-direction': attributes.icon.value !=='' && attributes.position.value === 'right' ? 'row-reverse' : 'row'}">
         <div class="gc_w_input_icon_wrap_preview" flex="none" ng-if="attributes.icon.value !== ''">
             <span class="gc_w_input_icon">
-                <md-icon ng-if="attributes.icon.type ==='fa-icon'" class="fa {{$eval(attributes.icon.value) || 'fa-home'}} {{attributes.icon.class}}" style="{{attributes.icon.style}}; font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
-                <ng-md-icon ng-if="attributes.icon.type ==='svg-icon'" icon="{{$eval(attributes.icon.value) || 'home'}}" size="{{attributes.icon.size}}" style="{{attributes.icon.style}}; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;" class="{{attributes.icon.class}}"></ng-md-icon>
+                <md-icon ng-if="attributes.icon.type ==='fa-icon'" class="fa {{$eval($eval(attributes.icon.value))}} {{attributes.icon.class}}" style="{{attributes.icon.style}}; font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
+                <ng-md-icon ng-if="attributes.icon.type ==='svg-icon'" icon="{{$eval($eval(attributes.icon.value))}}" size="{{attributes.icon.size}}" style="{{attributes.icon.style}}; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;" class="{{attributes.icon.class}}"></ng-md-icon>
             </span>
         </div>
         <div class="layout-row flex">
@@ -119,8 +146,8 @@
     <div ng-if="attributes.selectedType.value==='number'" layout="row" ng-style="{'flex-direction': attributes.icon.value !=='' && attributes.position.value === 'right' ? 'row-reverse' : 'row'}">
         <div class="gc_w_input_icon_wrap_preview" flex="none" ng-if="attributes.icon.value !== ''">
             <span class="gc_w_input_icon">
-                <md-icon ng-if="attributes.icon.type ==='fa-icon'" class="fa {{$eval(attributes.icon.value) || 'fa-home'}} {{attributes.icon.class}}" style="{{attributes.icon.style}}; font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
-                <ng-md-icon ng-if="attributes.icon.type ==='svg-icon'" icon="{{$eval(attributes.icon.value) || 'home'}}" size="{{attributes.icon.size}}" style="{{attributes.icon.style}}; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;" class="{{attributes.icon.class}}"></ng-md-icon>
+                <md-icon ng-if="attributes.icon.type ==='fa-icon'" class="fa {{$eval($eval(attributes.icon.value))}} {{attributes.icon.class}}" style="{{attributes.icon.style}}; font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
+                <ng-md-icon ng-if="attributes.icon.type ==='svg-icon'" icon="{{$eval($eval(attributes.icon.value))}}" size="{{attributes.icon.size}}" style="{{attributes.icon.style}}; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;" class="{{attributes.icon.class}}"></ng-md-icon>
             </span>
         </div>
         <div class="layout-row flex">
