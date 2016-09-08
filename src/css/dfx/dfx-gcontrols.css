@@ -519,11 +519,13 @@ md-chips md-chips-wrap div input[placeholder]:-ms-input-placeholder{
 }
 
 md-radio-button > div.md-container{
-    margin-top: 3px;
+    /*margin-top: 1px;*/
 }
 
 md-radio-button > div.md-label{
-    padding-top: 2px;
+    /*padding-top: 1px;*/
+    margin-left: 28px;
+    margin-right: 8px;
 }
 
 
