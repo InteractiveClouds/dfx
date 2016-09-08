@@ -47,7 +47,7 @@ dfxStudioApi.factory('dfxAuthRequest', function() {
             callback(data);
         });
     };
-    
+
     return aut_request;
 });
 
@@ -57,14 +57,14 @@ dfxStudioApi.factory('dfxStats', [ '$http', '$q', function($http, $q) {
 
     api_stats.getMain = function( scope ) {
         var deferred = $q.defer();
-        
+
         $http({
             method: 'GET',
             url: '/studio/stats/main'
         }).then(function successCallback(response) {
             deferred.resolve( response.data );
         });
-        
+
         return deferred.promise;
     }
     return api_stats;
@@ -505,27 +505,27 @@ dfxStudioApi.factory('dfxApplications', [ '$http', '$q', function($http, $q) {
 
     api_applications.getAll = function( scope ) {
         var deferred = $q.defer();
-        
+
         $http({
             method: 'GET',
             url: '/studio/tree'
         }).then(function successCallback(response) {
             deferred.resolve( response );
         });
-        
+
         return deferred.promise;
     }
 
     api_applications.getAppTree = function( scope, app_name ) {
         var deferred = $q.defer();
-        
+
         $http({
             method: 'GET',
             url: '/studio/tree?application=' + app_name
         }).then(function successCallback(response) {
             deferred.resolve( response );
         });
-        
+
         return deferred.promise;
     }
 
@@ -759,24 +759,24 @@ dfxStudioApi.factory('dfxApplications', [ '$http', '$q', function($http, $q) {
 
     api_applications.findAll = function( search ) {
         var deferred = $q.defer();
-        
+
         $http({
             method: 'GET',
             url: '/studio/components/search?q=' + search
         }).then(function successCallback(response) {
             deferred.resolve( response );
         });
-        
+
         return deferred.promise;
     };
 
     api_applications.copyObject = function( scope, to_copy ) {
         var deferred = $q.defer();
-        
+
         var data = {
             saveAsName:        to_copy.name,
             applicationName:   to_copy.application,
-            applicationTarget: to_copy.applicationTarget,            
+            applicationTarget: to_copy.applicationTarget,
             categoryTarget:    to_copy.categoryTarget,
             type:              to_copy.type
         }
@@ -803,7 +803,7 @@ dfxStudioApi.factory('dfxApplications', [ '$http', '$q', function($http, $q) {
 
     api_applications.copyCategory = function( scope, category ) {
         var deferred = $q.defer();
-        
+
         $http({
             method: 'POST',
             url: '/studio/application/copyCategory',
@@ -1242,14 +1242,14 @@ dfxStudioApi.factory('dfxViews', [ '$http', '$q', function($http, $q) {
     api_views.getOne = function( scope, app_name, view_name, platform ) {
         // url: '/studio/widget/item/' + app_name + '/' + view_name  + '/' + view.platform
     	var deferred = $q.defer();
-        
+
         $http({
   			method: 'GET',
   			url: '/studio/widget/item/' + app_name + '/' + view_name + '/' + platform
 		}).then(function successCallback(response) {
         	deferred.resolve( response.data.widget );
         });
-        
+
         return deferred.promise;
     };
 
@@ -1263,7 +1263,7 @@ dfxStudioApi.factory('dfxViews', [ '$http', '$q', function($http, $q) {
         }).then(function successCallback(response) {
             deferred.resolve( { "views": response.data.widgets } );
         });
-        
+
         return deferred.promise;
     };
 
@@ -1272,7 +1272,7 @@ dfxStudioApi.factory('dfxViews', [ '$http', '$q', function($http, $q) {
         var deferred = $q.defer();
 
         delete view._id;
-        
+
         $http({
             url: '/studio/widget/update/' + view.name,
             method: 'POST',
@@ -1280,7 +1280,7 @@ dfxStudioApi.factory('dfxViews', [ '$http', '$q', function($http, $q) {
         }).then(function successCallback(response) {
             deferred.resolve( response.data );
         });
-        
+
         return deferred.promise;
     }
 
@@ -1311,7 +1311,7 @@ dfxStudioApi.factory('dfxViews', [ '$http', '$q', function($http, $q) {
 
     api_views.create = function( scope, view ) {
         var deferred = $q.defer();
-        
+
         $http({
             url: '/studio/widget/create/',
             method: 'POST',
@@ -1321,14 +1321,14 @@ dfxStudioApi.factory('dfxViews', [ '$http', '$q', function($http, $q) {
         }, function errorCallback(response) {
             deferred.reject(response);
         });
-        
+
         return deferred.promise;
     }
 
     api_views.delete = function( scope, view ) {
         // add view.platform
         var deferred = $q.defer();
-        
+
         $http({
             url: '/studio/widget/delete/',
             method: 'POST',
@@ -1340,14 +1340,14 @@ dfxStudioApi.factory('dfxViews', [ '$http', '$q', function($http, $q) {
         }).then(function successCallback(response) {
             deferred.resolve( response.data.widget );
         });
-        
+
         return deferred.promise;
     }
 
     api_views.getCategories = function( scope, app_name, platform ) {
         // url: '/studio/widget/category/list/' + app_name + '/' + platform
         var deferred = $q.defer();
-        
+
         $http({
             url: '/studio/widget/category/list/' + app_name + '/' + platform,
             method: 'GET',
@@ -1355,13 +1355,13 @@ dfxStudioApi.factory('dfxViews', [ '$http', '$q', function($http, $q) {
         }).then(function successCallback(response) {
             deferred.resolve( response );
         });
-        
+
         return deferred.promise;
     }
 
     api_views.createCategory = function( scope, category_name, app_name, platform ) {
         var deferred = $q.defer();
-        
+
         $http({
             method: 'POST',
             url: '/studio/widget/category/createCategory',
@@ -1369,14 +1369,14 @@ dfxStudioApi.factory('dfxViews', [ '$http', '$q', function($http, $q) {
         }).then(function successCallback(response) {
             deferred.resolve( response );
         });
-        
+
         return deferred.promise;
     }
 
     api_views.editCategory = function( scope, old_name, new_name, app_name, platform ) {
         // data: { name: new_name, application: app_name, platform : platform }
         var deferred = $q.defer();
-        
+
         $http({
             method: 'POST',
             url: '/studio/widget/category/updateCategory/' + old_name,
@@ -1384,14 +1384,14 @@ dfxStudioApi.factory('dfxViews', [ '$http', '$q', function($http, $q) {
         }).then(function successCallback(response) {
             deferred.resolve( response );
         });
-        
+
         return deferred.promise;
     }
 
     api_views.removeCategory = function( scope, category_name, app_name, platform ) {
         // data: { name: category_name, ownerId: "", application: app_name, platform: platform }
         var deferred = $q.defer();
-        
+
         $http({
             method: 'POST',
             url: '/studio/widget/category/removeCategory/' + category_name,
@@ -1399,14 +1399,14 @@ dfxStudioApi.factory('dfxViews', [ '$http', '$q', function($http, $q) {
         }).then(function successCallback(response) {
             deferred.resolve( response );
         });
-        
+
         return deferred.promise;
     }
 
     api_views.createFromModel = function( scope, view ) {
         // Где это используется ? Нужно тоже добавить view.platform
         var deferred = $q.defer();
-        
+
         $http({
             url: '/studio/widget/create-from-model/',
             method: 'POST',
@@ -1416,7 +1416,7 @@ dfxStudioApi.factory('dfxViews', [ '$http', '$q', function($http, $q) {
         }, function errorCallback(response) {
             deferred.reject(response);
         });
-        
+
         return deferred.promise;
     }
 
@@ -1430,14 +1430,14 @@ dfxStudioApi.factory('dfxPages', [ '$http', '$q', function($http, $q) {
     api_pages.getOne = function( scope, app_name, page_name, platform ) {
         // url: '/studio/screen/item/' + page_name + '/' + app_name + '/' + platform
     	var deferred = $q.defer();
-        
+
         $http({
   			method: 'GET',
   			url: '/studio/screen/item/' + page_name + '/' + app_name + '/' + platform
 		}).then(function successCallback(response) {
         	deferred.resolve( response.data.screen );
         });
-        
+
         return deferred.promise;
     }
 
@@ -1446,7 +1446,7 @@ dfxStudioApi.factory('dfxPages', [ '$http', '$q', function($http, $q) {
         var deferred = $q.defer();
 
         delete page._id;
-        
+
         $http({
             url: '/studio/screen/update/',
             method: 'POST',
@@ -1454,14 +1454,14 @@ dfxStudioApi.factory('dfxPages', [ '$http', '$q', function($http, $q) {
         }).then(function successCallback(response) {
             deferred.resolve( response.data );
         });
-        
+
         return deferred.promise;
     }
 
     api_pages.delete = function( scope, page ) {
         // add page.platform
         var deferred = $q.defer();
-        
+
         $http({
             url: '/studio/screen/delete/',
             method: 'POST',
@@ -1474,14 +1474,14 @@ dfxStudioApi.factory('dfxPages', [ '$http', '$q', function($http, $q) {
         }).then(function successCallback(response) {
             deferred.resolve( response.data.screen );
         });
-        
+
         return deferred.promise;
     }
 
     api_pages.create = function( scope, page ) {
         // If no, then add page.platform
         var deferred = $q.defer();
-        
+
         $http({
             url: '/studio/screen/create/',
             method: 'POST',
@@ -1491,27 +1491,27 @@ dfxStudioApi.factory('dfxPages', [ '$http', '$q', function($http, $q) {
         }, function errorCallback(response) {
             deferred.reject(response);
         });
-        
+
         return deferred.promise;
     }
 
     api_pages.getCategories = function( scope, app_name, platform ) {
         // url: '/studio/screen-category/list/' + app_name + '/' + platform
         var deferred = $q.defer();
-        
+
         $http({
             url: '/studio/screen-category/list/' + app_name + '/' + platform,
             method: 'GET'
         }).then(function successCallback(response) {
             deferred.resolve( response );
         });
-        
+
         return deferred.promise;
     }
 
     api_pages.createCategory = function( scope, category_name, app_name, platform ) {
         var deferred = $q.defer();
-        
+
         $http({
             method: 'POST',
             url: '/studio/screen-category/create',
@@ -1519,14 +1519,14 @@ dfxStudioApi.factory('dfxPages', [ '$http', '$q', function($http, $q) {
         }).then(function successCallback(response) {
             deferred.resolve( response );
         });
-        
+
         return deferred.promise;
     }
 
     api_pages.editCategory = function( scope, old_name, new_name, app_name, platform ) {
         //  data: { name: new_name, application: app_name, platform : platform }
         var deferred = $q.defer();
-        
+
         $http({
             method: 'POST',
             url: '/studio/screen-category/update/' + old_name,
@@ -1534,14 +1534,14 @@ dfxStudioApi.factory('dfxPages', [ '$http', '$q', function($http, $q) {
         }).then(function successCallback(response) {
             deferred.resolve( response );
         });
-        
+
         return deferred.promise;
     }
 
     api_pages.removeCategory = function( scope, category_name, app_name, platform ) {
         // data: { applicationName: app_name, screenCategoryName: category_name, platform: platform }
         var deferred = $q.defer();
-        
+
         $http({
             method: 'POST',
             url: '/studio/screen-category/delete/' + category_name,
@@ -1549,7 +1549,7 @@ dfxStudioApi.factory('dfxPages', [ '$http', '$q', function($http, $q) {
         }).then(function successCallback(response) {
             deferred.resolve( response );
         });
-        
+
         return deferred.promise;
     }
 
@@ -1576,27 +1576,27 @@ dfxStudioApi.factory('dfxTemplates', [ '$http', '$q', function($http, $q) {
 
     api_templates.getOne = function( scope, app_name, template_name ) {
         var deferred = $q.defer();
-        
+
         $http({
             method: 'GET',
             url: '/studio/screentemplates/item/' + template_name + '/' + app_name
         }).then(function successCallback(response) {
             deferred.resolve(response.data.screenTemplate);
         });
-        
+
         return deferred.promise;
     };
 
     api_templates.getAll = function( scope, app_name ) {
         var deferred = $q.defer();
-        
+
         $http({
             method: 'GET',
             url: '/studio/screentemplates/list/' + app_name
         }).then(function successCallback(response) {
             deferred.resolve(response.data.screens_templates);
         });
-        
+
         return deferred.promise;
     };
 
@@ -1604,7 +1604,7 @@ dfxStudioApi.factory('dfxTemplates', [ '$http', '$q', function($http, $q) {
         var deferred = $q.defer();
 
         delete template._id;
-        
+
         $http({
             url: '/studio/screentemplates/create/',
             method: 'POST',
@@ -1612,7 +1612,7 @@ dfxStudioApi.factory('dfxTemplates', [ '$http', '$q', function($http, $q) {
         }).then(function successCallback(response) {
             deferred.resolve( response );
         });
-        
+
         return deferred.promise;
     }
 
@@ -1620,7 +1620,7 @@ dfxStudioApi.factory('dfxTemplates', [ '$http', '$q', function($http, $q) {
         var deferred = $q.defer();
 
         delete template._id;
-        
+
         $http({
             url: '/studio/screentemplates/update/',
             method: 'POST',
@@ -1628,7 +1628,7 @@ dfxStudioApi.factory('dfxTemplates', [ '$http', '$q', function($http, $q) {
         }).then(function successCallback(response) {
             deferred.resolve( response.data.screenTemplate );
         });
-        
+
         return deferred.promise;
     }
 
@@ -2006,7 +2006,7 @@ dfxStudioApi.factory('dfxApiServiceObjects', [ '$http', '$q', function($http, $q
 
     api_service_objects.getAll = function( scope, app_name ) {
         var deferred = $q.defer();
-        
+
         $http({
             method: 'POST',
             url: '/studio/auth-providers',
@@ -2014,39 +2014,39 @@ dfxStudioApi.factory('dfxApiServiceObjects', [ '$http', '$q', function($http, $q
         }).then(function successCallback(response) {
             deferred.resolve( response );
         });
-        
+
         return deferred.promise;
     }
 
     api_service_objects.getOne = function( scope, app_name, api_so_name ) {
         var deferred = $q.defer();
-        
+
         $http({
             method: 'GET',
             url: '/studio/query/dataNew/' + app_name + '/' + api_so_name
         }).then(function successCallback(response) {
             deferred.resolve( response );
         });
-        
+
         return deferred.promise;
     }
 
     api_service_objects.getCategories = function( scope, app_name ) {
         var deferred = $q.defer();
-        
+
         $http({
             method: 'GET',
             url: '/studio/query/category/list/' + app_name
         }).then(function successCallback(response) {
             deferred.resolve( response );
         });
-        
+
         return deferred.promise;
     }
 
     api_service_objects.createCategory = function( scope, category_name, app_name ) {
         var deferred = $q.defer();
-        
+
         $http({
             method: 'POST',
             url: '/studio/query/category/createCategory',
@@ -2054,13 +2054,13 @@ dfxStudioApi.factory('dfxApiServiceObjects', [ '$http', '$q', function($http, $q
         }).then(function successCallback(response) {
             deferred.resolve( response );
         });
-        
+
         return deferred.promise;
     }
 
     api_service_objects.editCategory = function( scope, old_name, new_name, app_name ) {
         var deferred = $q.defer();
-        
+
         $http({
             method: 'POST',
             url: '/studio/query/category/updateCategory/' + old_name,
@@ -2068,13 +2068,13 @@ dfxStudioApi.factory('dfxApiServiceObjects', [ '$http', '$q', function($http, $q
         }).then(function successCallback(response) {
             deferred.resolve( response );
         });
-        
+
         return deferred.promise;
     }
 
     api_service_objects.removeCategory = function( scope, category_name, app_name ) {
         var deferred = $q.defer();
-        
+
         $http({
             method: 'POST',
             url: '/studio/query/category/removeCategory/' + category_name,
@@ -2082,7 +2082,7 @@ dfxStudioApi.factory('dfxApiServiceObjects', [ '$http', '$q', function($http, $q
         }).then(function successCallback(response) {
             deferred.resolve( response );
         });
-        
+
         return deferred.promise;
     }
 
@@ -2098,7 +2098,7 @@ dfxStudioApi.factory('dfxApiServiceObjects', [ '$http', '$q', function($http, $q
         }, function errorCallback(response){
             deferred.reject( response );
         });
-        
+
         return deferred.promise;
     }
 
@@ -2112,7 +2112,7 @@ dfxStudioApi.factory('dfxApiServiceObjects', [ '$http', '$q', function($http, $q
         }).then(function successCallback(response) {
             deferred.resolve( response );
         });
-        
+
         return deferred.promise;
     }
 
@@ -2134,7 +2134,7 @@ dfxStudioApi.factory('dfxApiServiceObjects', [ '$http', '$q', function($http, $q
 
     api_service_objects.deleteSo = function( scope, so ) {
         var deferred = $q.defer();
-        
+
         $http({
             url: '/studio/query/delete/',
             method: 'POST',
@@ -2145,13 +2145,13 @@ dfxStudioApi.factory('dfxApiServiceObjects', [ '$http', '$q', function($http, $q
         }).then(function successCallback(response) {
             deferred.resolve( response );
         });
-        
+
         return deferred.promise;
     }
 
     api_service_objects.validateSoName = function( scope, api_so_name, app_name ) {
         var deferred = $q.defer();
-        
+
         $http({
             method: 'POST',
             url: '/studio/query/validateServiceName',
@@ -2159,13 +2159,13 @@ dfxStudioApi.factory('dfxApiServiceObjects', [ '$http', '$q', function($http, $q
         }).then(function successCallback(response) {
             deferred.resolve( response );
         });
-        
+
         return deferred.promise;
     }
 
     api_service_objects.validateSoUrl = function( scope, api_route, app_name, route_id ) {
         var deferred = $q.defer();
-        
+
         $http({
             method: 'POST',
             url: '/studio/query/validateServiceUrl',
@@ -2173,33 +2173,33 @@ dfxStudioApi.factory('dfxApiServiceObjects', [ '$http', '$q', function($http, $q
         }).then(function successCallback(response) {
             deferred.resolve( response );
         });
-        
+
         return deferred.promise;
     }
 
     api_service_objects.getCatalog = function( scope ) {
         var deferred = $q.defer();
-        
+
         $http({
             method: 'GET',
             url: '/src/catalog/datasources.json'
         }).then(function successCallback(response) {
             deferred.resolve( response );
         });
-        
+
         return deferred.promise;
     }
 
     api_service_objects.getStrongLoop = function( scope, server_url ) {
         var deferred = $q.defer();
-        
+
         $http({
             method: 'GET',
             url: server_url + '/explorer/swagger.json'
         }).then(function successCallback(response) {
             deferred.resolve( response );
         });
-        
+
         return deferred.promise;
     }
 
@@ -2241,4 +2241,24 @@ dfxStudioApi.factory('dfxSamples', [ '$http', '$q', function($http, $q) {
     };
 
     return api_samples;
+}]);
+
+dfxStudioApi.factory('dfxRendering', [ '$http', '$q', function($http, $q) {
+
+    var api_rendering = {};
+
+    api_rendering.render = function( scope ) {
+        var deferred = $q.defer();
+
+        $http({
+            method: 'POST',
+            url: '/studio/view/render'
+        }).then(function successCallback(response) {
+            deferred.resolve( response.data );
+        });
+
+        return deferred.promise;
+    };
+
+    return api_rendering;
 }]);

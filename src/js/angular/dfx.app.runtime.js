@@ -272,14 +272,15 @@ dfxAppRuntime.controller('dfx_view_controller', [ '$scope', '$rootScope', '$comp
 
     // Add a component
     $scope.addComponent = function( component, container_component, parent_id, view_id) {
-        var component_instance = $scope.renderGraphicalControl(component, parent_id, view_id);
-        $timeout(function() {
+        $scope.gc_instances[component.id] = component;
+        //var component_instance = $scope.gc_instances[component.id] = component;//$scope.renderGraphicalControl(component, parent_id, view_id);
+        /*$timeout(function() {
             if (component.container==null) {
                 $('#' + container_component.id).append(component_instance.fragment);
             } else {
                 $('#' + container_component.id + '_' + component.container).append(component_instance.fragment);
             }
-        }, 0);
+        }, 0);*/
     };
 
     // Render GControls
@@ -399,6 +400,33 @@ dfxAppRuntime.directive('dfxPageTemplate', ['$compile', '$mdSidenav', '$timeout'
 dfxAppRuntime.filter("sanitize", ['$sce', function($sce) {
     return function(htmlCode){
         return $sce.trustAsHtml(htmlCode);
+    }
+}]);
+
+dfxAppRuntime.directive('dfxViewPreviewCompiled', ['$compile', function($compile) {
+    return {
+        restrict: 'A',
+        controller: function($scope, $element, $attrs) {
+            $scope.view_id = $attrs.id;
+            $scope.$parent.dfxViewCard = $attrs.dfxViewCard;
+            var widget_definition = JSON.parse(window.localStorage.getItem( 'dfx_' + $attrs.dfxViewPreviewCompiled ));
+            var view_compiled = window.localStorage.getItem( 'DFX_view_compiled_' + $attrs.dfxViewPreviewCompiled + '_' + $attrs.dfxViewCard );
+            $scope.$watch('dfxViewCard', function(new_card, old_card) {
+                if (new_card!=null) {
+                  var animation = (widget_definition.definition[new_card][0].animation) ? widget_definition.definition[new_card][0].animation : {
+                    in: 'fadeIn',
+                    out: 'slideOutLeft'
+                  };
+                  $('#dfx_view_preview_container').removeClass().addClass('animated ' + animation.out).one('animationend', function(eventOne) {
+                    angular.element($('#dfx_view_preview_container')).html('');
+                    $('#dfx_view_preview_container').removeClass().addClass('animated ' + animation.in);
+                    $scope.addComponents( widget_definition.definition, { "id": "dfx_view_preview_container" }, '', new_card, 'dfx_view_preview_container' );
+                    angular.element($('#dfx_view_preview_container')).html(view_compiled);
+                    $compile(angular.element($('#dfx_view_preview_container')).contents())($scope);
+                  });
+                }
+            });
+        }
     }
 }]);
 

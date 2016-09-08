@@ -215,7 +215,7 @@ dfxViewEditorApp.controller("dfx_main_controller", [ '$scope', '$rootScope', '$q
 
 }]);
 
-dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScope', '$compile', '$timeout', '$mdDialog', '$mdToast', '$mdSidenav', '$log', '$mdMedia', '$window', '$http', 'dfxMessaging', function($scope, $rootScope, $compile, $timeout, $mdDialog, $mdToast, $mdSidenav, $log, $mdMedia, $window, $http, dfxMessaging) {
+dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScope', '$compile', '$timeout', '$mdDialog', '$mdToast', '$mdSidenav', '$log', '$mdMedia', '$window', '$http', 'dfxMessaging', 'dfxRendering', function($scope, $rootScope, $compile, $timeout, $mdDialog, $mdToast, $mdSidenav, $log, $mdMedia, $window, $http, dfxMessaging, dfxRendering) {
 
     $scope.palette_visible = true;
     $scope.property_visible = true;
@@ -771,7 +771,6 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     };
 
     $scope.openPreviewSettings = function(ev) {
-        $(ev.srcElement).animateCss('pulse');
         var parentEl = angular.element(document.body);
         $mdDialog.show({
             parent: parentEl,
@@ -890,6 +889,13 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
             });
         }, 0);
     };
+
+
+    $scope.compileView = function(event) {
+      dfxRendering.render($scope).then( function(data) {
+        window.localStorage.setItem('DFX_view_compiled_'+$scope.view_name+'_default', data);
+      });
+    }
 
     var platform = $('#dfx_visual_editor').attr('platform');
     $('.dfx_visual_editor_gc_cat_item').empty();
