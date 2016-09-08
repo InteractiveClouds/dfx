@@ -1694,21 +1694,21 @@ dfxStudioApi.factory('dfxGcTemplates', [ '$http', '$q', function($http, $q) {
         return deferred.promise;
     };
 
-    /*api_templates.update = function( scope, template ) {
+    api_gc_templates.update = function( scope, template ) {
         var deferred = $q.defer();
 
         delete template._id;
 
         $http({
-            url: '/studio/screentemplates/update/',
+            url: '/studio/gctemplates/update/',
             method: 'POST',
             data: {"change":template}
         }).then(function successCallback(response) {
-            deferred.resolve( response.data.screenTemplate );
+            deferred.resolve( response.data );
         });
 
         return deferred.promise;
-    }*/
+    };
 
     api_gc_templates.remove = function( scope, template_name, app_name, platform ) {
         var deferred = $q.defer();

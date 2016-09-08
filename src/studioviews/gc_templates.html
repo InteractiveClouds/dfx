@@ -4,32 +4,6 @@
     </h4>
 </div>
 
-<md-sidenav md-component-id="side_nav_gc_template" class="md-sidenav-left" style="width: 450px; max-width: 450px;" ng-cloak>
-    <md-content style="padding-top: 20px;">
-    <form >
-
-        <div class="md-dialog-content layout-column layout-padding">
-            <div class="layout-column flex-100">
-                <md-input-container class="md-block flex" style="margin: 0;">
-                    <label>Category Name</label>
-                    <input ng-model="scopeGcTemplate.name" ng-disabled="gcTemplateMode === 'editGcTemplate'" md-autofocus>
-                </md-input-container>
-            </div>
-            <div ng-if="gcTemplateMode === 'editGcTemplate'" class="layout-column flex-100">
-                <md-input-container class="md-block flex" style="margin: 0;">
-                    <label>New GC Template Name</label>
-                    <input ng-model="toEdit.name" md-autofocus>
-                </md-input-container>
-            </div>
-            <div style="display:flex; justify-content: flex-end;">
-                <md-button ng-if="gcTemplateMode === 'editGcTemplate'" class="md-primary" ng-click="editGcTemplate( toEdit )" aria-label="editGcTemplate">Save</md-button>
-                <md-button class="md-primary" ng-click="closeSidenav()">Cancel</md-button>
-            </div>
-        </div>
-    </form>
-    </md-content>
-</md-sidenav>
-
 <div layout="row">
     <md-content class="md-padding flex-100" layout="column">
         <md-card style="flex-grow:3;overflow:hidden;">
@@ -37,7 +11,10 @@
                 <table class="datatable" style="width:100%;">
                     <thead>
                         <tr style="border-bottom:1px solid #C7C7C7;">
-                            <th width="50%">Name</th>
+                            <th width="15%">Name</th>
+                            <th width="15%">App</th>
+                            <th width="15%">Platform</th>
+                            <th width="45%">Description</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -46,10 +23,12 @@
                     <table class="datatable" style="width:100%;">
                         <tbody>
                             <tr ng-repeat="gc_template in gc_templates track by $index" ng-click="" style="cursor:pointer;">
-                                <td width="50%">{{gc_template.name}}</td>
+                                <td width="15%">{{gc_template.name}}</td>
+                                <td width="15%">{{gc_template.application}}</td>
+                                <td width="15%">{{gc_template.platform}}</td>
+                                <td width="45%">{{gc_template.description}}</td>
                                 <td>
-                                    <md-button ng-click="editGcTemplateBtn( gc_template )" ng-disabled="gc_template.name ==='default'" style="margin: 0; padding: 0; min-width: 20px" aria-label="editGcTemplate"><md-icon class="fa fa-edit" style="font-size:20px; padding-top: 5px;"></md-icon></md-button>
-                                    <md-button style="margin: 0; padding: 0; min-width: 20px" ng-click="confirmDelete( $event, gc_template.name )" ng-disabled="gc_template.name ==='default'" aria-label="deleteGcTemplate"><md-icon class="fa fa-trash" style="font-size:20px; padding-top: 3px;"></md-icon></md-button>
+                                    <md-button ng-click="edit( gc_template )" ng-disabled="gc_template.name ==='default'" style="margin: 0; padding: 0; min-width: 20px" aria-label="editGcTemplate"><md-icon class="fa fa-edit" style="font-size:20px; padding-top: 5px;"></md-icon></md-button>
                                 </td>
                             </tr>
                         </tbody>

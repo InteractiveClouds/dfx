@@ -1,0 +1,35 @@
+<div layout="row" layout-align="space-between center" style="background:#DCDCDC">
+	<h4 style="padding-left:10px">
+		Edit GC Template
+	</h4>
+	<div layout="row">
+		<md-button ng-click="update()" class="md-primary">Save</md-button>
+		<md-button ng-click="cancel($event)" class="md-primary">Cancel</md-button>
+	</div>
+</div>
+<div layout="column" layout-padding>
+	<div layout="row" layout-padding>
+		<md-input-container flex="40">
+	        <label>Name</label>
+	        <input type="text" disabled ng-model="gc_template.name"/>
+	    </md-input-container>
+		<md-input-container flex="60">
+	        <label>Description</label>
+	        <input type="text"  ng-model="gc_template.description"/>
+	    </md-input-container>
+	</div>
+	<div layout="row" layout-padding>
+		<md-input-container flex="40">
+	        <label>Platform</label>
+	        <input type="text" disabled ng-model="gc_template.platform"/>
+	    </md-input-container>
+			<md-input-container flex="60">
+		        <label>Application</label>
+		        <input type="text" disabled ng-model="gc_template.application"/>
+		    </md-input-container>
+	</div>
+</div>
+<div layout="row" layout-align ="space-between center">
+    <button ng-click="openTemplateDesigner()" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-floppy-o" style="color: #757575"></span><span style="padding-left:5px">Open Designer</span></button>
+    <button ng-click="delete($event)" class="md-raised md-warn md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-trash-o" style="color: #ffffff"></span><span style="padding-left:5px">Delete Template</span></button>
+</div>

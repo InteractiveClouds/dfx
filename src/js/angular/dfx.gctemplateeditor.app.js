@@ -1,6 +1,6 @@
-var dfxViewEditorApp = angular.module("dfxViewEditorApp", ['ngMaterial', 'ngMdIcons', 'dfxGControls', 'dfxStudioApi', 'nsPopover']);
+var dfxGcTemplateEditorApp = angular.module("dfxGcTemplateEditorApp", ['ngMaterial', 'ngMdIcons', 'dfxGControls', 'dfxStudioApi', 'nsPopover']);
 
-dfxViewEditorApp.config(function($mdThemingProvider) {
+dfxGcTemplateEditorApp.config(function($mdThemingProvider) {
     $mdThemingProvider.theme('altTheme')
         .primaryPalette('blue') // specify primary color, all
     // other color intentions will be inherited
@@ -8,17 +8,12 @@ dfxViewEditorApp.config(function($mdThemingProvider) {
     $mdThemingProvider.setDefaultTheme('altTheme');
 });
 
-dfxViewEditorApp.controller("dfx_main_controller", [ '$scope', '$rootScope', '$q', '$http', '$mdDialog', '$compile', function($scope, $rootScope, $q, $http, $mdDialog, $compile) {
+dfxGcTemplateEditorApp.controller("dfx_main_gc_template_controller", [ '$scope', '$rootScope', '$q', '$http', '$mdDialog', '$compile', function($scope, $rootScope, $q, $http, $mdDialog, $compile) {
     $rootScope.message = "Welcome to the View Editor";
     $scope.application_name = $('#dfx-view-editor-body').attr('data-application');
-    $scope.view_name = $('#dfx-view-editor-body').attr('data-widget');
     $scope.view_platform = $('#dfx-view-editor-body').attr('data-platform');
-    //$scope.view_category = $('#dfx_src_widget_editor').attr('data-view-cat'); //here in that moment #dfx_src_widget_editor attribute 'data-platform' is empty. That attribute takes value inside dfx_view_editor_controller.
-    $scope.closed_gc_palette = false;
+    $scope.gc_template_name = $('#dfx-view-editor-body').attr('data-gctemplate');
     $scope.gc_types = {};
-    $scope.helpTree = true;
-    $scope.helpForm = false;
-    $scope.scopeOptionsVarNameInput = false;
 
     $scope.getGCDefaultAttributes = function( type ) {
         var deferred = $q.defer();
@@ -33,200 +28,20 @@ dfxViewEditorApp.controller("dfx_main_controller", [ '$scope', '$rootScope', '$q
         return deferred.promise;
     };
 
-    $scope.loadView = function() {
-        return '/studio/widget/editui/' + $scope.application_name + '/' + $scope.view_name + '/' + $scope.view_platform;
+    $scope.initContainers = function() {};
+
+    $scope.loadGcTemplate = function() {
+        return '/studio/gctemplates/editui/' + $scope.application_name + '/' + $scope.gc_template_name + '/' + $scope.view_platform;
     };
-
-    $scope.showHelpEditor = function(ev) {
-        $(ev.srcElement).animateCss('pulse');
-        var $parentScope = $scope;
-        var $editorScope = angular.element(document.getElementById('dfx_src_widget_editor')).scope()
-        $mdDialog.show({
-            parent: angular.element(document.body),
-            clickOutsideToClose:true,
-            templateUrl: '/gcontrols/web/help_dialog.html',
-            controller: function($scope){
-                $scope.$parentScope = $parentScope;
-                $scope.$editorScope = $editorScope;
-                $scope.helpTree = true;
-                $scope.helpForm = false;
-                $scope.scopeOptionsVarNameInput = false;
-                $scope.helpApiRoutesTree = false;
-                $scope.showBackButton = false;
-                $scope.showOkButton = false;
-                $scope.help_cardForm = false;
-                $scope.closeDialog = function() {
-                    $mdDialog.hide();
-                }
-                $scope.showApiRoutesTree = function(type) {
-                    $http({
-                        method: 'GET',
-                        url: '/studio/query/list-by-app-detailed/' + $scope.$parentScope.application_name
-                    }).then(function(data) {
-                        $http({
-                            method: 'GET',
-                            url: '/studio/query/list-by-app-detailed/__shared__'
-                        }).then(function(shared_data) {
-                            $scope.requestType = type;
-                            $scope.picker_apiroutes = data.data.queries;
-                            $scope.picker_apiroutes_cat = Object.keys($scope.picker_apiroutes);
-                            $scope.shared_picker_apiroutes = shared_data.data.queries;
-                            $scope.shared_picker_apiroutes_cat = Object.keys($scope.shared_picker_apiroutes);
-
-                            $scope.helpApiRoutesTree = true;
-                            $scope.helpTree = false;
-                            $scope.helpForm = false;
-                            $scope.scopeOptionsVarNameInput = false;
-                            $scope.showBackButton = true;
-                        });
-                    });
-                }
-                $scope.selectApiRoute = function(cat, idx, route, shared) {
-                    $scope.helpApiRoutesTree = false;
-                    $scope.picked_api_route = route;
-                    $scope.picked_api_route_instance = !shared ? $scope.picker_apiroutes[cat][idx].apiRoutes[route] : $scope.shared_picker_apiroutes[cat][idx].apiRoutes[route];
-                    $scope.showBackButton = true;
-                    ($scope.requestType  == 'get') ? $scope.showInputForm('getApiRoute') : $scope.showInputForm('apiroute-post');
-
-
-                }
-                $scope.showInputForm = function(type) {
-                    $scope.helpType = type;
-                    $scope.helpTree = false;
-
-                    $scope.helpForm = true;
-                    var chartsList = ['barchart','hzbarchart','piechart','donutchart','linechart','cmlinechart','areachart'];
-                    if (chartsList.indexOf(type) > -1) {
-                        $scope.scopeOptionsVarNameInput = true;
-                    } else {
-                        $scope.scopeOptionsVarNameInput = false;
-                    }
-
-                    $scope.showBackButton = true;
-                    $scope.showOkButton = true;
-                    if ((type === 'dialog_view') || (type === 'side_nav_view') || (type === 'bottom_sheet_view') || (type === 'show_card')) {
-                        $scope.helpCardForm = true;
-                        $scope.helpViewCards = $scope.$editorScope.view_cards;
-                        console.log($scope.helpViewCards);
-                    }
-                }
-                $scope.back = function() {
-                    if (($scope.helpType == 'getApiRoute') || ($scope.helpType == 'apiroute-post')) {
-                        $scope.helpTree = false;
-                        $scope.helpForm = false;
-                        $scope.scopeOptionsVarNameInput = false;
-                        $scope.helpApiRoutesTree = true;
-                        delete $scope.helpType;
-                    } else {
-                        $scope.helpCardForm = false;
-                        $scope.helpTree = true;
-                        $scope.helpForm = false;
-                        $scope.scopeOptionsVarNameInput = false;
-                        $scope.helpApiRoutesTree = false;
-                        $scope.showBackButton = false;
-                    }
-                    $scope.showOkButton = false;
-                }
-                $scope.ok = function() {
-                    if (($scope.helpType) && ($scope.scopeVarName)) {
-                        if ($scope.helpType == 'getApiRoute') {
-                            var editor_script   = $('#dfx_script_editor.CodeMirror')[0].CodeMirror;
-                            var route_params = {};
-                            if ($scope.picked_api_route_instance.parameters!=null) {
-                                for (var idx=0; idx<$scope.picked_api_route_instance.parameters.length; idx++) {
-                                    route_params[$scope.picked_api_route_instance.parameters[idx].name] = $scope.picked_api_route_instance.parameters[idx].value;
-                                }
-                            }
-                            var script = "dfxApiServices.get( $scope, '" + $scope.picked_api_route + "', " + JSON.stringify(route_params) + ").then(function(response){\n"
-                                + "\t\t$scope.$apply( function() {\n"
-                                + "\t\t\t$scope." + $scope.scopeVarName + " = response.data;\n"
-                                + "\t\t});\n"
-                                + "\t\t}).fail(function(error){\n"
-                                + "\t\t});\n";
-
-                            editor_script.replaceSelection(script);
-                        } else if ($scope.helpType == 'apiroute-post') {
-                            var editor_script   = $('#dfx_script_editor.CodeMirror')[0].CodeMirror;
-                            var route_params = {};
-                            if ($scope.picked_api_route_instance.parameters!=null) {
-                                for (var idx=0; idx<$scope.picked_api_route_instance.parameters.length; idx++) {
-                                    route_params[$scope.picked_api_route_instance.parameters[idx].name] = $scope.picked_api_route_instance.parameters[idx].value;
-                                }
-                            }
-                            var script = "dfxApiServices.post( $scope, '" + $scope.picked_api_route + "', " + JSON.stringify(route_params) + ", {}).then(function(response){\n"
-                                + "\t\t$scope.$apply( function() {\n"
-                                + "\t\t\t$scope." + $scope.scopeVarName + " = response.data;\n"
-                                + "\t\t});\n"
-                                + "\t\t}).fail(function(error){\n"
-                                + "\t\t});\n";
-
-                            editor_script.replaceSelection(script);
-                        } else {
-                            helpDialogScript({
-                                item: $scope.helpType,
-                                varName: $scope.scopeVarName,
-                                optionsVarName: $scope.scopeOptionsVarName,
-                                viewName: $scope.$parentScope.view_name,
-                                cardName: $scope.scopeCardName
-                            });
-                        }
-                        $mdDialog.hide();
-                    }
-                }
-            }
-        })
-    }
-
-    $scope.toggleGCPalette = function() {
-        if ($scope.closed_gc_palette) {
-            $('#dfx_gc_palette_title').css('display', 'inline-block');
-            $('#dfx_gc_palette_toggle > a > span').attr('class', 'fa fa-angle-double-left');
-            $('#dfx_visual_editor_left').css('width', '105px');
-            $('#dfx_visual_editor_middle').css('left','106px');
-            $('#dfx_visual_editor_workspace').css('left','106px');
-            $scope.closed_gc_palette = false;
-        } else {
-            $('#dfx_gc_palette_title').css('display', 'none');
-            $('#dfx_gc_palette_toggle > a > span').attr('class', 'fa fa-angle-double-right');
-            $('#dfx_visual_editor_left').css('width', '18px');
-            $('#dfx_visual_editor_middle').css('left','19px');
-            $('#dfx_visual_editor_workspace').css('left','19px');
-            $scope.closed_gc_palette = true;
-        }
-    };
-
-    $scope.initContainers = function() {
-
-    };
-
-    $scope.cancelAPIRoute = function() {
-        $('#dfx_picker_script').css( 'display', 'block' );
-        $('#dfx_picker_api_route').css( 'display', 'none' );
-        $('#dfx_picker_api_route_form').css( 'display', 'none' );
-    };
-
-    /*$scope.overrideAttribute = function(event, property) {
-        if ($scope.gc_renderer!=null) {
-            $scope.gc_renderer.attributes[property].status = 'overridden';
-        } else {
-            $scope.gc_selected.attributes[property].status = 'overridden';
-        }
-    };*/
 
 }]);
 
-dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScope', '$compile', '$timeout', '$mdDialog', '$mdToast', '$mdSidenav', '$log', '$mdMedia', '$window', '$http', 'dfxMessaging', 'dfxGcTemplates', function($scope, $rootScope, $compile, $timeout, $mdDialog, $mdToast, $mdSidenav, $log, $mdMedia, $window, $http, dfxMessaging, dfxGcTemplates) {
+dfxGcTemplateEditorApp.controller("dfx_gc_template_editor_controller", [ '$scope', '$rootScope', '$compile', '$timeout', '$mdDialog', '$mdToast', '$mdSidenav', '$log', '$mdMedia', '$window', '$http', 'dfxMessaging', 'dfxGcTemplates', function($scope, $rootScope, $compile, $timeout, $mdDialog, $mdToast, $mdSidenav, $log, $mdMedia, $window, $http, dfxMessaging, dfxGcTemplates) {
 
-    $scope.palette_visible = true;
     $scope.property_visible = true;
     $scope.design_visible = true;
-    $scope.script_visible = false;
-    $scope.style_visible = false;
     $scope.source_visible = false;
-    $scope.view_category = $('#dfx_src_widget_editor').attr('data-view-cat');
     $scope.design_view_mode = 'Design';
-    $scope.script_theme = (localStorage.getItem('DFX_script_theme')!=null) ? localStorage.getItem('DFX_script_theme') : 'monokai';
-    $scope.preview_wait_icon_visible = false;
 
     $scope.design_devices = [
         {
@@ -317,27 +132,12 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
         if (view_mode=='design') {
             $scope.design_view_mode = 'Design';
             $scope.showDesign();
-        } else if (view_mode=='script') {
-            $scope.design_view_mode = 'Script';
-            $scope.showScript();
-        } else if (view_mode=='style') {
-            $scope.design_view_mode = 'Style';
-            $scope.showStyle();
         } else if (view_mode=='source') {
             $scope.design_view_mode = 'Source';
             $scope.showSource();
         }
     };
-    $scope.changeScriptTheme = function (script_theme) {
-        $scope.script_theme = script_theme;
-        localStorage.setItem('DFX_script_theme', script_theme);
-        var editor = $('#dfx_src_editor')[0].CodeMirror;
-        editor.setOption('theme', $scope.script_theme);
-        editor = $('#dfx_styles_editor')[0].CodeMirror;
-        editor.setOption('theme', $scope.script_theme);
-        editor = $('#dfx_script_editor')[0].CodeMirror;
-        editor.setOption('theme', $scope.script_theme);
-    };
+
     $scope.showDesign = function() {
         $scope.design_visible = true;
         $scope.script_visible = false;
@@ -349,28 +149,6 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
         $('.dfx-ve-toolbar-button').removeClass('dfx-ve-toolbar-button-selected');
         $('.dfx-ve-toolbar-button-design').addClass('dfx-ve-toolbar-button-selected');
     };
-    $scope.showScript = function() {
-        $scope.design_visible = false;
-        $scope.script_visible = true;
-        $scope.style_visible = false;
-        $scope.source_visible = false;
-        $('#dfx_styles_editor').css('display', 'none');
-        $('#dfx_src_editor').css('display', 'none');
-        $('#dfx_script_editor').css('display', 'block');
-        $('.dfx-ve-toolbar-button').removeClass('dfx-ve-toolbar-button-selected');
-        $('.dfx-ve-toolbar-button-script').addClass('dfx-ve-toolbar-button-selected');
-    };
-    $scope.showStyle = function() {
-        $scope.design_visible = false;
-        $scope.style_visible = true;
-        $scope.script_visible = false;
-        $scope.source_visible = false;
-        $('#dfx_script_editor').css('display', 'none');
-        $('#dfx_src_editor').css('display', 'none');
-        $('#dfx_styles_editor').css('display', 'block');
-        $('.dfx-ve-toolbar-button').removeClass('dfx-ve-toolbar-button-selected');
-        $('.dfx-ve-toolbar-button-styles').addClass('dfx-ve-toolbar-button-selected');
-    };
     $scope.showSource = function() {
         var editor = $('#dfx_src_editor')[0].CodeMirror;
 
@@ -381,9 +159,9 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
                     delete component.attributes[attribute];
                 }
             }
-            var widget_definition = JSON.parse(editor.getValue());
-            DfxVisualBuilder.findComponentAndUpdateAttributes(component.id, widget_definition.definition, component.attributes, $scope.view_card_selected, false);
-            editor.setValue(JSON.stringify(widget_definition, null, '\t'));
+            var gc_template_definition = JSON.parse(editor.getValue());
+            DfxGcTemplateBuilder.findComponentAndUpdateAttributes(component.id, gc_template_definition, component.attributes, $scope.view_card_selected, false);
+            editor.setValue(JSON.stringify(gc_template_definition, null, '\t'));
             editor.scrollTo(0, 0);
             editor.refresh();
         }
@@ -431,242 +209,6 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
         $scope.refreshDevice();
     };
 
-    $scope.searchScript = function(ev) {
-        $(ev.srcElement).animateCss('pulse');
-        var editor = $('#dfx_script_editor')[0].CodeMirror;
-        editor.execCommand('find');
-    };
-
-    $scope.replaceScript = function(ev) {
-        $(ev.srcElement).animateCss('pulse');
-        var editor = $('#dfx_script_editor')[0].CodeMirror;
-        editor.execCommand('replace');
-    };
-
-    $scope.configureDependenciesScript = function(ev) {
-        $(ev.srcElement).animateCss('pulse');
-        var parentEl = angular.element(document.body);
-        $mdDialog.show({
-            parent: parentEl,
-            targetEvent: ev,
-            template:
-            '<md-dialog aria-label="List dialog">' +
-            '   <md-toolbar>' +
-            '       <div class="md-toolbar-tools">' +
-            '           <h2>Dependency Injection</h2>' +
-            '       </div>' +
-            '   </md-toolbar>' +
-            '   <md-dialog-content style="width:500px;min-height:400px;padding:20px">'+
-            '           <div ng-repeat="dependency in dependencies">'+
-            '               <md-checkbox ng-checked="dependencyExists(dependency, selectedDependencies)" ng-click="toggleDependency(dependency, selectedDependencies)">' +
-            '                   {{dependency}}' +
-            '               </md-checkbox>' +
-            '           </div>'+
-            '   </md-dialog-content>' +
-            '   <md-dialog-actions>' +
-            '       <md-button ng-click="saveConfigureDependenciesScriptDialog()" class="md-primary">' +
-            '           Save' +
-            '       </md-button>' +
-            '       <md-button ng-click="closeConfigureDependenciesScriptDialog()" class="md-primary">' +
-            '           Cancel' +
-            '       </md-button>' +
-            '   </md-dialog-actions>' +
-            '</md-dialog>',
-            locals: {
-                dependencies: $scope.dependencies
-            },
-            controller: DialogController
-        });
-        function DialogController($scope, $mdDialog) {
-            $scope.dependencies = ['$rootScope','$scope', 'dfxApiServices', 'dfxDialog', 'dfxSidenav', 'dfxBottomSheet', 'dfxChangeCard'];
-            $scope.selectedDependencies = [];
-            $scope.additionalDependencies = [];
-
-            var regexDependencies = /(controller(.*?)\[)(.*)(?=function)/;
-            var regexDependenciesArgs = /(function(.*?))(.*)(?=\{)/;
-            var editor_script = $('#dfx_script_editor.CodeMirror')[0].CodeMirror;
-            var text_script = editor_script.getValue();
-
-            var m;
-
-            if ((m = regexDependencies.exec(text_script)) !== null) {
-                if (m.index === regexDependencies.lastIndex) {
-                    regexDependencies.lastIndex++;
-                }
-                var arr_dependencies = m[3].split(',');
-                for (dependency in arr_dependencies) {
-                    if (arr_dependencies[dependency].trim() != '') {
-                        var current_dependency =
-                            arr_dependencies[dependency].substring(
-                                arr_dependencies[dependency].indexOf('\'')+1,
-                                arr_dependencies[dependency].length-1
-                            ).trim();
-                        if ($scope.dependencies.indexOf(current_dependency)>-1) {
-                            $scope.selectedDependencies.push( current_dependency );
-                        } else {
-                            $scope.additionalDependencies.push( current_dependency );
-                        }
-                    }
-                }
-                console.log($scope.selectedDependencies);
-            }
-
-            $scope.dependencyExists = function(item, list) {
-                return list.indexOf(item) > -1;
-            };
-
-            $scope.toggleDependency = function(item, list) {
-                var idx = list.indexOf(item);
-                if (idx > -1) {
-                    list.splice(idx, 1);
-                }
-                else {
-                    list.push(item);
-                }
-            };
-
-            $scope.saveConfigureDependenciesScriptDialog = function() {
-                var text_dependencies = '';
-                var text_dependencies_args = '';
-                $scope.selectedDependencies = $scope.selectedDependencies.concat($scope.additionalDependencies);
-                for (var i=0; i<$scope.selectedDependencies.length; i++) {
-                    text_dependencies += '\'' + $scope.selectedDependencies[i] + '\', ';
-                    text_dependencies_args += $scope.selectedDependencies[i] + ', ';
-                }
-                text_dependencies_args = text_dependencies_args.substr( 0, text_dependencies_args.length-2 );
-                var new_script = text_script.replace(regexDependencies, m[1 ] + text_dependencies);
-
-                new_script = new_script.replace( regexDependenciesArgs, 'function ( ' + text_dependencies_args + ' ) ' );
-
-                editor_script.setValue(new_script);
-                $mdDialog.hide();
-            }
-
-            $scope.closeConfigureDependenciesScriptDialog = function() {
-                $mdDialog.hide();
-            }
-        }
-    };
-
-    $scope.unselectComponent = function() {
-        if ($scope.gc_selected != null) {
-            $('#'+$scope.gc_selected.id).css('border', '0px');
-            $scope.gc_selected = null;
-        }
-    };
-
-    $scope.addCard = function(ev) {
-        $(ev.srcElement).animateCss('pulse');
-        $mdDialog.show({
-            controller: DialogController,
-            templateUrl: '/gcontrols/web/cards_add.html',
-            parent: angular.element(document.body),
-            targetEvent: ev
-        })
-        .then(function(card) {
-            var editor = $('#dfx_src_editor')[0].CodeMirror;
-            var widget_definition = JSON.parse(editor.getValue());
-            widget_definition.definition[card.name] = [
-                {
-                    id:         Math.floor(Math.random() * 1000),
-                    type:       "panel",
-                    attributes: {
-                        "name": { "value": "pnlPanel1", "status": "overridden" }
-                    },
-                    children:   []
-                }
-            ];
-            editor.setValue(JSON.stringify(widget_definition, null, '\t'), 0);
-            $scope.view_cards.push({'name':card.name});
-            $timeout(function() {
-                $scope.view_card_select_index = $scope.view_cards.length-1;
-            });
-        }, function() {
-            // do nothing
-        });
-
-        function DialogController($scope, $mdDialog) {
-            $scope.card = {"name":""};
-            $scope.addCardConfirm = function(answer) {
-                $mdDialog.hide($scope.card);
-            };
-
-            $scope.addCardCancel = function() {
-                $mdDialog.cancel();
-            };
-        }
-    };
-
-    $scope.removeCard = function(ev) {
-        $(ev.srcElement).animateCss('pulse');
-        if ($scope.view_card_select_index>0) {
-            var confirm = $mdDialog.confirm()
-                .title('Remove Card')
-                .textContent('Do you confirm you want to remove the card named ' + $scope.view_card_selected + '?')
-                .ariaLabel('Remove Card')
-                .targetEvent(ev)
-                .ok('OK')
-                .cancel('Cancel');
-            $mdDialog.show(confirm).then(function() {
-                var editor = $('#dfx_src_editor')[0].CodeMirror;
-                var widget_definition = JSON.parse(editor.getValue());
-                delete widget_definition.definition[$scope.view_card_selected];
-                editor.setValue(JSON.stringify(widget_definition, null, '\t'), 0);
-                for (var i=0; i<$scope.view_cards.length; i++) {
-                    if ($scope.view_cards[i].name==$scope.view_card_selected) {
-                        $scope.view_cards.splice(i, 1);
-                        break;
-                    }
-                }
-                $scope.gc_instances = {};
-                $timeout(function() {
-                    $scope.view_card_select_index = 0;
-                });
-            }, function() {
-              // do nothing
-            });
-        } else {
-            $mdDialog.show(
-                $mdDialog.alert()
-                    .clickOutsideToClose(true)
-                    .title('Remove Card')
-                    .textContent('You cannot remove the default card.')
-                    .ariaLabel('Remove Card')
-                    .ok('OK')
-                    .targetEvent(ev)
-            );
-        }
-    };
-
-    $scope.toggleCard = function(card) {
-        var editor = $('#dfx_src_editor')[0].CodeMirror;
-        var widget_definition = JSON.parse(editor.getValue());
-
-        widget_definition.definition[$scope.view_card_selected][0].animation = $scope.view_card_animation;
-
-        for (var key in $scope.gc_instances) {
-            var component = angular.copy($scope.gc_instances[key]);
-            for (attribute in component.attributes) {
-                if (component.attributes[attribute].status!='overridden') {
-                    delete component.attributes[attribute];
-                }
-            }
-            DfxVisualBuilder.findComponentAndUpdateAttributes(component.id, widget_definition.definition, component.attributes, $scope.view_card_selected, false);
-            editor.setValue(JSON.stringify(widget_definition, null, '\t'), 0);
-        }
-
-        $scope.gc_instances = {};
-        $('#dfx_visual_editor_workspace_'+$scope.view_card_selected).empty();
-        $scope.view_card_animation = (widget_definition.definition[card][0].animation) ? widget_definition.definition[card][0].animation : {
-          in: 'fadeIn',
-          out: 'slideOutLeft'
-        };
-        $scope.view_card_selected = card;
-        $scope.unselectComponent();
-        $scope.addComponents(widget_definition.definition, null, card);
-
-    };
-
     $scope.exitViewEditor = function(ev) {
         $(ev.srcElement).animateCss('pulse');
         var confirm = $mdDialog.confirm()
@@ -692,442 +234,23 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
                     delete component.attributes[attribute];
                 }
             }
-            var widget_definition = JSON.parse(editor.getValue());
-            DfxVisualBuilder.findComponentAndUpdateAttributes(component.id, widget_definition.definition, component.attributes, $scope.view_card_selected, false);
-            editor.setValue(JSON.stringify(widget_definition, null, '\t'), 0);
+            var gc_template_definition = JSON.parse(editor.getValue());
+            DfxGcTemplateBuilder.findComponentAndUpdateAttributes(component.id, gc_template_definition, component.attributes, $scope.view_card_selected, false);
+            editor.setValue(JSON.stringify(gc_template_definition, null, '\t'), 0);
         }
     };
 
-
-    $scope.saveView = function(event) {
-        $(event.srcElement).animateCss('pulse');
-        /*DfxStudio.updateWidgetSource({
-            widgetName:'#{widget.name}',
-            category:'#{widget.category}',
-            applicationName: '#{widget.application}'});*/
-        var editor = $('#dfx_src_editor.CodeMirror')[0].CodeMirror;
-        for (var key in $scope.gc_instances) {
-            var component = angular.copy($scope.gc_instances[key]);
-            for (attribute in component.attributes) {
-                if (component.attributes[attribute].status!='overridden') {
-                    delete component.attributes[attribute];
-                }
-            }
-            var widget_definition = JSON.parse(editor.getValue());
-            widget_definition.definition[$scope.view_card_selected][0].animation = $scope.view_card_animation;
-            DfxVisualBuilder.findComponentAndUpdateAttributes(component.id, widget_definition.definition, component.attributes, $scope.view_card_selected, false);
-            editor.setValue(JSON.stringify(widget_definition, null, '\t'), 0);
-        }
-        var editor_script = $('#dfx_script_editor.CodeMirror')[0].CodeMirror;
-        var editor_styles = $('#dfx_styles_editor.CodeMirror')[0].CodeMirror;
-
-        var view_condensed_src = JSON.parse(editor.getValue());
-
-        var obj           = {
-            src:         JSON.stringify(view_condensed_src),
-            src_script:  editor_script.getValue(),
-            src_styles:  editor_styles.getValue(),
-            application: $scope.application_name,
-            platform:    $scope.view_platform,
-            category:    $scope.view_category
-        };
-
-        // Update Widget Cache
-        window.localStorage.setItem( 'dfx_' + $scope.view_name, editor.getValue() );
-
-        $http({
-            method: 'POST',
-            url: '/studio/widget/update/' + $scope.view_name ,
-            data: {
-                change: obj
-            }
-        }).then(function (data) {
-            $mdToast.show(
-              $mdToast.simple()
-                .textContent(data.data.data)
-                .theme('success-toast')
-                .position('top right')
-                .hideDelay(3000)
-            );
-        },function (err) {
-            $mdToast.show(
-              $mdToast.simple()
-                .textContent(JSON.parse(err.responseText).error.message)
-                .position('top right')
-                .hideDelay(3000)
-            );
-        });
-
-    };
-
-    $scope.openPreview = function(event) {
-        $(event.srcElement).animateCss('pulse');
-        var editor = $('#dfx_src_editor.CodeMirror')[0].CodeMirror;
-        window.localStorage.setItem( 'dfx_' + $scope.view_name, editor.getValue() );
-        $window.open('/studio/widget/' + $scope.view_platform + '/preview-auth/' + $scope.application_name + '/' + $scope.view_name + '/' + $scope.view_platform + '/desktop', '_blank');
-        //$window.open('/studio/widget/web/preview-auth/' + $scope.application_name + '/' + $scope.view_name + '/web/desktop', '_blank');
-    };
-
-    $scope.openPreviewSettings = function(ev) {
-        $(ev.srcElement).animateCss('pulse');
-        var parentEl = angular.element(document.body);
-        $mdDialog.show({
-            parent: parentEl,
-            targetEvent: ev,
-            template:
-            '<md-dialog aria-label="Preview Settings">' +
-            '   <md-toolbar>' +
-            '       <div class="md-toolbar-tools">' +
-            '           <h2>Preview Settings</h2>' +
-            '       </div>' +
-            '   </md-toolbar>' +
-            '   <md-dialog-content style="width:500px;min-height:400px;padding:20px">'+
-            '       <h4 style="padding-bottom:10px">Login credentials:</h4>' +
-            '       <form layout="column">' +
-            '           <md-input-container>' +
-            '               <label>User ID</label>' +
-            '               <input name="userid" ng-model="dfx_ve_login_userid" type="text" />' +
-            '           </md-input-container>' +
-            '           <md-input-container>' +
-            '               <label>Password</label>' +
-            '               <input name="password" ng-model="dfx_ve_login_password" type="password" />' +
-            '           </md-input-container>' +
-            '       </form>' +
-            '   </md-dialog-content>' +
-            '   <md-dialog-actions>' +
-            '       <md-button ng-click="savePreviewSettings()" class="md-primary">' +
-            '           Save' +
-            '       </md-button>' +
-            '       <md-button ng-click="clearPreviewSettings()" class="md-primary">' +
-            '           Clear' +
-            '       </md-button>' +
-            '       <md-button ng-click="closePreviewSettingsDialog()" class="md-primary">' +
-            '           Cancel' +
-            '       </md-button>' +
-            '   </md-dialog-actions>' +
-            '</md-dialog>',
-            locals: {
-            },
-            controller: DialogController
-        });
-        function DialogController($scope, $mdDialog) {
-            $scope.dfx_ve_login_userid = localStorage.getItem( 'DFX_ve_login_userid' )==null ? '' : localStorage.getItem( 'DFX_ve_login_userid' );
-            $scope.dfx_ve_login_password = localStorage.getItem( 'DFX_ve_login_password' )==null ? '' : localStorage.getItem( 'DFX_ve_login_password' );
-
-            $scope.savePreviewSettings = function() {
-                localStorage.setItem( 'DFX_ve_login_userid', $scope.dfx_ve_login_userid );
-                localStorage.setItem( 'DFX_ve_login_password', $scope.dfx_ve_login_password );
-                $mdDialog.hide();
-            }
-
-            $scope.clearPreviewSettings = function() {
-                localStorage.removeItem( 'DFX_app_tokens' );
-                localStorage.removeItem( 'DFX_ve_login_userid' );
-                localStorage.removeItem( 'DFX_ve_login_password' );
-                $scope.dfx_ve_login_userid = '';
-                $scope.dfx_ve_login_password = '';
-                dfxDialog.showMessage( 'Preview Settings Cleared' );
-            }
-
-            $scope.closePreviewSettingsDialog = function() {
-                $mdDialog.hide();
-            }
-        }
-    };
-
-    $scope.openPreviewInPage = function() {
-        $timeout(function(){
-            $mdDialog.show({
-                scope: $scope.$new(),
-                parent: angular.element(document.body),
-                clickOutsideToClose:true,
-                templateUrl: '/studio/studioviews/page_preview_dialog.html',
-                controller: function(){
-                    $http({
-                        method: 'POST',
-                        url: '/studio/screen/getByView',
-                        data : {
-                            viewName : $scope.view_name,
-                            applicationName : $scope.application_name
-                        }
-
-                    }).then(function(data) {
-                        if (!window.localStorage.getItem('pagePreviewName')) {
-                            $scope.selectedPage = {value : data.data.data[0] ? data.data.data[0].name : null};
-                        } else {
-                            $scope.selectedPage =  {value : window.localStorage.getItem('pagePreviewName') || null};
-                        }
-                        $scope.pagesArray = data.data.data;
-                    },function(err){
-                        dfxMessaging.showWarning(err);
-                    });
-                    $scope.closeDialog = function(){
-                        $mdDialog.hide();
-                    }
-                    $scope.show = function() {
-                        window.localStorage.setItem('pagePreviewName', $scope.selectedPage.value);
-                        $scope.preview_wait_icon_visible = true;
-                        $mdDialog.hide();
-
-                        $http({
-                            method : 'GET',
-                            url : '/studio/screen/preview/' + $scope.application_name + '/' + $scope.selectedPage.value + '/' + $scope.view_platform
-                        }).then(function(response){
-                                $scope.preview_wait_icon_visible = false;
-                                if (response.data.indexOf('http') > -1) {
-                                    $window.open(response.data, '_blank');
-                                } else {
-                                    dfxMessaging.showWarning(response.data);
-                                }
-                            },function(err){
-                                $scope.preview_wait_icon_visible = false;
-                                dfxMessaging.showWarning("Something went wrong. See server logs for more details");
-                            })
-                    }
-                }
-            });
-        }, 0);
-    };
 
     var platform = $('#dfx_visual_editor').attr('platform');
     $('.dfx_visual_editor_gc_cat_item').empty();
 
-    // Initialize GC Palette
-    $scope.palette = {
-        'basic': {
-            'statictext': {'default_name':'txtText', 'flex':'false'},
-            'button': {'default_name':'btnButton', 'flex':'false'},
-            'icon': {'default_name':'icoIcon', 'flex':'false'},
-            'image': {'default_name':'imgImage', 'flex':'false'},
-            'html': {'default_name':'htHtml', 'flex':'true'},
-            'carousel': {'default_name':'crsCarousel', 'flex':'true'},
-            'googlemap': {'default_name':'googleMap', 'flex':'true'},
-            'treeview': {'default_name':'trvTreeView', 'flex':'true'}
-        },
-        'input': {
-            'input': {'default_name':'inpInput', 'flex':'true'},
-            'textarea': {'default_name':'txtTextarea', 'flex':'true'},
-            'datepicker': {'default_name':'dtField', 'flex':'true'},
-            'select': {'default_name':'selSelect', 'flex':'true'},
-            'slider': {'default_name':'sldSlider', 'flex':'true'},
-            'knob': {'default_name':'knbKnob', 'flex':'false'},
-            'chips': {'default_name':'chpChips', 'flex':'true'},
-            'rating': {'default_name':'rtRating', 'flex':'false'},
-            'richtext': {'default_name':'rchText', 'flex':'true'},
-            'json': {'default_name':'jsnJson', 'flex':'true'},
-            'progressbar': {'default_name':'progressBar', 'flex':'true'}
-        },
-        'menu': {
-            'fab': {'default_name':'fbFab', 'flex':'false'},
-            'iconbar': {'default_name':'iconBar', 'flex':'false'},
-            'treemenu': {'default_name':'trMenu', 'flex':'false'},
-            'horizontalmenu': {'default_name':'hrztMenu', 'flex':'true'}
-        },
-        'selection': {
-            'radio': {'default_name':'rdRadio', 'flex':'false'},
-            'checkbox': {'default_name':'chkCheckbox', 'flex':'false'},
-            'switch': {'default_name':'swtSwitch', 'flex':'false'}
-        },
-        'table': {
-            'datatable': {'default_name':'dtblDatatable', 'flex':'true'}
-        },
-        'chart': {
-            'barchart': {'default_name':'barChart', 'flex':'false'},
-            'hzbarchart': {'default_name':'hzBarChart', 'flex':'false'},
-            'piechart': {'default_name':'pieChart', 'flex':'false'},
-            'donutchart': {'default_name':'donutChart', 'flex':'false'},
-            'linechart': {'default_name':'lineChart', 'flex':'false'},
-            'cmlinechart': {'default_name':'cmLineChart', 'flex':'false'},
-            'areachart': {'default_name':'areaChart', 'flex':'false'}
-        },
-        'layout': {
-            'panel': {'default_name':'pnlPanel', 'flex':'true'},
-            'tabs': {'default_name':'tbTabs', 'flex':'true'},
-            'wizard': {'default_name':'wzrdWizard', 'flex':'true'}
-        }
-    }
-
-    if ($('body').attr('dfx-load-google-maps') === 'false') {
-        delete $scope.palette.basic.googlemap;
-    }
     var item_fragment = '';
     var comp_idx = 0;
-
-    for (var cat in $scope.palette) {
-        for (var gc in $scope.palette[cat]) {
-            item_fragment = '<li class="dfx_visual_editor_draggable dfx_visual_editor_gc_cat_item_draggable" gc-cat="' + cat + '" gc-type="' + gc + '" gc-flex="' + $scope.palette[cat][gc].flex + '">' + '<img class="dfx-ve-palette-icon" src="/images/vb/icons/' + cat + '_' + gc + '.png" title="' + gc + '"/></li>';
-            $('ul[gc-cat=' + cat + ']').append(item_fragment);
-        }
-    }
 
     // Initialize Graphical Controls
     // gc_instances     List of Graphical Controls
     // gc_selected      Current selected Graphical Control
     $scope.gc_instances = {};
-    $scope.view_cards = [];
-    $scope.view_card_selected = 'default';
-    $scope.view_card_select_index = -1;
-    $scope.view_card_animation = {
-      in: 'fadeIn',
-      out: 'slideOutLeft'
-    }
-    $scope.animation_in_list = ['bounce','flash','pulse','rubberBand','shake', 'headShake', 'swing', 'tada', 'wobble', 'jello', 'bounceIn', 'bounceInUp', 'bounceInDown',
-      'bounceInLeft', 'bounceInRight', 'fadeIn', 'fadeInDown', 'fadeInDownBig', 'fadeInLeft',
-      'fadeInLeftBig', 'fadeInRight', 'fadeInRightBig', 'fadeInUp', 'fadeInUpBig', 'flipInX', 'flipInY', 'lightSpeedIn', 'rotateIn', 'rotateInDownLeft',
-      'rotateInDownRight', 'rotateInUpLeft', 'rotateInUpRight', 'hinge',
-      'rollIn', 'zoomIn', 'zoomInDown', 'zoomInLeft', 'zoomInRight', 'zoomInUp', 'slideInDown',
-      'slideInLeft', 'slideInRight', 'slideInUp' ];
-
-    $scope.animation_out_list = ['bounce','flash','pulse','rubberBand','shake', 'headShake', 'swing', 'tada', 'wobble', 'jello','bounceOut', 'bounceOutDown', 'bounceOutLeft',
-      'bounceOutRight', 'bounceOutUp', 'fadeOut', 'fadeOutDown', 'fadeOutDownBig', 'fadeOutLeft', 'fadeOutLeftBig', 'fadeOutRight',
-      'fadeOutRightBig', 'fadeOutUp', 'fadeOutUpBig', 'flipOutX', 'flipOutY', 'lightSpeedOut', 'rotateOut', 'rotateOutDownLeft', 'rotateOutDownRight', 'rotateOutUpLeft',
-      'rotateOutUpRight', 'hinge', 'rollOut', 'zoomOut', 'zoomOutDown', 'zoomOutLeft', 'zoomOutRight', 'zoomOutUp', 'slideOutDown', 'slideOutLeft', 'slideOutRight', 'slideOutUp' ];
-
-    $scope.$watch('view_card_select_index', function(current, old){
-        if (current!=old) {
-            $scope.toggleCard( $scope.view_cards[current].name );
-        }
-    });
-
-    $scope.swapContainerDown = function(component_id, index, tabNumber){
-        var editor = $('#dfx_src_editor')[0].CodeMirror;
-        var widget_definition = JSON.parse(editor.getValue());
-        $scope.findComponentAndUpdateContainerDown(component_id, widget_definition.definition, $scope.view_card_selected, false, index, tabNumber);
-        editor.setValue(JSON.stringify(widget_definition, null, '\t'), 0);
-    };
-
-    $scope.swapContainerRight = function(component_id, index, rowIndex, tabNumber){
-        var editor = $('#dfx_src_editor')[0].CodeMirror;
-        var widget_definition = JSON.parse(editor.getValue());
-        $scope.findComponentAndUpdateContainerRight(component_id, widget_definition.definition, $scope.view_card_selected, false, index, rowIndex, tabNumber);
-        editor.setValue(JSON.stringify(widget_definition, null, '\t'), 0);
-    };
-
-    $scope.swapContainerUp = function(component_id, index, tabNumber){
-        var editor = $('#dfx_src_editor')[0].CodeMirror;
-        var widget_definition = JSON.parse(editor.getValue());
-        $scope.findComponentAndUpdateContainerUp(component_id, widget_definition.definition, $scope.view_card_selected, false, index, tabNumber);
-        editor.setValue(JSON.stringify(widget_definition, null, '\t'), 0);
-    };
-
-    $scope.swapContainerLeft = function(component_id, index, rowIndex, tabNumber){
-        var editor = $('#dfx_src_editor')[0].CodeMirror;
-        var widget_definition = JSON.parse(editor.getValue());
-        $scope.findComponentAndUpdateContainerLeft(component_id, widget_definition.definition, $scope.view_card_selected, false, index, rowIndex, tabNumber);
-        editor.setValue(JSON.stringify(widget_definition, null, '\t'), 0);
-    };
-
-    $scope.findComponentAndUpdateContainerDown = function (component_id, parent_definition, card, found_it, index, tabNumber) {
-        var idx = 0, child_idx = 0;
-        var ref_parent_definition = (card!=null) ? parent_definition[card] : parent_definition;
-        if (!found_it) {
-            for (idx = 0; idx < ref_parent_definition.length; idx++) {
-                if (ref_parent_definition[idx].id == component_id) {
-                    found_it= true;
-                    var g_controls = ref_parent_definition[idx].children;
-                    for(var i=0; i < g_controls.length; i++){
-                        var arr = g_controls[i].container.split('_');
-                        if(parseInt(arr[1]) === tabNumber){
-                            if(parseInt(arr[3]) === index){
-                                arr[3] = index + 1;
-                            }else if(parseInt(arr[3]) === (index+1)){
-                                arr[3] = index;
-                            }
-                            g_controls[i].container = arr.join('_');
-                        }
-                    }
-                    ref_parent_definition[idx].children = g_controls;
-                    break;
-                } else {
-                    $scope.findComponentAndUpdateContainerDown(component_id, ref_parent_definition[idx].children, null, found_it, index, tabNumber);
-                }
-            }
-        }
-    };
-
-    $scope.findComponentAndUpdateContainerRight = function (component_id, parent_definition, card, found_it, index, rowIndex, tabNumber) {
-        var idx = 0, child_idx = 0;
-        var ref_parent_definition = (card!=null) ? parent_definition[card] : parent_definition;
-        if (!found_it) {
-            for (idx = 0; idx < ref_parent_definition.length; idx++) {
-                if (ref_parent_definition[idx].id == component_id) {
-                    found_it= true;
-                    var g_controls = ref_parent_definition[idx].children;
-                    for(var i=0; i < g_controls.length; i++){
-                        var arr = g_controls[i].container.split('_');
-                        if(parseInt(arr[1]) === tabNumber){
-                            if(parseInt(arr[5]) === index && parseInt(arr[3]) === rowIndex){
-                                arr[5] = index + 1;
-                            }else if(parseInt(arr[5]) === (index+1) && parseInt(arr[3]) === rowIndex){
-                                arr[5] = index;
-                            }
-                            g_controls[i].container = arr.join('_');
-                        }
-                    }
-                    ref_parent_definition[idx].children = g_controls;
-                    break;
-                } else {
-                    $scope.findComponentAndUpdateContainerRight(component_id, ref_parent_definition[idx].children, null, found_it, index, rowIndex, tabNumber);
-                }
-            }
-        }
-    };
-
-    $scope.findComponentAndUpdateContainerUp = function (component_id, parent_definition, card, found_it, index, tabNumber) {
-        var idx = 0, child_idx = 0;
-        var ref_parent_definition = (card!=null) ? parent_definition[card] : parent_definition;
-        if (!found_it) {
-            for (idx = 0; idx < ref_parent_definition.length; idx++) {
-                if (ref_parent_definition[idx].id == component_id) {
-                    found_it= true;
-                    var g_controls = ref_parent_definition[idx].children;
-                    for(var i=0; i < g_controls.length; i++){
-                        var arr = g_controls[i].container.split('_');
-                        if(parseInt(arr[1]) === tabNumber){
-                            if(parseInt(arr[3]) === index){
-                                arr[3] = index - 1;
-                            }else if(parseInt(arr[3]) === (index-1)){
-                                arr[3] = index;
-                            }
-                            g_controls[i].container = arr.join('_');
-                        }
-                    }
-                    ref_parent_definition[idx].children = g_controls;
-                    break;
-                } else {
-                    $scope.findComponentAndUpdateContainerUp(component_id, ref_parent_definition[idx].children, null, found_it, index, tabNumber);
-                }
-            }
-        }
-    };
-
-    $scope.findComponentAndUpdateContainerLeft = function (component_id, parent_definition, card, found_it, index, rowIndex, tabNumber) {
-        var idx = 0, child_idx = 0;
-        var ref_parent_definition = (card!=null) ? parent_definition[card] : parent_definition;
-        if (!found_it) {
-            for (idx = 0; idx < ref_parent_definition.length; idx++) {
-                if (ref_parent_definition[idx].id == component_id) {
-                    found_it= true;
-                    var g_controls = ref_parent_definition[idx].children;
-                    for(var i=0; i < g_controls.length; i++){
-                        var arr = g_controls[i].container.split('_');
-                        if(parseInt(arr[1]) === tabNumber){
-                            if(parseInt(arr[5]) === index && parseInt(arr[3]) === rowIndex){
-                                arr[5] = index - 1;
-                            }else if(parseInt(arr[5]) === (index-1) && parseInt(arr[3]) === rowIndex){
-                                arr[5] = index;
-                            }
-                            g_controls[i].container = arr.join('_');
-                        }
-                    }
-                    ref_parent_definition[idx].children = g_controls;
-                    break;
-                } else {
-                    $scope.findComponentAndUpdateContainerLeft(component_id, ref_parent_definition[idx].children, null, found_it, index, rowIndex, tabNumber);
-                }
-            }
-        }
-    };
 
     $scope.getComponent = function( element ) {
         var id = $(element).attr('id');
@@ -1146,43 +269,13 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
         var container_id = $('#'+component.id).parent().attr('gc-container');
         component.container = container_id;
         $scope.gc_instances[ component.id ] = component;
-        DfxVisualBuilder.addComponentToDefinition(component.id, parent_id, component, $scope.view_card_selected);
-    };
-
-    // Load cards
-    $scope.loadCards = function(view_definition) {
-        if($scope.view_cards.length === 0){
-            for (card in view_definition) {
-                $scope.view_cards.push({"name": card});
-            }
-            $timeout(function() {
-                $scope.view_card_select_index = 0;
-                $scope.view_card_animation = (view_definition.default[0].animation) ? view_definition.default[0].animation : {
-                  in: 'fadeIn',
-                  out: 'slideOutLeft'
-                }
-            }, 1000);
-        }
-    };
-
-    // Add components
-    $scope.addComponents = function( components, container_component, card ) {
-        var idx = 0;
-        var ref_components = (card!=null) ? components[card] : components;
-        for (idx = 0; idx < ref_components.length; idx++) {
-            var component = ref_components[idx];
-            $scope.addComponent(component, container_component, card);
-        }
+        DfxGcTemplateBuilder.addComponentToDefinition(component.id, parent_id, component, $scope.view_card_selected);
     };
 
     // Add a component
-    $scope.addComponent = function( component, container_component, card) {
+    $scope.addComponent = function(component) {
         var component_instance = $scope.renderGraphicalControl(component);
-        if (container_component == null) {
-            $('#dfx_visual_editor_workspace_' + card).append(component_instance.fragment);
-        } else {
-            $('#' + container_component.id + '_' + component.container).append(component_instance.fragment);
-        }
+        $('#dfx_visual_editor_workspace_default').append(component_instance.fragment);
     };
 
     // Render GControls
@@ -1223,23 +316,6 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
         $('#dfx-ve-property-title-selected-renderer').css('display', 'none');
         var id = $('#dfx-ve-property-title-selected-gc-text').attr('component-id');
         $scope.loadPropertyPanel(id);
-    }
-
-    $scope.removeComponent = function(component_id) {
-        var confirm = $mdDialog.confirm()
-            .title('Would you like to delete this component?')
-            .content('The component and all child components will be deleted.')
-            .cancel('No')
-            .ok('Yes');
-        $mdDialog.show(confirm).then(function() {
-            var parent_id = $('#'+component_id).closest('[gc-parent]').attr('gc-parent');
-            if (parent_id) {
-                delete $scope.gc_instances[component_id];
-                DfxVisualBuilder.removeComponentConfirmed(component_id, $scope.view_card_selected);
-            } else {
-                dfxMessaging.showWarning('Root panel can not be removed');
-            }
-        });
     };
 
     $scope.overrideAttribute = function(attribute_name) {
@@ -1262,145 +338,26 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
         setAttibutesChainStatus(attribute_name, $scope.gc_selected.attributes);
     };
 
-    // Functions implementing UNDO in view editor - START
-    $scope.cacheAttributeOldValue = function (attribute_name, $event, attribute_value) {
-        if ($event && $event.relatedTarget && $event.relatedTarget.textContent == 'Save') return;//called from picker using $.focus() by clicking Save button
-
-        if (attribute_value) {
-            $scope.attribute_temp_old_value = {value: attribute_value};
-        } else {
-            $scope.attribute_temp_old_value = angular.copy($scope.gc_selected.attributes[attribute_name]);
-        }
-    };
-
-    $scope.cacheAttributeNewValue = function (attribute_name) {
-        if (! $scope.gc_selected.attributes[attribute_name]) return;
-
-        var attribute_new_value = $scope.gc_selected.attributes[attribute_name].value;
-        var attribute_old_value = $scope.attribute_temp_old_value ?  $scope.attribute_temp_old_value.value : '';
-
-        if (attribute_new_value !== attribute_old_value) {
-            $scope.view_editor_actions_stack = $scope.view_editor_actions_stack || [];
-            $scope.view_editor_actions_stack.unshift({ component_id: $scope.gc_selected.id, attribute_name: attribute_name, attribute_old_value: angular.copy(attribute_old_value) });
-        }
-    };
-
-    $scope.viewEditorUndo = function(event) {
-        $(event.srcElement).animateCss('pulse');
-        if ($scope.view_editor_actions_stack && $scope.view_editor_actions_stack.length > 0) {
-            var action_for_undo = $scope.view_editor_actions_stack.shift();
-            var gc_for_undo = $scope.gc_instances[ action_for_undo.component_id ];
-            gc_for_undo.attributes[ action_for_undo.attribute_name ].value = action_for_undo.attribute_old_value;
-        }
-    };
-    // Functions implementing UNDO in view editor - END
-
-    // Functions implementing Cut/Copy/Paste in view editor - START
-    $scope.viewEditorCut = function(event) {
+    // Functions to work with GC Templates - START
+    $scope.saveGcTemplate = function (event) {
         $(event.srcElement).animateCss('pulse');
 
-        var component_id = $scope.gc_selected.id;
-        var parent_id = $('#'+component_id).closest('[gc-parent]').attr('gc-parent');
+        var gc_selected = angular.copy($scope.gc_selected);
+        DfxGcTemplateBuilder.removeNotOverriddenAttributes(gc_selected.attributes, gc_selected.type);
 
-        if (parent_id) {
-            var view_definition = DfxVisualBuilder.movingComponentHelper.getViewDefinition();
-            var component_definition = DfxVisualBuilder.getComponentDefinition($scope.gc_selected.id, view_definition.definition);
-
-            component_definition.attributes = angular.copy($scope.gc_selected.attributes);// if comp attributes changed and not saved, it's only in scope at the moment of cut/copy
-
-            $scope.view_editor_cached_component = component_definition;// put component in memory
-
-            // remove component
-            delete $scope.gc_instances[component_id];
-            DfxVisualBuilder.removeComponentConfirmed(component_id, $scope.view_card_selected);
-        } else {
-            dfxMessaging.showWarning('Root panel can not be cut');
-        }
-    };
-
-    $scope.viewEditorCopy = function(event) {
-        $(event.srcElement).animateCss('pulse');
-
-        var view_definition = DfxVisualBuilder.movingComponentHelper.getViewDefinition();
-        var component_definition = DfxVisualBuilder.getComponentDefinition($scope.gc_selected.id, view_definition.definition);
-
-        component_definition.attributes = angular.copy($scope.gc_selected.attributes);// if comp attributes changed and not saved, it's only in scope at the moment of cut/copy
-
-        $scope.view_editor_cached_component = component_definition;// put component in memory
-    };
-
-    $scope.viewEditorPaste = function(event) {
-        $(event.srcElement).animateCss('pulse');
-
-        var getSelectedComponent = function () {
-            if ($scope.gc_selected) {
-                return $scope.gc_selected;
-            } else { // get root panel from current card
-                var view_definition = DfxVisualBuilder.movingComponentHelper.getViewDefinition();
-                var current_card_root_panel_id = view_definition.definition[$scope.view_card_selected][0].id;
-                var current_card_root_panel_full_definition = $scope.gc_instances[current_card_root_panel_id];
-                return current_card_root_panel_full_definition;
-            }
+        var gc_template = {
+            name: $scope.gc_template_name,
+            platform: $scope.view_platform,
+            application: $scope.application_name,
+            attributes: gc_selected.attributes
         };
 
-        if ($scope.view_editor_cached_component) {
-            var selected_component = getSelectedComponent();
-            var cached_component_copy = angular.copy($scope.view_editor_cached_component);
-            DfxVisualBuilder.pasteComponent(cached_component_copy, selected_component, $scope.view_card_selected);
-        }
-    };
-    // Functions implementing Cut/Copy/Paste in view editor - END
+        delete gc_template.attributes.name; // remove because it's always overridden anyway
 
-    // Functions to work with GC Templates - START
-    $scope.saveComponentAsTemplate = function(event) {
-        $(event.srcElement).animateCss('pulse');
-
-        $mdDialog.show({
-            controller: DialogController,
-            templateUrl: '/gcontrols/web/template_save.html',
-            parent: angular.element(document.body),
-            targetEvent: event
-        })
-        .then(function(gc_template) {
-            var gc_selected = angular.copy($scope.gc_selected);
-            DfxVisualBuilder.removeNotOverriddenAttributes(gc_selected.attributes, gc_selected.type);
-
-            gc_template.type = gc_selected.type;
-            gc_template.application = $scope.application_name;
-            gc_template.platform = $scope.view_platform;
-
-            gc_template.attributes = gc_selected.attributes;
-            delete gc_template.attributes.name; // remove because it's always overridden anyway
-            gc_template.attributes.template = gc_template.attributes.template || {};
-            gc_template.attributes.template.value = gc_template.attributes.template.value || 'default';
-
-            //1) default values to remove when inheritance from TEMPLATE not from default
-            //  - also why icon is in src of the view??
-            //5) apply it to design time - for just dropped component, when selecting template in drop-down
-            //  - also, refresh scope.gc_templates when new temlate is saved
-            //  - reinit adds properties to source, but should not
-            //7) do not forget to uncomment gc_button->menuItemNames
-            //8) prevent cross-linking from templates to each other
-
-            dfxGcTemplates.create( $scope, gc_template )
-                .then( function() {
-                   dfxMessaging.showMessage( 'The template ' + gc_template.name + ' has been created' );
-                });
-
-        }, function() {
-            // do nothing
-        });
-
-        function DialogController($scope, $mdDialog) {
-            $scope.template = {"name": "", "description": ""};
-            $scope.saveTemplateConfirm = function(answer) {
-                $mdDialog.hide($scope.template);
-            };
-
-            $scope.saveTemplateCancel = function() {
-                $mdDialog.cancel();
-            };
-        }
+        dfxGcTemplates.update( $scope, gc_template )
+            .then( function() {
+               dfxMessaging.showMessage( 'The template ' + $scope.gc_template_name + ' has been updated' );
+            });
     };
 
     $scope.loadGcTemplates = function() {
@@ -1412,27 +369,12 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
                 $scope.gc_templates = gc_templates;
             });
     };
-
-    $scope.reinitComponentWithTemplate = function() {
-        return;//TODO: temporarily not used
-
-        var gc_element = $('#' + $scope.gc_selected.id);
-        var gc_element_scope = angular.element(gc_element).scope();
-
-        //console.log('gc_element_scope: ', gc_element_scope);
-
-        var gc_component = gc_element_scope.getComponent(gc_element);
-        //scope.attributes = null;
-        //basectrl.init(scope, element, component, attrs, 'button').then(function() {
-        var gc_attrs = {dfxGcEdit: '', dfxGcWebBase: '', dfxGcWebButton: ''};
-        gc_element_scope.reinitAttributes(gc_element_scope, gc_element, gc_component, gc_attrs, 'button');
-    };
     // Functions to work with GC Templates - END
 
-    DfxVisualBuilder.init();
+    DfxGcTemplateBuilder.init($timeout, $scope);
 }]);
 
-dfxViewEditorApp.directive('dfxGcWebDroppable', [ '$timeout', function($timeout) {
+dfxGcTemplateEditorApp.directive('dfxGcWebDroppable', [ '$timeout', function($timeout) {
     return {
         restrict: 'A',
         controller: function($scope, $element, $attrs) {
@@ -1461,7 +403,7 @@ dfxViewEditorApp.directive('dfxGcWebDroppable', [ '$timeout', function($timeout)
                         } else {
                             // Move component
                             gc_id = $(ui.item).attr('id');
-                            DfxVisualBuilder.moveComponent(gc_id, this, $scope.view_card_selected);
+                            DfxGcTemplateBuilder.moveComponent(gc_id, this, $scope.view_card_selected);
                         }
                     },
                     start: function (event, ui) {
@@ -1474,180 +416,7 @@ dfxViewEditorApp.directive('dfxGcWebDroppable', [ '$timeout', function($timeout)
     }
 }]);
 
-dfxViewEditorApp.directive('dfxGcLayoutProperty', ['$mdToast', 'dfxMessaging', function($mdToast, dfxMessaging) {
-    return {
-        restrict: 'A',
-        templateUrl: function( el, attrs ) {
-            return '/gcontrols/web/layout_props.html';
-        },
-        controller: function($scope, $element, $attrs) {
-            $scope.addLayoutRow = function() {
-                var component = $scope.$parent.gc_selected;
-                component.attributes.layout.status = "overridden";
-                component.attributes.layout.rows.push({
-                    "cols": [
-                        {
-                            "width": { "value": 100},
-                            "autoWidth": { "value": false},
-                            "display": { "value": "true"},
-                            "classes": {
-                                "value": ""
-                            },
-                            "dynamicClasses": {
-                                "value": ""
-                            },
-                            "style": {
-                                "value": ""
-                            },
-                            "orientation": {
-                                "value": "row"
-                            },
-                            "halignment": {
-                                "value": "start"
-                            },
-                            "valignment": {
-                                "value": "start"
-                            },
-                            "css": {
-                                "color": "",
-                                "background": "",
-                                "padding": "",
-                                "text-align": ""
-                            }
-                        }
-                    ],
-                    "classes": {
-                        "value": ""
-                    },
-                    "dynamicClasses": {
-                        "value": ""
-                    },
-                    "style": {
-                        "value": ""
-                    }
-                });
-                DfxVisualBuilder.initGraphicalControls();
-            };
-            $scope.addLayoutColumn = function(row_index) {
-                var component = $scope.$parent.gc_selected;
-                component.attributes.layout.status = "overridden";
-                component.attributes.layout.rows[row_index].cols.push({
-                    "width": { "value": 25},
-                    "autoWidth": { "value": false},
-                    "display": { "value": "true"},
-                    "classes": {
-                        "value": ""
-                    },
-                    "dynamicClasses": {
-                        "value": ""
-                    },
-                    "style": {
-                        "value": ""
-                    },
-                    "orientation": {
-                        "value": "row"
-                    },
-                    "halignment": {
-                        "value": "start"
-                    },
-                    "valignment": {
-                        "value": "start"
-                    },
-                    "css": {
-                        "color": "",
-                        "background": "",
-                        "padding": "",
-                        "text-align": ""
-                    }
-                });
-                DfxVisualBuilder.initGraphicalControls();
-            };
-
-            $scope.deleteLayoutColumn = function(row_index, col_index) {
-                var component = $scope.$parent.gc_selected;
-                var row_cols = component.attributes.layout.rows[row_index].cols;
-
-                if (col_index===0 && row_cols.length===1) {
-
-                  dfxMessaging.showWarning('The layout row must contain at least one column');
-
-                } else {
-
-                  if ($('#'+$scope.$parent.gc_selected.id+'_layout_0_row_'+row_index+'_column_'+col_index).children().length>0) {
-
-                      // move components from removed row to the first row or to the second (in case when first row is removed)
-                      var container_id = $scope.$parent.gc_selected.id;
-
-                      var to_layout_id = col_index == 0 ? 'layout_0_row_'+row_index+'_column_1' : 'layout_0_row_'+row_index+'_column_0';
-
-                      var column_children = $('#'+$scope.$parent.gc_selected.id+'_layout_0_row_'+row_index+'_column_'+col_index).children();
-                      if (column_children.length > 0) {
-
-                          for (var i = 0; i < column_children.length; i++) {
-                              var next_gc_id = column_children[i].id;
-
-                              // Move component
-                              DfxVisualBuilder.moveComponentFromRemovedLayout(next_gc_id, $scope.$parent.view_card_selected, container_id, to_layout_id);
-                          }
-                      }
-                  }
-
-                  component.attributes.layout.status = "overridden";
-                  component.attributes.layout.rows[row_index].cols.splice(col_index, 1);
-
-                  // reindex layout children
-                  var editor = $('#dfx_src_editor.CodeMirror')[0].CodeMirror;
-                  var wgt_definition = JSON.parse(editor.getValue());
-                  DfxVisualBuilder.reindexLayoutChildComponents(row_index, col_index, container_id, wgt_definition.definition, $scope.$parent.view_card_selected, false);
-                  editor.setValue(JSON.stringify(wgt_definition, null, '\t'));
-
-                }
-            };
-
-            $scope.deleteLayoutRow = function(row_index) {
-                var component = $scope.$parent.gc_selected;
-                var row_cols = component.attributes.layout.rows[row_index].cols;
-
-                if (row_index===0 && component.attributes.layout.rows.length===1) {
-
-                  dfxMessaging.showWarning('The layout must contain at least one row');
-
-                } else {
-
-                    // move components from removed row to the first row or to the second (in case when first row is removed)
-                    var container_id = $scope.$parent.gc_selected.id;
-
-
-                    var to_layout_id = row_index == 0 ? 'layout_0_row_1_column_0' : 'layout_0_row_' + (row_index-1) + '_column_0';
-
-                    for (var i = 0; i < row_cols.length; i++) {
-                        var column_children = $('#'+$scope.$parent.gc_selected.id+'_layout_0_row_'+row_index+'_column_'+i).children();
-                        if (column_children.length > 0) {
-                            for (var j = 0; j < column_children.length; j++) {
-                                var next_gc_id = column_children[j].id;
-
-                                // Move component
-                                DfxVisualBuilder.moveComponentFromRemovedLayout(next_gc_id, $scope.$parent.view_card_selected, container_id, to_layout_id);
-                            }
-                        }
-                    }
-
-                    component.attributes.layout.status = "overridden";
-                    component.attributes.layout.rows.splice(row_index, 1);
-
-                    // reindex layout children
-                    var editor = $('#dfx_src_editor.CodeMirror')[0].CodeMirror;
-                    var wgt_definition = JSON.parse(editor.getValue());
-                    DfxVisualBuilder.reindexLayoutChildComponents(row_index, null, container_id, wgt_definition.definition, $scope.$parent.view_card_selected, false);
-                    editor.setValue(JSON.stringify(wgt_definition, null, '\t'));
-
-                }
-            };
-        }
-    }
-}]);
-
-dfxViewEditorApp.directive('dfxGcExtendedProperty', [function() {
+dfxGcTemplateEditorApp.directive('dfxGcExtendedProperty', [function() {
     return {
         restrict: 'A',
         templateUrl: function( el, attrs ) {
@@ -1666,7 +435,7 @@ dfxViewEditorApp.directive('dfxGcExtendedProperty', [function() {
     }
 }]);
 
-dfxViewEditorApp.directive('dfxGcRendererDesign', ['$compile', '$timeout', function($compile, $timeout) {
+dfxGcTemplateEditorApp.directive('dfxGcRendererDesign', ['$compile', '$timeout', function($compile, $timeout) {
     return {
         restrict: 'A',
         link: function($scope, $element, $attrs) {
@@ -1678,7 +447,7 @@ dfxViewEditorApp.directive('dfxGcRendererDesign', ['$compile', '$timeout', funct
     }
 }]);
 
-dfxViewEditorApp.directive('dfxVePickerIcon', ['$q', '$http', '$mdDialog', '$timeout', '$compile', '$filter', function($q, $http, $mdDialog, $timeout, $compile, $filter) {
+dfxGcTemplateEditorApp.directive('dfxVePickerIcon', ['$q', '$http', '$mdDialog', '$timeout', '$compile', '$filter', function($q, $http, $mdDialog, $timeout, $compile, $filter) {
     return {
         restrict: 'A',
         transclude: true,
@@ -1753,7 +522,7 @@ dfxViewEditorApp.directive('dfxVePickerIcon', ['$q', '$http', '$mdDialog', '$tim
     }
 }]);
 
-dfxViewEditorApp.directive('dfxVeCssStyle', ['$timeout', '$compile', function($timeout, $compile) {
+dfxGcTemplateEditorApp.directive('dfxVeCssStyle', ['$timeout', '$compile', function($timeout, $compile) {
     return {
         restrict: 'E',
         transclude: true,
@@ -1902,7 +671,7 @@ dfxViewEditorApp.directive('dfxVeCssStyle', ['$timeout', '$compile', function($t
     }
 }]);
 
-dfxViewEditorApp.directive('dfxVePickerColumn', [ '$compile', '$mdDialog', function($compile, $mdDialog) {
+dfxGcTemplateEditorApp.directive('dfxVePickerColumn', [ '$compile', '$mdDialog', function($compile, $mdDialog) {
     return {
         restrict: 'E',
         transclude: true,
@@ -1936,7 +705,7 @@ dfxViewEditorApp.directive('dfxVePickerColumn', [ '$compile', '$mdDialog', funct
     }
 }]);
 
-dfxViewEditorApp.directive('dfxVeColorPicker', ['$timeout', function($timeout) {
+dfxGcTemplateEditorApp.directive('dfxVeColorPicker', ['$timeout', function($timeout) {
     return {
         restrict: 'E',
         transclude: true,
@@ -1970,7 +739,7 @@ dfxViewEditorApp.directive('dfxVeColorPicker', ['$timeout', function($timeout) {
     }
 }]);
 
-dfxViewEditorApp.directive('dfxVePickerImage', (function($mdDialog, $timeout, $compile) {
+dfxGcTemplateEditorApp.directive('dfxVePickerImage', (function($mdDialog, $timeout, $compile) {
     return {
         restrict: 'E',
         transclude: true,
@@ -2041,7 +810,7 @@ dfxViewEditorApp.directive('dfxVePickerImage', (function($mdDialog, $timeout, $c
     }
 }));
 
-dfxViewEditorApp.filter('checkExpression', [ function() {
+dfxGcTemplateEditorApp.filter('checkExpression', [ function() {
     return function( input ) {
         var regexp = /(^\')(.*)(\'$)/gm,
             filtered = regexp.exec( input );
@@ -2053,8 +822,8 @@ dfxViewEditorApp.filter('checkExpression', [ function() {
         return filtered ? input : '{expression}';
     };
 }]);
-
-dfxViewEditorApp.directive('dfxVeExpressionEditor', [ '$mdDialog', function($mdDialog) {
+/*
+dfxGcTemplateEditorApp.directive('dfxVeExpressionEditor', [ '$mdDialog', function($mdDialog) {
     return {
         restrict: 'E',
         transclude: true,
@@ -2125,7 +894,7 @@ dfxViewEditorApp.directive('dfxVeExpressionEditor', [ '$mdDialog', function($mdD
     }
 }]);
 
-dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http', '$timeout', '$compile', function($mdDialog, $mdToast, $http, $timeout, $compile) {
+dfxGcTemplateEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http', '$timeout', '$compile', function($mdDialog, $mdToast, $http, $timeout, $compile) {
     return {
         restrict: 'E',
         transclude: true,
@@ -2588,7 +1357,7 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
     }
 }]);
 
-dfxViewEditorApp.directive('dfxVeMenuIcons', [ '$http', '$timeout', '$compile', '$filter', function($http, $timeout, $compile, $filter) {
+dfxGcTemplateEditorApp.directive('dfxVeMenuIcons', [ '$http', '$timeout', '$compile', '$filter', function($http, $timeout, $compile, $filter) {
     return {
         restrict: 'E',
         transclude: true,
@@ -2680,7 +1449,7 @@ dfxViewEditorApp.directive('dfxVeMenuIcons', [ '$http', '$timeout', '$compile', 
     }
 }]);
 
-dfxViewEditorApp.directive('dfxVeMenuExpression', [ '$timeout', '$compile', function($timeout, $compile) {
+dfxGcTemplateEditorApp.directive('dfxVeMenuExpression', [ '$timeout', '$compile', function($timeout, $compile) {
     return {
         restrict: 'E',
         transclude: true,
@@ -2724,7 +1493,7 @@ dfxViewEditorApp.directive('dfxVeMenuExpression', [ '$timeout', '$compile', func
     }
 }]);
 
-dfxViewEditorApp.directive('dfxVeTreeEditor', [ '$mdDialog', '$mdToast', '$http', '$timeout', function($mdDialog, $mdToast, $http, $timeout) {
+dfxGcTemplateEditorApp.directive('dfxVeTreeEditor', [ '$mdDialog', '$mdToast', '$http', '$timeout', function($mdDialog, $mdToast, $http, $timeout) {
     return {
         restrict: 'E',
         transclude: true,
@@ -2936,7 +1705,7 @@ dfxViewEditorApp.directive('dfxVeTreeEditor', [ '$mdDialog', '$mdToast', '$http'
     }
 }]);
 
-dfxViewEditorApp.directive('dfxGcToolbarDesign', function($sce, $compile, $timeout, $mdMenu, $filter) {
+dfxGcTemplateEditorApp.directive('dfxGcToolbarDesign', function($sce, $compile, $timeout, $mdMenu, $filter) {
     return {
         restrict: 'E',
         transclude: true,
@@ -3354,11 +2123,6 @@ dfxViewEditorApp.directive('dfxGcToolbarDesign', function($sce, $compile, $timeo
                 }, 0);
             };
 
-            /*$timeout(function(){
-                scope.attributes.toolbar.rightMenu.initialClick.value = false;
-                scope.attributes.toolbar.leftMenu.initialClick.value = false;
-            }, 0);*/
-
             scope.snippetTrustAsHtml = function( snippet ) {
                 return $sce.trustAsHtml(snippet);
             };
@@ -3597,7 +2361,7 @@ dfxViewEditorApp.directive('dfxGcToolbarDesign', function($sce, $compile, $timeo
     }
 });
 
-dfxViewEditorApp.directive('dfxGcToolbarProperty', function($mdDialog) {
+dfxGcTemplateEditorApp.directive('dfxGcToolbarProperty', function($mdDialog) {
     return {
         restrict: 'A',
         templateUrl: function( el, attrs) {
@@ -3646,7 +2410,7 @@ dfxViewEditorApp.directive('dfxGcToolbarProperty', function($mdDialog) {
     }
 });
 
-dfxViewEditorApp.directive('dfxVePlatform', function() {
+dfxGcTemplateEditorApp.directive('dfxVePlatform', function() {
     return {
         restrict: 'A',
         scope: false,
@@ -3661,13 +2425,13 @@ dfxViewEditorApp.directive('dfxVePlatform', function() {
 });
 
 
-dfxViewEditorApp.directive('dfxViewCompiled', [ '$compile', function($compile) {
+dfxGcTemplateEditorApp.directive('dfxViewCompiled', [ '$compile', function($compile) {
     return {
         restrict: 'A',
         controller: function($scope, $element, $attrs) {
             $scope.view_id = $attrs.dfxViewCompiled;
-            var widget_definition = JSON.parse(window.localStorage.getItem( 'dfx_' + $attrs.dfxViewCompiled ));
-            $scope.addCompiledComponents( widget_definition.definition, { 'id': 'dfx-ve-compiled' }, 'default' );
+            var gc_template_definition = JSON.parse(window.localStorage.getItem( 'dfx_' + $attrs.dfxViewCompiled ));
+            $scope.addCompiledComponents( gc_template_definition, { 'id': 'dfx-ve-compiled' }, 'default' );
         }
     }
 }]);
@@ -3679,8 +2443,8 @@ var helpDialogScript = function (options) {
         ve_scope.searchAPIRoute();
     } else {
         var editor_script          = $('#dfx_script_editor.CodeMirror')[0].CodeMirror;
-        var widget_name            = DfxVisualBuilder.getWidgetName();
-        var widget_controller_name = DfxVisualBuilder.getWidgetControllerName();
+        var widget_name            = DfxGcTemplateBuilder.getWidgetName();
+        var widget_controller_name = DfxGcTemplateBuilder.getWidgetControllerName();
         var script                 = '';
 
         if (options.item == 'module') {
@@ -4243,3 +3007,4 @@ var helpDialogScript = function (options) {
         $('#dfx_visual_editor_help_close').click();
     }
 };
+*/
