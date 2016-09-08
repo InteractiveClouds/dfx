@@ -5352,8 +5352,8 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
         // save filters content bug
         if (obj) {
             switch( obj.type ) {
-                case 'precode': console.log("PRE_CODE"); $scope.scopeService.data.precode[$scope.codeArrayItemIndex].code = obj.value; break;
-                case 'postcode':  console.log("POST_CODE"); $scope.scopeService.data.postcode[$scope.codeArrayItemIndex].code = obj.value; break;
+                case 'precode': console.log("PRE_CODE"); $scope.api_so.apiRoutes[$scope.scopeServiceIndex].data.precode[$scope.codeArrayItemIndex].code = obj.value; break;
+                case 'postcode':  console.log("POST_CODE"); $scope.api_so.apiRoutes[$scope.scopeServiceIndex].data.postcode[$scope.codeArrayItemIndex].code = obj.value; break;
             }
             $scope.renderFilters( $scope.scopeService );
         }
@@ -5704,11 +5704,12 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
         $('#' + id +'_span').show();
     }
 
-    $scope.editService = function( serviceItem ) {
+    $scope.editService = function( serviceItem, index ) {
         $scope.selected_service_tab = 0;
         $scope.validUrlResult = '';
         $scope.serviceUrlError = '';
         $scope.scopeService = serviceItem;
+        $scope.scopeServiceIndex = index;
         $scope.editFilterTitle = null;
         if ( !serviceItem.data.parameters ) $scope.scopeService.data.parameters = [];
         if ( !serviceItem.data.precode ) $scope.scopeService.data.precode = [];
@@ -6019,16 +6020,18 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
     }
 
     $scope.closeActionsEditor = function() {
-        var editor = $('#dfx_filter_src_query_editor.CodeMirror')[0].CodeMirror;
-            codeValue = editor.getValue();
+        if($scope.editorOpened){            
+            var editor = $('#dfx_filter_src_query_editor.CodeMirror')[0].CodeMirror;
+                codeValue = editor.getValue();
 
-        switch( $scope.codeArrayName ) {
-            case 'precode': $scope.scopeService.data.precode[$scope.codeArrayItemIndex].code = codeValue; break;
-            case 'postcode': $scope.scopeService.data.postcode[$scope.codeArrayItemIndex].code = codeValue; break;
+            switch( $scope.codeArrayName ) {
+                case 'precode': $scope.scopeService.data.precode[$scope.codeArrayItemIndex].code = codeValue; break;
+                case 'postcode': $scope.scopeService.data.postcode[$scope.codeArrayItemIndex].code = codeValue; break;
+            }
+            $scope.editorOpened = false;
+            editor.setValue('');
+            $scope.editFilterTitle = null;
         }
-        $scope.editorOpened = false;
-        editor.setValue('');
-        $scope.editFilterTitle = null;
     }
 
     $scope.execute = function( event ) {
