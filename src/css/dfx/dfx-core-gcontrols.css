@@ -92,7 +92,16 @@ md-toolbar.dfx-core-gc-toolbar:not(.md-menu-toolbar){
     padding: 0 5px;
     min-height:48px;
 }
-
+div.wizard-submit-step{
+    opacity: 0;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+div.wizard-submit-step.is-wizard-submit-step { 
+    opacity: 1 !important 
+}
 .md-button.glyph.dfx-core-gc-wizard-submit:not([disabled]).md-focused,
 .md-button.glyph.dfx-core-gc-wizard-submit:not([disabled]):hover,
 .md-button.glyph.dfx-core-gc-wizard-submit{
