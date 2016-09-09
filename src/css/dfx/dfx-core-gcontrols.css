@@ -249,7 +249,7 @@ button[disabled="disabled"].dfx-core-gc-button.md-button md-icon, button[disable
     margin: 0;
     list-style: none;
 }
-.dfx-core-gc-treemenu > ul > li li {
+.dfx-core-gc-treemenu > ul > li li, .dfx-core-gc-treemenu > div > ul > li li {
     background-color: rgba(153,153,153,.15);
 }
 .dfx-core-gc-treemenu button, button.treemenu-actionbar-item-button {
@@ -316,6 +316,9 @@ md-menu-bar.treemenu-actionbar {
     padding: 0;
     width: 48px;
 }
+div.treemenu-actionbar-item {
+    padding-left: 0px !important;
+}
 button.treemenu-actionbar-button.md-button {
     padding: 0px !important;
     min-width: 48px;
@@ -338,12 +341,18 @@ md-icon.treemenu-actionbar-item-icon, ng-md-icon.treemenu-actionbar-item-icon {
     justify-content: center;
     color: #757575;
 }
+button.treemenu-actionbar-item-button div.treemenu-actionbar-item-label {
+    padding-left: 0px !important;
+}
 .treemenu-actionbar-menu-content {
     padding-left: 0px !important;
 }
 button.treemenu-actionbar-item-button {
     padding: 0 16px !important;
     line-height: 32px;
+}
+md-menu-content md-menu-item .md-button[disabled] .treemenu-actionbar-item-icon {
+    color: rgba(0,0,0,0.25);
 }
 /* Menu editor */
 .tree-menu-title, md-menu-content md-menu-item.tree-menu-title {
