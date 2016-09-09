@@ -114,6 +114,12 @@ DfxGcTemplateBuilder.init = function ($timeout, $scope) {
             $timeout(function() {
                 //DfxGcTemplateBuilder.getVeScopeFromHtml().loadPropertyPanel(src_content.id);
                 //$('#' + src_content.id).trigger('click');
+
+                //TODO: try use compoent scope and one-time watcher:
+                //var gc_element = $('#' + $scope.gc_selected.id);
+                //var gc_element_scope = angular.element(gc_element).scope();
+
+                //TODO: or try this - return $q.when(component.id);
             }, 100);
         });
     });

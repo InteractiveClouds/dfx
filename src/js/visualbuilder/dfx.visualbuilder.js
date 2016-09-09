@@ -907,6 +907,32 @@ DfxVisualBuilder.movingComponentHelper = (function () {
         editor.setValue(JSON.stringify(wgt_definition, null, '\t'));
     };
 
+    api.replaceComponentInDefinition = function (component_new_definition, card) {
+        var component_id = component_new_definition.id,
+            found_it = false;
+
+        var doReplace = function (parent_definition, card) {
+            var ref_definition = (card !== null) ? parent_definition[card] : parent_definition;
+
+            for (var idx = 0; idx < ref_definition.length; idx++) {
+                if (found_it) break;
+            
+                if (ref_definition[idx].id == component_id) {
+                    ref_definition[idx] = component_new_definition;
+                    found_it = true;
+                } else {
+                    doReplace(ref_definition[idx].children, null);
+                }
+            }
+        };
+
+        var editor = $('#dfx_src_editor.CodeMirror')[0].CodeMirror;
+        var view_definition = JSON.parse(editor.getValue());
+
+        doReplace(view_definition.definition, card);
+        editor.setValue(JSON.stringify(view_definition, null, '\t'));
+    };
+
     api.addComponentToScope = function(component_definition, container_definition, card) {
         var ve_scope = angular.element(document.getElementById('dfx_src_widget_editor')).scope();
         ve_scope.addComponent(component_definition, container_definition, card);

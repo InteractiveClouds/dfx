@@ -1374,19 +1374,10 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
             gc_template.attributes.template = gc_template.attributes.template || {};
             gc_template.attributes.template.value = gc_template.attributes.template.value || 'default';
 
-            //1) default values to remove when inheritance from TEMPLATE not from default
-            //  - also why icon is in src of the view??
-            //5) apply it to design time - for just dropped component, when selecting template in drop-down
-            //  - also, refresh scope.gc_templates when new temlate is saved
-            //  - reinit adds properties to source, but should not
-            //7) do not forget to uncomment gc_button->menuItemNames
-            //8) prevent cross-linking from templates to each other
-
             dfxGcTemplates.create( $scope, gc_template )
                 .then( function() {
                    dfxMessaging.showMessage( 'The template ' + gc_template.name + ' has been created' );
                 });
-
         }, function() {
             // do nothing
         });
@@ -1413,19 +1404,14 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
             });
     };
 
-    $scope.reinitComponentWithTemplate = function() {
-        return;//TODO: temporarily not used
+    $scope.reinitComponentWithTemplate = function(template_name) {
+        var view_definition = DfxVisualBuilder.movingComponentHelper.getViewDefinition();
+        var gc_component_definition = DfxVisualBuilder.getComponentDefinition($scope.gc_selected.id, view_definition.definition);
+        gc_component_definition.attributes.template = {'value': template_name, 'status': 'overridden'};
 
         var gc_element = $('#' + $scope.gc_selected.id);
         var gc_element_scope = angular.element(gc_element).scope();
-
-        //console.log('gc_element_scope: ', gc_element_scope);
-
-        var gc_component = gc_element_scope.getComponent(gc_element);
-        //scope.attributes = null;
-        //basectrl.init(scope, element, component, attrs, 'button').then(function() {
-        var gc_attrs = {dfxGcEdit: '', dfxGcWebBase: '', dfxGcWebButton: ''};
-        gc_element_scope.reinitAttributes(gc_element_scope, gc_element, gc_component, gc_attrs, 'button');
+        gc_element_scope.reinitAttributes(gc_component_definition);
     };
     // Functions to work with GC Templates - END
 
