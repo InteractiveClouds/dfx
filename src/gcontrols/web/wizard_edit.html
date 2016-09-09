@@ -10,7 +10,7 @@
                 </li>
                 <li class="col-md-12">
                     <span class="col-md-6">Template:</span>
-                    <input class="col-md-6" type="text" ng-model="attributes.template.value" ng-change="overrideAttribute('template')" disabled/>
+                    <input class="col-md-6" type="text" ng-model="attributes.template.value" ng-change="overrideAttribute('template');reinitComponentWithTemplate(attributes.template.value);"/>
                 </li>
                 <li class="col-md-12">
                     <span class="col-md-6">Name:</span>
@@ -96,13 +96,13 @@
                             <md-option ng-repeat="step in attributes.steps.value track by $index" value="{{$index}}">{{step.label}}</md-option>
                         </md-select>
                     </md-input-container>
-                </li>                
+                </li>
                 <li class="col-md-12">
                     <input class="dfx-ve-property-treeview-button" type="checkbox" checked id="item-6" />
                     <label for="item-6" class="dfx-ve-property-title-level-1">
                         <span>{{attributes.steps.value[attributes.stepIndex.value].label}}</span>
-                        <span class="pull-right"><a href="#" ng-click="removeStep()">Remove step</a></span>                        
-                    </label>                   
+                        <span class="pull-right"><a href="#" ng-click="removeStep()">Remove step</a></span>
+                    </label>
                     <ul class="dfx-ve-property-treeview-content">
                         <li class="col-md-12">
                             <span class="col-md-6">Label:</span>
@@ -191,7 +191,7 @@
                                                         </md-select>
                                                     </md-input-container>
                                                 </li>
-                                                <li class="col-md-12">                                                    
+                                                <li class="col-md-12">
                                                     <span class="col-md-6">Hor.Alignment:</span>
                                                     <md-input-container class="col-md-6" style="padding: 0 0 10px">
                                                         <md-select aria-label="h_alignment" ng-model="col.halignment.value">
@@ -199,7 +199,7 @@
                                                         </md-select>
                                                     </md-input-container>
                                                 </li>
-                                                <li class="col-md-12">                                                    
+                                                <li class="col-md-12">
                                                     <span class="col-md-6">Ver.Alignment:</span>
                                                     <md-input-container class="col-md-6" style="padding: 0 0 10px">
                                                         <md-select aria-label="v_alignment" ng-model="col.valignment.value">
@@ -207,18 +207,18 @@
                                                         </md-select>
                                                     </md-input-container>
                                                 </li>
-                                                <li class="col-md-12">                                                    
+                                                <li class="col-md-12">
                                                     <span class="col-md-6">Style:</span>
                                                     <div class="col-md-6" layout="row">
                                                         <input class="col-md-12" type="text" ng-model="col.style.value" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('steps')"/>
                                                         <dfx-ve-css-style></dfx-ve-css-style>
                                                     </div>
                                                 </li>
-                                                <li class="col-md-12">                                                    
+                                                <li class="col-md-12">
                                                     <span class="col-md-6">Class:</span>
                                                     <input class="col-md-6" type="text" ng-model="col.classes.value" style="padding-left: 6px" ng-change="overrideAttribute('steps')"/>
                                                 </li>
-                                                <li class="col-md-12">                                                    
+                                                <li class="col-md-12">
                                                     <span class="col-md-6">Dynamic Class:</span>
                                                     <input class="col-md-6" type="text" ng-model="col.dynamicClasses.value" style="padding-left: 6px" ng-change="overrideAttribute('steps')"/>
                                                 </li>
@@ -227,16 +227,16 @@
                                     </ul>
                                 </li>
                             </ul>
-                        </li>                        
+                        </li>
                     </ul>
                 </li>
-            </ul>            
+            </ul>
         </li>
     </ul>
     <ul>
         <li>
             <input class="dfx-ve-property-treeview-button" type="checkbox" checked id="item-buttons-1" />
-            <label for="item-buttons-1"><span>Navigation Buttons</span></label>            
+            <label for="item-buttons-1"><span>Navigation Buttons</span></label>
             <ul class="dfx-ve-property-treeview-content">
                 <li class="col-md-12">
                     <input class="dfx-ve-property-treeview-button" type="checkbox" checked id="item-buttons-11" />
@@ -265,7 +265,7 @@
                             <input class="col-md-6" type="text" ng-model="attributes.previousButton.dynamicClasses.value" style="padding-left: 6px" ng-change="overrideAttribute('previousButton.dynamicClasses')"/>
                         </li>
                         <li class="col-md-12">
-                            <span class="col-md-6">Onclick:</span>                            
+                            <span class="col-md-6">Onclick:</span>
                             <div class="col-md-6" layout="row">
                                 <input class="col-md-12" type="text" ng-model="attributes.previousButton.onclick.value" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('previousButton.onclick')"/>
                                 <dfx-ve-expression-editor></dfx-ve-expression-editor>

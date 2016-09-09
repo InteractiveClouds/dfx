@@ -10,7 +10,7 @@
                 </li>
                 <li class="col-md-12">
                     <span class="col-md-4">Template:</span>
-                    <input class="col-md-8" type="text" ng-model="attributes.template.value" ng-change="overrideAttribute('template')" disabled/>
+                    <input class="col-md-8" type="text" ng-model="attributes.template.value" ng-change="overrideAttribute('template');reinitComponentWithTemplate(attributes.template.value);"/>
                 </li>
                 <li class="col-md-12">
                     <span class="col-md-4">Name:</span>

@@ -10,7 +10,7 @@
 		        </li>
 				<li class="col-md-12" dfx-gc-property="template">
 					<span class="col-md-4">Template:</span>
-					<input class="col-md-8" type="text" ng-model="attributes.template.value" ng-change="overrideAttribute('template')" disabled/>
+					<input class="col-md-8" type="text" ng-model="attributes.template.value" ng-change="overrideAttribute('template');reinitComponentWithTemplate(attributes.template.value);"/>
 				</li>
 				<li class="col-md-12" dfx-gc-property="name">
 					<span class="col-md-4">Name:</span>
@@ -44,7 +44,7 @@
 							<md-option ng-repeat="labelPos in ['left','center','right']" value="{{labelPos}}">{{labelPos}}</md-option>
 						</md-select>
 					</md-input-container>
-				</li>				
+				</li>
 				<li class="col-md-12" dfx-gc-property="display">
 					<span class="col-md-4">Display:</span>
 					<div class="col-md-8" layout="row">
@@ -82,7 +82,7 @@
 				<li class="col-md-12">
 					<span class="col-md-4">Unit:</span>
 					<input class="col-md-8" type="text" ng-model="attributes.options.value.unit" ng-change="overrideAttribute('options')" />
-				</li>	
+				</li>
 				<li class="col-md-12">
 					<span class="col-md-4">Start Angle:</span>
 					<input class="col-md-8" type="number" ng-model="attributes.options.value.startAngle" ng-change="overrideAttribute('options')" />
@@ -90,7 +90,7 @@
 				<li class="col-md-12">
 					<span class="col-md-4">End Angle:</span>
 					<input class="col-md-8" type="number" ng-model="attributes.options.value.endAngle" ng-change="overrideAttribute('options')" />
-				</li>								
+				</li>
 				<li class="col-md-12">
 					<span class="col-md-4">Display Input:</span>
 					<span class="col-md-8"><md-checkbox style="margin: 0" class="md-primary" ng-model="attributes.options.value.displayInput" ng-change="overrideAttribute('options')" aria-label="options"></md-checkbox></span>
@@ -98,15 +98,15 @@
 				<li class="col-md-12">
 					<span class="col-md-4">Display Previous:</span>
 					<span class="col-md-8"><md-checkbox style="margin: 0" class="md-primary" ng-model="attributes.options.value.displayPrevious" ng-change="overrideAttribute('options')" aria-label="options"></md-checkbox></span>
-				</li>				
+				</li>
 				<!-- <li class="col-md-12">
           <span class="col-md-4">Dynamic Options:</span>
           <span class="col-md-8"><md-checkbox style="margin: 0" class="md-primary" ng-model="attributes.options.value.dynamicOptions" ng-change="overrideAttribute('options')" aria-label="options"></md-checkbox></span>
-      </li> -->		
+      </li> -->
       	<li class="col-md-12">
 					<span class="col-md-4">Read Only:</span>
 					<span class="col-md-8"><md-checkbox style="margin: 0" class="md-primary" ng-model="attributes.options.value.readOnly" ng-change="overrideAttribute('options')" aria-label="options"></md-checkbox></span>
-				</li>					
+				</li>
 			</ul>
 		</li>
 	</ul>
@@ -126,7 +126,7 @@
 						<li class="col-md-12">
 							<span class="col-md-4">Bar Width:</span>
 							<input class="col-md-8" type="number" ng-model="attributes.options.value.barWidth" ng-change="overrideAttribute('options')" />
-						</li>						
+						</li>
 						<li class="col-md-12">
 							<span class="col-md-4">Bar Color:</span>
 							<div class="col-md-8 dfx-knob-panel-color-picker" layout="row" style="padding:0;">
@@ -146,7 +146,7 @@
 							<div class="col-md-8 dfx-knob-panel-color-picker" layout="row" style="padding:0;">
 								<dfx-ve-color-picker name="track-color" class="col-md-11" ng-model="attributes.options.value.trackColor"></dfx-ve-color-picker>
 							</div>
-						</li>						
+						</li>
 						<li class="col-md-12">
 							<span class="col-md-4">Previous Bar Color:</span>
 							<div class="col-md-8 dfx-knob-panel-color-picker" layout="row" style="padding:0;">
@@ -168,7 +168,7 @@
 							<div class="col-md-8 dfx-knob-panel-color-picker" layout="row" style="padding:0;">
 								<dfx-ve-color-picker name="bg-color" class="col-md-11" ng-model="attributes.options.value.bgColor"></dfx-ve-color-picker>
 							</div>
-						</li>				
+						</li>
 						<li class="col-md-12">
 							<span class="col-md-4">Label Style:</span>
 							<div class="col-md-8" layout="row">
@@ -190,7 +190,7 @@
 						<li class="col-md-12">
 							<span class="col-md-4">Dynamic Class:</span>
 							<input class="col-md-8" type="text" ng-model="attributes.dynamicClasses.value" ng-change="overrideAttribute('dynamicClasses')" />
-						</li>				
+						</li>
 					</ul>
 				</li>
 				<li class="col-md-12">
@@ -231,7 +231,7 @@
 						</li>
 						<li class="col-md-12">
 							<span class="col-md-4">Duration:</span>
-							<input class="col-md-8" type="number" ng-model="attributes.options.value.animate.duration" style="padding-left: 6px" ng-change="overrideAttribute('options')"/>							
+							<input class="col-md-8" type="number" ng-model="attributes.options.value.animate.duration" style="padding-left: 6px" ng-change="overrideAttribute('options')"/>
 						</li>
 						<li class="col-md-12">
 							<span class="col-md-4">Ease:</span>
@@ -240,7 +240,7 @@
 									<md-option ng-repeat="labelPos in ['linear', 'bounce', 'sin', 'cubic', 'quad', 'exp', 'circle']" value="{{labelPos}}">{{labelPos}}</md-option>
 								</md-select>
 							</md-input-container>
-						</li>          	
+						</li>
 					</ul>
 		        </li>
 				<li class="col-md-12">
@@ -292,7 +292,7 @@
 						<li class="col-md-12">
 							<span class="col-md-4">Width:</span>
 							<input class="col-md-8" type="number" ng-model="attributes.options.value.scale.width" style="padding-left: 6px" ng-change="overrideAttribute('options')"/>
-						</li>						
+						</li>
 						<li class="col-md-12">
 							<span class="col-md-4">Height:</span>
 							<input class="col-md-8" type="number" ng-model="attributes.options.value.scale.height" style="padding-left: 6px" ng-change="overrideAttribute('options')"/>

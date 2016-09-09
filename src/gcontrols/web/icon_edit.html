@@ -10,7 +10,7 @@
                 </li>
                 <li class="col-md-12" dfx-gc-property="template">
                     <span class="col-md-5">Template:</span>
-                    <input class="col-md-7" type="text" ng-model="attributes.template.value" ng-change="overrideAttribute('template')" disabled/>
+                    <input class="col-md-7" type="text" ng-model="attributes.template.value" ng-change="overrideAttribute('template');reinitComponentWithTemplate(attributes.template.value);"/>
                 </li>
 				<li class="col-md-12" dfx-gc-property="name">
 					<span class="col-md-5">Name:</span>
@@ -29,7 +29,7 @@
 						<input class="col-md-12" type="text" ng-model="attributes.icon.value" ng-change="overrideAttribute('icon');ifShowIconTypes(attributes.icon.value)" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue('icon', $event)" ng-blur="cacheAttributeNewValue('icon')"/>
                         <md-icon ng-click="showFontIcons($event, attributes.icon)" dfx-ve-picker-icon class="dfx-ve-picker-icon fa fa-ellipsis-h"></md-icon>
 					</div>
-				</li>                
+				</li>
                 <li class="col-md-12" ng-if="!attributes.state.value" ng-show="showIconTypes">
                     <span class="col-md-5">Icon Type:</span>
                     <div class="col-md-7" layout="row" style="padding: 0 0 8px 0">
@@ -76,7 +76,7 @@
                     <span class="col-md-5">Checked Icon:</span>
                     <div class="col-md-7" layout="row">
                         <input class="col-md-12" type="text" ng-model="attributes.state.checkedIcon.value" ng-change="overrideAttribute('state.checkedIcon');ifShowIconTypes(attributes.state.checkedIcon.value, 'checked')" style="margin-left:-15px;"/>
-                        <md-icon ng-click="showFontIcons($event, attributes.state.checkedIcon)" dfx-ve-picker-icon class="dfx-ve-picker-icon fa fa-ellipsis-h"></md-icon>                        
+                        <md-icon ng-click="showFontIcons($event, attributes.state.checkedIcon)" dfx-ve-picker-icon class="dfx-ve-picker-icon fa fa-ellipsis-h"></md-icon>
                     </div>
                 </li>
                 <li class="col-md-12" ng-if="attributes.state.value && showCheckedIconTypes">
@@ -106,7 +106,7 @@
                     <span class="col-md-5">Unchecked Icon:</span>
                     <div class="col-md-7" layout="row">
                         <input class="col-md-12" type="text" ng-model="attributes.state.uncheckedIcon.value" ng-change="overrideAttribute('state.uncheckedIcon');ifShowIconTypes(attributes.state.uncheckedIcon.value, 'unchecked')" style="margin-left:-15px;"/>
-                        <md-icon ng-click="showFontIcons($event, attributes.state.uncheckedIcon)" dfx-ve-picker-icon class="dfx-ve-picker-icon fa fa-ellipsis-h"></md-icon> 
+                        <md-icon ng-click="showFontIcons($event, attributes.state.uncheckedIcon)" dfx-ve-picker-icon class="dfx-ve-picker-icon fa fa-ellipsis-h"></md-icon>
                     </div>
                 </li>
                 <li class="col-md-12" ng-if="attributes.state.value && showUncheckedIconTypes">
@@ -146,19 +146,19 @@
                         <input class="col-md-12" type="text" ng-model="attributes.waiting.value" ng-change="overrideAttribute('waiting')" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue('waiting', $event)" ng-blur="cacheAttributeNewValue('waiting')"/>
                         <dfx-ve-expression-editor></dfx-ve-expression-editor>
                     </div>
-                </li> 
+                </li>
                 <li class="col-md-12">
                     <span class="col-md-5">Auto-disabled:</span>
                     <div class="col-md-7" layout="row">
                         <input class="col-md-12" type="text" ng-model="attributes.waiting.autoDisabled" ng-change="overrideAttribute('waiting.autoDisabled')" style="margin-left:-15px;"/>
                         <dfx-ve-expression-editor></dfx-ve-expression-editor>
                     </div>
-                </li>                
+                </li>
                 <li class="col-md-12">
                     <span class="col-md-5">Icon:</span>
                     <div class="col-md-7" layout="row">
                         <input class="col-md-12" type="text" ng-model="attributes.waiting.icon.value" ng-change="overrideAttribute('waiting.icon');ifShowIconTypes(attributes.waiting.icon.value, 'waiting')" style="margin-left:-15px;"/>
-                        <md-icon ng-click="showFontIcons($event, attributes.waiting.icon)" dfx-ve-picker-icon class="dfx-ve-picker-icon fa fa-ellipsis-h"></md-icon>                        
+                        <md-icon ng-click="showFontIcons($event, attributes.waiting.icon)" dfx-ve-picker-icon class="dfx-ve-picker-icon fa fa-ellipsis-h"></md-icon>
                     </div>
                 </li>
                 <li class="col-md-12" ng-if="showWaitingIconTypes">
@@ -183,7 +183,7 @@
                         <input class="col-md-12" type="text" ng-model="attributes.waiting.icon.class" ng-change="overrideAttribute('waiting.icon.class')" style="margin-left:-15px;"/>
                         <dfx-ve-menu-expression></dfx-ve-menu-expression>
                     </div>
-                </li>                
+                </li>
             </ul>
         </li>
     </ul>
@@ -195,7 +195,7 @@
 				<li class="col-md-12">
                     <span class="col-md-5">Icon Size:</span>
                     <input class="col-md-7" type="number" ng-model="attributes.icon.size" ng-change="overrideAttribute('icon.size')" />
-                </li>				
+                </li>
 				<li class="col-md-12">
 					<span class="col-md-5">Style:</span>
 					<div class="col-md-7" layout="row">
