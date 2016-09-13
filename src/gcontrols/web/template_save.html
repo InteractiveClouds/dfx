@@ -1,0 +1,30 @@
+<md-dialog aria-label="Save as Template"  ng-cloak>
+	<md-toolbar>
+		<div class="md-toolbar-tools">
+			<h2>Save as Template</h2>
+		</div>
+    </md-toolbar>
+    <md-dialog-content>
+		<div class="md-dialog-content">
+			<form name="frmSaveTemplate">
+				<div layout-gt-sm="row">
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Template Name</label>
+						<input ng-model="template.name" placeholder="Enter a template name" md-autofocus>
+					</md-input-container>
+				</div>
+				<div layout-gt-sm="row">
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Template Description</label>
+						<input ng-model="template.description" placeholder="Enter a template description" md-autofocus>
+					</md-input-container>
+				</div>
+			</form>
+		</div>
+	</md-dialog-content>
+	<md-dialog-actions layout="row">
+		<span flex></span>
+		<md-button ng-click="saveTemplateConfirm('ok')" ng-disabled="template.name==''">OK</md-button>
+		<md-button ng-click="saveTemplateCancel()" style="margin-right:20px;">Cancel</md-button>
+	</md-dialog-actions>
+</md-dialog>
