@@ -165,9 +165,12 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", layout="co
                                     span Custom
                                 ul.dfx-ve-palette-treeview-content(gc-cat="custom", style="margin-bottom:5px")
             md-content#dfx-ve-main-content(flex="100", ng-click="unselectComponent()")
-                div(style="width:100%;")
+                
+                //div(style="width:100%;")
                     md-chips.dfx-ve-templates(ng-model="gc_templates", readonly="true", style="color:#fff;font-size:13px;")
-                        md-chip-template {{$chip.name}}
+                        md-chip-template(class="dfx_visual_editor_draggable dfx_visual_editor_gc_cat_item_draggable ui-draggable", gc-cat="basic", gc-type="button", gc-flex="false") {{$chip.name}}
+                            img(class="dfx-ve-palette-icon" src="/images/vb/icons/basic_image.png")
+                        
                 md-tabs.md-dynamic-height(layout="column", md-selected="view_card_select_index")
                     md-tab(ng-repeat="card in view_cards", label="{{card.name}}")
                         md-content(style="padding:10px;background-color:#efefef", layout="column", layout-align="center start")

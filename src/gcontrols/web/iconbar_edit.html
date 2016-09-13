@@ -10,7 +10,11 @@
                 </li>
                 <li class="col-md-12" dfx-gc-property="template">
                     <span class="col-md-4">Template:</span>
-                    <input class="col-md-8" type="text" ng-model="attributes.template.value" ng-change="overrideAttribute('template');reinitComponentWithTemplate(attributes.template.value);"/>
+										<md-input-container class="col-md-8" style="padding: 0 0 4px 0">
+          						<md-select aria-label="rating-range" ng-model="attributes.template.value" ng-change="overrideAttribute('template');reinitComponentWithTemplate(attributes.template.value);">
+          			        <md-option ng-repeat="gc_template in gc_templates" value="{{gc_template.name}}">{{gc_template.name}}</md-option>
+          			      </md-select>
+          					</md-input-container>
                 </li>
 				<li class="col-md-12" dfx-gc-property="name">
 					<span class="col-md-4">Name:</span>
