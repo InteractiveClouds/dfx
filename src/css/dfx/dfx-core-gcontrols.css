@@ -470,6 +470,19 @@ md-checkbox.dfx-core-gc-treeview-checkbox {
     margin-right: 6px;
     margin-left: 6px;
 }
+/* Checkbox */
+.dfx-core-gc-checkbox-label{
+    font-size: 10px !important;
+    margin: 7px 0 11px !important;
+    padding-left: 3px !important;
+    color: rgba(0,0,0,0.54);
+}
+md-checkbox[type="checkbox"].dfx-core-gc-checkbox-button {
+    margin: 0 0 0 5px;
+}
+.dfx-core-gc-checkbox-label, .dfx-core-gc-checkbox-value {
+    display: inline-block;
+}
 /* JSON Editor */
 .dfx-core-gc-json-input-type {
     display: flex;

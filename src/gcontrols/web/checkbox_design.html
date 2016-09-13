@@ -1,13 +1,12 @@
-<div style="{{attributes.style.value}}" class="gc-checkbox {{attributes.classes.value}}">
-    <div class="gc-true-checkbox-label-design">{{attributes.label.value | checkExpression}}</div>
-    <div ng-repeat="item in attributes.staticArray.value track by $index" ng-style="{'margin-top' : $index > 0 && attributes.direction.value ==='column' ? '21px' : '4px', 'margin-right':'15px'}"> <!--, 'background': $index === attributes.selectedIndex.value ? '#f2f2f2' : ''-->
-        <div style="display: inline-block;">
-            <md-checkbox ng-model="item.isChecked" style="margin: 0 0 0 5px" class="md-primary" ng-class="attributes.buttonClass.value" aria-label="item.isChecked"></md-checkbox>
-        </div>
-        <div style="display: inline-block;">{{ item.label | checkExpression }} </div>
-        <div ng-if="$eval(attributes.displayValue.value)" style="display: inline-block;">
-            <div ng-if="item.isChecked">{{item.checked}}</div>
-            <div ng-if="!item.isChecked">{{item.unchecked}}</div>
-        </div>
+<div style="{{attributes.style.value}}" class="dfx-core-gc-checkbox {{attributes.classes.value}}">
+    <div style="{{attributes.labelStyle.style}}" class="dfx-core-gc-checkbox-label {{attributes.labelStyle.class}}">{{attributes.label.value | checkExpression}}</div>
+    <div ng-repeat="item in attributes.staticArray.value track by $index" ng-style="{'margin-top' : $index > 0 && attributes.direction.value ==='column' ? '21px' : '4px', 'margin-right':'15px'}">
+        <md-checkbox ng-model="item.isChecked" class="dfx-core-gc-checkbox-button md-primary" ng-class="{{attributes.itemStyle.item.class}}" style="{{attributes.itemStyle.item.style}}" aria-label="item.isChecked">
+            <span class="{{attributes.itemStyle.label.class}}" style="{{attributes.itemStyle.label.style}}">{{ item.label | checkExpression }}</span>
+            <span ng-if="attributes.displayValue.value" style="{{attributes.itemStyle.val.style}}" class="{{attributes.itemStyle.val.class}}"> 
+                <span ng-if="item.isChecked" ng-bind="item.checked"></span>
+                <span ng-if="!item.isChecked" ng-bind="item.unchecked"></span>
+            </span>
+        </md-checkbox>
     </div>
 </div>

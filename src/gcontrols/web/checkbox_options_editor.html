@@ -43,21 +43,21 @@
                                 <li class="col-md-12">
                                     <span class="col-md-4">Checked value:</span>
                                     <div class="col-md-8" layout="row">
-                                        <input class="col-md-12" type="text" ng-model="currentItem.checked" style="margin-left:-15px;"/>
+                                        <input class="col-md-12" type="text" ng-model="currentItem.checked" ng-change="overrideAttribute('staticArray')" style="margin-left:-15px;"/>
                                         <dfx-ve-menu-expression></dfx-ve-menu-expression>
                                     </div>
                                 </li>
                                 <li class="col-md-12">
                                     <span class="col-md-4">Unchecked value:</span>
                                     <div class="col-md-8" layout="row">
-                                        <input class="col-md-12" type="text" ng-model="currentItem.unchecked" style="margin-left:-15px;"/>
+                                        <input class="col-md-12" type="text" ng-model="currentItem.unchecked" ng-change="overrideAttribute('staticArray')" style="margin-left:-15px;"/>
                                         <dfx-ve-menu-expression></dfx-ve-menu-expression>
                                     </div>
                                 </li>
                                 <li class="col-md-12">
                                     <span class="col-md-4">Label:</span>
                                     <div class="col-md-8" layout="row">
-                                        <input class="col-md-12" type="text" ng-model="currentItem.label" style="margin-left:-15px;"/>
+                                        <input class="col-md-12" type="text" ng-model="currentItem.label" ng-change="overrideAttribute('staticArray')" style="margin-left:-15px;"/>
                                         <dfx-ve-menu-expression></dfx-ve-menu-expression>
                                     </div>
                                 </li>
