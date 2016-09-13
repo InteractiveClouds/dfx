@@ -22,7 +22,7 @@
                     <md-content class="menu-structure" layout-padding flex>
                         <ul>
                             <li ng-repeat="step in attributes.steps.value track by $index" class="menu-tree-item">
-                                <a href="#" ng-click="selectStepItem( $index )">{{ step.label | checkExpression }}</a>
+                                <a href="#" ng-click="selectStepItem( $index )">{{ (step.label | checkExpression) || 'no-label' }}</a>
                             </li>
                         </ul>
                     </md-content>

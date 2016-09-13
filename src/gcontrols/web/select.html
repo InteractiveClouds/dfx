@@ -1,6 +1,6 @@
 <md-input-container ng-if="attributes.isBindingPresent.value=== true" ng-show="$eval(attributes.display.value)" style="{{attributes.style.value}}" class="md-block {{attributes.classes.value}} dfx-core-gc-select" ng-class="$eval(attributes.dynamicClasses.value)">
     <label ng-bind="$eval(attributes.label.value)"></label>
-    <md-select ng-if="attributes.optionsType.value==='dynamic'" ng-model="$gcscope[attributes.binding.value]" class="md-altTheme-theme glyph"
+    <md-select ng-if="attributes.optionsType.value==='dynamic' && bindingType.value ==='simpleBinding'" ng-model="$parent_scope[attributes.binding.value]" class="md-altTheme-theme glyph"
                md-on-open="$eval(attributes.onopen.value)"
                md-on-close="$eval(attributes.onclose.value)"
                ng-change="$eval(attributes.onchange.value)"
@@ -18,11 +18,35 @@
                ng-mousedown="$eval(attributes.onmousedown.value)"
                ng-mouseup="$eval(attributes.onmouseup.value)"
              ng-disabled="$eval(attributes.disabled.value)" aria-label="GC Select">
-        <md-option ng-repeat="option in $gcscope[attributes.options.source] track by $index" value="{{option[attributes.options.value] || $index}}">
-          {{option[attributes.options.display]}}
+        <md-option ng-repeat="option in $parent_scope[attributes.options.source] track by $index" value="{{$eval('option.' + attributes.options.value)}}">
+            {{$eval('option.' + attributes.options.display)}}
         </md-option>
     </md-select>
-    <md-select ng-if="attributes.optionsType.value==='static'" ng-model="$gcscope[attributes.binding.value]" class="md-altTheme-theme glyph"
+    <div ng-if="attributes.optionsType.value==='dynamic' && bindingType.value ==='complexBinding'">
+      <md-select dfx-complex-ng-model class="md-altTheme-theme glyph"
+               md-on-open="$eval(attributes.onopen.value)"
+               md-on-close="$eval(attributes.onclose.value)"
+               ng-change="$eval(attributes.onchange.value)"
+               ng-focus="$eval(attributes.onfocus.value)"
+               ng-blur="$eval(attributes.onblur.value)"
+               ng-click="$eval(attributes.onclick.value)"
+               ng-dblclick="$eval(attributes.ondblclick.value)"
+               ng-keypress="$eval(attributes.onkeypress.value)"
+               ng-keydown="$eval(attributes.onkeydown.value)"
+               ng-keyup="$eval(attributes.onkeyup.value)"
+               ng-mouseover="$eval(attributes.onmouseover.value)"
+               ng-mouseenter="$eval(attributes.onmouseenter.value)"
+               ng-mousemove="$eval(attributes.onmousemove.value)"
+               ng-mouseleave="$eval(attributes.onmouseleave.value)"
+               ng-mousedown="$eval(attributes.onmousedown.value)"
+               ng-mouseup="$eval(attributes.onmouseup.value)"
+             ng-disabled="$eval(attributes.disabled.value)" aria-label="GC Select">
+        <md-option ng-repeat="option in $parent_scope[attributes.options.source] track by $index" value="{{$eval('option.' + attributes.options.value)}}">
+            {{$eval('option.' + attributes.options.display)}}
+        </md-option>
+    </md-select>
+    </div>
+    <md-select ng-if="attributes.optionsType.value==='static' && bindingType.value ==='simpleBinding'" ng-model="$parent_scope[attributes.binding.value]" class="md-altTheme-theme glyph"
                md-on-open="$eval(attributes.onopen.value)"
                md-on-close="$eval(attributes.onclose.value)"
                ng-change="$eval(attributes.onchange.value)"
@@ -42,6 +66,28 @@
                ng-disabled="$eval(attributes.disabled.value)" aria-label="GC Select">
         <md-option ng-repeat="option in attributes.staticOptions.value track by $index" value="{{option.value}}" ng-bind="$eval(option.display)"></md-option>
     </md-select>
+    <div ng-if="attributes.optionsType.value==='static' && bindingType.value ==='complexBinding'">
+      <md-select dfx-complex-ng-model class="md-altTheme-theme glyph"
+               md-on-open="$eval(attributes.onopen.value)"
+               md-on-close="$eval(attributes.onclose.value)"
+               ng-change="$eval(attributes.onchange.value)"
+               ng-focus="$eval(attributes.onfocus.value)"
+               ng-blur="$eval(attributes.onblur.value)"
+               ng-click="$eval(attributes.onclick.value)"
+               ng-dblclick="$eval(attributes.ondblclick.value)"
+               ng-keypress="$eval(attributes.onkeypress.value)"
+               ng-keydown="$eval(attributes.onkeydown.value)"
+               ng-keyup="$eval(attributes.onkeyup.value)"
+               ng-mouseover="$eval(attributes.onmouseover.value)"
+               ng-mouseenter="$eval(attributes.onmouseenter.value)"
+               ng-mousemove="$eval(attributes.onmousemove.value)"
+               ng-mouseleave="$eval(attributes.onmouseleave.value)"
+               ng-mousedown="$eval(attributes.onmousedown.value)"
+               ng-mouseup="$eval(attributes.onmouseup.value)"
+             ng-disabled="$eval(attributes.disabled.value)" aria-label="GC Select">
+            <md-option ng-repeat="option in attributes.staticOptions.value track by $index" value="{{option.value}}" ng-bind="$eval(option.display)"></md-option>
+        </md-select>
+    </div>
 </md-input-container>
 
 <md-input-container ng-if="attributes.isBindingPresent.value=== false" ng-show="$eval(attributes.display.value)" style="{{attributes.style.value}}" class="md-block {{attributes.classes.value}}" ng-class="$eval(attributes.dynamicClasses.value)">
@@ -64,8 +110,8 @@
                ng-mousedown="$eval(attributes.onmousedown.value)"
                ng-mouseup="$eval(attributes.onmouseup.value)"
                ng-disabled="$eval(attributes.disabled.value)" aria-label="GC Select">
-        <md-option ng-repeat="option in $gcscope[attributes.options.source] track by $index" value="{{option[attributes.options.value] || $index}}">
-            {{option[attributes.options.display]}}
+        <md-option ng-repeat="option in $parent_scope[attributes.options.source] track by $index" value="{{$eval('option.' + attributes.options.value)}}">
+            {{$eval('option.' + attributes.options.display)}}
         </md-option>
     </md-select>
     <md-select ng-if="attributes.optionsType.value==='static'" ng-model="attributes.currentItem.value" class="md-altTheme-theme glyph"

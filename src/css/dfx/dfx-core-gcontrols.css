@@ -92,7 +92,16 @@ md-toolbar.dfx-core-gc-toolbar:not(.md-menu-toolbar){
     padding: 0 5px;
     min-height:48px;
 }
-
+div.wizard-submit-step{
+    opacity: 0;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+div.wizard-submit-step.is-wizard-submit-step { 
+    opacity: 1 !important 
+}
 .md-button.glyph.dfx-core-gc-wizard-submit:not([disabled]).md-focused,
 .md-button.glyph.dfx-core-gc-wizard-submit:not([disabled]):hover,
 .md-button.glyph.dfx-core-gc-wizard-submit{
@@ -100,15 +109,17 @@ md-toolbar.dfx-core-gc-toolbar:not(.md-menu-toolbar){
     background-color: rgb(255,215,64);
 }
 .panel-body-collapser {
+    display: flex;
     width: 50px;
-    float: right;
-    padding: 10px 0 0 20px;
 }
 .panel-body-collapser md-icon.collapser-trigger {
-    width: 15px;
+    width: 20px;
     height: 20px;
     cursor: pointer;
     transition: all .5s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .panel-body-collapser md-icon.collapser-trigger.expanded {
     -webkit-transform: rotate(90deg);
@@ -238,10 +249,10 @@ button[disabled="disabled"].dfx-core-gc-button.md-button md-icon, button[disable
     margin: 0;
     list-style: none;
 }
-.dfx-core-gc-treemenu > ul > li li {
+.dfx-core-gc-treemenu > ul > li li, .dfx-core-gc-treemenu > div > ul > li li {
     background-color: rgba(153,153,153,.15);
 }
-.dfx-core-gc-treemenu button {
+.dfx-core-gc-treemenu button, button.treemenu-actionbar-item-button {
     color: #707070;
     display:inline-flex;
     flex-direction:row;
@@ -259,20 +270,26 @@ button[disabled="disabled"].dfx-core-gc-button.md-button md-icon, button[disable
 .dfx-core-gc-treemenu button, .dfx-core-gc-treemenu button * {
     transition: all .5s;
 }
-.dfx-core-gc-treemenu button .tree-menu-icon {
+.dfx-core-gc-treemenu button .tree-menu-icon, .dfx-core-gc-treemenu button .tree-menu-action-icon {
     color: inherit;
     width: 16px;
     height:16px;
+    min-width: 16px;
+    min-height:16px;
     margin:auto 16px auto 0;
     text-align: center;
 }
 .dfx-core-gc-treemenu button .tree-menu-label {
     flex-grow:1;
 }
-.dfx-core-gc-treemenu button .trigger-icon {
-    width:5px;
-    height:16px;
-    margin:auto 0;
+.dfx-core-gc-treemenu button .trigger-icon {    
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    min-width: 16px;
+    min-height: 16px;
+    display: flex;
+    justify-content: center;
 }
 .dfx-core-gc-treemenu button.opened .trigger-icon {
     -webkit-transform: rotate(90deg);
@@ -289,8 +306,56 @@ button[disabled="disabled"].dfx-core-gc-button.md-button md-icon, button[disable
     height: 1px;
     background-color: rgba(0,0,0,0.12);
 }
+md-menu-content.md-menu-bar-menu md-menu-divider.dfx-menu-item-divider {
+    display: block;
+    height: 1px;
+    background-color: rgba(0,0,0,.12);
+    margin: 0;
+}
+md-menu-bar.treemenu-actionbar {
+    padding: 0;
+    width: 48px;
+}
+div.treemenu-actionbar-item {
+    padding-left: 0px !important;
+}
+button.treemenu-actionbar-button.md-button {
+    padding: 0px !important;
+    min-width: 48px;
+    min-height: 48px;
+    margin: 0 !important;
+    justify-content: center;
+    border-radius: 0;
+}
+md-icon.treemenu-actionbar-button-icon, ng-md-icon.treemenu-actionbar-button-icon {
+    margin: 0 !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+md-icon.treemenu-actionbar-item-icon, ng-md-icon.treemenu-actionbar-item-icon {
+    margin: auto 16px auto 0;
+    min-width: 16px;
+    min-height: 16px;
+    display: flex;
+    justify-content: center;
+    color: #757575;
+}
+button.treemenu-actionbar-item-button div.treemenu-actionbar-item-label {
+    padding-left: 0px !important;
+}
+.treemenu-actionbar-menu-content {
+    padding-left: 0px !important;
+}
+button.treemenu-actionbar-item-button {
+    padding: 0 16px !important;
+    line-height: 32px;
+}
+md-menu-content md-menu-item .md-button[disabled] .treemenu-actionbar-item-icon {
+    color: rgba(0,0,0,0.25);
+}
 /* Menu editor */
-.tree-menu-title {
+.tree-menu-title, md-menu-content md-menu-item.tree-menu-title {
     font-size: 15px;
     font-weight: 700;
     color: #707070;
@@ -355,6 +420,9 @@ div[dfx-gc-web-panel] > div > section > md-content > div > div {
 .dfx-core-gc-richtext .ql-tooltip.ql-image-tooltip .preview {
     height: 90px;
 }
+.dfx-core-gc-richtext div.toolbar-container.ql-toolbar[aria-hidden="false"] {
+    display: block !important;
+}
 /* Progressbar */
 .dfx-core-gc-progressbar {
     padding-bottom: 35px;
@@ -369,21 +437,38 @@ div[dfx-gc-web-panel] > div > section > md-content > div > div {
     padding: 16px;
 }
 .dfx-core-gc-treeview ul {
-    padding: 0 0 0 18px;
+    padding: 0 0 0 20px;
     margin: 0;
 }
 .dfx-core-gc-treeview li {
     list-style: none;
 }
+.dfx-core-gc-treeview li a {
+    display: inline-block;
+    padding: 3px 0;
+}
 .dfx-core-gc-treeview .node-trigger {
-    width: 18px;
+    width: 20px;
+    min-width: 20px;
     height: auto;
-    margin-left: -18px;
+    float: left;
+    margin: 6px 0 0 -20px;
     cursor: pointer;
 }
 .dfx-core-gc-treeview ng-md-icon.node-trigger {
     color: #757575;
     height: 18px;
+}
+.dfx-core-gc-treeview md-icon {
+    min-height: 14px;
+    text-align: center;
+    color: #757575;
+}
+md-checkbox.dfx-core-gc-treeview-checkbox {
+    margin-bottom: 0px;
+    width: 20px;
+    margin-right: 6px;
+    margin-left: 6px;
 }
 /* JSON Editor */
 .dfx-core-gc-json-input-type {
@@ -469,6 +554,29 @@ button[disabled="disabled"].dfx-core-gc-json-button ng-md-icon {
 .dfx-web-gc-json-dialog-tab div.jsoneditor-outer {
     margin: -36px 0 0 0;
     padding: 36px 0 0 0px;
+}
+.dfx-web-gc-json-dialog-tab button[dfx-je-class="dfx-je-button"][dfx-icon="wrap_text"]{
+  background-image: url('data:image/svg+xml;utf-8, <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="#676B6E"><path d="M4 19h6v-2H4v2z"></path><path d="M20 5H4v2h16V5z"></path><path d="M17 11H4v2h13.25c1.1 0 2 .9 2 2s-.9 2-2 2H15v-2l-3 3 3 3v-2h2c2.21 0 4-1.79 4-4s-1.79-4-4-4z"></path></svg>')
+}
+.dfx-web-gc-json-dialog-tab button[dfx-je-class="dfx-je-button"][dfx-icon="short_text"]{
+  background-image: url('data:image/svg+xml;utf-8, <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="#676B6E"><path d="M4 9h16v2H4z"></path><path d="M4 13h10v2H4z"></path></svg>')
+}
+.dfx-web-gc-json-dialog-tab button[dfx-je-class="dfx-je-button"][dfx-icon="format_line_spacing"]{
+  background-image: url('data:image/svg+xml;utf-8, <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="#676B6E"><path d="M6 7h2.5L5 3.5 1.5 7H4v10H1.5L5 20.5 8.5 17H6V7z"></path><path d="M10 5v2h12V5H10z"></path><path d="M10 19h12v-2H10v2z"></path><path d="M10 13h12v-2H10v2z"></path></svg>')
+}
+.dfx-web-gc-json-dialog-tab button[dfx-je-class="dfx-je-button"][dfx-icon="vertical_align_center"]{
+  background-image: url('data:image/svg+xml;utf-8, <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="#676B6E"><path d="M8 19h3v4h2v-4h3l-4-4-4 4z"></path><path d="M16 5h-3V1h-2v4H8l4 4 4-4z"></path><path d="M4 11v2h16v-2H4z"></path></svg>')
+}
+.dfx-web-gc-json-dialog-tab button[dfx-je-class="dfx-je-button"][dfx-icon="undo"]{
+  background-image: url('data:image/svg+xml;utf-8, <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="#676B6E"><path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"></path></svg>')
+}
+.dfx-web-gc-json-dialog-tab button[dfx-je-class="dfx-je-button"][dfx-icon="redo"]{
+  background-image: url('data:image/svg+xml;utf-8, <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="#676B6E"><path d="M18.4 10.6C16.55 8.99 14.15 8 11.5 8c-4.65 0-8.58 3.03-9.96 7.22L3.9 16c1.05-3.19 4.05-5.5 7.6-5.5 1.95 0 3.73.72 5.12 1.88L13 16h9V7l-3.6 3.6z"></path></svg>')
+}
+
+/* GC Carousel */
+.dfx-gc-web-carousel .jk-carousel {
+    max-width: 100%;
 }
 
 /* Animation */

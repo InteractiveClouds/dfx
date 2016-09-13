@@ -5428,7 +5428,17 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
         }
     }
 
-    $scope.updateApiSo = function() {
+    $scope.updateApiSo = function(obj) {
+
+        // save filters content bug
+        if (obj) {
+            switch( obj.type ) {
+                case 'precode': console.log("PRE_CODE"); $scope.api_so.apiRoutes[$scope.scopeServiceIndex].data.precode[$scope.codeArrayItemIndex].code = obj.value; break;
+                case 'postcode':  console.log("POST_CODE"); $scope.api_so.apiRoutes[$scope.scopeServiceIndex].data.postcode[$scope.codeArrayItemIndex].code = obj.value; break;
+            }
+            $scope.renderFilters( $scope.scopeService );
+        }
+
         $scope.api_so.application = $scope.app_name;
         $scope.renderRoutesFilters();
         if ( $scope.notRenderedFilters ) {
@@ -5775,11 +5785,12 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
         $('#' + id +'_span').show();
     }
 
-    $scope.editService = function( serviceItem ) {
+    $scope.editService = function( serviceItem, index ) {
         $scope.selected_service_tab = 0;
         $scope.validUrlResult = '';
         $scope.serviceUrlError = '';
         $scope.scopeService = serviceItem;
+        $scope.scopeServiceIndex = index;
         $scope.editFilterTitle = null;
         if ( !serviceItem.data.parameters ) $scope.scopeService.data.parameters = [];
         if ( !serviceItem.data.precode ) $scope.scopeService.data.precode = [];
@@ -6069,37 +6080,39 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
     $scope.saveActions = function() {
         var editor = $('#dfx_filter_src_query_editor.CodeMirror')[0].CodeMirror,
             codeValue = editor.getValue();
-        switch( $scope.codeArrayName ) {
-            case 'precode': $scope.scopeService.data.precode[$scope.codeArrayItemIndex].code = codeValue; break;
-            case 'postcode': $scope.scopeService.data.postcode[$scope.codeArrayItemIndex].code = codeValue; break;
+
+        var obj = {
+            type : $scope.codeArrayName,
+            value : codeValue
         }
 
         $timeout(function(){
             $scope.editorOpened = false;
             editor.setValue('');
-            $scope.renderFilters( $scope.scopeService );
             if ( $scope.isEmptyFilterName ) {
                 dfxMessaging.showWarning("Filter name can't be empty");
                 $scope.selected_service_tab = 2;
             } else {
-                $scope.updateApiSo();
+                $scope.updateApiSo(obj);
             }
             $scope.editFilterTitle = null;
-        }, 0);
+        }, 200);
 
     }
 
     $scope.closeActionsEditor = function() {
-        var editor = $('#dfx_filter_src_query_editor.CodeMirror')[0].CodeMirror;
-            codeValue = editor.getValue();
+        if($scope.editorOpened){            
+            var editor = $('#dfx_filter_src_query_editor.CodeMirror')[0].CodeMirror;
+                codeValue = editor.getValue();
 
-        switch( $scope.codeArrayName ) {
-            case 'precode': $scope.scopeService.data.precode[$scope.codeArrayItemIndex].code = codeValue; break;
-            case 'postcode': $scope.scopeService.data.postcode[$scope.codeArrayItemIndex].code = codeValue; break;
+            switch( $scope.codeArrayName ) {
+                case 'precode': $scope.scopeService.data.precode[$scope.codeArrayItemIndex].code = codeValue; break;
+                case 'postcode': $scope.scopeService.data.postcode[$scope.codeArrayItemIndex].code = codeValue; break;
+            }
+            $scope.editorOpened = false;
+            editor.setValue('');
+            $scope.editFilterTitle = null;
         }
-        $scope.editorOpened = false;
-        editor.setValue('');
-        $scope.editFilterTitle = null;
     }
 
     $scope.execute = function( event ) {
@@ -6156,20 +6169,20 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
         $.ajax({
             url: '/studio/query/execute',
             data: simulateService,
-            type: 'GET',
+            type: 'POST',
             headers : {'X-DREAMFACE-TENANT' : $('body').attr('data-tenantid')}
         })
             .then(function(data) {
-                $scope.simulatedMeta = JSON.stringify(data.metadata, null, '\t');
-                $scope.simulatedResult = JSON.stringify(data.data, null, '\t');
-                $scope.simulatedRequest = JSON.stringify(data.requestData, null, '\t');
+                $scope.simulatedMeta = data.metadata;
+                $scope.simulatedResult = data.data;
+                $scope.simulatedRequest = data.requestData;
                 $timeout(function() {
                     $scope.isExecuted = true;
                 }, 0);
             }).fail(function(data) {
-                $scope.simulatedMeta = JSON.stringify(data, null, '\t');
-                $scope.simulatedResult = JSON.stringify(JSON.parse(data.responseText), null, '\t');
-                $scope.simulatedRequest = JSON.stringify(data, null, '\t');
+                $scope.simulatedMeta = data;
+                $scope.simulatedResult = data.responseText;
+                $scope.simulatedRequest = data;
                 $timeout(function() {
                     $scope.isExecuted = true;
                 }, 0);
@@ -6196,43 +6209,52 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
         //     executedMirror.refresh();
         // }, 0);
         sidenav.find("#executedResult").css( "height", sidenavHeight-245 );
+        var container = document.getElementById('executedResult'),
+            options = { mode: 'code', modes: ['tree','form','code','text','view'], history: true }
+        $timeout(function(){
+            if(!$scope.dfxSampleJsonEditor) $scope.dfxSampleJsonEditor = new JSONEditor(container, options, $scope.simulatedResult);
+        },0);
     }
 
     $scope.viewMetaData = function() {
         // var editor = $('#executedResult.CodeMirror')[0].CodeMirror;
         // editor.setValue( $scope.simulatedMeta );
-        $("#executedResult").val( $scope.simulatedMeta );
+        // $("#executedResult").val( $scope.simulatedMeta );
+        $scope.dfxSampleJsonEditor.set($scope.simulatedMeta);
         $("#showResults").css('opacity',1);
     }
 
     $scope.viewResult = function() {
         // var editor = $('#executedResult.CodeMirror')[0].CodeMirror;
         // editor.setValue( $scope.simulatedResult );
-        dfxApiServiceObjects.getSettings().then(function( response ){
-            var settings = response.data;
-            $scope.showFullResult = false;
-            if ((settings.api_so_response_max_size == 0) || ($scope.simulatedResult.length < settings.api_so_response_max_size)) {
-                $("#executedResult").val( $scope.simulatedResult );
-            } else {
-                $scope.showFullResult = true;
-                $scope.numberOfCutedChars = settings.api_so_response_max_size;
-                $("#executedResult").val( $scope.simulatedResult.slice(0,settings.api_so_response_max_size) );
-            }
-            $("#showResults").css('opacity',1);
-        });
-    }
-
-    $scope.showFullResultAction = function() {
-        $scope.showFullResult = false;
-        $("#executedResult").val("") ;
-        $("#executedResult").val( $scope.simulatedResult ) ;
+        // $("#executedResult").val( $scope.simulatedResult );
+        $scope.dfxSampleJsonEditor.set($scope.simulatedResult);   
+        // dfxApiServiceObjects.getSettings().then(function( response ){
+        //     var settings = response.data;
+        //     $scope.showFullResult = false;
+        //     if ((settings.api_so_response_max_size == 0) || ($scope.simulatedResult.length < settings.api_so_response_max_size)) {
+        //         $("#executedResult").val( $scope.simulatedResult );
+        //     } else {
+        //         $scope.showFullResult = true;
+        //         $scope.numberOfCutedChars = settings.api_so_response_max_size;
+        //         $("#executedResult").val( $scope.simulatedResult.slice(0,settings.api_so_response_max_size) );
+        //     }
+        // });
         $("#showResults").css('opacity',1);
     }
+
+    // $scope.showFullResultAction = function() {
+    //     $scope.showFullResult = false;
+    //     $("#executedResult").val("") ;
+    //     $("#executedResult").val( $scope.simulatedResult ) ;
+    //     $("#showResults").css('opacity',1);
+    // }
 
     $scope.viewRequest = function() {
         // var editor = $('#executedResult.CodeMirror')[0].CodeMirror;
         // editor.setValue( $scope.simulatedRequest );
-        $("#executedResult").val( $scope.simulatedRequest );
+        // $("#executedResult").val( $scope.simulatedRequest );
+        $scope.dfxSampleJsonEditor.set($scope.simulatedRequest);
         $("#showResults").css('opacity',1);
     }
 

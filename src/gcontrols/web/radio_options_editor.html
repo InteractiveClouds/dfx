@@ -26,7 +26,7 @@
 		      <md-content class="menu-structure options-editor" layout-padding flex>
 						<ul>
 							<li ng-repeat="statOpt in attributes.radioItems.value track by $index" class="menu-tree-item">
-								<a href="#" ng-click="selectOptionItem( $index )">{{ statOpt.display | checkExpression }}</a>
+								<a href="#" ng-click="selectOptionItem( $index )">{{ (statOpt.display | checkExpression) || 'no-label' }}</a>
 							</li>
 						</ul>
 		      </md-content>
@@ -98,6 +98,7 @@
 			<div class="second-dialog-box"></div>	
 		</md-dialog-content>
 		<div class="md-actions"> 
+            <md-button ng-show="attributes.optionsType.value === 'dynamic'" ng-click="showSamples()" id="samples-btn" class="md-primary" md-autofocus="attributes.optionsType.value === 'dynamic'">Samples</md-button> 
 			<md-button ng-click="closeDialog()" class="md-primary">Close</md-button> 
 		</div> 
 	</form>

@@ -642,16 +642,17 @@ div[gc-type="panel"] > .dfx-ve-gc-handle-duplicate {
 .dfx-ve-property-picker-content input {
   border: 1px #ccc solid;
 }
-/* Icons Dialogbox */
+/* Content Dialogbox */
 md-icon.dfx-ve-picker-icon {
   font-size: 16px;
   color:#97CFFF;
   width: 13px;
   height:18px;
-  margin:2px 0 0 15px;
+  padding-top:4px;
   cursor:pointer;
+  text-align: center;
 }
-.dfx-ve-icons-dialog {
+.dfx-ve-content-dialog {
   display: flex;
   flex-direction: column;
   width: 1100px;
@@ -659,7 +660,7 @@ md-icon.dfx-ve-picker-icon {
   z-index: 1;
   top: 50%;
   left: 50%;
-  margin: -305px 0 0 -550px;
+  margin: -330px 0 0 -550px;
   background: #ffffff;
   border-radius: 4px;
   overflow: hidden;
@@ -667,7 +668,7 @@ md-icon.dfx-ve-picker-icon {
   .transition-duration(0.2s);
   box-shadow: 0 7px 8px -4px rgba(0,0,0,.2),0 13px 19px 2px rgba(0,0,0,.14),0 5px 24px 4px rgba(0,0,0,.12);
 }
-.dfx-ve-icons-dialog.active {
+.dfx-ve-content-dialog.active {
   opacity: 1;
 }
 .dfx-ve-actions {
@@ -694,43 +695,51 @@ md-icon.dfx-ve-picker-icon {
   border-radius: 2px;
   border: none;
 }
-.dfx-ve-icons-content {
+.dfx-ve-content-container {
   display: flex;
-  height: 500px;
+  height: 550px;
   width: 100%;
   padding: 0;
 }
-.dfx-ve-icons-categories {
+.dfx-ve-content-categories {
   background: #757575;
   color: #ffffff;
   width: 200px;
   min-width: 200px;
   padding: 8px 16px;
-  height: 500px;
+  height: 550px;
 }
-.dfx-ve-icons-categories ul {
+.dfx-ve-content-categories ul {
   padding: 0;
 }
-.dfx-ve-icons-categories li {
+.dfx-ve-content-categories li {
   list-style: none;
   padding: 1px 0;
+  text-align: left;
 }
-.dfx-ve-icons-categories li span {
-  margin-left: 8px;
+.dfx-ve-content-categories li span {
   cursor: pointer;
+  &:hover {
+    color: #73cbff;
+  }
   &.active {
     color: #73cbff;
   }
 }
-.dfx-ve-icons-categories li span.dfx-ve-icons-types {
+.dfx-ve-content-categories li span.dfx-ve-content-categories-types {
   font-size: 16px;
   font-weight: 600;
-  margin-left: 0px;
+  margin-left: -8px;
 }
-.dfx-ve-icons-list {
-  height: 492px;
+.dfx-ve-content-categories-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 8px 0 8px -8px;
+}
+.dfx-ve-content-data {
+  height: 550px;
   overflow: auto;
-  margin: 8px 0 0 8px;
+  //margin: 8px 0 0 8px;
   width: 100%;
 }
 .dfx-ve-icon-item {
@@ -738,7 +747,7 @@ md-icon.dfx-ve-picker-icon {
   align-items:center;
   cursor:pointer;
   width:210px;
-  margin:5px 0px 0 5px;
+  margin:5px 0px 0 10px;
 }
 .dfx-ve-icon-item {
   span {
@@ -775,9 +784,9 @@ md-icon.dfx-ve-picker-icon {
   overflow: hidden;
   box-shadow: 0 7px 8px -4px rgba(0,0,0,.2),0 13px 19px 2px rgba(0,0,0,.14),0 5px 24px 4px rgba(0,0,0,.12);
 }
-.second-dialog-inner .dfx-ve-icons-content {
-  height: 564px;
-}
+//.second-dialog-inner .dfx-ve-icons-content {
+//  height: 564px;
+//}
 .dfx-ve-menu-icon-color-picker .sp-replacer {
   margin: 0 -4px 0 12px;
 }
@@ -1188,6 +1197,66 @@ md-radio-group.dfx-ve-menu-editor-radio-group {
       margin-top: 1px;
 
     }
+  }
+}
+
+/* DFX Dynamic Options Samples List */
+.dfx-ve-samples-list {
+  ul {
+    padding: 0;
+    .dfx-ve-samples-list-item {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      a {
+        flex-grow: 1;
+        padding: 0 10px;
+        text-decoration: none;
+        &:hover {
+          background: rgba(236,236,236,.5);
+        }
+      }
+      md-icon {
+        color: #757575;
+        margin-left: 10px;
+        cursor: pointer;
+        &:hover {
+          color: #337ab7;
+        }
+      }
+      &.active {
+        a {
+          font-weight: 700;
+          background: #ECECEC;
+        }
+      }
+    }
+  }
+}
+.dfx-ve-sample {
+  height: 460px;
+  position: relative;
+  z-index:0;
+  overflow: hidden;
+  .jsoneditor {
+    border-bottom: 1px solid rgba(0,0,0,0.12);
+  }
+  md-toolbar.dfx-je-toolbar {
+    background: rgba(128,128,128,0.46);
+  }
+  pre {
+    border: none;
+    height: 460px;
+    margin: 0px;
+    position: relative;
+    z-index: 10;
+  }
+  textarea {
+    position: absolute;
+    z-index: -1;
+    top:0px;
+    width:0px;
+    height:0px;
   }
 }
 

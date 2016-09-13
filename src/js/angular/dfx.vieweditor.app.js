@@ -8,7 +8,7 @@ dfxViewEditorApp.config(function($mdThemingProvider) {
     $mdThemingProvider.setDefaultTheme('altTheme');
 });
 
-dfxViewEditorApp.controller("dfx_main_controller", [ '$scope', '$rootScope', '$q', '$http', '$mdDialog', '$compile', function($scope, $rootScope, $q, $http, $mdDialog, $compile) {
+dfxViewEditorApp.controller("dfx_main_controller", [ '$scope', '$rootScope', '$q', '$http', '$mdDialog', '$compile', '$timeout', function($scope, $rootScope, $q, $http, $mdDialog, $compile, $timeout) {
     $rootScope.message = "Welcome to the View Editor";
     $scope.application_name = $('#dfx-view-editor-body').attr('data-application');
     $scope.view_name = $('#dfx-view-editor-body').attr('data-widget');
@@ -402,22 +402,23 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     };
 
     $scope.refreshDevice = function() {
+        var dfx_ve_platform = $('div[dfx-ve-platform]');
         if ($scope.design_device_orientation=='Portrait') {
-            $('#dfx-ve-platform').css('width', $scope.design_selected_device.portrait['width']);
-            $('#dfx-ve-platform').css('height', $scope.design_selected_device.portrait['height']);
-            $('#dfx-ve-platform').css('padding-top', $scope.design_selected_device.portrait['padding-top']);
-            $('#dfx-ve-platform').css('padding-left', $scope.design_selected_device.portrait['padding-left']);
-            $('#dfx-ve-platform').css('padding-right', $scope.design_selected_device.portrait['padding-right']);
-            $('#dfx-ve-platform').css('padding-bottom', $scope.design_selected_device.portrait['padding-bottom']);
-            $('#dfx-ve-platform').css( 'background', 'url(/images/' + $scope.design_selected_device.portrait['image'] + ') no-repeat' );
+            dfx_ve_platform.css('width', $scope.design_selected_device.portrait['width']);
+            dfx_ve_platform.css('height', $scope.design_selected_device.portrait['height']);
+            dfx_ve_platform.css('padding-top', $scope.design_selected_device.portrait['padding-top']);
+            dfx_ve_platform.css('padding-left', $scope.design_selected_device.portrait['padding-left']);
+            dfx_ve_platform.css('padding-right', $scope.design_selected_device.portrait['padding-right']);
+            dfx_ve_platform.css('padding-bottom', $scope.design_selected_device.portrait['padding-bottom']);
+            dfx_ve_platform.css( 'background', 'url(/images/' + $scope.design_selected_device.portrait['image'] + ') no-repeat' );
         } else {
-            $('#dfx-ve-platform').css('width', $scope.design_selected_device.landscape['width']);
-            $('#dfx-ve-platform').css('height', $scope.design_selected_device.landscape['height']);
-            $('#dfx-ve-platform').css('padding-top', $scope.design_selected_device.landscape['padding-top']);
-            $('#dfx-ve-platform').css('padding-left', $scope.design_selected_device.landscape['padding-left']);
-            $('#dfx-ve-platform').css('padding-right', $scope.design_selected_device.landscape['padding-right']);
-            $('#dfx-ve-platform').css('padding-bottom', $scope.design_selected_device.landscape['padding-bottom']);
-            $('#dfx-ve-platform').css( 'background', 'url(/images/' + $scope.design_selected_device.landscape['image'] + ') no-repeat' );
+            dfx_ve_platform.css('width', $scope.design_selected_device.landscape['width']);
+            dfx_ve_platform.css('height', $scope.design_selected_device.landscape['height']);
+            dfx_ve_platform.css('padding-top', $scope.design_selected_device.landscape['padding-top']);
+            dfx_ve_platform.css('padding-left', $scope.design_selected_device.landscape['padding-left']);
+            dfx_ve_platform.css('padding-right', $scope.design_selected_device.landscape['padding-right']);
+            dfx_ve_platform.css('padding-bottom', $scope.design_selected_device.landscape['padding-bottom']);
+            dfx_ve_platform.css( 'background', 'url(/images/' + $scope.design_selected_device.landscape['image'] + ') no-repeat' );
         }
     };
 
@@ -642,7 +643,9 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
         var editor = $('#dfx_src_editor')[0].CodeMirror;
         var widget_definition = JSON.parse(editor.getValue());
 
-        widget_definition.definition[$scope.view_card_selected][0].animation = $scope.view_card_animation;
+        if ( widget_definition.definition[$scope.view_card_selected] ) {
+            widget_definition.definition[$scope.view_card_selected][0].animation = $scope.view_card_animation;
+        }
 
         for (var key in $scope.gc_instances) {
             var component = angular.copy($scope.gc_instances[key]);
@@ -664,7 +667,6 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
         $scope.view_card_selected = card;
         $scope.unselectComponent();
         $scope.addComponents(widget_definition.definition, null, card);
-
     };
 
     $scope.exitViewEditor = function(ev) {
@@ -1700,7 +1702,7 @@ dfxViewEditorApp.directive('dfxVePickerIcon', ['$q', '$http', '$mdDialog', '$tim
                         $compile($('.dfx-ve-dialog').contents())(scope);
                         $('.sp-container').remove();
                         $timeout(function() {
-                            $('.dfx-ve-icons-dialog').addClass('active');
+                            $('.dfx-ve-content-dialog').addClass('active');
                         }, 250);
                     });
                 });
@@ -1713,13 +1715,13 @@ dfxViewEditorApp.directive('dfxVePickerIcon', ['$q', '$http', '$mdDialog', '$tim
                     case 'fa-icons': scope.iconsCategory = '/ ' + 'Font Awesome Icons'; break;
                     default: scope.iconsCategory = '/ ' + iconCategory;
                 }
-                $(".dfx-ve-icons-categories span").removeClass('active');
+                $(".dfx-ve-content-categories span").removeClass('active');
                 $(ev.target).addClass('active');
             }
             scope.searchIcons = function( icon ) {
                 scope.dfxIconsList = $filter('filter')(scope.dfxFilteredIconsList, icon, 'strict');
                 scope.iconsCategory = '| ' + icon;
-                $(".dfx-ve-icons-categories span").removeClass('active');
+                $(".dfx-ve-content-categories span").removeClass('active');
             }
             scope.setDfxIcon = function(icon, type) {
                 scope.iconObj.value = "'"+icon+"'";
@@ -1729,7 +1731,7 @@ dfxViewEditorApp.directive('dfxVePickerIcon', ['$q', '$http', '$mdDialog', '$tim
                 //scope.$parent.cacheAttributeNewValue(attrs.dfxPickerProperty);// needed for UNDO functionality
             }
             scope.closeVeIconsDialog = function(){
-                $('.dfx-ve-icons-dialog').removeClass('active');
+                $('.dfx-ve-content-dialog').removeClass('active');
                 $timeout(function(){
                     angular.element($('.dfx-ve-dialog')).remove();
                     $('.sp-container').remove();
@@ -2034,6 +2036,8 @@ dfxViewEditorApp.filter('checkExpression', [ function() {
 
         if ( input && ( input.indexOf('+') >= 0 ) ) {
             filtered = false;
+        } else if ( input === '' ) {
+            filtered = true;
         }
 
         return filtered ? input : '{expression}';
@@ -2111,7 +2115,7 @@ dfxViewEditorApp.directive('dfxVeExpressionEditor', [ '$mdDialog', function($mdD
     }
 }]);
 
-dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http', '$timeout', '$compile', function($mdDialog, $mdToast, $http, $timeout, $compile) {
+dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http', '$timeout', '$compile', '$q', function($mdDialog, $mdToast, $http, $timeout, $compile, $q) {
     return {
         restrict: 'E',
         transclude: true,
@@ -2131,9 +2135,10 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                     $(element).find('md-icon').attr('side','right');
                 }
             }
-            scope.menuItemsType = {"value":"static"};
+            scope.menuItemsType = {"value":""};
             scope.menuItemNames = {"value":""};
             scope.dialogGcType = '';
+            scope.actionsMode = {"value": false};
             scope.showMenuEditor = function(ev) {
                 scope.menu = {};
                 if(scope.attributes.layoutType.value === 'none' ){
@@ -2197,6 +2202,7 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                     scope.menuItems = scope.attributes.menuItems;
                     scope.gc_selected.type === 'iconbar' ? scope.statable.value = true : scope.statable.value = false;
                     scope.menuItemNames.value = scope.attributes.menuItemNames.value;
+                    scope.menuItemsType.value = scope.attributes.menuItemsType.value;
                     scope.dialogGcType = scope.gc_selected.type;
                 }
                 $mdDialog.show({
@@ -2507,6 +2513,8 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                                     case 'checked': icon.indexOf("'fa-") === 0 ? scope.menu.state.checkedIcon.type = 'fa-icon' : scope.menu.state.checkedIcon.type = 'svg-icon'; break;
                                     case 'unchecked': icon.indexOf("'fa-") === 0 ? scope.menu.state.uncheckedIcon.type = 'fa-icon' : scope.menu.state.uncheckedIcon.type = 'svg-icon'; break;
                                     case 'waiting': icon.indexOf("'fa-") === 0 ? scope.menu.waiting.icon.type = 'fa-icon' : scope.menu.waiting.icon.type = 'svg-icon'; break;
+                                    case 'actions': icon.indexOf("'fa-") === 0 ? scope.menu.actions.icon.type = 'fa-icon' : scope.menu.actions.icon.type = 'svg-icon'; break;
+                                    case 'actionItem': icon.indexOf("'fa-") === 0 ? scope.actionItem.icon.type = 'fa-icon' : scope.actionItem.icon.type = 'svg-icon'; break;
                                 }
                             }
                             if ( !type ) {
@@ -2516,6 +2524,8 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                                     case 'checked': scope.showCheckedIconTypes = filtered ? false : true; break;
                                     case 'unchecked': scope.showUncheckedIconTypes = filtered ? false : true; break;
                                     case 'waiting': scope.showWaitingIconTypes = filtered ? false : true; break;
+                                    case 'actions': scope.showActionsIconTypes = filtered ? false : true; break;
+                                    case 'actionItem': scope.showActionItemIconTypes = filtered ? false : true; break;
                                 }
                             }
                         }
@@ -2553,19 +2563,280 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                                 }
                             }, 0);
                         }
+                        scope.checkActions = function(menu){
+                            if(!menu.actions.hasOwnProperty('icon')) menu.actions.icon = {"value": "", "type": "", "style": "", "class": ""};
+                            if(!menu.actions.hasOwnProperty('actionItems')) menu.actions.actionItems = [];
+                            if(!menu.actions.hasOwnProperty('onclick')) menu.actions.onclick = "";
+                        }
+                        scope.setActiveActionItem = function(index){
+                            if(scope.menu.actions.actionItems.length>0){                                
+                                scope.actionActiveIndex = index;
+                                scope.actionItem = scope.menu.actions.actionItems[index];
+                                $timeout(function() {
+                                    $('.actions-structure li').removeClass('active');
+                                    $('.actions-structure li').eq(index).addClass('active');
+                                    scope.ifShowMenuIconTypes(scope.actionItem.icon.value, 'actionItem');
+                                }, 0);
+                            }else{
+                                scope.actionItem = {};
+                            }
+                        }
+                        scope.addActionItem = function() {
+                            var actionItemTemplate = {
+                                "label": "'New action item'",
+                                "type": "standard",
+                                "icon": { "value": "'home'", "type": "svg-icon" },
+                                "display": "true",
+                                "disabled": "false",
+                                "onclick": ""
+                            }
+                            if(scope.menu.actions.actionItems.length>0){
+                                ++scope.actionActiveIndex;
+                                scope.menu.actions.actionItems.splice(scope.actionActiveIndex, 0, actionItemTemplate);
+                            }else{
+                                scope.menu.actions.actionItems.push(actionItemTemplate);
+                            }
+                            scope.setActiveActionItem(scope.actionActiveIndex);
+                        }
+                        scope.deleteActionItem = function(){
+                            if(scope.menu.actions.actionItems.length>0){
+                                scope.menu.actions.actionItems.splice(scope.actionActiveIndex, 1);
+                                if(scope.actionActiveIndex===scope.menu.actions.actionItems.length && scope.actionActiveIndex>0) --scope.actionActiveIndex;
+                                scope.setActiveActionItem(scope.actionActiveIndex);
+                            }
+                        }
+                        scope.moveUpActionItem = function(){
+                            if(scope.menu.actions.actionItems.length>1 && scope.actionActiveIndex>0){
+                                var tempActiveItem = scope.actionItem;
+                                scope.menu.actions.actionItems.splice(scope.actionActiveIndex, 1);
+                                --scope.actionActiveIndex;
+                                scope.menu.actions.actionItems.splice(scope.actionActiveIndex, 0, tempActiveItem);
+                                scope.setActiveActionItem(scope.actionActiveIndex);
+                            }
+                        }
+                        scope.moveDownActionItem = function(){
+                            if(scope.menu.actions.actionItems.length>0 && scope.actionActiveIndex<scope.menu.actions.actionItems.length-1){
+                                var tempActiveItem = scope.actionItem;
+                                scope.menu.actions.actionItems.splice(scope.actionActiveIndex, 1);
+                                ++scope.actionActiveIndex;
+                                scope.menu.actions.actionItems.splice(scope.actionActiveIndex, 0, tempActiveItem);
+                                scope.setActiveActionItem(scope.actionActiveIndex);
+                            }
+                        }
+                        scope.setActionsMode = function(){
+                            scope.actionsMode.value=true;                            
+                            scope.actionActiveIndex = 0;
+                            if(scope.menu.actions.actionItems.length>0) scope.setActiveActionItem(scope.actionActiveIndex);
+                        }
+                        scope.leaveActionsMode = function(){
+                            scope.actionsMode.value=false;
+                        }
+                        scope.gcJsonSample = {};
+                        scope.gcSamplesArray = {};
+                        scope.tempItemNames = {};
+                        scope.scriptSampleName = '';
+                        scope.scriptSampleNameValid = {"value": false};
+                        scope.focusSamples = function(){$timeout(function(){$("#samples-btn").focus();},100);}
+                        scope.runJsonEditor = function(model){
+                            scope.dfxSampleJsonEditor = null;
+                            var container = document.getElementById('dfx-ve-sample-json'),
+                                options = { mode: 'code', modes: ['tree','form','code','text','view'], history: true }
+                            $timeout(function(){scope.dfxSampleJsonEditor = new JSONEditor(container, options, model);}, 0);
+                        }
+                        scope.checkMainNames = function( propName ){
+                            if (!scope.tempItemNames.hasOwnProperty('main')) scope.tempItemNames.main = {"source": ""};
+                            switch (propName) {
+                                case 'type': if(!scope.tempItemNames.main.hasOwnProperty('type')){scope.tempItemNames.main.type = 'type';} break;
+                                case 'label': if(!scope.tempItemNames.main.hasOwnProperty('label')){scope.tempItemNames.main.label = 'label';} break;
+                                case 'title': if(!scope.tempItemNames.main.hasOwnProperty('title')){scope.tempItemNames.main.title = 'title';} break;
+                                case 'divider': if(!scope.tempItemNames.main.hasOwnProperty('divider')){scope.tempItemNames.main.divider = 'divider';} break;
+                                case 'shortcut': if(!scope.tempItemNames.main.hasOwnProperty('shortcut')){scope.tempItemNames.main.shortcut = 'shortcut';} break;
+                                case 'notification': if(!scope.tempItemNames.main.hasOwnProperty('notification')){scope.tempItemNames.main.notification = 'notification';} break;
+                                case 'display': if(!scope.tempItemNames.main.hasOwnProperty('display')){scope.tempItemNames.main.display = 'display';} break;
+                                case 'disabled': if(!scope.tempItemNames.main.hasOwnProperty('disabled')){scope.tempItemNames.main.disabled = 'disabled';} break;
+                                case 'onclick': if(!scope.tempItemNames.main.hasOwnProperty('onclick')){scope.tempItemNames.main.onclick = 'onclick';} break;
+                                case 'icon': if(!scope.tempItemNames.main.hasOwnProperty('icon')){scope.tempItemNames.main.icon = {"value": "icon"};} break;
+                                case 'scopeItems': if(!scope.tempItemNames.main.hasOwnProperty('scopeItems')){scope.tempItemNames.main.scopeItems = 'scopeItems';} break;
+                                case 'state': if(!scope.tempItemNames.hasOwnProperty('state')){scope.tempItemNames.state = {"name": "state"};} break;
+                                case 'waiting': if(!scope.tempItemNames.hasOwnProperty('waiting')){scope.tempItemNames.waiting = {"name": "waiting"};} break;
+                                case 'actions': if(!scope.tempItemNames.hasOwnProperty('actions')){scope.tempItemNames.actions = {"name": "actions"};} break;
+                            }
+                        }
+                        scope.checkIconNames = function( icon, iconModeType ){
+                            Object.getOwnPropertyNames(icon).forEach(function(iconProp) {
+                                switch(iconModeType){
+                                    case 'main':
+                                        if(!scope.tempItemNames.main.icon.hasOwnProperty(iconProp)) scope.tempItemNames.main.icon[iconProp] = iconProp;                                        break;
+                                    case 'checkedIcon':
+                                        if(!scope.tempItemNames.state.hasOwnProperty('checkedIcon')) scope.tempItemNames.state.checkedIcon = {"value": "checkedIcon"};
+                                        if(!scope.tempItemNames.state.checkedIcon.hasOwnProperty(iconProp)) scope.tempItemNames.state.checkedIcon[iconProp] = iconProp; break;
+                                    case 'uncheckedIcon':
+                                        if(!scope.tempItemNames.state.hasOwnProperty('uncheckedIcon')) scope.tempItemNames.state.uncheckedIcon = {"value": "uncheckedIcon"};
+                                        if(!scope.tempItemNames.state.uncheckedIcon.hasOwnProperty(iconProp)) scope.tempItemNames.state.uncheckedIcon[iconProp] = iconProp; break;
+                                    case 'waiting':
+                                        if(!scope.tempItemNames.waiting.hasOwnProperty('icon')) scope.tempItemNames.waiting.icon = {"value": "icon"};
+                                        if(!scope.tempItemNames.waiting.icon.hasOwnProperty(iconProp)) scope.tempItemNames.waiting.icon[iconProp] = iconProp; break;
+                                    case 'actionObject':
+                                        if(!scope.tempItemNames.actions.hasOwnProperty('icon')) scope.tempItemNames.actions.icon = {"value": "icon"};
+                                        if(!scope.tempItemNames.actions.icon.hasOwnProperty(iconProp)) scope.tempItemNames.actions.icon[iconProp] = iconProp; break;
+                                    case 'actionItem':
+                                        if(!scope.tempItemNames.actions.actionItems.hasOwnProperty('icon')) scope.tempItemNames.actions.actionItems.icon = {"value": "icon"};
+                                        if(!scope.tempItemNames.actions.actionItems.icon.hasOwnProperty(iconProp)) scope.tempItemNames.actions.actionItems.icon[iconProp] = iconProp; break;
+                                }
+                            });
+                        }
+                        scope.checkStateNames = function( state ){
+                            Object.getOwnPropertyNames(state).forEach(function(stateProp) {
+                                if(!scope.tempItemNames.state.hasOwnProperty(stateProp)){
+                                    switch(stateProp){
+                                        case 'binding': scope.tempItemNames.state[stateProp] = stateProp; break;
+                                        case 'checkedIcon': scope.checkIconNames( state.checkedIcon, 'checkedIcon' ); break;
+                                        case 'uncheckedIcon': scope.checkIconNames( state.uncheckedIcon, 'uncheckedIcon' ); break;
+                                    }
+                                }
+                            });
+                        }
+                        scope.checkWaitingNames = function( waiting ){
+                            Object.getOwnPropertyNames(waiting).forEach(function(waitingProp) {
+                                if(!scope.tempItemNames.waiting.hasOwnProperty(waitingProp)) {
+                                    switch(waitingProp){
+                                        case 'binding': scope.tempItemNames.waiting[waitingProp] = waitingProp; break;
+                                        case 'autoDisabled': scope.tempItemNames.waiting[waitingProp] = waitingProp;; break;
+                                        case 'icon': scope.checkIconNames( waiting.icon, 'waiting' ); break;
+                                    }
+                                }
+                            });
+                        }
+                        scope.checkActionItemNames = function( actionItem ){
+                            Object.getOwnPropertyNames(actionItem).forEach(function(actionItemProp) {
+                                if(!scope.tempItemNames.actions.actionItems.hasOwnProperty(actionItemProp)) {
+                                    switch(actionItemProp){
+                                        case 'type': scope.tempItemNames.actions.actionItems[actionItemProp] = actionItemProp; break;
+                                        case 'label': scope.tempItemNames.actions.actionItems[actionItemProp] = actionItemProp; break;
+                                        case 'display': scope.tempItemNames.actions.actionItems[actionItemProp] = actionItemProp; break;
+                                        case 'disabled': scope.tempItemNames.actions.actionItems[actionItemProp] = actionItemProp; break;
+                                        case 'onclick': scope.tempItemNames.actions.actionItems[actionItemProp] = actionItemProp; break;
+                                        case 'icon': scope.checkIconNames( actionItem.icon, 'actionItem' ); break;
+                                    }
+                                }
+                            });    
+                        }
+                        scope.checkActionsNames = function( actionObject ){
+                            Object.getOwnPropertyNames(actionObject).forEach(function(actionObjectProp) {
+                                if(!scope.tempItemNames.actions.hasOwnProperty(actionObjectProp)) {
+                                    switch(actionObjectProp){
+                                        case 'icon': scope.checkIconNames( actionObject.icon, 'actionObject' ); break;
+                                        case 'display': scope.tempItemNames.actions[actionObjectProp] = actionObjectProp; break;
+                                        case 'disabled': scope.tempItemNames.actions[actionObjectProp] = actionObjectProp; break;
+                                        case 'onclick': scope.tempItemNames.actions[actionObjectProp] = actionObjectProp; break;
+                                        case 'actionItems': 
+                                            if(!scope.tempItemNames.actions.hasOwnProperty('actionItems')) scope.tempItemNames.actions.actionItems = {"name": actionObjectProp};
+                                            if(actionObject.actionItems.length>0){
+                                                for (var i = 0; i < actionObject.actionItems.length; i++) {
+                                                    scope.checkActionItemNames(actionObject.actionItems[i]);
+                                                };
+                                            }
+                                            break;
+                                    }
+                                }
+                            });
+                        }
+                        scope.checkItemNames = function( item ) {
+                            if(item.hasOwnProperty('type')){scope.checkMainNames('type');}
+                            if(item.hasOwnProperty('label')){scope.checkMainNames('label');}
+                            if(item.hasOwnProperty('title')){scope.checkMainNames('title');}
+                            if(item.hasOwnProperty('divider')){scope.checkMainNames('divider');}
+                            if(item.hasOwnProperty('shortcut')){scope.checkMainNames('shortcut');}
+                            if(item.hasOwnProperty('notification')){scope.checkMainNames('notification');}
+                            if(item.hasOwnProperty('display')){scope.checkMainNames('display');}
+                            if(item.hasOwnProperty('disabled')){scope.checkMainNames('disabled');}
+                            if(item.hasOwnProperty('onclick')){scope.checkMainNames('onclick');}
+                            if(item.hasOwnProperty('scopeItems')){
+                                scope.checkMainNames('scopeItems');
+                                if(item.scopeItems.length>0){
+                                    for (var i = 0; i < item.scopeItems.length; i++) {
+                                        scope.checkItemNames(item.scopeItems[i]);
+                                    };
+                                }
+                            }
+                            if(item.hasOwnProperty('icon')){ scope.checkMainNames('icon'); scope.checkIconNames(item.icon, 'main'); }
+                            if(item.hasOwnProperty('state')){ scope.checkMainNames('state'); scope.checkStateNames(item.state); }
+                            if(item.hasOwnProperty('waiting')){ scope.checkMainNames('waiting'); scope.checkWaitingNames(item.waiting); }
+                            if(item.hasOwnProperty('actions')){ scope.checkMainNames('actions'); scope.checkActionsNames(item.actions); }
+                            $q.all([ scope.checkItemNames, scope.checkMainNames, scope.checkIconNames, scope.checkStateNames, scope.checkWaitingNames, scope.checkActionsNames, scope.checkActionItemNames ]).then(function(){
+                                scope.menuItemNames.value = scope.tempItemNames;
+                                if(scope.toolbarSide){
+                                    if(scope.toolbarSide ==='left'){
+                                        scope.attributes.toolbar.leftMenu.menuItemNames.value = scope.tempItemNames;
+                                    }else{
+                                        scope.attributes.toolbar.rightMenu.menuItemNames.value = scope.tempItemNames;
+                                    }
+                                }else{
+                                    scope.attributes.menuItemNames.value = scope.tempItemNames;
+                                }
+                            });
+                        }
+                        scope.fillPropertiesNames = function(sampleJson){for(var i = 0; i<sampleJson.length; i++){scope.checkItemNames(sampleJson[i]);};}
                         scope.showSamples = function(){
-                            console.log(scope.dialogGcType);
-                            $('#' + scope.component_id + '_md_dialog .second-dialog-box').load('/gcontrols/web/gcs_json_samples.html');
-                            $timeout(function() {
-                                $compile($('.second-dialog-box').contents())(scope);
-                                $('#' + scope.component_id + '_md_dialog .second-dialog').fadeIn(250);
-                            }, 250);
+                            scope.samplesLoaded = $http.get('/gcontrols/web/gcs_json_samples.json').then(function(res){
+                                scope.gcSamplesArray = res.data[scope.dialogGcType];
+                                scope.gcJsonSample = scope.gcSamplesArray[0];
+                            });
+                            $q.all([scope.samplesLoaded]).then(function(){
+                                $('body').append('<div class="dfx-ve-dialog"></div>');
+                                $('.dfx-ve-dialog').load('/gcontrols/web/gcs_json_samples.html', function(){
+                                    $compile($('.dfx-ve-dialog').contents())(scope);
+                                    $('.sp-container').remove();
+                                    $('.dfx-ve-content-dialog').addClass('active');
+                                    $timeout(function(){
+                                        scope.runJsonEditor(scope.gcSamplesArray[0].value);
+                                        $(".dfx-ve-content-categories li").eq(0).find('span').addClass('active');
+                                        scope.scriptSampleName!=='' ? $("#dfx-copy-sample-btn").focus() : $("#dfx-json-sample-name").focus();
+                                    }, 250);
+                                });
+                            });
                         }
-                        scope.closeDialog = function() {
-                            $mdDialog.hide();
+                        scope.selectSample = function(ev, sample) {
+                            scope.gcJsonSample = sample;
+                            scope.dfxSampleJsonEditor ? scope.dfxSampleJsonEditor.set(sample.value) : scope.runJsonEditor(sample.value);
+                            $(".dfx-ve-content-categories span").removeClass('active');
+                            $(ev.target).addClass('active');
+                            scope.scriptSampleName!=='' ? $("#dfx-copy-sample-btn").focus() : $("#dfx-json-sample-name").focus();
                         }
+                        scope.addSampleToScript = function(){
+                            scope.fillPropertiesNames(scope.gcJsonSample.value);
+                            var sampleGet = scope.dfxSampleJsonEditor.get(),
+                                sampleStringified = JSON.stringify(sampleGet, null, '\t'),
+                                sampleStringified = sampleStringified.split("\n").join("\n\t"),
+                                scriptEditor = $('#dfx_script_editor.CodeMirror')[0].CodeMirror;
+                            $q.all([ scope.fillPropertiesNames ]).then(function(){
+                                scope.tempItemNames.main.source = scope.scriptSampleName;
+                                scope.closeDialog();
+                                scope.closeSamples();
+                                $timeout(function(){
+                                    scope.changeViewMode('script');
+                                    scriptEditor.focus();
+                                    scriptEditor.setCursor({line: 4, ch: 0});
+                                    var sampleToAdd = "\t$scope." + scope.scriptSampleName + " = " + sampleStringified + ";\n";
+                                    scriptEditor.replaceSelection(sampleToAdd);
+                                    scope.changeViewMode('design');
+                                    $mdToast.show(
+                                        $mdToast.simple()
+                                        .textContent('JSON Sample "'+scope.gcJsonSample.name+'" has been added to the Script.')
+                                        .theme('success-toast')
+                                        .position('top right')
+                                        .hideDelay(3000)
+                                    );
+                                    scope.closeDialog();
+                                    scope.tempItemNames = {};
+                                }, 250);
+                            });
+                        }
+                        scope.closeDialog = function(){$mdDialog.hide();}
                         scope.closeSamples = function() {
-                            $(".second-dialog").fadeOut('250', function() { $(this).remove(); });
+                            $('.dfx-ve-content-dialog').removeClass('active');
+                            angular.element($('.dfx-ve-dialog')).remove();
+                            $('.sp-container').remove();
                         }
                     }
                 })
@@ -2614,13 +2885,13 @@ dfxViewEditorApp.directive('dfxVeMenuIcons', [ '$http', '$timeout', '$compile', 
                     case 'fa-icons': $scope.iconsCategory = '/ ' + 'Font Awesome Icons'; break;
                     default: $scope.iconsCategory = '/ ' + iconCategory;
                 }
-                $(".dfx-ve-icons-categories span").removeClass('active');
+                $(".dfx-ve-content-categories span").removeClass('active');
                 $(ev.target).addClass('active');
             }
             $scope.searchIcons = function( icon ) {
                 $scope.dfxIconsList = $filter('filter')($scope.dfxFilteredIconsList, icon, 'strict');
                 $scope.iconsCategory = '| ' + icon;
-                $(".dfx-ve-icons-categories span").removeClass('active');
+                $(".dfx-ve-content-categories span").removeClass('active');
             }
             $scope.showMenuIcons = function(ev, menuItem) {
                 $scope.targetItem = menuItem;

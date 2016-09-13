@@ -26,7 +26,7 @@
 		      <md-content class="menu-structure options-editor" layout-padding flex>
 						<ul>
 							<li ng-repeat="statOpt in attributes.slidersArray.value track by $index" class="menu-tree-item">
-								<a href="#" ng-click="selectSliderItem( $index )">{{ statOpt.label | checkExpression }}</a>
+								<a href="#" ng-click="selectSliderItem( $index )">{{ (statOpt.label | checkExpression) || 'no-label' }}</a>
 							</li>
 						</ul>
 		      </md-content>
@@ -73,7 +73,7 @@
 									<span class="col-md-4">Source:</span>
 									<div class="col-md-8" layout="row">
 										<input class="col-md-12" type="text" ng-model="attributes.source.value" style="margin-left:-15px;" ng-change="overrideAttribute('source')"/>
-                    <dfx-ve-menu-expression></dfx-ve-menu-expression>
+                    					<dfx-ve-menu-expression></dfx-ve-menu-expression>
 									</div>
 								</li>								
 								<li class="col-md-12">
@@ -98,6 +98,7 @@
 			<div class="second-dialog-box"></div>	
 		</md-dialog-content>
 		<div class="md-actions"> 
+            <md-button ng-show="attributes.optionsType.value === 'dynamic'" ng-click="showSamples()" id="samples-btn" class="md-primary" md-autofocus="attributes.optionsType.value === 'dynamic'">Samples</md-button> 
 			<md-button ng-click="closeDialog()" class="md-primary">Close</md-button> 
 		</div> 
 	</form>

@@ -18,10 +18,10 @@
                        ng-mousedown="$eval(attributes.onmousedown.value)"
                        ng-mouseup="$eval(attributes.onmouseup.value)"></md-switch>
             <div style="padding-top: 3px;">
-                <div style="display: inline-block">{{item[attributes.switchValue.label]}}</div>
+                <div style="display: inline-block">{{$eval(item[attributes.switchValue.label]) || item[attributes.switchValue.label]}}</div>
                 <div style="display: inline-block" ng-if="$eval(attributes.displayValue.value)">
-                    <div ng-if="attributes.bindingBoolean.value[$index]">{{item[attributes.switchValue.trueSwitchValue]}}</div>
-                    <div ng-if="!attributes.bindingBoolean.value[$index]" >{{item[attributes.switchValue.falseSwitchValue]}}</div>
+                    <div ng-if="attributes.bindingBoolean.value[$index]">{{$eval(item[attributes.switchValue.trueSwitchValue]) || item[attributes.switchValue.trueSwitchValue]}}</div>
+                    <div ng-if="!attributes.bindingBoolean.value[$index]" >{{$eval(item[attributes.switchValue.falseSwitchValue]) || item[attributes.switchValue.falseSwitchValue]}}</div>
                 </div>
             </div>
         </div>
@@ -72,10 +72,10 @@
                        ng-mousedown="$eval(attributes.onmousedown.value)"
                        ng-mouseup="$eval(attributes.onmouseup.value)"></md-switch>
             <div style="padding-top: 3px;">
-                <div style="display: inline-block">{{item[attributes.switchValue.label]}}</div>
+                <div style="display: inline-block">{{$eval(item[attributes.switchValue.label]) || item[attributes.switchValue.label]}}</div>
                 <div style="display: inline-block" ng-if="$eval(attributes.displayValue.value)">
-                    <div ng-if="attributes.bindingBoolean.value[$index]">{{item[attributes.switchValue.trueSwitchValue]}}</div>
-                    <div ng-if="!attributes.bindingBoolean.value[$index]" >{{item[attributes.switchValue.falseSwitchValue]}}</div>
+                    <div ng-if="attributes.bindingBoolean.value[$index]">{{$eval(item[attributes.switchValue.trueSwitchValue]) || item[attributes.switchValue.trueSwitchValue]}}</div>
+                    <div ng-if="!attributes.bindingBoolean.value[$index]" >{{$eval(item[attributes.switchValue.falseSwitchValue]) || item[attributes.switchValue.falseSwitchValue]}}</div>
                 </div>
             </div>
         </div>

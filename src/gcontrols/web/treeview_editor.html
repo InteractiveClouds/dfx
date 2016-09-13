@@ -3,8 +3,12 @@
         <md-toolbar><div class="md-toolbar-tools">
             <h2>TreeView editor</h2>
         </div></md-toolbar>
-        <md-dialog-content id="{{component_id}}_md_dialog" layout="column" style="max-width:880px;max-height:810px;width:880px;height:400px;margin:0px;padding:8px 8px 2px 8px;">
-            <div style="display:flex;flex-direction:row;flex-wrap:wrap;justify-content:space-between;">
+        <md-dialog-content id="{{component_id}}_md_dialog" layout="column" style="max-width:880px;max-height:810px;width:880px;height:400px;margin:0px;">
+            <md-radio-group ng-model="attributes.treeItemsType.value" ng-change="overrideAttribute('treeItemsType')" class="dfx-ve-options-editor-radio-group">
+              <md-radio-button class="dfx-ve-options-editor-radio-button md-primary" value="static" aria-label="Static options">Static options</md-radio-button>
+              <md-radio-button class="dfx-ve-options-editor-radio-button md-primary" value="dynamic" aria-label="Dynamic options">Dynamic options</md-radio-button>
+            </md-radio-group>
+            <div ng-show="attributes.treeItemsType.value === 'static'" style="display:flex;flex-direction:row;flex-wrap:wrap;justify-content:space-between;padding:8px;">
                 <section id="{{component_id}}_menu_structure" class="md-whiteframe-1dp" style="width:49.5%;border-radius:4px;overflow:hidden;">
                     <md-toolbar style="min-height:36px;background:rgba(128,128,128,0.46);">
                         <div class="md-toolbar-tools" style="height:36px;max-height:36px">
@@ -21,7 +25,7 @@
                     </md-toolbar>
                     <md-content class="tree-structure" layout-padding flex style="">
                         <script type="text/ng-template" id="treeView">
-                            <a href="#" ng-click="selectTreeItem($event, node)">{{ node.name | checkExpression }}</a>
+                            <a href="#" ng-click="selectTreeItem($event, node)">{{ (node.name | checkExpression) || 'no-label' }}</a>
                             <ul ng-if="node.children.length > 0">
                                 <li ng-repeat="node in node.children track by $index"  class="tree-view-item" parent-index="{{$parent.$parent.$index}}" self-index="{{$index}}" ng-include="'treeView'"></li>
                             </ul>
@@ -50,9 +54,46 @@
                     </md-content>
                 </section>
             </div>
+            <div ng-show="attributes.treeItemsType.value === 'dynamic'" style="padding:8px;">
+                <section id="{{component_id}}_dynamic_properties" class="md-whiteframe-1dp" style="border-radius:4px;overflow:hidden;">
+                    <md-toolbar style="min-height:36px;background:rgba(128,128,128,0.46);">
+                        <div class="md-toolbar-tools" style="height:36px;max-height:36px">
+                            <h3 style="font-size:16px;">Choose variables from scope</h3>
+                        </div>
+                    </md-toolbar>
+                    <md-content layout-padding flex style="">
+                        <div class="dfx-ve-property-treeview hover clearfix" style="padding:8px 16px 12px 12px;margin:0 -8px;width:65%;">
+                            <ul class="dfx-ve-property-picker-content" style="margin:0;padding:0">
+                                <li class="col-md-12">
+                                    <span class="col-md-4">Source:</span>
+                                    <div class="col-md-8" layout="row">
+                                        <input class="col-md-12" type="text" ng-model="attributes.dynamic.value"ng-change="overrideAttribute('dynamic')" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue('dynamic', $event)" ng-blur="cacheAttributeNewValue('dynamic')"/>
+                                        <dfx-ve-menu-expression></dfx-ve-menu-expression>
+                                    </div>
+                                </li>
+                                <li class="col-md-12">
+                                    <span class="col-md-4" style="padding-left:16px;">Repeatable Property:</span>
+                                    <div class="col-md-8" layout="row">
+                                        <input class="col-md-12" type="text" ng-model="attributes.repeatable_property.value"ng-change="overrideAttribute('repeatable_property')" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue('repeatable_property', $event)" ng-blur="cacheAttributeNewValue('repeatable_property')"/>
+                                        <dfx-ve-menu-expression></dfx-ve-menu-expression>
+                                    </div>
+                                </li>
+                                <li class="col-md-12">
+                                    <span class="col-md-4" style="padding-left:16px;">Label:</span>
+                                    <div class="col-md-8" layout="row">
+                                        <input class="col-md-12" type="text" ng-model="attributes.label.value"ng-change="overrideAttribute('label')" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue('label', $event)" ng-blur="cacheAttributeNewValue('label')"/>
+                                        <dfx-ve-menu-expression></dfx-ve-menu-expression>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </md-content>
+                </section>
+            </div>
             <div class="second-dialog-box"></div>
         </md-dialog-content>
         <div class="md-actions">
+            <md-button ng-show="attributes.treeItemsType.value === 'dynamic'" ng-click="showSamples()" id="samples-btn" class="md-primary" md-autofocus="attributes.treeItemsType.value === 'dynamic'">Samples</md-button> 
             <md-button ng-click="closeDialog()" class="md-primary">Close</md-button>
         </div>
     </form>

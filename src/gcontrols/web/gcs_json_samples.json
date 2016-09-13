@@ -1,0 +1,430 @@
+{
+	"button": [
+		{
+			"name": "Example 1",
+			"value": [
+				{
+					"label": "'My Button Label'",
+					"icon": {"name": "'star'", "type": "svg-icon"},        
+					"type": "standard",
+					"shortcut": "123",
+					"notification": "5",
+					"display": "true",
+					"disabled": "false",
+					"onclick": "toggleScopeState()",
+					"scopeItems": [],
+					"waiting": { 
+						"binding": "scopeState", 
+						"autoDisabled": "scopeState", 
+						"icon": { 
+							"name": "'fa-spinner'", 
+							"type": "fa-icon", 
+							"style": "", 
+							"class": "fa-pulse" 
+						}
+					}
+				},
+				{
+					"label": "'My Button Label'",
+					"icon": {"name": "'stars'", "type": "svg-icon"},        
+					"myButtonsType": "standard",
+					"shortcut": "",
+					"notification": "",
+					"display": "true",
+					"disabled": "false",
+					"onclick": "toggleScopeState()",
+					"scopeItems": [
+						{
+							"label": "'My Button Label'",
+							"type": "title"
+						},
+						{
+							"type": "divider"
+						}
+					]  
+				}
+			]	
+		}		
+    ],
+    "carousel": [
+    	{
+    		"name": "Example 1",
+    		"value": [
+    			{ 
+		            "title": "<h2>Costa Rica</h2>", 
+		            "description": "<h4>Forest {{scopeState}}</h4>", 
+		            "src": "'https://www.travelexcellence.com/images/movil/La_Paz_Waterfall.jpg'",
+		            "onclick": "toggleScopeState()"
+		        },
+		        { 
+		            "title": "<h2>Indonesia</h2>", 
+		            "description": "<h4>Mountains {{scopeState}}</h4>", 
+		            "src": "'http://images.kuoni.co.uk/73/indonesia-34834203-1451484722-ImageGalleryLightbox.jpg'",
+		            "onclick": "toggleScopeState()"
+		        },    
+		        { 
+		            "title": "<h2>Vietnam</h2>", 
+		            "description": "<h4>Sea {{scopeState}}</h4>", 
+		            "src": "'https://www.travcoa.com/sites/default/files/styles/flexslider_full/public/tours/images/imperialvietnam-halong-bay-14214576.jpg?itok=O-q1yr5_'",
+		            "onclick": "toggleScopeState()"
+		        },
+		        { 
+		            "title": "<h2>USA</h2>", 
+		            "description": "<h4>River {{scopeState}}</h4>",
+		            "src": "'http://www.parasholidays.in/blog/wp-content/uploads/2014/05/holiday-tour-packages-for-usa.jpg'",
+		            "onclick": "toggleScopeState()"
+		        },
+		        { 
+		            "title": "<h2>New Zealand</h2>", 
+		            "description": "<h4>Volcano {{scopeState}}</h4>", 
+		            "src": "'http://clickker.in/wp-content/uploads/2016/03/new-zealand-fy-8-1-Copy.jpg'",
+		            "onclick": "toggleScopeState()" 
+		        }
+    		]
+    	}    	
+    ],
+    "checkbox": [
+    	{
+    		"name": "Example 1",
+    		"value": [
+    			{
+    				"trueCheckValue": true,
+    				"falseCheckValue": false,
+    				"label": "'My checkbox label'"
+    			}
+    		]
+    	}
+    ],
+    "checkbox": [
+    	{
+    		"name": "Example 1",
+    		"value": [
+    			{
+    				"trueCheckValue": true,
+    				"falseCheckValue": false,
+    				"label": "'Apple'"
+    			},
+    			{
+    				"trueCheckValue": true,
+    				"falseCheckValue": false,
+    				"label": "'Banana'"
+    			},
+    			{
+    				"trueCheckValue": true,
+    				"falseCheckValue": false,
+    				"label": "'Kiwi'"
+    			}
+    		]
+    	}
+    ],
+	"fab": [
+		{
+			"name": "Example 1",
+			"value": [
+				{
+					"label": "'My Button Label'",
+					"icon": {"name": "'star'", "type": "svg-icon"},        
+					"display": "true",
+					"disabled": "false",
+					"onclick": "toggleScopeState()"
+				},
+				{
+					"label": "'My Button Label'",
+					"icon": {"name": "'stars'", "type": "svg-icon"},        
+					"display": "true",
+					"disabled": "false",
+					"onclick": "toggleScopeState()"					
+				}
+			]	
+		}		
+	],
+	"iconbar": [
+		{
+			"name": "Example 1",
+			"value": [
+				{
+					"scopeItems": [
+						{
+							"label": "'My Label'",
+							"icon": {"name": "'stars'", "type": "svg-icon"},        
+							"shortcut": "ABC",
+							"notification": "8",
+							"display": "true",
+							"disabled": "false",
+							"onclick": "",
+							"scopeItems": [],
+							"state": {
+								"binding": "scopeState",
+								"checkedIcon":   { "name": "'thumb_up'", "type": "svg-icon", "style": "color:lightgreen", "class": "greened" },
+								"uncheckedIcon": { "name": "'thumb_down'", "type": "svg-icon", "style": "color:violet", "class": "violetted" }
+							}
+						}
+					],
+					"state": {
+						"binding": "scopeState",
+						"checkedIcon":   { "name": "'thumb_up'", "type": "svg-icon", "style": "color:lightgreen", "class": "greened" },
+						"uncheckedIcon": { "name": "'thumb_down'", "type": "svg-icon", "style": "color:violet", "class": "violetted" }
+					}
+				},				
+				{
+					"icon": {"name": "'twitter'", "type": "svg-icon"},
+					"type": "standard"
+				}
+			]
+		},
+		{
+			"name": "Example 2",
+			"value": [
+				{
+					"type": "title",
+					"label": "My Single Title"
+				}
+			]
+		},
+		{
+			"name": "Example 3",
+			"value": [
+				{
+					"type": "divider"
+				}
+			]
+		},
+		{
+			"name": "Example 4",
+			"value": [
+				{
+					"icon": {"name": "'my_library_music'", "type": "svg-icon", "style": "color: green", "class": "fa-pulse"}
+				}
+			]
+		}
+	],
+	"horizontalmenu": [
+		{
+			"name": "Example 1",
+			"value": [
+				{
+					"icon": {"name":"'apple'", "type":"svg-icon", "style":"","class":""},
+					"scopeItems": [
+						{
+							"label": "'Second Level Label 1'",
+							"icon": {"name": "'my_library_music'", "type": "svg-icon", "style": "color: green", "class": "fa-pulse"}
+						},
+						{
+							"label": "'Second Level Label 2'",
+							"icon": {"name": "'my_library_music'", "type": "svg-icon", "style": "color: red", "class": ""},
+							"scopeItems": [
+								{
+									"label": "'Third Level Label 1'",
+									"icon": {"name": "'star'", "type": "svg-icon", "style": "color: green", "class": "fa-pulse"}
+								},
+								{
+									"label": "'Third Level Label 2'",
+									"icon": {"name": "'apple'", "type": "svg-icon", "style": "color: red", "class": ""}
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	],
+	"radio": [
+    	{
+    		"name": "Example 1",
+    		"value": [
+    			{
+    				"bindingProperty": "apple",
+    				"propToDisplay": "'Apple'"
+    			},
+    			{
+    				"bindingProperty": "banana",
+    				"propToDisplay": "'Banana'"
+    			},
+    			{
+    				"bindingProperty": "kiwi",
+    				"propToDisplay": "'Kiwi'"
+    			}
+    		]
+    	}
+    ],
+	"treemenu": [
+		{
+			"name": "Example 1",
+			"value": [
+				{
+					"label": "'My TreeMenu Label'",
+					"icon": {"name":"'apple'", "type":"svg-icon", "style":"","class":""},
+					"scopeItems": [
+						{
+							"label": "'Second Level Label 1'",
+							"icon": {"name": "'my_library_music'", "type": "svg-icon", "style": "color: green", "class": "fa-pulse"}
+						},
+						{
+							"label": "'Second Level Label 2'",
+							"icon": {"name": "'my_library_music'", "type": "svg-icon", "style": "color: red", "class": ""},
+							"scopeItems": [
+								{
+									"label": "'Third Level Label 1'",
+									"icon": {"name": "'star'", "type": "svg-icon", "style": "color: green", "class": "fa-pulse"}
+								},
+								{
+									"label": "'Third Level Label 2'",
+									"icon": {"name": "'apple'", "type": "svg-icon", "style": "color: red", "class": ""}
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Example 2",
+			"value": [
+				{
+					"label": "'Accounts'",
+					"icon": { "name": "'account_balance'", "type": "svg-icon" },
+					"scopeItems": [
+						{
+							"label": "'Financial'",
+							"type": "title"
+						},
+						{
+							"label": "'GBP'",
+							"icon": { "name": "'fa-gbp'", "type": "fa-icon" }
+						},
+						{
+							"label": "'EURO'",
+							"icon": { "name": "'fa-euro'", "type": "fa-icon" }
+						},
+						{
+							"label": "'USD'",
+							"icon": { "name": "'fa-usd'", "type": "fa-icon" }
+						},
+						{	"type": "divider"   },
+						{
+							"label": "'Bitcoin'",
+							"icon": { "name": "'fa-bitcoin'", "type": "fa-icon" }
+						}
+					],
+					"actions": {
+						"icon": { "name": "'view_list'", "type": "svg-icon" },
+						"onclick": "triggerFunc()",
+						"actionItems": [
+							{	"label": "'Title'", "type": "title"	},
+							{
+								"label": "'Standard'",
+								"icon": { "name": "'star'", "type": "svg-icon" },
+								"onclick": "actionFunc()"
+							},
+							{	"type": "divider"	},
+							{
+								"label": "'Standard'",
+								"icon": { "name": "'stars'", "type": "svg-icon" }
+							}
+						]
+					}
+				}
+			]
+		}
+	],
+	"treeview": [
+		{
+			"name": "Example 1",
+			"value": [
+				{
+					"name": "'Products'",
+					"children": [
+						{
+							"name": "'Printers'",
+							"children": [
+								{ "name": "'Canon'" },
+								{ "name": "'HP'" },
+								{ "name": "'Samsung'" }
+							]
+						},
+						{
+							"name": "'Smartphones'",
+							"children": [
+								{
+									"name": "'Apple'",
+									"children": [
+										{ "name": "'iPhone 5s'" },
+										{ "name": "'iPhone 6s'" }
+									]
+								},
+								{	"name": "'Samsung'"	  },
+								{
+									"name": "'Xiaomi'",
+									"children": [
+										{ "name": "'Redmi 3S'" },
+										{ "name": "'Redmi Note 3'" }
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	],
+	"select": [
+    	{
+    		"name": "Example 1",
+    		"value": [
+    			{
+    				"value": "apple",
+    				"display": "'Apple'"
+    			},
+    			{
+    				"value": "banana",
+    				"display": "'Banana'"
+    			},
+    			{
+    				"value": "kiwi",
+    				"display": "'Kiwi'"
+    			}
+    		]
+    	}
+    ],
+	"slider": [
+    	{
+    		"name": "Example 1",
+    		"value": [
+    			{
+    				"displayValue": 3,
+    				"bindingLabel": "'Apple'"
+    			},
+    			{
+    				"displayValue": 4,
+    				"bindingLabel": "'Banana'"
+    			},
+    			{
+    				"displayValue": 2,
+    				"bindingLabel": "'Kiwi'"
+    			}
+    		]
+    	}
+    ],
+	"switch": [
+    	{
+    		"name": "Example 1",
+    		"value": [
+    			{
+    				"trueSwitchValue": true,
+    				"falseSwitchValue": false,
+    				"label": "'Apple'"
+    			},
+    			{
+    				"trueSwitchValue": true,
+    				"falseSwitchValue": false,
+    				"label": "'Banana'"
+    			},
+    			{
+    				"trueSwitchValue": true,
+    				"falseSwitchValue": false,
+    				"label": "'Kiwi'"
+    			}
+    		]
+    	}
+    ]
+}

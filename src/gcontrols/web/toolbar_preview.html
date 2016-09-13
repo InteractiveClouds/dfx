@@ -32,12 +32,12 @@
 
                 <!--buttons-->
                 <div ng-if="attributes.toolbar.leftMenu.type.value === 'Buttons'" class="gc-icon-bar">
-                    <div class="{{component_id}}_left_buttons_menu" dfx-repeatable-panel="{{$index}}" ng-if="attributes.toolbar.leftMenu.menuItems.value.length > 0 || scope.attributes.toolbar.leftMenu.dynamicPresent.value" style="width: 100%"></div>
+                    <div class="{{component_id}}_left_buttons_menu" dfx-repeatable-panel="{{$index}}" style="width: 100%"></div>
                 </div>
 
                 <!--iconbar-->
                 <div ng-if="attributes.toolbar.leftMenu.type.value === 'Icon Bar'" layout="column">
-                    <div class="{{component_id}}_left_menu_bar" dfx-repeatable-panel="{{$index}}" ng-if="attributes.toolbar.leftMenu.menuItems.value.length > 0 || attributes.toolbar.leftMenu.dynamicPresent.value"></div>
+                    <div class="{{component_id}}_left_menu_bar" dfx-repeatable-panel="{{$index}}"></div>
                 </div>
             </div>
         </div>
@@ -85,11 +85,11 @@
 
                 <!--buttons-->
                 <div ng-if="attributes.toolbar.rightMenu.type.value === 'Buttons'" class="gc-icon-bar">
-                    <div class="{{component_id}}_right_buttons_menu" dfx-repeatable-panel="{{$index}}" ng-if="attributes.toolbar.rightMenu.menuItems.value.length > 0  || scope.attributes.toolbar.rightMenu.dynamicPresent.value" style="width: 100%"></div>
+                    <div class="{{component_id}}_right_buttons_menu" dfx-repeatable-panel="{{$index}}" style="width: 100%"></div>
                 </div>
 
                 <div ng-if="attributes.toolbar.rightMenu.type.value === 'Icon Bar'" layout="column" class="gc">
-                    <div class="{{component_id}}_right_menu_bar" dfx-repeatable-panel="{{$index}}" ng-if="attributes.toolbar.rightMenu.menuItems.value.length > 0 || scope.attributes.toolbar.rightMenu.dynamicPresent.value"></div>
+                    <div class="{{component_id}}_right_menu_bar" dfx-repeatable-panel="{{$index}}"></div>
                 </div>
             </div>
         </div>
