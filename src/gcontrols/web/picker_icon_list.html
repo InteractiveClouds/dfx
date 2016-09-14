@@ -1,4 +1,4 @@
-<div class="dfx-ve-content-dialog">
+<div id="dfx-ve-icons-dialog" class="dfx-ve-content-dialog" tabindex="0">
     <md-toolbar>
         <div class="dfx-icons-search-toolbar md-toolbar-tools">
             <h2>DreamFace Icons <span ng-bind="iconsCategory"></span></h2>
@@ -29,7 +29,7 @@
         </div>
     </md-content>
     <div class="dfx-ve-actions">
-        <md-button ng-click="closeVeIconsDialog()" class="md-primary">Cancel</md-button> 
+        <md-button id="exit-icons-dialog" ng-click="closeVeIconsDialog()" class="md-primary">Cancel</md-button> 
     </div> 
 </div>
 <div class="dfx-ve-backdrop" ng-click="closeVeIconsDialog()"></div>

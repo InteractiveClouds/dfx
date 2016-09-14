@@ -1,4 +1,4 @@
-<div class="dfx-ve-css-style-editor">
+<div id="dfx-ve-css-style-dialog" class="dfx-ve-css-style-editor" tabindex="0">
 <md-toolbar><div class="md-toolbar-tools">
 <h2>Css styles</h2>
 </div></md-toolbar>
@@ -432,8 +432,8 @@
 </div>
 </md-content>
 <div class="dfx-ve-css-styles-actions">
-<md-button ng-click="saveStyles()" class="md-primary">Save</md-button>
-<md-button ng-click="closeCssDialog()" class="md-primary">Cancel</md-button>
+<md-button id="save-css-styles" ng-click="saveStyles()" class="md-primary">Save</md-button>
+<md-button id="exit-css-styles" ng-click="closeCssDialog()" class="md-primary">Cancel</md-button>
 </div>
 </div>
 <div class="dfx-ve-backdrop" ng-click="closeCssDialog()"></div>

@@ -1635,8 +1635,15 @@ dfxViewEditorApp.directive('dfxVePickerIcon', ['$q', '$http', '$mdDialog', '$tim
                     $('.dfx-ve-dialog').load('/gcontrols/web/picker_icon_list.html', function(){
                         $compile($('.dfx-ve-dialog').contents())(scope);
                         $('.sp-container').remove();
+                        $('#dfx-ve-icons-dialog').keyup(function(e) { 
+                            if(e.which === 27) scope.closeVeIconsDialog();
+                            if(e.which === 13 && document.activeElement.tagName!=='BUTTON') scope.closeVeIconsDialog();
+                            e.preventDefault();
+                            e.stopPropagation();
+                        });
                         $timeout(function() {
                             $('.dfx-ve-content-dialog').addClass('active');
+                            $('#exit-icons-dialog').focus();
                         }, 250);
                     });
                 });
@@ -1669,6 +1676,7 @@ dfxViewEditorApp.directive('dfxVePickerIcon', ['$q', '$http', '$mdDialog', '$tim
                 $timeout(function(){
                     angular.element($('.dfx-ve-dialog')).remove();
                     $('.sp-container').remove();
+                    if($('#dfx-ve-menu-editor-dialog').length > 0) $('#dfx-ve-menu-editor-dialog').focus();
                 }, 250);
             }
         }
@@ -1684,7 +1692,7 @@ dfxViewEditorApp.directive('dfxVeCssStyle', ['$timeout', '$compile', function($t
             return '/gcontrols/web/css_style.html';
         },
         link: function(scope, element, attrs) {
-            scope.attributes.style.status = "overridden";
+            scope.attributes.style.status = "overridden";            
             scope.showCssStyles = function(ev) {
                 var dfxCssStyleDialog = '<div class="dfx-ve-dialog"></div>';
                 $('body').append(dfxCssStyleDialog);
@@ -1694,6 +1702,13 @@ dfxViewEditorApp.directive('dfxVeCssStyle', ['$timeout', '$compile', function($t
                     scope.preview = {};
                     $timeout(function() {
                         $('.dfx-ve-css-style-editor').addClass('active');
+                        $('#save-css-styles').focus();
+                        $('#dfx-ve-css-style-dialog').keyup(function(e) { 
+                            if(e.which === 27) scope.closeCssDialog();
+                            if(e.which === 13) scope.saveStyles();
+                            e.preventDefault();
+                            e.stopPropagation();
+                        });
                         scope.inputStyle = $(".css-style");
                         scope.targetStyles = ev.target;
                         scope.targetElement = $(scope.targetStyles).parent().children('input');
@@ -1818,8 +1833,10 @@ dfxViewEditorApp.directive('dfxVeCssStyle', ['$timeout', '$compile', function($t
                 $timeout(function(){
                     angular.element($('.dfx-ve-dialog')).remove();
                     $('.sp-container').remove();
+                    if($('#dfx-ve-menu-editor-dialog').length > 0) $('#dfx-ve-menu-editor-dialog').focus();
                 }, 250);
-            }
+            }          
+
         }
     }
 }]);
@@ -2016,7 +2033,15 @@ dfxViewEditorApp.directive('dfxVeExpressionEditor', [ '$mdDialog', function($mdD
                         $("textarea.expression-textarea").val(scope.targetLabelValue);
                         if (scope.attributes.label) { scope.attributes.label.status = "overridden"; }
                         if (scope.attributes.display) { scope.attributes.display.status = "overridden"; }
-                        if (scope.attributes.disabled) { scope.attributes.disabled.status = "overridden"; }
+                        if (scope.attributes.disabled) { scope.attributes.disabled.status = "overridden"; }                        
+                        $('#dfx-ve-expression-dialog').keyup(function(e) { 
+                            if(e.which === 13) {
+                                var activeTagName = document.activeElement.tagName;
+                                if(activeTagName!=='A' && activeTagName!=='TEXTAREA' && activeTagName!=='BUTTON') scope.setLabel();                                
+                            }
+                            e.preventDefault();
+                            e.stopPropagation();
+                        });
                     },
                     controller: function() {
                         scope.addVariable = function(ev) {
@@ -2144,9 +2169,18 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                     parent: angular.element(document.body),
                     targetEvent: ev,
                     clickOutsideToClose:true,
+                    escapeToClose: false,
                     ariaLabel: 'menu-editor',
                     templateUrl: '/gcontrols/web/menu_editor.html',
                     onComplete: function() {
+                        $('#dfx-ve-menu-editor-dialog').keyup(function(e) { 
+                            if(e.which === 13 && $('#dfx-ve-expression-menu-dialog').length === 0) {
+                                if(document.activeElement.tagName!=='BUTTON')  scope.closeDialog();
+                            }
+                            if(e.which === 27) scope.closeDialog();
+                            e.preventDefault();
+                            e.stopPropagation();
+                        }); 
                         $timeout(function(){
                             if(scope.menuItems.value.length>0) {
                                 scope.menu = scope.menuItems.value[0];
@@ -2722,6 +2756,15 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                                     $compile($('.dfx-ve-dialog').contents())(scope);
                                     $('.sp-container').remove();
                                     $('.dfx-ve-content-dialog').addClass('active');
+                                    $('#dfx-ve-gc-samples-dialog').keyup(function(e) { 
+                                        if(e.which === 13) {
+                                            var activeTagName = document.activeElement.tagName;
+                                            if(activeTagName!=='TEXTAREA' && activeTagName!=='BUTTON') $('#dfx-copy-sample-btn').click();                                
+                                        }
+                                        if(e.which === 27) scope.closeSamples();
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                    }); 
                                     $timeout(function(){
                                         scope.runJsonEditor(scope.gcSamplesArray[0].value);
                                         $(".dfx-ve-content-categories li").eq(0).find('span').addClass('active');
@@ -2771,6 +2814,7 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                             $('.dfx-ve-content-dialog').removeClass('active');
                             angular.element($('.dfx-ve-dialog')).remove();
                             $('.sp-container').remove();
+                            if($('#dfx-ve-menu-editor-dialog').length > 0) $('#dfx-ve-menu-editor-dialog').focus();
                         }
                     }
                 })
@@ -2889,6 +2933,16 @@ dfxViewEditorApp.directive('dfxVeMenuExpression', [ '$timeout', '$compile', func
                     $scope.targetMenuExpValue = angular.element($scope.targetMenuExpression).data('$ngModelController').$viewValue;
                     $("textarea.expression-textarea").val($scope.targetMenuExpValue);
                     $('#' + $scope.component_id + '_md_dialog .second-dialog').fadeIn(250);
+                    $('textarea.expression-textarea').focus();
+                    $('#dfx-ve-expression-menu-dialog').keyup(function(e) { 
+                        if(e.which === 13) {                            
+                            var activeTagName = document.activeElement.tagName;
+                            if(activeTagName!=='A' && activeTagName!=='TEXTAREA' && activeTagName!=='BUTTON') $scope.saveMenuExpression();                                
+                        }
+                        if(e.which === 27) $scope.closeMenuExpression();
+                        e.preventDefault();
+                        e.stopPropagation();
+                    });    
                 }, 250);
             }
             $scope.addExpression = function(ev) {
@@ -2904,12 +2958,14 @@ dfxViewEditorApp.directive('dfxVeMenuExpression', [ '$timeout', '$compile', func
                 angular.element($scope.targetMenuExpression).data('$ngModelController').$setViewValue(newMenuExpression);
                 $($scope.targetMenuExpression).focus().blur();
                 $(".second-dialog").fadeOut('250', function() { $(this).remove(); });
+                $('#dfx-ve-menu-editor-dialog').focus();
             }
             $scope.clearMenuExpression = function() {
                 $("textarea.expression-textarea").val('');
             }
             $scope.closeMenuExpression = function() {
                 $(".second-dialog").fadeOut('250', function() { $(this).remove(); });
+                $('#dfx-ve-menu-editor-dialog').focus();
             }
         }
     }
@@ -2931,11 +2987,20 @@ dfxViewEditorApp.directive('dfxVeTreeEditor', [ '$mdDialog', '$mdToast', '$http'
                     parent: angular.element(document.body),
                     targetEvent: ev,
                     clickOutsideToClose:true,
+                    escapeToClose: false,
                     ariaLabel: 'tree-view-editor',
                     templateUrl: '/gcontrols/web/treeview_editor.html',
                     onComplete: function() {
                         scope.children = scope.attributes.static.value;
                         scope.tree = scope.children[0];
+                        $('#dfx-ve-menu-editor-dialog').keyup(function(e) { 
+                            if(e.which === 13 && $('#dfx-ve-expression-menu-dialog').length === 0) {
+                                if(document.activeElement.tagName!=='BUTTON')  scope.closeDialog();
+                            }
+                            if(e.which === 27) scope.closeDialog();
+                            e.preventDefault();
+                            e.stopPropagation();
+                        }); 
                         $timeout(function() {
                             scope.indexTreeItem = 0;
                             scope.arrayElement = scope.children;
