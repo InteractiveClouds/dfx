@@ -28,13 +28,16 @@
                 </li>
                 <li class="col-md-12">
                     <span class="col-md-4">Options:</span>
-                    <a ng-click="showOptionsEditor($event)" style="font-size:12px;color:#97CFFF;text-decoration:none; cursor:pointer;"><span style="padding-left:0"><md-icon class="fa fa-edit" style="font-size:14px;height:16px;min-height: 14px;"></md-icon>Edit</span></a>
+                    <a ng-click="showOptionsEditor($event)" style="font-size:12px;color:#97CFFF;text-decoration:none;margin-left:5px;cursor:pointer;"><span style="padding-left:0"><md-icon class="fa fa-edit" style="font-size:14px;height:16px;min-height: 14px;"></md-icon>Edit</span></a>
                 </li>
                 <li class="col-md-12">
                     <span class="col-md-4" style="margin-top: 3px">Direction:</span>
-                    <md-input-container class="col-md-8" style="padding: 0 0 10px">
-                        <md-select aria-label="Input type:" ng-model="attributes.direction.value" ng-change="overrideAttribute('direction')"><md-option ng-repeat="direction in ['row', 'column']" value="{{direction}}">{{direction}}</md-option></md-select>
-                    </md-input-container>
+                    <div class="col-md-8" layout="row">
+                        <md-radio-group class="dfx-ve-property-treeview-radiogroup row-radio" ng-model="attributes.direction.value" ng-change="overrideAttribute('direction')">
+                            <md-radio-button class="md-primary" value="column" aria-label="Direction">Column</md-radio-button>
+                            <md-radio-button class="md-primary" value="row" aria-label="Direction">Row</md-radio-button>
+                        </md-radio-group>
+                    </div>
                 </li>
                 <li class="col-md-12">
                     <span class="col-md-4" style="margin-top: 3px">Display value:</span>

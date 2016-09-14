@@ -1,7 +1,7 @@
 <div style="{{attributes.style.value}}" class="dfx-core-gc-checkbox {{attributes.classes.value}}">
-    <div style="{{attributes.labelStyle.style}}" class="dfx-core-gc-checkbox-label {{attributes.labelStyle.class}}">{{attributes.label.value | checkExpression}}</div>
-    <div ng-repeat="item in attributes.staticArray.value track by $index" ng-style="{'margin-top' : $index > 0 && attributes.direction.value ==='column' ? '21px' : '4px', 'margin-right':'15px'}">
-        <md-checkbox ng-model="item.isChecked" class="dfx-core-gc-checkbox-button md-primary" ng-class="{{attributes.itemStyle.item.class}}" style="{{attributes.itemStyle.item.style}}" aria-label="item.isChecked">
+    <div><span style="{{attributes.labelStyle.style}}" class="dfx-core-gc-checkbox-label {{attributes.labelStyle.class}}">{{attributes.label.value | checkExpression}}</span></div>
+    <div ng-repeat="item in attributes.staticArray.value track by $index" ng-style="{'margin-top' : $index > 0 && attributes.direction.value ==='column' ? '21px' : '4px', 'margin-right':'15px', 'display': attributes.direction.value === 'column' ? 'block' : 'inline-block'}">
+        <md-checkbox ng-model="item.isChecked" class="dfx-core-gc-checkbox-button md-altTheme-theme md-primary" ng-class="attributes.itemStyle.item.class !== '' ? attributes.itemStyle.item.class : ''"  style="{{attributes.itemStyle.item.style}}" aria-label="item.isChecked">
             <span class="{{attributes.itemStyle.label.class}}" style="{{attributes.itemStyle.label.style}}">{{ item.label | checkExpression }}</span>
             <span ng-if="attributes.displayValue.value" style="{{attributes.itemStyle.val.style}}" class="{{attributes.itemStyle.val.class}}"> 
                 <span ng-if="item.isChecked" ng-bind="item.checked"></span>
