@@ -415,7 +415,12 @@ md-input-container label{
     /*padding-right: 0 !important;*/
     /*width: 136px !important;*/
 }
-
+md-input-container>div>md-select {
+    margin: 0;
+    -webkit-box-ordinal-group: 3;
+    -webkit-order: 2;
+    order: 2;
+}
 md-input-container md-select md-select-value{
     padding-bottom: 3px !important;
     margin-top: -2px !important;
@@ -424,6 +429,14 @@ md-input-container md-select md-select-value{
 md-input-container md-select md-select-value span.md-select-icon{
     margin-top: -2px !important;
     color: rgba(0,0,0,0.26);
+}
+/* Input Container Label Fix */
+md-input-container.md-input-focused label.md-placeholder {
+    opacity: 0 !important;
+}
+md-input-container.md-input-has-value label {
+    opacity: 1 !important;
+    color: rgba(0,0,0,0.54);
 }
 
 button.chip_remove {
@@ -506,11 +519,13 @@ md-chips md-chips-wrap div input[placeholder]:-ms-input-placeholder{
 }
 
 md-radio-button > div.md-container{
-    margin-top: 3px;
+    /*margin-top: 1px;*/
 }
 
 md-radio-button > div.md-label{
-    padding-top: 2px;
+    /*padding-top: 1px;*/
+    margin-left: 28px;
+    margin-right: 8px;
 }
 
 
@@ -886,14 +901,14 @@ md-content.menu-structure.options-editor, md-content.tree-structure.options-edit
     max-height: 260px;
     overflow-y: auto;
 }
-md-content.menu-structure ul, md-content.tree-structure ul {
+md-content.menu-structure ul, md-content.tree-structure ul, md-content.actions-structure ul {
   padding: 0px;
   list-style: none;
 }
-md-content.menu-structure ul ul, md-content.tree-structure ul ul  {
+md-content.menu-structure ul ul, md-content.tree-structure ul ul, md-content.actions-structure ul ul {
     padding-left: 20px;
 }
-md-content.menu-structure ul li a, md-content.tree-structure ul li a {
+md-content.menu-structure ul li a, md-content.tree-structure ul li a, md-content.actions-structure ul li a {
     padding: 0px 10px;
     text-decoration: none;
     display: block;
@@ -901,10 +916,10 @@ md-content.menu-structure ul li a, md-content.tree-structure ul li a {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-md-content.menu-structure ul li a:hover, md-content.tree-structure ul li a:hover {
+md-content.menu-structure ul li a:hover, md-content.tree-structure ul li a:hover, md-content.actions-structure ul li a:hover {
     background:rgba(236,236,236,0.5);
 }
-md-content.menu-structure ul li.active > a, md-content.tree-structure ul li.active > a  {
+md-content.menu-structure ul li.active > a, md-content.tree-structure ul li.active > a, md-content.actions-structure ul li.active > a {
     font-weight: 700;
     background:#ECECEC;
 }
@@ -979,16 +994,16 @@ md-input-container label:not(.md-container-ignore) {
 md-input-container {
     margin: 0;
 }
-
 .gc-btn-group {
     display:inline-flex;
     flex-direction:row;
-    margin:0 -20px
+    width: 100%;
 }
 .gc-btn-group button.gc-btn-group-first {
+    width: 100%;
     height:36px!important;
     border-radius:3px 0 0 3px!important;
-    margin-right:0!important;
+    margin:0;
     z-index: 1;
 }
 .gc-btn-group button.gc-btn-group-last {
@@ -996,7 +1011,7 @@ md-input-container {
     min-width:35px;
     width:35px;
     border-radius:0 3px 3px 0!important;
-    margin-left:0!important;
+    margin:0;
     position: relative;
     z-index: 0;
 }
@@ -1021,6 +1036,10 @@ md-input-container {
 }
 /* Empty menu container fix */
 .md-open-menu-container md-menu-content.md-menu-bar-menu:empty { display: none !important; }
+/* Fixed menu container padding */
+div._md.md-open-menu-container {
+    padding: 0px !important;
+}
 /* GC Carousel */
 @font-face {
     font-family: 'Material Icons';

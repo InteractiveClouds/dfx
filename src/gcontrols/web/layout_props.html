@@ -26,10 +26,10 @@
 						<li class="col-md-12">
 							<div layout>
 								<span class="col-md-3" style="margin-top:10px;">Flex Height:</span>
-								<md-slider class="md-primary" flex ng-model="row.height.value" ng-disabled="attributes.autoHeight && attributes.autoHeight.value" step="5" min="0" max="100" aria-label="Flex height:">
+									<md-slider class="md-primary" flex ng-model="row.height.value" ng-disabled="attributes.autoHeight && attributes.autoHeight.value" step="5" min="0" max="100" aria-label="Flex height:">
 								</md-slider>
 								<div flex="20" layout layout-align="center center">
-									<input flex type="text" ng-model="row.height.value" aria-label="blue" aria-controls="row-height" style="margin-left:5px" ng-change="overrideAttribute('layout')">
+									<input flex type="number" min="0" max="100" ng-model="row.height.value" aria-label="blue" aria-controls="row-height" style="margin-left:5px" ng-change="overrideAttribute('layout')">
 								</div>
 							</div>
 						</li>
@@ -65,7 +65,7 @@
 												<md-slider class="md-primary" flex ng-model="column.width.value" step="5" min="0" max="100" aria-label="Flex width:">
 							  					</md-slider>
 												<div flex="20" layout layout-align="center center">
-													<input flex type="text" ng-model="column.width.value" aria-label="blue" aria-controls="column-width" style="margin-left:5px" ng-change="overrideAttribute('layout')">
+													<input flex type="number" ng-model="column.width.value" aria-label="blue" aria-controls="column-width" style="margin-left:5px" ng-change="overrideAttribute('layout')">
 												</div>
 							  				</div>
 										</li>

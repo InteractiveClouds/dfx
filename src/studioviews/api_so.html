@@ -90,7 +90,7 @@
 		</h4>
 	</div>
 	<md-tabs md-selected="selected_service_tab" md-dynamic-height md-center-tabs md-stretch-tabs="always" md-border-bottom>
-		<md-tab label="Settings">
+		<md-tab label="Settings" md-on-select="closeActionsEditor()">
 			<md-content class="md-padding sidenav-service">
 				<md-input-container class="input-select-aligned" ng-class="validUrlResult === 'failed' || existUrl === true ? 'md-input-invalid' : ''" style="width:100%">
 				  <label>API Route URL:</label>
@@ -162,7 +162,7 @@
                 </md-input-container>
 			</md-content>
 		</md-tab>
-		<md-tab label="Parameters">
+		<md-tab label="Parameters" md-on-select="closeActionsEditor()">
 			<md-content class="md-padding sidenav-service">
 				<h4>Parameters for: {{scopeService.data.settings.url}}</h4>
 				<table ng-if="scopeService.data.parameters.length > 0" class="sidenavtable" style="width:100%;">
@@ -396,7 +396,7 @@
 	      </div>				
 			</md-content>
 		</md-tab>
-		<md-tab label="Test">
+		<md-tab label="Test" md-on-select="closeActionsEditor()">
 			<md-content class="md-padding sidenav-service">
 				<md-button ng-click="execute( $event )" class="md-raised">
 					<md-icon class="fa fa-play" style="width:14px;height:14px;"></md-icon>
@@ -517,7 +517,7 @@
 												<td width="20%">{{serviceItem.data.settings.typerequest.slice(5)}}</td>
 												<td width="25%">{{serviceItem.data.settings.authentication === 'none' ? 'public/rest' : serviceItem.data.settings.authentication}}</td>
 												<td>
-	                        <md-button ng-click="editService( serviceItem )" style="margin:0;padding:0;min-width:20px" aria-label="edit-service"><md-icon class="fa fa-edit" style="font-size:20px; padding-top: 5px;"></md-icon></md-button>
+	                        <md-button ng-click="editService( serviceItem, $index )" style="margin:0;padding:0;min-width:20px" aria-label="edit-service"><md-icon class="fa fa-edit" style="font-size:20px; padding-top: 5px;"></md-icon></md-button>
                             <md-button ng-click="showCurl( serviceItem )" style="margin:0;padding:0;min-width:20px" aria-label="show-curl"><md-icon class="fa fa-info" style="font-size:20px; padding-top: 5px;"></md-icon></md-button>
                             <md-button style="margin: 0; padding: 0; min-width: 20px" ng-click="confirmDelete( $event, $index )" aria-label="delete-service"><md-icon class="fa fa-trash" style="font-size:20px; padding-top: 3px;"></md-icon></md-button>
 												</td>

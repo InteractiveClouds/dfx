@@ -458,6 +458,35 @@ md-dialog .dfx-ve-property-treeview {
   }
 }
 
+.dfx-ve-property-treeview-radiogroup {
+  display: flex;
+  padding-left: 5px;
+  &.row-radio {
+    flex-direction: row;
+  }
+  md-radio-button {
+    margin-bottom: 0px;
+    &>div.md-label {
+      margin-left: 26px;
+      margin-right: 16px;
+    }
+    &:hover {
+      color: #2389da;
+    }
+  }
+}
+
+.dfx-ve-property-treeview-edit-button {
+  cursor:pointer;
+  &:hover {
+    color: #2389da;
+  }
+  .dfx-ve-property-treeview-edit-button-icon {
+    color: #2389da;
+    margin-right: 8px;
+  }
+}
+
 md-dialog .dfx-ve-property-treeview label:before {
   margin-top: 3px !important;
 }

@@ -1,4 +1,4 @@
-<md-dialog aria-label="textarea" ng-cloak>
+<md-dialog aria-label="textarea" ng-cloak id="dfx-ve-menu-editor-dialog" tabindex="0">
 	<form>
 		<md-toolbar>
 			<div class="md-toolbar-tools">
@@ -26,7 +26,7 @@
 		      <md-content class="menu-structure options-editor" layout-padding flex>
 						<ul>
 							<li ng-repeat="statOpt in attributes.staticOptions.value track by $index" class="menu-tree-item">
-								<a href="#" ng-click="selectOptionItem( $index )">{{ statOpt.display | checkExpression }}</a>
+								<a href="#" ng-click="selectOptionItem( $index )">{{ (statOpt.display | checkExpression) || 'no-label' }}</a>
 							</li>
 						</ul>
 		      </md-content>

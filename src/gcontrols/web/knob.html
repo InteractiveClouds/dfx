@@ -17,7 +17,9 @@
     <md-input-container class="md-input-has-messages md-input-has-value" style="display: block;;text-align: {{attributes.labelPosition.value}}" ng-show="$eval(attributes.showLabel.value)">
     	<label ng-click="$eval(attributes.onlabelclick.value)" ng-bind="$eval(attributes.label.value)" style="{{attributes.labelStyle.value}}"></label>
     </md-input-container>
-    <div ng-if="!isRepeatable.value" class="{{component_id}}_dfx_ng_knob" dfx-item="{{$dfx_item}}" dfx-index="{{$dfx_index}}"></div>
+    <div ng-if="!isRepeatable.value" class="{{component_id}}_dfx_ng_knob">
+        <ui-knob dfx-complex-value options="attributes.options.value"></ui-knob>
+    </div>
     <div ng-if="isRepeatable.value" class="{{component_id}}_dfx_ng_knob" >
         <ui-knob id="{{component_id}}_dfx_ng_knob_{{repeated_id}}" value="0" options="attributes.options.value"></ui-knob>
     </div>

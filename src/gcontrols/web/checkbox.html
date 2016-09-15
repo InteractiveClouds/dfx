@@ -1,110 +1,46 @@
-<div ng-if="attributes.isBindingPresent.value=== true" ng-show="$eval(attributes.display.value)" class="{{attributes.classes.value}}" ng-class="$eval(attributes.dynamicClasses.value)" style="{{attributes.style.value}}">
-    <div class="gc-true-checkbox-label-preview"><span ng-bind="$eval(attributes.label.value)"></span></div>
-    <div ng-if="attributes.optionsType.value==='dynamic'" ng-repeat="item in $gcscope[attributes.source.value] track by $index" ng-style="{'margin-top' : $index > 0 && attributes.direction.value ==='column' ? '21px' : '4px', 'display': attributes.direction.value ==='column' ? 'block' : 'inline-block', 'margin-right':'15px'}">
-        <div style="display: inline-block;">
-            <md-checkbox ng-model="attributes.bindingBoolean.value[$index]" style="margin: 0 0 0 5px" class="md-primary" ng-class="attributes.buttonClass.value" ng-disabled="$eval(attributes.disabled.value)"
-                         ng-click="ngClickFunc();sendId(component_id)"
-                         ng-change="$eval(attributes.onchange.value)"
-                         ng-focus="$eval(attributes.onfocus.value)"
-                         ng-blur="$eval(attributes.onblur.value)"
-                         ng-dblclick="$eval(attributes.ondblclick.value)"
-                         ng-keypress="$eval(attributes.onkeypress.value)"
-                         ng-keydown="$eval(attributes.onkeydown.value)"
-                         ng-keyup="$eval(attributes.onkeyup.value)"
-                         ng-mouseover="$eval(attributes.onmouseover.value)"
-                         ng-mouseenter="$eval(attributes.onmouseenter.value)"
-                         ng-mousemove="$eval(attributes.onmousemove.value)"
-                         ng-mouseleave="$eval(attributes.onmouseleave.value)"
-                         ng-mousedown="$eval(attributes.onmousedown.value)"
-                         ng-mouseup="$eval(attributes.onmouseup.value)"
-                         aria-label="md-checkbox"></md-checkbox>
-        </div>
-        <div style="display: inline-block;">{{$eval(item[attributes.checkValue.label]) || item[attributes.checkValue.label]}}</div>
-        <div ng-if="$eval(attributes.displayValue.value)" style="display: inline-block;">
-            <div ng-if="attributes.bindingBoolean.value[$index]">{{$eval(item[attributes.checkValue.trueCheckValue]) || item[attributes.checkValue.trueCheckValue]}}</div>
-            <div ng-if="!attributes.bindingBoolean.value[$index]">{{$eval(item[attributes.checkValue.falseCheckValue]) || item[attributes.checkValue.falseCheckValue]}}</div>
-        </div>
-        <!--{{item}}-->
+<div ng-if="isBindingPresent.value=== true" ng-show="$eval(attributes.display.value)" class="dfx-core-gc-checkbox {{attributes.classes.value}}" ng-class="$eval(attributes.dynamicClasses.value)" style="{{attributes.style.value}}">
+    <div><span style="{{attributes.labelStyle.style}}" class="dfx-core-gc-checkbox-label {{attributes.labelStyle.class}}" ng-bind="$eval(attributes.label.value)"></span></div>
+    <div ng-if="attributes.optionsType.value==='dynamic'" ng-init="dfxCheckboxBinding = ($eval(bindingObject))" ng-repeat="item in $parent_scope[attributes.source.value] track by $index" ng-style="{'margin-top' : $index > 0 && attributes.direction.value ==='column' ? '21px' : '4px', 'display': attributes.direction.value ==='column' ? 'block' : 'inline-block', 'margin-right':'15px', 'margin-left':'5px'}">
+        <md-checkbox class="dfx-core-gc-checkbox-button md-altTheme-theme md-primary" ng-class="attributes.itemStyle.item.class !== '' ? attributes.itemStyle.item.class : ''" style="{{attributes.itemStyle.item.style}}" ng-init="dfxTrueValue = dfxCheckValueType( $eval('item.' + attributes.checkValue.trueCheckValue) ); dfxFalseValue = dfxCheckValueType( $eval('item.' + attributes.checkValue.falseCheckValue) )" ng-model="dfxCheckboxBinding[$index]" ng-true-value="{{dfxTrueValue}}" ng-false-value="{{dfxFalseValue}}" ng-disabled="$eval(attributes.disabled.value)" ng-click="$eval(attributes.onclick.value)" ng-change="$eval(attributes.onchange.value)" ng-focus="$eval(attributes.onfocus.value)" ng-blur="$eval(attributes.onblur.value)" ng-dblclick="$eval(attributes.ondblclick.value)" ng-keypress="$eval(attributes.onkeypress.value)" ng-keydown="$eval(attributes.onkeydown.value)" ng-keyup="$eval(attributes.onkeyup.value)" ng-mouseover="$eval(attributes.onmouseover.value)" ng-mouseenter="$eval(attributes.onmouseenter.value)" ng-mousemove="$eval(attributes.onmousemove.value)" ng-mouseleave="$eval(attributes.onmouseleave.value)" ng-mousedown="$eval(attributes.onmousedown.value)" ng-mouseup="$eval(attributes.onmouseup.value)" aria-label="Checkbox Item">
+            <span class="{{attributes.itemStyle.label.class}}" style="{{attributes.itemStyle.label.style}}" ng-init="dfxCheckLabel = $eval('item.' + attributes.checkValue.label)" ng-bind="$eval(dfxCheckLabel)"></span>
+            <span ng-if="attributes.displayValue.value" style="{{attributes.itemStyle.val.style}}" class="{{attributes.itemStyle.val.class}}"> 
+                <span ng-if="dfxCheckboxBinding[$index] === $eval('item.' + attributes.checkValue.trueCheckValue)" ng-bind="$eval('item.' + attributes.checkValue.trueCheckValue)"></span>
+                <span ng-if="dfxCheckboxBinding[$index] === $eval('item.' + attributes.checkValue.falseCheckValue)" ng-bind="$eval('item.' + attributes.checkValue.falseCheckValue)"></span>
+            </span>
+        </md-checkbox>
     </div>
-
-    <div ng-if="attributes.optionsType.value==='static'" ng-repeat="item in attributes.staticArray.value track by $index" ng-style="{'margin-top' : $index > 0 && attributes.direction.value ==='column' ? '21px' : '4px', 'display': attributes.direction.value ==='column' ? 'block' : 'inline-block', 'margin-right':'15px'}">
-        <div style="display: inline-block;">
-            <md-checkbox ng-model="attributes.bindingBoolean.value[$index]" style="margin: 0 0 0 5px" class="md-primary" ng-class="attributes.buttonClass.value" ng-disabled="$eval(attributes.disabled.value)"
-                         ng-click="ngClickFunc();sendId(component_id)"
-                         ng-change="$eval(attributes.onchange.value)"
-                         ng-focus="$eval(attributes.onfocus.value)"
-                         ng-blur="$eval(attributes.onblur.value)"
-                         ng-dblclick="$eval(attributes.ondblclick.value)"
-                         ng-keypress="$eval(attributes.onkeypress.value)"
-                         ng-keydown="$eval(attributes.onkeydown.value)"
-                         ng-keyup="$eval(attributes.onkeyup.value)"
-                         ng-mouseover="$eval(attributes.onmouseover.value)"
-                         ng-mouseenter="$eval(attributes.onmouseenter.value)"
-                         ng-mousemove="$eval(attributes.onmousemove.value)"
-                         ng-mouseleave="$eval(attributes.onmouseleave.value)"
-                         ng-mousedown="$eval(attributes.onmousedown.value)"
-                         ng-mouseup="$eval(attributes.onmouseup.value)"
-                         aria-label="md-checkbox"></md-checkbox>
-        </div>
-        <div ng-bind="$eval(item.label)" style="display: inline-block;"></div>
-        <div ng-if="$eval(attributes.displayValue.value)" style="display: inline-block;">
-            <div ng-if="attributes.bindingBoolean.value[$index]">{{$eval(item.checked) || item.checked}}</div>
-            <div ng-if="!attributes.bindingBoolean.value[$index]">{{$eval(item.unchecked) || item.unchecked}}</div>
-        </div>
+    <div ng-if="attributes.optionsType.value==='static'" ng-init="dfxCheckboxBinding = ($eval(bindingObject))" ng-repeat="item in attributes.staticArray.value track by $index" ng-style="{'margin-top' : $index > 0 && attributes.direction.value ==='column' ? '21px' : '4px', 'display': attributes.direction.value ==='column' ? 'block' : 'inline-block', 'margin-right':'15px', 'margin-left':'5px'}">
+        <md-checkbox class="dfx-core-gc-checkbox-button md-altTheme-theme md-primary" ng-class="attributes.itemStyle.item.class !== '' ? attributes.itemStyle.item.class : ''" style="{{attributes.itemStyle.item.style}}" ng-init="dfxTrueValue = dfxCheckValueType( $eval(item.checked) ); dfxFalseValue = dfxCheckValueType( $eval(item.unchecked) )" ng-model="dfxCheckboxBinding[$index]" ng-true-value="{{dfxTrueValue}}" ng-false-value="{{dfxFalseValue}}" ng-disabled="$eval(attributes.disabled.value)" ng-click="$eval(attributes.onclick.value)" ng-change="$eval(attributes.onchange.value)" ng-focus="$eval(attributes.onfocus.value)" ng-blur="$eval(attributes.onblur.value)" ng-dblclick="$eval(attributes.ondblclick.value)" ng-keypress="$eval(attributes.onkeypress.value)" ng-keydown="$eval(attributes.onkeydown.value)" ng-keyup="$eval(attributes.onkeyup.value)" ng-mouseover="$eval(attributes.onmouseover.value)" ng-mouseenter="$eval(attributes.onmouseenter.value)" ng-mousemove="$eval(attributes.onmousemove.value)" ng-mouseleave="$eval(attributes.onmouseleave.value)" ng-mousedown="$eval(attributes.onmousedown.value)" ng-mouseup="$eval(attributes.onmouseup.value)" aria-label="Checkbox Item">
+            <span class="{{attributes.itemStyle.label.class}}" style="{{attributes.itemStyle.label.style}}" ng-bind="$eval(item.label)"></span>
+            <span ng-if="attributes.displayValue.value" style="{{attributes.itemStyle.val.style}}" class="{{attributes.itemStyle.val.class}}"> 
+                <span ng-if="dfxCheckboxBinding[$index] === $eval(item.checked)" ng-bind="$eval(item.checked)"></span>
+                <span ng-if="dfxCheckboxBinding[$index] === $eval(item.unchecked)" ng-bind="$eval(item.unchecked)"></span>
+            </span>
+        </md-checkbox>
     </div>
-
 </div>
-
-<div ng-if="attributes.isBindingPresent.value=== false" ng-show="$eval(attributes.display.value)" class="{{attributes.classes.value}}" ng-class="$eval(attributes.dynamicClasses.value)" style="{{attributes.style.value}}">
-    <div class="gc-true-checkbox-label-preview"><span ng-bind="$eval(attributes.label.value)"></span></div>
-    <div ng-if="attributes.optionsType.value==='dynamic'" ng-repeat="item in $gcscope[attributes.source.value] track by $index" ng-style="{'margin-top' : $index > 0 && attributes.direction.value ==='column' ? '21px' : '4px', 'display': attributes.direction.value ==='column' ? 'block' : 'inline-block', 'margin-right':'15px'}">
-        <div style="display: inline-block;">
-            <md-checkbox ng-model="attributes.bindingBoolean.value[$index]" style="margin: 0 0 0 5px" class="md-primary" ng-class="attributes.buttonClass.value" ng-disabled="$eval(attributes.disabled.value)"
-                         ng-click="ngClickFunc()"
-                         ng-change="$eval(attributes.onchange.value)"
-                         ng-focus="$eval(attributes.onfocus.value)"
-                         ng-blur="$eval(attributes.onblur.value)"
-                         ng-dblclick="$eval(attributes.ondblclick.value)"
-                         ng-keypress="$eval(attributes.onkeypress.value)"
-                         ng-keydown="$eval(attributes.onkeydown.value)"
-                         ng-keyup="$eval(attributes.onkeyup.value)"
-                         ng-mouseover="$eval(attributes.onmouseover.value)"
-                         ng-mouseenter="$eval(attributes.onmouseenter.value)"
-                         ng-mousemove="$eval(attributes.onmousemove.value)"
-                         ng-mouseleave="$eval(attributes.onmouseleave.value)"
-                         ng-mousedown="$eval(attributes.onmousedown.value)"
-                         ng-mouseup="$eval(attributes.onmouseup.value)"
-                         aria-label="md-checkbox"></md-checkbox>
-        </div>
-        <div style="display: inline-block;">{{$eval(item[attributes.checkValue.label]) || item[attributes.checkValue.label]}}</div>
-        <div ng-if="$eval(attributes.displayValue.value)" style="display: inline-block;">
-            <div ng-if="attributes.bindingBoolean.value[$index]">{{$eval(item[attributes.checkValue.trueCheckValue]) || item[attributes.checkValue.trueCheckValue]}}</div>
-            <div ng-if="!attributes.bindingBoolean.value[$index]">{{$eval(item[attributes.checkValue.falseCheckValue]) || item[attributes.checkValue.falseCheckValue]}}</div>
-        </div>
+<div ng-if="isBindingPresent.value=== false" ng-show="$eval(attributes.display.value)" class="{{attributes.classes.value}}" ng-class="$eval(attributes.dynamicClasses.value)" style="{{attributes.style.value}}">
+    <div><span style="{{attributes.labelStyle.style}}" class="dfx-core-gc-checkbox-label {{attributes.labelStyle.class}}" ng-bind="$eval(attributes.label.value)"></span></div>
+    <div ng-if="attributes.optionsType.value==='dynamic'" ng-repeat="item in $parent_scope[attributes.source.value] track by $index" ng-style="{'margin-top' : $index > 0 && attributes.direction.value ==='column' ? '21px' : '4px', 'display': attributes.direction.value ==='column' ? 'block' : 'inline-block', 'margin-right':'15px', 'margin-left':'5px'}">
+        <md-checkbox class="dfx-core-gc-checkbox-button md-altTheme-theme md-primary" ng-class="attributes.itemStyle.item.class !== '' ? attributes.itemStyle.item.class : ''" style="{{attributes.itemStyle.item.style}}" ng-init="dfxTrueValue = dfxCheckValueType( $eval('item.' + attributes.checkValue.trueCheckValue) ); dfxFalseValue = dfxCheckValueType( $eval('item.' + attributes.checkValue.falseCheckValue) )"
+            ng-model="item.isChecked" ng-disabled="$eval(attributes.disabled.value)" ng-click="$eval(attributes.onclick.value)" ng-change="$eval(attributes.onchange.value)" ng-focus="$eval(attributes.onfocus.value)" ng-blur="$eval(attributes.onblur.value)" ng-dblclick="$eval(attributes.ondblclick.value)" ng-keypress="$eval(attributes.onkeypress.value)" ng-keydown="$eval(attributes.onkeydown.value)" ng-keyup="$eval(attributes.onkeyup.value)" ng-mouseover="$eval(attributes.onmouseover.value)" ng-mouseenter="$eval(attributes.onmouseenter.value)" ng-mousemove="$eval(attributes.onmousemove.value)" ng-mouseleave="$eval(attributes.onmouseleave.value)" ng-mousedown="$eval(attributes.onmousedown.value)" ng-mouseup="$eval(attributes.onmouseup.value)" aria-label="Checkbox Item">
+            <span class="{{attributes.itemStyle.label.class}}" style="{{attributes.itemStyle.label.style}}" ng-init="dfxCheckLabel = $eval('item.' + attributes.checkValue.label)" ng-bind="$eval(dfxCheckLabel)"></span>
+            <span ng-if="attributes.displayValue.value" style="{{attributes.itemStyle.val.style}}" class="{{attributes.itemStyle.val.class}}"> 
+                <span ng-if="item.isChecked" ng-bind="$eval('item.' + attributes.checkValue.trueCheckValue)"></span>
+                <span ng-if="!item.isChecked" ng-bind="$eval('item.' + attributes.checkValue.falseCheckValue)"></span>
+            </span>
+        </md-checkbox>
     </div>
-    <div ng-if="attributes.optionsType.value==='static'" ng-repeat="item in attributes.staticArray.value track by $index" ng-style="{'margin-top' : $index > 0 && attributes.direction.value ==='column' ? '21px' : '4px', 'display': attributes.direction.value ==='column' ? 'block' : 'inline-block', 'margin-right':'15px'}">
-        <div style="display: inline-block;">
-            <md-checkbox ng-model="item.isChecked" style="margin: 0 0 0 5px" class="md-primary" ng-class="attributes.buttonClass.value" ng-disabled="$eval(attributes.disabled.value)"
-                         ng-click="ngClickFunc()"
-                         ng-change="$eval(attributes.onchange.value)"
-                         ng-focus="$eval(attributes.onfocus.value)"
-                         ng-blur="$eval(attributes.onblur.value)"
-                         ng-dblclick="$eval(attributes.ondblclick.value)"
-                         ng-keypress="$eval(attributes.onkeypress.value)"
-                         ng-keydown="$eval(attributes.onkeydown.value)"
-                         ng-keyup="$eval(attributes.onkeyup.value)"
-                         ng-mouseover="$eval(attributes.onmouseover.value)"
-                         ng-mouseenter="$eval(attributes.onmouseenter.value)"
-                         ng-mousemove="$eval(attributes.onmousemove.value)"
-                         ng-mouseleave="$eval(attributes.onmouseleave.value)"
-                         ng-mousedown="$eval(attributes.onmousedown.value)"
-                         ng-mouseup="$eval(attributes.onmouseup.value)"
-                         aria-label="md-checkbox"></md-checkbox>
-        </div>
-        <div ng-bind="$eval(item.label)" style="display: inline-block;"></div>
-        <div ng-if="$eval(attributes.displayValue.value)" style="display: inline-block;">
-            <div ng-if="item.isChecked">{{$eval(item.checked) || item.checked}}</div>
-            <div ng-if="!item.isChecked">{{$eval(item.unchecked) || item.unchecked}}</div>
-        </div>
+    <div ng-if="attributes.optionsType.value==='static'" ng-repeat="item in attributes.staticArray.value track by $index" ng-style="{'margin-top' : $index > 0 && attributes.direction.value ==='column' ? '21px' : '4px', 'display': attributes.direction.value ==='column' ? 'block' : 'inline-block', 'margin-right':'15px', 'margin-left':'5px'}">
+        <md-checkbox class="dfx-core-gc-checkbox-button md-altTheme-theme md-primary" ng-class="attributes.itemStyle.item.class !== '' ? attributes.itemStyle.item.class : ''" style="{{attributes.itemStyle.item.style}}"
+            ng-init="dfxTrueValue = dfxCheckValueType( $eval(item.checked) ); dfxFalseValue = dfxCheckValueType( $eval(item.unchecked) )"
+            ng-model="item.isChecked"            
+            ng-disabled="$eval(attributes.disabled.value)" ng-click="$eval(attributes.onclick.value)" ng-change="$eval(attributes.onchange.value)" ng-focus="$eval(attributes.onfocus.value)" ng-blur="$eval(attributes.onblur.value)" ng-dblclick="$eval(attributes.ondblclick.value)" ng-keypress="$eval(attributes.onkeypress.value)" ng-keydown="$eval(attributes.onkeydown.value)" ng-keyup="$eval(attributes.onkeyup.value)" ng-mouseover="$eval(attributes.onmouseover.value)" ng-mouseenter="$eval(attributes.onmouseenter.value)" ng-mousemove="$eval(attributes.onmousemove.value)" ng-mouseleave="$eval(attributes.onmouseleave.value)" ng-mousedown="$eval(attributes.onmousedown.value)" ng-mouseup="$eval(attributes.onmouseup.value)" aria-label="Checkbox Item">
+            <span class="{{attributes.itemStyle.label.class}}" style="{{attributes.itemStyle.label.style}}" ng-bind="$eval(item.label)"></span>
+            <span ng-if="attributes.displayValue.value" style="{{attributes.itemStyle.val.style}}" class="{{attributes.itemStyle.val.class}}"> 
+                <span ng-if="item.isChecked" ng-bind="$eval(item.checked)"></span>
+                <span ng-if="!item.isChecked" ng-bind="$eval(item.unchecked)"></span>
+            </span>
+        </md-checkbox>
     </div>
 </div>
