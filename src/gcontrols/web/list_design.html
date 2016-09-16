@@ -1,0 +1,9 @@
+<md-content id="{{component_id}}_selectable_list" tabindex="0">
+    <md-list flex>
+        <md-subheader class="md-no-sticky">{{ attributes.label.value | checkExpression }}</md-subheader>
+        <md-list-item class="md-3-line" ng-repeat="it in attributes.static.value track by $index" ng-click="toggleItem($event, it, $index)" style="background-color: {{items_bg[$index]}}">
+            {{listBg[$index]}}
+            <div class="md-list-item-inner" ng-bind-html="it.data"></div>
+        </md-list-item>        
+    </md-list>
+</md-content>

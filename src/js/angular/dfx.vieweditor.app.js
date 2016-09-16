@@ -898,7 +898,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     $scope.palette = {
         'basic': {
             'statictext': {'default_name':'txtText', 'flex':'false'},
-            'button': {'default_name':'btnButton', 'flex':'false'},
+            'button': {'default_name':'btnButton', 'flex':'true'},
             'icon': {'default_name':'icoIcon', 'flex':'false'},
             'image': {'default_name':'imgImage', 'flex':'false'},
             'html': {'default_name':'htHtml', 'flex':'true'},
@@ -928,7 +928,8 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
         'selection': {
             'radio': {'default_name':'rdRadio', 'flex':'false'},
             'checkbox': {'default_name':'chkCheckbox', 'flex':'false'},
-            'switch': {'default_name':'swtSwitch', 'flex':'false'}
+            'switch': {'default_name':'swtSwitch', 'flex':'false'},
+            'list': {'default_name':'sltList', 'flex':'true'}
         },
         'table': {
             'datatable': {'default_name':'dtblDatatable', 'flex':'true'}
@@ -3852,6 +3853,38 @@ dfxViewEditorApp.directive('dfxGcToolbarDesign', function($sce, $compile, $timeo
         }
     }
 });
+
+dfxViewEditorApp.directive('dfxVeListEditor', ['$mdDialog', '$timeout', '$compile', function($mdDialog, $timeout, $compile) {
+    return {
+        restrict: 'E',
+        transclude: true,
+        replace: true,
+        templateUrl: function( el, attrs ) {
+            return '/gcontrols/web/picker_list.html';
+        },
+        link: function(scope, element, attrs) {
+            scope.showListEditor = function(ev) {
+                $mdDialog.show({
+                    scope: scope.$new(),
+                    parent: angular.element(document.body),
+                    targetEvent: ev,
+                    clickOutsideToClose:true,
+                    escapeToClose: false,
+                    templateUrl: '/gcontrols/web/list_options_editor.html',
+                    onComplete:function(scope){
+                        
+                    },
+                    controller: function(scope){
+                        scope.saveDialog = function() {
+                            scope.closeDialog();
+                        }
+                        scope.closeDialog = function() { $mdDialog.hide(); }
+                    }
+                })
+            };
+        }
+    }
+}]);
 
 dfxViewEditorApp.directive('dfxGcToolbarProperty', function($mdDialog) {
     return {
