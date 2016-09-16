@@ -17,13 +17,6 @@
                     <input class="col-md-8" type="text" ng-model="attributes.name.value" ng-change="overrideAttribute('name')"/>
                 </li>
                 <li class="col-md-12">
-                    <span class="col-md-4">Binding:</span>
-                    <div class="col-md-8" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.binding.value" style="margin-left:-15px;" ng-change="overrideAttribute('binding')"/>
-                        <dfx-ve-expression-editor></dfx-ve-expression-editor>
-                    </div>
-                </li>
-                <li class="col-md-12">
                     <span class="col-md-4">Label:</span>
                     <div class="col-md-8" layout="row">
                         <input class="col-md-12" type="text" ng-model="attributes.label.value" style="margin-left:-15px;" ng-change="overrideAttribute('label')"/>
@@ -33,6 +26,13 @@
                 <li class="col-md-12">
                     <span class="col-md-4">List Items:</span>
                     <dfx-ve-list-editor></dfx-ve-list-editor>
+                </li>
+                <li class="col-md-12">
+                    <span class="col-md-4">Selected Items:</span>
+                    <div class="col-md-8" layout="row">
+                        <input class="col-md-12" type="text" ng-model="attributes.selected.value" style="margin-left:-15px;" ng-change="overrideAttribute('selected')"/>
+                        <dfx-ve-expression-editor></dfx-ve-expression-editor>
+                    </div>
                 </li>
                 <li class="col-md-12">
                     <span class="col-md-4">Display:</span>
@@ -88,18 +88,32 @@
                 </li> 
                 <li class="col-md-12">
                     <input class="dfx-ve-property-treeview-button" type="checkbox" checked aria-label="item-12" id="item-12" />
-                    <label for="item-12" class="dfx-ve-property-title-level-1"><span>Item Styling</span></label>
+                    <label for="item-12" class="dfx-ve-property-title-level-1"><span>Label Styling</span></label>
+                    <ul class="dfx-ve-property-treeview-content">
+                        <li class="col-md-12">
+                            <span class="col-md-6">Style:</span>
+                            <div class="col-md-6" layout="row"><input class="col-md-12" type="text" ng-model="attributes.labelStyle.style" ng-change="overrideAttribute('labelStyle.style')" style="margin-left:-15px;"/><dfx-ve-css-style></dfx-ve-css-style></div>
+                        </li>                        
+                        <li class="col-md-12">
+                            <span class="col-md-6">Class:</span>
+                            <input class="col-md-6" type="text" ng-model="attributes.labelStyle.class" ng-change="overrideAttribute('labelStyle.class')"/>
+                        </li>                        
+                    </ul>
+                </li>
+                <li class="col-md-12">
+                    <input class="dfx-ve-property-treeview-button" type="checkbox" checked aria-label="item-13" id="item-13" />
+                    <label for="item-13" class="dfx-ve-property-title-level-1"><span>Item Styling</span></label>
                     <ul class="dfx-ve-property-treeview-content">
                         <li class="col-md-12">
                             <span class="col-md-6">Normal Background Color:</span>
                             <div class="col-md-6 dfx-ve-property-treeview-color-picker" layout="row" style="padding:0;">
-                                <dfx-ve-color-picker name="normal-bg-color" class="col-md-11" ng-model="attributes.itemStyle.bgNormal"></dfx-ve-color-picker>
+                                <dfx-ve-color-picker name="normal-bg-color" class="col-md-11" ng-model="attributes.itemStyle.bgNormal" ng-change="overrideAttribute('itemStyle.bgNormal')"></dfx-ve-color-picker>
                             </div>
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-6">Selected Background Color:</span>
                             <div class="col-md-6 dfx-ve-property-treeview-color-picker" layout="row" style="padding:0;">
-                                <dfx-ve-color-picker name="selected-bg-color" class="col-md-11" ng-model="attributes.itemStyle.bgSelected"></dfx-ve-color-picker>
+                                <dfx-ve-color-picker name="selected-bg-color" class="col-md-11" ng-model="attributes.itemStyle.bgSelected" ng-change="overrideAttribute('itemStyle.bgSelected')"></dfx-ve-color-picker>
                             </div>
                         </li>
                         <li class="col-md-12">

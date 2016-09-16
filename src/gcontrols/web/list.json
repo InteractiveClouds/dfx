@@ -2,7 +2,7 @@
     "template":       { "value": "default" },
     "name":           { "value": "sltList1" },
     "label":          { "value": "'List label'" },
-    "binding" :       { "value": "" },
+    "selected":       { "value": "" },
     "display":        { "value": "true" },
     "disabled":       { "value": "false" },
     "static":         { "value": 
