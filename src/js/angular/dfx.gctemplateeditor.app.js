@@ -9,7 +9,8 @@ dfxGcTemplateEditorApp.config(function($mdThemingProvider) {
 });
 
 dfxGcTemplateEditorApp.controller("dfx_main_gc_template_controller", [ '$scope', '$rootScope', '$q', '$http', '$mdDialog', '$compile', function($scope, $rootScope, $q, $http, $mdDialog, $compile) {
-    $rootScope.message = "Welcome to the View Editor";
+    $rootScope.message = "Welcome to the GC Template Editor";
+    $scope.is_gc_template_editor = true;
     $scope.application_name = $('#dfx-view-editor-body').attr('data-application');
     $scope.view_platform = $('#dfx-view-editor-body').attr('data-platform');
     $scope.gc_template_name = $('#dfx-view-editor-body').attr('data-gctemplate');
@@ -339,8 +340,16 @@ dfxGcTemplateEditorApp.controller("dfx_gc_template_editor_controller", [ '$scope
     };
 
     // Functions to work with GC Templates - START
-    $scope.saveGcTemplate = function (event) {
+    $scope.saveGcTemplate = function(event) {
         $(event.srcElement).animateCss('pulse');
+
+        var prepareAttributes = function(gc_template) {
+            delete gc_template.attributes.name; // remove because it's always overridden anyway
+
+            Object.keys(gc_template.attributes).forEach(function(key, index) {
+                gc_template.attributes[key].locked = gc_template.attributes[key].locked || false;
+            });
+        };
 
         var gc_selected = angular.copy($scope.gc_selected);
         DfxGcTemplateBuilder.removeNotOverriddenAttributes(gc_selected.attributes, gc_selected.type);
@@ -352,7 +361,7 @@ dfxGcTemplateEditorApp.controller("dfx_gc_template_editor_controller", [ '$scope
             attributes: gc_selected.attributes
         };
 
-        delete gc_template.attributes.name; // remove because it's always overridden anyway
+        prepareAttributes(gc_template);
 
         dfxGcTemplates.update( $scope, gc_template )
             .then( function() {
@@ -893,7 +902,7 @@ dfxGcTemplateEditorApp.directive('dfxVeExpressionEditor', [ '$mdDialog', functio
         }
     }
 }]);
-
+*/
 dfxGcTemplateEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http', '$timeout', '$compile', function($mdDialog, $mdToast, $http, $timeout, $compile) {
     return {
         restrict: 'E',
@@ -3007,4 +3016,3 @@ var helpDialogScript = function (options) {
         $('#dfx_visual_editor_help_close').click();
     }
 };
-*/

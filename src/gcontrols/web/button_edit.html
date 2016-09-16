@@ -21,47 +21,47 @@
 					<input class="col-md-8" type="text" ng-model="attributes.name.value" ng-change="overrideAttribute('name')" ng-focus="cacheAttributeOldValue('name', $event)" ng-blur="cacheAttributeNewValue('name')"/>
 				</li>
 				<li class="col-md-12" dfx-gc-property="label">
-					<span class="col-md-4">Label:</span>
+					<span class="col-md-4">Label:<dfx-gc-template-locking attr_name="label"></dfx-gc-template-locking></span>
 					<div class="col-md-8" layout="row">
-						<input class="col-md-12" type="text" ng-model="attributes.label.value" ng-change="overrideAttribute('label')" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue('label', $event)" ng-blur="cacheAttributeNewValue('label')"/>
+						<input class="col-md-12" type="text" ng-model="attributes.label.value" ng-change="overrideAttribute('label')" ng-disabled="attributes.label.locked" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue('label', $event)" ng-blur="cacheAttributeNewValue('label')"/>
 						<dfx-ve-expression-editor></dfx-ve-expression-editor>
 					</div>
 				</li>
 				<li class="col-md-12" dfx-gc-property="icon">
-					<span class="col-md-4">Icon:</span>
+					<span class="col-md-4">Icon:<dfx-gc-template-locking attr_name="icon"></dfx-gc-template-locking></span>
 					<div class="col-md-8" layout="row">
-						<input class="col-md-12" type="text" ng-model="attributes.icon.value" style="margin-left:-15px;" ng-change="overrideAttribute('icon');ifShowIconTypes(attributes.icon.value)" ng-focus="cacheAttributeOldValue('icon')" ng-blur="cacheAttributeNewValue('icon')"/>
+						<input class="col-md-12" type="text" ng-model="attributes.icon.value" style="margin-left:-15px;" ng-change="overrideAttribute('icon');ifShowIconTypes(attributes.icon.value)" ng-disabled="attributes.icon.locked" ng-focus="cacheAttributeOldValue('icon')" ng-blur="cacheAttributeNewValue('icon')"/>
 						<md-icon ng-click="showFontIcons($event, attributes.icon)" dfx-ve-picker-icon class="dfx-ve-picker-icon fa fa-ellipsis-h"></md-icon>
 					</div>
 				</li>
         <li class="col-md-12" ng-show="showIconTypes">
-            <span class="col-md-4">Icon Type:</span>
+            <span class="col-md-4">Icon Type:<dfx-gc-template-locking attr_name="icon"></dfx-gc-template-locking></span>
             <div class="col-md-8" layout="row" style="padding: 0 0 8px 0">
-                <md-radio-group ng-model="attributes.icon.type">
+                <md-radio-group ng-model="attributes.icon.type" ng-disabled="attributes.icon.locked">
                     <md-radio-button value="fa-icon" ngChange="overrideAttribute('icon')" style="margin: 0;" class="md-primary">Font Awesome Icon</md-radio-button>
                     <md-radio-button value="svg-icon" ngChange="overrideAttribute('icon')" style="margin: 0;" class="md-primary">SVG Icon</md-radio-button>
                 </md-radio-group>
             </div>
         </li>
 				<li class="col-md-12">
-					<span class="col-md-4">Icon position:</span>
+					<span class="col-md-4">Icon position:<dfx-gc-template-locking attr_name="icon"></dfx-gc-template-locking></span>
 					<md-input-container class="col-md-8" style="padding: 0 0 4px 0">
-						<md-select aria-label="icon-position " ng-model="attributes.icon.position" ng-change="overrideAttribute('icon')" style="text-transform: capitalize">
+						<md-select aria-label="icon-position " ng-model="attributes.icon.position" ng-change="overrideAttribute('icon')" ng-disabled="attributes.icon.locked" style="text-transform: capitalize">
 							<md-option ng-repeat="iconPosition in ['left', 'center', 'right']" style="text-transform: capitalize" value="{{iconPosition}}">{{iconPosition}}</md-option>
 						</md-select>
 					</md-input-container>
 				</li>
 				<li class="col-md-12" dfx-gc-property="display">
-					<span class="col-md-4">Display:</span>
+					<span class="col-md-4">Display:<dfx-gc-template-locking attr_name="display"></dfx-gc-template-locking></span>
 					<div class="col-md-8" layout="row">
-						<input class="col-md-12" type="text" ng-model="attributes.display.value" style="margin-left:-15px;" ng-change="overrideAttribute('display')" ng-focus="cacheAttributeOldValue('display', $event)" ng-blur="cacheAttributeNewValue('display')"/>
+						<input class="col-md-12" type="text" ng-model="attributes.display.value" style="margin-left:-15px;" ng-change="overrideAttribute('display')" ng-disabled="attributes.display.locked" ng-focus="cacheAttributeOldValue('display', $event)" ng-blur="cacheAttributeNewValue('display')"/>
 						<dfx-ve-expression-editor></dfx-ve-expression-editor>
 					</div>
 				</li>
 				<li class="col-md-12" dfx-gc-property="disabled">
-					<span class="col-md-4">Disabled:</span>
+					<span class="col-md-4">Disabled:<dfx-gc-template-locking attr_name="disabled"></dfx-gc-template-locking></span>
 					<div class="col-md-8" layout="row">
-						<input class="col-md-12" type="text" ng-model="attributes.disabled.value" style="margin-left:-15px;" ng-change="overrideAttribute('disabled')" ng-focus="cacheAttributeOldValue('disabled', $event)" ng-blur="cacheAttributeNewValue('disabled')"/>
+						<input class="col-md-12" type="text" ng-model="attributes.disabled.value" style="margin-left:-15px;" ng-change="overrideAttribute('disabled')" ng-disabled="attributes.disabled.locked" ng-focus="cacheAttributeOldValue('disabled', $event)" ng-blur="cacheAttributeNewValue('disabled')"/>
 						<dfx-ve-expression-editor></dfx-ve-expression-editor>
 					</div>
 				</li>
@@ -78,46 +78,46 @@
             <label for="item-5">Wait</label>
             <ul class="dfx-ve-property-treeview-content">
                 <li class="col-md-12" dfx-gc-property="waiting">
-                    <span class="col-md-4">Binding:</span>
+                    <span class="col-md-4">Binding:<dfx-gc-template-locking attr_name="waiting"></dfx-gc-template-locking></span>
                     <div class="col-md-8" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.waiting.value" ng-change="overrideAttribute('waiting')" style="margin-left:-15px;"/>
+                        <input class="col-md-12" type="text" ng-model="attributes.waiting.value" ng-change="overrideAttribute('waiting')" ng-disabled="attributes.waiting.locked" style="margin-left:-15px;"/>
                         <dfx-ve-expression-editor></dfx-ve-expression-editor>
                     </div>
                 </li>
                 <li class="col-md-12">
-                    <span class="col-md-4">Auto-disabled:</span>
+                    <span class="col-md-4">Auto-disabled:<dfx-gc-template-locking attr_name="waiting.autoDisabled"></dfx-gc-template-locking></span>
                     <div class="col-md-8" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.waiting.autoDisabled" ng-change="overrideAttribute('waiting.autoDisabled')" style="margin-left:-15px;"/>
+                        <input class="col-md-12" type="text" ng-model="attributes.waiting.autoDisabled" ng-change="overrideAttribute('waiting.autoDisabled')" ng-disabled="attributes.waiting.locked" style="margin-left:-15px;"/>
                         <dfx-ve-expression-editor></dfx-ve-expression-editor>
                     </div>
                 </li>
                 <li class="col-md-12">
-                    <span class="col-md-4">Icon:</span>
+                    <span class="col-md-4">Icon:<dfx-gc-template-locking attr_name="waiting.icon"></dfx-gc-template-locking></span>
                     <div class="col-md-8" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.waiting.icon.value" ng-change="overrideAttribute('waiting.icon');ifShowIconTypes(attributes.waiting.icon.value, 'waiting')" style="margin-left:-15px;"/>
+                        <input class="col-md-12" type="text" ng-model="attributes.waiting.icon.value" ng-change="overrideAttribute('waiting.icon');ifShowIconTypes(attributes.waiting.icon.value, 'waiting')" ng-disabled="attributes.waiting.icon.locked" style="margin-left:-15px;"/>
                         <md-icon ng-click="showFontIcons($event, attributes.waiting.icon)" dfx-ve-picker-icon class="dfx-ve-picker-icon fa fa-ellipsis-h"></md-icon>
                     </div>
                 </li>
                 <li class="col-md-12" ng-if="showWaitingIconTypes">
-                    <span class="col-md-4">Icon Type:</span>
+                    <span class="col-md-4">Icon Type:<dfx-gc-template-locking attr_name="waiting.icon"></dfx-gc-template-locking></span>
                     <div class="col-md-8" layout="row" style="padding: 0 0 8px 0">
-                        <md-radio-group ng-model="attributes.waiting.icon.type">
+                        <md-radio-group ng-model="attributes.waiting.icon.type" ng-disabled="attributes.waiting.icon.locked">
                             <md-radio-button value="svg-icon" ngChange="overrideAttribute('waiting.icon.type')" style="margin: 0;" class="md-primary">SVG Icon</md-radio-button>
                             <md-radio-button value="fa-icon" ngChange="overrideAttribute('waiting.icon.type')" style="margin: 0;" class="md-primary">Font Awesome Icon</md-radio-button>
                         </md-radio-group>
                     </div>
                 </li>
                 <li class="col-md-12">
-                    <span class="col-md-4">Icon Style:</span>
+                    <span class="col-md-4">Icon Style:<dfx-gc-template-locking attr_name="waiting.icon"></dfx-gc-template-locking></span>
                     <div class="col-md-8" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.waiting.icon.style" ng-change="overrideAttribute('waiting.icon.style')" style="margin-left:-15px;"/>
+                        <input class="col-md-12" type="text" ng-model="attributes.waiting.icon.style" ng-change="overrideAttribute('waiting.icon.style')" ng-disabled="attributes.waiting.icon.locked" style="margin-left:-15px;"/>
                         <dfx-ve-css-style></dfx-ve-css-style>
                     </div>
                 </li>
                 <li class="col-md-12">
-                    <span class="col-md-4">Icon Class:</span>
+                    <span class="col-md-4">Icon Class:<dfx-gc-template-locking attr_name="waiting.icon"></dfx-gc-template-locking></span>
                     <div class="col-md-8" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.waiting.icon.class" ng-change="overrideAttribute('waiting.icon.class')" style="margin-left:-15px;"/>
+                        <input class="col-md-12" type="text" ng-model="attributes.waiting.icon.class" ng-change="overrideAttribute('waiting.icon.class')" sng-disabled="attributes.waiting.icon.locked" tyle="margin-left:-15px;"/>
                         <dfx-ve-menu-expression></dfx-ve-menu-expression>
                     </div>
                 </li>
@@ -129,59 +129,60 @@
 			<input class="dfx-ve-property-treeview-button" type="checkbox" id="item-3" />
 			<label for="item-3">Styling Attributes</label>
 			<ul class="dfx-ve-property-treeview-content">
-				<li class="col-md-12">
-                    <span class="col-md-4">Style:</span>
+								<li class="col-md-12">
+                    <span class="col-md-4">Style:<dfx-gc-template-locking attr_name="style"></dfx-gc-template-locking></span>
                     <div class="col-md-8" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.style.value" ng-change="overrideAttribute('style')" style="margin-left:-15px;"/>
+												<input class="col-md-12" type="text" ng-model="attributes.style.value" ng-change="overrideAttribute('style')" ng-disabled="attributes.style.locked" style="margin-left:-15px;"/>
                         <dfx-ve-css-style></dfx-ve-css-style>
                     </div>
                 </li>
                 <li class="col-md-12">
-                    <span class="col-md-4">Class:</span>
-                    <input class="col-md-8" type="text" ng-model="attributes.classes.value"  ng-change="overrideAttribute('classes')"/>
+                    <span class="col-md-4">Class:<dfx-gc-template-locking attr_name="classes"></dfx-gc-template-locking></span>
+										<input class="col-md-8" type="text" ng-model="attributes.classes.value"  ng-change="overrideAttribute('classes')" ng-disabled="attributes.classes.locked"/>
                 </li>
                 <li class="col-md-12">
-                    <span class="col-md-4">Dynamic Class:</span>
-                    <input class="col-md-8" type="text" ng-model="attributes.dynamicClasses.value"  ng-change="overrideAttribute('dynamicClasses')"/>
+                    <span class="col-md-4">Dynamic Class:<dfx-gc-template-locking attr_name="dynamicClasses"></dfx-gc-template-locking></span>
+                    <input class="col-md-8" type="text" ng-model="attributes.dynamicClasses.value"  ng-change="overrideAttribute('dynamicClasses')" ng-disabled="attributes.dynamicClasses.locked"/>
                 </li>
                 <li class="col-md-12">
-                    <span class="col-md-4">Icon Size:</span>
-                    <input class="col-md-8" type="number" ng-model="attributes.icon.size" ng-change="overrideAttribute('icon.size')"/>
+                    <span class="col-md-4">Icon Size:<dfx-gc-template-locking attr_name="icon"></dfx-gc-template-locking></span>
+                    <input class="col-md-8" type="number" ng-model="attributes.icon.size" ng-change="overrideAttribute('icon.size')" ng-disabled="attributes.icon.locked"/>
+								</li>
                 <li class="col-md-12">
-                    <span class="col-md-4">Icon Style:</span>
+                    <span class="col-md-4">Icon Style:<dfx-gc-template-locking attr_name="icon"></dfx-gc-template-locking></span>
                     <div class="col-md-8" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.icon.style" ng-change="overrideAttribute('icon.style')" style="margin-left:-15px;"/>
+                        <input class="col-md-12" type="text" ng-model="attributes.icon.style" ng-change="overrideAttribute('icon.style')" ng-disabled="attributes.icon.locked" style="margin-left:-15px;"/>
                         <dfx-ve-css-style></dfx-ve-css-style>
                     </div>
                 </li>
                 <li class="col-md-12">
-                    <span class="col-md-4">Icon Class:</span>
-                    <input class="col-md-8" type="text" ng-model="attributes.icon.class" ng-change="overrideAttribute('icon.class')"/>
+                    <span class="col-md-4">Icon Class:<dfx-gc-template-locking attr_name="icon"></dfx-gc-template-locking></span>
+                    <input class="col-md-8" type="text" ng-model="attributes.icon.class" ng-change="overrideAttribute('icon.class')" ng-disabled="attributes.icon.locked"/>
                 </li>
                 <li class="col-md-12">
-                    <span class="col-md-4">Item Style:</span>
+                    <span class="col-md-4">Item Style:<dfx-gc-template-locking attr_name="singleMenu.button"></dfx-gc-template-locking></span>
                     <div class="col-md-8" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.singleMenu.button.style" ng-change="overrideAttribute('singleMenu.button.style')" style="margin-left:-15px;"/>
+                        <input class="col-md-12" type="text" ng-model="attributes.singleMenu.button.style" ng-change="overrideAttribute('singleMenu.button.style')" ng-disabled="attributes.singleMenu.button.locked" style="margin-left:-15px;"/>
                         <dfx-ve-css-style></dfx-ve-css-style>
                     </div>
                 </li>
                 <li class="col-md-12">
-                    <span class="col-md-4">Item Class:</span>
-                    <input class="col-md-8" type="text" ng-model="attributes.singleMenu.button.class" ng-change="overrideAttribute('singleMenu.button.class')"/>
+                    <span class="col-md-4">Item Class:<dfx-gc-template-locking attr_name="singleMenu.button"></dfx-gc-template-locking></span>
+                    <input class="col-md-8" type="text" ng-model="attributes.singleMenu.button.class" ng-change="overrideAttribute('singleMenu.button.class')" ng-disabled="attributes.singleMenu.button.locked"/>
                 </li>
                 <li class="col-md-12">
-                    <span class="col-md-4">Item Icon Size:</span>
-                    <input class="col-md-8" type="number" ng-model="attributes.singleMenu.icon.size" ng-change="overrideAttribute('singleMenu.icon.size')"/>
+                    <span class="col-md-4">Item Icon Size:<dfx-gc-template-locking attr_name="singleMenu.icon"></dfx-gc-template-locking></span>
+                    <input class="col-md-8" type="number" ng-model="attributes.singleMenu.icon.size" ng-change="overrideAttribute('singleMenu.icon.size')" ng-disabled="attributes.singleMenu.icon.locked"/>
                 <li class="col-md-12">
-                    <span class="col-md-4">Item Icon Style:</span>
+                    <span class="col-md-4">Item Icon Style:<dfx-gc-template-locking attr_name="singleMenu.icon"></dfx-gc-template-locking></span>
                     <div class="col-md-8" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.singleMenu.icon.style" ng-change="overrideAttribute('singleMenu.icon.style')" style="margin-left:-15px;"/>
+                        <input class="col-md-12" type="text" ng-model="attributes.singleMenu.icon.style" ng-change="overrideAttribute('singleMenu.icon.style')" ng-disabled="attributes.singleMenu.icon.locked" style="margin-left:-15px;"/>
                         <dfx-ve-css-style></dfx-ve-css-style>
                     </div>
                 </li>
                 <li class="col-md-12">
-                    <span class="col-md-4">Item Icon Class:</span>
-                    <input class="col-md-8" type="text" ng-model="attributes.singleMenu.icon.class" ng-change="overrideAttribute('singleMenu.icon.class')"/>
+                    <span class="col-md-4">Item Icon Class:<dfx-gc-template-locking attr_name="singleMenu.icon"></dfx-gc-template-locking></span>
+                    <input class="col-md-8" type="text" ng-model="attributes.singleMenu.icon.class" ng-change="overrideAttribute('singleMenu.icon.class')" ng-disabled="attributes.singleMenu.icon.locked"/>
                 </li>
 			</ul>
 		</li>
@@ -192,48 +193,48 @@
 			<label for="item-4">Events</label>
 			<ul class="dfx-ve-property-treeview-content">
                 <li class="col-md-12">
-                    <span class="col-md-4">On Click:</span>
-                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onclick.value" ng-change="overrideAttribute('onclick')" class="col-md-12" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue('onclick', $event)" ng-blur="cacheAttributeNewValue('onclick')"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                    <span class="col-md-4">On Click:<dfx-gc-template-locking attr_name="onclick"></dfx-gc-template-locking></span>
+                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onclick.value" ng-change="overrideAttribute('onclick')" ng-disabled="attributes.onclick.locked" class="col-md-12" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue('onclick', $event)" ng-blur="cacheAttributeNewValue('onclick')"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
                 </li>
                 <li class="col-md-12">
-                    <span class="col-md-4">On Double Click:</span>
-                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.ondblclick.value" ng-change="overrideAttribute('ondblclick')" class="col-md-12" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue('ondblclick', $event)" ng-blur="cacheAttributeNewValue('ondblclick')"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                    <span class="col-md-4">On Double Click:<dfx-gc-template-locking attr_name="ondblclick"></dfx-gc-template-locking></span>
+                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.ondblclick.value" ng-change="overrideAttribute('ondblclick')" ng-disabled="attributes.ondblclick.locked" class="col-md-12" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue('ondblclick', $event)" ng-blur="cacheAttributeNewValue('ondblclick')"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
                 </li>
                 <li class="col-md-12">
-                    <span class="col-md-4">On Key Press:</span>
-                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onkeypress.value" ng-change="overrideAttribute('onkeypress')" class="col-md-12" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue('onkeypress', $event)" ng-blur="cacheAttributeNewValue('onkeypress')"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                    <span class="col-md-4">On Key Press:<dfx-gc-template-locking attr_name="onkeypress"></dfx-gc-template-locking></span>
+                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onkeypress.value" ng-change="overrideAttribute('onkeypress')" ng-disabled="attributes.onkeypress.locked" class="col-md-12" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue('onkeypress', $event)" ng-blur="cacheAttributeNewValue('onkeypress')"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
                 </li>
                 <li class="col-md-12">
-                    <span class="col-md-4">On Key Down:</span>
-                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onkeydown.value" ng-change="overrideAttribute('onkeydown')" class="col-md-12" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue('onkeydown', $event)" ng-blur="cacheAttributeNewValue('onkeydown')"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                    <span class="col-md-4">On Key Down:<dfx-gc-template-locking attr_name="onkeydown"></dfx-gc-template-locking></span>
+                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onkeydown.value" ng-change="overrideAttribute('onkeydown')" ng-disabled="attributes.onkeydown.locked" class="col-md-12" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue('onkeydown', $event)" ng-blur="cacheAttributeNewValue('onkeydown')"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
                 </li>
                 <li class="col-md-12">
-                    <span class="col-md-4">On Key Up:</span>
-                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onkeyup.value" ng-change="overrideAttribute('onkeyup')" class="col-md-12" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue('onkeyup', $event)" ng-blur="cacheAttributeNewValue('onkeyup')"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                    <span class="col-md-4">On Key Up:<dfx-gc-template-locking attr_name="onkeyup"></dfx-gc-template-locking></span>
+                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onkeyup.value" ng-change="overrideAttribute('onkeyup')" ng-disabled="attributes.onkeyup.locked" class="col-md-12" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue('onkeyup', $event)" ng-blur="cacheAttributeNewValue('onkeyup')"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
                 </li>
                 <li class="col-md-12">
-                    <span class="col-md-4">On Mouse Over:</span>
-                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onmouseover.value" ng-change="overrideAttribute('onmouseover')" class="col-md-12" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue('onmouseover', $event)" ng-blur="cacheAttributeNewValue('onmouseover')"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                    <span class="col-md-4">On Mouse Over:<dfx-gc-template-locking attr_name="onmouseover"></dfx-gc-template-locking></span>
+                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onmouseover.value" ng-change="overrideAttribute('onmouseover')" ng-disabled="attributes.onmouseover.locked" class="col-md-12" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue('onmouseover', $event)" ng-blur="cacheAttributeNewValue('onmouseover')"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
                 </li>
                 <li class="col-md-12">
-                    <span class="col-md-4">On Mouse Enter:</span>
-                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onmouseenter.value" ng-change="overrideAttribute('onmouseenter')" class="col-md-12" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue('onmouseenter', $event)" ng-blur="cacheAttributeNewValue('onmouseenter')"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                    <span class="col-md-4">On Mouse Enter:<dfx-gc-template-locking attr_name="onmouseenter"></dfx-gc-template-locking></span>
+                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onmouseenter.value" ng-change="overrideAttribute('onmouseenter')" ng-disabled="attributes.onmouseenter.locked" class="col-md-12" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue('onmouseenter', $event)" ng-blur="cacheAttributeNewValue('onmouseenter')"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
                 </li>
                 <li class="col-md-12">
-                    <span class="col-md-4">On Mouse Move:</span>
-                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onmousemove.value" ng-change="overrideAttribute('onmousemove')" class="col-md-12" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue('onmousemove', $event)" ng-blur="cacheAttributeNewValue('onmousemove')"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                    <span class="col-md-4">On Mouse Move:<dfx-gc-template-locking attr_name="onmousemove"></dfx-gc-template-locking></span>
+                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onmousemove.value" ng-change="overrideAttribute('onmousemove')" ng-disabled="attributes.onmousemove.locked" class="col-md-12" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue('onmousemove', $event)" ng-blur="cacheAttributeNewValue('onmousemove')"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
                 </li>
                 <li class="col-md-12">
-                    <span class="col-md-4">On Mouse Leave:</span>
-                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onmouseleave.value" ng-change="overrideAttribute('onmouseleave')" class="col-md-12" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue('onmouseleave', $event)" ng-blur="cacheAttributeNewValue('onmouseleave')"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                    <span class="col-md-4">On Mouse Leave:<dfx-gc-template-locking attr_name="onmouseleave"></dfx-gc-template-locking></span>
+                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onmouseleave.value" ng-change="overrideAttribute('onmouseleave')" ng-disabled="attributes.onmouseleave.locked" class="col-md-12" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue('onmouseleave', $event)" ng-blur="cacheAttributeNewValue('onmouseleave')"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
                 </li>
                 <li class="col-md-12">
-                    <span class="col-md-4">On Mouse Down:</span>
-                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onmousedown.value" ng-change="overrideAttribute('onmousedown')" class="col-md-12" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue('onmousedown', $event)" ng-blur="cacheAttributeNewValue('onmousedown')"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                    <span class="col-md-4">On Mouse Down:<dfx-gc-template-locking attr_name="onmousedown"></dfx-gc-template-locking></span>
+                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onmousedown.value" ng-change="overrideAttribute('onmousedown')" ng-disabled="attributes.onmousedown.locked" class="col-md-12" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue('onmousedown', $event)" ng-blur="cacheAttributeNewValue('onmousedown')"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
                 </li>
                 <li class="col-md-12">
-                    <span class="col-md-4">On Mouse Up:</span>
-                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onmouseup.value" ng-change="overrideAttribute('onmouseup')" class="col-md-12" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue('onmouseup', $event)" ng-blur="cacheAttributeNewValue('onmouseup')"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                    <span class="col-md-4">On Mouse Up:<dfx-gc-template-locking attr_name="onmouseup"></dfx-gc-template-locking></span>
+                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onmouseup.value" ng-change="overrideAttribute('onmouseup')" ng-disabled="attributes.onmouseup.locked" class="col-md-12" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue('onmouseup', $event)" ng-blur="cacheAttributeNewValue('onmouseup')"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
                 </li>
 			</ul>
 		</li>

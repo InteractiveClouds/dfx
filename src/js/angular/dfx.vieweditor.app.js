@@ -1357,6 +1357,17 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     $scope.saveComponentAsTemplate = function(event) {
         $(event.srcElement).animateCss('pulse');
 
+        var prepareAttributes = function(gc_template, gc_selected) {
+            gc_template.attributes = gc_selected.attributes;
+            delete gc_template.attributes.name; // remove because it's always overridden anyway
+            gc_template.attributes.template = gc_template.attributes.template || {};
+            gc_template.attributes.template.value = gc_template.attributes.template.value || 'default';
+
+            Object.keys(gc_template.attributes).forEach(function(key, index) {
+                gc_template.attributes[key].locked = false;
+            });
+        };
+
         $mdDialog.show({
             controller: DialogController,
             templateUrl: '/gcontrols/web/template_save.html',
@@ -1371,10 +1382,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
             gc_template.application = $scope.application_name;
             gc_template.platform = $scope.view_platform;
 
-            gc_template.attributes = gc_selected.attributes;
-            delete gc_template.attributes.name; // remove because it's always overridden anyway
-            gc_template.attributes.template = gc_template.attributes.template || {};
-            gc_template.attributes.template.value = gc_template.attributes.template.value || 'default';
+            prepareAttributes(gc_template, gc_selected);
 
             dfxGcTemplates.create( $scope, gc_template )
                 .then( function() {
@@ -2569,7 +2577,7 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                             if(!menu.actions.hasOwnProperty('onclick')) menu.actions.onclick = "";
                         }
                         scope.setActiveActionItem = function(index){
-                            if(scope.menu.actions.actionItems.length>0){                                
+                            if(scope.menu.actions.actionItems.length>0){
                                 scope.actionActiveIndex = index;
                                 scope.actionItem = scope.menu.actions.actionItems[index];
                                 $timeout(function() {
@@ -2624,7 +2632,7 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                             }
                         }
                         scope.setActionsMode = function(){
-                            scope.actionsMode.value=true;                            
+                            scope.actionsMode.value=true;
                             scope.actionActiveIndex = 0;
                             if(scope.menu.actions.actionItems.length>0) scope.setActiveActionItem(scope.actionActiveIndex);
                         }
@@ -2719,7 +2727,7 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                                         case 'icon': scope.checkIconNames( actionItem.icon, 'actionItem' ); break;
                                     }
                                 }
-                            });    
+                            });
                         }
                         scope.checkActionsNames = function( actionObject ){
                             Object.getOwnPropertyNames(actionObject).forEach(function(actionObjectProp) {
@@ -2729,7 +2737,7 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                                         case 'display': scope.tempItemNames.actions[actionObjectProp] = actionObjectProp; break;
                                         case 'disabled': scope.tempItemNames.actions[actionObjectProp] = actionObjectProp; break;
                                         case 'onclick': scope.tempItemNames.actions[actionObjectProp] = actionObjectProp; break;
-                                        case 'actionItems': 
+                                        case 'actionItems':
                                             if(!scope.tempItemNames.actions.hasOwnProperty('actionItems')) scope.tempItemNames.actions.actionItems = {"name": actionObjectProp};
                                             if(actionObject.actionItems.length>0){
                                                 for (var i = 0; i < actionObject.actionItems.length; i++) {
