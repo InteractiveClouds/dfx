@@ -619,6 +619,16 @@ button[disabled="disabled"].dfx-core-gc-json-button ng-md-icon {
     max-width: 100%;
 }
 
+/* GC List */
+md-list .md-subheader.dfx-core-gc-list-subheader {
+    color: rgba(0,0,0,0.54);
+    font-weight: 600;
+}
+.dfx-core-gc-list-item-text.md-list-item-text {
+    display: flex;
+    align-items: center;
+}
+
 /* Animation */
 @charset "UTF-8";
 
