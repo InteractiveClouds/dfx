@@ -28,6 +28,7 @@
   "dynamic":        { "value": "" },  
   "classes":        { "value": "" },
   "dynamicClasses": { "value": "" },
+  "notFlex":        { "value": true },
   "flex":           { "value": 30 },
 	"style": 					{ "value": "" },
   "singleMenu":     { "button": { "style": "", "class": "" }, "icon": { "size": 16, "style": "", "class": "" } },
