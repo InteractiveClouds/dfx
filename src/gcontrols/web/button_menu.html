@@ -1,5 +1,5 @@
 <md-menu-bar class="dfx-core-gc-button-menubar" dfx-ng-show="ng-show,display">
-    <md-menu>
+    <md-menu md-position-mode="target-{{positionModeSide}} target" md-offset="{{positionOffsetLeft}}px 52px">
         <div class="gc-btn-group">
             <md-button dfx-gc-compiled class="gc-btn-group-first dfx-core-gc-button md-raised md-primary {{attributes.classes.value}} md-altTheme-theme {{$eval(attributes.waiting.value) ? 'dfx-core-button-wait' : ''}}" style="{{attributes.style.value}}" dfx-ng-class="ng-class,dynamicClasses" dfx-ng-click="ng-click,onclick" dfx-ng-dblclick="ng-dblclick,ondblclick" dfx-ng-keypress="ng-keypress,onkeypress" dfx-ng-keydown="ng-keydown,onkeydown" dfx-ng-keyup="ng-keyup,onkeyup" dfx-ng-mouseover="ng-mouseover,onmouseover" dfx-ng-mouseenter="ng-mouseenter,onmouseenter" dfx-ng-mousemove="ng-mousemove,onmousemove" dfx-ng-mouseleave="ng-mouseleave,onmouseleave" dfx-ng-mouseup="ng-mouseup,onmouseup" ng-disabled="$eval(attributes.disabled.value) || $eval(attributes.waiting.autoDisabled)" aria-label="{{attributes.name.value}}">
                 <div ng-if="!$eval(attributes.waiting.value)" ng-style="{'display':'flex','flex-direction': attributes.icon.position === 'right' ? 'row-reverse' : 'row', 'justify-content': 'center', 'align-items':'center'}">

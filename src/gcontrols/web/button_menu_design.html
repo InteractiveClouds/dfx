@@ -1,5 +1,5 @@
 <md-menu-bar class="dfx-core-gc-button-menubar">
-	<md-menu>
+	<md-menu md-position-mode="target-{{positionModeSide}} target" md-offset="{{positionOffsetLeft}}px 52px">
   		<div class="gc-btn-group">
 			<button ng-click="$eval(attributes.onclick.value)" class="gc-btn-group-first md-raised md-primary {{attributes.classes.value}} md-altTheme-theme md-button glyph" style="{{attributes.style.value}}">
 				<div ng-if="attributes.waiting.value !== 'true' && attributes.icon.type ==='fa-icon'" ng-style="{'display':'flex','flex-direction': attributes.icon.position === 'right' ? 'row-reverse' : 'row', 'justify-content': 'center', 'align-items':'center'}">
