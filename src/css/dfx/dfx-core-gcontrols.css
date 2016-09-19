@@ -208,8 +208,28 @@ button[disabled].dfx-core-gc-icon md-icon, button[disabled].dfx-core-gc-icon ng-
     cursor: wait;
 }
 /* Button */
+.dfx-core-gc-button-container {
+    padding: 6px 8px;
+}
 .dfx-gc-core-button-label {
     margin: 0 5px;
+}
+.dfx-core-gc-button {
+    width: 100%;
+    margin: 0px;
+    min-width: 0px; 
+}
+.dfx-core-gc-button-icon, .dfx-core-gc-button-icon.fa {
+    margin: auto 0px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+.dfx-core-gc-button-menubar {
+    padding: 0px;
+}
+.dfx-core-gc-button-menubar md-menu {
+    width: 100%;
 }
 button.dfx-core-gc-button.md-button.dfx-core-button-wait, button.gc-btn-group-last.md-button.dfx-core-button-wait {
     cursor: wait !important;
@@ -469,6 +489,26 @@ md-checkbox.dfx-core-gc-treeview-checkbox {
     width: 20px;
     margin-right: 6px;
     margin-left: 6px;
+}
+/* Checkbox */
+.dfx-core-gc-checkbox {
+    overflow: hidden;
+}
+.dfx-core-gc-checkbox-label{
+    font-size: 10px !important;
+    margin: 7px 0 11px !important;
+    padding-left: 3px !important;
+    color: rgba(0,0,0,0.54);
+}
+md-checkbox[type="checkbox"].dfx-core-gc-checkbox-button {
+    margin: 0 0 0 5px;
+    display: -webkit-flex;
+    -webkit-flex-direction: row;
+    display: flex;
+    flex-direction: row;
+}
+.dfx-core-gc-checkbox-label, .dfx-core-gc-checkbox-value {
+    display: inline-block;
 }
 /* JSON Editor */
 .dfx-core-gc-json-input-type {
