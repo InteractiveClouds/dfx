@@ -3965,6 +3965,14 @@ dfxViewEditorApp.directive('dfxVeListEditor', ['$mdDialog', '$timeout', '$http',
                     $timeout(function(){
                         scope.htmlEditor.refresh();
                         scope.htmlEditor.focus();
+                        $('#dfx-ve-html-menu-editor').keyup(function(e) { 
+                            if(e.which === 13) {
+                                if(document.activeElement.tagName!=='TEXTAREA' && document.activeElement.tagName!=='BUTTON') scope.setHtmlValue();
+                            }
+                            if(e.which === 27) scope.hideHtmlEditor();
+                            e.preventDefault();
+                            e.stopPropagation();
+                        }); 
                     },0);
                     $(scope.htmlEditor.getWrapperElement()).attr("id", "dfx_html_editor");
                     $('#' + scope.component_id + '_md_dialog .second-dialog').fadeIn(250);

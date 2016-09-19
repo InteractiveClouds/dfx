@@ -1,9 +1,8 @@
-<md-content id="{{component_id}}_selectable_list" tabindex="0">
+<md-content id="{{component_id}}_selectable_list" tabindex="0" style="{{attributes.style.value}}" class="dfx-core-gc-list-container {{attributes.classes.value}}">
     <md-list flex>
-        <md-subheader ng-if="attributes.labelVisible.value" class="md-no-sticky">{{ attributes.label.value | checkExpression }}</md-subheader>
-        <md-list-item class="md-3-line" ng-repeat="it in attributes.static.value track by $index" ng-click="toggleItem($event, it, $index)" style="background-color: {{items_bg[$index]}}" aria-label="List Item">
-            <div class="md-list-item-inner" ng-bind-html="it.data"></div>
+        <md-subheader ng-if="attributes.labelVisible.value" style="{{attributes.labelStyle.style}}" class="dfx-core-gc-list-subheader md-no-sticky {{attributes.labelStyle.class}}"><span>{{ attributes.label.value | checkExpression }}</span></md-subheader>
+        <md-list-item class="dfx-core-gc-list-item" ng-class="attributes.itemStyle.class !=='' ? attributes.itemStyle.class : ''; attributes.itemStyle.lines" ng-repeat="it in attributes.static.value track by $index" ng-click="toggleItem($event, it, $index)" style="{{attributes.itemStyle.style}}; background-color: {{items_bg[$index]}}" aria-label="List Item">
+            <div class="dfx-core-gc-list-item-inner md-list-item-inner" ng-bind-html="it.data"></div>
         </md-list-item>        
     </md-list>
-
 </md-content>
