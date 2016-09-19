@@ -17,6 +17,10 @@
                     <input class="col-md-8" type="text" ng-model="attributes.name.value" ng-change="overrideAttribute('name')"/>
                 </li>
                 <li class="col-md-12">
+                    <span class="col-md-4">Show Label:</span>
+                    <span class="col-md-8" style="padding-left:0px;"><md-checkbox style="margin: 0" class="md-primary" ng-model="attributes.labelVisible.value" ng-change="overrideAttribute('labelVisible')" aria-label="Label visible"></md-checkbox></span>
+                </li>
+                <li class="col-md-12" ng-if="attributes.labelVisible.value">
                     <span class="col-md-4">Label:</span>
                     <div class="col-md-8" layout="row">
                         <input class="col-md-12" type="text" ng-model="attributes.label.value" style="margin-left:-15px;" ng-change="overrideAttribute('label')"/>
@@ -105,9 +109,9 @@
                     <label for="item-13" class="dfx-ve-property-title-level-1"><span>Item Styling</span></label>
                     <ul class="dfx-ve-property-treeview-content">
                         <li class="col-md-12">
-                            <span class="col-md-6">Normal Background Color:</span>
+                            <span class="col-md-6">Default Background Color:</span>
                             <div class="col-md-6 dfx-ve-property-treeview-color-picker" layout="row" style="padding:0;">
-                                <dfx-ve-color-picker name="normal-bg-color" class="col-md-11" ng-model="attributes.itemStyle.bgNormal" ng-change="overrideAttribute('itemStyle.bgNormal')"></dfx-ve-color-picker>
+                                <dfx-ve-color-picker name="normal-bg-color" class="col-md-11" ng-model="attributes.itemStyle.bgDefault" ng-change="overrideAttribute('itemStyle.bgDefault')"></dfx-ve-color-picker>
                             </div>
                         </li>
                         <li class="col-md-12">
@@ -141,22 +145,6 @@
                 <li class="col-md-12">
                     <span class="col-md-4">On Double Click:</span>
                     <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.ondblclick.value" ng-change="overrideAttribute('ondblclick')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
-                </li>
-                <li class="col-md-12">
-                    <span class="col-md-4">On Change:</span>
-                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onchange.value" ng-change="overrideAttribute('onchange')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
-                </li>
-                <li class="col-md-12">
-                    <span class="col-md-4">On Focus:</span>
-                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onfocus.value" ng-change="overrideAttribute('onfocus')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
-                </li>
-                <li class="col-md-12">
-                    <span class="col-md-4">On Blur:</span>
-                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onblur.value" ng-change="overrideAttribute('onblur')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
-                </li>
-                <li class="col-md-12">
-                    <span class="col-md-4">On Key Press:</span>
-                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onkeypress.value" ng-change="overrideAttribute('onkeypress')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
                 </li>
                 <li class="col-md-12">
                     <span class="col-md-4">On Key Down:</span>

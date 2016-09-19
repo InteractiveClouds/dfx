@@ -3854,7 +3854,7 @@ dfxViewEditorApp.directive('dfxGcToolbarDesign', function($sce, $compile, $timeo
     }
 });
 
-dfxViewEditorApp.directive('dfxVeListEditor', ['$mdDialog', '$timeout', '$compile', function($mdDialog, $timeout, $compile) {
+dfxViewEditorApp.directive('dfxVeListEditor', ['$mdDialog', '$timeout', '$http', '$q', '$compile', '$mdToast', function($mdDialog, $timeout, $http, $q, $compile, $mdToast) {
     return {
         restrict: 'E',
         transclude: true,
@@ -3875,6 +3875,7 @@ dfxViewEditorApp.directive('dfxVeListEditor', ['$mdDialog', '$timeout', '$compil
                 sampleStringified = '',
                 dfxSampleJsonEditor = null,
                 scriptSampleNameValid = {"value": false};
+                optionData = "<img src='https://material.angularjs.org/latest/img/list/60.jpeg?0' class='md-avatar' alt='Janet Perkins' /><div class='md-list-item-text' layout='column'><h3>Min Li Chan</h3><h4>Brunch this weekend?</h4><p>I'll be in your neighborhood doing errands</p></div>";
                 scope.currentItem = {};
                 scope.gcSamplesArray = [];
                 scope.scriptSampleName = '';
@@ -3889,8 +3890,9 @@ dfxViewEditorApp.directive('dfxVeListEditor', ['$mdDialog', '$timeout', '$compil
                     templateUrl: '/gcontrols/web/list_options_editor.html',
                     onComplete: function(){
                         scope.activeOption(itemIndex);
+                        scope.attributes.optionItemNames.status = 'overridden';
                         $('#dfx-ve-menu-editor-dialog').keyup(function(e) { 
-                            if(e.which === 13 && $('#dfx-ve-expression-menu-dialog').length === 0) {
+                            if(e.which === 13 && $('#dfx-ve-expression-menu-dialog').length === 0 && $('#dfx-ve-html-menu-editor').length === 0) {
                                 if(document.activeElement.tagName!=='BUTTON')  scope.closeDialog();
                             }
                             if(e.which === 27) scope.closeDialog();
@@ -3914,7 +3916,7 @@ dfxViewEditorApp.directive('dfxVeListEditor', ['$mdDialog', '$timeout', '$compil
             scope.addItem = function(){
                 scope.attributes.static.status = "overridden" ;                    
                 itemIndex++; counter++; opt = "list item " + counter;
-                scope.attributes.static.value.splice(itemIndex, 0, {"name": opt, "data":"", "onclick":""});
+                scope.attributes.static.value.splice(itemIndex, 0, {"name": opt, "data": optionData});
                 $timeout(function(){scope.activeOption(itemIndex);}, 0);
             };
             scope.moveItemUp = function(){
@@ -3940,7 +3942,41 @@ dfxViewEditorApp.directive('dfxVeListEditor', ['$mdDialog', '$timeout', '$compil
                 if(scope.attributes.static.value.length === 1){itemIndex = 0;}
                 else{scope.attributes.static.value.splice(itemIndex, 1);if(itemIndex > 0) --itemIndex;}
                 scope.activeOption(itemIndex);
-            };                
+            };  
+            scope.showHtmlEditor = function(ev, htmlValue) {
+                $('#' + scope.component_id + '_md_dialog .second-dialog-box').load('/gcontrols/web/html_editor_dialog.html', function(){
+                    $compile($('.second-dialog-box').contents())(scope);
+                    var myTextArea = document.getElementById('dfx_html_editor');
+                    scope.htmlEditor = CodeMirror(function (elt) {
+                            myTextArea.parentNode.replaceChild(elt, myTextArea);
+                        },
+                        {
+                            lineNumbers: true,
+                            value: htmlValue,
+                            mode: {name: "xml", globalVars: true},
+                            matchBrackets: true,
+                            highlightSelectionMatches: {showToken: /\w/},
+                            styleActiveLine: true,
+                            viewportMargin : Infinity,
+                            extraKeys: {"Alt-F": "findPersistent", "Ctrl-Space": "autocomplete"},
+                            lineWrapping: true
+                        });
+                    scope.htmlEditor.setSize(856, 380);
+                    $timeout(function(){
+                        scope.htmlEditor.refresh();
+                        scope.htmlEditor.focus();
+                    },0);
+                    $(scope.htmlEditor.getWrapperElement()).attr("id", "dfx_html_editor");
+                    $('#' + scope.component_id + '_md_dialog .second-dialog').fadeIn(250);
+                });                
+            }
+            scope.setHtmlValue = function() {
+                scope.currentItem.data = scope.htmlEditor.getValue();
+                scope.hideHtmlEditor();
+            }
+            scope.hideHtmlEditor = function() {
+                $(".second-dialog").fadeOut('250', function() { $(this).remove(); });
+            }              
             scope.focusSamples = function(type){
                 if(type === 'dynamic'){                        
                     $timeout(function(){$("#samples-btn").focus();},100);}
@@ -3952,14 +3988,12 @@ dfxViewEditorApp.directive('dfxVeListEditor', ['$mdDialog', '$timeout', '$compil
                 $timeout(function(){dfxSampleJsonEditor = new JSONEditor(container, options, model);}, 0);
             }
             scope.checkItemNames = function(item){
-                if(item.hasOwnProperty('trueCheckValue')){scope.attributes.checkValue.trueCheckValue = 'trueCheckValue';}
-                if(item.hasOwnProperty('falseCheckValue')){scope.attributes.checkValue.falseCheckValue = 'falseCheckValue';}
-                if(item.hasOwnProperty('label')){scope.attributes.checkValue.label = 'label';}
+                if(item.hasOwnProperty('data')){scope.attributes.optionItemNames.value.data = 'data';}
             }
             scope.fillPropertiesNames = function(sampleJson){for(var i = 0; i<sampleJson.length; i++){scope.checkItemNames(sampleJson[i]);};}
             scope.showSamples = function(){
                 samplesLoaded = $http.get('/gcontrols/web/gcs_json_samples.json').then(function(res){
-                    scope.gcSamplesArray = res.data['checkbox'];
+                    scope.gcSamplesArray = res.data['list'];
                     gcJsonSample = scope.gcSamplesArray[0];
                 });
                 $q.all([samplesLoaded]).then(function(){
@@ -3999,7 +4033,7 @@ dfxViewEditorApp.directive('dfxVeListEditor', ['$mdDialog', '$timeout', '$compil
                 sampleStringified = sampleStringified.split("\n").join("\n\t");
                 scriptEditor = $('#dfx_script_editor.CodeMirror')[0].CodeMirror;
                 $q.all([ scope.fillPropertiesNames, scope.checkItemNames ]).then(function(){
-                    scope.attributes.source.value = scope.scriptSampleName;
+                    scope.attributes.optionItemNames.value.source = scope.scriptSampleName;
                     scope.closeDialog();
                     scope.closeSamples();
                     $timeout(function(){
