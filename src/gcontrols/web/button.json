@@ -29,7 +29,7 @@
   "classes":        { "value": "" },
   "dynamicClasses": { "value": "" },
   "notFlex":        { "value": true },
-  "flex":           { "value": 30 },
+  "flex":           { "value": 15 },
 	"style": 					{ "value": "" },
   "singleMenu":     { "button": { "style": "", "class": "" }, "icon": { "size": 16, "style": "", "class": "" } },
   "onclick": 				{ "value": "" },
