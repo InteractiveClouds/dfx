@@ -310,7 +310,7 @@ dfxGcTemplateEditorApp.controller("dfx_gc_template_editor_controller", [ '$scope
         $('#dfx-ve-property-title-selected-gc-text').text(component.attributes.name.value);
         $('#dfx-ve-property-title-selected-gc-text').attr('component-id', component.id);
 
-        $scope.loadGcTemplates();
+        $scope.loadGcTemplatesByType();
     };
 
     $scope.reloadPropertyPanel = function() {
@@ -369,13 +369,13 @@ dfxGcTemplateEditorApp.controller("dfx_gc_template_editor_controller", [ '$scope
             });
     };
 
-    $scope.loadGcTemplates = function() {
-        $scope.gc_templates = {};
+    $scope.loadGcTemplatesByType = function() {
+        $scope.gc_templates_by_type = {};
         dfxGcTemplates.getByType( $scope, $scope.application_name, $scope.gc_selected.type, $scope.view_platform )
             .then( function(gc_templates) {
                 gc_templates = gc_templates || {};
                 gc_templates.unshift({ 'name': 'default' });
-                $scope.gc_templates = gc_templates;
+                $scope.gc_templates_by_type = gc_templates;
             });
     };
     // Functions to work with GC Templates - END

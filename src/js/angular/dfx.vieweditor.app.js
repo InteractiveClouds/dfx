@@ -957,7 +957,10 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
 
     for (var cat in $scope.palette) {
         for (var gc in $scope.palette[cat]) {
-            item_fragment = '<li class="dfx_visual_editor_draggable dfx_visual_editor_gc_cat_item_draggable" gc-cat="' + cat + '" gc-type="' + gc + '" gc-flex="' + $scope.palette[cat][gc].flex + '">' + '<img class="dfx-ve-palette-icon" src="/images/vb/icons/' + cat + '_' + gc + '.png" title="' + gc + '"/></li>';
+            item_fragment = '<li class="dfx_visual_editor_draggable dfx_visual_editor_gc_cat_item_draggable" gc-cat="' + cat + '" gc-type="' + gc + '" gc-flex="' + $scope.palette[cat][gc].flex + '" style="position:relative;">' +
+                '<img class="dfx-ve-palette-icon" src="/images/vb/icons/' + cat + '_' + gc + '.png" title="' + gc + '"/>' +
+                '<a id="dfx_gc_template_' + gc + '" class="dfx-ve-gc-templates-handle" href="#" onclick="DfxVisualBuilder.getGcTemplatesToDragDrop(\'' + gc + '\',\'' + cat + '\')"><i class="fa fa-cube"></i></a>' +
+                '</li>';
             $('ul[gc-cat=' + cat + ']').append(item_fragment);
         }
     }
@@ -1218,7 +1221,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
         $('#dfx-ve-property-title-selected-gc-text').text(component.attributes.name.value);
         $('#dfx-ve-property-title-selected-gc-text').attr('component-id', component.id);
 
-        $scope.loadGcTemplates();
+        $scope.loadGcTemplatesByType();
     };
 
     $scope.reloadPropertyPanel = function() {
@@ -1406,26 +1409,74 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
 
     $scope.loadGcTemplates = function() {
         $scope.gc_templates = {};
+        dfxGcTemplates.getAll( $scope, $scope.application_name, $scope.view_platform ).then(function( data ) {
+            $scope.gc_templates = data || [];
+
+            $timeout(function() {
+                for (var i = 0; i < $scope.gc_templates.length; i++) {
+                    $('#dfx_gc_template_' + $scope.gc_templates[i].type).show();
+                }
+            }, 0);
+        });
+    };
+
+    $scope.getGcTemplatesToDragDrop = function(gc_type, gc_cat) {
+        var makeGcTemplatesDraggable = function() {
+            $timeout(function() {
+                $('.dfx-ve-gc-templates-content').draggable({
+                    appendTo:          "body",
+                    cursorAt:          {top: 5, left: 17},
+                    cursor:            "move",
+                    helper: function (event) {
+                        var helper_fragment = '<img style="width:36px;height:34px;" src="/images/vb/icons/' + gc_cat + '_' + gc_type + '_drag.png"/>';
+                        return helper_fragment;
+                    },
+                    connectToSortable: ".dfx_visual_editor_droppable"
+                });
+            }, 0);
+        };
+        var addGcTemplatesToToolbar = function() {
+            $timeout(function() {
+                $scope.gc_templates_to_drag_drop = [];
+                for (var i = 0; i < $scope.gc_templates.length; i++) {
+                    if ($scope.gc_templates[i].type == gc_type) {
+                        $scope.gc_templates_to_drag_drop.push( $scope.gc_templates[i] );
+                    }
+                }
+                $('#dfx-ve-gc-templates-toolbar').show();
+
+                makeGcTemplatesDraggable();
+            }, 0);
+        };
+
+        addGcTemplatesToToolbar();
+    };
+
+    $scope.loadGcTemplatesByType = function() {
+        $scope.gc_templates_by_type = {};
         dfxGcTemplates.getByType( $scope, $scope.application_name, $scope.gc_selected.type, $scope.view_platform )
             .then( function(gc_templates) {
                 gc_templates = gc_templates || {};
                 gc_templates.unshift({ 'name': 'default' });
-                $scope.gc_templates = gc_templates;
+                $scope.gc_templates_by_type = gc_templates;
             });
     };
 
-    $scope.reinitComponentWithTemplate = function(template_name) {
+    $scope.reinitComponentWithTemplate = function(template_name, gc_id) {
+        var component_id = gc_id || $scope.gc_selected.id;
         var view_definition = DfxVisualBuilder.movingComponentHelper.getViewDefinition();
-        var gc_component_definition = DfxVisualBuilder.getComponentDefinition($scope.gc_selected.id, view_definition.definition);
+        var gc_component_definition = DfxVisualBuilder.getComponentDefinition(component_id, view_definition.definition);
         gc_component_definition.attributes.template = {'value': template_name, 'status': 'overridden'};
 
-        var gc_element = $('#' + $scope.gc_selected.id);
+        var reload_property_panel = gc_id ? false : true;
+        var gc_element = $('#' + component_id);
         var gc_element_scope = angular.element(gc_element).scope();
-        gc_element_scope.reinitAttributes(gc_component_definition);
+        gc_element_scope.reinitAttributes(gc_component_definition, reload_property_panel);
     };
     // Functions to work with GC Templates - END
 
     DfxVisualBuilder.init();
+    $scope.loadGcTemplates();
 }]);
 
 dfxViewEditorApp.directive('dfxGcWebDroppable', [ '$timeout', function($timeout) {
@@ -1446,7 +1497,8 @@ dfxViewEditorApp.directive('dfxGcWebDroppable', [ '$timeout', function($timeout)
                     beforeStop: function (event, ui) {
                         var gc_id,
                             gc_type = $(ui.item).attr('gc-type'),
-                            gc_flex = $(ui.item).attr('gc-flex');
+                            gc_flex = $(ui.item).attr('gc-flex'),
+                            gc_template_name = $(ui.item).attr('gc-template-name');
                         if ($(ui.item).hasClass('dfx_visual_editor_gc_cat_item_draggable')) {
                             // Add a new component
                             gc_id  = Math.floor(Math.random() * 100000);
@@ -1454,6 +1506,12 @@ dfxViewEditorApp.directive('dfxGcWebDroppable', [ '$timeout', function($timeout)
                             var view_editor_scope = angular.element(view_editor).scope();
                             var gc = view_editor_scope.renderGraphicalControl({id: gc_id, type: gc_type, flex: gc_flex});
                             $(ui.item).replaceWith(gc.fragment);
+
+                            if (gc_template_name) {
+                                $timeout(function() {
+                                    view_editor_scope.reinitComponentWithTemplate(gc_template_name, gc_id);
+                                }, 0);
+                            }
                         } else {
                             // Move component
                             gc_id = $(ui.item).attr('id');

@@ -12,7 +12,7 @@
 					<span class="col-md-4">Template:</span>
 					<md-input-container class="col-md-8" style="padding: 0 0 4px 0">
 						<md-select aria-label="rating-range" ng-model="attributes.template.value" ng-change="overrideAttribute('template');reinitComponentWithTemplate(attributes.template.value);">
-							<md-option ng-repeat="gc_template in gc_templates" value="{{gc_template.name}}">{{gc_template.name}}</md-option>
+							<md-option ng-repeat="gc_template in gc_templates_by_type" value="{{gc_template.name}}">{{gc_template.name}}</md-option>
 						</md-select>
 					</md-input-container>
 				</li>
@@ -49,7 +49,7 @@
                                 <input class="col-md-12" type="text" ng-model="attributes.style.value" ng-change="overrideAttribute('style')" style="margin-left:-15px;"/>
                                 <dfx-ve-css-style></dfx-ve-css-style>
                             </div>
-                        </li>                        
+                        </li>
                         <li class="col-md-12">
                             <span class="col-md-4">Class:</span>
                             <input class="col-md-8" type="text" ng-model="attributes.classes.value" ng-change="overrideAttribute('classes')"/>
@@ -57,7 +57,7 @@
                         <li class="col-md-12">
                             <span class="col-md-4">Dynamic Class:</span>
                             <input class="col-md-8" type="text" ng-model="attributes.dynamicClasses.value"  ng-change="overrideAttribute('dynamicClasses')"/>
-                        </li>   
+                        </li>
                     </ul>
                 </li>
                 <li class="col-md-12">
@@ -77,7 +77,7 @@
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-4">Icon Size:</span>
-                            <input class="col-md-8" type="number" ng-model="attributes.itemStyle.icon.size" ng-change="overrideAttribute('itemStyle.icon.size')"/>                            
+                            <input class="col-md-8" type="number" ng-model="attributes.itemStyle.icon.size" ng-change="overrideAttribute('itemStyle.icon.size')"/>
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-4">Icon Style:</span>
@@ -88,7 +88,7 @@
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-4">Icon Class:</span>
-                            <input class="col-md-8" type="text" ng-model="attributes.itemStyle.icon.class" ng-change=" overrideAttribute('itemStyle.icon.class')"/>                            
+                            <input class="col-md-8" type="text" ng-model="attributes.itemStyle.icon.class" ng-change=" overrideAttribute('itemStyle.icon.class')"/>
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-4">Notification style:</span>
@@ -107,22 +107,22 @@
                                 <input class="col-md-12" type="text" ng-model="attributes.itemStyle.title.style" ng-change="overrideAttribute('itemStyle.title.style')" style="margin-left:-15px;"/>
                                 <dfx-ve-css-style></dfx-ve-css-style>
                             </div>
-                        </li> 
+                        </li>
                         <li class="col-md-12">
                             <span class="col-md-4">Title class:</span>
                             <input class="col-md-8" type="text" ng-model="attributes.itemStyle.title.class" ng-change="overrideAttribute('itemStyle.title.class')"/>
-                        </li> 
+                        </li>
                         <li class="col-md-12">
                             <span class="col-md-4">Divider style:</span>
                             <div class="col-md-8" layout="row">
                                 <input class="col-md-12" type="text" ng-model="attributes.itemStyle.divider.style" ng-change="overrideAttribute('itemStyle.divider.style')" style="margin-left:-15px;"/>
                                 <dfx-ve-css-style></dfx-ve-css-style>
                             </div>
-                        </li>                        
+                        </li>
                         <li class="col-md-12">
                             <span class="col-md-4">Divider class:</span>
                             <input class="col-md-8" type="text" ng-model="attributes.itemStyle.divider.class" ng-change="overrideAttribute('itemStyle.divider.class')"/>
-                        </li>                        
+                        </li>
                         <li class="col-md-12">
                             <input class="dfx-ve-property-treeview-button" type="checkbox" checked aria-label="item-221" id="item-221" />
                             <label for="item-221" class="dfx-ve-property-title-level-2"><span>Action Menu Styling</span></label>
@@ -188,33 +188,33 @@
                                         <li class="col-md-12">
                                             <span class="col-md-4">Icon Class:</span>
                                             <input class="col-md-8" type="text" ng-model="attributes.actionStyle.icon.class" ng-change="overrideAttribute('actionStyle.icon.class')"/>
-                                        </li>  
+                                        </li>
                                         <li class="col-md-12">
                                             <span class="col-md-4">Title style:</span>
                                             <div class="col-md-8" layout="row">
                                                 <input class="col-md-12" type="text" ng-model="attributes.actionStyle.title.style" ng-change="overrideAttribute('actionStyle.title.style')" style="margin-left:-15px;"/>
                                                 <dfx-ve-css-style></dfx-ve-css-style>
                                             </div>
-                                        </li> 
+                                        </li>
                                         <li class="col-md-12">
                                             <span class="col-md-4">Title class:</span>
                                             <input class="col-md-8" type="text" ng-model="attributes.actionStyle.title.class" ng-change="overrideAttribute('actionStyle.title.class')"/>
-                                        </li> 
+                                        </li>
                                         <li class="col-md-12">
                                             <span class="col-md-4">Divider style:</span>
                                             <div class="col-md-8" layout="row">
                                                 <input class="col-md-12" type="text" ng-model="attributes.actionStyle.divider.style" ng-change="overrideAttribute('actionStyle.divider.style')" style="margin-left:-15px;"/>
                                                 <dfx-ve-css-style></dfx-ve-css-style>
                                             </div>
-                                        </li>    
+                                        </li>
                                         <li class="col-md-12">
                                             <span class="col-md-4">Divider class:</span>
                                             <input class="col-md-8" type="text" ng-model="attributes.actionStyle.divider.class" ng-change="overrideAttribute('actionStyle.divider.class')"/>
-                                        </li>    
+                                        </li>
                                     </ul>
-                                </li>       
+                                </li>
                             </ul>
-                        </li>               
+                        </li>
                     </ul>
                 </li>
 			</ul>

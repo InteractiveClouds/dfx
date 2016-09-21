@@ -1295,14 +1295,32 @@ md-radio-group.dfx-ve-menu-editor-radio-group {
 }
 
 /* GC Template Chips */
-md-chips.dfx-ve-templates > md-chips-wrap > md-chip {
-  font-size: 12px;
-  height: 20px;
-  line-height: 20px;
+.dfx-ve-gc-templates-content {
   color: #fff;
-  background: #2196F3;
+  font-size: 13px;
+  line-height:20px;
+  display: inline-block;
+  margin-top:2px;
+  margin-right:20px;
+  padding-left:5px;
+  padding-right:5px;
+  background:#2196F3;
+  border-radius:3px;
+  z-index: 10;
 }
 
-md-chips.dfx-ve-templates > md-chips-wrap > md-chip[index="0"] {
-  display: none;
+.dfx-ve-gc-templates-handle {
+  left: auto;
+  right: 16px;
+  top: 0;
+  position: absolute;
+  z-index: 10;
+  width: 20px;
+  height: 20px;
+  margin-left: -5px;
+  margin-top: -5px;
+  border-radius: 50%;
+  background: #e1e1e1;
+  color: #7B7B7B;
+  display:none;
 }

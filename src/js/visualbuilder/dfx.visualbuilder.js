@@ -916,7 +916,7 @@ DfxVisualBuilder.movingComponentHelper = (function () {
 
             for (var idx = 0; idx < ref_definition.length; idx++) {
                 if (found_it) break;
-            
+
                 if (ref_definition[idx].id == component_id) {
                     ref_definition[idx] = component_new_definition;
                     found_it = true;
@@ -1569,6 +1569,14 @@ DfxVisualBuilder.loadStylesPalette = function (componentPalette) {
 
         StylesPaletteModal.fillModal('styles-palette-modal-window');
     });
+};
+
+/**
+ * Gets GC templates by type to show in Drag & Drop toolbar
+ */
+DfxVisualBuilder.getGcTemplatesToDragDrop = function(gc_type, gc_cat) {
+    var ve_scope = angular.element(document.getElementById('dfx_src_widget_editor')).scope();
+    ve_scope.getGcTemplatesToDragDrop(gc_type, gc_cat);
 };
 
 /**
