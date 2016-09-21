@@ -88,7 +88,7 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", layout="co
                             img(src="/images/vb/icons/preview_global.png", class="dfx-ve-toolbar-icon", ng-click="$mdOpenMenu($event)", title="Settings")
                             md-menu-content(width="4")
                                 md-menu-item
-                                    md-button(ng-click="openPreviewSettings()")
+                                    md-button(ng-click="openPreviewSettings($event)")
                                         ng-md-icon(icon="tune")
                                         span(style="padding-left:10px") Settings
                                 md-menu-item
