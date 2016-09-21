@@ -111,16 +111,8 @@ DfxGcTemplateBuilder.init = function ($timeout, $scope) {
         };
 
         DfxGcTemplateBuilder.loadComponents(src_content, function () {
-            $timeout(function() {
-                //DfxGcTemplateBuilder.getVeScopeFromHtml().loadPropertyPanel(src_content.id);
-                //$('#' + src_content.id).trigger('click');
-
-                //TODO: try use compoent scope and one-time watcher:
-                //var gc_element = $('#' + $scope.gc_selected.id);
-                //var gc_element_scope = angular.element(gc_element).scope();
-
-                //TODO: or try this - return $q.when(component.id);
-            }, 100);
+            DfxGcTemplateBuilder.getVeScopeFromHtml().loadPropertyPanel(src_content.id);
+            //$('#' + src_content.id).trigger('click');
         });
     });
 };
@@ -206,8 +198,9 @@ DfxGcTemplateBuilder.loadComponents = function (src_definition, callback) {
         setSrcInEditor(JSON.stringify(src_definition, null, '\t'));
 
         angular.element(document).ready(function () {
-            DfxGcTemplateBuilder.addComponent(src_definition);
-            callback();
+            DfxGcTemplateBuilder.addComponent(src_definition, function() {
+                callback();
+            });
         });
     } catch (err) {
         console.error('DFX error: template definition is corrupted');

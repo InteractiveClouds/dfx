@@ -274,13 +274,14 @@ dfxGcTemplateEditorApp.controller("dfx_gc_template_editor_controller", [ '$scope
     };
 
     // Add a component
-    $scope.addComponent = function(component) {
-        var component_instance = $scope.renderGraphicalControl(component);
-        $('#dfx_visual_editor_workspace_default').append(component_instance.fragment);
+    $scope.addComponent = function(component, callback) {
+        var component_instance = $scope.renderGraphicalControl(component, function(clonedElement) {
+            $('#dfx_visual_editor_workspace_default').append(clonedElement);
+        });
     };
 
     // Render GControls
-    $scope.renderGraphicalControl = function( component ) {
+    $scope.renderGraphicalControl = function( component, callback ) {
         $scope.gc_instances[component.id] = component;
         var gc_instance = {};
         var flex_container_attr = (component.flex=='true' || (component.attributes!=null && component.attributes.flex!=null)) ? ' flex="{{attributes.flex.value}}"' : '';
@@ -289,7 +290,11 @@ dfxGcTemplateEditorApp.controller("dfx_gc_template_editor_controller", [ '$scope
             component.attributes && (!component.attributes.autoHeight || component.attributes.autoHeight.value != true)) ?
                 ' layout="column" ' : '';
 
-        gc_instance.fragment = $compile('<div id="' + component.id + '" dfx-gc-web-base dfx-gc-web-' + component.type + ' dfx-gc-design gc-type="' + component.type + '" gc-role="control"' + flex_container_attr + gc_layout + '></div>')($scope);
+        var gc_html_template = '<div id="' + component.id + '" dfx-gc-web-base dfx-gc-web-' + component.type + ' dfx-gc-design gc-type="' + component.type + '" gc-role="control"' + flex_container_attr + gc_layout + '></div>';
+
+        gc_instance.fragment = $compile(gc_html_template)($scope, function(clonedElement) {
+            if (callback) callback(clonedElement); // sometimes, especially when doing reloadPropertyPanel(), must wait until compilation is completed
+        });
         gc_instance.id = component.id;
 
         return gc_instance;
@@ -381,48 +386,6 @@ dfxGcTemplateEditorApp.controller("dfx_gc_template_editor_controller", [ '$scope
     // Functions to work with GC Templates - END
 
     DfxGcTemplateBuilder.init($timeout, $scope);
-}]);
-
-dfxGcTemplateEditorApp.directive('dfxGcWebDroppable', [ '$timeout', function($timeout) {
-    return {
-        restrict: 'A',
-        controller: function($scope, $element, $attrs) {
-            angular.element(document).ready(function() {
-                $('#'+$attrs.id).sortable({
-                    appendTo:         'body',
-                    cursor:           'move',
-                    cursorAt:         {top: 15, left: 40},
-                    placeholder:      'ui-placeholder',
-                    refreshPositions: true,
-                    handle:           '.dfx-ve-gc-handle',
-                    tolerance:        'pointer',
-                    scroll:           true,
-                    connectWith:      '.dfx_visual_editor_droppable',
-                    beforeStop: function (event, ui) {
-                        var gc_id,
-                            gc_type = $(ui.item).attr('gc-type'),
-                            gc_flex = $(ui.item).attr('gc-flex');
-                        if ($(ui.item).hasClass('dfx_visual_editor_gc_cat_item_draggable')) {
-                            // Add a new component
-                            gc_id  = Math.floor(Math.random() * 100000);
-                            var view_editor = document.querySelector('#dfx_src_widget_editor');
-                            var view_editor_scope = angular.element(view_editor).scope();
-                            var gc = view_editor_scope.renderGraphicalControl({id: gc_id, type: gc_type, flex: gc_flex});
-                            $(ui.item).replaceWith(gc.fragment);
-                        } else {
-                            // Move component
-                            gc_id = $(ui.item).attr('id');
-                            DfxGcTemplateBuilder.moveComponent(gc_id, this, $scope.view_card_selected);
-                        }
-                    },
-                    start: function (event, ui) {
-                        $(ui.placeholder).html('<div style="border:1px #00c3f3 dashed;min-width:50px;height:30px;"></div>');
-                    },
-                    helper: 'clone'
-                });
-            });
-        }
-    }
 }]);
 
 dfxGcTemplateEditorApp.directive('dfxGcExtendedProperty', [function() {

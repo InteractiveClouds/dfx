@@ -1191,7 +1191,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     };
 
     // Render GControls
-    $scope.renderGraphicalControl = function( component ) {
+    $scope.renderGraphicalControl = function( component, callback ) {
         $scope.gc_instances[component.id] = component;
         var gc_instance = {};
         var flex_container_attr = (component.flex=='true' || (component.attributes!=null && component.attributes.flex!=null)) ? ' flex="{{attributes.flex.value}}"' : '';
@@ -1200,7 +1200,11 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
             component.attributes && (!component.attributes.autoHeight || component.attributes.autoHeight.value != true)) ?
                 ' layout="column" ' : '';
 
-        gc_instance.fragment = $compile('<div id="' + component.id + '" dfx-gc-web-base dfx-gc-web-' + component.type + ' dfx-gc-design gc-type="' + component.type + '" gc-role="control"' + flex_container_attr + gc_layout + '></div>')($scope);
+        var gc_html_template = '<div id="' + component.id + '" dfx-gc-web-base dfx-gc-web-' + component.type + ' dfx-gc-design gc-type="' + component.type + '" gc-role="control"' + flex_container_attr + gc_layout + '></div>';
+
+        gc_instance.fragment = $compile(gc_html_template)($scope, function(clonedElement) {
+            if (callback) callback(clonedElement); // sometimes, especially when doing reloadPropertyPanel(), must wait until compilation is completed
+        });
         gc_instance.id = component.id;
 
         return gc_instance;
@@ -1510,7 +1514,7 @@ dfxViewEditorApp.directive('dfxGcWebDroppable', [ '$timeout', function($timeout)
                             if (gc_template_name) {
                                 $timeout(function() {
                                     view_editor_scope.reinitComponentWithTemplate(gc_template_name, gc_id);
-                                }, 0);
+                                }, 100);//wait until dfxGcWebBase.initAttributes() completes that reads getGCDefaultAttributes() from DB
                             }
                         } else {
                             // Move component
