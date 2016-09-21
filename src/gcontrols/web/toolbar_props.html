@@ -13,14 +13,14 @@
                 <dfx-ve-expression-editor></dfx-ve-expression-editor>
             </div>
         </li>
-        <li class="col-md-12">
+        <li class="col-md-12" ng-if="attributes.autoHeight.value">
             <span class="col-md-6">Collapsible:</span>
             <div class="col-md-6" layout="row">
                 <input class="col-md-12" type="text" ng-model="attributes.toolbar.collapsible.value" style="margin-left:-15px;" ng-change="overrideAttribute('toolbar.collapsible')"/>
                 <dfx-ve-expression-editor></dfx-ve-expression-editor>
             </div>
         </li>
-        <li class="col-md-12">
+        <li class="col-md-12" ng-if="attributes.autoHeight.value">
             <span class="col-md-6">Collapsed:</span>
             <div class="col-md-6" layout="row">
                 <input class="col-md-12" type="text" ng-model="attributes.toolbar.collapsed.value" style="margin-left:-15px;" ng-change="overrideAttribute('toolbar.collapsed');checkPanelBody();"/>

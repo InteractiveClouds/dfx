@@ -4110,6 +4110,7 @@ dfxViewEditorApp.directive('dfxGcToolbarProperty', function($mdDialog) {
                         scope.saveDialog = function() {
                             var editor = $('#dfx_html_editor.CodeMirror')[0].CodeMirror;
                             scope.attributes.toolbar.title.content.value = editor.getValue();
+                            scope.attributes.toolbar.title.content.status = 'overridden';
                             $mdDialog.hide();
                         }
                     }

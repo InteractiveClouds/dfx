@@ -47,8 +47,12 @@
             <div ng-if="attributes.toolbar.title.isHtml.value === false" layout="column" layout-align="center" class="{{attributes.toolbar.title.classes.value}} layout-align-center layout-column" ng-class="$eval(attributes.toolbar.title.dynamicClasses.value)">
                 <span ng-bind="$eval(attributes.toolbar.title.value)"></span>
             </div>
-            <div ng-if="attributes.toolbar.title.isHtml.value" id="{{component_id}}_toolbar_bindingHtml" style="color:#000;{{attributes.toolbar.title.style.value}}" class="{{attributes.toolbar.title.classes.value}} layout-align-center layout-column" ng-class="$eval(attributes.toolbar.title.dynamicClasses.value)"
+            <div ng-if="attributes.toolbar.title.isHtml.value === true && attributes.toolbar.title.bindingHtml.value ===''" id="{{component_id}}_toolbar_bindingHtml" style="color:#000;{{attributes.toolbar.title.style.value}}" class="{{attributes.toolbar.title.classes.value}} layout-align-center layout-column" ng-class="$eval(attributes.toolbar.title.dynamicClasses.value)"
                  ng-bind-html="snippetTrustAsHtml(attributes.toolbar.title.content.value)"
+                 aria-label="{{component_id}}_toolbar_bindingHtml">
+            </div>
+            <div ng-if="attributes.toolbar.title.isHtml.value === true && attributes.toolbar.title.bindingHtml.value !==''" id="{{component_id}}_toolbar_bindingHtml" style="color:#000;{{attributes.toolbar.title.style.value}}" class="{{attributes.toolbar.title.classes.value}} layout-align-center layout-column" ng-class="$eval(attributes.toolbar.title.dynamicClasses.value)" ng-init="dynamicHtmlTitle = ($eval(htmlTitleObject))"
+                 ng-bind-html="snippetTrustAsHtml(dynamicHtmlTitle)"
                  aria-label="{{component_id}}_toolbar_bindingHtml">
             </div>
         </div>
@@ -95,7 +99,7 @@
         </div>
     </div>
     <div class="panel-body-collapser" ng-show="$eval(attributes.toolbar.collapsible.value)">
-        <md-icon ng-click="collapsePanelBody($eval(attributes.toolbar.collapsed.value), $index);"
+        <md-icon ng-click="collapsePanelContent($dfx_item, $index)"
                  class="fa fa-chevron-right collapser-trigger"
                  ng-class="$eval(attributes.toolbar.collapsed.value) ? '' : 'expanded' ">
         </md-icon>

@@ -25,7 +25,7 @@
             <span ng-if="attributes.label.value!==''" ng-bind="$eval(attributes.label.value)" class="dfx-gc-core-button-label"></span>
         </div>
     </md-button>
-    <div class="{{component_class}}_button_menu" ng-if="attributes.menuItems.value.length > 0 || scope.attributes.dynamicPresent.value"></div>
+    <div class="{{component_class}}_button_menu" ng-if="attributes.menuItems.value.length > 0 || attributes.dynamicPresent.value"></div>
 </div>
 <div ng-if="attributes.menuItemsType.value === 'dynamic'" class="dfx-core-gc-button-container">    
     <md-button dfx-gc-compiled ng-if="$parent_scope[attributes.menuItemNames.value.main.source].length === 0" class="dfx-core-gc-button md-raised md-primary {{attributes.classes.value}} md-altTheme-theme {{$eval(attributes.waiting.value) ? 'dfx-core-button-wait' : ''}}"

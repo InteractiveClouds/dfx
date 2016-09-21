@@ -8,7 +8,7 @@
 		<li class="col-md-12">
 			<span class="col-md-6">Auto Height:</span>
 			<div class="col-md-6" layout="row">
-				<md-checkbox ng-model="attributes.autoHeight.value" class="md-primary" ng-change="overrideAttribute('autoHeight');" aria-label="attributes.autoHeight.value"/>
+				<md-checkbox ng-model="attributes.autoHeight.value" class="md-primary" ng-change="overrideAttribute('autoHeight'); cancelRepeating(attributes.autoHeight.value)" aria-label="attributes.autoHeight.value"/>
 			</div>
 		</li>
 		<li class="col-md-12" ng-repeat="row in $parent.gc_selected.attributes.layout.rows">

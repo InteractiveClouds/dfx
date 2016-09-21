@@ -111,6 +111,8 @@ div.wizard-submit-step.is-wizard-submit-step {
 .panel-body-collapser {
     display: flex;
     width: 50px;
+    justify-content: center;
+    align-items: center;
 }
 .panel-body-collapser md-icon.collapser-trigger {
     width: 20px;
