@@ -1572,6 +1572,14 @@ DfxVisualBuilder.loadStylesPalette = function (componentPalette) {
 };
 
 /**
+ * Saves GC template in database
+ */
+DfxVisualBuilder.saveComponentAsTemplate = function(event) {
+    var ve_scope = angular.element(document.getElementById('dfx_src_widget_editor')).scope();
+    ve_scope.saveComponentAsTemplate(event);
+};
+
+/**
  * Gets GC templates by type to show in Drag & Drop toolbar
  */
 DfxVisualBuilder.getGcTemplatesToDragDrop = function(gc_type, gc_cat) {

@@ -37,9 +37,6 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", layout="co
                     span(style="margin-right:5px") Cards:
                     img(src="/images/vb/icons/cards_add.png", ng-show="design_visible", class="dfx-ve-toolbar-icon", ng-click="addCard($event)", title="Add a new card")
                     img(src="/images/vb/icons/cards_subtract.png", ng-show="design_visible", class="dfx-ve-toolbar-icon", ng-click="removeCard($event)", title="Remove the current card")
-                span(style="font-size: 12px;margin-left: 1px;background: #4a4a4a;line-height: 48px;color: #fff;padding: 0 8px;border-left: 1px #6b6a6a solid;border-right: 1px #6b6a6a solid;", ng-show="design_visible")
-                    span(style="margin-right:5px") Templates:
-                    img(src="/images/vb/icons/action_save.png", ng-show="design_visible", class="dfx-ve-toolbar-icon", ng-click="saveComponentAsTemplate($event)", title="Save Component as Template")
                 span(style="font-size: 12px;margin-left: 1px;background: #4a4a4a;line-height: 48px;color: #fff;padding: 0 8px;border-left: 1px #6b6a6a solid;border-right: 1px #6b6a6a solid;", ng-show="script_visible")
                     span(style="margin-right:5px") Script:
                     img(src="/images/vb/icons/script_assistant.png", class="dfx-ve-toolbar-icon", ng-click="showHelpEditor($event)", title="Code Assistant")
@@ -166,7 +163,7 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", layout="co
                                 ul.dfx-ve-palette-treeview-content(gc-cat="custom", style="margin-bottom:5px")
             md-content#dfx-ve-main-content(layout="column", flex="100", ng-click="unselectComponent()")
                 
-                div#dfx-ve-gc-templates-toolbar(style="width:100%;display:none;")
+                div#dfx-ve-gc-templates-toolbar(style="width:100%;display:none;overflow-x:auto;white-space:nowrap;height:75px;")
                     div.dfx-ve-gc-templates-content.dfx_visual_editor_draggable.dfx_visual_editor_gc_cat_item_draggable(ng-repeat="gc_template in gc_templates_to_drag_drop", gc-type="{{gc_template.type}}", gc-template-name="{{gc_template.name}}") {{gc_template.name}}
                         
                 md-tabs.md-dynamic-height(layout="column", md-selected="view_card_select_index", flex="100")
