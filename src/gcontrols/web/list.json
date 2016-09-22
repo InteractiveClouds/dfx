@@ -14,7 +14,7 @@
     "classes":        { "value": "" },
     "dynamicClasses": { "value": "" },
     "labelStyle":     { "style": "", "class": "" },
-    "itemStyle":      { "lines": "md-3-line", "bgDefault": "#ffffff", "bgSelected": "#f0f0f0", "style": "", "class": "" },
+    "itemStyle":      { "bgDefault": "#ffffff", "bgSelected": "#f0f0f0", "style": "", "class": "" },
     "onclick":        { "value": "" },
     "ondblclick":     { "value": "" },
     "onkeydown":      { "value": "" },

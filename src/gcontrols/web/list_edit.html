@@ -109,16 +109,6 @@
                     <label for="item-13" class="dfx-ve-property-title-level-1"><span>Item Styling</span></label>
                     <ul class="dfx-ve-property-treeview-content">
                         <li class="col-md-12">
-                            <span class="col-md-6" style="margin-top: 3px">Item Lines Number:</span>
-                            <div class="col-md-6" layout="row">
-                                <md-radio-group class="dfx-ve-property-treeview-radiogroup row-radio" ng-model="attributes.itemStyle.lines" ng-change="overrideAttribute('itemStyle.lines')">
-                                    <md-radio-button class="md-primary" value="one-line" aria-label="Lines">1</md-radio-button>
-                                    <md-radio-button class="md-primary" value="md-2-line" aria-label="Lines">2</md-radio-button>
-                                    <md-radio-button class="md-primary" value="md-3-line" aria-label="Lines">3</md-radio-button>
-                                </md-radio-group>
-                            </div>
-                        </li>
-                        <li class="col-md-12">
                             <span class="col-md-6">Default Background Color:</span>
                             <div class="col-md-6 dfx-ve-property-treeview-color-picker" layout="row" style="padding:0;">
                                 <dfx-ve-color-picker name="normal-bg-color" class="col-md-11" ng-model="attributes.itemStyle.bgDefault" ng-change="overrideAttribute('itemStyle.bgDefault');initBg('change')"></dfx-ve-color-picker>
