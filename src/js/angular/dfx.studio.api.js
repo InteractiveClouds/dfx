@@ -2247,12 +2247,15 @@ dfxStudioApi.factory('dfxRendering', [ '$http', '$q', function($http, $q) {
 
     var api_rendering = {};
 
-    api_rendering.render = function( scope ) {
+    api_rendering.render = function( scope, view_definition ) {
         var deferred = $q.defer();
 
         $http({
             method: 'POST',
-            url: '/studio/view/render'
+            url: '/studio/view/render',
+			data: {
+				view_source: JSON.parse(view_definition)
+			}
         }).then(function successCallback(response) {
             deferred.resolve( response.data );
         });
