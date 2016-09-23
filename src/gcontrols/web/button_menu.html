@@ -13,7 +13,7 @@
                     <span ng-if="attributes.label.value!==''" ng-bind="$eval(attributes.label.value)" class="dfx-gc-core-button-label"></span>
                 </div>
             </md-button>
-            <button ng-click="$mdOpenMenu();" class="gc-btn-group-last md-raised md-primary {{attributes.classes.value}} md-altTheme-theme md-button {{$eval(attributes.waiting.value) ? 'dfx-core-button-wait' : ''}}" style="{{attributes.style.value}}" ng-class="$eval(attributes.dynamicClasses.value)" ng-disabled="$eval(attributes.disabled.value) || $eval(attributes.waiting.autoDisabled)">
+            <button ng-click="$mdOpenMenu();" class="gc-btn-group-last md-raised md-primary {{attributes.classes.value}} md-altTheme-theme md-button {{$eval(attributes.waiting.value) ? 'dfx-core-button-wait' : ''}}" style="{{attributes.style.value}}" ng-class="$eval(attributes.dynamicClasses.value)" ng-disabled="$eval(attributes.disabled.value) || $eval(attributes.waiting.autoDisabled)" aria-label="GC Button menu trigger">
                 <md-icon class="fa fa-caret-down" style="color:inherit"></md-icon>
             </button>
         </div>

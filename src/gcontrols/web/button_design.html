@@ -1,5 +1,5 @@
 <div class="dfx-core-gc-button-container">
-    <md-button ng-if="attributes.menuItems.value.length === 0" class="dfx-core-gc-button {{attributes.classes.value}} md-altTheme-theme md-raised md-primary" style="{{attributes.style.value}}">
+    <md-button ng-if="attributes.menuItems.value.length === 0" class="dfx-core-gc-button {{attributes.classes.value}} md-altTheme-theme md-raised md-primary" style="{{attributes.style.value}}" aria-label="GC Button">
       <div ng-if="attributes.waiting.value !== 'true' && attributes.icon.type ==='fa-icon'" ng-style="{'display':'flex','flex-direction': attributes.icon.position === 'right' ? 'row-reverse' : 'row', 'justify-content': 'center', 'align-items':'center'}">
         <md-icon ng-if="attributes.icon.value != ''" class="dfx-core-gc-button-icon fa {{$eval(attributes.icon.value) || 'fa-home'}} {{attributes.icon.class}}" style="font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px; color: inherit; {{attributes.icon.style}}"></md-icon>
         <span ng-if="attributes.label.value!==''" class="dfx-gc-core-button-label">{{attributes.label.value | checkExpression}}</span>
