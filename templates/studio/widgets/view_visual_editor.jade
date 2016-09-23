@@ -111,7 +111,9 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", layout="co
                         a(href="#") Properties
                         div#dfx-ve-property-title-selected-gc(style="display:none")
                             span(style="margin-left:5px;margin-right:5px") >
-                            a#dfx-ve-property-title-selected-gc-text(href="#", ng-click="reloadPropertyPanel()") Gc
+                            a#dfx-ve-property-title-selected-gc-text(href="#", ng-click="reloadPropertyPanel()") Gc                        
+                        a(ng-click="loadGcTemplateLockingMenu($event)", ng-show="gc_selected!=null", class="pull-right dfx-ve-gc-templates-locking-menuicon")
+                            i(class="fa fa-cog")                        
                         div#dfx-ve-property-title-selected-renderer(style="display:none")
                             span(style="margin-left:5px;margin-right:5px") >
                             a#dfx-ve-property-title-selected-renderer-text(href="#") Renderer
@@ -161,11 +163,9 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", layout="co
                                 label(for="palette-item-7")
                                     span Custom
                                 ul.dfx-ve-palette-treeview-content(gc-cat="custom", style="margin-bottom:5px")
-            md-content#dfx-ve-main-content(layout="column", flex="100", ng-click="unselectComponent()")
-                
+            md-content#dfx-ve-main-content(layout="column", flex="100", ng-click="unselectComponent()")                
                 div#dfx-ve-gc-templates-toolbar(style="width:100%;display:none;overflow-x:auto;white-space:nowrap;height:75px;")
-                    div.dfx-ve-gc-templates-content.dfx_visual_editor_draggable.dfx_visual_editor_gc_cat_item_draggable(ng-repeat="gc_template in gc_templates_to_drag_drop", gc-type="{{gc_template.type}}", gc-template-name="{{gc_template.name}}") {{gc_template.name}}
-                        
+                    div.dfx-ve-gc-templates-content.dfx_visual_editor_draggable.dfx_visual_editor_gc_cat_item_draggable(ng-repeat="gc_template in gc_templates_to_drag_drop", gc-type="{{gc_template.type}}", gc-template-name="{{gc_template.name}}") {{gc_template.name}}                        
                 md-tabs.md-dynamic-height(layout="column", md-selected="view_card_select_index", flex="100")
                     md-tab(ng-repeat="card in view_cards", label="{{card.name}}")
                         md-content(style="padding:10px;background-color:#efefef", layout="row", layout-align="center start")

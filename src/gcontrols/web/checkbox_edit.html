@@ -26,11 +26,11 @@
                         <input class="col-md-12" type="text" ng-model="attributes.binding.value" style="margin-left:-15px;" ng-change="overrideAttribute('binding')"/><dfx-ve-expression-editor></dfx-ve-expression-editor>
                     </div>
                 </li>
-                <li class="col-md-12" dfx-gc-property="label">
+                <li class="col-md-12" dfx-gc-property="label" ng-show="isGcAttributeVisible(attributes.label.locked)">
                     <span class="col-md-4">Label:<dfx-gc-template-locking attr_name="label"></dfx-gc-template-locking></span>
                     <div class="col-md-8" layout="row"><input class="col-md-12" type="text" ng-model="attributes.label.value" style="margin-left:-15px;" ng-change="overrideAttribute('label')" ng-disabled="attributes.label.locked"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
                 </li>
-                <li class="col-md-12">
+                <li class="col-md-12" ng-show="isGcAttributeVisible(attributes.staticArray.locked)">
                     <span class="col-md-4">Options:<dfx-gc-template-locking attr_name="staticArray"></dfx-gc-template-locking></span>
                     <a ng-click="showOptionsEditor($event)"
                       style="font-size:12px;text-decoration:none;margin-left:5px;cursor:pointer;{{attributes.staticArray.locked ? 'pointer-events:none;color:grey;' : 'color:#97CFFF;'}}">

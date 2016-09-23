@@ -957,7 +957,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
 
     for (var cat in $scope.palette) {
         for (var gc in $scope.palette[cat]) {
-            item_fragment = '<li class="dfx_visual_editor_draggable dfx_visual_editor_gc_cat_item_draggable dfx_ve_palette_icon_li" gc-cat="' + cat + '" gc-type="' + gc + '" gc-flex="' + $scope.palette[cat][gc].flex + '" style="position:relative;">' +
+            item_fragment = '<li class="dfx_visual_editor_draggable dfx_visual_editor_gc_cat_item_draggable dfx-ve-palette-icon-li" gc-cat="' + cat + '" gc-type="' + gc + '" gc-flex="' + $scope.palette[cat][gc].flex + '" style="position:relative;">' +
                 '<img id="dfx_ve_palette_icon_' + gc + '" class="dfx-ve-palette-icon" src="/images/vb/icons/' + cat + '_' + gc + '.png" title="' + gc + '" gc-cat="' + cat + '" gc-type="' + gc + '"/>' +
                 '</li>';
             $('ul[gc-cat=' + cat + ']').append(item_fragment);
@@ -1487,6 +1487,48 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
         var gc_element = $('#' + component_id);
         var gc_element_scope = angular.element(gc_element).scope();
         gc_element_scope.reinitAttributes(gc_component_definition, reload_property_panel);
+    };
+
+    $scope.loadGcTemplateLockingMenu = function($event) {
+        $event.stopImmediatePropagation();
+        $scope.closeGcTemplateLockingMenu();
+        var snippet = '<md-menu-content width="4" style="left:'+($event.x-250)+'px;top:'+($event.y-5)+'px;" layout="column" class="md-whiteframe-4dp dfx-ve-gc-templates-locking-popmenu md-menu-bar-menu md-dense .md-button" ng-mouseleave="closeGcTemplateLockingMenu()">';
+        snippet += '<md-menu-item><md-button ng-click="displayAllGcTemplateAttributes()"><md-icon class="fa fa-folder-open" aria-label="Display All"></md-icon>Display All</md-button></md-menu-item>';
+        snippet += '<md-menu-item><md-button ng-click="displayLockedGcTemplateAttributes()"><md-icon class="fa fa-lock" aria-label="Display Locked"></md-icon>Display Locked</md-button></md-menu-item>';
+        snippet += '<md-menu-item><md-button ng-click="displayUnlockedGcTemplateAttributes()"><md-icon class="fa fa-unlock" aria-label="Display Unlocked"></md-icon>Display Unlocked</md-button></md-menu-item>';
+        snippet += '</md-menu-content>';
+        angular.element(document.getElementById('dfx-view-editor-body')).append($compile(snippet)($scope));
+    };
+    $scope.closeGcTemplateLockingMenu = function() {
+        $('.dfx-ve-gc-templates-locking-popmenu').remove();
+    };
+    $scope.displayAllGcTemplateAttributes = function() {
+        $scope.display_all_attributes = true;
+        $scope.display_locked_attributes = false;
+        $scope.display_unlocked_attributes = false;
+        $scope.closeGcTemplateLockingMenu();
+    };
+    $scope.displayLockedGcTemplateAttributes = function() {
+        $scope.display_all_attributes = false;
+        $scope.display_locked_attributes = true;
+        $scope.display_unlocked_attributes = false;
+        $scope.closeGcTemplateLockingMenu();
+    };
+    $scope.displayUnlockedGcTemplateAttributes = function() {
+        $scope.display_all_attributes = false;
+        $scope.display_locked_attributes = false;
+        $scope.display_unlocked_attributes = true;
+        $scope.closeGcTemplateLockingMenu();
+    };
+    $scope.isGcAttributeVisible = function(is_locked) {
+        if ($scope.display_all_attributes) {
+            return true;
+        } else if ($scope.display_locked_attributes) {
+            return is_locked ? true : false;
+        } else if ($scope.display_unlocked_attributes) {
+            return is_locked ? false : true;
+        }
+        return true;
     };
     // Functions to work with GC Templates - END
 
