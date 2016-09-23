@@ -161,7 +161,7 @@ dfxGcTemplateEditorApp.controller("dfx_gc_template_editor_controller", [ '$scope
                 }
             }
             var gc_template_definition = JSON.parse(editor.getValue());
-            DfxGcTemplateBuilder.findComponentAndUpdateAttributes(component.id, gc_template_definition, component.attributes, $scope.view_card_selected, false);
+            DfxGcTemplateBuilder.findComponentAndUpdateAttributes(gc_template_definition, component.attributes);
             editor.setValue(JSON.stringify(gc_template_definition, null, '\t'));
             editor.scrollTo(0, 0);
             editor.refresh();
@@ -236,7 +236,7 @@ dfxGcTemplateEditorApp.controller("dfx_gc_template_editor_controller", [ '$scope
                 }
             }
             var gc_template_definition = JSON.parse(editor.getValue());
-            DfxGcTemplateBuilder.findComponentAndUpdateAttributes(component.id, gc_template_definition, component.attributes, $scope.view_card_selected, false);
+            DfxGcTemplateBuilder.findComponentAndUpdateAttributes(gc_template_definition, component.attributes);
             editor.setValue(JSON.stringify(gc_template_definition, null, '\t'), 0);
         }
     };

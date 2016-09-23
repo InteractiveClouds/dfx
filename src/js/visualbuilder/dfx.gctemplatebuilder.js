@@ -42,7 +42,7 @@ DfxGcTemplateBuilder.toggleViewSource = function () {
                 }
             }
             var widget_definition = JSON.parse(editor.getValue());
-            DfxGcTemplateBuilder.findComponentAndUpdateAttributes(component.id, widget_definition.definition, component.attributes, false);
+            DfxGcTemplateBuilder.findComponentAndUpdateAttributes(widget_definition.definition, component.attributes);
             editor.setValue(JSON.stringify(widget_definition, null, '\t'));
             editor.scrollTo(0, 0);
             editor.refresh();
@@ -309,27 +309,12 @@ DfxGcTemplateBuilder.getComponentDefinition = function (component_id, parent_def
 /**
  * Finds the component by its id and update its attributes
  *
- * @param {component_id} the component id
  * @param {parent_definition} the parent definition
- * @param {found_it} specifies if the parent has been found in the recursive loop
  * @param {updated_attributes} the updated component attributes
  */
-DfxGcTemplateBuilder.findComponentAndUpdateAttributes = function (component_id, parent_definition, updated_attributes, card, found_it) {
-    var idx = 0, child_idx = 0;
-    var ref_parent_definition = (card!=null) ? parent_definition[card] : parent_definition;
-    if (!found_it) {
-        for (idx = 0; idx < ref_parent_definition.length; idx++) {
-            if (ref_parent_definition[idx].id == component_id) {
-                found_it = true;
-
-                DfxGcTemplateBuilder.removeNotOverriddenAttributes(updated_attributes, ref_parent_definition[idx].type);
-                ref_parent_definition[idx].attributes = updated_attributes;
-                break;
-            } else {
-                DfxGcTemplateBuilder.findComponentAndUpdateAttributes(component_id, ref_parent_definition[idx].children, updated_attributes, null, found_it);
-            }
-        }
-    }
+DfxGcTemplateBuilder.findComponentAndUpdateAttributes = function (parent_definition, updated_attributes) {
+    DfxGcTemplateBuilder.removeNotOverriddenAttributes(updated_attributes, parent_definition.type);
+    parent_definition.attributes = updated_attributes;
 };
 
 /**
