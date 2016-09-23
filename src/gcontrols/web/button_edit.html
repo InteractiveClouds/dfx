@@ -4,14 +4,15 @@
 			<input class="dfx-ve-property-treeview-button" type="checkbox" id="item-0" />
 			<label for="item-0">Main Properties</label>
 			<ul class="dfx-ve-property-treeview-content">
-        <li class="col-md-12">
+        <li class="col-md-12" ng-show="isGcSpecialAttributeVisible()">
             <span class="col-md-4">Id:</span>
             <input class="col-md-8" type="text" ng-model="component_id" disabled/>
         </li>
-		<li class="col-md-12" dfx-gc-property="template">
+		<li class="col-md-12" dfx-gc-property="template" ng-show="isGcSpecialAttributeVisible()">
 			<span class="col-md-4">Template:</span>
 			<md-input-container class="col-md-8" style="padding: 0 0 4px 0">
-				<md-select aria-label="rating-range" ng-model="attributes.template.value" ng-change="overrideAttribute('template');reinitComponentWithTemplate(attributes.template.value);">
+				<md-select aria-label="rating-range" ng-model="attributes.template.value"
+					ng-change="overrideAttribute('template');reinitComponentWithTemplate(attributes.template.value);">
 	        <md-option ng-repeat="gc_template in gc_templates_by_type" value="{{gc_template.name}}">{{gc_template.name}}</md-option>
 	      </md-select>
 			</md-input-container>

@@ -1530,6 +1530,14 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
         }
         return true;
     };
+    $scope.isGcSpecialAttributeVisible = function() {
+        if ($scope.display_all_attributes || $scope.display_unlocked_attributes) {
+            return true;
+        } else if ($scope.display_locked_attributes) {
+            return false;
+        }
+        return true;
+    };
     // Functions to work with GC Templates - END
 
     DfxVisualBuilder.init();
