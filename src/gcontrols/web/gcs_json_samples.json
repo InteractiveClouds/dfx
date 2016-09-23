@@ -90,7 +90,7 @@
     			{
     				"trueCheckValue": true,
     				"falseCheckValue": false,
-    				"label": "'My checkbox label'"
+    				"label": "My checkbox label"
     			}
     		]
     	}
@@ -102,17 +102,17 @@
     			{
     				"trueCheckValue": true,
     				"falseCheckValue": false,
-    				"label": "'Apple'"
+    				"label": "Apple"
     			},
     			{
     				"trueCheckValue": true,
     				"falseCheckValue": false,
-    				"label": "'Banana'"
+    				"label": "Banana"
     			},
     			{
     				"trueCheckValue": true,
     				"falseCheckValue": false,
-    				"label": "'Kiwi'"
+    				"label": "Kiwi"
     			}
     		]
     	}
@@ -422,17 +422,17 @@
     			{
     				"trueSwitchValue": true,
     				"falseSwitchValue": false,
-    				"label": "'Apple'"
+    				"label": "Apple"
     			},
     			{
     				"trueSwitchValue": true,
     				"falseSwitchValue": false,
-    				"label": "'Banana'"
+    				"label": "Banana"
     			},
     			{
     				"trueSwitchValue": true,
     				"falseSwitchValue": false,
-    				"label": "'Kiwi'"
+    				"label": "Kiwi"
     			}
     		]
     	}
