@@ -139,8 +139,12 @@ dfxAppRuntime.controller('dfx_app_controller', [ '$scope', '$rootScope', 'dfxAut
 
     $scope.logout = function() {
         authRequest.removeToken();
-
     }
+
+	$scope.routeToPage = function(page_name) {
+        $location.search( 'name', page_name );
+        //$scope.$apply();
+    };
 }]);
 
 dfxAppRuntime.controller('dfx_page_controller', [ '$scope', '$rootScope', 'dfxAuthRequest', '$q', '$http', '$compile', '$routeParams', '$location', 'dfxPages', function( $scope, $rootScope, dfxAuthRequest, $q, $http, $compile, $routeParams, $location, dfxPages) {
