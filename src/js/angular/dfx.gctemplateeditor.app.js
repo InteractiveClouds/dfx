@@ -383,6 +383,10 @@ dfxGcTemplateEditorApp.controller("dfx_gc_template_editor_controller", [ '$scope
                 $scope.gc_templates_by_type = gc_templates;
             });
     };
+
+    $scope.isGcAttributeVisible = function(is_locked) {
+        return true; // all attributes are always visible in gc template editor
+    };
     // Functions to work with GC Templates - END
 
     DfxGcTemplateBuilder.init($timeout, $scope);
