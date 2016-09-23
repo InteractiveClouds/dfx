@@ -111,6 +111,8 @@ div.wizard-submit-step.is-wizard-submit-step {
 .panel-body-collapser {
     display: flex;
     width: 50px;
+    justify-content: center;
+    align-items: center;
 }
 .panel-body-collapser md-icon.collapser-trigger {
     width: 20px;
@@ -496,20 +498,45 @@ md-checkbox.dfx-core-gc-treeview-checkbox {
 }
 .dfx-core-gc-checkbox-label{
     font-size: 10px !important;
-    margin: 7px 0 11px !important;
+    margin: 7px 0!important;
     padding-left: 3px !important;
     color: rgba(0,0,0,0.54);
 }
 md-checkbox[type="checkbox"].dfx-core-gc-checkbox-button {
+    height: 26px; 
     margin: 0 0 0 5px;
     display: -webkit-flex;
     -webkit-flex-direction: row;
     display: flex;
     flex-direction: row;
+    align-items: center;
 }
 .dfx-core-gc-checkbox-label, .dfx-core-gc-checkbox-value {
     display: inline-block;
 }
+/* Switch */
+.dfx-core-gc-switch {
+    overflow: hidden;
+}
+.dfx-core-gc-switch-label{
+    font-size: 10px !important;
+    margin: 7px 0!important;
+    padding-left: 3px !important;
+    color: rgba(0,0,0,0.54);
+}
+.dfx-core-gc-switch-button {
+    height: 26px;
+    margin: 0 0 0 5px;
+    display: -webkit-flex;
+    -webkit-flex-direction: row;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.dfx-core-gc-switch-label, .dfx-core-gc-switch-value {
+    display: inline-block;
+}
+
 /* JSON Editor */
 .dfx-core-gc-json-input-type {
     display: flex;
@@ -617,6 +644,16 @@ button[disabled="disabled"].dfx-core-gc-json-button ng-md-icon {
 /* GC Carousel */
 .dfx-gc-web-carousel .jk-carousel {
     max-width: 100%;
+}
+
+/* GC List */
+md-list .md-subheader.dfx-core-gc-list-subheader {
+    color: rgba(0,0,0,0.54);
+    font-weight: 600;
+}
+.dfx-core-gc-list-item-text.md-list-item-text {
+    display: flex;
+    align-items: center;
 }
 
 /* Animation */

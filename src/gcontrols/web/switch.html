@@ -1,107 +1,46 @@
-<div ng-if="attributes.isBindingPresent.value=== true" ng-show="$eval(attributes.display.value)" class="{{attributes.classes.value}}" ng-class="$eval(attributes.dynamicClasses.value)" style="{{attributes.style.value}}">
-    <div class="gc-checkbox-label-preview"><span ng-bind="$eval(attributes.label.value)"></span></div>
-    <div layout="{{attributes.direction.value}}">
-        <div ng-if="attributes.optionsType.value==='dynamic'" layout="row" ng-repeat="item in $gcscope[attributes.source.value] track by $index" ng-style="{'margin-top' : $index > 0 && attributes.direction.value ==='column' ? '11px' : '0', 'margin-right':'15px'}">
-            <md-switch aria-label="{{attributes.name.value}} switch" ng-model="attributes.bindingBoolean.value[$index]" style="margin: 0 0 0 5px" class="md-primary" ng-class="attributes.buttonClass.value" ng-disabled="$eval(attributes.disabled.value)"
-                       ng-click="ngClickFunc()"
-                       ng-change="$eval(attributes.onchange.value)"
-                       ng-focus="$eval(attributes.onfocus.value)"
-                       ng-blur="$eval(attributes.onblur.value)"
-                       ng-dblclick="$eval(attributes.ondblclick.value)"
-                       ng-keypress="$eval(attributes.onkeypress.value)"
-                       ng-keydown="$eval(attributes.onkeydown.value)"
-                       ng-keyup="$eval(attributes.onkeyup.value)"
-                       ng-mouseover="$eval(attributes.onmouseover.value)"
-                       ng-mouseenter="$eval(attributes.onmouseenter.value)"
-                       ng-mousemove="$eval(attributes.onmousemove.value)"
-                       ng-mouseleave="$eval(attributes.onmouseleave.value)"
-                       ng-mousedown="$eval(attributes.onmousedown.value)"
-                       ng-mouseup="$eval(attributes.onmouseup.value)"></md-switch>
-            <div style="padding-top: 3px;">
-                <div style="display: inline-block">{{$eval(item[attributes.switchValue.label]) || item[attributes.switchValue.label]}}</div>
-                <div style="display: inline-block" ng-if="$eval(attributes.displayValue.value)">
-                    <div ng-if="attributes.bindingBoolean.value[$index]">{{$eval(item[attributes.switchValue.trueSwitchValue]) || item[attributes.switchValue.trueSwitchValue]}}</div>
-                    <div ng-if="!attributes.bindingBoolean.value[$index]" >{{$eval(item[attributes.switchValue.falseSwitchValue]) || item[attributes.switchValue.falseSwitchValue]}}</div>
-                </div>
-            </div>
-        </div>
-        <div ng-if="attributes.optionsType.value==='static'" layout="row" ng-repeat="item in attributes.staticArray.value track by $index" ng-style="{'margin-top' : $index > 0 && attributes.direction.value ==='column' ? '11px' : '0', 'margin-right':'15px'}">
-            <md-switch aria-label="{{attributes.name.value}} switch" ng-model="attributes.bindingBoolean.value[$index]" style="margin: 0 0 0 5px" class="md-primary" ng-class="attributes.buttonClass.value" ng-disabled="$eval(attributes.disabled.value)"
-                       ng-click="ngClickFunc()"
-                       ng-change="$eval(attributes.onchange.value)"
-                       ng-focus="$eval(attributes.onfocus.value)"
-                       ng-blur="$eval(attributes.onblur.value)"
-                       ng-dblclick="$eval(attributes.ondblclick.value)"
-                       ng-keypress="$eval(attributes.onkeypress.value)"
-                       ng-keydown="$eval(attributes.onkeydown.value)"
-                       ng-keyup="$eval(attributes.onkeyup.value)"
-                       ng-mouseover="$eval(attributes.onmouseover.value)"
-                       ng-mouseenter="$eval(attributes.onmouseenter.value)"
-                       ng-mousemove="$eval(attributes.onmousemove.value)"
-                       ng-mouseleave="$eval(attributes.onmouseleave.value)"
-                       ng-mousedown="$eval(attributes.onmousedown.value)"
-                       ng-mouseup="$eval(attributes.onmouseup.value)"></md-switch>
-            <div style="padding-top: 3px;">
-                <div style="display: inline-block">{{ $eval(item.label) }} </div>
-                <div style="display: inline-block" ng-if="$eval(attributes.displayValue.value)">
-                    <div ng-if="attributes.bindingBoolean.value[$index]">{{$eval(item.checked) || item.checked}}</div>
-                    <div ng-if="!attributes.bindingBoolean.value[$index]" >{{$eval(item.unchecked) || item.unchecked}}</div>
-                </div>
-            </div>
-        </div>
+<div ng-if="isBindingPresent.value=== true" ng-show="$eval(attributes.display.value)" class="dfx-core-gc-switch {{attributes.classes.value}}" ng-class="$eval(attributes.dynamicClasses.value)" ng-init="dfxSwitchSource = ($eval(sourceArray))" style="{{attributes.style.value}}">
+    <div><span style="{{attributes.labelStyle.style}}" class="dfx-core-gc-switch-label {{attributes.labelStyle.class}}" ng-bind="$eval(attributes.label.value)"></span></div>
+    <div ng-if="attributes.optionsType.value==='dynamic'" ng-init="dfxSwitchBinding = ($eval(bindingObject))" ng-repeat="item in dfxSwitchSource track by $index" ng-style="{'margin-top' : $index > 0 && attributes.direction.value ==='column' ? '21px' : '4px', 'display': attributes.direction.value ==='column' ? 'block' : 'inline-block', 'margin-right':'15px', 'margin-left':'5px'}">
+        <md-switch class="dfx-core-gc-switch-button md-altTheme-theme md-primary" ng-class="attributes.itemStyle.item.class !== '' ? attributes.itemStyle.item.class : ''" style="{{attributes.itemStyle.item.style}}" ng-init="dfxTrueValue = dfxSwitchValueType( $eval('item.' + attributes.switchValue.trueSwitchValue) ); dfxFalseValue = dfxSwitchValueType( $eval('item.' + attributes.switchValue.falseSwitchValue) )" ng-model="dfxSwitchBinding[$index]" ng-true-value="{{dfxTrueValue}}" ng-false-value="{{dfxFalseValue}}" ng-disabled="$eval(attributes.disabled.value)" ng-click="$eval(attributes.onclick.value)" ng-change="$eval(attributes.onchange.value)" ng-focus="$eval(attributes.onfocus.value)" ng-blur="$eval(attributes.onblur.value)" ng-dblclick="$eval(attributes.ondblclick.value)" ng-keypress="$eval(attributes.onkeypress.value)" ng-keydown="$eval(attributes.onkeydown.value)" ng-keyup="$eval(attributes.onkeyup.value)" ng-mouseover="$eval(attributes.onmouseover.value)" ng-mouseenter="$eval(attributes.onmouseenter.value)" ng-mousemove="$eval(attributes.onmousemove.value)" ng-mouseleave="$eval(attributes.onmouseleave.value)" ng-mousedown="$eval(attributes.onmousedown.value)" ng-mouseup="$eval(attributes.onmouseup.value)" aria-label="Switch Item">
+            <span class="{{attributes.itemStyle.label.class}}" style="{{attributes.itemStyle.label.style}}" ng-init="dfxSwitchLabel = $eval('item.' + attributes.switchValue.label)" ng-bind="dfxSwitchLabel"></span>
+            <span ng-if="attributes.displayValue.value" style="{{attributes.itemStyle.val.style}}" class="{{attributes.itemStyle.val.class}}"> 
+                <span ng-if="dfxSwitchBinding[$index] === $eval('item.' + attributes.switchValue.trueSwitchValue)" ng-bind="$eval('item.' + attributes.switchValue.trueSwitchValue)"></span>
+                <span ng-if="dfxSwitchBinding[$index] === $eval('item.' + attributes.switchValue.falseSwitchValue)" ng-bind="$eval('item.' + attributes.switchValue.falseSwitchValue)"></span>
+            </span>
+        </md-switch>
+    </div>
+    <div ng-if="attributes.optionsType.value==='static'" ng-init="dfxSwitchBinding = ($eval(bindingObject))" ng-repeat="item in attributes.staticArray.value track by $index" ng-style="{'margin-top' : $index > 0 && attributes.direction.value ==='column' ? '21px' : '4px', 'display': attributes.direction.value ==='column' ? 'block' : 'inline-block', 'margin-right':'15px', 'margin-left':'5px'}">
+        <md-switch class="dfx-core-gc-switch-button md-altTheme-theme md-primary" ng-class="attributes.itemStyle.item.class !== '' ? attributes.itemStyle.item.class : ''" style="{{attributes.itemStyle.item.style}}" ng-init="dfxTrueValue = dfxSwitchValueType( $eval(item.checked) ); dfxFalseValue = dfxSwitchValueType( $eval(item.unchecked) )" ng-model="dfxSwitchBinding[$index]" ng-true-value="{{dfxTrueValue}}" ng-false-value="{{dfxFalseValue}}" ng-disabled="$eval(attributes.disabled.value)" ng-click="$eval(attributes.onclick.value)" ng-change="$eval(attributes.onchange.value)" ng-focus="$eval(attributes.onfocus.value)" ng-blur="$eval(attributes.onblur.value)" ng-dblclick="$eval(attributes.ondblclick.value)" ng-keypress="$eval(attributes.onkeypress.value)" ng-keydown="$eval(attributes.onkeydown.value)" ng-keyup="$eval(attributes.onkeyup.value)" ng-mouseover="$eval(attributes.onmouseover.value)" ng-mouseenter="$eval(attributes.onmouseenter.value)" ng-mousemove="$eval(attributes.onmousemove.value)" ng-mouseleave="$eval(attributes.onmouseleave.value)" ng-mousedown="$eval(attributes.onmousedown.value)" ng-mouseup="$eval(attributes.onmouseup.value)" aria-label="Switch Item">
+            <span class="{{attributes.itemStyle.label.class}}" style="{{attributes.itemStyle.label.style}}" ng-bind="$eval(item.label)"></span>
+            <span ng-if="attributes.displayValue.value" style="{{attributes.itemStyle.val.style}}" class="{{attributes.itemStyle.val.class}}"> 
+                <span ng-if="dfxSwitchBinding[$index] === $eval(item.checked)" ng-bind="$eval(item.checked)"></span>
+                <span ng-if="dfxSwitchBinding[$index] === $eval(item.unchecked)" ng-bind="$eval(item.unchecked)"></span>
+            </span>
+        </md-switch>
     </div>
 </div>
-
-<div ng-if="attributes.isBindingPresent.value=== false" ng-show="$eval(attributes.display.value)" class="{{attributes.classes.value}}" ng-class="$eval(attributes.dynamicClasses.value)" style="{{attributes.style.value}}">
-    <div class="gc-checkbox-label-preview"><span ng-bind="$eval(attributes.label.value)"></span></div>
-    <div layout="{{attributes.direction.value}}">
-        <div ng-if="attributes.optionsType.value==='dynamic'" layout="row" ng-repeat="item in $gcscope[attributes.source.value] track by $index" ng-style="{'margin-top' : $index > 0 && attributes.direction.value ==='column' ? '11px' : '0', 'margin-right':'15px'}">
-            <md-switch aria-label="{{attributes.name.value}} switch" ng-model="attributes.bindingBoolean.value[$index]" style="margin: 0 0 0 5px" class="md-primary" ng-class="attributes.buttonClass.value" ng-disabled="$eval(attributes.disabled.value)"
-                       ng-click="ngClickFunc()"
-                       ng-change="$eval(attributes.onchange.value)"
-                       ng-focus="$eval(attributes.onfocus.value)"
-                       ng-blur="$eval(attributes.onblur.value)"
-                       ng-dblclick="$eval(attributes.ondblclick.value)"
-                       ng-keypress="$eval(attributes.onkeypress.value)"
-                       ng-keydown="$eval(attributes.onkeydown.value)"
-                       ng-keyup="$eval(attributes.onkeyup.value)"
-                       ng-mouseover="$eval(attributes.onmouseover.value)"
-                       ng-mouseenter="$eval(attributes.onmouseenter.value)"
-                       ng-mousemove="$eval(attributes.onmousemove.value)"
-                       ng-mouseleave="$eval(attributes.onmouseleave.value)"
-                       ng-mousedown="$eval(attributes.onmousedown.value)"
-                       ng-mouseup="$eval(attributes.onmouseup.value)"></md-switch>
-            <div style="padding-top: 3px;">
-                <div style="display: inline-block">{{$eval(item[attributes.switchValue.label]) || item[attributes.switchValue.label]}}</div>
-                <div style="display: inline-block" ng-if="$eval(attributes.displayValue.value)">
-                    <div ng-if="attributes.bindingBoolean.value[$index]">{{$eval(item[attributes.switchValue.trueSwitchValue]) || item[attributes.switchValue.trueSwitchValue]}}</div>
-                    <div ng-if="!attributes.bindingBoolean.value[$index]" >{{$eval(item[attributes.switchValue.falseSwitchValue]) || item[attributes.switchValue.falseSwitchValue]}}</div>
-                </div>
-            </div>
-        </div>
-        <div ng-if="attributes.optionsType.value==='static'" layout="row" ng-repeat="item in attributes.staticArray.value track by $index" ng-style="{'margin-top' : $index > 0 && attributes.direction.value ==='column' ? '11px' : '0', 'margin-right':'15px'}">
-            <md-switch aria-label="{{attributes.name.value}} switch" ng-model="item.isChecked" style="margin: 0 0 0 5px" class="md-primary" ng-class="attributes.buttonClass.value" ng-disabled="$eval(attributes.disabled.value)"
-                       ng-click="ngClickFunc()"
-                       ng-change="$eval(attributes.onchange.value)"
-                       ng-focus="$eval(attributes.onfocus.value)"
-                       ng-blur="$eval(attributes.onblur.value)"
-                       ng-dblclick="$eval(attributes.ondblclick.value)"
-                       ng-keypress="$eval(attributes.onkeypress.value)"
-                       ng-keydown="$eval(attributes.onkeydown.value)"
-                       ng-keyup="$eval(attributes.onkeyup.value)"
-                       ng-mouseover="$eval(attributes.onmouseover.value)"
-                       ng-mouseenter="$eval(attributes.onmouseenter.value)"
-                       ng-mousemove="$eval(attributes.onmousemove.value)"
-                       ng-mouseleave="$eval(attributes.onmouseleave.value)"
-                       ng-mousedown="$eval(attributes.onmousedown.value)"
-                       ng-mouseup="$eval(attributes.onmouseup.value)"></md-switch>
-            <div style="padding-top: 3px;">
-                <div style="display: inline-block">{{ $eval(item.label) }} </div>
-                <div style="display: inline-block" ng-if="$eval(attributes.displayValue.value)">
-                    <div ng-if="item.isChecked">{{$eval(item.checked) || item.checked}}</div>
-                    <div ng-if="!item.isChecked">{{$eval(item.unchecked) || item.unchecked}}</div>
-                </div>
-            </div>
-        </div>
+<div ng-if="isBindingPresent.value=== false" ng-show="$eval(attributes.display.value)" class="{{attributes.classes.value}}" ng-class="$eval(attributes.dynamicClasses.value)" ng-init="dfxSwitchSource = ($eval(sourceArray))" style="{{attributes.style.value}}">
+    <div><span style="{{attributes.labelStyle.style}}" class="dfx-core-gc-switch-label {{attributes.labelStyle.class}}" ng-bind="$eval(attributes.label.value)"></span></div>
+    <div ng-if="attributes.optionsType.value==='dynamic'" ng-repeat="item in dfxSwitchSource track by $index" ng-style="{'margin-top' : $index > 0 && attributes.direction.value ==='column' ? '21px' : '4px', 'display': attributes.direction.value ==='column' ? 'block' : 'inline-block', 'margin-right':'15px', 'margin-left':'5px'}">
+        <md-switch class="dfx-core-gc-switch-button md-altTheme-theme md-primary" ng-class="attributes.itemStyle.item.class !== '' ? attributes.itemStyle.item.class : ''" style="{{attributes.itemStyle.item.style}}" ng-init="dfxTrueValue = dfxSwitchValueType( $eval('item.' + attributes.switchValue.trueSwitchValue) ); dfxFalseValue = dfxSwitchValueType( $eval('item.' + attributes.switchValue.falseSwitchValue) )"
+            ng-model="item.isChecked" ng-disabled="$eval(attributes.disabled.value)" ng-click="$eval(attributes.onclick.value)" ng-change="$eval(attributes.onchange.value)" ng-focus="$eval(attributes.onfocus.value)" ng-blur="$eval(attributes.onblur.value)" ng-dblclick="$eval(attributes.ondblclick.value)" ng-keypress="$eval(attributes.onkeypress.value)" ng-keydown="$eval(attributes.onkeydown.value)" ng-keyup="$eval(attributes.onkeyup.value)" ng-mouseover="$eval(attributes.onmouseover.value)" ng-mouseenter="$eval(attributes.onmouseenter.value)" ng-mousemove="$eval(attributes.onmousemove.value)" ng-mouseleave="$eval(attributes.onmouseleave.value)" ng-mousedown="$eval(attributes.onmousedown.value)" ng-mouseup="$eval(attributes.onmouseup.value)" aria-label="Switch Item">
+            <span class="{{attributes.itemStyle.label.class}}" style="{{attributes.itemStyle.label.style}}" ng-init="dfxSwitchLabel = $eval('item.' + attributes.switchValue.label)" ng-bind="dfxSwitchLabel"></span>
+            <span ng-if="attributes.displayValue.value" style="{{attributes.itemStyle.val.style}}" class="{{attributes.itemStyle.val.class}}"> 
+                <span ng-if="item.isChecked" ng-bind="$eval('item.' + attributes.switchValue.trueSwitchValue)"></span>
+                <span ng-if="!item.isChecked" ng-bind="$eval('item.' + attributes.switchValue.falseSwitchValue)"></span>
+            </span>
+        </md-switch>
+    </div>
+    <div ng-if="attributes.optionsType.value==='static'" ng-repeat="item in attributes.staticArray.value track by $index" ng-style="{'margin-top' : $index > 0 && attributes.direction.value ==='column' ? '21px' : '4px', 'display': attributes.direction.value ==='column' ? 'block' : 'inline-block', 'margin-right':'15px', 'margin-left':'5px'}">
+        <md-switch class="dfx-core-gc-switch-button md-altTheme-theme md-primary" ng-class="attributes.itemStyle.item.class !== '' ? attributes.itemStyle.item.class : ''" style="{{attributes.itemStyle.item.style}}"
+            ng-init="dfxTrueValue = dfxSwitchValueType( $eval(item.checked) ); dfxFalseValue = dfxSwitchValueType( $eval(item.unchecked) )"
+            ng-model="item.isChecked"            
+            ng-disabled="$eval(attributes.disabled.value)" ng-click="$eval(attributes.onclick.value)" ng-change="$eval(attributes.onchange.value)" ng-focus="$eval(attributes.onfocus.value)" ng-blur="$eval(attributes.onblur.value)" ng-dblclick="$eval(attributes.ondblclick.value)" ng-keypress="$eval(attributes.onkeypress.value)" ng-keydown="$eval(attributes.onkeydown.value)" ng-keyup="$eval(attributes.onkeyup.value)" ng-mouseover="$eval(attributes.onmouseover.value)" ng-mouseenter="$eval(attributes.onmouseenter.value)" ng-mousemove="$eval(attributes.onmousemove.value)" ng-mouseleave="$eval(attributes.onmouseleave.value)" ng-mousedown="$eval(attributes.onmousedown.value)" ng-mouseup="$eval(attributes.onmouseup.value)" aria-label="Switch Item">
+            <span class="{{attributes.itemStyle.label.class}}" style="{{attributes.itemStyle.label.style}}" ng-bind="$eval(item.label)"></span>
+            <span ng-if="attributes.displayValue.value" style="{{attributes.itemStyle.val.style}}" class="{{attributes.itemStyle.val.class}}"> 
+                <span ng-if="item.isChecked" ng-bind="$eval(item.checked)"></span>
+                <span ng-if="!item.isChecked" ng-bind="$eval(item.unchecked)"></span>
+            </span>
+        </md-switch>
     </div>
 </div>

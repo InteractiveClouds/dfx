@@ -46,15 +46,7 @@
                 <li class="col-md-12">
                     <span class="col-md-4" style="margin-top: 3px">Display value:</span>
                     <span class="col-md-8"><md-checkbox style="margin: 0" class="md-primary" ng-model="attributes.displayValue.value" ng-true-value="true" ng-false-value="false" ng-change="overrideAttribute('displayValue');" aria-label="displayValue"></md-checkbox></span>
-                </li>
-                <li class="col-md-12" ng-show="$eval(attributes.checkValue.value)">
-                    <span class="col-md-4">Checked value:</span>
-                    <input class="col-md-8" type="text" ng-model="attributes.checkValue.trueCheckValue" ng-change="overrideAttribute('checkValue.trueCheckValue')"/>
-                </li>
-                <li class="col-md-12" ng-show="$eval(attributes.checkValue.value)">
-                    <span class="col-md-4">Unchecked value:</span>
-                    <input class="col-md-8" type="text" ng-model="attributes.checkValue.falseCheckValue" ng-change="overrideAttribute('checkValue.falseCheckValue')"/>
-                </li>
+                </li>                
                 <li class="col-md-12" dfx-gc-property="display">
                     <span class="col-md-4">Display:</span>
                     <div class="col-md-8" layout="row"><input class="col-md-12" type="text" ng-model="attributes.display.value" style="margin-left:-15px;" ng-change="overrideAttribute('display')"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>

@@ -83,7 +83,7 @@
                 <li class="col-md-12">
                     <span class="col-md-4">Auto-disabled:</span>
                     <div class="col-md-8" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.waiting.autoDisabled" ng-change="overrideAttribute('waiting.autoDisabled')" style="margin-left:-15px;"/>
+                        <input class="col-md-12" type="text" ng-model="attributes.waiting.autoDisabled" ng-change="overrideAttribute('waiting')" style="margin-left:-15px;"/>
                         <dfx-ve-expression-editor></dfx-ve-expression-editor>
                     </div>
                 </li>                
@@ -126,6 +126,10 @@
 			<label for="item-3">Styling Attributes</label>
 			<ul class="dfx-ve-property-treeview-content">
                 <li class="col-md-12">
+                    <span class="col-md-4">Size width to Label:</span>
+                    <span class="col-md-8" style="padding-left:0px;"><md-checkbox style="margin: 0" class="md-primary" ng-model="attributes.notFlex.value" ng-change="overrideAttribute('notFlex');changeWidth()" aria-label="notFlex"></md-checkbox></span>
+                </li>                
+                <li class="col-md-12" ng-if="!attributes.notFlex.value">
                     <span class="col-md-12">
                         <div layout>
                             <span class="col-md-3" style="margin-top:10px;margin-left:-5px;">Flex Width:</span>
