@@ -537,6 +537,27 @@ md-checkbox[type="checkbox"].dfx-core-gc-checkbox-button {
     display: inline-block;
 }
 
+/* Radio */
+.dfx-core-gc-radio-label {
+    font-size: 10px !important;
+    margin: 7px 0!important;
+    padding-left: 3px !important;
+    color: rgba(0,0,0,0.54) !important;
+}
+.dfx-gc-radio-group {
+    display: -webkit-flex;
+    display: flex;
+}
+.dfx-core-gc-radio-button {
+    height: 26px;
+    margin: 0 0 0 5px;
+    display: -webkit-flex;
+    -webkit-flex-direction: row;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 /* JSON Editor */
 .dfx-core-gc-json-input-type {
     display: flex;
