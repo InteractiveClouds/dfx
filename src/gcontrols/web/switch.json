@@ -20,8 +20,7 @@
     "itemStyle":      { 
         "item":       { "style": "", "class": "" },
         "label":      { "style": "", "class": "" },
-        "val":        { "style": "", "class": "" }
-    },
+        "val":        { "style": "", "class": "" }},
     "onclick":        { "value": "" },
     "ondblclick":     { "value": "" },
     "onchange":       { "value": "" },
