@@ -1,0 +1,62 @@
+FRAG-IF{{attributes.menuItemsType.value === 'static'}}
+<div class="dfx-core-gc-button-container">
+    <md-button ng-if="ATTR-EXP{{(attributes.menuItems.value.length === 0) ? 'true' : 'false'}}ATTR-ENDEXP" class="dfx-core-gc-button md-raised md-primary ATTR-EXP{{(attributes.classes.value!='') ? attributes.classes.value : ''}}ATTR-ENDEXP md-altTheme-theme ATTR-EXP{{(attributes.waiting.value!='') ? 'dfx-core-button-wait' : ''}}ATTR-ENDEXP"
+        ATTR-IF{{style="attributes.style.value"}}
+        ng-show="attributes.display.value"
+        ATTR-IF{{ng-class="attributes.dynamicClasses.value"}}
+		ATTR-IF{{ng-click="attributes.onclick.value"}}
+        ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
+        ATTR-IF{{ng-keypress="attributes.onkeypress.value"}}
+        ATTR-IF{{ng-keydown="attributes.onkeydown.value"}}
+        ATTR-IF{{ng-keyup="attributes.onkeyup.value"}}
+        ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}}
+        ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}}
+        ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}}
+        ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
+        ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}
+        ATTR-IF{{ng-disabled="attributes.waiting.autoDisabled"}} aria-label="{{attributes.name.value}}">
+        <div ng-if="!$eval(attributes.waiting.value)" ng-style="{'display':'flex','flex-direction': attributes.icon.position === 'right' ? 'row-reverse' : 'row', 'justify-content': 'center', 'align-items':'center'}">
+            <md-icon ng-if="ATTR-EXP{{(attributes.icon.type ==='fa-icon' && attributes.icon.value.length > 0) ? 'true' : 'false'}}ATTR-ENDEXP" class="dfx-core-gc-button-icon {{attributes.icon.class}} fa {{$eval(attributes.icon.value)}}" style="color: inherit; {{attributes.icon.style}}; font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
+            <ng-md-icon ng-if="ATTR-EXP{{(attributes.icon.type ==='svg-icon' && attributes.icon.value.length > 0) ? 'true' : 'false'}}ATTR-ENDEXP" icon="{{attributes.icon.value}}" size="{{attributes.icon.size}}" style="color: inherit; {{attributes.icon.style}}; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;" class="dfx-core-gc-button-icon {{attributes.icon.class}}"></ng-md-icon>
+            <span ng-if="ATTR-EXP{{(attributes.label.value!=='') ? 'true' : false}}ATTR-ENDEXP" ng-bind="attributes.label.value" class="dfx-gc-core-button-label"></span>
+        </div>
+        <div ng-if="$eval(attributes.waiting.value)" ng-style="{'display':'flex','flex-direction': attributes.icon.position === 'right' ? 'row-reverse' : 'row', 'justify-content': 'center', 'align-items':'center'}">
+            <md-icon ng-if="ATTR-EXP{{(attributes.waiting.icon.type ==='fa-icon' && attributes.waiting.icon.value!='' && attributes.waiting.icon.value.length > 0) ? 'true' : 'false'}}ATTR-ENDEXP" class="dfx-core-gc-button-icon {{attributes.icon.class}} fa {{$eval(attributes.waiting.icon.value) || 'fa-spinner'}} {{attributes.waiting.icon.class}}" style="color: inherit; {{attributes.icon.style}}; font-size: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; {{attributes.waiting.icon.style}}"></md-icon>
+            <ng-md-icon ng-if="ATTR-EXP{{(attributes.waiting.icon.type ==='svg-icon' && attributes.waiting.icon.value!='' && attributes.waiting.icon.value.length > 0) ? 'true' : 'false'}}ATTR-ENDEXP" icon="{{$eval(attributes.waiting.icon.value) || 'track_changes'}}" size="{{attributes.icon.size}}" class="dfx-core-gc-button-icon {{attributes.icon.class}} {{attributes.waiting.icon.class}}" style="color: inherit; {{attributes.icon.style}}; {{attributes.waiting.icon.style}}"></ng-md-icon>
+            <span ng-if="ATTR-EXP{{(attributes.label.value!=='') ? 'true' : false}}ATTR-ENDEXP" ng-bind="attributes.label.value" class="dfx-gc-core-button-label"></span>
+        </div>
+    </md-button>
+    <div class="{{component_class}}_button_menu" ng-if="ATTR-EXP{{(attributes.menuItems.value.length > 0) ? 'true' : 'false'}}ATTR-ENDEXP"></div>
+</div>
+FRAG-ENDIF
+FRAG-IF{{attributes.menuItemsType.value === 'dynamic'}}
+<div class="dfx-core-gc-button-container">
+    <md-button class="dfx-core-gc-button md-raised md-primary ATTR-EXP{{(attributes.classes.value!='') ? attributes.classes.value : ''}}ATTR-ENDEXP md-altTheme-theme ATTR-EXP{{(attributes.waiting.value!='') ? 'dfx-core-button-wait' : ''}}ATTR-ENDEXP"
+		ATTR-IF{{style="attributes.style.value"}}
+		ng-show="attributes.display.value"
+		ATTR-IF{{ng-class="attributes.dynamicClasses.value"}}
+		ATTR-IF{{ng-click="attributes.onclick.value"}}
+		ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
+		ATTR-IF{{ng-keypress="attributes.onkeypress.value"}}
+		ATTR-IF{{ng-keydown="attributes.onkeydown.value"}}
+		ATTR-IF{{ng-keyup="attributes.onkeyup.value"}}
+		ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}}
+		ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}}
+		ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}}
+		ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
+		ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}
+        ng-disabled="attributes.disabled.value || attributes.waiting.autoDisabled" aria-label="{{attributes.name.value}}">
+        <div ng-if="!$eval(attributes.waiting.value)" ng-style="{'display':'flex','flex-direction': attributes.icon.position === 'right' ? 'row-reverse' : 'row', 'justify-content': 'center', 'align-items':'center'}">
+            <md-icon ng-if="ATTR-EXP{{(attributes.icon.type ==='fa-icon' && attributes.icon.value!=null && attributes.icon.value.length > 0) ? 'true' : 'false'}}ATTR-ENDEXP" class="dfx-core-gc-button-icon {{attributes.icon.class}} fa {{$eval(attributes.icon.value)}}" style="color: inherit; {{attributes.icon.style}}; font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
+            <ng-md-icon ng-if="ATTR-EXP{{(attributes.icon.type ==='svg-icon' && attributes.icon.value!=null && attributes.icon.value.length > 0) ? 'true' : 'false'}}ATTR-ENDEXP" icon="{{$eval(attributes.icon.value)}}" size="{{attributes.icon.size}}" style="color: inherit; {{attributes.icon.style}}; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;" class="dfx-core-gc-button-icon {{attributes.icon.class}}"></ng-md-icon>
+            <span ng-if="ATTR-EXP{{(attributes.label.value!=='') ? 'true' : false}}ATTR-ENDEXP" ng-bind="attributes.label.value" class="dfx-gc-core-button-label"></span>
+        </div>
+        <div ng-if="$eval(attributes.waiting.value)" ng-style="{'display':'flex','flex-direction': attributes.icon.position === 'right' ? 'row-reverse' : 'row', 'justify-content': 'center', 'align-items':'center'}">
+            <md-icon ng-if="ATTR-EXP{{(attributes.waiting.icon.type ==='fa-icon' && attributes.waiting.icon.value!='' && attributes.waiting.icon.value.length > 0) ? 'true' : 'false'}}ATTR-ENDEXP" class="dfx-core-gc-button-icon {{attributes.icon.class}} fa {{$eval(attributes.waiting.icon.value) || 'fa-spinner'}} {{attributes.waiting.icon.class}}" style="color: inherit; {{attributes.icon.style}}; font-size: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; {{attributes.waiting.icon.style}}"></md-icon>
+            <ng-md-icon ng-if="ATTR-EXP{{(attributes.waiting.icon.type ==='svg-icon' && attributes.waiting.icon.value!='' && attributes.waiting.icon.value.length > 0) ? 'true' : 'false'}}ATTR-ENDEXP" icon="{{$eval(attributes.waiting.icon.value) || 'track_changes'}}" size="{{attributes.icon.size}}" class="dfx-core-gc-button-icon {{attributes.icon.class}} {{attributes.waiting.icon.class}}" style="color: inherit; {{attributes.icon.style}}; {{attributes.waiting.icon.style}}"></ng-md-icon>
+            <span ng-if="ATTR-EXP{{(attributes.label.value!=='') ? 'true' : false}}ATTR-ENDEXP" ng-bind="attributes.label.value" class="dfx-gc-core-button-label"></span>
+        </div>
+    </md-button>
+    <div class="{{component_class}}_button_menu" ng-if="attributes.menuItemNames.value.main.source!=''"></div>
+</div>
+FRAG-ENDIF
