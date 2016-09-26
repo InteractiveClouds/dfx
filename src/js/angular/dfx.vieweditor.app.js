@@ -1599,7 +1599,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
         $mdDialog.show({
             targetEvent: $event,
             hasBackdrop: false,
-            template: '<md-dialog>' +
+            template: '<md-dialog style="left:'+($event.x-250)+'px;top:'+($event.y-5)+'px;position:absolute;">' +
                 //'  <md-dialog-content><div id="gc_preview_container"></div></md-dialog-content>' +
                 '  <md-dialog-content><div id="gc_preview_container" style="width:100%;"></div></md-dialog-content>' +
                 '</md-dialog>',
