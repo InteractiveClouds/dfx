@@ -42,6 +42,24 @@
             <span class="col-md-6">Dynamic Class:</span>
             <input class="col-md-6" type="text" ng-model="attributes.toolbar.dynamicClasses.value" style="padding-left: 6px" ng-change="overrideAttribute('toolbar.dynamicClasses')"/>
         </li>
+        <li class="col-md-12" ng-if="attributes.collapseStyle">
+            <input class="dfx-ve-property-treeview-button" type="checkbox" checked aria-label="collapser" id="collapser" />
+            <label for="collapser" class="dfx-ve-property-title-level-1"><span>Collapsing Styling</span></label>
+            <ul class="dfx-ve-property-treeview-content">
+                <li class="col-md-12">
+                    <span class="col-md-4">Style:</span>
+                    <div class="col-md-8" layout="row"><input class="col-md-12" type="text" ng-model="attributes.collapseStyle.style" ng-change="overrideAttribute('collapseStyle.style')" style="margin-left:-15px;"/><dfx-ve-css-style></dfx-ve-css-style></div>
+                </li>                        
+                <li class="col-md-12">
+                    <span class="col-md-4">Class:</span>
+                    <input class="col-md-8" type="text" ng-model="attributes.collapseStyle.class" ng-change="overrideAttribute('collapseStyle.class')"/>
+                </li>
+                <li class="col-md-12">
+                    <span class="col-md-4">Dynamic Class:</span>
+                    <input class="col-md-8" type="text" ng-model="attributes.collapseStyle.dynamicClass"  ng-change="overrideAttribute('collapseStyle.dynamicClass')"/>
+                </li>   
+            </ul>
+        </li>
         <li class="col-md-12">
             <input class="dfx-ve-property-treeview-button" type="checkbox" aria-label="item-21" id="item-21" />
             <label for="item-21" class="dfx-ve-property-title-level-1"><span>Left Menu</span></label>
