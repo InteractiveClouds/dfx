@@ -33,5 +33,6 @@
     "onmouseenter":   { "value": "" },
     "onmousemove":    { "value": "" },
     "onmouseleave":   { "value": "" },
+    "onmousedown":    { "value": "" },
     "onmouseup":      { "value": "" }
 }
