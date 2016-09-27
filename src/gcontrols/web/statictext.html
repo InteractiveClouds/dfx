@@ -12,7 +12,7 @@
     dfx-ng-mousemove="ng-mousemove,onmousemove"
     dfx-ng-mouseleave="ng-mouseleave,onmouseleave"
     dfx-ng-mouseup="ng-mouseup,onmouseup">
-    <md-tooltip ng-if="attributes.tooltipProperties.toolTipText!=''" md-direction='{{attributes.tooltipProperties.direction}}'>
+    <md-tooltip ng-if="attributes.tooltipProperties.toolTipText!=''" md-direction='{{attributes.tooltipProperties.direction}}' style="{{attributes.tooltipProperties.style}}" class="dfx-core-gcs-tooltip {{attributes.tooltipProperties.class}}">
         <span ng-bind="$eval(attributes.tooltipProperties.toolTipText)"></span>
     </md-tooltip>
 </div>
