@@ -9,14 +9,6 @@ dfxGCC.directive('dfxGccWebBase', ['$rootScope', '$http', '$compile', '$injector
                 sessionStorage.setItem('dfx_' + gc_type, JSON.stringify(gc_template));
             };
 
-            var mergeArrayTypeAttribute = function (default_array_attribute, updated_array_attribute) {
-                for (var i = 0; i < updated_array_attribute.length; i++) {
-                    if (i > 0) {// default_attributes array contains only one, first array element, so, clone it first
-                        default_array_attribute.push(angular.copy(default_array_attribute[0]));
-                    }
-                    mergeWithOverriddenAttributes(default_array_attribute[i], updated_array_attribute[i]);
-                }
-            };
             var mergeWithOverriddenAttributes = function (default_attributes, updated_attributes) {
                 for (var updated_attribute in updated_attributes) {
                     if (updated_attributes.hasOwnProperty(updated_attribute)) {
@@ -25,7 +17,6 @@ dfxGCC.directive('dfxGccWebBase', ['$rootScope', '$http', '$compile', '$injector
                         {
 
                             if ( Array.isArray(updated_attributes[updated_attribute]) ) {
-                                //mergeArrayTypeAttribute(default_attributes[updated_attribute], updated_attributes[updated_attribute]);
                                 default_attributes[updated_attribute] = updated_attributes[updated_attribute];// this is an array, without 'value'
                             } else {
                                 if (updated_attributes[updated_attribute] !== null && typeof updated_attributes[updated_attribute] === 'object') {
@@ -698,10 +689,8 @@ dfxGCC.directive('dfxGccWebDatepicker', ['$timeout', function($timeout) {
         link: function(scope, element, attrs, basectrl) {
             var component = scope.$parent.getComponent(element);
             scope.dp_input;
-            basectrl.init(scope, element, component, attrs, 'datepicker').then(function(){
-                console.log('scope.attributes.designDate: ', scope.attributes.designDate);
-                scope.attributes.test.value == 'test';
 
+            basectrl.init(scope, element, component, attrs, 'datepicker').then(function() {
                 if ( !scope.attributes.hasOwnProperty('flex') ) { scope.attributes.flex = { "value": 20 }; }
                 scope.attributes.bindingDate.status = "overridden";
                 scope.attributes.ranged.status = "overridden";
@@ -739,28 +728,9 @@ dfxGCC.directive('dfxGccWebDatepicker', ['$timeout', function($timeout) {
                     scope.attributes.alignment.status = "overridden" ;
                 });
 
-                scope.$watch('attributes.alignment.value', function(newValue){
-                    $timeout(function(){
-                        var preview_wrapper = '#' + scope.component_id;
-                        if (scope.$parent.col.orientation.value == 'row') {
-                            $(preview_wrapper).addClass('flex-'+ scope.attributes.flex.value);
-                        } else {
-                            $(preview_wrapper).css('width', scope.attributes.flex.value + '%');
-                        }
-                    },0);
-                    scope.setAlignment(newValue);
-                });
-
-                scope.setAlignment = function(alignment){
-                    $timeout(function(){
-                        var dp_input = '#' + scope.component_id + '> form > div > div > md-datepicker > div.md-datepicker-input-container > input' ;
-                        $(dp_input).css('text-align', alignment);
-                    },0)
-                };
-
                 $timeout(function () {
                     try{
-                        scope.dp_input = '#' + scope.component_id + '> form > div > div > md-datepicker > div.md-datepicker-input-container > input';
+                        scope.dp_input = '#' + scope.component_id + ' > div > div > md-datepicker > div.md-datepicker-input-container > input';
                         $(scope.dp_input).focus(function(){
                             scope.attributes.labelClass = 'dp-label-focus-on';
                             scope.$apply(function(){
@@ -777,8 +747,20 @@ dfxGCC.directive('dfxGccWebDatepicker', ['$timeout', function($timeout) {
                     }
                 },0);
 
-                scope.changeWidth = function(){
+                scope.attributes.bindingDateModel = function() {
+                    return scope.attributes.bindingDate.value;
+                };
+
+                scope.changeWidth = function() {
                     $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+
+                    $timeout(function(){
+                        var preview_wrapper = '#' + scope.component_id;
+                        $(preview_wrapper).css('width', scope.attributes.flex.value + '%');
+
+                        var dp_input = '#' + scope.component_id + ' > div > div > md-datepicker > div.md-datepicker-input-container > input' ;
+                        $(dp_input).css('text-align', scope.attributes.alignment.value);
+                    }, 0);
                 };
                 scope.changeWidth();
             });
