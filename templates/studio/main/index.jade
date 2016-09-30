@@ -151,7 +151,7 @@ html
                                                         ul.dfx-studio-explorer-treeview-content
                                                             li
                                                                 input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="root-configuration-{{$index}}")
-                                                                label(for="root-configuration-{{$index}}") Configuration
+                                                                label(for="root-configuration-{{$index}}") Configure
                                                                 ul.dfx-studio-explorer-treeview-content
                                                                     li
                                                                         a(href="", ng-click="loadStudioView(application.name + '/configuration/general')") General
@@ -165,11 +165,9 @@ html
                                                                         a(href="", ng-click="loadStudioView(application.name + '/configuration/users')") Users and Roles
                                                                     li
                                                                         a(href="", ng-click="loadStudioView(application.name + '/configuration/personalization')") Personalization
-                                                                    li
-                                                                        a(href="", ng-click="loadStudioView(application.name + '/configuration/deployment')") Deployment
                                                             li
                                                                 input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="root-components-{{$index}}")
-                                                                label(for="root-components-{{$index}}") Components
+                                                                label(for="root-components-{{$index}}") Develop
                                                                 ul.dfx-studio-explorer-treeview-content
                                                                     li
                                                                         input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="root-pages-{{$index}}")
@@ -379,6 +377,12 @@ html
                                                                                             span {{apiso.name}}
                                                                                             a.pull-right.dfx-studio-explorer-treeview-menuicon(ng-click="loadExplorerMenu($event, 'menuItem', application.name, apisoCategoryName, 'apiso', apiso.name)")
                                                                                                 i.fa.fa-cog
+                                                            li
+                                                                input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="root-deploy-{{$index}}")
+                                                                label(for="root-deploy-{{$index}}") Deploy
+                                                                ul.dfx-studio-explorer-treeview-content
+                                                                    li
+                                                                        a(href="", ng-click="loadStudioView(application.name + '/configuration/deployment')") Builds & Deployment
                                             li
                                                 input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="shared-cat")
                                                 label(for="shared-cat") Shared Catalog
