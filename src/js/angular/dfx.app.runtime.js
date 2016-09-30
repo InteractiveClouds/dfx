@@ -410,20 +410,20 @@ dfxAppRuntime.directive('dfxViewPreviewCompiled', ['$compile', function($compile
             $scope.view_id = $attrs.id;
             $scope.$parent.dfxViewCard = $attrs.dfxViewCard;
             var widget_definition = JSON.parse(window.localStorage.getItem( 'dfx_' + $attrs.dfxViewPreviewCompiled ));
-            var view_compiled = window.localStorage.getItem( 'DFX_view_compiled_' + $attrs.dfxViewPreviewCompiled + '_' + $attrs.dfxViewCard );
             $scope.$watch('dfxViewCard', function(new_card, old_card) {
                 if (new_card!=null) {
-                  var animation = (widget_definition.definition[new_card][0].animation) ? widget_definition.definition[new_card][0].animation : {
-                    in: 'fadeIn',
-                    out: 'slideOutLeft'
-                  };
-                  $('#dfx_view_preview_container').removeClass().addClass('animated ' + animation.out).one('animationend', function(eventOne) {
-                    angular.element($('#dfx_view_preview_container')).html('');
-                    $('#dfx_view_preview_container').removeClass().addClass('animated ' + animation.in);
-                    $scope.addComponents( widget_definition.definition, { "id": "dfx_view_preview_container" }, '', new_card, 'dfx_view_preview_container' );
-                    angular.element($('#dfx_view_preview_container')).html(view_compiled);
-                    $compile(angular.element($('#dfx_view_preview_container')).contents())($scope);
-                  });
+					var view_compiled = window.localStorage.getItem( 'DFX_view_compiled_' + $attrs.dfxViewPreviewCompiled + '_' + new_card );
+                  	var animation = (widget_definition.definition[new_card][0].animation) ? widget_definition.definition[new_card][0].animation : {
+                    	in: 'fadeIn',
+                    	out: 'slideOutLeft'
+                  	};
+                	$('#dfx_view_preview_container').removeClass().addClass('animated ' + animation.out).one('animationend', function(eventOne) {
+	                    angular.element($('#dfx_view_preview_container')).html('');
+	                    $('#dfx_view_preview_container').removeClass().addClass('animated ' + animation.in);
+	                    $scope.addComponents( widget_definition.definition, { "id": "dfx_view_preview_container" }, '', new_card, 'dfx_view_preview_container' );
+	                    angular.element($('#dfx_view_preview_container')).html(view_compiled);
+	                    $compile(angular.element($('#dfx_view_preview_container')).contents())($scope);
+                	});
                 }
             });
         }
