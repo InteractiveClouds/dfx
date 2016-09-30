@@ -5,8 +5,7 @@
 	ATTR-IF{{ng-class="attributes.dynamicClasses.value"}}>
 	<label ATTR-IF{{ng-bind="attributes.label.value"}}></label>
 	<ul class="star-rating"
-				ng-model="attributes.bindingRatingModel"
-				ng-model-options="{ getterSetter: true }"
+				ng-model="$gcscope[scope.attributes.binding.value]"
 				ATTR-IF{{aria-label="attributes.name.value"}}
 				ATTR-IF{{ng-click="attributes.onclick.value"}}
 				ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}}
@@ -18,17 +17,14 @@
 				ATTR-IF{{ng-disabled="attributes.disabled.value"}}>
         <li ng-repeat="star in stars" class="star"
 						ng-class="{filled: star.filled}"
-						style="color: #fd0"
+						ng-style="{color: star.filled ? 'attributes.highlighted.value' : 'attributes.color.value' }"
 						ng-click="toggle($index)">
 						FRAG-IF{{attributes.icon.type ==='fa-icon'}}
-            <i class="fa {{$eval(attributes.icon.value)}}" style="font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></i>
+            <i class="fa {{attributes.icon.value}}" style="font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></i>
 						FRAG-ENDIF
 						FRAG-IF{{attributes.icon.type ==='svg-icon'}}
-            <ng-md-icon icon="{{$eval(attributes.icon.value)}}" size="{{attributes.icon.size}}" style="height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></ng-md-icon>
+            <ng-md-icon icon="{{attributes.icon.value}}" size="{{attributes.icon.size}}" style="height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></ng-md-icon>
 						FRAG-ENDIF
         </li>
     </ul>
 </md-input-container>
-<div>attributes.binding.value: {{attributes.binding.value}}</div>
-<div>$gcscope[attributes.binding.value]: {{$gcscope[attributes.binding.value]}}</div>
-<div>$gcscope: {{$gcscope}}</div>

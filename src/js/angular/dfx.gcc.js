@@ -828,11 +828,6 @@ dfxGCC.directive('dfxGccWebRating', function() {
                     scope.$watch("$gcscope[attributes.binding.value]", function(newValue){
                         updateStars();
                     });
-
-                    scope.attributes.bindingRatingModel = function() {
-                        //return $gcscope[attributes.binding.value];
-                        return scope.attributes.binding.value;
-                    };
                 });
             }
         }
