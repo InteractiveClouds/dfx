@@ -132,7 +132,10 @@ dfxGCC.directive('dfxGccWebBase', ['$rootScope', '$http', '$compile', '$injector
                     scope.$parent_scope = scope.$parent;
                 } else {
                     //scope.$parent_scope = angular.element(document.getElementById(scope.view_id)).scope().$parent;
-                    //scope.$parent_scope = scope.$parent.$parent.$parent.$parent;
+                    if (scope.$parent.view_id) {// TODO: still not sure about this solution
+                        scope.$parent_scope = angular.element(document.getElementById(scope.$parent.view_id)).scope().$parent;
+                        //console.log(scope);
+                    }
                 }
 
                 return $q.when(component.id);
@@ -735,6 +738,24 @@ dfxGCC.directive('dfxGccWebDatepicker', ['$timeout', function($timeout) {
                     }, 0);
                 };
                 scope.changeWidth();
+            });
+        }
+    }
+}]);
+
+dfxGCC.directive('dfxGccWebProgressbar', ['$timeout', function( $timeout ) {
+    return {
+        restrict: 'A',
+        require: '^dfxGccWebBase',
+        scope: true,
+        link: function(scope, element, attrs, basectrl) {
+            var component = scope.getComponent(element);
+            basectrl.init(scope, element, component, attrs, 'progressbar').then(function() {
+                scope.attributes.flex.status = "overridden";
+
+                $timeout(function() {
+                    element.css('width', scope.attributes.flex.value + '%');
+                }, 0);
             });
         }
     }
