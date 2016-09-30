@@ -397,32 +397,6 @@ dfxGCC.directive('dfxGccWebTreeview', [ '$timeout', '$compile', '$q', '$http', '
                     scope.attributes.iconType.status = "overridden";
                 }
 
-                scope.ifShowIconTypes = function( icon, status ) {
-                    var regexp = /(^\')(.*)(\'$)/gm, filtered = regexp.exec( icon );
-                    if ( icon && ( icon.indexOf('+') >= 0 ) ) { filtered = false; }
-                    if ( icon === '' ) { filtered = true; }
-                    if ( icon.indexOf("'") === 0 && icon.indexOf('+') === -1 && icon.charAt(icon.length-1) === "'" ) {
-                        if ( icon.indexOf("'fa-") === 0 ) {
-                            switch ( status ) {
-                                case 'isOpened': scope.attributes.isOpened.type = 'fa-icon'; break;
-                                case 'isClosed': scope.attributes.isClosed.type = 'fa-icon'; break;
-                            }
-                        } else {
-                            switch ( status ) {
-                                case 'isOpened': scope.attributes.isOpened.type = 'svg-icon'; break;
-                                case 'isClosed': scope.attributes.isClosed.type = 'svg-icon'; break;
-                            }
-                        }
-                    }
-                    if ( status === 'isOpened' ) {
-                        scope.showOpenedIconTypes = filtered ? false : true;
-                    } else {
-                        scope.showClosedIconTypes = filtered ? false : true;
-                    }
-
-                }
-                scope.ifShowIconTypes(scope.attributes.isOpened.value, 'isOpened');
-                scope.ifShowIconTypes(scope.attributes.isClosed.value, 'isClosed');
                 scope.toggleNode = function( event, node ) {
                     node.expanded ? node.expanded = false : node.expanded = true;
                 }
@@ -537,118 +511,20 @@ dfxGCC.directive('dfxGccWebTreeview', [ '$timeout', '$compile', '$q', '$http', '
                         }
                     });
                 }
-                /*
-                scope.gcJsonSample = {};
-                scope.gcSamplesArray = {};
-                scope.scriptSampleName = '';
-                scope.scriptSampleNameValid = {"value": false};
-                scope.focusSamples = function(){$timeout(function(){$("#samples-btn").focus();},100);}
-                scope.runJsonEditor = function(model){
-                    scope.dfxSampleJsonEditor = null;
-                    var container = document.getElementById('dfx-ve-sample-json'),
-                        options = { mode: 'code', modes: ['tree','form','code','text','view'], history: true };
-                    $timeout(function(){scope.dfxSampleJsonEditor = new JSONEditor(container, options, model);}, 0);
-                }
-                scope.checkNames = function( propName ){
-                    switch (propName) {
-                        case 'name': scope.attributes.label.value = "name"; break;
-                        case 'children': scope.attributes.repeatable_property.value = "children"; break;
-                    }
-                }
-                scope.checkItemNames = function( item ) {
-                    if(item.hasOwnProperty('name')){scope.checkNames('name');}
-                    if(item.hasOwnProperty('children')){scope.checkNames('children');}
-                }
-                scope.fillPropertiesNames = function(sampleJson){for(var i = 0; i<sampleJson.length; i++){scope.checkItemNames(sampleJson[i]);};}
-                scope.showSamples = function(){
-                    scope.samplesLoaded = $http.get('/gcontrols/web/gcs_json_samples.json').then(function(res){
-                        scope.gcSamplesArray = res.data['treeview'];
-                        scope.gcJsonSample = scope.gcSamplesArray[0];
-                    });
-                    $q.all([scope.samplesLoaded]).then(function(){
-                        $('body').append('<div class="dfx-ve-dialog"></div>');
-                        $('.dfx-ve-dialog').load('/gcontrols/web/gcs_json_samples.html', function(){
-                            $compile($('.dfx-ve-dialog').contents())(scope);
-                            $('.sp-container').remove();
-                            $('.dfx-ve-content-dialog').addClass('active');
-                            $('#dfx-ve-gc-samples-dialog').keyup(function(e) {
-                                if(e.which === 13) {
-                                    var activeTagName = document.activeElement.tagName;
-                                    if(activeTagName!=='TEXTAREA' && activeTagName!=='BUTTON') $('#dfx-copy-sample-btn').click();
-                                }
-                                if(e.which === 27) scope.closeSamples();
-                                e.preventDefault();
-                                e.stopPropagation();
-                            });
-                            $timeout(function(){
-                                scope.runJsonEditor(scope.gcSamplesArray[0].value);
-                                $(".dfx-ve-content-categories li").eq(0).find('span').addClass('active');
-                                scope.scriptSampleName!=='' ? $("#dfx-copy-sample-btn").focus() : $("#dfx-json-sample-name").focus();
-                            }, 250);
-                        });
-                    });
-                }
-                scope.selectSample = function(ev, sample) {
-                    scope.gcJsonSample = sample;
-                    scope.dfxSampleJsonEditor ? scope.dfxSampleJsonEditor.set(sample.value) : scope.runJsonEditor(sample.value);
-                    $(".dfx-ve-content-categories span").removeClass('active');
-                    $(ev.target).addClass('active');
-                    scope.scriptSampleName!=='' ? $("#dfx-copy-sample-btn").focus() : $("#dfx-json-sample-name").focus();
-                }
-                scope.addSampleToScript = function(){
-                    scope.fillPropertiesNames(scope.gcJsonSample.value);
-                    var sampleGet = scope.dfxSampleJsonEditor.get(),
-                        sampleStringified = JSON.stringify(sampleGet, null, '\t'),
-                        sampleStringified = sampleStringified.split("\n").join("\n\t"),
-                        scriptEditor = $('#dfx_script_editor.CodeMirror')[0].CodeMirror;
-                    $q.all([ scope.fillPropertiesNames, scope.checkItemNames, scope.checkNames ]).then(function(){
-                        scope.attributes.dynamic.value = scope.scriptSampleName;
-                        scope.attributes.label.status = "overridden";
-                        scope.attributes.repeatable_property.status = "overridden";
-                        scope.closeDialog();
-                        scope.closeSamples();
-                        $timeout(function(){
-                            scope.changeViewMode('script');
-                            scriptEditor.focus();
-                            scriptEditor.setCursor({line: 4, ch: 0});
-                            var sampleToAdd = "\t$scope." + scope.scriptSampleName + " = " + sampleStringified + ";\n";
-                            scriptEditor.replaceSelection(sampleToAdd);
-                            scope.changeViewMode('design');
-                            $mdToast.show(
-                                $mdToast.simple()
-                                .textContent('JSON Sample "'+scope.gcJsonSample.name+'" has been added to the Script.')
-                                .theme('success-toast')
-                                .position('top right')
-                                .hideDelay(3000)
-                            );
-                            scope.closeDialog();
-                        }, 250);
-                    });
-                }
-                scope.closeSamples = function() {
-                    $('.dfx-ve-content-dialog').removeClass('active');
-                    angular.element($('.dfx-ve-dialog')).remove();
-                    $('.sp-container').remove();
-                    if($('#dfx-ve-menu-editor-dialog').length > 0) $('#dfx-ve-menu-editor-dialog').focus();
-                }
-                if (!angular.isDefined(attrs.dfxGcDesign) && !angular.isDefined(attrs.dfxGcEdit)) {
-                    if(scope.attributes.treeItemsType.value==='static'){
-                        scope.selectedArrayClone = JSON.parse(JSON.stringify(scope.attributes.static.value));
-                        scope.rebuildSelectedArray('static');
-                    }else{
-                        scope.selectedArrayClone = JSON.parse(JSON.stringify(scope.$parent_scope[scope.attributes.dynamic.value]));
-                        scope.rebuildSelectedArray('dynamic');
-                    }
-                }*/
 
-                console.log('0.attributes.static.value: ', scope.attributes.static.value);
-                scope.static_items = [];
-                scope.test = function(test_param) {
-                    console.log('1.1.test_param: ', test_param);
+                if(scope.attributes.treeItemsType.value==='static'){
+                    scope.selectedArrayClone = JSON.parse(JSON.stringify(scope.attributes.static.value));
+                    scope.rebuildSelectedArray('static');
+                }else{
+                    scope.selectedArrayClone = JSON.parse(JSON.stringify(scope.$parent_scope[scope.attributes.dynamic.value]));
+                    scope.rebuildSelectedArray('dynamic');
+                }
+
+                scope.getDynamicItems = function() {
+                    return scope.$gcscope[scope.attributes.dynamic.value];
+                    //return scope.attributes.dynamic.value;
                 };
-
                 scope.getStaticItems = function() {
-                    console.log('2.scope.attributes.static.value: ', scope.attributes.static.value);
                     return scope.attributes.static.value;
                 };
             });
@@ -2074,3 +1950,117 @@ dfxGCC.directive('dfxGccWebRating', function() {
         }
     }
 });
+
+dfxGCC.directive('dfxGccWebKnob', ['$timeout', '$compile', function($timeout, $compile) {
+    return {
+        restrict:    'A',
+        require:     '^dfxGccWebBase',
+        scope:       true,
+        link: function (scope, element, attrs, basectrl) {
+            var component = scope.$parent.getComponent(element);
+            basectrl.init(scope, element, component, attrs, 'knob').then(function () {
+                scope.attributes.binding.status = 'overridden';
+                if ( !scope.attributes.options.value.hasOwnProperty('size') ){
+                    scope.attributes.options.value = {
+                        "animate": {"enabled":true,"duration":1000,"ease":"bounce"},
+                        "barCap": 20,
+                        "barColor": "#e65d5d",
+                        "barWidth": 40,
+                        "bgColor": "",
+                        "fontSize": "auto",
+                        "displayInput": true,
+                        "dynamicOptions": true,
+                        "displayPrevious": false,
+                        "size": 300,
+                        "min": 0,
+                        "max": 100,
+                        "step": 1,
+                        "startAngle": 0,
+                        "endAngle": 360,
+                        "textColor": "#222222",
+                        "prevBarColor": "rgba(0,0,0,0)",
+                        "trackColor": "#ffe6e6",
+                        "trackWidth": 50,
+                        "readOnly": false,
+                        "unit": "%",
+                        "subText": {"enabled":true, "text":"Sub text", "color":"#808080", "font":"auto"},
+                        "skin": {"type":"tron","width":10,"color":"rgba(255,0,0,.5)","spaceWidth":5},
+                        "scale": {"enabled":true,"type":"lines","color":"#808080","width":3,"quantity":20,"height":10,"spaceWidth":15}
+                    };
+                }
+                scope.attributes.options.status = 'overridden';
+                $timeout(function() {
+                    scope.isRepeatable = {"value":false};
+                    if(typeof scope.attributes.options.value.readOnly === 'string'){
+                        switch(scope.attributes.options.value.readOnly){
+                            case 'true': scope.attributes.options.value.readOnly = true; break;
+                            case 'false': scope.attributes.options.value.readOnly = false; break;
+                        }
+                    }
+                    if(scope.attributes.binding.value.indexOf('$dfx_item') >= 0) {
+                        scope.isRepeatable.value = true;
+                        scope.repeated_id = Math.floor(Math.random() * 100000);
+                        var repeatedKnobId = component.id+'_dfx_ng_knob_'+scope.repeated_id;
+                        $timeout(function() {
+                            var repeatedKnob = angular.element(document.getElementById(repeatedKnobId));
+                            repeatedKnob.attr('value', scope.attributes.binding.value);
+                            scope = repeatedKnob.scope();
+                            $injector = repeatedKnob.injector();
+                            $injector.invoke(function($compile){
+                                $compile(repeatedKnob)(scope);
+                            })
+                        }, 0);
+                    } else {
+                        $('.'+component.id+'_dfx_ng_knob').empty().html('<ui-knob value="' + scope.attributes.binding.value + '" options="attributes.options.value"></ui-knob>');
+                        $timeout(function() {$compile($('.'+component.id+'_dfx_ng_knob').contents())(scope);}, 0);
+                    }
+                }, 0);
+            });
+        }
+    }
+}]);
+
+/* Directive for Dynamic ng-models */
+dfxGCC.directive('dfxComplexNgModel', ['$timeout', '$compile', '$parse', function ($timeout, $compile, $parse) {
+    return {
+        restrict: 'A',
+        terminal: true,
+        priority: 100000,
+        scope: true,
+        link: function (scope, element) {
+            var binding;
+            if(scope.attributes.binding.value && scope.attributes.binding.value !==''){
+                binding = scope.attributes.binding.value;
+                if(binding.indexOf('$dfx_item')===-1) binding = '$parent_scope.'+binding;
+                element.removeAttr('dfx-complex-ng-model');
+                element.attr('ng-model', binding);
+                $compile(element)(scope);
+            }
+        }
+    };
+}]);
+
+/* Directive for Dynamic values */
+dfxGCC.directive('dfxComplexValue', ['$timeout', '$compile', '$parse', function ($timeout, $compile, $parse) {
+    return {
+        restrict: 'A',
+        terminal: true,
+        priority: 100000,
+        transclude: true,
+        scope: true,
+        link: function (scope, element) {
+            var binding,
+            interval = setInterval(function() {
+                if (typeof scope.attributes.binding === 'undefined') return;
+                clearInterval(interval);
+                binding = scope.attributes.binding.value;
+                if(binding !==''){
+                    if(binding.indexOf('$dfx_item')===-1) binding = '$parent_scope.'+binding;
+                    element.removeAttr('dfx-complex-value');
+                    element.attr('value', binding);
+                    $compile(element)(scope);
+                }
+            }, 10);
+        }
+    };
+}]);
