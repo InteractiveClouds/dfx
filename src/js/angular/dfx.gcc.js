@@ -2074,3 +2074,117 @@ dfxGCC.directive('dfxGccWebRating', function() {
         }
     }
 });
+
+dfxGCC.directive('dfxGccWebKnob', ['$timeout', '$compile', function($timeout, $compile) {
+    return {
+        restrict:    'A',
+        require:     '^dfxGccWebBase',
+        scope:       true,
+        link: function (scope, element, attrs, basectrl) {
+            var component = scope.$parent.getComponent(element);
+            basectrl.init(scope, element, component, attrs, 'knob').then(function () {
+                scope.attributes.binding.status = 'overridden';
+                if ( !scope.attributes.options.value.hasOwnProperty('size') ){
+                    scope.attributes.options.value = {
+                        "animate": {"enabled":true,"duration":1000,"ease":"bounce"},
+                        "barCap": 20,
+                        "barColor": "#e65d5d",
+                        "barWidth": 40,
+                        "bgColor": "",
+                        "fontSize": "auto",
+                        "displayInput": true,
+                        "dynamicOptions": true,
+                        "displayPrevious": false,
+                        "size": 300,
+                        "min": 0,
+                        "max": 100,
+                        "step": 1,
+                        "startAngle": 0,
+                        "endAngle": 360,
+                        "textColor": "#222222",
+                        "prevBarColor": "rgba(0,0,0,0)",
+                        "trackColor": "#ffe6e6",
+                        "trackWidth": 50,
+                        "readOnly": false,
+                        "unit": "%",
+                        "subText": {"enabled":true, "text":"Sub text", "color":"#808080", "font":"auto"},
+                        "skin": {"type":"tron","width":10,"color":"rgba(255,0,0,.5)","spaceWidth":5},
+                        "scale": {"enabled":true,"type":"lines","color":"#808080","width":3,"quantity":20,"height":10,"spaceWidth":15}
+                    };
+                }
+                scope.attributes.options.status = 'overridden';
+                $timeout(function() {
+                    scope.isRepeatable = {"value":false};
+                    if(typeof scope.attributes.options.value.readOnly === 'string'){
+                        switch(scope.attributes.options.value.readOnly){
+                            case 'true': scope.attributes.options.value.readOnly = true; break;
+                            case 'false': scope.attributes.options.value.readOnly = false; break;
+                        }
+                    }
+                    if(scope.attributes.binding.value.indexOf('$dfx_item') >= 0) {
+                        scope.isRepeatable.value = true;
+                        scope.repeated_id = Math.floor(Math.random() * 100000);
+                        var repeatedKnobId = component.id+'_dfx_ng_knob_'+scope.repeated_id;
+                        $timeout(function() {
+                            var repeatedKnob = angular.element(document.getElementById(repeatedKnobId));
+                            repeatedKnob.attr('value', scope.attributes.binding.value);
+                            scope = repeatedKnob.scope();
+                            $injector = repeatedKnob.injector();
+                            $injector.invoke(function($compile){
+                                $compile(repeatedKnob)(scope);
+                            })
+                        }, 0);
+                    } else {
+                        $('.'+component.id+'_dfx_ng_knob').empty().html('<ui-knob value="' + scope.attributes.binding.value + '" options="attributes.options.value"></ui-knob>');
+                        $timeout(function() {$compile($('.'+component.id+'_dfx_ng_knob').contents())(scope);}, 0);
+                    }
+                }, 0);
+            });
+        }
+    }
+}]);
+
+/* Directive for Dynamic ng-models */
+dfxGCC.directive('dfxComplexNgModel', ['$timeout', '$compile', '$parse', function ($timeout, $compile, $parse) {
+    return {
+        restrict: 'A',
+        terminal: true,
+        priority: 100000,
+        scope: true,
+        link: function (scope, element) {
+            var binding;
+            if(scope.attributes.binding.value && scope.attributes.binding.value !==''){
+                binding = scope.attributes.binding.value;
+                if(binding.indexOf('$dfx_item')===-1) binding = '$parent_scope.'+binding;
+                element.removeAttr('dfx-complex-ng-model');
+                element.attr('ng-model', binding);
+                $compile(element)(scope);
+            }
+        }
+    };
+}]);
+
+/* Directive for Dynamic values */
+dfxGCC.directive('dfxComplexValue', ['$timeout', '$compile', '$parse', function ($timeout, $compile, $parse) {
+    return {
+        restrict: 'A',
+        terminal: true,
+        priority: 100000,
+        transclude: true,
+        scope: true,
+        link: function (scope, element) {
+            var binding,
+            interval = setInterval(function() {
+                if (typeof scope.attributes.binding === 'undefined') return;
+                clearInterval(interval);
+                binding = scope.attributes.binding.value;
+                if(binding !==''){
+                    if(binding.indexOf('$dfx_item')===-1) binding = '$parent_scope.'+binding;
+                    element.removeAttr('dfx-complex-value');
+                    element.attr('value', binding);
+                    $compile(element)(scope);
+                }
+            }, 10);
+        }
+    };
+}]);
