@@ -116,46 +116,34 @@
                             <input class="col-md-7" type="text" ng-model="attributes.triggerButton.class" style="padding-left: 6px" ng-change="overrideAttribute('triggerButton.class')"/>
                         </li>
                         <li class="col-md-12">
-                            <input class="dfx-ve-property-treeview-button" type="checkbox" checked aria-label="menu-icon-styles" id="menu-icon-styles" />
-                            <label for="menu-icon-styles" class="dfx-ve-property-title-level-2"><span>Icon Styling</span></label>
-                            <ul class="dfx-ve-property-treeview-content">                    
-                                <li class="col-md-12">
-                                    <span class="col-md-5">Icon Size:</span>
-                                    <input class="col-md-7" type="number" ng-model="attributes.icon.size" ng-change="overrideAttribute('icon.size')" />
-                                </li>
-                                <li class="col-md-12">
-                                    <span class="col-md-5">Icon Style:</span>
-                                    <div class="col-md-7" layout="row">
-                                        <input class="col-md-12" type="text" ng-model="attributes.icon.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('icon.style')"/>
-                                        <dfx-ve-css-style></dfx-ve-css-style>
-                                    </div>
-                                </li>
-                            </ul>
+                            <span class="col-md-5">Icon Size:</span>
+                            <input class="col-md-7" type="number" ng-model="attributes.icon.size" ng-change="overrideAttribute('icon.size')" />
                         </li>
                         <li class="col-md-12">
-                            <input class="dfx-ve-property-treeview-button" type="checkbox" checked aria-label="menu-tooltip-styles" id="menu-tooltip-styles" />
-                            <label for="menu-tooltip-styles" class="dfx-ve-property-title-level-2"><span>Tooltip Styling</span></label>
-                            <ul class="dfx-ve-property-treeview-content">                    
-                                <li class="col-md-12">
-                                    <span class="col-md-5">Direction:</span>
-                                    <md-input-container class="col-md-7" style="padding: 0 0 10px">
-                                        <md-select aria-label="tooltipDirection" class="md-block" ng-model="attributes.triggerButton.tooltip.direction" ng-change="overrideAttribute('triggerButton.tooltip.direction')" style="text-transform: capitalize;">
-                                            <md-option ng-repeat="tooltipDirection in ['top', 'right', 'bottom', 'left']" ng-value="tooltipDirection" style="text-transform: capitalize;">{{tooltipDirection}}</md-option>
-                                        </md-select>
-                                    </md-input-container>
-                                </li>
-                                <li class="col-md-12">
-                                    <span class="col-md-5">Style:</span>
-                                    <div class="col-md-7" layout="row">
-                                        <input class="col-md-12" type="text" ng-model="attributes.triggerButton.tooltip.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('triggerButton.tooltip.style')"/>
-                                        <dfx-ve-css-style></dfx-ve-css-style>
-                                    </div>
-                                </li>
-                                <li class="col-md-12">
-                                    <span class="col-md-5">Class:</span>
-                                    <input class="col-md-7" type="text" ng-model="attributes.triggerButton.tooltip.classes" style="padding-left: 6px" ng-change="overrideAttribute('triggerButton.tooltip.classes')"/>
-                                </li>
-                            </ul>
+                            <span class="col-md-5">Icon Style:</span>
+                            <div class="col-md-7" layout="row">
+                                <input class="col-md-12" type="text" ng-model="attributes.icon.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('icon.style')"/>
+                                <dfx-ve-css-style></dfx-ve-css-style>
+                            </div>
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-5">Tooltip Direction:</span>
+                            <md-input-container class="col-md-7" style="padding: 0 0 10px">
+                                <md-select aria-label="tooltipDirection" class="md-block" ng-model="attributes.triggerButton.tooltip.direction" ng-change="overrideAttribute('triggerButton.tooltip.direction')" style="text-transform: capitalize;">
+                                    <md-option ng-repeat="tooltipDirection in ['top', 'right', 'bottom', 'left']" ng-value="tooltipDirection" style="text-transform: capitalize;">{{tooltipDirection}}</md-option>
+                                </md-select>
+                            </md-input-container>
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-5">Tooltip Style:</span>
+                            <div class="col-md-7" layout="row">
+                                <input class="col-md-12" type="text" ng-model="attributes.triggerButton.tooltip.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('triggerButton.tooltip.style')"/>
+                                <dfx-ve-css-style></dfx-ve-css-style>
+                            </div>
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-5">Tooltip Class:</span>
+                            <input class="col-md-7" type="text" ng-model="attributes.triggerButton.tooltip.classes" style="padding-left: 6px" ng-change="overrideAttribute('triggerButton.tooltip.classes')"/>
                         </li>
                     </ul>
                 </li>
@@ -175,46 +163,34 @@
                             <input class="col-md-7" type="text" ng-model="attributes.actionButton.class" style="padding-left: 6px" ng-change="overrideAttribute('actionButton.class')"/>
                         </li>
                         <li class="col-md-12">
-                            <input class="dfx-ve-property-treeview-button" type="checkbox" checked aria-label="item-icon-styles" id="item-icon-styles" />
-                            <label for="item-icon-styles" class="dfx-ve-property-title-level-2"><span>Icon Styling</span></label>
-                            <ul class="dfx-ve-property-treeview-content">                    
-                                <li class="col-md-12">
-                                    <span class="col-md-5">Size:</span>
-                                    <input class="col-md-7" type="number" ng-model="attributes.actionButton.icon.size" ng-change="overrideAttribute('actionButton.icon.size')" />
-                                </li>
-                                <li class="col-md-12">
-                                    <span class="col-md-5">Style:</span>
-                                    <div class="col-md-7" layout="row">
-                                        <input class="col-md-12" type="text" ng-model="attributes.actionButton.icon.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('actionButton.icon.style')"/>
-                                        <dfx-ve-css-style></dfx-ve-css-style>
-                                    </div>
-                                </li>
-                            </ul>
+                            <span class="col-md-5">Icon Size:</span>
+                            <input class="col-md-7" type="number" ng-model="attributes.actionButton.icon.size" ng-change="overrideAttribute('actionButton.icon.size')" />
                         </li>
                         <li class="col-md-12">
-                            <input class="dfx-ve-property-treeview-button" type="checkbox" checked aria-label="item-tooltip-styles" id="item-tooltip-styles" />
-                            <label for="item-tooltip-styles" class="dfx-ve-property-title-level-2"><span>Tooltip Styling</span></label>
-                            <ul class="dfx-ve-property-treeview-content">                    
-                                <li class="col-md-12">
-                                    <span class="col-md-5">Direction:</span>
-                                    <md-input-container class="col-md-7" style="padding: 0 0 10px">
-                                        <md-select aria-label="tooltipDirection" class="md-block" ng-model="attributes.actionButton.tooltip.direction" ng-change="overrideAttribute('actionButton.tooltip.direction')" style="text-transform: capitalize;">
-                                            <md-option ng-repeat="tooltipDirection in ['top', 'right', 'bottom', 'left']" ng-value="tooltipDirection" style="text-transform: capitalize;">{{tooltipDirection}}</md-option>
-                                        </md-select>
-                                    </md-input-container>
-                                </li>
-                                <li class="col-md-12">
-                                    <span class="col-md-5">Style:</span>
-                                    <div class="col-md-7" layout="row">
-                                        <input class="col-md-12" type="text" ng-model="attributes.actionButton.tooltip.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('actionButton.tooltip.style')"/>
-                                        <dfx-ve-css-style></dfx-ve-css-style>
-                                    </div>
-                                </li>
-                                <li class="col-md-12">
-                                    <span class="col-md-5">Class:</span>
-                                    <input class="col-md-7" type="text" ng-model="attributes.actionButton.tooltip.classes" style="padding-left: 6px" ng-change="overrideAttribute('actionButton.tooltip.classes')"/>
-                                </li>
-                            </ul>
+                            <span class="col-md-5">Icon Style:</span>
+                            <div class="col-md-7" layout="row">
+                                <input class="col-md-12" type="text" ng-model="attributes.actionButton.icon.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('actionButton.icon.style')"/>
+                                <dfx-ve-css-style></dfx-ve-css-style>
+                            </div>
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-5">Tooltip Direction:</span>
+                            <md-input-container class="col-md-7" style="padding: 0 0 10px">
+                                <md-select aria-label="tooltipDirection" class="md-block" ng-model="attributes.actionButton.tooltip.direction" ng-change="overrideAttribute('actionButton.tooltip.direction')" style="text-transform: capitalize;">
+                                    <md-option ng-repeat="tooltipDirection in ['top', 'right', 'bottom', 'left']" ng-value="tooltipDirection" style="text-transform: capitalize;">{{tooltipDirection}}</md-option>
+                                </md-select>
+                            </md-input-container>
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-5">Tooltip Style:</span>
+                            <div class="col-md-7" layout="row">
+                                <input class="col-md-12" type="text" ng-model="attributes.actionButton.tooltip.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('actionButton.tooltip.style')"/>
+                                <dfx-ve-css-style></dfx-ve-css-style>
+                            </div>
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-5">Tooltip Class:</span>
+                            <input class="col-md-7" type="text" ng-model="attributes.actionButton.tooltip.classes" style="padding-left: 6px" ng-change="overrideAttribute('actionButton.tooltip.classes')"/>
                         </li>
                     </ul>
                 </li>

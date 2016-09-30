@@ -17,7 +17,7 @@
                ng-mouseleave="$eval(attributes.onmouseleave.value)"
                ng-mousedown="$eval(attributes.onmousedown.value)"
                ng-mouseup="$eval(attributes.onmouseup.value)"
-             ng-disabled="$eval(attributes.disabled.value)" aria-label="GC Select {{$parent_scope[attributes.binding.value]}}">
+             ng-disabled="$eval(attributes.disabled.value)" aria-label="GC Select">
         <md-option ng-repeat="option in $parent_scope[attributes.options.source] track by $index" ng-value="$eval('option.' + attributes.options.value)">
             {{$eval('option.' + attributes.options.display)}}
         </md-option>
@@ -40,7 +40,7 @@
                ng-mouseleave="$eval(attributes.onmouseleave.value)"
                ng-mousedown="$eval(attributes.onmousedown.value)"
                ng-mouseup="$eval(attributes.onmouseup.value)"
-             ng-disabled="$eval(attributes.disabled.value)" aria-label="GC Select {{$parent_scope[attributes.binding.value]}}">
+             ng-disabled="$eval(attributes.disabled.value)" aria-label="GC Select">
         <md-option ng-repeat="option in $parent_scope[attributes.options.source] track by $index" ng-value="$eval('option.' + attributes.options.value)">
             {{$eval('option.' + attributes.options.display)}}
         </md-option>
