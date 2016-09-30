@@ -760,3 +760,81 @@ dfxGCC.directive('dfxGccWebProgressbar', ['$timeout', function( $timeout ) {
         }
     }
 }]);
+
+dfxGCC.directive('dfxGccWebRating', function() {
+    return {
+        restrict: 'A',
+        require: '^dfxGccWebBase',
+        scope: true,
+        link: {
+            pre : function(scope, element, attrs, basectrl) {
+                var component = scope.getComponent(element);
+                scope.component_id = component.id;
+                scope.attributes = null;
+                basectrl.init(scope, element, component, attrs, 'rating').then(function(){
+                    scope.attributes.binding.status = "overridden";
+                    scope.attributes.maxValue.status = "overridden";
+                    scope.attributes.icon.status = "overridden";
+                    if ( !scope.attributes.icon.hasOwnProperty('type') ) { scope.attributes.icon.type = 'fa-icon'; }
+                    if ( !scope.attributes.icon.hasOwnProperty('size') ) { scope.attributes.icon.size = 21; }
+                    if ( scope.attributes.range.hasOwnProperty('values') ) {delete scope.attributes.range.values; }
+                    scope.ifShowIconTypes = function( icon ) {
+                        var regexp = /(^\')(.*)(\'$)/gm, filtered = regexp.exec( icon );
+                        if ( icon && ( icon.indexOf('+') >= 0 ) ) { filtered = false; }
+                        if ( icon === '' ) { filtered = true; }
+                        if ( icon.indexOf("'") === 0 && icon.indexOf('+') === -1 && icon.charAt(icon.length-1) === "'" ) {
+                            icon.indexOf("'fa-") === 0 ? scope.attributes.icon.type = 'fa-icon' : scope.attributes.icon.type = 'svg-icon';
+                        }
+                        scope.showIconTypes = filtered ? false : true;
+                    }
+                    scope.ifShowIconTypes(scope.attributes.icon.value);
+                    scope.$gcscope = scope;
+                    basectrl.bindScopeVariable(scope, component.attributes.binding.value);
+
+                    function updateStars() {
+                        scope.stars = [];
+                        for (var i = 0; i < scope.attributes.range.value; i++) {
+                            var rangeStep = scope.attributes.maxValue.value/scope.attributes.range.value;
+                            scope.stars.push({
+                                filled: i*rangeStep < scope.$gcscope[scope.attributes.binding.value]
+                            });
+                        }
+                    };
+                    scope.toggle = function(index) {
+                        var rangeStep = scope.attributes.maxValue.value/scope.attributes.range.value;
+                        scope.attributes.disabled.value === "false" ? scope.$gcscope[scope.attributes.binding.value] = index*rangeStep + rangeStep : index*rangeStep;
+                        updateStars();
+                    };
+                    scope.$watch('attributes.binding.value', function(newValue) {
+                        if (newValue) {
+                            updateStars();
+                        }
+                    });
+                    scope.$watch('attributes.range.value', function(newValue) {
+                        if (newValue) {
+                            updateStars();
+                        }
+                    });
+                    scope.$watch('attributes.maxValue.value', function(newValue) {
+                        if (newValue) {
+                            updateStars();
+                        }
+                    });
+                    scope.$watch('attributes.disabled.value', function(newValue) {
+                        if (newValue) {
+                            updateStars();
+                        }
+                    });
+                    scope.$watch("$gcscope[attributes.binding.value]", function(newValue){
+                        updateStars();
+                    });
+
+                    scope.attributes.bindingRatingModel = function() {
+                        //return $gcscope[attributes.binding.value];
+                        return scope.attributes.binding.value;
+                    };
+                });
+            }
+        }
+    }
+});
