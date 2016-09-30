@@ -1,60 +1,58 @@
-test
-<form name="dateForm"
-  ng-show="$eval(attributes.display.value)"
-  class="{{attributes.classes.value}} gc-datepicker"
-  ATTR-IF{{style="attributes.style.value"}}
-  ATTR-IF{{ng-class="attributes.dynamicClasses.value"}}>
+<div ng-form name="dateForm"
+    ng-show="attributes.display.value"
+    class="{{attributes.classes.value}} gc-datepicker"
+    ATTR-IF{{style="attributes.style.value"}}
+    ATTR-IF{{ng-class="attributes.dynamicClasses.value"}}>
+
+    <label style="font-size: 11px; margin-top: 6px; margin-bottom: 3px"
+           ATTR-IF{{ng-class="attributes.labelClass"}}
+           ATTR-IF{{ng-bind="attributes.label.value"}}></label>
     <div>
-        <label style="font-size: 11px; margin-top: 6px; margin-bottom: 3px"
-               ATTR-IF{{ng-class="attributes.labelClass"}}
-               ATTR-IF{{ng-bind="attributes.label.value"}}></label>
-        <div>
-            FRAG-IF{{attributes.selectedType.value !== 'ranged'}}
-            <md-datepicker name="dateField"
-                           ng-if="attributes.test.value == 'test'"
-                           ng-model="attributes.bindingDate.value"
-                           ATTR-IF{{ng-required="attributes.isDateRequired.value"}}
-                           ATTR-IF{{ng-disabled="attributes.disabled.value"}} md-placeholder="Enter date"
-                           ATTR-IF{{ng-change="attributes.onchange.value"}}
-                           ATTR-IF{{ng-focus="attributes.onfocus.value"}}
-                           ATTR-IF{{ng-blur="attributes.onblur.value"}}
-                           ATTR-IF{{ng-click="attributes.onclick.value"}}
-                           ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
-                           ATTR-IF{{ng-keypress="attributes.onkeypress.value"}}
-                           ATTR-IF{{ng-keydown="attributes.onkeydown.value"}}
-                           ATTR-IF{{ng-keyup="attributes.onkeyup.value"}}
-                           ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}}
-                           ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}}
-                           ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}}
-                           ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
-                           ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
-                           ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}></md-datepicker>
-            FRAG-ENDIF
-            FRAG-IF{{attributes.selectedType.value === 'ranged'}}
-            <md-datepicker name="dateField"
-                           ng-if="attributes.test.value == 'test'"
-                           ng-model="attributes.bindingDate.value"
-                           ATTR-IF{{ng-required="attributes.isDateRequired.value"}}
-                           ATTR-IF{{ng-disabled="attributes.disabled.value"}} md-placeholder="Enter date"
-                           md-min-date="minDate" md-max-date="maxDate"
-                           ATTR-IF{{ng-change="attributes.onchange.value"}}
-                           ATTR-IF{{ng-focus="attributes.onfocus.value"}}
-                           ATTR-IF{{ng-blur="attributes.onblur.value"}}
-                           ATTR-IF{{ng-click="attributes.onclick.value"}}
-                           ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
-                           ATTR-IF{{ng-keypress="attributes.onkeypress.value"}}
-                           ATTR-IF{{ng-keydown="attributes.onkeydown.value"}}
-                           ATTR-IF{{ng-keyup="attributes.onkeyup.value"}}
-                           ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}}
-                           ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}}
-                           ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}}
-                           ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
-                           ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
-                           ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}></md-datepicker>
-            FRAG-ENDIF
-            <div ng-messages="dateForm.dateField.$error">
-                <div class="validation-messages" ng-message="required">This date is required.</div>
-            </div>
+        FRAG-IF{{attributes.selectedType.value !== 'ranged'}}
+        <md-datepicker name="dateField"
+                       ng-model="attributes.bindingDateModel"
+                       ng-model-options="{ getterSetter: true }"
+                       ATTR-IF{{ng-required="attributes.isDateRequired.value"}}
+                       ATTR-IF{{ng-disabled="attributes.disabled.value"}} md-placeholder="Enter date"
+                       ATTR-IF{{ng-change="attributes.onchange.value"}}
+                       ATTR-IF{{ng-focus="attributes.onfocus.value"}}
+                       ATTR-IF{{ng-blur="attributes.onblur.value"}}
+                       ATTR-IF{{ng-click="attributes.onclick.value"}}
+                       ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
+                       ATTR-IF{{ng-keypress="attributes.onkeypress.value"}}
+                       ATTR-IF{{ng-keydown="attributes.onkeydown.value"}}
+                       ATTR-IF{{ng-keyup="attributes.onkeyup.value"}}
+                       ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}}
+                       ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}}
+                       ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}}
+                       ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
+                       ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
+                       ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}></md-datepicker>
+        FRAG-ENDIF
+        FRAG-IF{{attributes.selectedType.value === 'ranged'}}
+        <md-datepicker name="dateField"
+                       ng-model="attributes.bindingDateModel"
+                       ng-model-options="{ getterSetter: true }"
+                       ATTR-IF{{ng-required="attributes.isDateRequired.value"}}
+                       ATTR-IF{{ng-disabled="attributes.disabled.value"}} md-placeholder="Enter date"
+                       md-min-date="minDate" md-max-date="maxDate"
+                       ATTR-IF{{ng-change="attributes.onchange.value"}}
+                       ATTR-IF{{ng-focus="attributes.onfocus.value"}}
+                       ATTR-IF{{ng-blur="attributes.onblur.value"}}
+                       ATTR-IF{{ng-click="attributes.onclick.value"}}
+                       ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
+                       ATTR-IF{{ng-keypress="attributes.onkeypress.value"}}
+                       ATTR-IF{{ng-keydown="attributes.onkeydown.value"}}
+                       ATTR-IF{{ng-keyup="attributes.onkeyup.value"}}
+                       ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}}
+                       ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}}
+                       ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}}
+                       ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
+                       ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
+                       ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}></md-datepicker>
+        FRAG-ENDIF
+        <div ng-messages="dateForm.dateField.$error">
+            <div class="validation-messages" ng-message="required">This date is required.</div>
         </div>
     </div>
-</form>
+</div>

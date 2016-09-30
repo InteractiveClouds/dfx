@@ -9,14 +9,6 @@ dfxGCC.directive('dfxGccWebBase', ['$rootScope', '$http', '$compile', '$injector
                 sessionStorage.setItem('dfx_' + gc_type, JSON.stringify(gc_template));
             };
 
-            var mergeArrayTypeAttribute = function (default_array_attribute, updated_array_attribute) {
-                for (var i = 0; i < updated_array_attribute.length; i++) {
-                    if (i > 0) {// default_attributes array contains only one, first array element, so, clone it first
-                        default_array_attribute.push(angular.copy(default_array_attribute[0]));
-                    }
-                    mergeWithOverriddenAttributes(default_array_attribute[i], updated_array_attribute[i]);
-                }
-            };
             var mergeWithOverriddenAttributes = function (default_attributes, updated_attributes) {
                 for (var updated_attribute in updated_attributes) {
                     if (updated_attributes.hasOwnProperty(updated_attribute)) {
@@ -25,7 +17,6 @@ dfxGCC.directive('dfxGccWebBase', ['$rootScope', '$http', '$compile', '$injector
                         {
 
                             if ( Array.isArray(updated_attributes[updated_attribute]) ) {
-                                //mergeArrayTypeAttribute(default_attributes[updated_attribute], updated_attributes[updated_attribute]);
                                 default_attributes[updated_attribute] = updated_attributes[updated_attribute];// this is an array, without 'value'
                             } else {
                                 if (updated_attributes[updated_attribute] !== null && typeof updated_attributes[updated_attribute] === 'object') {
@@ -141,7 +132,10 @@ dfxGCC.directive('dfxGccWebBase', ['$rootScope', '$http', '$compile', '$injector
                     scope.$parent_scope = scope.$parent;
                 } else {
                     //scope.$parent_scope = angular.element(document.getElementById(scope.view_id)).scope().$parent;
-                    //scope.$parent_scope = scope.$parent.$parent.$parent.$parent;
+                    if (scope.$parent.view_id) {// TODO: still not sure about this solution
+                        scope.$parent_scope = angular.element(document.getElementById(scope.$parent.view_id)).scope().$parent;
+                        //console.log(scope);
+                    }
                 }
 
                 return $q.when(component.id);
@@ -191,50 +185,15 @@ dfxGCC.directive('dfxNgSrc', ['$timeout', function($timeout) {
         restrict: 'A',
         require: '?ngModel',
         link: function (scope, el, attr) {
-            console.log('attr: ', attr);
-            console.log('attr.ngSrc: ', attr.ngSrc);
-            console.log("el.attr('ng-src'): ", el.attr('ng-src'));
-/*
-            //TODO: get tenantId, appName, check normal URL, check why expression is moved to External URL...
+            var src = attr.ngSrc;
 
-            // watch the Image ng-src changes to transform resource URL
-            var ngSrcInitial = el.attr('ng-src'),
-                chunks = ngSrcInitial.match(/\{\{([^{}]*)\}\}/);
-
-            if (chunks) {
-                scope.$watch(
-                    chunks[1],
-                    function( newValue, oldValue ) {
-                        console.log('oldValue: ', oldValue);
-                        console.log('newValue: ', newValue);
-                        var ngSrcVal = newValue,
-                            tenantId = 'Examples',
-                            applicationName = '';
-
-                        //if (ngSrcVal && ngSrcVal.indexOf('./') == 0)
-                        var resourceSrc = '/resources/' + tenantId + '/' + applicationName + ngSrcVal;
-                        el.attr('ng-src', resourceSrc);
-                        el.attr('src', resourceSrc);
-                    }
-                );
-            }
-
-            // transform resource URL from Image ng-src
-            angular.element(document).ready(function() {
-                $timeout(function () {
-                    var ngSrcVal = el.attr('ng-src'),
-                        tenantId = 'Examples',
-                        applicationName = '';
-
-
-                    //if (ngSrcVal && ngSrcVal.indexOf('./') == 0)
-                    var resourceSrc = '/resources/' + tenantId + '/' + applicationName + ngSrcVal;
-                    el.attr('ng-src', resourceSrc);
-                    el.attr('src', resourceSrc);
-
-
-                }, 0);
-            });*/
+            $timeout(function() {
+                // if src value is URL within quotes, remove quotes
+                if (src.indexOf("'") == 0 && src.lastIndexOf("'") == (src.length - 1) && src.length > 2) {
+                    var src_without_quotes = src.replace(/'/g, '');
+                    el.attr('src', src_without_quotes);
+                }
+            }, 0);
         }
     }
 }]);
@@ -438,11 +397,6 @@ dfxGCC.directive('dfxGccWebTreeview', [ '$timeout', '$compile', '$q', '$http', '
                     scope.attributes.iconType.status = "overridden";
                 }
 
-console.log('1.attributes.static.value: ', scope.attributes.static.value);
-                scope.test = function(test_param) {
-                    console.log('2.test_param: ', test_param);
-                };
-
                 scope.ifShowIconTypes = function( icon, status ) {
                     var regexp = /(^\')(.*)(\'$)/gm, filtered = regexp.exec( icon );
                     if ( icon && ( icon.indexOf('+') >= 0 ) ) { filtered = false; }
@@ -583,6 +537,7 @@ console.log('1.attributes.static.value: ', scope.attributes.static.value);
                         }
                     });
                 }
+                /*
                 scope.gcJsonSample = {};
                 scope.gcSamplesArray = {};
                 scope.scriptSampleName = '';
@@ -684,7 +639,18 @@ console.log('1.attributes.static.value: ', scope.attributes.static.value);
                         scope.selectedArrayClone = JSON.parse(JSON.stringify(scope.$parent_scope[scope.attributes.dynamic.value]));
                         scope.rebuildSelectedArray('dynamic');
                     }
-                }
+                }*/
+
+                console.log('0.attributes.static.value: ', scope.attributes.static.value);
+                scope.static_items = [];
+                scope.test = function(test_param) {
+                    console.log('1.1.test_param: ', test_param);
+                };
+
+                scope.getStaticItems = function() {
+                    console.log('2.scope.attributes.static.value: ', scope.attributes.static.value);
+                    return scope.attributes.static.value;
+                };
             });
         }
     }
@@ -698,10 +664,8 @@ dfxGCC.directive('dfxGccWebDatepicker', ['$timeout', function($timeout) {
         link: function(scope, element, attrs, basectrl) {
             var component = scope.$parent.getComponent(element);
             scope.dp_input;
-            basectrl.init(scope, element, component, attrs, 'datepicker').then(function(){
-                console.log('scope.attributes.designDate: ', scope.attributes.designDate);
-                scope.attributes.test.value == 'test';
 
+            basectrl.init(scope, element, component, attrs, 'datepicker').then(function() {
                 if ( !scope.attributes.hasOwnProperty('flex') ) { scope.attributes.flex = { "value": 20 }; }
                 scope.attributes.bindingDate.status = "overridden";
                 scope.attributes.ranged.status = "overridden";
@@ -739,28 +703,9 @@ dfxGCC.directive('dfxGccWebDatepicker', ['$timeout', function($timeout) {
                     scope.attributes.alignment.status = "overridden" ;
                 });
 
-                scope.$watch('attributes.alignment.value', function(newValue){
-                    $timeout(function(){
-                        var preview_wrapper = '#' + scope.component_id;
-                        if (scope.$parent.col.orientation.value == 'row') {
-                            $(preview_wrapper).addClass('flex-'+ scope.attributes.flex.value);
-                        } else {
-                            $(preview_wrapper).css('width', scope.attributes.flex.value + '%');
-                        }
-                    },0);
-                    scope.setAlignment(newValue);
-                });
-
-                scope.setAlignment = function(alignment){
-                    $timeout(function(){
-                        var dp_input = '#' + scope.component_id + '> form > div > div > md-datepicker > div.md-datepicker-input-container > input' ;
-                        $(dp_input).css('text-align', alignment);
-                    },0)
-                };
-
                 $timeout(function () {
                     try{
-                        scope.dp_input = '#' + scope.component_id + '> form > div > div > md-datepicker > div.md-datepicker-input-container > input';
+                        scope.dp_input = '#' + scope.component_id + ' > div > div > md-datepicker > div.md-datepicker-input-container > input';
                         $(scope.dp_input).focus(function(){
                             scope.attributes.labelClass = 'dp-label-focus-on';
                             scope.$apply(function(){
@@ -777,8 +722,20 @@ dfxGCC.directive('dfxGccWebDatepicker', ['$timeout', function($timeout) {
                     }
                 },0);
 
-                scope.changeWidth = function(){
+                scope.attributes.bindingDateModel = function() {
+                    return scope.attributes.bindingDate.value;
+                };
+
+                scope.changeWidth = function() {
                     $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+
+                    $timeout(function(){
+                        var preview_wrapper = '#' + scope.component_id;
+                        $(preview_wrapper).css('width', scope.attributes.flex.value + '%');
+
+                        var dp_input = '#' + scope.component_id + ' > div > div > md-datepicker > div.md-datepicker-input-container > input' ;
+                        $(dp_input).css('text-align', scope.attributes.alignment.value);
+                    }, 0);
                 };
                 scope.changeWidth();
             });
@@ -2026,3 +1983,21 @@ dfxGCC.directive('dfxGccWebToolbar', function($sce, $compile, $timeout) {
         }
     }
 });
+
+dfxGCC.directive('dfxGccWebProgressbar', ['$timeout', function( $timeout ) {
+    return {
+        restrict: 'A',
+        require: '^dfxGccWebBase',
+        scope: true,
+        link: function(scope, element, attrs, basectrl) {
+            var component = scope.getComponent(element);
+            basectrl.init(scope, element, component, attrs, 'progressbar').then(function() {
+                scope.attributes.flex.status = "overridden";
+
+                $timeout(function() {
+                    element.css('width', scope.attributes.flex.value + '%');
+                }, 0);
+            });
+        }
+    }
+}]);
