@@ -9,6 +9,7 @@
   "style":        { "value": "" },
   "bodyStyle":    { "value": "" },
   "dynamicClasses": { "value": "" },
+  "collapseStyle":{ "style": "", "class": "", "dynamicClass": "" },
   "flex":         { "value": "100" },
   "autoHeight":   { "value": false },
   "display":      { "value": "true" },
