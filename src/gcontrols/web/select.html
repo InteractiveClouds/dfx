@@ -17,8 +17,8 @@
                ng-mouseleave="$eval(attributes.onmouseleave.value)"
                ng-mousedown="$eval(attributes.onmousedown.value)"
                ng-mouseup="$eval(attributes.onmouseup.value)"
-             ng-disabled="$eval(attributes.disabled.value)" aria-label="GC Select">
-        <md-option ng-repeat="option in $parent_scope[attributes.options.source] track by $index" value="{{$eval('option.' + attributes.options.value)}}">
+             ng-disabled="$eval(attributes.disabled.value)" aria-label="GC Select {{$parent_scope[attributes.binding.value]}}">
+        <md-option ng-repeat="option in $parent_scope[attributes.options.source] track by $index" ng-value="$eval('option.' + attributes.options.value)">
             {{$eval('option.' + attributes.options.display)}}
         </md-option>
     </md-select>
@@ -40,8 +40,8 @@
                ng-mouseleave="$eval(attributes.onmouseleave.value)"
                ng-mousedown="$eval(attributes.onmousedown.value)"
                ng-mouseup="$eval(attributes.onmouseup.value)"
-             ng-disabled="$eval(attributes.disabled.value)" aria-label="GC Select">
-        <md-option ng-repeat="option in $parent_scope[attributes.options.source] track by $index" value="{{$eval('option.' + attributes.options.value)}}">
+             ng-disabled="$eval(attributes.disabled.value)" aria-label="GC Select {{$parent_scope[attributes.binding.value]}}">
+        <md-option ng-repeat="option in $parent_scope[attributes.options.source] track by $index" ng-value="$eval('option.' + attributes.options.value)">
             {{$eval('option.' + attributes.options.display)}}
         </md-option>
     </md-select>
@@ -64,7 +64,7 @@
                ng-mousedown="$eval(attributes.onmousedown.value)"
                ng-mouseup="$eval(attributes.onmouseup.value)"
                ng-disabled="$eval(attributes.disabled.value)" aria-label="GC Select">
-        <md-option ng-repeat="option in attributes.staticOptions.value track by $index" value="{{option.value}}" ng-bind="$eval(option.display)"></md-option>
+        <md-option ng-repeat="option in attributes.staticOptions.value track by $index" ng-value="option.value" ng-bind="$eval(option.display)"></md-option>
     </md-select>
     <div ng-if="attributes.optionsType.value==='static' && bindingType.value ==='complexBinding'">
       <md-select dfx-complex-ng-model class="md-altTheme-theme glyph"
@@ -85,7 +85,7 @@
                ng-mousedown="$eval(attributes.onmousedown.value)"
                ng-mouseup="$eval(attributes.onmouseup.value)"
              ng-disabled="$eval(attributes.disabled.value)" aria-label="GC Select">
-            <md-option ng-repeat="option in attributes.staticOptions.value track by $index" value="{{option.value}}" ng-bind="$eval(option.display)"></md-option>
+            <md-option ng-repeat="option in attributes.staticOptions.value track by $index" ng-value="option.value" ng-bind="$eval(option.display)"></md-option>
         </md-select>
     </div>
 </md-input-container>
@@ -110,7 +110,7 @@
                ng-mousedown="$eval(attributes.onmousedown.value)"
                ng-mouseup="$eval(attributes.onmouseup.value)"
                ng-disabled="$eval(attributes.disabled.value)" aria-label="GC Select">
-        <md-option ng-repeat="option in $parent_scope[attributes.options.source] track by $index" value="{{$eval('option.' + attributes.options.value)}}">
+        <md-option ng-repeat="option in $parent_scope[attributes.options.source] track by $index" ng-value="$eval('option.' + attributes.options.value)">
             {{$eval('option.' + attributes.options.display)}}
         </md-option>
     </md-select>
@@ -132,6 +132,6 @@
                ng-mousedown="$eval(attributes.onmousedown.value)"
                ng-mouseup="$eval(attributes.onmouseup.value)"
                ng-disabled="$eval(attributes.disabled.value)" aria-label="GC Select">
-        <md-option ng-repeat="option in attributes.staticOptions.value track by $index" value="{{option.value}}" ng-bind="$eval(option.display)"></md-option>
+        <md-option ng-repeat="option in attributes.staticOptions.value track by $index" ng-value="option.value" ng-bind="$eval(option.display)"></md-option>
     </md-select>
 </md-input-container>

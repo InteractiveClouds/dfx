@@ -536,6 +536,42 @@ md-checkbox[type="checkbox"].dfx-core-gc-checkbox-button {
 .dfx-core-gc-switch-label, .dfx-core-gc-switch-value {
     display: inline-block;
 }
+div.dfx-core-gc-switch md-switch[disabled].dfx-core-gc-switch-button .md-thumb {
+    background-color: rgb(189,189,189);
+}
+div.dfx-core-gc-switch md-switch[disabled].dfx-core-gc-switch-button .md-bar {
+    background-color: rgba(0,0,0,0.12);
+}
+div.dfx-core-gc-switch md-switch[disabled].dfx-core-gc-switch-button .md-thumb:before {
+    background-color: none;
+}
+
+/* Radio */
+.dfx-core-gc-radio-label {
+    font-size: 10px !important;
+    margin: 7px 0!important;
+    padding-left: 3px !important;
+    color: rgba(0,0,0,0.54) !important;
+}
+.dfx-core-gc-radio-group {
+    display: -webkit-flex;
+    display: flex;
+}
+.dfx-core-gc-radio-button {
+    height: 26px;
+    margin: 0 0 0 5px;
+    display: -webkit-flex;
+    -webkit-flex-direction: row;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.dfx-core-gc-radio-group md-radio-button[disabled].dfx-core-gc-radio-button .md-container .md-off {
+    border-color: rgba(0,0,0,0.38);
+}
+.dfx-core-gc-radio-group md-radio-button[disabled].dfx-core-gc-radio-button .md-container .md-on {
+    background-color: rgba(0,0,0,0.38);
+}
 
 /* JSON Editor */
 .dfx-core-gc-json-input-type {

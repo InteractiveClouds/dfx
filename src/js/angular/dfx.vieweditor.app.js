@@ -1689,6 +1689,7 @@ dfxViewEditorApp.directive('dfxVePickerIcon', ['$q', '$http', '$mdDialog', '$tim
             scope.setDfxIcon = function(icon, type) {
                 scope.iconObj.value = "'"+icon+"'";
                 scope.iconObj.type = type;
+                $(element).siblings('input').focus().blur();
                 scope.closeVeIconsDialog();
 
                 //scope.$parent.cacheAttributeNewValue(attrs.dfxPickerProperty);// needed for UNDO functionality

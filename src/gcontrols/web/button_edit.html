@@ -4,66 +4,66 @@
 			<input class="dfx-ve-property-treeview-button" type="checkbox" id="item-0" />
 			<label for="item-0">Main Properties</label>
 			<ul class="dfx-ve-property-treeview-content">
-        <li class="col-md-12">
-            <span class="col-md-4">Id:</span>
-            <input class="col-md-8" type="text" ng-model="component_id" disabled/>
-        </li>
-		<li class="col-md-12" dfx-gc-property="template">
-			<span class="col-md-4">Template:</span>
-			<input class="col-md-8" type="text" ng-model="attributes.template.value" ng-change="overrideAttribute('template')" disabled/>
-		</li>
-        <li class="col-md-12" dfx-gc-property="name">
-					<span class="col-md-4">Name:</span>
-					<input class="col-md-8" type="text" ng-model="attributes.name.value" ng-change="overrideAttribute('name')" ng-focus="cacheAttributeOldValue('name', $event)" ng-blur="cacheAttributeNewValue('name')"/>
-				</li>
-				<li class="col-md-12" dfx-gc-property="label">
-					<span class="col-md-4">Label:</span>
-					<div class="col-md-8" layout="row">
-						<input class="col-md-12" type="text" ng-model="attributes.label.value" ng-change="overrideAttribute('label')" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue('label', $event)" ng-blur="cacheAttributeNewValue('label')"/>
-						<dfx-ve-expression-editor></dfx-ve-expression-editor>
-					</div>
-				</li>
-				<li class="col-md-12" dfx-gc-property="icon">
-					<span class="col-md-4">Icon:</span>
-					<div class="col-md-8" layout="row">
-						<input class="col-md-12" type="text" ng-model="attributes.icon.value" style="margin-left:-15px;" ng-change="overrideAttribute('icon');ifShowIconTypes(attributes.icon.value)" ng-focus="cacheAttributeOldValue('icon')" ng-blur="cacheAttributeNewValue('icon')"/>
-						<md-icon ng-click="showFontIcons($event, attributes.icon)" dfx-ve-picker-icon class="dfx-ve-picker-icon fa fa-ellipsis-h"></md-icon>
-					</div>
-				</li>
-        <li class="col-md-12" ng-show="showIconTypes">
-            <span class="col-md-4">Icon Type:</span>
-            <div class="col-md-8" layout="row" style="padding: 0 0 8px 0">
-                <md-radio-group ng-model="attributes.icon.type">
-                    <md-radio-button value="fa-icon" ngChange="overrideAttribute('icon')" style="margin: 0;" class="md-primary">Font Awesome Icon</md-radio-button>
-                    <md-radio-button value="svg-icon" ngChange="overrideAttribute('icon')" style="margin: 0;" class="md-primary">SVG Icon</md-radio-button>
-                </md-radio-group>
-            </div>
-        </li>
+                <li class="col-md-12">
+                    <span class="col-md-4">Id:</span>
+                    <input class="col-md-8" type="text" ng-model="component_id" disabled/>
+                </li>
+        		<li class="col-md-12" dfx-gc-property="template">
+        			<span class="col-md-4">Template:</span>
+        			<input class="col-md-8" type="text" ng-model="attributes.template.value" ng-change="overrideAttribute('template')" disabled/>
+        		</li>
+                <li class="col-md-12" dfx-gc-property="name">
+        			<span class="col-md-4">Name:</span>
+        			<input class="col-md-8" type="text" ng-model="attributes.name.value" ng-change="overrideAttribute('name')" ng-focus="cacheAttributeOldValue('name', $event)" ng-blur="cacheAttributeNewValue('name')"/>
+        		</li>
+        		<li class="col-md-12" dfx-gc-property="label">
+        			<span class="col-md-4">Label:</span>
+        			<div class="col-md-8" layout="row">
+        				<input class="col-md-12" type="text" ng-model="attributes.label.value" ng-change="overrideAttribute('label')" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue('label', $event)" ng-blur="cacheAttributeNewValue('label')"/>
+        				<dfx-ve-expression-editor></dfx-ve-expression-editor>
+        			</div>
+        		</li>
+        		<li class="col-md-12" dfx-gc-property="icon">
+        			<span class="col-md-4">Icon:</span>
+        			<div class="col-md-8" layout="row">
+        				<input class="col-md-12" type="text" ng-model="attributes.icon.value" style="margin-left:-15px;" ng-change="overrideAttribute('icon');ifShowIconTypes(attributes.icon.value)" ng-focus="cacheAttributeOldValue('icon')" ng-blur="cacheAttributeNewValue('icon')"/>
+        				<md-icon ng-click="showFontIcons($event, attributes.icon)" dfx-ve-picker-icon class="dfx-ve-picker-icon fa fa-ellipsis-h"></md-icon>
+        			</div>
+        		</li>
+                <li class="col-md-12" ng-show="showIconTypes">
+                    <span class="col-md-4">Icon Type:</span>
+                    <div class="col-md-8" layout="row" style="padding: 0 0 8px 0">
+                        <md-radio-group ng-model="attributes.icon.type">
+                            <md-radio-button value="fa-icon" ngChange="overrideAttribute('icon')" style="margin: 0;" class="md-primary">Font Awesome Icon</md-radio-button>
+                            <md-radio-button value="svg-icon" ngChange="overrideAttribute('icon')" style="margin: 0;" class="md-primary">SVG Icon</md-radio-button>
+                        </md-radio-group>
+                    </div>
+                </li>
 				<li class="col-md-12">
 					<span class="col-md-4">Icon position:</span>
-					<md-input-container class="col-md-8" style="padding: 0 0 4px 0">
-						<md-select aria-label="icon-position " ng-model="attributes.icon.position" ng-change="overrideAttribute('icon')" style="text-transform: capitalize">
-							<md-option ng-repeat="iconPosition in ['left', 'center', 'right']" style="text-transform: capitalize" value="{{iconPosition}}">{{iconPosition}}</md-option>
-						</md-select>
-					</md-input-container>
-				</li>
-				<li class="col-md-12" dfx-gc-property="display">
-					<span class="col-md-4">Display:</span>
-					<div class="col-md-8" layout="row">
-						<input class="col-md-12" type="text" ng-model="attributes.display.value" style="margin-left:-15px;" ng-change="overrideAttribute('display')" ng-focus="cacheAttributeOldValue('display', $event)" ng-blur="cacheAttributeNewValue('display')"/>
-						<dfx-ve-expression-editor></dfx-ve-expression-editor>
-					</div>
-				</li>
-				<li class="col-md-12" dfx-gc-property="disabled">
-					<span class="col-md-4">Disabled:</span>
-					<div class="col-md-8" layout="row">
-						<input class="col-md-12" type="text" ng-model="attributes.disabled.value" style="margin-left:-15px;" ng-change="overrideAttribute('disabled')" ng-focus="cacheAttributeOldValue('disabled', $event)" ng-blur="cacheAttributeNewValue('disabled')"/>
-						<dfx-ve-expression-editor></dfx-ve-expression-editor>
-					</div>
+                    <md-radio-group class="dfx-ve-property-treeview-radiogroup row-radio" ng-model="attributes.icon.position" ng-change="overrideAttribute('icon')" style="text-transform: capitalize">
+                        <md-radio-button class="md-primary" value="left" aria-label="Icon position">Left</md-radio-button>
+                        <md-radio-button class="md-primary" value="center" aria-label="Icon position">Center</md-radio-button>
+                        <md-radio-button class="md-primary" value="right" aria-label="Icon position">Right</md-radio-button>
+                    </md-radio-group>					
 				</li>
                 <li class="col-md-12">
                     <span class="col-md-4">Menu Items:</span>
                     <dfx-ve-menu-editor></dfx-ve-menu-editor>
+                </li>
+                <li class="col-md-12" dfx-gc-property="display">
+                    <span class="col-md-4">Display:</span>
+                    <div class="col-md-8" layout="row">
+                        <input class="col-md-12" type="text" ng-model="attributes.display.value" style="margin-left:-15px;" ng-change="overrideAttribute('display')" ng-focus="cacheAttributeOldValue('display', $event)" ng-blur="cacheAttributeNewValue('display')"/>
+                        <dfx-ve-expression-editor></dfx-ve-expression-editor>
+                    </div>
+                </li>
+                <li class="col-md-12" dfx-gc-property="disabled">
+                    <span class="col-md-4">Disabled:</span>
+                    <div class="col-md-8" layout="row">
+                        <input class="col-md-12" type="text" ng-model="attributes.disabled.value" style="margin-left:-15px;" ng-change="overrideAttribute('disabled')" ng-focus="cacheAttributeOldValue('disabled', $event)" ng-blur="cacheAttributeNewValue('disabled')"/>
+                        <dfx-ve-expression-editor></dfx-ve-expression-editor>
+                    </div>
                 </li>
 			</ul>
 		</li>
@@ -126,82 +126,101 @@
 			<label for="item-3">Styling Attributes</label>
 			<ul class="dfx-ve-property-treeview-content">
                 <li class="col-md-12">
-                    <span class="col-md-4">Size width to Label:</span>
-                    <span class="col-md-8" style="padding-left:0px;"><md-checkbox style="margin: 0" class="md-primary" ng-model="attributes.notFlex.value" ng-change="overrideAttribute('notFlex');changeWidth()" aria-label="notFlex"></md-checkbox></span>
-                </li>                
-                <li class="col-md-12" ng-if="!attributes.notFlex.value">
-                    <span class="col-md-12">
-                        <div layout>
-                            <span class="col-md-3" style="margin-top:10px;margin-left:-5px;">Flex Width:</span>
-                            <md-slider class="md-primary" flex ng-model="attributes.flex.value" step="5" min="0" max="100" aria-label="Flex width:" ng-change="overrideAttribute('flex');changeWidth()" ng-model-options="{ debounce: 500 }">
-                            </md-slider>
-                            <div flex="20" layout layout-align="center center">
-                                <input flex type="number" step="1" min="0" max="100" ng-model="attributes.flex.value" aria-label="blue" aria-controls="flex-width" style="margin-left:5px; text-align: center" ng-change="overrideAttribute('flex');changeWidth()">
+                    <input class="dfx-ve-property-treeview-button" type="checkbox" checked aria-label="container-styles" id="container-styles" />
+                    <label for="container-styles" class="dfx-ve-property-title-level-1"><span>Container Styling</span></label>
+                    <ul class="dfx-ve-property-treeview-content">
+                    
+                        <li class="col-md-12">
+                            <span class="col-md-4">Size width to Label:</span>
+                            <span class="col-md-8" style="padding-left:0px;"><md-checkbox style="margin: 0" class="md-primary" ng-model="attributes.notFlex.value" ng-change="overrideAttribute('notFlex');changeWidth()" aria-label="notFlex"></md-checkbox></span>
+                        </li>                
+                        <li class="col-md-12" ng-if="!attributes.notFlex.value">
+                            <span class="col-md-12">
+                                <div layout>
+                                    <span class="col-md-3" style="margin-top:10px;margin-left:-5px;">Flex Width:</span>
+                                    <md-slider class="md-primary" flex ng-model="attributes.flex.value" step="5" min="0" max="100" aria-label="Flex width:" ng-change="overrideAttribute('flex');changeWidth()" ng-model-options="{ debounce: 500 }">
+                                    </md-slider>
+                                    <div flex="20" layout layout-align="center center">
+                                        <input flex type="number" step="1" min="0" max="100" ng-model="attributes.flex.value" aria-label="blue" aria-controls="flex-width" style="margin-left:5px; text-align: center" ng-change="overrideAttribute('flex');changeWidth()">
+                                    </div>
+                                </div>
+                            </span>
+                        </li>
+        				<li class="col-md-12">
+                            <span class="col-md-4">Style:</span>
+                            <div class="col-md-8" layout="row">
+                                <input class="col-md-12" type="text" ng-model="attributes.style.value" ng-change="overrideAttribute('style')" style="margin-left:-15px;"/>
+                                <dfx-ve-css-style></dfx-ve-css-style>
                             </div>
-                        </div>
-                    </span>
-                </li>
-				<li class="col-md-12">
-                    <span class="col-md-4">Style:</span>
-                    <div class="col-md-8" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.style.value" ng-change="overrideAttribute('style')" style="margin-left:-15px;"/>
-                        <dfx-ve-css-style></dfx-ve-css-style>
-                    </div>
-                </li>
-                <li class="col-md-12">
-                    <span class="col-md-4">Class:</span>
-                    <input class="col-md-8" type="text" ng-model="attributes.classes.value"  ng-change="overrideAttribute('classes')"/>
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-4">Class:</span>
+                            <input class="col-md-8" type="text" ng-model="attributes.classes.value"  ng-change="overrideAttribute('classes')"/>
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-4">Dynamic Class:</span>
+                            <input class="col-md-8" type="text" ng-model="attributes.dynamicClasses.value"  ng-change="overrideAttribute('dynamicClasses')"/>
+                        </li>
+                    </ul>
                 </li>
                 <li class="col-md-12">
-                    <span class="col-md-4">Dynamic Class:</span>
-                    <input class="col-md-8" type="text" ng-model="attributes.dynamicClasses.value"  ng-change="overrideAttribute('dynamicClasses')"/>
+                    <input class="dfx-ve-property-treeview-button" type="checkbox" checked aria-label="icon-styles" id="icon-styles" />
+                    <label for="icon-styles" class="dfx-ve-property-title-level-1"><span>Icon Styling</span></label>
+                    <ul class="dfx-ve-property-treeview-content">                    
+                        <li class="col-md-12">
+                            <span class="col-md-4">Size:</span>
+                            <input class="col-md-8" type="number" ng-model="attributes.icon.size" ng-change="overrideAttribute('icon.size')"/>
+                        <li class="col-md-12">
+                            <span class="col-md-4">Style:</span>
+                            <div class="col-md-8" layout="row">
+                                <input class="col-md-12" type="text" ng-model="attributes.icon.style" ng-change="overrideAttribute('icon.style')" style="margin-left:-15px;"/>
+                                <dfx-ve-css-style></dfx-ve-css-style>
+                            </div>
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-4">Class:</span>
+                            <input class="col-md-8" type="text" ng-model="attributes.icon.class" ng-change="overrideAttribute('icon.class')"/>
+                        </li>
+                    </ul>
                 </li>
                 <li class="col-md-12">
-                    <span class="col-md-4">Icon Size:</span>
-                    <input class="col-md-8" type="number" ng-model="attributes.icon.size" ng-change="overrideAttribute('icon.size')"/>
-                <li class="col-md-12">
-                    <span class="col-md-4">Icon Style:</span>
-                    <div class="col-md-8" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.icon.style" ng-change="overrideAttribute('icon.style')" style="margin-left:-15px;"/>
-                        <dfx-ve-css-style></dfx-ve-css-style>
-                    </div>
+                    <input class="dfx-ve-property-treeview-button" type="checkbox" checked aria-label="item-styles" id="item-styles" />
+                    <label for="item-styles" class="dfx-ve-property-title-level-1"><span>Item Styling</span></label>
+                    <ul class="dfx-ve-property-treeview-content">                    
+                        <li class="col-md-12">
+                            <span class="col-md-4">Style:</span>
+                            <div class="col-md-8" layout="row">
+                                <input class="col-md-12" type="text" ng-model="attributes.singleMenu.button.style" ng-change="overrideAttribute('singleMenu.button.style')" style="margin-left:-15px;"/>
+                                <dfx-ve-css-style></dfx-ve-css-style>
+                            </div>
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-4">Class:</span>
+                            <input class="col-md-8" type="text" ng-model="attributes.singleMenu.button.class" ng-change="overrideAttribute('singleMenu.button.class')"/>
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-4">Icon Size:</span>
+                            <input class="col-md-8" type="number" ng-model="attributes.singleMenu.icon.size" ng-change="overrideAttribute('singleMenu.icon.size')"/>
+                        <li class="col-md-12">
+                            <span class="col-md-4">Icon Style:</span>
+                            <div class="col-md-8" layout="row">
+                                <input class="col-md-12" type="text" ng-model="attributes.singleMenu.icon.style" ng-change="overrideAttribute('singleMenu.icon.style')" style="margin-left:-15px;"/>
+                                <dfx-ve-css-style></dfx-ve-css-style>
+                            </div>
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-4">Icon Class:</span>
+                            <input class="col-md-8" type="text" ng-model="attributes.singleMenu.icon.class" ng-change="overrideAttribute('singleMenu.icon.class')"/>
+                        </li>  
+                    </ul>
                 </li>
-                <li class="col-md-12">
-                    <span class="col-md-4">Icon Class:</span>
-                    <input class="col-md-8" type="text" ng-model="attributes.icon.class" ng-change="overrideAttribute('icon.class')"/>
-                </li>
-                <li class="col-md-12">
-                    <span class="col-md-4">Item Style:</span>
-                    <div class="col-md-8" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.singleMenu.button.style" ng-change="overrideAttribute('singleMenu.button.style')" style="margin-left:-15px;"/>
-                        <dfx-ve-css-style></dfx-ve-css-style>
-                    </div>
-                </li>
-                <li class="col-md-12">
-                    <span class="col-md-4">Item Class:</span>
-                    <input class="col-md-8" type="text" ng-model="attributes.singleMenu.button.class" ng-change="overrideAttribute('singleMenu.button.class')"/>
-                </li>
-                <li class="col-md-12">
-                    <span class="col-md-4">Item Icon Size:</span>
-                    <input class="col-md-8" type="number" ng-model="attributes.singleMenu.icon.size" ng-change="overrideAttribute('singleMenu.icon.size')"/>
-                <li class="col-md-12">
-                    <span class="col-md-4">Item Icon Style:</span>
-                    <div class="col-md-8" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.singleMenu.icon.style" ng-change="overrideAttribute('singleMenu.icon.style')" style="margin-left:-15px;"/>
-                        <dfx-ve-css-style></dfx-ve-css-style>
-                    </div>
-                </li>
-                <li class="col-md-12">
-                    <span class="col-md-4">Item Icon Class:</span>
-                    <input class="col-md-8" type="text" ng-model="attributes.singleMenu.icon.class" ng-change="overrideAttribute('singleMenu.icon.class')"/>
-                </li>  
-			</ul>
-		</li>
-	</ul>
-	<ul>
-		<li>
-			<input class="dfx-ve-property-treeview-button" type="checkbox" checked id="item-4" />
-			<label for="item-4">Events</label>
+            </ul>
+        </li>
+    </ul>
+    <ul>
+        <li>
+            <input class="dfx-ve-property-treeview-button" type="checkbox" checked id="item-4" />
+            <label for="item-4">Events</label>
 			<ul class="dfx-ve-property-treeview-content">
                 <li class="col-md-12">
                     <span class="col-md-4">On Click:</span>
