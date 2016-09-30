@@ -906,7 +906,9 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
             editor.setValue(JSON.stringify(widget_definition, null, '\t'), 0);
         }
 		dfxRendering.render($scope, editor.getValue()).then( function(data) {
-          window.localStorage.setItem('DFX_view_compiled_'+$scope.view_name+'_default', data);
+			for (var card_name in data) {
+				window.localStorage.setItem('DFX_view_compiled_'+$scope.view_name+'_'+card_name, data[card_name]);
+			}
         });
     }
 
@@ -3881,7 +3883,7 @@ dfxViewEditorApp.directive('dfxVeListEditor', ['$mdDialog', '$timeout', '$http',
         templateUrl: function( el, attrs ) {
             return '/gcontrols/web/picker_list.html';
         },
-        link: function(scope, element, attrs) {  
+        link: function(scope, element, attrs) {
             var opt = '',
                 counter = 1,
                 scriptEditor,
@@ -3910,14 +3912,14 @@ dfxViewEditorApp.directive('dfxVeListEditor', ['$mdDialog', '$timeout', '$http',
                     onComplete: function(){
                         scope.activeOption(itemIndex);
                         scope.attributes.optionItemNames.status = 'overridden';
-                        $('#dfx-ve-menu-editor-dialog').keyup(function(e) { 
+                        $('#dfx-ve-menu-editor-dialog').keyup(function(e) {
                             if(e.which === 13 && $('#dfx-ve-expression-menu-dialog').length === 0 && $('#dfx-ve-html-menu-editor').length === 0) {
                                 if(document.activeElement.tagName!=='BUTTON')  scope.closeDialog();
                             }
                             if(e.which === 27) scope.closeDialog();
                             e.preventDefault();
                             e.stopPropagation();
-                        }); 
+                        });
                     },
                     controller: function(){
                         itemIndex = 0;scope.currentItem = {};
@@ -3933,7 +3935,7 @@ dfxViewEditorApp.directive('dfxVeListEditor', ['$mdDialog', '$timeout', '$http',
             }
             scope.selectItem = function(index){scope.activeOption(index);}
             scope.addItem = function(){
-                scope.attributes.static.status = "overridden" ;                    
+                scope.attributes.static.status = "overridden" ;
                 itemIndex++; counter++; opt = "list item " + counter;
                 scope.attributes.static.value.splice(itemIndex, 0, {"name": opt, "data": optionData});
                 $timeout(function(){scope.activeOption(itemIndex);}, 0);
@@ -3961,7 +3963,7 @@ dfxViewEditorApp.directive('dfxVeListEditor', ['$mdDialog', '$timeout', '$http',
                 if(scope.attributes.static.value.length === 1){itemIndex = 0;}
                 else{scope.attributes.static.value.splice(itemIndex, 1);if(itemIndex > 0) --itemIndex;}
                 scope.activeOption(itemIndex);
-            };  
+            };
             scope.showHtmlEditor = function(ev, htmlValue) {
                 $('#' + scope.component_id + '_md_dialog .second-dialog-box').load('/gcontrols/web/html_editor_dialog.html', function(){
                     $compile($('.second-dialog-box').contents())(scope);
@@ -3984,18 +3986,18 @@ dfxViewEditorApp.directive('dfxVeListEditor', ['$mdDialog', '$timeout', '$http',
                     $timeout(function(){
                         scope.htmlEditor.refresh();
                         scope.htmlEditor.focus();
-                        $('#dfx-ve-html-menu-editor').keyup(function(e) { 
+                        $('#dfx-ve-html-menu-editor').keyup(function(e) {
                             if(e.which === 13) {
                                 if(document.activeElement.tagName!=='TEXTAREA' && document.activeElement.tagName!=='BUTTON') scope.setHtmlValue();
                             }
                             if(e.which === 27) scope.hideHtmlEditor();
                             e.preventDefault();
                             e.stopPropagation();
-                        }); 
+                        });
                     },0);
                     $(scope.htmlEditor.getWrapperElement()).attr("id", "dfx_html_editor");
                     $('#' + scope.component_id + '_md_dialog .second-dialog').fadeIn(250);
-                });                
+                });
             }
             scope.setHtmlValue = function() {
                 scope.currentItem.data = scope.htmlEditor.getValue();
@@ -4003,9 +4005,9 @@ dfxViewEditorApp.directive('dfxVeListEditor', ['$mdDialog', '$timeout', '$http',
             }
             scope.hideHtmlEditor = function() {
                 $(".second-dialog").fadeOut('250', function() { $(this).remove(); });
-            }              
+            }
             scope.focusSamples = function(type){
-                if(type === 'dynamic'){                        
+                if(type === 'dynamic'){
                     $timeout(function(){$("#samples-btn").focus();},100);}
                 }
             scope.runJsonEditor = function(model){
@@ -4029,15 +4031,15 @@ dfxViewEditorApp.directive('dfxVeListEditor', ['$mdDialog', '$timeout', '$http',
                         $compile($('.dfx-ve-dialog').contents())(scope);
                         $('.sp-container').remove();
                         $('.dfx-ve-content-dialog').addClass('active');
-                        $('#dfx-ve-gc-samples-dialog').keyup(function(e) { 
+                        $('#dfx-ve-gc-samples-dialog').keyup(function(e) {
                             if(e.which === 13) {
                                 var activeTagName = document.activeElement.tagName;
-                                if(activeTagName!=='TEXTAREA' && activeTagName!=='BUTTON') $('#dfx-copy-sample-btn').click();                                
+                                if(activeTagName!=='TEXTAREA' && activeTagName!=='BUTTON') $('#dfx-copy-sample-btn').click();
                             }
                             if(e.which === 27) scope.closeSamples();
                             e.preventDefault();
                             e.stopPropagation();
-                        }); 
+                        });
                         $timeout(function(){
                             scope.runJsonEditor(scope.gcSamplesArray[0].value);
                             $(".dfx-ve-content-categories li").eq(0).find('span').addClass('active');
@@ -4084,7 +4086,7 @@ dfxViewEditorApp.directive('dfxVeListEditor', ['$mdDialog', '$timeout', '$http',
                 angular.element($('.dfx-ve-dialog')).remove();
                 $('.sp-container').remove();
                 if($('#dfx-ve-menu-editor-dialog').length > 0) $('#dfx-ve-menu-editor-dialog').focus();
-            }  
+            }
         }
     }
 }]);
