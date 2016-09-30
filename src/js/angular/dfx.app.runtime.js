@@ -125,12 +125,19 @@ dfxAppRuntime.controller('dfx_app_controller', [ '$scope', '$rootScope', 'dfxAut
     $scope.design_device_orientation = 'Portrait';
 
     $scope.getGCDefaultAttributes = function( type ) {
+		var cached_gc_types = sessionStorage.getItem('DFX_gc_types');
+		if (cached_gc_types===null) {
+			cached_gc_types = {};
+		} else {
+			cached_gc_types = JSON.parse(cached_gc_types);
+		}
         var deferred = $q.defer();
-        if ($scope.gc_types[type] != null) {
-            deferred.resolve( $scope.gc_types[type] );
-        } else {
+		if (cached_gc_types[type]!=null) {
+			deferred.resolve( cached_gc_types[type] );
+		} else {
             $http.get( '/gcontrols/web/' + type + '.json' ).success( function(data) {
-                $scope.gc_types[type] = data;
+                cached_gc_types[type] = data;
+				sessionStorage.setItem('DFX_gc_types', JSON.stringify(cached_gc_types));
                 deferred.resolve( data );
             });
         }
