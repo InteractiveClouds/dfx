@@ -182,50 +182,15 @@ dfxGCC.directive('dfxNgSrc', ['$timeout', function($timeout) {
         restrict: 'A',
         require: '?ngModel',
         link: function (scope, el, attr) {
-            console.log('attr: ', attr);
-            console.log('attr.ngSrc: ', attr.ngSrc);
-            console.log("el.attr('ng-src'): ", el.attr('ng-src'));
-/*
-            //TODO: get tenantId, appName, check normal URL, check why expression is moved to External URL...
+            var src = attr.ngSrc;
 
-            // watch the Image ng-src changes to transform resource URL
-            var ngSrcInitial = el.attr('ng-src'),
-                chunks = ngSrcInitial.match(/\{\{([^{}]*)\}\}/);
-
-            if (chunks) {
-                scope.$watch(
-                    chunks[1],
-                    function( newValue, oldValue ) {
-                        console.log('oldValue: ', oldValue);
-                        console.log('newValue: ', newValue);
-                        var ngSrcVal = newValue,
-                            tenantId = 'Examples',
-                            applicationName = '';
-
-                        //if (ngSrcVal && ngSrcVal.indexOf('./') == 0)
-                        var resourceSrc = '/resources/' + tenantId + '/' + applicationName + ngSrcVal;
-                        el.attr('ng-src', resourceSrc);
-                        el.attr('src', resourceSrc);
-                    }
-                );
-            }
-
-            // transform resource URL from Image ng-src
-            angular.element(document).ready(function() {
-                $timeout(function () {
-                    var ngSrcVal = el.attr('ng-src'),
-                        tenantId = 'Examples',
-                        applicationName = '';
-
-
-                    //if (ngSrcVal && ngSrcVal.indexOf('./') == 0)
-                    var resourceSrc = '/resources/' + tenantId + '/' + applicationName + ngSrcVal;
-                    el.attr('ng-src', resourceSrc);
-                    el.attr('src', resourceSrc);
-
-
-                }, 0);
-            });*/
+            $timeout(function() {
+                // if src value is URL within quotes, remove quotes
+                if (src.indexOf("'") == 0 && src.lastIndexOf("'") == (src.length - 1) && src.length > 2) {
+                    var src_without_quotes = src.replace(/'/g, '');
+                    el.attr('src', src_without_quotes);
+                }
+            }, 0);
         }
     }
 }]);
@@ -429,11 +394,6 @@ dfxGCC.directive('dfxGccWebTreeview', [ '$timeout', '$compile', '$q', '$http', '
                     scope.attributes.iconType.status = "overridden";
                 }
 
-console.log('1.attributes.static.value: ', scope.attributes.static.value);
-                scope.test = function(test_param) {
-                    console.log('2.test_param: ', test_param);
-                };
-
                 scope.ifShowIconTypes = function( icon, status ) {
                     var regexp = /(^\')(.*)(\'$)/gm, filtered = regexp.exec( icon );
                     if ( icon && ( icon.indexOf('+') >= 0 ) ) { filtered = false; }
@@ -574,6 +534,7 @@ console.log('1.attributes.static.value: ', scope.attributes.static.value);
                         }
                     });
                 }
+                /*
                 scope.gcJsonSample = {};
                 scope.gcSamplesArray = {};
                 scope.scriptSampleName = '';
@@ -675,7 +636,18 @@ console.log('1.attributes.static.value: ', scope.attributes.static.value);
                         scope.selectedArrayClone = JSON.parse(JSON.stringify(scope.$parent_scope[scope.attributes.dynamic.value]));
                         scope.rebuildSelectedArray('dynamic');
                     }
-                }
+                }*/
+
+                console.log('0.attributes.static.value: ', scope.attributes.static.value);
+                scope.static_items = [];
+                scope.test = function(test_param) {
+                    console.log('1.1.test_param: ', test_param);
+                };
+
+                scope.getStaticItems = function() {
+                    console.log('2.scope.attributes.static.value: ', scope.attributes.static.value);
+                    return scope.attributes.static.value;
+                };
             });
         }
     }
