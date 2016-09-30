@@ -116,6 +116,27 @@
 			<label for="item-3">Styling Attributes</label>
 			<ul class="dfx-ve-property-treeview-content">
 				<li class="col-md-12">
+                    <input class="dfx-ve-property-treeview-button" type="checkbox" checked aria-label="container-styles" id="container-styles" />
+                    <label for="container-styles" class="dfx-ve-property-title-level-1"><span>Container Styling</span></label>
+                    <ul class="dfx-ve-property-treeview-content">                    
+						<li class="col-md-12">
+							<span class="col-md-4">Style:</span>
+							<div class="col-md-8" layout="row">
+								<input class="col-md-12" type="text" ng-model="attributes.style.value" ng-change="overrideAttribute('style')" style="margin-left:-15px;"/>
+								<dfx-ve-css-style></dfx-ve-css-style>
+							</div>
+						</li>
+						<li class="col-md-12">
+							<span class="col-md-4">Class:</span>
+							<input class="col-md-8" type="text" ng-model="attributes.classes.value" ng-change="overrideAttribute('classes')" />
+						</li>
+						<li class="col-md-12">
+							<span class="col-md-4">Dynamic Class:</span>
+							<input class="col-md-8" type="text" ng-model="attributes.dynamicClasses.value" ng-change="overrideAttribute('dynamicClasses')" />
+						</li>				
+                    </ul>
+                </li>
+				<li class="col-md-12">
 					<input class="dfx-ve-property-treeview-button" type="checkbox" checked aria-label="item-30" id="item-30" />
 					<label for="item-30" class="dfx-ve-property-title-level-1"><span>Main Styles</span></label>
 					<ul class="dfx-ve-property-treeview-content">
@@ -176,21 +197,6 @@
 								<dfx-ve-css-style></dfx-ve-css-style>
 							</div>
 						</li>
-						<li class="col-md-12">
-							<span class="col-md-4">Style:</span>
-							<div class="col-md-8" layout="row">
-								<input class="col-md-12" type="text" ng-model="attributes.style.value" ng-change="overrideAttribute('style')" style="margin-left:-15px;"/>
-								<dfx-ve-css-style></dfx-ve-css-style>
-							</div>
-						</li>
-						<li class="col-md-12">
-							<span class="col-md-4">Class:</span>
-							<input class="col-md-8" type="text" ng-model="attributes.classes.value" ng-change="overrideAttribute('classes')" />
-						</li>
-						<li class="col-md-12">
-							<span class="col-md-4">Dynamic Class:</span>
-							<input class="col-md-8" type="text" ng-model="attributes.dynamicClasses.value" ng-change="overrideAttribute('dynamicClasses')" />
-						</li>				
 					</ul>
 				</li>
 				<li class="col-md-12">
