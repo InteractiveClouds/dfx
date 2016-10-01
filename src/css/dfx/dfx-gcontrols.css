@@ -278,6 +278,10 @@
 .gc_tooltip_direction{
     margin: 0 !important;
 }
+.dfx-core-gcs-tooltip {
+    color: #ffffff;
+    background: rgba(0,0,0,0.5);
+}
 
 .col-md-12.gc_zero_padding{
     padding: 0;

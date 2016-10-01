@@ -98,35 +98,47 @@
             <label for="item-3">Styling Attributes</label>
             <ul class="dfx-ve-property-treeview-content">
                 <li class="col-md-12">
-					<span class="col-md-12">
-						<div layout>
-                            <span class="col-md-3" style="margin-top:10px;margin-left:-5px;">Flex Width:</span>
-                            <md-slider class="md-primary" flex ng-model="attributes.flex.value" step="5" min="0" max="100" aria-label="Flex width:" ng-change="overrideAttribute('flex');changeWidth()" ng-model-options="{ debounce: 500 }">
-                            </md-slider>
-                            <div flex="20" layout layout-align="center center">
-                                <input flex type="number" min="0" max="100" ng-model="attributes.flex.value" ng-model-options="{ updateOn: 'blur', debounce: 500 }" aria-label="blue" aria-controls="flex-width" style="margin-left:5px; text-align: center" ng-change="overrideAttribute('flex');changeWidth()"/>
+                    <input class="dfx-ve-property-treeview-button" type="checkbox" checked aria-label="container-styles" id="container-styles" />
+                    <label for="container-styles" class="dfx-ve-property-title-level-1"><span>Container Styling</span></label>
+                    <ul class="dfx-ve-property-treeview-content">                    
+                        <li class="col-md-12">
+                            <span class="col-md-12">
+                                <div layout>
+                                    <span class="col-md-3" style="margin-top:10px;margin-left:-5px;">Flex Width:</span>
+                                    <md-slider class="md-primary" flex ng-model="attributes.flex.value" step="5" min="0" max="100" aria-label="Flex width:" ng-change="overrideAttribute('flex');changeWidth()" ng-model-options="{ debounce: 500 }">
+                                    </md-slider>
+                                    <div flex="20" layout layout-align="center center">
+                                        <input flex type="number" min="0" max="100" ng-model="attributes.flex.value" ng-model-options="{ updateOn: 'blur', debounce: 500 }" aria-label="blue" aria-controls="flex-width" style="margin-left:5px; text-align: center" ng-change="overrideAttribute('flex');changeWidth()"/>
+                                    </div>
+                                </div>
+                            </span>
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-4">Style:</span>
+                            <div class="col-md-8" layout="row">
+                                <input class="col-md-12" type="text" ng-model="attributes.style.value" style="margin-left:-15px;" ng-change="overrideAttribute('style')"/>
+                                <dfx-ve-css-style></dfx-ve-css-style>
                             </div>
-                        </div>
-	  				</span>
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-4">Class:</span>
+                            <input class="col-md-8" type="text" ng-model="attributes.classes.value" ng-change="overrideAttribute('classes')"/>
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-4">Dynamic Class:</span>
+                            <input class="col-md-8" type="text" ng-model="attributes.dynamicClasses.value" ng-change="overrideAttribute('dynamicClasses')"/>
+                        </li>
+                    </ul>
                 </li>
                 <li class="col-md-12">
-                    <span class="col-md-4">Style:</span>
-                    <div class="col-md-8" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.style.value" style="margin-left:-15px;" ng-change="overrideAttribute('style')"/>
-                        <dfx-ve-css-style></dfx-ve-css-style>
-                    </div>
-                </li>
-                <li class="col-md-12">
-                    <span class="col-md-4">Class:</span>
-                    <input class="col-md-8" type="text" ng-model="attributes.classes.value" ng-change="overrideAttribute('classes')"/>
-                </li>
-                <li class="col-md-12">
-                    <span class="col-md-4">Button Class:</span>
-                    <input class="col-md-8" type="text" ng-model="attributes.buttonClass.value" ng-change="overrideAttribute('buttonClass')"/>
-                </li>
-                <li class="col-md-12">
-                    <span class="col-md-4">Dynamic Class:</span>
-                    <input class="col-md-8" type="text" ng-model="attributes.dynamicClasses.value" ng-change="overrideAttribute('dynamicClasses')"/>
+                    <input class="dfx-ve-property-treeview-button" type="checkbox" checked aria-label="button-styles" id="button-styles" />
+                    <label for="button-styles" class="dfx-ve-property-title-level-1"><span>Button Styling</span></label>
+                    <ul class="dfx-ve-property-treeview-content">                    
+                        <li class="col-md-12">
+                            <span class="col-md-4">Class:</span>
+                            <input class="col-md-8" type="text" ng-model="attributes.buttonClass.value" ng-change="overrideAttribute('buttonClass')"/>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </li>

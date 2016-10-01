@@ -28,24 +28,22 @@
                 </li>
                 <li class="col-md-12">
                     <span class="col-md-4">Options:</span>
-                    <a ng-click="showOptionsEditor($event)" style="font-size:12px;color:#97CFFF;text-decoration:none;margin-left:5px;cursor:pointer;"><span style="padding-left:0"><md-icon class="fa fa-edit" style="font-size:14px;height:16px;min-height: 14px;"></md-icon>Edit</span></a>
+                    <a ng-click="showOptionsEditor($event)" style="font-size:12px;color:#97CFFF;text-decoration:none;cursor:pointer;"><span style="padding-left:0"><md-icon class="fa fa-edit" style="font-size:14px;height:16px;min-height: 14px;"></md-icon>Edit</span></a>
                     <!-- <span ng-click="showOptionsEditor($event)" class="dfx-ve-property-treeview-edit-button">
                         <ng-md-icon icon="edit" size="20" class="dfx-ve-property-treeview-edit-button-icon"></ng-md-icon>
                         Edit
                     </span> -->
                 </li>
                 <li class="col-md-12">
-                    <span class="col-md-4" style="margin-top: 3px">Direction:</span>
-                    <div class="col-md-8" layout="row">
-                        <md-radio-group class="dfx-ve-property-treeview-radiogroup row-radio" ng-model="attributes.direction.value" ng-change="overrideAttribute('direction')">
-                            <md-radio-button class="md-primary" value="column" aria-label="Direction">Column</md-radio-button>
-                            <md-radio-button class="md-primary" value="row" aria-label="Direction">Row</md-radio-button>
-                        </md-radio-group>
-                    </div>
+                    <span class="col-md-4">Direction:</span>
+                    <md-radio-group class="dfx-ve-property-treeview-radiogroup row-radio" ng-model="attributes.direction.value" ng-change="overrideAttribute('direction')">
+                        <md-radio-button class="md-primary" value="column" aria-label="Direction">Column</md-radio-button>
+                        <md-radio-button class="md-primary" value="row" aria-label="Direction">Row</md-radio-button>
+                    </md-radio-group>
                 </li>
                 <li class="col-md-12">
-                    <span class="col-md-4" style="margin-top: 3px">Display value:</span>
-                    <span class="col-md-8"><md-checkbox style="margin: 0" class="md-primary" ng-model="attributes.displayValue.value" ng-true-value="true" ng-false-value="false" ng-change="overrideAttribute('displayValue');" aria-label="displayValue"></md-checkbox></span>
+                    <span class="col-md-4">Display value:</span>
+                    <md-checkbox class="dfx-ve-property-treeview-checkbox md-primary" ng-model="attributes.displayValue.value" ng-true-value="true" ng-false-value="false" ng-change="overrideAttribute('displayValue');" aria-label="displayValue"></md-checkbox>
                 </li>                
                 <li class="col-md-12" dfx-gc-property="display">
                     <span class="col-md-4">Display:</span>
