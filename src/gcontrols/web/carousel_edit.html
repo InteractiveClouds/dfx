@@ -35,9 +35,18 @@
                         <dfx-ve-expression-editor></dfx-ve-expression-editor>
                     </div>
                 </li>
+                <li class="col-md-12">
+                    <span class="col-md-4">Options:</span>
+                    <a ng-click="showSlidesEditor($event)" style="font-size:12px;color:#97CFFF;text-decoration:none;cursor:pointer;">
+                        <span style="padding-left:0">
+                            <md-icon class="fa fa-edit" style="font-size:14px;height:16px;min-height: 14px;"></md-icon>
+                            Edit
+                        </span>
+                    </a>
+                </li>
             </ul>
         </li>
-        <li>
+        <!-- <li>
             <input class="dfx-ve-property-treeview-button" type="checkbox" id="item-1" />
             <label for="item-1">Options</label>
             <ul class="dfx-ve-property-treeview-content">
@@ -55,7 +64,7 @@
                     <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.dynamic.value" ng-change="overrideAttribute('dynamic')" class="col-md-12" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue('dynamic', $event)" ng-blur="cacheAttributeNewValue('dynamic')"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
                 </li>
             </ul>
-        </li>
+        </li> -->
         <li>
             <input class="dfx-ve-property-treeview-button" type="checkbox" id="item-2" />
             <label for="item-2">Styling Attributes</label>
@@ -63,6 +72,7 @@
                 <li class="col-md-12">
 					<span class="col-md-12">
 						<div layout>
+                            <span class="col-md-3" style="margin-top:10px;margin-left:-5px;">Flex Width:</span>
                             <md-slider class="md-primary" flex ng-model="attributes.flex.value" step="5" min="0" max="100" aria-label="Flex width:" ng-change="overrideAttribute('flex');changeWidth();rebuildCarousel();" ng-model-options="{ debounce: 500 }">
                             </md-slider>
                             <div flex="20" layout layout-align="center center">

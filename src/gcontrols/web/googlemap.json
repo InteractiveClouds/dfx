@@ -1,18 +1,8 @@
 {
-  "template": 			{ "value": "default" },
-  "name": {
-    "value": "gmpGooglemap1"
-  },
-  "binding": {
-    "value": ""
-  },
-  "display": {
-    "value": "true"
-  },
-  "flex" : {
-    "value" : 100
-  },
-  "style": {
-    "value": ""
-  }
+  "template": { "value": "default" },
+  "name":     { "value": "gmpGooglemap1" },
+  "binding":  { "value": "" },
+  "display":  { "value": "true" },
+  "flex":     { "value" : 100 },
+  "style":    { "value": "" }
 }

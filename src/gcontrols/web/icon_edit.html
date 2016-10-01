@@ -34,8 +34,8 @@
                     <span class="col-md-5">Icon Type:</span>
                     <div class="col-md-7" layout="row" style="padding: 0 0 8px 0">
                         <md-radio-group ng-model="attributes.icon.type">
-                            <md-radio-button value="svg-icon" ngChange="overrideAttribute('icon')" style="margin: 0;" class="md-primary">SVG Icon</md-radio-button>
-                            <md-radio-button value="fa-icon" ngChange="overrideAttribute('icon')" style="margin: 0;" class="md-primary">Font Awesome Icon</md-radio-button>
+                            <md-radio-button value="svg-icon" ngChange="overrideAttribute('icon.type')" style="margin: 0;" class="md-primary">SVG Icon</md-radio-button>
+                            <md-radio-button value="fa-icon" ngChange="overrideAttribute('icon.type')" style="margin: 0;" class="md-primary">Font Awesome Icon</md-radio-button>
                         </md-radio-group>
                     </div>
                 </li>
@@ -68,14 +68,14 @@
                 <li class="col-md-12" ng-if="attributes.state.value">
                     <span class="col-md-5">Binding:</span>
                     <div class="col-md-7" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.state.binding" ng-change="overrideAttribute('state')" style="margin-left:-15px;"/>
+                        <input class="col-md-12" type="text" ng-model="attributes.state.binding" ng-change="overrideAttribute('state.binding')" style="margin-left:-15px;"/>
                         <dfx-ve-expression-editor></dfx-ve-expression-editor>
                     </div>
                 </li>
                 <li class="col-md-12" ng-if="attributes.state.value">
                     <span class="col-md-5">Checked Icon:</span>
                     <div class="col-md-7" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.state.checkedIcon.value" ng-change="overrideAttribute('state');ifShowIconTypes(attributes.state.checkedIcon.value, 'checked')" style="margin-left:-15px;"/>
+                        <input class="col-md-12" type="text" ng-model="attributes.state.checkedIcon.value" ng-change="overrideAttribute('state.checkedIcon');ifShowIconTypes(attributes.state.checkedIcon.value, 'checked')" style="margin-left:-15px;"/>
                         <md-icon ng-click="showFontIcons($event, attributes.state.checkedIcon)" dfx-ve-picker-icon class="dfx-ve-picker-icon fa fa-ellipsis-h"></md-icon>                        
                     </div>
                 </li>
@@ -83,29 +83,29 @@
                     <span class="col-md-5">Icon Type:</span>
                     <div class="col-md-7" layout="row" style="padding: 0 0 8px 0">
                         <md-radio-group ng-model="attributes.state.checkedIcon.type">
-                            <md-radio-button value="svg-icon" ngChange="overrideAttribute('state')" style="margin: 0;" class="md-primary">SVG Icon</md-radio-button>
-                            <md-radio-button value="fa-icon" ngChange="overrideAttribute('state')" style="margin: 0;" class="md-primary">Font Awesome Icon</md-radio-button>
+                            <md-radio-button value="svg-icon" ngChange="overrideAttribute('state.checkedIcon.type')" style="margin: 0;" class="md-primary">SVG Icon</md-radio-button>
+                            <md-radio-button value="fa-icon" ngChange="overrideAttribute('state.checkedIcon.type')" style="margin: 0;" class="md-primary">Font Awesome Icon</md-radio-button>
                         </md-radio-group>
                     </div>
                 </li>
                 <li class="col-md-12" ng-if="attributes.state.value">
                     <span class="col-md-5">Checked Icon Style:</span>
                     <div class="col-md-7" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.state.checkedIcon.style" style="margin-left:-15px;"/>
+                        <input class="col-md-12" type="text" ng-model="attributes.state.checkedIcon.style" ng-change="overrideAttribute('state.checkedIcon.style')" style="margin-left:-15px;"/>
                         <dfx-ve-css-style></dfx-ve-css-style>
                     </div>
                 </li>
                 <li class="col-md-12" ng-if="attributes.state.value">
                     <span class="col-md-5">Checked Icon Class:</span>
                     <div class="col-md-7" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.state.checkedIcon.class" ng-model-options="{ updateOn: 'blur'}" style="margin-left:-15px;"/>
+                        <input class="col-md-12" type="text" ng-model="attributes.state.checkedIcon.class" ng-model-options="{ updateOn: 'blur'}" ng-change="overrideAttribute('state.checkedIcon.class')" style="margin-left:-15px;"/>
                         <dfx-ve-menu-expression></dfx-ve-menu-expression>
                     </div>
                 </li>
                 <li class="col-md-12" ng-if="attributes.state.value">
                     <span class="col-md-5">Unchecked Icon:</span>
                     <div class="col-md-7" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.state.uncheckedIcon.value" ng-change="overrideAttribute('state');ifShowIconTypes(attributes.state.uncheckedIcon.value, 'unchecked')" style="margin-left:-15px;"/>
+                        <input class="col-md-12" type="text" ng-model="attributes.state.uncheckedIcon.value" ng-change="overrideAttribute('state.uncheckedIcon');ifShowIconTypes(attributes.state.uncheckedIcon.value, 'unchecked')" style="margin-left:-15px;"/>
                         <md-icon ng-click="showFontIcons($event, attributes.state.uncheckedIcon)" dfx-ve-picker-icon class="dfx-ve-picker-icon fa fa-ellipsis-h"></md-icon> 
                     </div>
                 </li>
@@ -113,22 +113,22 @@
                     <span class="col-md-5">Icon Type:</span>
                     <div class="col-md-7" layout="row" style="padding: 0 0 8px 0">
                         <md-radio-group ng-model="attributes.state.uncheckedIcon.type">
-                            <md-radio-button value="svg-icon" ngChange="overrideAttribute('state')" style="margin: 0;" class="md-primary">SVG Icon</md-radio-button>
-                            <md-radio-button value="fa-icon" ngChange="overrideAttribute('state')" style="margin: 0;" class="md-primary">Font Awesome Icon</md-radio-button>
+                            <md-radio-button value="svg-icon" ngChange="overrideAttribute('state.type')" style="margin: 0;" class="md-primary">SVG Icon</md-radio-button>
+                            <md-radio-button value="fa-icon" ngChange="overrideAttribute('state.type')" style="margin: 0;" class="md-primary">Font Awesome Icon</md-radio-button>
                         </md-radio-group>
                     </div>
                 </li>
                 <li class="col-md-12" ng-if="attributes.state.value">
                     <span class="col-md-5">Unchecked Icon Style:</span>
                     <div class="col-md-7" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.state.uncheckedIcon.style" style="margin-left:-15px;"/>
+                        <input class="col-md-12" type="text" ng-model="attributes.state.uncheckedIcon.style" ng-change="overrideAttribute('state.uncheckedIcon.style')" style="margin-left:-15px;"/>
                         <dfx-ve-css-style></dfx-ve-css-style>
                     </div>
                 </li>
                 <li class="col-md-12" ng-if="attributes.state.value">
                     <span class="col-md-5">Unchecked Icon Class:</span>
                     <div class="col-md-7" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.state.uncheckedIcon.class" ng-model-options="{ updateOn: 'blur'}" style="margin-left:-15px;"/>
+                        <input class="col-md-12" type="text" ng-model="attributes.state.uncheckedIcon.class" ng-model-options="{ updateOn: 'blur'}" ng-change="overrideAttribute('state.uncheckedIcon.class')" style="margin-left:-15px;"/>
                         <dfx-ve-menu-expression></dfx-ve-menu-expression>
                     </div>
                 </li>
@@ -150,14 +150,14 @@
                 <li class="col-md-12">
                     <span class="col-md-5">Auto-disabled:</span>
                     <div class="col-md-7" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.waiting.autoDisabled" ng-change="overrideAttribute('waiting')" style="margin-left:-15px;"/>
+                        <input class="col-md-12" type="text" ng-model="attributes.waiting.autoDisabled" ng-change="overrideAttribute('waiting.autoDisabled')" style="margin-left:-15px;"/>
                         <dfx-ve-expression-editor></dfx-ve-expression-editor>
                     </div>
                 </li>                
                 <li class="col-md-12">
                     <span class="col-md-5">Icon:</span>
                     <div class="col-md-7" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.waiting.icon.value" ng-change="overrideAttribute('waiting');ifShowIconTypes(attributes.waiting.icon.value, 'waiting')" style="margin-left:-15px;"/>
+                        <input class="col-md-12" type="text" ng-model="attributes.waiting.icon.value" ng-change="overrideAttribute('waiting.icon');ifShowIconTypes(attributes.waiting.icon.value, 'waiting')" style="margin-left:-15px;"/>
                         <md-icon ng-click="showFontIcons($event, attributes.waiting.icon)" dfx-ve-picker-icon class="dfx-ve-picker-icon fa fa-ellipsis-h"></md-icon>                        
                     </div>
                 </li>
@@ -165,22 +165,22 @@
                     <span class="col-md-5">Icon Type:</span>
                     <div class="col-md-7" layout="row" style="padding: 0 0 8px 0">
                         <md-radio-group ng-model="attributes.waiting.icon.type">
-                            <md-radio-button value="svg-icon" ngChange="overrideAttribute('waiting')" style="margin: 0;" class="md-primary">SVG Icon</md-radio-button>
-                            <md-radio-button value="fa-icon" ngChange="overrideAttribute('waiting')" style="margin: 0;" class="md-primary">Font Awesome Icon</md-radio-button>
+                            <md-radio-button value="svg-icon" ngChange="overrideAttribute('waiting.icon.type')" style="margin: 0;" class="md-primary">SVG Icon</md-radio-button>
+                            <md-radio-button value="fa-icon" ngChange="overrideAttribute('waiting.icon.type')" style="margin: 0;" class="md-primary">Font Awesome Icon</md-radio-button>
                         </md-radio-group>
                     </div>
                 </li>
                 <li class="col-md-12">
                     <span class="col-md-5">Icon Style:</span>
                     <div class="col-md-7" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.waiting.icon.style" style="margin-left:-15px;"/>
+                        <input class="col-md-12" type="text" ng-model="attributes.waiting.icon.style" ng-change="overrideAttribute('waiting.icon.style')" style="margin-left:-15px;"/>
                         <dfx-ve-css-style></dfx-ve-css-style>
                     </div>
                 </li>
                 <li class="col-md-12">
                     <span class="col-md-5">Icon Class:</span>
                     <div class="col-md-7" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.waiting.icon.class" style="margin-left:-15px;"/>
+                        <input class="col-md-12" type="text" ng-model="attributes.waiting.icon.class" ng-change="overrideAttribute('waiting.icon.class')" style="margin-left:-15px;"/>
                         <dfx-ve-menu-expression></dfx-ve-menu-expression>
                     </div>
                 </li>                
@@ -194,7 +194,7 @@
 			<ul class="dfx-ve-property-treeview-content">
 				<li class="col-md-12">
                     <span class="col-md-5">Icon Size:</span>
-                    <input class="col-md-7" type="number" ng-model="attributes.icon.size" ng-change="overrideAttribute('icon')" />
+                    <input class="col-md-7" type="number" ng-model="attributes.icon.size" ng-change="overrideAttribute('icon.size')" />
                 </li>				
 				<li class="col-md-12">
 					<span class="col-md-5">Style:</span>

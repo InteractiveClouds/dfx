@@ -1,7 +1,7 @@
 <md-toolbar ng-if="$eval(attributes.toolbar.visible.value)" style="{{attributes.toolbar.style.value}}" class="gc-toolbar dfx-core-gc-toolbar md-altTheme-theme {{attributes.toolbar.classes.value}}" ng-class="$eval(attributes.toolbar.dynamicClasses.value)">
     <div style="min-height:48px;" layout="row" flex="100">
         <!--leftMenu-->
-        <div flex="{{attributes.toolbar.leftMenu.flexWidth.value}}" layout="column" layout-align="center start" ng-show="$eval(attributes.toolbar.leftMenu.visible.value)" style="{{attributes.toolbar.leftMenu.style.value}}">
+        <div flex="{{attributes.toolbar.leftMenu.flexWidth.value}}" layout="column" layout-align="center start" ng-if="$eval(attributes.toolbar.leftMenu.visible.value)" style="{{attributes.toolbar.leftMenu.style.value}}">
             <div class="{{component_id}}_toolbar_left_menu" ng-show="$eval(attributes.toolbar.leftMenu.visible.value)" ng-style="{'width': attributes.toolbar.leftMenu.type.value === 'Buttons' && attributes.toolbar.leftMenu.equalButtonSize.value===true? '100%':''}" class="{{attributes.toolbar.leftMenu.classes.value}}" ng-class="$eval(attributes.toolbar.leftMenu.dynamicClasses.value)">
                 <!--fab-->
                 <md-fab-speed-dial ng-if="attributes.toolbar.leftMenu.type.value === 'Fab'" md-direction="{{attributes.toolbar.leftMenu.fabDirection.value}}" ng-class="attributes.toolbar.leftMenu.animation.value">
@@ -13,18 +13,18 @@
                         </md-button>
                     </md-fab-trigger>
                     <md-fab-actions>
-                        <div ng-if="attributes.toolbar.leftMenu.dynamicPresent.value === false" ng-repeat="item in attributes.toolbar.leftMenu.menuItems.value track by $index">
+                        <div ng-if="attributes.toolbar.leftMenu.menuItemsType.value === 'static'" ng-repeat="item in attributes.toolbar.leftMenu.menuItems.value track by $index">
                             <md-button aria-label="{{component_id}}_fab-icon_{{$index}}" ng-click="$eval(item.onclick)" ng-show="$eval(item.display)" ng-disabled="$eval(item.disabled)" class="{{attributes.toolbar.leftMenu.fab.actionButton.class}} md-fab dfx-core-gc-fab-item" style="{{attributes.toolbar.leftMenu.fab.actionButton.style}}">
                                 <md-tooltip ng-if="item.label.length>0" md-autohide="true" md-direction="{{attributes.toolbar.leftMenu.fab.actionButton.tooltip.direction}}" class="dfx-core-gc-fab-tooltip {{attributes.toolbar.leftMenu.fab.actionButton.tooltip.classes}}" style="{{attributes.toolbar.leftMenu.fab.actionButton.tooltip.style}}">{{$eval(item.label)}}</md-tooltip>
-                                <md-icon ng-if="item.icon.type === 'fa-icon'" class="fa {{$eval(item.icon.value) || 'fa-home'}} dfx-core-gc-fab-item-icon" style="{{attributes.toolbar.leftMenu.fab.actionButton.icon.style}};font-size:{{attributes.toolbar.leftMenu.fab.actionButton.icon.size}}px;width:{{attributes.toolbar.leftMenu.fab.actionButton.icon.size}}px;height:{{attributes.toolbar.leftMenu.fab.actionButton.icon.size}}px;"></md-icon>
-                                <ng-md-icon ng-if="item.icon.type === 'svg-icon'" icon="{{$eval(item.icon.value) || 'home'}}" size="{{attributes.toolbar.leftMenu.fab.actionButton.icon.size}}" class="dfx-core-gc-fab-item-icon" style="{{attributes.toolbar.leftMenu.fab.actionButton.icon.style}};width:{{attributes.toolbar.leftMenu.fab.actionButton.icon.size}}px;height:{{attributes.toolbar.leftMenu.fab.actionButton.icon.size}}px;"></ng-md-icon>
+                                <md-icon ng-if="item.icon.type === 'fa-icon'" class="fa {{$eval(item.icon.value)}} dfx-core-gc-fab-item-icon" style="{{attributes.toolbar.leftMenu.fab.actionButton.icon.style}};font-size:{{attributes.toolbar.leftMenu.fab.actionButton.icon.size}}px;width:{{attributes.toolbar.leftMenu.fab.actionButton.icon.size}}px;height:{{attributes.toolbar.leftMenu.fab.actionButton.icon.size}}px;"></md-icon>
+                                <ng-md-icon ng-if="item.icon.type === 'svg-icon'" icon="{{$eval(item.icon.value)}}" size="{{attributes.toolbar.leftMenu.fab.actionButton.icon.size}}" class="dfx-core-gc-fab-item-icon" style="{{attributes.toolbar.leftMenu.fab.actionButton.icon.style}};width:{{attributes.toolbar.leftMenu.fab.actionButton.icon.size}}px;height:{{attributes.toolbar.leftMenu.fab.actionButton.icon.size}}px;"></ng-md-icon>
                             </md-button>
                         </div>
-                        <div ng-if="attributes.toolbar.leftMenu.dynamicPresent.value" ng-repeat="item in leftItems track by $index">
-                            <md-button aria-label="{{component_id}}_fab-icon_{{$index}}" ng-click="$eval(item.onclick)" ng-show="$eval(item.display)" ng-disabled="$eval(item.disabled)" class="{{attributes.toolbar.leftMenu.fab.actionButton.class}} md-fab dfx-core-gc-fab-item" style="{{attributes.toolbar.leftMenu.fab.actionButton.style}}">
-                                <md-tooltip ng-if="item.label.length>0" md-autohide="true" md-direction="{{attributes.toolbar.leftMenu.fab.actionButton.tooltip.direction}}" class="dfx-core-gc-fab-tooltip {{attributes.toolbar.leftMenu.fab.actionButton.tooltip.classes}}" style="{{attributes.toolbar.leftMenu.fab.actionButton.tooltip.style}}">{{$eval(item.label)}}</md-tooltip>
-                                <md-icon ng-if="item.icon.type === 'fa-icon'" class="fa {{$eval(item.icon.value) || 'fa-home'}} dfx-core-gc-fab-item-icon" style="{{attributes.toolbar.leftMenu.fab.actionButton.icon.style}};font-size:{{attributes.toolbar.leftMenu.fab.actionButton.icon.size}}px;width:{{attributes.toolbar.leftMenu.fab.actionButton.icon.size}}px;height:{{attributes.toolbar.leftMenu.fab.actionButton.icon.size}}px;"></md-icon>
-                                <ng-md-icon ng-if="item.icon.type === 'svg-icon'" icon="{{$eval(item.icon.value) || 'home'}}" size="{{attributes.toolbar.leftMenu.fab.actionButton.icon.size}}" class="dfx-core-gc-fab-item-icon" style="{{attributes.toolbar.leftMenu.fab.actionButton.icon.style}};width:{{attributes.toolbar.leftMenu.fab.actionButton.icon.size}}px;height:{{attributes.toolbar.leftMenu.fab.actionButton.icon.size}}px;"></ng-md-icon>
+                        <div ng-if="attributes.toolbar.leftMenu.menuItemsType.value === 'dynamic'" ng-repeat="item in $parent_scope[attributes.toolbar.leftMenu.menuItemNames.value.main.source] track by $index">
+                            <md-button aria-label="{{component_id}}_fab-icon_{{$index}}" ng-click="$eval(item[attributes.toolbar.rightMenu.menuItemNames.value.main.onclick])" ng-show="$eval(item[attributes.toolbar.leftMenu.menuItemNames.value.main.display])" ng-disabled="$eval(item[attributes.toolbar.leftMenu.menuItemNames.value.main.disabled])" class="{{attributes.toolbar.leftMenu.fab.actionButton.class}} md-fab dfx-core-gc-fab-item" style="{{attributes.toolbar.leftMenu.fab.actionButton.style}}">
+                                <md-tooltip ng-if="item[attributes.toolbar.leftMenu.menuItemNames.value.main.label].length>0" md-autohide="true" md-direction="{{attributes.toolbar.leftMenu.fab.actionButton.tooltip.direction}}" class="dfx-core-gc-fab-tooltip {{attributes.toolbar.leftMenu.fab.actionButton.tooltip.classes}}" style="{{attributes.toolbar.leftMenu.fab.actionButton.tooltip.style}}">{{$eval(item[attributes.toolbar.leftMenu.menuItemNames.value.main.label])}}</md-tooltip>
+                                <md-icon ng-if="item[attributes.toolbar.leftMenu.menuItemNames.value.main.icon.value][attributes.toolbar.leftMenu.menuItemNames.value.main.icon.type] === 'fa-icon'" class="fa {{item[attributes.toolbar.leftMenu.menuItemNames.value.main.icon.value][attributes.toolbar.leftMenu.menuItemNames.value.main.icon.name]}} dfx-core-gc-fab-item-icon" style="{{attributes.toolbar.leftMenu.fab.actionButton.icon.style}};font-size:{{attributes.toolbar.leftMenu.fab.actionButton.icon.size}}px;width:{{attributes.toolbar.leftMenu.fab.actionButton.icon.size}}px;height:{{attributes.toolbar.leftMenu.fab.actionButton.icon.size}}px;"></md-icon>
+                                <ng-md-icon ng-if="item[attributes.toolbar.leftMenu.menuItemNames.value.main.icon.value][attributes.toolbar.leftMenu.menuItemNames.value.main.icon.type] === 'svg-icon'" icon="{{$eval(item[attributes.toolbar.leftMenu.menuItemNames.value.main.icon.value][attributes.toolbar.leftMenu.menuItemNames.value.main.icon.name])}}" size="{{attributes.toolbar.leftMenu.fab.actionButton.icon.size}}" class="dfx-core-gc-fab-item-icon" style="{{attributes.toolbar.leftMenu.fab.actionButton.icon.style}};width:{{attributes.toolbar.leftMenu.fab.actionButton.icon.size}}px;height:{{attributes.toolbar.leftMenu.fab.actionButton.icon.size}}px;"></ng-md-icon>
                             </md-button>
                         </div>
                     </md-fab-actions>
@@ -32,29 +32,33 @@
 
                 <!--buttons-->
                 <div ng-if="attributes.toolbar.leftMenu.type.value === 'Buttons'" class="gc-icon-bar">
-                    <div class="{{component_id}}_left_buttons_menu" dfx-repeatable-panel="{{$index}}" ng-if="attributes.toolbar.leftMenu.menuItems.value.length > 0 || scope.attributes.toolbar.leftMenu.dynamicPresent.value" style="width: 100%"></div>
+                    <div class="{{component_id}}_left_buttons_menu" dfx-repeatable-panel="{{$index}}" style="width: 100%"></div>
                 </div>
 
                 <!--iconbar-->
                 <div ng-if="attributes.toolbar.leftMenu.type.value === 'Icon Bar'" layout="column">
-                    <div class="{{component_id}}_left_menu_bar" dfx-repeatable-panel="{{$index}}" ng-if="attributes.toolbar.leftMenu.menuItems.value.length > 0 || attributes.toolbar.leftMenu.dynamicPresent.value"></div>
+                    <div class="{{component_id}}_left_menu_bar" dfx-repeatable-panel="{{$index}}"></div>
                 </div>
             </div>
         </div>
 
         <!--Title-->
-        <div flex="{{attributes.toolbar.title.flexWidth.value}}" layout="column" layout-align="center {{attributes.toolbar.title.alignment.value}}" ng-show="$eval(attributes.toolbar.title.visible.value)" style="{{attributes.toolbar.title.style.value}}" >
+        <div flex="{{($eval(attributes.toolbar.leftMenu.visible.value) || $eval(attributes.toolbar.rightMenu.visible.value)) ? attributes.toolbar.title.flexWidth.value : 100}}" layout="column" layout-align="center {{attributes.toolbar.title.alignment.value}}" ng-if="$eval(attributes.toolbar.title.visible.value)" style="{{attributes.toolbar.title.style.value}}" >
             <div ng-if="attributes.toolbar.title.isHtml.value === false" layout="column" layout-align="center" class="{{attributes.toolbar.title.classes.value}} layout-align-center layout-column" ng-class="$eval(attributes.toolbar.title.dynamicClasses.value)">
                 <span ng-bind="$eval(attributes.toolbar.title.value)"></span>
             </div>
-            <div ng-if="attributes.toolbar.title.isHtml.value" id="{{component_id}}_toolbar_bindingHtml" style="color:#000;{{attributes.toolbar.title.style.value}}" class="{{attributes.toolbar.title.classes.value}} layout-align-center layout-column" ng-class="$eval(attributes.toolbar.title.dynamicClasses.value)"
+            <div ng-if="attributes.toolbar.title.isHtml.value === true && attributes.toolbar.title.bindingHtml.value ===''" id="{{component_id}}_toolbar_bindingHtml" style="color:#000;{{attributes.toolbar.title.style.value}}" class="{{attributes.toolbar.title.classes.value}} layout-align-center layout-column" ng-class="$eval(attributes.toolbar.title.dynamicClasses.value)"
                  ng-bind-html="snippetTrustAsHtml(attributes.toolbar.title.content.value)"
+                 aria-label="{{component_id}}_toolbar_bindingHtml">
+            </div>
+            <div ng-if="attributes.toolbar.title.isHtml.value === true && attributes.toolbar.title.bindingHtml.value !==''" id="{{component_id}}_toolbar_bindingHtml" style="color:#000;{{attributes.toolbar.title.style.value}}" class="{{attributes.toolbar.title.classes.value}} layout-align-center layout-column" ng-class="$eval(attributes.toolbar.title.dynamicClasses.value)" ng-init="dynamicHtmlTitle = ($eval(htmlTitleObject))"
+                 ng-bind-html="snippetTrustAsHtml(dynamicHtmlTitle)"
                  aria-label="{{component_id}}_toolbar_bindingHtml">
             </div>
         </div>
 
         <!--RightMenu-->
-        <div flex="{{attributes.toolbar.rightMenu.flexWidth.value}}" layout="column" layout-align="center end" style="{{attributes.toolbar.rightMenu.style.value}}">
+        <div flex="{{attributes.toolbar.rightMenu.flexWidth.value}}" layout="column" layout-align="center end" ng-if="$eval(attributes.toolbar.rightMenu.visible.value)"  style="{{attributes.toolbar.rightMenu.style.value}}">
             <div class="{{component_id}}_toolbar_right_menu" ng-show="$eval(attributes.toolbar.rightMenu.visible.value)" ng-style="{'width': attributes.toolbar.rightMenu.type.value === 'Buttons' && attributes.toolbar.rightMenu.equalButtonSize.value===true? '100%':''}" class="{{attributes.toolbar.rightMenu.classes.value}}" ng-class="$eval(attributes.toolbar.rightMenu.dynamicClasses.value)">
                 <!--fab-->
                 <md-fab-speed-dial ng-if="attributes.toolbar.rightMenu.type.value === 'Fab'" md-direction="{{attributes.toolbar.rightMenu.fabDirection.value}}" ng-class="attributes.toolbar.rightMenu.animation.value">
@@ -66,18 +70,18 @@
                         </md-button>
                     </md-fab-trigger>
                     <md-fab-actions>
-                        <div ng-if="attributes.toolbar.rightMenu.dynamicPresent.value === false" ng-repeat="item in attributes.toolbar.rightMenu.menuItems.value track by $index" >
+                        <div ng-if="attributes.toolbar.rightMenu.menuItemsType.value === 'static'" ng-repeat="item in attributes.toolbar.rightMenu.menuItems.value track by $index">
                             <md-button aria-label="{{component_id}}_fab-icon_{{$index}}" ng-click="$eval(item.onclick)" ng-show="$eval(item.display)" ng-disabled="$eval(item.disabled)" class="{{attributes.toolbar.rightMenu.fab.actionButton.class}} md-fab dfx-core-gc-fab-item" style="{{attributes.toolbar.rightMenu.fab.actionButton.style}}">
                                 <md-tooltip ng-if="item.label.length>0" md-autohide="true" md-direction="{{attributes.toolbar.rightMenu.fab.actionButton.tooltip.direction}}" class="dfx-core-gc-fab-tooltip {{attributes.toolbar.rightMenu.fab.actionButton.tooltip.classes}}" style="{{attributes.toolbar.rightMenu.fab.actionButton.tooltip.style}}">{{$eval(item.label)}}</md-tooltip>
-                                <md-icon ng-if="item.icon.type === 'fa-icon'" class="fa {{$eval(item.icon.value) || 'fa-home'}} dfx-core-gc-fab-item-icon" style="{{attributes.toolbar.rightMenu.fab.actionButton.icon.style}};font-size:{{attributes.toolbar.rightMenu.fab.actionButton.icon.size}}px;width:{{attributes.toolbar.rightMenu.fab.actionButton.icon.size}}px;height:{{attributes.toolbar.rightMenu.fab.actionButton.icon.size}}px;"></md-icon>
-                                <ng-md-icon ng-if="item.icon.type === 'svg-icon'" icon="{{$eval(item.icon.value) || 'home'}}" size="{{attributes.toolbar.rightMenu.fab.actionButton.icon.size}}" class="dfx-core-gc-fab-item-icon" style="{{attributes.toolbar.rightMenu.fab.actionButton.icon.style}};width:{{attributes.toolbar.rightMenu.fab.actionButton.icon.size}}px;height:{{attributes.toolbar.rightMenu.fab.actionButton.icon.size}}px;"></ng-md-icon>
+                                <md-icon ng-if="item.icon.type === 'fa-icon'" class="fa {{$eval(item.icon.value)}} dfx-core-gc-fab-item-icon" style="{{attributes.toolbar.rightMenu.fab.actionButton.icon.style}};font-size:{{attributes.toolbar.rightMenu.fab.actionButton.icon.size}}px;width:{{attributes.toolbar.rightMenu.fab.actionButton.icon.size}}px;height:{{attributes.toolbar.rightMenu.fab.actionButton.icon.size}}px;"></md-icon>
+                                <ng-md-icon ng-if="item.icon.type === 'svg-icon'" icon="{{$eval(item.icon.value)}}" size="{{attributes.toolbar.rightMenu.fab.actionButton.icon.size}}" class="dfx-core-gc-fab-item-icon" style="{{attributes.toolbar.rightMenu.fab.actionButton.icon.style}};width:{{attributes.toolbar.rightMenu.fab.actionButton.icon.size}}px;height:{{attributes.toolbar.rightMenu.fab.actionButton.icon.size}}px;"></ng-md-icon>
                             </md-button>
                         </div>
-                        <div ng-if="attributes.toolbar.rightMenu.dynamicPresent.value" ng-repeat="item in rightItems track by $index">
-                            <md-button aria-label="{{component_id}}_fab-icon_{{$index}}" ng-click="$eval(item.onclick)" ng-show="$eval(item.display)" ng-disabled="$eval(item.disabled)" class="{{attributes.toolbar.rightMenu.fab.actionButton.class}} md-fab dfx-core-gc-fab-item" style="{{attributes.toolbar.rightMenu.fab.actionButton.style}}">
-                                <md-tooltip ng-if="item.label.length>0" md-autohide="true" md-direction="{{attributes.toolbar.rightMenu.fab.actionButton.tooltip.direction}}" class="dfx-core-gc-fab-tooltip {{attributes.toolbar.rightMenu.fab.actionButton.tooltip.classes}}" style="{{attributes.toolbar.rightMenu.fab.actionButton.tooltip.style}}">{{$eval(item.label)}}</md-tooltip>
-                                <md-icon ng-if="item.icon.type === 'fa-icon'" class="fa {{$eval(item.icon.value) || 'fa-home'}} dfx-core-gc-fab-item-icon" style="{{attributes.toolbar.rightMenu.fab.actionButton.icon.style}};font-size:{{attributes.toolbar.rightMenu.fab.actionButton.icon.size}}px;width:{{attributes.toolbar.rightMenu.fab.actionButton.icon.size}}px;height:{{attributes.toolbar.rightMenu.fab.actionButton.icon.size}}px;"></md-icon>
-                                <ng-md-icon ng-if="item.icon.type === 'svg-icon'" icon="{{$eval(item.icon.value) || 'home'}}" size="{{attributes.toolbar.rightMenu.fab.actionButton.icon.size}}" class="dfx-core-gc-fab-item-icon" style="{{attributes.toolbar.rightMenu.fab.actionButton.icon.style}};width:{{attributes.toolbar.rightMenu.fab.actionButton.icon.size}}px;height:{{attributes.toolbar.rightMenu.fab.actionButton.icon.size}}px;"></ng-md-icon>
+                        <div ng-if="attributes.toolbar.rightMenu.menuItemsType.value === 'dynamic'" ng-repeat="item in $parent_scope[attributes.toolbar.rightMenu.menuItemNames.value.main.source] track by $index">
+                            <md-button aria-label="{{component_id}}_fab-icon_{{$index}}" ng-click="$eval(item[attributes.toolbar.rightMenu.menuItemNames.value.main.onclick])" ng-show="$eval(item[attributes.toolbar.rightMenu.menuItemNames.value.main.display])" ng-disabled="$eval(item[attributes.toolbar.rightMenu.menuItemNames.value.main.disabled])" class="{{attributes.toolbar.rightMenu.fab.actionButton.class}} md-fab dfx-core-gc-fab-item" style="{{attributes.toolbar.rightMenu.fab.actionButton.style}}">
+                                <md-tooltip ng-if="item[attributes.toolbar.rightMenu.menuItemNames.value.main.label].length>0" md-autohide="true" md-direction="{{attributes.toolbar.rightMenu.fab.actionButton.tooltip.direction}}" class="dfx-core-gc-fab-tooltip {{attributes.toolbar.rightMenu.fab.actionButton.tooltip.classes}}" style="{{attributes.toolbar.rightMenu.fab.actionButton.tooltip.style}}">{{$eval(item[attributes.toolbar.rightMenu.menuItemNames.value.main.label])}}</md-tooltip>
+                                <md-icon ng-if="item[attributes.toolbar.rightMenu.menuItemNames.value.main.icon.value][attributes.toolbar.rightMenu.menuItemNames.value.main.icon.type] === 'fa-icon'" class="fa {{$eval(item[attributes.toolbar.rightMenu.menuItemNames.value.main.icon.value][attributes.toolbar.rightMenu.menuItemNames.value.main.icon.name])}} dfx-core-gc-fab-item-icon" style="{{attributes.toolbar.rightMenu.fab.actionButton.icon.style}};font-size:{{attributes.toolbar.rightMenu.fab.actionButton.icon.size}}px;width:{{attributes.toolbar.rightMenu.fab.actionButton.icon.size}}px;height:{{attributes.toolbar.rightMenu.fab.actionButton.icon.size}}px;"></md-icon>
+                                <ng-md-icon ng-if="item[attributes.toolbar.rightMenu.menuItemNames.value.main.icon.value][attributes.toolbar.rightMenu.menuItemNames.value.main.icon.type] === 'svg-icon'" icon="{{$eval(item[attributes.toolbar.rightMenu.menuItemNames.value.main.icon.value][attributes.toolbar.rightMenu.menuItemNames.value.main.icon.name])}}" size="{{attributes.toolbar.rightMenu.fab.actionButton.icon.size}}" class="dfx-core-gc-fab-item-icon" style="{{attributes.toolbar.rightMenu.fab.actionButton.icon.style}};width:{{attributes.toolbar.rightMenu.fab.actionButton.icon.size}}px;height:{{attributes.toolbar.rightMenu.fab.actionButton.icon.size}}px;"></ng-md-icon>
                             </md-button>
                         </div>
                     </md-fab-actions>
@@ -85,19 +89,25 @@
 
                 <!--buttons-->
                 <div ng-if="attributes.toolbar.rightMenu.type.value === 'Buttons'" class="gc-icon-bar">
-                    <div class="{{component_id}}_right_buttons_menu" dfx-repeatable-panel="{{$index}}" ng-if="attributes.toolbar.rightMenu.menuItems.value.length > 0  || scope.attributes.toolbar.rightMenu.dynamicPresent.value" style="width: 100%"></div>
+                    <div class="{{component_id}}_right_buttons_menu" dfx-repeatable-panel="{{$index}}" style="width: 100%"></div>
                 </div>
 
                 <div ng-if="attributes.toolbar.rightMenu.type.value === 'Icon Bar'" layout="column" class="gc">
-                    <div class="{{component_id}}_right_menu_bar" dfx-repeatable-panel="{{$index}}" ng-if="attributes.toolbar.rightMenu.menuItems.value.length > 0 || scope.attributes.toolbar.rightMenu.dynamicPresent.value"></div>
+                    <div class="{{component_id}}_right_menu_bar" dfx-repeatable-panel="{{$index}}"></div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="panel-body-collapser" ng-show="$eval(attributes.toolbar.collapsible.value)">
-        <md-icon ng-click="collapsePanelBody($eval(attributes.toolbar.collapsed.value), $index);"
-                 class="fa fa-chevron-right collapser-trigger"
-                 ng-class="$eval(attributes.toolbar.collapsed.value) ? '' : 'expanded' ">
-        </md-icon>
+    <div ng-if="collapsibleType.value !== 'boolean'" class="panel-body-collapser" ng-show="$eval(attributes.toolbar.collapsible.value)">        
+        <md-icon ng-if="collapsedType.value === 'boolean' && isRepeatableTitle === false" ng-click="dfxCollapsed.value = !dfxCollapsed.value"  style="{{attributes.collapseStyle.style}}" class="fa fa-chevron-right collapser-trigger {{attributes.collapseStyle.class}}" ng-class="[dfxCollapsed.value ? '' : 'expanded', attributes.collapseStyle.dynamicClass]"></md-icon>
+        <md-icon ng-if="collapsedType.value === 'boolean' && isRepeatableTitle === true" ng-click="dfxCollapsed.value[$index] = !dfxCollapsed.value[$index]"  style="{{attributes.collapseStyle.style}}" class="fa fa-chevron-right collapser-trigger {{attributes.collapseStyle.class}}" ng-class="[dfxCollapsed.value[$index] ? '' : 'expanded', attributes.collapseStyle.dynamicClass]"></md-icon>
+        <md-icon ng-if="collapsedType.value === 'complex'" ng-click="collapsePanelContent()" style="{{attributes.collapseStyle.style}}" class="fa fa-chevron-right collapser-trigger {{attributes.collapseStyle.class}}" ng-class="[$eval(attributes.toolbar.collapsed.value) ? '' : 'expanded', attributes.collapseStyle.dynamicClass]"></md-icon>
+        <md-icon ng-if="collapsedType.value === 'in_dfx_item'" ng-click="collapsePanelContent($dfx_item, $index)"  style="{{attributes.collapseStyle.style}}" class="fa fa-chevron-right collapser-trigger {{attributes.collapseStyle.class}}" ng-class="[$eval(attributes.toolbar.collapsed.value) ? '' : 'expanded', attributes.collapseStyle.dynamicClass]"></md-icon>
+    </div>
+    <div ng-if="collapsibleType.value === 'boolean'" class="panel-body-collapser" ng-show="$eval(attributes.toolbar.collapsible.value)">
+        <md-icon ng-if="collapsedType.value === 'boolean' && isRepeatableTitle === false" ng-click="dfxCollapsed.value = !dfxCollapsed.value"  style="{{attributes.collapseStyle.style}}" class="fa fa-chevron-right collapser-trigger {{attributes.collapseStyle.class}}" ng-class="[dfxCollapsed.value ? '' : 'expanded', attributes.collapseStyle.dynamicClass]"></md-icon>
+        <md-icon ng-if="collapsedType.value === 'boolean' && isRepeatableTitle === true" ng-click="dfxCollapsed.value[$index] = !dfxCollapsed.value[$index]"  style="{{attributes.collapseStyle.style}}" class="fa fa-chevron-right collapser-trigger {{attributes.collapseStyle.class}}" ng-class="[dfxCollapsed.value[$index] ? '' : 'expanded', attributes.collapseStyle.dynamicClass]"></md-icon>
+        <md-icon ng-if="collapsedType.value === 'complex'" ng-click="collapsePanelContent()"  style="{{attributes.collapseStyle.style}}" class="fa fa-chevron-right collapser-trigger {{attributes.collapseStyle.class}}" ng-class="[$eval(attributes.toolbar.collapsed.value) ? '' : 'expanded', attributes.collapseStyle.dynamicClass]"></md-icon>
+        <md-icon ng-if="collapsedType.value === 'in_dfx_item'" ng-click="collapsePanelContent($dfx_item, $index)"  style="{{attributes.collapseStyle.style}}" class="fa fa-chevron-right collapser-trigger {{attributes.collapseStyle.class}}" ng-class="[$eval(attributes.toolbar.collapsed.value) ? '' : 'expanded', attributes.collapseStyle.dynamicClass]"></md-icon>
     </div>
 </md-toolbar>

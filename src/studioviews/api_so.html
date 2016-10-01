@@ -7,7 +7,7 @@
 	</h4>
 	<div layout="row">
 		<md-button ng-if="serviceMode === 'serviceAdd'" ng-click="saveApiSo()" class="md-primary" ng-disabled="validNameResult === 'failed' || validUrlResult === 'failed'">Save</md-button>
-		<md-button ng-if="serviceMode === 'serviceEdit'" ng-click="updateApiSo()" class="md-primary" ng-disabled="validNameResult === 'failed' || validUrlResult === 'failed'">Save</md-button>		
+		<md-button ng-if="serviceMode === 'serviceEdit'" ng-click="updateApiSo()" class="md-primary" ng-disabled="validNameResult === 'failed' || validUrlResult === 'failed'">Save</md-button>
 		<md-button ng-click="leaveApiSoEditor()" class="md-primary">Cancel</md-button>
 	</div>	
 </div>
@@ -21,7 +21,7 @@
     </div>
     <h3 style="margin: 10px 0 0 10px;" >CURL command</h3>
     <md-input-container class="md-block">
-        <textarea id="curl_content" style="height: 100px; padding: 10px;" md-select-on-focus aria-label="curl_content">{{curlItemContent}}</textarea>
+        <textarea id="curl_content" style="height:100px;min-height:100px;padding:10px;" md-select-on-focus aria-label="curl_content">{{curlItemContent}}</textarea>
     </md-input-container>
     <div style="display:flex; justify-content: flex-end; margin-top: -30px;">
         <span id='curl_content_span' style="color: white; margin: 15px 420px 15px 15px; background: #2AB52A; padding: 2px 5px; border-radius: 3px; display:none;" class='md-flex'>Copied!</span>
@@ -29,7 +29,7 @@
     </div>
     <h3 style="margin: 10px 0 0 10px;border-top: 2px #E0E0E0 solid; padding-top: 10px" >CURL command with parameters and body</h3>
     <md-input-container class="md-block">
-        <textarea id="curl_content_with_parameters" style="height: 120px; padding: 10px;" md-select-on-focus aria-label="curl_content_with_parameters">{{curlItemContentWithParameters}}</textarea>
+        <textarea id="curl_content_with_parameters" style="min-height:120px;height: 120px; padding: 10px;" md-select-on-focus aria-label="curl_content_with_parameters">{{curlItemContentWithParameters}}</textarea>
     </md-input-container>
     <div style="display:flex; justify-content: flex-end; margin-top: -30px;">
         <span id='curl_content_with_parameters_span' style="color: white; margin: 15px 420px 15px 15px; background: #2AB52A; padding: 2px 5px; border-radius: 3px; display:none;" class='md-flex'>Copied!</span>
@@ -39,6 +39,10 @@
     <md-input-container class="md-block">
         <table class="datatable" style="width:100%;">
             <tbody>
+            <tr class="ng-scope" role="button" tabindex="0">
+                <td width="40%" class="ng-binding">Method</td>
+                <td width="60%" class="ng-binding"><b>POST</b></td>
+            </tr>
             <tr class="ng-scope" role="button" tabindex="0">
                 <td width="40%" class="ng-binding">URL</td>
                 <td width="60%" class="ng-binding">{{postmanUrl}}</td>
@@ -86,7 +90,7 @@
 		</h4>
 	</div>
 	<md-tabs md-selected="selected_service_tab" md-dynamic-height md-center-tabs md-stretch-tabs="always" md-border-bottom>
-		<md-tab label="Settings">
+		<md-tab label="Settings" md-on-select="closeActionsEditor()">
 			<md-content class="md-padding sidenav-service">
 				<md-input-container class="input-select-aligned" ng-class="validUrlResult === 'failed' || existUrl === true ? 'md-input-invalid' : ''" style="width:100%">
 				  <label>API Route URL:</label>
@@ -134,9 +138,31 @@
 				  <label>Request Body:</label>
 				  <textarea ng-model="scopeService.data.settings.postrequestbody" class="textarea-gray" style="min-height:100px;padding:0 8px;" aria-label="scopeService.data.settings.postrequestbody"></textarea>
 				</md-input-container>
+                <md-input-container class="input-select-aligned margin-select" style="width:25%;margin-right:14px;">
+                    <label>Cache response:</label>
+                    <md-select ng-model="scopeService.data.settings.cache">
+                        <md-option value="none">none</md-option>
+                        <md-option value="user">per user</md-option>
+                        <md-option value="tenant">per tenant</md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container class="input-select-aligned" style="width:25%;margin-right:14px;" ng-if="scopeService.data.settings.cache != 'none'">
+                    <label>Expiration time (seconds):</label>
+                    <input name="cacheTimeExpiry" ng-model="scopeService.data.settings.cacheTimeExpiry" placeholder="3600" required="" ng-pattern="/^0|[1-9]\d*$/">
+                    <div ng-messages="scopeService.data.settings.cacheTimeExpiry.$error" role="alert" multiple="">
+                        <div ng-message="pattern" ng-hide="scopeService.data.settings.cacheTimeExpiry" class="my-message">Value must be numeric</div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container ng-if="scopeService.data.settings.cache == 'user'">
+                    <md-button class="md-raised md-warn" ng-click="clearCache('user')">clear</md-button>
+                </md-input-container>
+                <md-input-container ng-if="scopeService.data.settings.cache == 'tenant'">
+                    <md-button class="md-raised md-warn" ng-click="clearCache('tenant')">clear</md-button>
+                </md-input-container>
 			</md-content>
 		</md-tab>
-		<md-tab label="Parameters">
+		<md-tab label="Parameters" md-on-select="closeActionsEditor()">
 			<md-content class="md-padding sidenav-service">
 				<h4>Parameters for: {{scopeService.data.settings.url}}</h4>
 				<table ng-if="scopeService.data.parameters.length > 0" class="sidenavtable" style="width:100%;">
@@ -370,7 +396,7 @@
 	      </div>				
 			</md-content>
 		</md-tab>
-		<md-tab label="Test">
+		<md-tab label="Test" md-on-select="closeActionsEditor()">
 			<md-content class="md-padding sidenav-service">
 				<md-button ng-click="execute( $event )" class="md-raised">
 					<md-icon class="fa fa-play" style="width:14px;height:14px;"></md-icon>
@@ -380,8 +406,10 @@
 				<md-button ng-click="viewMetaData()" ng-show="isExecuted" class="md-raised">View MetaData</md-button>
 				<md-button ng-click="viewRequest()" ng-show="isExecuted" class="md-raised">View Request</md-button>
 				<div id="showResults" style="padding-top:16px;opacity:0;">
+                    <!-- <p ng-show="showFullResult" style="color:red">The response was cut by {{numberOfCutedChars}} characters click <b><a ng-click="showFullResultAction()" style="cursor:pointer;">here</a></b> to see full response</p> -->
 						<div style="border:1px solid #dddddd;">
-		        	<textarea id="executedResult" style="white-space:pre;width:100%;border:none;outline:none!important;"></textarea>						
+		        	<!-- <textarea id="executedResult" style="white-space:pre;width:100%;border:none;outline:none!important;"></textarea> -->
+		        	<div id="executedResult" style="white-space:pre;width:100%;border:none;outline:none!important;"></div>						
 						</div>
 				</div>
 			</md-content>
@@ -489,7 +517,7 @@
 												<td width="20%">{{serviceItem.data.settings.typerequest.slice(5)}}</td>
 												<td width="25%">{{serviceItem.data.settings.authentication === 'none' ? 'public/rest' : serviceItem.data.settings.authentication}}</td>
 												<td>
-	                        <md-button ng-click="editService( serviceItem )" style="margin:0;padding:0;min-width:20px" aria-label="edit-service"><md-icon class="fa fa-edit" style="font-size:20px; padding-top: 5px;"></md-icon></md-button>
+	                        <md-button ng-click="editService( serviceItem, $index )" style="margin:0;padding:0;min-width:20px" aria-label="edit-service"><md-icon class="fa fa-edit" style="font-size:20px; padding-top: 5px;"></md-icon></md-button>
                             <md-button ng-click="showCurl( serviceItem )" style="margin:0;padding:0;min-width:20px" aria-label="show-curl"><md-icon class="fa fa-info" style="font-size:20px; padding-top: 5px;"></md-icon></md-button>
                             <md-button style="margin: 0; padding: 0; min-width: 20px" ng-click="confirmDelete( $event, $index )" aria-label="delete-service"><md-icon class="fa fa-trash" style="font-size:20px; padding-top: 3px;"></md-icon></md-button>
 												</td>

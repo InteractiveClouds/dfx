@@ -7,10 +7,29 @@
 	"display": 				{ "value": "true" },
 	"disabled": 			{ "value": "false" },
 	"menuItems": 			{ "value": [] },
-	"static": 				{ "value": "" },
-	"dynamic": 				{ "value": "" },  
-	"classes": 				{ "value": "" },
-	"dynamicClasses": { "value": "" },
+  "menuItemsType":  { "value": "static" },
+  "menuItemNames": {
+    "value": {
+      "main": {
+        "source": "",
+        "label": "",
+        "type": "",
+        "icon": {"value": "", "name":"", "type":""},
+        "shortcut": "",
+        "notification": "",
+        "display": "",
+        "disabled": "",
+        "onclick": "",
+        "scopeItems": ""
+      }
+    }
+  },
+  "static":         { "value": "" },
+  "dynamic":        { "value": "" },  
+  "classes":        { "value": "" },
+  "dynamicClasses": { "value": "" },
+  "notFlex":        { "value": true },
+  "flex":           { "value": 15 },
 	"style": 					{ "value": "" },
   "singleMenu":     { "button": { "style": "", "class": "" }, "icon": { "size": 16, "style": "", "class": "" } },
   "onclick": 				{ "value": "" },

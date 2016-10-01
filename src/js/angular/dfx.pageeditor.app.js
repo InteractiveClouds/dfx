@@ -34,11 +34,15 @@ dfxPageEditorApp.controller("dfx_page_editor_controller", [ '$scope', '$rootScop
 
     $scope.palette_visible = true;
     $scope.property_visible = true;
-    $scope.current_mode = 'design';
     $scope.selected_page = null;
     $scope.selected_template = null;
     $scope.templatePropertyEditMode = false;
     $scope.templates = [];
+    $scope.design_visible = true;
+    $scope.script_visible = false;
+    $scope.design_view_mode = 'Design';
+    $scope.script_theme = (localStorage.getItem('DFX_script_theme')!=null) ? localStorage.getItem('DFX_script_theme') : 'monokai';
+    $scope.preview_wait_icon_visible = false;
 
     if ($scope.page_platform=='web') {
         $('#dfx_page_editor_workspace').css( 'width', '100%' );
@@ -50,7 +54,7 @@ dfxPageEditorApp.controller("dfx_page_editor_controller", [ '$scope', '$rootScop
         $('#dfx_page_editor_container').css( 'background', 'url("/images/iphone_5_320x568.png") no-repeat' );
         $('#dfx_page_editor_container').css( 'background-position-x', '50%' );
     }
-    
+
     $scope.toggleLeft = function() {
         $scope.palette_visible = !$scope.palette_visible;
         if ($scope.palette_visible) {
@@ -143,24 +147,32 @@ dfxPageEditorApp.controller("dfx_page_editor_controller", [ '$scope', '$rootScop
         $scope.loadPageTemplate($scope.selected_page.template);
     }
 
+    $scope.changeViewMode = function (view_mode) {
+        if (view_mode=='design') {
+            $scope.design_view_mode = 'Design';
+            $scope.showDesign();
+        } else if (view_mode=='script') {
+            $scope.design_view_mode = 'Script';
+            $scope.showScript();
+        }
+    };
 
     $scope.showDesign = function() {
-        $('.dfx-pe-toolbar-button-script').removeClass('dfx-pe-toolbar-button-selected');
-        $('.dfx-pe-toolbar-button-design').addClass('dfx-pe-toolbar-button-selected');
-        $scope.current_mode = 'design';
-    }
-
+        $scope.design_visible = true;
+        $scope.script_visible = false;
+        $('#dfx_pe_script_editor').css('display', 'none');
+    };
     $scope.showScript = function() {
-        $('.dfx-pe-toolbar-button-script').addClass('dfx-pe-toolbar-button-selected');
-        $('.dfx-pe-toolbar-button-design').removeClass('dfx-pe-toolbar-button-selected');
-        $scope.current_mode = 'script';
+        $scope.design_visible = false;
+        $scope.script_visible = true;
+        $('#dfx_pe_script_editor').css('display', 'block');
         $timeout( function() {
             var editor = $('#dfx_pe_script_editor')[0].CodeMirror;
             editor.scrollTo(0, 0);
             editor.refresh();
             $('#dfx_pe_script_editor').click();
         }, 0);
-    }
+    };
 
     $scope.addLayoutRow = function() {
         $scope.selected_page.layout.rows.push( {"columns": [{ "width":"100", "views":[] }] } );
@@ -185,7 +197,7 @@ dfxPageEditorApp.controller("dfx_page_editor_controller", [ '$scope', '$rootScop
     $scope.saveTemplateProperty = function() {
         dfxTemplates.update( $scope, $scope.selected_template )
             .then( function(template) {
-               dfxMessaging.showMessage( 'The template ' + $scope.selected_template.name + ' has been updated' ); 
+               dfxMessaging.showMessage( 'The template ' + $scope.selected_template.name + ' has been updated' );
             });
         $scope.templatePropertyEditMode = false;
     };
@@ -201,7 +213,7 @@ dfxPageEditorApp.controller("dfx_page_editor_controller", [ '$scope', '$rootScop
             templateUrl: '/studio/studioviews/saveas_page_template.html',
             controller: DialogController
         });
-        
+
         function DialogController($scope, $mdDialog) {
             $scope.template = {
                 "name":   ''
@@ -211,7 +223,7 @@ dfxPageEditorApp.controller("dfx_page_editor_controller", [ '$scope', '$rootScop
             $scope.saveAsTemplate = function() {
                 var nameExp = /([\\/\-+(){}[\]=<>*~`?\! '\"',.;:$@#])/ig,
                     nameRes = nameExp.exec( $scope.template.name );
-                
+
                 if ( !nameRes && $scope.template.name !== '' ) {
                     $scope.selected_template.name = $scope.template.name;
                     $scope.selected_page.template = $scope.template.name;
@@ -281,26 +293,26 @@ dfxPageEditorApp.controller("dfx_page_editor_controller", [ '$scope', '$rootScop
     };
 
     $scope.savePageDefinition = function() {
-        var editor = $('#dfx_pe_script_editor')[0].CodeMirror;;
+        var editor = $('#dfx_pe_script_editor')[0].CodeMirror;
         $scope.selected_page.script = editor.getValue();
         dfxPages.update( $scope, $scope.selected_page ).then( function(data) {
             dfxMessaging.showMessage( 'The page ' + $scope.selected_page.name + ' has been saved' );
         });
     };
-    $scope.waitIconShow = false;
+
     $scope.openPreview = function() {
-        $scope.waitIconShow = true;
+        $scope.preview_wait_icon_visible = true;
         dfxPages.preview('/studio/screen/preview/' + $scope.application_name + '/' + $scope.page_name + '/' + $scope.page_platform)
             .then(function(response){
-                $scope.waitIconShow = false;
+                $scope.preview_wait_icon_visible = false;
                 if (response.data.indexOf('http') > -1) {
                     $window.open(response.data, '_blank');
                 } else {
                     dfxMessaging.showWarning(response.data);
                 }
             },function(err){
-                $scope.waitIconShow = false;
-                dfxMessaging.showWarning("Something went wrong. See server logs for more details");
+                $scope.preview_wait_icon_visible = false;
+                dfxMessaging.showWarning("Unable to call DreamFace Compiler");
             })
     };
 
@@ -336,48 +348,12 @@ dfxPageEditorApp.controller("dfx_page_editor_controller", [ '$scope', '$rootScop
         $scope.closeViewMenu();
         var snippet = '<md-whiteframe style="left:'+($event.x-5)+'px;top:'+($event.y-5)+'px;width:175px;" class="md-whiteframe-4dp dfx-view-menu" ng-mouseleave="closeViewMenu()">';
         snippet += '<div><a ng-click="removeView(' + row_id + ', ' + col_id + ', ' + view_id + ')">Remove the view</a></div>';
-        snippet += '<div><a ng-click="configureView(' + row_id + ', ' + col_id + ', ' + view_id + ', $event)">Configure the view</a></div>';
         snippet += '</md-whiteframe>';
         angular.element(document.getElementById('dfx_page_editor')).append($compile(snippet)($scope));
     };
 
     $scope.closeViewMenu = function($event) {
         $('.dfx-view-menu').remove();
-    };
-
-    $scope.configureView = function(row_id, col_id, view_id, $event) {
-        $scope.closeViewMenu();
-
-        var arr_ref = $scope.selected_page.layout.rows[row_id].columns[col_id].views;
-        for (var i=0; i<arr_ref.length; i++) {
-            if (arr_ref[i].id==view_id) {
-                $scope.selected_view = arr_ref[i];
-                break;
-            }
-        }
-
-        var parentEl = angular.element(document.body);
-
-        $mdDialog.show({
-            parent: parentEl,
-            targetEvent: $event,
-            clickOutsideToClose: true,
-            scope: $scope.$new(),
-            templateUrl: '/studio/studioviews/config_view_dialog.html',
-            controller: DialogController
-        });
-        
-        function DialogController($scope, $mdDialog) {
-            
-            $scope.closeDialog = function() {
-                $mdDialog.hide();
-            }
-        }
-        /*$timeout( function() {
-            
-            // The following line forces to recalculate the ng-repeat
-            $scope.selected_page.layout.rows[row_id].columns[col_id].views = angular.copy($scope.selected_page.layout.rows[row_id].columns[col_id].views);
-        }, 0);*/
     };
 
     $scope.removeView = function(row_id, col_id, view_id) {
@@ -404,7 +380,7 @@ dfxPageEditorApp.directive( 'dfxPageIncludeTemplate', function($compile) {
         restrict: 'A',
         link: function(scope, element, attributes) {
             scope.$watch('selected_template.layout.' + attributes.dfxPageIncludeTemplate + '.content.value', function(new_value) {
-                element.html(new_value); 
+                element.html(new_value);
                 $compile(element.contents())(scope);
             });
         }
@@ -422,21 +398,21 @@ dfxPageEditorApp.directive('dfxPageTemplate', ['$compile', '$mdSidenav', functio
 
             // Middle Section Start
             tpl_snippet += '<div layout="row" style="position:relative;{{selected_template.layout.body.style}}" flex>';
-            
+
             // Left
             tpl_snippet += '<div id="dfxpageleft" ng-show="selected_template.layout.left.display==\'true\'" style="width:{{selected_template.layout.left.width}};{{selected_template.layout.left.style}};z-index:50;" class="{{selected_template.layout.left.whiteframe}}"><md-content layout="column" layout-align="{{selected_template.layout.left.halignment}} {{selected_template.layout.left.valignment}}" style="background:inherit" dfx-page-include-template="left"></md-content></div>';
 
             // Body
             tpl_snippet += '<div layout="column" style="background:inherit;z-index: 51;border:1px #37474F solid;overflow:auto;" layout-padding class="content-wrapper" flex id="pagebody">';
-            
-            tpl_snippet += '<div layout="row" style="" flex ng-repeat="row in selected_page.layout.rows">';
-            tpl_snippet += '<div layout="column" flex="{{col.width}}" class="dfx-page-droppable-column" dfx-page-droppable-column data-row="{{$parent.$index}}" data-column="{{$index}}" ng-repeat="col in row.columns" style="border:1px #999 solid;min-height:50px">';
-            tpl_snippet += '<div ng-repeat="view in col.views" dfx-page-sortable-view class="{{(view.fit==\'content\') ? \'\' : \'flex\'}} md-whiteframe-3dp" style="letter-spacing:0.2em;background:#607D8B;color:#fff;cursor:pointer;min-height:150px" layout="row" layout-align="center center" data-view-id="{{view.id}}" data-view="{{view.name}}"><div class= "dfx-pe-view-menu"><span>{{view.name}}</span><a ng-click="loadViewMenu($event, $parent.$parent.$index, $parent.$index, view.id)" class="dfx-pe-view-menu-item"><i class="fa fa-gear"></i></a></div></div>';
+
+            tpl_snippet += '<div layout="row" style="" flex="{{selected_page.autoHeight != true ? row.height : \'\'}}" ng-repeat="row in selected_page.layout.rows">';
+            tpl_snippet += '<div layout="column" flex="{{col.width}}" class="dfx-page-droppable-column" dfx-page-droppable-column data-row="{{$parent.$index}}" data-column="{{$index}}" ng-repeat="col in row.columns" style="border:1px #999 solid;">';
+            tpl_snippet += '<div ng-repeat="view in col.views" dfx-page-sortable-view class="{{(view.fit==\'content\') ? \'\' : \'flex\'}} md-whiteframe-3dp" style="letter-spacing:0.2em;background:#4cd5f3;color:#383838;cursor:pointer;" layout="row" layout-align="center center" data-view-id="{{view.id}}" data-view="{{view.name}}"><div class= "dfx-pe-view-menu"><span>{{view.name}}</span><a ng-click="loadViewMenu($event, $parent.$parent.$index, $parent.$index, view.id)" class="dfx-pe-view-menu-item"><i class="fa fa-gear"></i></a></div></div>';
             tpl_snippet += '</div>';
             tpl_snippet += '</div>';
-            
+
             tpl_snippet += '</div>';
-            
+
             // Right
             tpl_snippet += '<div id="dfxpageright" ng-show="selected_template.layout.right.display==\'true\'" style="width:{{selected_template.layout.right.width}};{{selected_template.layout.right.style}};z-index:50;" class="{{selected_template.layout.right.whiteframe}}"><md-content layout layout-align="{{selected_template.layout.right.halignment}} {{selected_template.layout.right.valignment}}" style="background:inherit" dfx-page-include-template="right"></md-content></div>';
 
@@ -460,7 +436,7 @@ dfxPageEditorApp.directive('dfxPageDraggableView', [function() {
                 cursorAt:          {top: 5, left: 20},
                 cursor:            "move",
                 helper: function(event) {
-                    var helper_snippet = '<div class="md-whiteframe-z2" style="width:120px;height:50px;letter-spacing: 0.2em;color:#fff;background:#607D8B;line-height:50px;text-align:center;vertical-align:middle;white-space: nowrap;text-overflow: ellipsis; overflow: hidden; padding: 0 5px;">' + $element.text() + '</div>';
+                    var helper_snippet = '<div class="md-whiteframe-z2" style="width:120px;height:50px;letter-spacing: 0.2em;color:#383838;background:#4cd5f3;line-height:50px;text-align:center;vertical-align:middle;white-space: nowrap;text-overflow: ellipsis; overflow: hidden; padding: 0 5px;">' + $element.text() + '</div>';
                     return helper_snippet;
                 },
                 zIndex: 2000,
@@ -526,7 +502,7 @@ dfxPageEditorApp.directive('dfxPageProperties', [ function() {
         templateUrl: function( el, attrs ) {
             return '/studio/studioviews/page_properties_edit.html';
         },
-        link: function(scope, element, attrs) {    
+        link: function(scope, element, attrs) {
         }
     }
 }]);
@@ -544,4 +520,3 @@ dfxPageEditorApp.directive('dfxView', [ '$http', '$timeout', function($http, $ti
         }
     }
 }]);
-

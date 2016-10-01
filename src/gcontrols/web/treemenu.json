@@ -1,43 +1,89 @@
 {
-  "template": 			{ "value": "default" },
-  "name": { "value": "sdMenu1" },
-  "display": { "value": "true" },
-  "dynamicPresent": { "value": false },
-  "dynamic": { "value": "" },
-  "menuItems": {
-    "value": [
-      {
-        "label": "'Home'",
-        "icon": { "value": "'home'", "type": "svg-icon"},
-        "shortcut": "",
-        "title": false,
-        "divider": false,
-        "notification": "",
-        "display": "true",
-        "disabled": "false",
-        "onclick": "",
-        "menuItems": { "value": [] }
-      }
-    ]
-  },
-  "static": { "value": "" },
-  "dynamic": { "value": "" },
-  "style": { "value": "" },
-  "titleStyle": { "value": "" },
-  "itemStyle": { "value": "" },
-  "notificationStyle": { "value": "" },
-  "layoutType": { "value": "" },
-  "classes": { "value": "" },
-  "dynamicClasses": { "value": "" },
-  "style": { "value": "" },
-  "onclick": { "value": "" },
-  "ondblclick": { "value": "" },
-  "onkeypress": { "value": "" },
-  "onkeydown": { "value": "" },
-  "onkeyup": { "value": "" },
-  "onmouseover": { "value": "" },
-  "onmouseenter": { "value": "" },
-  "onmousemove": { "value": "" },
-  "onmouseleave": { "value": "" },
-  "onmouseup": { "value": "" }
+    "template": 			{ "value": "default" },
+    "name": { "value": "sdMenu1" },
+    "display": { "value": "true" },
+    "dynamicPresent": { "value": false },
+    "dynamic": { "value": "" },
+    "menuItems": {
+        "value": [
+            {
+                "label": "'Home'",
+                "icon": { "value": "'home'", "type": "svg-icon"},
+                "shortcut": "",
+                "title": false,
+                "divider": false,
+                "notification": "",
+                "display": "true",
+                "disabled": "false",
+                "onclick": "",
+                "menuItems": { "value": [] }
+            }
+        ]
+    },
+    "menuItemsType":  { "value": "static" },
+    "menuItemNames": {
+        "value": {
+            "main": {
+                "source": "",
+                "label": "",
+                "type": "",
+                "icon": {"value": "", "name":"", "type":""},
+                "shortcut": "",
+                "notification": "",
+                "display": "",
+                "disabled": "",
+                "onclick": "",
+                "scopeItems": ""
+            },
+            "actions": {
+                "name": "",
+                "icon": {"value":"","name":"","type":"","style":"","class":""},
+                "display": "",
+                "disabled": "",
+                "onclick": "",
+                "actionItems": {
+                    "name": "",
+                    "type": "",
+                    "label": "",
+                    "icon": {"value":"","name":"","type":"","style":"","class":""},
+                    "display": "",
+                    "disabled": "",
+                    "onclick": ""
+                }
+            }
+        }
+    },
+    "static": { "value": "" },
+    "dynamic": { "value": "" },
+    "style": { "value": "" },
+    "classes": { "value": "" },
+    "dynamicClasses": { "value": "" },
+    "itemStyle": { 
+        "button": { "style": "", "class": "" }, 
+        "icon": { "size": 16, "style": "", "class": "" },
+        "notification": {"style": "", "class": ""},
+        "title": {"style": "", "class": ""},
+        "divider": {"style": "", "class": ""}
+    },
+    "triggerStyle": { 
+        "button": { "style": "", "class": "" }, 
+        "icon": { "size": 16, "style": "", "class": "" }
+    },
+    "actionStyle": { 
+        "button": { "style": "", "class": "" }, 
+        "icon": { "size": 16, "style": "", "class": "" },
+        "title": {"style": "", "class": ""},
+        "divider": {"style": "", "class": ""}
+    },
+    "layoutType": { "value": "" },
+    "onclick": { "value": "" },
+    "ondblclick": { "value": "" },
+    "onkeypress": { "value": "" },
+    "onkeydown": { "value": "" },
+    "onkeyup": { "value": "" },
+    "onmouseover": { "value": "" },
+    "onmouseenter": { "value": "" },
+    "onmousemove": { "value": "" },
+    "onmouseleave": { "value": "" },
+    "onmouseup": { "value": "" }
 }

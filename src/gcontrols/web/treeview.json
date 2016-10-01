@@ -4,6 +4,8 @@
   "display":              { "value": "true" },
   "dynamic":              { "value": "" },
   "static":               { "value": [] },
+  "treeItemsType":        { "value": "static" },
+  "selected":             { "value": "" },
   "label":                { "value": "" },
   "repeatable_property":  { "value": "" },
   "style":                { "value": "" },
@@ -13,6 +15,7 @@
   "color":                { "value": "" },
   "classes":              { "value": "" },
   "dynamicClasses":       { "value": "" },
+  "flex":                 { "value": 100 },
   "style":                { "value": "" },
   "onclick":              { "value": "" },
   "ondblclick":           { "value": "" },
@@ -23,5 +26,6 @@
   "onmouseenter":         { "value": "" },
   "onmousemove":          { "value": "" },
   "onmouseleave":         { "value": "" },
-  "onmouseup":            { "value": "" }
+  "onmouseup":            { "value": "" },
+  "onmousedown":          { "value": "" }
 }

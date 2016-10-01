@@ -1,67 +1,33 @@
 {
 	"template": 			{ "value": "default" },
-	"name": {
-		"value": "hzBarChart1"
-	},
-	"flex": {
-	  	"value": 50
-	},
-	"binding": {
-	  	"value": ""
-	},
-	"title": {
-	  	"value": "'Horizontal Bar Chart'"
-	},
-  	"chartType": {
-	  "value": "multiBarHorizontalChart"
-	},
-	"display": {
-		"value": "true"
-	},
+	"name": 					{ "value": "hzBarChart1" },
+	"flex": 					{ "value": 50 },
+	"binding": 				{ "value": "" },
+	"title": 					{ "value": "'Horizontal Bar Chart'" },
+	"chartType": 			{ "value": "multiBarHorizontalChart" },
+	"display": 				{ "value": "true" },
 	"options": {
-	  	"xAxisLabel": "''",
-	  	"yAxisLabel": "'Values'",
-			"xAxisLabelDistance": 0,
-	  	"yAxisLabelDistance": 0,
-	  	"showValues": "true",
-	  	"duration": 500,
-	  	"showXAxis": "true",
-	  	"showYAxis": "true",
-			"showControls": "true",
-			"showLegend": "true",
-			"stacked": "false"
+  	"xAxisLabel": "''",
+  	"yAxisLabel": "'Values'",
+		"xAxisLabelDistance": 0,
+  	"yAxisLabelDistance": 0,
+  	"showValues": "true",
+  	"duration": 500,
+  	"showXAxis": "true",
+  	"showYAxis": "true",
+		"showControls": "true",
+		"showLegend": "true",
+		"stacked": "false"
 	},
-	"dynamicOptions": {
-	  	"value": ""
-	},
-	"style": {
-	  	"value": ""
-	},
-	"classes": {
-		"value": ""
-	},
-	"dynamicClasses": {
-		"value": ""
-	},
-	"onclick": {
-		"value": ""
-	},
-	"ondblclick": {
-	  	"value": ""
-	},
-	"onmouseover": {
-	  	"value": ""
-	},
-	"onmouseleave": {
-	  	"value": ""
-	},
-	"onmousemove": {
-	  	"value": ""
-	},
-	"onstatechange": {
-	  	"value": ""
-	},
-	"onrenderend": {
-	  	"value": ""
-	}
+	"dynamicOptions": { "value": "" },
+	"style": 					{ "value": "" },
+	"classes": 				{ "value": "" },
+	"dynamicClasses": { "value": "" },
+	"onclick": 				{ "value": "" },
+	"ondblclick": 		{ "value": "" },
+	"onmouseover": 		{ "value": "" },
+	"onmouseleave": 	{ "value": "" },
+	"onmousemove": 		{ "value": "" },
+	"onstatechange": 	{ "value": "" },
+	"onrenderend": 		{ "value": "" }
 }

@@ -1,0 +1,27 @@
+<div ng-show="attributes.display.value"
+     ATTR-IF{{class="attributes.classes.value"}}
+     ATTR-IF{{style="attributes.style.value"}}
+     ATTR-IF{{ng-class="attributes.dynamicClasses.value"}}
+     ATTR-IF{{ng-click="attributes.onclick.value"}}
+     ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
+     ATTR-IF{{ng-keypress="attributes.onkeypress.value"}}
+     ATTR-IF{{ng-keydown="attributes.onkeydown.value"}}
+     ATTR-IF{{ng-keyup="attributes.onkeyup.value"}}
+     ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}}
+     ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}}
+     ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}}
+     ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
+     ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
+     ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}
+     ng-init="isRepeatable.value = false">
+    <md-input-container class="md-input-has-messages md-input-has-value" style="display: block;;text-align: {{attributes.labelPosition.value}}"
+      ng-show="attributes.showLabel.value">
+    	   <label ATTR-IF{{ng-click="attributes.onlabelclick.value"}} ATTR-IF{{ng-bind="attributes.label.value"}} ATTR-IF{{style="attributes.labelStyle.value"}}></label>
+    </md-input-container>
+    <div ng-if="!isRepeatable.value" class="{{component_id}}_dfx_ng_knob">
+        <ui-knob dfx-complex-value options="attributes.options.value"></ui-knob>
+    </div>
+    <div ng-if="isRepeatable.value" class="{{component_id}}_dfx_ng_knob" >
+        <ui-knob id="{{component_id}}_dfx_ng_knob_{{repeated_id}}" value="0" options="attributes.options.value"></ui-knob>
+    </div>
+</div>

@@ -88,6 +88,13 @@
             $username.val('guest');
             $password.val('guest');
             $form.submit();
+        } else {
+            var cached_username = window.localStorage.getItem('DFX_ve_login_userid');
+            if (cached_username!=null && cached_username!='') {
+              $username.val(cached_username);
+              $password.val(window.localStorage.getItem('DFX_ve_login_password'));
+              $form.submit();
+            }
         }
 
         function decryptToken ( raw, pass ) {
@@ -113,7 +120,7 @@
             //var data = JSON.parse('{"data":{"user":{"tenant":"WebTests2","roles":{"list":["guest"],"default":"guest"},"email":"","lastName":"","firstName":""},"app_conf":[]},"result":"success"}');
             sessionStorage.dfx_user = JSON.stringify( data.user );
             sessionStorage.dfx_app_conf = JSON.stringify( data.app_conf );
-        
+
             window.location = DreamFace.successfulLoginRedirectUrl || 'index.html';
         });
     }
@@ -122,14 +129,13 @@
             sURLVariables = sPageURL.split('&'),
             sParameterName,
             i;
-    
+
         for (i = 0; i < sURLVariables.length; i++) {
             sParameterName = sURLVariables[i].split('=');
-    
+
             if (sParameterName[0] === sParam) {
                 return sParameterName[1] === undefined ? true : sParameterName[1];
             }
         }
     };
 })();
-

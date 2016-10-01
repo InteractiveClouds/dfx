@@ -1,65 +1,35 @@
 {
-  "template": 			{ "value": "default" },
-  "name": {
-    "value": "dtField1"
-  },
-  "label": {
-    "value": "'Date label'"
-  },
-  "bindingExpression": {
-    "value": "new Date()"
-  },
-  "alignment":{
-    "value": "center",
-    "status":"overridden"
-  },
-  "bindingDate": {
-    "value": ""
-  },
-  "designDate": {
-    "value": ""
-  },
-  "dpTypes": ["standard", "ranged"],
-  "selectedType":{
-      "value": "standard"
-  },
-  "ranged": {
-    "monthsBefore": 6,
-    "monthsAfter": 6
-  },
-  "isDateRequired": {
-    "value": "true"
-  },
-  "requireOptions": ["true", "false"],
-  "display": {
-    "value": "true"
-  },
-  "disabled": {
-    "value": "false"
-  },
-  "classes": {
-    "value": ""
-  },
-  "dynamicClasses": {
-    "value": ""
-  },
-  "style": {
-    "value": ""
-  },
-  "formName": {
-    "value": ""
-  },
-  "onclick": { "value": "" },
-  "ondblclick": { "value": "" },
-  "onchange": { "value": "" },
-  "onfocus": { "value": "" },
-  "onblur": { "value": "" },
-  "onkeypress": { "value": "" },
-  "onkeydown": { "value": "" },
-  "onkeyup": { "value": "" },
-  "onmouseover": { "value": "" },
-  "onmouseenter": { "value": "" },
-  "onmousemove": { "value": "" },
-  "onmouseleave": { "value": "" },
-  "onmouseup": { "value": "" }
+  "template": 			    { "value": "default" },
+  "name":               { "value": "dtField1" },
+  "label":              { "value": "'Date label'" },
+  "bindingExpression":  { "value": "new Date()" },
+  "alignment":          { "value": "center", "status":"overridden" },
+  "bindingDate":        { "value": "" },
+  "designDate":         { "value": "" },
+  "dpTypes":            [ "standard", "ranged" ],
+  "selectedType":       { "value": "standard" },
+  "ranged":             { "monthsBefore": 6, "monthsAfter": 6 },
+  "isDateRequired":     { "value": "true" },
+  "requireOptions":     [ "true", "false" ],
+  "display":            { "value": "true" },
+  "disabled":           { "value": "false" },
+  "classes":            { "value": "" },
+  "dynamicClasses":     { "value": "" },
+  "flex":               { "value": 20 },
+  "style":              { "value": "" },
+  "formName":           { "value": "" },
+  "onclick":            { "value": "" },
+  "ondblclick":         { "value": "" },
+  "onchange":           { "value": "" },
+  "onfocus":            { "value": "" },
+  "onblur":             { "value": "" },
+  "onkeypress":         { "value": "" },
+  "onkeydown":          { "value": "" },
+  "onkeyup":            { "value": "" },
+  "onmouseover":        { "value": "" },
+  "onmouseenter":       { "value": "" },
+  "onmousemove":        { "value": "" },
+  "onmouseleave":       { "value": "" },
+  "onmousedown":        { "value": "" },
+  "onmouseup":          { "value": "" }
 }

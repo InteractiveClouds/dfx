@@ -1,60 +1,31 @@
 {
   "template": 			{ "value": "default" },
-  "name": {
-    "value": "txtTextarea"
-  },
-  "label": {
-    "value": "'Textarea label'"
-  },
-  "icon": {
-    "value": "",
-    "type": "fa-icon",
-    "size": 21
-  },
-  "position": {
-    "value": "left"
-  },
-  "binding" :{
-    "value" : ""
-  },
-  "display": {
-    "value": "true"
-  },
-  "disabled": {
-    "value": "false"
-  },
-  "required": {
-    "value": "false"
-  },
-  "maxlength":{
-    "value": ""
-  },
-  "rowsNumber":{
-    "value": "1"
-  },
-  "temporary": {
-    "value": ""
-  },
-  "classes": {
-    "value": ""
-  },
-  "dynamicClasses": {
-    "value": ""
-  },
-  "style": {
-    "value": ""
-  },
-  "onclick": { "value": "" },
-  "ondblclick": { "value": "" },
-  "onchange": { "value": "" },
-  "onfocus": { "value": "" },
-  "onblur": { "value": "" },
-  "onkeypress": { "value": "" },
-  "onkeydown": { "value": "" },
-  "onkeyup": { "value": "" },
-  "onmouseover": { "value": "" },
-  "onmouseenter": { "value": "" },
-  "onmousemove": { "value": "" },
-  "onmouseleave": { "value": "" },
-  "onmouseup": { "value": "" }
+  "name":           { "value": "txtTextarea" },
+  "label":          { "value": "'Textarea label'" },
+  "icon":           { "value": "", "type": "fa-icon", "size": 21, "style": "", "class": "" },
+  "position":       { "value": "left" },
+  "binding":        { "value" : "" },
+  "display":        { "value": "true" },
+  "disabled":       { "value": "false" },
+  "required":       { "value": "false" },
+  "maxlength":      { "value": "" },
+  "rowsNumber":     { "value": "1" },
+  "temporary":      { "value": "" },
+  "classes":        { "value": "" },
+  "dynamicClasses": { "value": "" },
+  "flex":           { "value": 50 },
+  "style":          { "value": "" },
+  "onclick":        { "value": "" },
+  "ondblclick":     { "value": "" },
+  "onchange":       { "value": "" },
+  "onfocus":        { "value": "" },
+  "onblur":         { "value": "" },
+  "onkeypress":     { "value": "" },
+  "onkeydown":      { "value": "" },
+  "onkeyup":        { "value": "" },
+  "onmouseover":    { "value": "" },
+  "onmouseenter":   { "value": "" },
+  "onmousemove":    { "value": "" },
+  "onmouseleave":   { "value": "" },
+  "onmouseup":      { "value": "" }
 }

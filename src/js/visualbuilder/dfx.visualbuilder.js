@@ -113,6 +113,8 @@ DfxVisualBuilder.init = function () {
         }
     });
 
+    var script_theme = localStorage.getItem('DFX_script_theme')!=null ? localStorage.getItem('DFX_script_theme') : 'monokai';
+
     // Initialization of dfx_src_editor
 
     var htmlTextArea = document.getElementById('dfx_src_editor');
@@ -123,11 +125,14 @@ DfxVisualBuilder.init = function () {
             lineNumbers: true,
             value: $('#dfx_src_editor').text(),
             mode: {name: 'application/json', globalVars: true},
+            theme: script_theme,
             matchBrackets: true,
             highlightSelectionMatches: {showToken: /\w/},
             styleActiveLine: true,
             viewportMargin : Infinity,
-            extraKeys: {"Alt-F": "findPersistent", "Ctrl-Space": "autocomplete"}
+            extraKeys: {"Alt-F": "findPersistent", "Ctrl-Space": "autocomplete"},
+            foldGutter: true,
+            gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
         });
     srcEditor.setSize(null, window.innerHeight - 59);
     $(srcEditor.getWrapperElement()).attr("id", "dfx_src_editor");
@@ -143,11 +148,14 @@ DfxVisualBuilder.init = function () {
             lineNumbers: true,
             value: $('#dfx_script_editor').text(),
             mode: {name: 'javascript', globalVars: true},
+            theme: script_theme,
             matchBrackets: true,
             highlightSelectionMatches: {showToken: /\w/},
             styleActiveLine: true,
             viewportMargin : Infinity,
-            extraKeys: {"Alt-F": "findPersistent", "Ctrl-Space": "autocomplete"}
+            extraKeys: {"Alt-F": "findPersistent", "Ctrl-Space": "autocomplete"},
+            foldGutter: true,
+            gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
         });
     scriptEditor.setSize(null, window.innerHeight - 59);
     $(scriptEditor.getWrapperElement()).attr("id", "dfx_script_editor");
@@ -163,11 +171,14 @@ DfxVisualBuilder.init = function () {
             lineNumbers: true,
             value: $('#dfx_styles_editor').text(),
             mode: {name: 'css', globalVars: true},
+            theme: script_theme,
             matchBrackets: true,
             highlightSelectionMatches: {showToken: /\w/},
             styleActiveLine: true,
             viewportMargin : Infinity,
-            extraKeys: {"Alt-F": "findPersistent", "Ctrl-Space": "autocomplete"}
+            extraKeys: {"Alt-F": "findPersistent", "Ctrl-Space": "autocomplete"},
+            foldGutter: true,
+            gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
         });
     stylesEditor.setSize(null, window.innerHeight - 59);
     $(stylesEditor.getWrapperElement()).attr("id", "dfx_styles_editor");
@@ -288,11 +299,12 @@ DfxVisualBuilder.initGraphicalControls = function () {
             $('.dfx_visual_editor_gc_layout_selected_row').removeClass('dfx_visual_editor_gc_layout_selected_row');
             $('.dfx_visual_editor_gc_layout_selected_layout').removeClass('dfx_visual_editor_gc_layout_selected_layout');
         },
-        helper:            function (event) {
-            var gc_type         = $(this).attr('gc-type');
-            var helper_fragment = '<div style="height:24px; width:80px; color: #333" class="text-center">' + gc_type + '</div>';
-            return helper_fragment;
-        },
+        helper: function (event) {
+                    var gc_cat         = $(this).attr('gc-cat');
+                    var gc_type         = $(this).attr('gc-type');
+                    var helper_fragment = '<img style="width:36px;" src="/images/vb/icons/' + gc_cat + '_' + gc_type + '_drag.png"/>';
+                    return helper_fragment;
+                },
         connectToSortable: ".dfx_visual_editor_droppable"
     });
 
@@ -730,7 +742,7 @@ DfxVisualBuilder.moveComponentFromRemovedLayout = function (component_id, card, 
  */
 DfxVisualBuilder.reindexLayoutChildComponents = function (removed_row_index, removed_column_index, removed_layout_id, parent_definition, card, found_it) {
     var container_definition = (card!=null) ? parent_definition[card] : parent_definition;
-    
+
     var getLayoutRowColumnIndex = function (container) {
         var rowIndexPosition = container.indexOf('_row_');
         var columnIndexPosition = container.indexOf('_column_');
@@ -760,10 +772,8 @@ DfxVisualBuilder.reindexLayoutChildComponents = function (removed_row_index, rem
     if (!found_it) {
         for (var i = 0; i < container_definition.length; i++) {
             var next_layout = container_definition[i];
-
             if (next_layout.id == removed_layout_id) {
                 found_it = true;
-
                 for (var j = 0; j < next_layout.children.length; j++) {
                     var next_layout_child = next_layout.children[j];
                     if (next_layout_child) {
@@ -781,7 +791,7 @@ DfxVisualBuilder.reindexLayoutChildComponents = function (removed_row_index, rem
 
                 break;
             } else {
-                DfxVisualBuilder.reindexLayoutChildComponents(removed_row_index, removed_col_index, removed_layout_id, container_definition[idx].children, card, found_it);
+                DfxVisualBuilder.reindexLayoutChildComponents(removed_row_index, removed_column_index, removed_layout_id, container_definition[i].children, null, found_it);
             }
         }
     }
@@ -790,22 +800,56 @@ DfxVisualBuilder.reindexLayoutChildComponents = function (removed_row_index, rem
 /** 
  * Pastes a component to the selected container
  */
-DfxVisualBuilder.pasteComponent = function (component_definition, container_definition, card) {
-    DfxVisualBuilder.movingComponentHelper.setComponentsNewIdsAndNames(component_definition, card, DfxVisualBuilder.movingComponentHelper.getViewDefinition());
+DfxVisualBuilder.pasteComponent = function (component_to_paste_definition, current_selected_component, card) {
+    var container_definition = DfxVisualBuilder.movingComponentHelper.getTargetContainerDefinition(component_to_paste_definition, current_selected_component);
 
-    DfxVisualBuilder.movingComponentHelper.addComponentToDefinition(component_definition, container_definition, card, true);
+    if (container_definition) {
+        DfxVisualBuilder.movingComponentHelper.setComponentsNewIdsAndNames(component_to_paste_definition, card, DfxVisualBuilder.movingComponentHelper.getViewDefinition());
 
-    DfxVisualBuilder.movingComponentHelper.addComponentToScope(component_definition, container_definition.id, card);
+        DfxVisualBuilder.movingComponentHelper.addComponentToDefinition(component_to_paste_definition, container_definition, card, true);
+
+        DfxVisualBuilder.movingComponentHelper.addComponentToScope(component_to_paste_definition, container_definition, card);
+    }
 };
 
 DfxVisualBuilder.movingComponentHelper = (function () {
     var api = {};
 
-    api.replaceLayoutIndex = function (component_definition, newIndex) {
-        var rowIndexPosition = component_definition.container.indexOf('_row_');
+    api.getLayoutRowColumnIndex = function (container) {
+        var row_index_position = container.indexOf('_row_');
+        var column_index_position = container.indexOf('_column_');
 
-        component_definition.container = 'layout_' + parseInt(newIndex) +
-            component_definition.container.substring(rowIndexPosition);
+        var row_index_value = container.substring(row_index_position + 5, column_index_position);
+        var column_index_value = container.substring(column_index_position + 8);
+
+        return {row_index: parseInt(row_index_value), column_index: parseInt(column_index_value)};
+    };
+
+    api.containerHasRowColumn = function (container_definition, row_column_index) {
+        if (container_definition.type == 'tabs' || container_definition.type == 'wizard') return false;
+
+        var row_definition = container_definition.attributes.layout.rows[row_column_index.row_index];
+        if (row_definition) {
+            if (row_definition.cols[row_column_index.column_index]) {
+                return true;
+            }
+        }
+        return false;
+    };
+
+    api.replaceLayoutIndex = function (component_definition, new_index) {
+        if (! component_definition.container) {// root panel does not have container
+            component_definition.container = 'layout_0_row_0_column_0';
+            return;
+        }
+
+        var row_index_position = component_definition.container.indexOf('_row_');
+        component_definition.container = 'layout_' + parseInt(new_index) + component_definition.container.substring(row_index_position);
+    };
+
+    api.replaceLayoutRowColumnIndex = function (component_definition) {
+        var row_index_position = component_definition.container.indexOf('_row_');
+        component_definition.container = component_definition.container.substring(0, row_index_position) + '_row_0_column_0';
     };
 
     api.getViewDefinition = function () {
@@ -814,7 +858,7 @@ DfxVisualBuilder.movingComponentHelper = (function () {
     };
 
     api.removeDefaultAttributes = function (component_definition) {
-        for (attribute in component_definition.attributes) {
+        for (var attribute in component_definition.attributes) {
             if (component_definition.attributes[attribute].status!='overridden') {
                 delete component_definition.attributes[attribute];
             }
@@ -822,10 +866,22 @@ DfxVisualBuilder.movingComponentHelper = (function () {
     };
 
     api.changeTabOrWizardStepIndex = function (component_definition, container_definition) {
+        var index_value = 0;
+
         if (container_definition.type == 'tabs') {
-            api.replaceLayoutIndex(component_definition, container_definition.attributes.tabIndex.value);
+            index_value = container_definition.attributes.tabIndex ? container_definition.attributes.tabIndex.value : index_value;
         } else if (container_definition.type == 'wizard') {
-            api.replaceLayoutIndex(component_definition, container_definition.attributes.stepIndex.value);
+            index_value = container_definition.attributes.stepIndex ? container_definition.attributes.stepIndex.value : index_value;
+        }
+
+        api.replaceLayoutIndex(component_definition, index_value);
+    };
+
+    api.changeRowColumnIndex = function (component_definition, container_definition) {
+        var row_column_index = api.getLayoutRowColumnIndex(component_definition.container);
+        var row_column_exists = api.containerHasRowColumn(container_definition, row_column_index);
+        if (! row_column_exists) {
+            api.replaceLayoutRowColumnIndex(component_definition);
         }
     };
 
@@ -845,20 +901,39 @@ DfxVisualBuilder.movingComponentHelper = (function () {
 
         api.removeDefaultAttributes(component_definition);
         api.changeTabOrWizardStepIndex(component_definition, container_definition);
+        api.changeRowColumnIndex(component_definition, container_definition);
 
         DfxVisualBuilder.findParentAndAddComponent(component_definition.id, container_definition.id, component_definition, wgt_definition.definition, card, false, add_component_to_end);
         editor.setValue(JSON.stringify(wgt_definition, null, '\t'));
     };
 
-    api.addComponentToScope = function(component_definition, container_id, card) {
-        var gc_container_fake_definition = {id: container_id};
+    api.addComponentToScope = function(component_definition, container_definition, card) {
         var ve_scope = angular.element(document.getElementById('dfx_src_widget_editor')).scope();
-        ve_scope.addComponent(component_definition, gc_container_fake_definition, card);
+        ve_scope.addComponent(component_definition, container_definition, card);
     };
-    
+
     api.isContainer = function(component_definition) {
         var attributes = component_definition.attributes;
-        return attributes.layout || attributes.steps || attributes.tabs;
+        var is_container = attributes.layout || attributes.steps || attributes.tabs ? true : false;
+        return is_container;
+    };
+
+    api.getComponentContainerDefinition = function(component_definition) {
+        var parent_id = $('#' + component_definition.id).closest('[gc-parent]').attr('gc-parent');
+        var container_definition = DfxVisualBuilder.getComponentDefinition(parent_id, api.getViewDefinition().definition);
+        return container_definition;
+    };
+
+    api.getTargetContainerDefinition = function(component_to_paste_definition, current_selected_component) {
+        if ( api.isContainer(current_selected_component) ) {
+            if (current_selected_component.id !== component_to_paste_definition.id) {
+                return current_selected_component;
+            } else {
+                return api.getComponentContainerDefinition(current_selected_component);
+            }
+        } else {
+            return api.getComponentContainerDefinition(current_selected_component);
+        }
     };
 
     return api;
@@ -930,31 +1005,20 @@ DfxVisualBuilder.__addComponentToDefinition = function (component_id, parent_id,
 };
 
 /**
+ * Gets Visual Editor scope from HTML page
+ *
+ */
+DfxVisualBuilder.getVeScopeFromHtml = function () {
+    return angular.element(document.getElementById('dfx_src_widget_editor')).scope();
+};
+
+/**
  * Removes a component
  *
  */
 DfxVisualBuilder.removeComponent = function (component_id) {
-    var ve_scope = angular.element(document.getElementById('dfx_src_widget_editor')).scope();
+    var ve_scope = DfxVisualBuilder.getVeScopeFromHtml();
     ve_scope.removeComponent(component_id);
-    /*var gc_role        = $('.dfx_visual_editor_selected_box').attr('gc-role');
-    var gc_selected_id = $('.dfx_visual_editor_selected_box').attr('gc-selected-id');
-    var from_parent_id = $('#' + gc_selected_id).closest('[gc-parent]').attr('gc-parent');
-    var editor         = $('#dfx_src_editor.CodeMirror')[0].CodeMirror;
-    var wgt_definition = JSON.parse(editor.getValue());
-
-    if (gc_role == 'control-child') {
-        var gc_type                = $('.dfx_visual_editor_selected_box').attr('gc-type');
-        var gc_control_id          = $('#' + gc_selected_id).attr('gc-control-id');
-        var gc_control_child_index = $('#' + gc_selected_id).attr('gc-child-index');
-        gc_factory.removeChildComponent(gc_type, gc_control_id, gc_control_child_index, wgt_definition.definition);
-    } else {
-        DfxVisualBuilder.findParentAndRemoveComponent(gc_selected_id, from_parent_id, wgt_definition.definition, false);
-        $('#' + gc_selected_id).remove();
-    }
-    editor.setValue(JSON.stringify(wgt_definition, null, '\t'), 0);
-    editor.gotoLine(1);
-
-    $('#dfx_visual_editor_middle #dfx_visual_editor_workspace').click();*/
 };
 
 DfxVisualBuilder.removeComponentConfirmed = function (component_id, card) {
@@ -962,13 +1026,18 @@ DfxVisualBuilder.removeComponentConfirmed = function (component_id, card) {
     var wgt_definition = JSON.parse(editor.getValue());
 
     var parent_id = $('#'+component_id).closest('[gc-parent]').attr('gc-parent');
-    $('#'+component_id).remove();
 
-    if (parent_id != null) {
+    if (parent_id) {
+        $('#'+component_id).remove();
+
         DfxVisualBuilder.findParentAndRemoveComponent(component_id, parent_id, wgt_definition.definition, card, false);
         editor.setValue(JSON.stringify(wgt_definition, null, '\t'));
         //editor.gotoLine(1);
         $('#dfx_visual_editor_middle #dfx_visual_editor_workspace').click();
+
+        // hide property panel of removed component
+        var ve_scope = DfxVisualBuilder.getVeScopeFromHtml();
+        ve_scope.unselectComponent();
     }
 
 };
@@ -1206,8 +1275,11 @@ DfxVisualBuilder.findComponentAndUpdateAttributes = function (component_id, pare
                     appendCss(style);
                 }
 
-                found_it                          = true;
+                found_it = true;
+
+                DfxVisualBuilder.removeNotOverriddenAttributes(updated_attributes, ref_parent_definition[idx].type);
                 ref_parent_definition[idx].attributes = updated_attributes;
+
                 //$('#dfx_visual_editor_gc_notif').css('display', 'inline-block').hide().fadeIn().delay(3000).fadeOut();
 
                 /*DfxStudio.showNotification({
@@ -1222,6 +1294,91 @@ DfxVisualBuilder.findComponentAndUpdateAttributes = function (component_id, pare
             }
         }
     }
+};
+
+/**
+ * Removes not overridden attributes
+ */
+DfxVisualBuilder.removeNotOverriddenAttributes = function (updated_attributes, gc_type, attr_full_path) {
+    var getGcTemplate = function (gc_type, callback) {
+        gc_type = (gc_type == 'datatable') ? 'table' : gc_type;
+        gc_type = (gc_type == 'json') ? 'gc_json' : gc_type;
+
+        var template = JSON.parse( sessionStorage.getItem('dfx_' + gc_type) );
+
+        if (template != null) {
+            callback(template);
+        }
+        else {
+            var app_body = angular.element(document.querySelector('body'));
+            var app_scope = angular.element(app_body).scope();
+
+            app_scope.getGCDefaultAttributes(gc_type).then(function (default_attributes) {
+                callback(default_attributes);
+            });
+        }
+    };
+    var getDeepValue = function(obj, path) {
+        for (var i = 0, path = path.split('.'), len = path.length; i < len; i++) {
+            obj = obj[ path[i] ];
+        }
+        return obj;
+    };
+    var hasNestedAttributes = function (obj) {
+        for (var attr in obj) {
+            if (obj.hasOwnProperty(attr) && attr != 'value' && attr != 'status') {
+                return true;
+            }
+        }
+        return false;
+    };
+    var isAttributeMandatory = function (attr_name) {
+        if (attr_name == 'name' || attr_name == 'flex') {
+            return true;
+        }
+        return false;
+    };
+
+    var removeOverriddenWithDefaultValues = function (attr_full_path, attr_updated_value, updated_attributes, attr_short_path, template) {
+        var attr_default_value = getDeepValue(template, attr_full_path);
+
+        //console.log('====== ' + gc_type);
+        //console.log(attr_full_path, attr_updated_value, attr_default_value);
+
+        if (attr_updated_value !== null && typeof attr_updated_value === 'object') {
+            if ((!attr_default_value || attr_updated_value.value == attr_default_value.value)
+                && !hasNestedAttributes(attr_updated_value) && !isAttributeMandatory(attr_short_path))
+            {
+                delete updated_attributes[attr_short_path];
+            }
+        } else {
+            if (attr_updated_value == attr_default_value && !isAttributeMandatory(attr_short_path)) {
+                delete updated_attributes[attr_short_path];
+            }
+        }
+    };
+
+    var removeNotOverridden = function (updated_attributes, attr_full_path, template) {
+        for (var attribute in updated_attributes) {
+            if (updated_attributes.hasOwnProperty(attribute)) {
+                if (attribute != 'value' && attribute != 'status' && !Array.isArray(updated_attributes[attribute])) {
+                    var attr_path = attr_full_path ? attr_full_path + '.' + attribute : attribute;
+
+                    if (updated_attributes[attribute] !== null && typeof updated_attributes[attribute] === 'object') {
+                        if (updated_attributes[attribute] && updated_attributes[attribute].status != 'overridden' && !isAttributeMandatory(attribute)) {
+                            delete updated_attributes[attribute];
+                        }
+                        removeNotOverridden(updated_attributes[attribute], attr_path, template);
+                    }
+                    removeOverriddenWithDefaultValues(attr_path, updated_attributes[attribute], updated_attributes, attribute, template);
+                }
+            }
+        }
+    };
+
+    getGcTemplate(gc_type, function(template) {
+        removeNotOverridden(updated_attributes, attr_full_path, template);
+    });
 };
 
 /**

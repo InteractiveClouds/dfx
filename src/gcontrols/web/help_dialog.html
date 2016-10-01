@@ -1,65 +1,83 @@
-<md-dialog aria-label="textarea" ng-cloak style="width: 555px;">
+<md-dialog aria-label="textarea" ng-cloak style="width: 755px;">
     <form>
         <md-toolbar><div class="md-toolbar-tools">
             <h2>Code Assistant</h2>
         </div></md-toolbar>
-        <md-dialog-content style="padding:0 10px; min-height: 270px;">
-            <div class="dfx-ve-property-treeview hover" style="padding-top: 10px;" ng-show="helpTree">
+        <md-dialog-content style="padding:0 10px; min-height: 370px;">
+            <div class="dfx-ca-property-treeview hover" style="padding-top: 10px;" ng-show="helpTree">
                 <ul>
                     <li>
-                        <input class="dfx-ve-property-treeview-button" type="checkbox" id="help-apiroutes" checked="checked"/>
+                        <input class="dfx-ca-property-treeview-button" type="checkbox" id="help-apiroutes" checked="checked"/>
                         <label for="help-apiroutes">API Services</label>
                         <ul class="help-apiroutes">
                             <li ng-click="showApiRoutesTree('get')">
-                                <span style="cursor:pointer;">Get data</span>
+                                <span style="cursor:pointer;">Get data from an API Service</span>
                             </li>
                             <li ng-click="showApiRoutesTree('post')">
-                                <span style="cursor:pointer;">Send data</span>
+                                <span style="cursor:pointer;">Send data to an API Service</span>
                             </li>
                         </ul>
                     </li>
                     <li>
-                        <input class="dfx-ve-property-treeview-button" type="checkbox" id="help-function" checked="checked"/>
-                        <label for="help-function">Application Services</label>
-                        <ul class="help-function">
+                        <input class="dfx-ca-property-treeview-button" type="checkbox" id="help-appservices" checked="checked"/>
+                        <label for="help-appservices">Application Services</label>
+                        <ul class="help-appservices">
                             <li ng-click="showInputForm('function')">
-                                <span style="cursor:pointer;">Scope function</span>
+                                <span style="cursor:pointer;">Add a function</span>
                             </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <input class="dfx-ca-property-treeview-button" type="checkbox" id="help-dialog" checked="checked"/>
+                        <label for="help-dialog">Dialog Services</label>
+                        <ul class="help-dialog">
                             <li ng-click="showInputForm('dialog_html')">
-                                <span style="cursor:pointer;">HTML in Dialog</span>
+                                <span style="cursor:pointer;">Display HTML content in a Dialog</span>
                             </li>
                             <li ng-click="showInputForm('dialog_view')">
-                                <span style="cursor:pointer;">View in Dialog</span>
+                                <span style="cursor:pointer;">Display a View in a Dialog</span>
                             </li>
                             <li ng-click="showInputForm('dialog_wait')">
-                                <span style="cursor:pointer;">Waiting message</span>
-                            </li>
-                            <li ng-click="showInputForm('side_nav_html')">
-                                <span style="cursor:pointer;">HTML in SideNav</span>
-                            </li>
-                            <li ng-click="showInputForm('side_nav_view')">
-                                <span style="cursor:pointer;">View in SideNav</span>
-                            </li>
-                            <li ng-click="showInputForm('bottom_sheet_html')">
-                                <span style="cursor:pointer;">HTML in Bottom Sheet</span>
-                            </li>
-                            <li ng-click="showInputForm('bottom_sheet_view')">
-                                <span style="cursor:pointer;">View in Bottom Sheet</span>
-                            </li>
-                            <li ng-click="showInputForm('show_card')">
-                                <span style="cursor:pointer;">Show card</span>
+                                <span style="cursor:pointer;">Display a waiting message</span>
                             </li>
                         </ul>
                     </li>
                     <li>
-                        <input class="dfx-ve-property-treeview-button" type="checkbox" id="help-charts" checked="checked"/>
-                        <label for="help-charts">Charts</label>
+                        <input class="dfx-ca-property-treeview-button" type="checkbox" id="help-sidenav" checked="checked"/>
+                        <label for="help-sidenav">SideNav & Bottom sheet Services</label>
+                        <ul class="help-sidenav">
+                            <li ng-click="showInputForm('side_nav_html')">
+                                <span style="cursor:pointer;">Display HTML in a Side Nav</span>
+                            </li>
+                            <li ng-click="showInputForm('side_nav_view')">
+                                <span style="cursor:pointer;">Display a View in a SideNav</span>
+                            </li>
+                            <li ng-click="showInputForm('bottom_sheet_html')">
+                                <span style="cursor:pointer;">Display HTML in Bottom Sheet</span>
+                            </li>
+                            <li ng-click="showInputForm('bottom_sheet_view')">
+                                <span style="cursor:pointer;">Display a View in Bottom Sheet</span>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <input class="dfx-ca-property-treeview-button" type="checkbox" id="help-card" checked="checked"/>
+                        <label for="help-card">Card Services</label>
+                        <ul class="help-card">
+                            <li ng-click="showInputForm('show_card')">
+                                <span style="cursor:pointer;">Switch View to a different card</span>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <input class="dfx-ca-property-treeview-button" type="checkbox" id="help-charts" checked="checked"/>
+                        <label for="help-charts">Chart Settings Services</label>
                         <ul class="help-charts">
                             <li ng-click="showInputForm('barchart')">
-                                <span style="cursor:pointer;">Bar</span>
+                                <span style="cursor:pointer;">Vertical Bar</span>
                             </li>
                             <li ng-click="showInputForm('hzbarchart')">
-                                <span style="cursor:pointer;">Horizontal</span>
+                                <span style="cursor:pointer;">Horizontal Bar</span>
                             </li>
                             <li ng-click="showInputForm('piechart')">
                                 <span style="cursor:pointer;">Pie</span>
@@ -79,11 +97,11 @@
                         </ul>
                     </li>
                     <li>
-                        <input class="dfx-ve-property-treeview-button" type="checkbox" id="help-others" checked="checked"/>
+                        <input class="dfx-ca-property-treeview-button" type="checkbox" id="help-others" checked="checked"/>
                         <label for="help-others">Others</label>
                         <ul class="help-others">
                             <li ng-click="showInputForm('googleMap')">
-                                <span style="cursor:pointer;">Google Maps</span>
+                                <span style="cursor:pointer;">Define Google Maps settings</span>
                             </li>
                         </ul>
                     </li>
@@ -111,25 +129,25 @@
                     </div>
                 </form>
             </div>
-            <div class="dfx-ve-property-treeview hover" id="help_dialog_box" ng-show="helpApiRoutesTree" style="padding: 13px;">
+            <div class="dfx-ca-property-treeview hover" id="help_dialog_box" ng-show="helpApiRoutesTree" style="padding: 13px 0px 0px 0px;">
                 <ul>
                     <li>
-                        <input class="dfx-ve-property-treeview-button" type="checkbox" id="apiroute-root" />
+                        <input class="dfx-ca-property-treeview-button" type="checkbox" id="apiroute-root" />
                         <label for="apiroute-root"> Application API Services </label>
-                            <ul class="dfx-ve-property-treeview-content">
+                            <ul class="dfx-ca-property-treeview-content">
                                 <p ng-show="!picker_apiroutes_cat.length"> There is no API Services</p>
                                 <li ng-repeat="cat in picker_apiroutes_cat">
                                     <ul>
                                         <li>
-                                            <input class="dfx-ve-property-treeview-button" type="checkbox" id="apiroute-item-cat-{{$index}}" />
+                                            <input class="dfx-ca-property-treeview-button" type="checkbox" checked id="apiroute-item-cat-{{$index}}" />
                                             <label for="apiroute-item-cat-{{$index}}">{{cat}}</label>
                                             <ul>
                                                 <li ng-repeat="service in picker_apiroutes[cat]">
-                                                    <input class="dfx-ve-property-treeview-button" type="checkbox" id="apiroute-item-cat-{{$parent.$index}}-{{$index}}" checked />
+                                                    <input class="dfx-ca-property-treeview-button" type="checkbox" checked id="apiroute-item-cat-{{$parent.$index}}-{{$index}}" checked />
                                                     <label for="apiroute-item-cat-{{$parent.$index}}-{{$index}}">{{service.name}} ({{service.description}})</label>
                                                     <ul>
                                                         <li ng-repeat="(key, value) in service.apiRoutes">
-                                                            <a href="#" ng-click="selectApiRoute( cat, $parent.$index, key)">{{key}}</a>
+                                                            <a style="margin-left:10px" href="#" ng-click="selectApiRoute( cat, $parent.$index, key)">{{key}}</a>
                                                         </li>
                                                     </ul>
                                                 </li>
@@ -140,18 +158,18 @@
                             </ul>
                     </li>
                     <li>
-                        <input class="dfx-ve-property-treeview-button" type="checkbox" id="apiroute-root-shared" />
+                        <input class="dfx-ca-property-treeview-button" type="checkbox" id="apiroute-root-shared" />
                         <label for="apiroute-root-shared"> Shared catalog API Services </label>
-                        <ul class="dfx-ve-property-treeview-content">
+                        <ul class="dfx-ca-property-treeview-content">
                             <p ng-show="!shared_picker_apiroutes_cat.length"> There is no API Services</p>
                             <li ng-repeat="cat in shared_picker_apiroutes_cat">
                                 <ul>
                                     <li>
-                                        <input class="dfx-ve-property-treeview-button" type="checkbox" id="shared-apiroute-item-cat-{{$index}}" />
+                                        <input class="dfx-ca-property-treeview-button" type="checkbox" checked id="shared-apiroute-item-cat-{{$index}}" />
                                         <label for="shared-apiroute-item-cat-{{$index}}">{{cat}}</label>
                                         <ul>
                                             <li ng-repeat="service in shared_picker_apiroutes[cat]">
-                                                <input class="dfx-ve-property-treeview-button" type="checkbox" id="shared-apiroute-item-cat-{{$parent.$index}}-{{$index}}" checked />
+                                                <input class="dfx-ca-property-treeview-button" type="checkbox" checked id="shared-apiroute-item-cat-{{$parent.$index}}-{{$index}}" checked />
                                                 <label for="shared-apiroute-item-cat-{{$parent.$index}}-{{$index}}">{{service.name}} ({{service.description}})</label>
                                                 <ul>
                                                     <li ng-repeat="(key, value) in service.apiRoutes">
