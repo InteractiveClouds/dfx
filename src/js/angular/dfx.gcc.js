@@ -522,7 +522,6 @@ dfxGCC.directive('dfxGccWebTreeview', [ '$timeout', '$compile', '$q', '$http', '
 
                 scope.getDynamicItems = function() {
                     return scope.$gcscope[scope.attributes.dynamic.value];
-                    //return scope.attributes.dynamic.value;
                 };
                 scope.getStaticItems = function() {
                     return scope.attributes.static.value;
@@ -2016,6 +2015,347 @@ dfxGCC.directive('dfxGccWebKnob', ['$timeout', '$compile', function($timeout, $c
                     }
                 }, 0);
             });
+        }
+    }
+}]);
+
+var DfxGcChartUtil = (function () {
+    var api = {};
+
+    var removeBracketsFromEventListener = function(eventListener) {
+        return (eventListener) ? eventListener.replace(/\(.*?\)/g, "") : eventListener;
+    };
+    var refreshChartToReflectFlexSize = function(scope, isDesignTime, $timeout, oldFlexValue) {
+          $timeout(function() {
+              if (scope[scope.attributes.name.value].refresh) {
+                  oldFlexValue = oldFlexValue || 100;
+
+                  // remove old flex class and add new manually because it's not done automatically after chart dropping
+                  if (oldFlexValue) { $('#' + scope.component_id).removeClass('flex' + '-' + oldFlexValue); }
+                  $('#' + scope.component_id).attr('flex', scope.attributes.flex.value);
+                  $('#' + scope.component_id).addClass('flex' + '-' + scope.attributes.flex.value);
+
+                  // for the case when panel column layout direction = column
+                  $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+
+                  scope[scope.attributes.name.value].refresh();
+              }
+          }, 0);
+    };
+
+    api.adjustContainerHeight = function(scope) {
+        // adjust container height to include title height
+        var containerHeight = $('#' + scope.component_id).find('.dfx-core-gc-chart').height();
+        var chartTitleHeight = $('#' + scope.component_id).find('.title').height() * 1.5 || 30;
+        $('#' + scope.component_id).height(containerHeight + chartTitleHeight);
+    };
+
+    api.setAttributesBeforeInit = function (scope, attrs, chartOptions, chartData) {
+        //must set main chart options before reading json definition from file,
+        //otherwise, chart is not constructed - and when attributes are reset from file - chart does not exist and nvd3.watch is useless
+        scope.attributes = scope.attributes || { 'options': {} };
+        scope.attributes.options = {value: chartOptions};
+
+        scope.$gcscope = scope; //also, must set it here, before reading data from file
+    };
+
+    api.setRunTimeAttributes = function (scope, chartTypeDef, chartEventNames, $timeout) {
+        if (scope.attributes.title.value) {
+            scope.attributes.options.value.title = {
+                text: scope.attributes.title.value,
+                enable: true
+            };
+        }
+        if (scope.attributes.options.xAxisLabel) {
+            scope.attributes.options.value.chart.xAxis.axisLabel = scope.attributes.options.xAxisLabel;
+            scope.attributes.options.value.chart.yAxis.axisLabel = scope.attributes.options.yAxisLabel;
+        }
+        if (scope.attributes.options.xAxisLabelDistance) {
+            scope.attributes.options.value.chart.xAxis.axisLabelDistance = scope.attributes.options.xAxisLabelDistance;
+            scope.attributes.options.value.chart.yAxis.axisLabelDistance = scope.attributes.options.yAxisLabelDistance;
+        }
+        if (scope.attributes.options.duration) {
+            scope.attributes.options.value.chart.duration = scope.attributes.options.duration;
+        }
+        if (scope.attributes.options.showValues) {
+            scope.attributes.options.value.chart.showValues = scope.attributes.options.showValues;
+        }
+        if (scope.attributes.options.showXAxis) {
+            scope.attributes.options.value.chart.showXAxis = scope.attributes.options.showXAxis;
+            scope.attributes.options.value.chart.showYAxis = scope.attributes.options.showYAxis;
+        }
+        if (scope.attributes.options.showControls) {
+            scope.attributes.options.value.chart.showControls = scope.attributes.options.showControls;
+        }
+        if (scope.attributes.options.showLegend) {
+            scope.attributes.options.value.chart.showLegend = scope.attributes.options.showLegend;
+        }
+        if (scope.attributes.options.stacked) {
+            scope.attributes.options.value.chart.stacked = scope.attributes.options.stacked;
+        }
+        if (scope.attributes.options.useInteractiveGuideline) {
+            scope.attributes.options.value.chart.useInteractiveGuideline = scope.attributes.options.useInteractiveGuideline;
+        }
+        if (scope.attributes.options.rescaleY) {
+            scope.attributes.options.value.chart.rescaleY = scope.attributes.options.rescaleY;
+        }
+        if (scope.attributes.options.labelSunbeamLayout) {
+            scope.attributes.options.value.chart.labelSunbeamLayout = scope.attributes.options.labelSunbeamLayout;
+        }
+        if (scope.attributes.options.labelThreshold) {
+            scope.attributes.options.value.chart.labelThreshold = scope.attributes.options.labelThreshold;
+        }
+        if (scope.attributes.options.donutLabelsOutside) {
+            scope.attributes.options.value.chart.donutLabelsOutside = scope.attributes.options.donutLabelsOutside;
+        }
+        if (scope.attributes.options.showLabels) {
+            scope.attributes.options.value.chart.showLabels = scope.attributes.options.showLabels;
+        }
+        if (scope.attributes.options.cornerRadius) {
+            scope.attributes.options.value.chart.cornerRadius = scope.attributes.options.cornerRadius;
+        }
+        if (scope.attributes.options.growOnHover) {
+            scope.attributes.options.value.chart.growOnHover = scope.attributes.options.growOnHover;
+        }
+        if (scope.attributes.options.donutRatio) {
+            scope.attributes.options.value.chart.donutRatio = scope.attributes.options.donutRatio;
+        }
+
+        var assignEvent = function(eventName, dispatch) {
+            if (scope.attributes[eventName] && scope.attributes[eventName].value) {
+                var normalizedEvent = removeBracketsFromEventListener(scope.attributes[eventName].value);
+                dispatch[ chartEventNames[eventName] ] = scope.$gcscope[normalizedEvent];
+            }
+        };
+        // global chart dispatch
+        var generalDispatch = {};
+        assignEvent('onbeforeupdate', generalDispatch);
+        assignEvent('onstatechange', generalDispatch);
+        assignEvent('onrenderend', generalDispatch);
+        scope.attributes.options.value.chart.dispatch = generalDispatch;
+
+        // specific chart dispatch
+        var specificDispatch = {};
+        assignEvent('onclick', specificDispatch);
+        assignEvent('ondblclick', specificDispatch);
+        assignEvent('onmouseover', specificDispatch);
+        assignEvent('onmouseleave', specificDispatch);
+        assignEvent('onmousemove', specificDispatch);
+        assignEvent('onareaclick', specificDispatch);
+        assignEvent('onareamouseover', specificDispatch);
+        assignEvent('onareamouseleave', specificDispatch);
+        scope.attributes.options.value.chart[chartTypeDef] = { dispatch: specificDispatch };
+
+        refreshChartToReflectFlexSize(scope, false, $timeout);
+    };
+    api.setRunTimeChartNameVariable = function (scope, basectrl, component, $timeout) {
+        $timeout(function() {
+            //first, create variable with real chart name and assign to it the value from temp chart name
+            scope[component.attributes.name.value] = scope.dfx_chart_api;
+
+            //then, create this variable in parent scope (it does not exist there - not like other vars from attributes)
+            scope.$parent_scope[component.attributes.name.value] = scope[component.attributes.name.value];
+
+            //then, bind this scope variable
+            basectrl.bindScopeVariable(scope, component.attributes.name.value);
+        }, 0);
+    };
+
+    api.watchRunTimeAttributes = function (scope, $timeout) {
+        scope.$gcscope.$watch(scope.attributes.title.value, function(newValue) {
+            scope.attributes.options.value.title.text = newValue;
+        });
+        if (scope.attributes.options.xAxisLabel) {
+            scope.$gcscope.$watch(scope.attributes.options.xAxisLabel, function (newValue) {
+                scope.attributes.options.value.chart.xAxis.axisLabel = newValue;
+            });
+            scope.$gcscope.$watch(scope.attributes.options.yAxisLabel, function (newValue) {
+                scope.attributes.options.value.chart.yAxis.axisLabel = newValue;
+            });
+        }
+        if (scope.attributes.options.xAxisLabelDistance) {
+            scope.$gcscope.$watch(scope.attributes.options.xAxisLabelDistance, function (newValue) {
+                scope.attributes.options.value.chart.xAxis.axisLabelDistance = newValue;
+            });
+            scope.$gcscope.$watch(scope.attributes.options.yAxisLabelDistance, function (newValue) {
+                scope.attributes.options.value.chart.yAxis.axisLabelDistance = newValue;
+            });
+        }
+        if (scope.attributes.options.duration) {
+            scope.$gcscope.$watch(scope.attributes.options.duration, function (newValue) {
+                scope.attributes.options.value.chart.duration = newValue;
+            });
+        }
+        if (scope.attributes.options.showValues) {
+            scope.$gcscope.$watch(scope.attributes.options.showValues, function (newValue, oldValue) {
+                scope.attributes.options.value.chart.showValues = newValue;
+                refreshChartToReflectFlexSize(scope, false, $timeout, oldValue);
+            });
+        }
+        if (scope.attributes.options.showXAxis) {
+            scope.$gcscope.$watch(scope.attributes.options.showXAxis, function (newValue) {
+                scope.attributes.options.value.chart.showXAxis = newValue;
+            });
+            scope.$gcscope.$watch(scope.attributes.options.showYAxis, function (newValue) {
+                scope.attributes.options.value.chart.showYAxis = newValue;
+            });
+        }
+        if (scope.attributes.options.showControls) {
+            scope.$gcscope.$watch(scope.attributes.options.showControls, function (newValue, oldValue) {
+                scope.attributes.options.value.chart.showControls = newValue;
+                refreshChartToReflectFlexSize(scope, false, $timeout, oldValue);
+            });
+        }
+        if (scope.attributes.options.showLegend) {
+            scope.$gcscope.$watch(scope.attributes.options.showLegend, function (newValue, oldValue) {
+                scope.attributes.options.value.chart.showLegend = newValue;
+                refreshChartToReflectFlexSize(scope, false, $timeout, oldValue);
+            });
+        }
+        if (scope.attributes.options.stacked) {
+            scope.$gcscope.$watch(scope.attributes.options.stacked, function (newValue, oldValue) {
+                scope.attributes.options.value.chart.stacked = newValue;
+                refreshChartToReflectFlexSize(scope, false, $timeout, oldValue);
+            });
+        }
+        if (scope.attributes.options.useInteractiveGuideline) {
+            scope.$gcscope.$watch(scope.attributes.options.useInteractiveGuideline, function (newValue, oldValue) {
+                scope.attributes.options.value.chart.useInteractiveGuideline = newValue;
+                refreshChartToReflectFlexSize(scope, false, $timeout, oldValue);
+            });
+        }
+        if (scope.attributes.options.rescaleY) {
+            scope.$gcscope.$watch(scope.attributes.options.rescaleY, function (newValue, oldValue) {
+                scope.attributes.options.value.chart.rescaleY = newValue;
+                refreshChartToReflectFlexSize(scope, false, $timeout, oldValue);
+            });
+        }
+        if (scope.attributes.options.labelSunbeamLayout) {
+            scope.$gcscope.$watch(scope.attributes.options.labelSunbeamLayout, function (newValue) {
+                scope.attributes.options.value.chart.labelSunbeamLayout = newValue;
+            });
+        }
+        if (scope.attributes.options.labelThreshold) {
+            scope.$gcscope.$watch(scope.attributes.options.labelThreshold, function (newValue) {
+                scope.attributes.options.value.chart.labelThreshold = newValue;
+            });
+        }
+        if (scope.attributes.options.donutLabelsOutside) {
+            scope.$gcscope.$watch(scope.attributes.options.donutLabelsOutside, function (newValue) {
+                scope.attributes.options.value.chart.donutLabelsOutside = newValue;
+            });
+        }
+        if (scope.attributes.options.showLabels) {
+            scope.$gcscope.$watch(scope.attributes.options.showLabels, function (newValue) {
+                scope.attributes.options.value.chart.showLabels = newValue;
+            });
+        }
+        if (scope.attributes.options.cornerRadius) {
+            scope.$gcscope.$watch(scope.attributes.options.cornerRadius, function (newValue) {
+                scope.attributes.options.value.chart.cornerRadius = newValue;
+            });
+        }
+        if (scope.attributes.options.growOnHover) {
+            scope.$gcscope.$watch(scope.attributes.options.growOnHover, function (newValue) {
+                scope.attributes.options.value.chart.growOnHover = newValue;
+            });
+        }
+        if (scope.attributes.options.donutRatio) {
+            scope.$gcscope.$watch(scope.attributes.options.donutRatio, function (newValue) {
+                scope.attributes.options.value.chart.donutRatio = newValue;
+            });
+        }
+    };
+
+    return api;
+}());
+
+dfxGCC.directive('dfxGccWebAreachart', ['$timeout', '$filter', function($timeout, $filter) {
+    return {
+        restrict: 'A',
+        require: '^dfxGccWebBase',
+        scope: true,
+        link: function(scope, element, attrs, basectrl) {
+            var component = scope.getComponent(element);
+
+            var chartData    = [
+                {
+                    "key" : "North America" ,
+                    "values" : [ [ 1320033600000 , 26.672] , [ 1322629200000 , 27.297] , [ 1325307600000 , 20.174] , [ 1327986000000 , 19.631] , [ 1330491600000 , 20.366] , [ 1333166400000 , 19.284] , [ 1335758400000 , 19.157]]
+                },
+                {
+                    "key" : "Europe" ,
+                    "values" : [ [ 1320033600000 , 35.611] , [ 1322629200000 , 35.320] , [ 1325307600000 , 31.564] , [ 1327986000000 , 32.074] , [ 1330491600000 , 35.053] , [ 1333166400000 , 33.873] , [ 1335758400000 , 32.321]]
+                },
+                {
+                    "key" : "Australia" ,
+                    "values" : [ [ 1320033600000 , 5.453] , [ 1322629200000 , 7.672] , [ 1325307600000 , 8.014] , [ 1327986000000 , 0] , [ 1330491600000 , 0] , [ 1333166400000 , 0] , [ 1335758400000 , 0]]
+                }
+            ];
+            var chartOptions = {
+                chart: {
+                    type: 'stackedAreaChart',
+                    margin : {
+                        top: 20,
+                        right: 20,
+                        bottom: 50,
+                        left: 55
+                    },
+                    x: function(d){return d[0];},
+                    y: function(d){return d[1];},
+                    useVoronoi: false,
+                    clipEdge: true,
+                    duration: 100,
+                    useInteractiveGuideline: true,
+                    xAxis: {
+                        showMaxMin: false,
+                        tickFormat: function(d) {
+                            return d3.time.format('%x')(new Date(d))
+                        },
+                        axisLabel: 'X Axis'
+                    },
+                    yAxis: {
+                        tickFormat: function(d){
+                            return d3.format(',.2f')(d);
+                        }
+                    }
+                },
+                title: {
+                    text: 'Stacked Area Chart',
+                    enable: true
+                }
+            };
+
+            basectrl.init(scope, element, component, attrs, 'areachart').then(function () {
+                if (scope.attributes.dynamicOptions) scope.attributes.dynamicOptions.status = "overridden";
+                scope.attributes.flex.status = "overridden";
+
+                DfxGcChartUtil.setRunTimeChartNameVariable(scope, basectrl, component, $timeout);
+
+                basectrl.bindScopeVariable(scope, component.attributes.title.value);
+
+                // dynamicOptions is a priority over all static options, title and events (ex. onclick)
+                if (scope.attributes.dynamicOptions && scope.attributes.dynamicOptions.value) {
+                    scope.attributes.options.value = scope[scope.attributes.dynamicOptions.value];
+                } else {
+                    scope.attributes.options.value = chartOptions;
+
+                    var eventsList = {
+                        onareaclick: 'areaClick',
+                        onareamouseover: 'areaMouseover',
+                        onareamouseleave: 'areaMouseout',
+                        onstatechange: 'stateChange',
+                        onrenderend: 'renderEnd'
+                    };
+
+                    DfxGcChartUtil.setRunTimeAttributes(scope, 'stacked', eventsList, $timeout);
+                    DfxGcChartUtil.watchRunTimeAttributes(scope, $timeout);
+                }
+
+                DfxGcChartUtil.adjustContainerHeight(scope);
+            });
+
+            DfxGcChartUtil.setAttributesBeforeInit(scope, attrs, chartOptions, chartData);
         }
     }
 }]);
