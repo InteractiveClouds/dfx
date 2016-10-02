@@ -764,10 +764,27 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
 
     $scope.openPreview = function(event) {
         $(event.srcElement).animateCss('pulse');
-        var editor = $('#dfx_src_editor.CodeMirror')[0].CodeMirror;
-        window.localStorage.setItem( 'dfx_' + $scope.view_name, editor.getValue() );
-        $window.open('/studio/widget/' + $scope.view_platform + '/preview-auth/' + $scope.application_name + '/' + $scope.view_name + '/' + $scope.view_platform + '/desktop', '_blank');
-        //$window.open('/studio/widget/web/preview-auth/' + $scope.application_name + '/' + $scope.view_name + '/web/desktop', '_blank');
+
+		var editor = $('#dfx_src_editor.CodeMirror')[0].CodeMirror;
+		window.localStorage.setItem( 'dfx_' + $scope.view_name, editor.getValue() );
+        for (var key in $scope.gc_instances) {
+            var component = angular.copy($scope.gc_instances[key]);
+            for (attribute in component.attributes) {
+                if (component.attributes[attribute].status!='overridden') {
+                    delete component.attributes[attribute];
+                }
+            }
+            var widget_definition = JSON.parse(editor.getValue());
+            widget_definition.definition[$scope.view_card_selected][0].animation = $scope.view_card_animation;
+            DfxVisualBuilder.findComponentAndUpdateAttributes(component.id, widget_definition.definition, component.attributes, $scope.view_card_selected, false);
+            editor.setValue(JSON.stringify(widget_definition, null, '\t'), 0);
+        }
+		dfxRendering.render($scope, editor.getValue()).then( function(data) {
+			for (var card_name in data) {
+				window.localStorage.setItem('DFX_view_compiled_'+$scope.view_name+'_'+card_name, data[card_name]);
+			}
+			$window.open('/studio/widget/' + $scope.view_platform + '/preview-auth/' + $scope.application_name + '/' + $scope.view_name + '/' + $scope.view_platform + '/desktop', '_blank');
+        });
     };
 
     $scope.openPreviewSettings = function(ev) {
