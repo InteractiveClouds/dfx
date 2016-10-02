@@ -2360,6 +2360,628 @@ dfxGCC.directive('dfxGccWebAreachart', ['$timeout', '$filter', function($timeout
     }
 }]);
 
+dfxGCC.directive('dfxGccWebBarchart', ['$timeout', '$filter', function($timeout, $filter) {
+    return {
+        restrict: 'A',
+        require: '^dfxGccWebBase',
+        scope: true,
+        link: function(scope, element, attrs, basectrl) {
+            var component = scope.getComponent(element);
+
+            var chartData    = [{
+                key:    "Cumulative Return",
+                values: [
+                    {
+                        "label": "A",
+                        "value": -29.76
+                    },
+                    {
+                        "label": "B",
+                        "value": 32.80
+                    },
+                    {
+                        "label": "C",
+                        "value": 196.45
+                    },
+                    {
+                        "label": "D",
+                        "value": -98.07
+                    },
+                    {
+                        "label": "E",
+                        "value": -13.92
+                    }
+                ]
+            }];
+            var chartOptions = {
+                chart: {
+                    type: 'discreteBarChart',
+                    margin : {
+                        top: 20,
+                        right: 20,
+                        bottom: 50,
+                        left: 55
+                    },
+                    x: function(d){return d.label;},
+                    y: function(d){return d.value;},
+                    showValues:  true,
+                    valueFormat: function (d) {
+                        return d3.format(',.4f')(d);
+                    },
+                    duration:    500,
+                    xAxis:       {
+                        axisLabel: 'X Axis',
+                        axisLabelDistance: -5
+                    },
+                    yAxis:       {
+                        axisLabel: 'Y Axis',
+                        axisLabelDistance: -5
+                    }
+                },
+                title: {
+                    text: 'Bar Chart',
+                    enable: true
+                }
+            };
+
+            basectrl.init(scope, element, component, attrs, 'barchart').then(function () {
+                if (scope.attributes.dynamicOptions) scope.attributes.dynamicOptions.status = "overridden";
+                scope.attributes.flex.status = "overridden";
+
+                DfxGcChartUtil.setRunTimeChartNameVariable(scope, basectrl, component, $timeout);
+
+                basectrl.bindScopeVariable(scope, component.attributes.title.value);
+
+                // dynamicOptions is a priority over all static options, title and events (ex. onclick)
+                if (scope.attributes.dynamicOptions && scope.attributes.dynamicOptions.value) {
+                    scope.attributes.options.value = scope[scope.attributes.dynamicOptions.value];
+                } else {
+                    scope.attributes.options.value = chartOptions;
+
+                    var eventsList = {
+                        onclick: 'elementClick',
+                        ondblclick: 'elementDblClick',
+                        onmouseover: 'elementMouseover',
+                        onmouseleave: 'elementMouseout',
+                        onmousemove: 'elementMousemove',
+                        onbeforeupdate: 'beforeUpdate',
+                        onrenderend: 'renderEnd'
+                    };
+
+                    DfxGcChartUtil.setRunTimeAttributes(scope, 'discretebar', eventsList, $timeout);
+                    DfxGcChartUtil.watchRunTimeAttributes(scope, $timeout);
+                }
+
+                DfxGcChartUtil.adjustContainerHeight(scope);
+            });
+
+            DfxGcChartUtil.setAttributesBeforeInit(scope, attrs, chartOptions, chartData);
+        }
+    }
+}]);
+
+dfxGCC.directive('dfxGccWebHzbarchart', ['$timeout', '$filter', function($timeout, $filter) {
+    return {
+        restrict: 'A',
+        require: '^dfxGccWebBase',
+        scope: true,
+        link: function(scope, element, attrs, basectrl) {
+            var component = scope.getComponent(element);
+
+            var chartData = [
+                {
+                    "key": "Series1",
+                    "color": "#d62728",
+                    "values": [
+                        {
+                            "label" : "Group A" ,
+                            "value" : -1.874
+                        },
+                        {
+                            "label" : "Group B" ,
+                            "value" : -8.096
+                        },
+                        {
+                            "label" : "Group C" ,
+                            "value" : -0.570
+                        },
+                        {
+                            "label" : "Group D" ,
+                            "value" : -2.417
+                        },
+                        {
+                            "label" : "Group E" ,
+                            "value" : -0.720
+                        }
+                    ]
+                },
+                {
+                    "key": "Series2",
+                    "color": "#1f77b4",
+                    "values": [
+                        {
+                            "label" : "Group A" ,
+                            "value" : 25.307
+                        },
+                        {
+                            "label" : "Group B" ,
+                            "value" : 16.756
+                        },
+                        {
+                            "label" : "Group C" ,
+                            "value" : 18.451
+                        },
+                        {
+                            "label" : "Group D" ,
+                            "value" : 8.614
+                        },
+                        {
+                            "label" : "Group E" ,
+                            "value" : 7.808
+                        }
+                    ]
+                }
+            ];
+            var chartOptions = {
+                chart: {
+                    type: 'multiBarHorizontalChart',
+                    margin : {
+                        top: 20,
+                        right: 20,
+                        bottom: 50,
+                        left: 55
+                    },
+                    x: function(d){return d.label;},
+                    y: function(d){return d.value;},
+                    showControls: true,
+                    showValues:  true,
+                    duration:    500,
+                    xAxis:       {
+                        showMaxMin: false,
+                        axisLabel: ''
+                    },
+                    yAxis:       {
+                        axisLabel: 'Values',
+                        tickFormat: function(d) {
+                            return d3.format(',.2f')(d);
+                        }
+                    }
+                },
+                title: {
+                    text: 'Horizontal Bar Chart',
+                    enable: true
+                }
+            };
+
+            basectrl.init(scope, element, component, attrs, 'hzbarchart').then(function () {
+                if (scope.attributes.dynamicOptions) scope.attributes.dynamicOptions.status = "overridden";
+                scope.attributes.flex.status = "overridden";
+
+                DfxGcChartUtil.setRunTimeChartNameVariable(scope, basectrl, component, $timeout);
+
+                basectrl.bindScopeVariable(scope, component.attributes.title.value);
+
+                // dynamicOptions is a priority over all static options, title and events (ex. onclick)
+                if (scope.attributes.dynamicOptions && scope.attributes.dynamicOptions.value) {
+                    scope.attributes.options.value = scope[scope.attributes.dynamicOptions.value];
+                } else {
+                    scope.attributes.options.value = chartOptions;
+
+                    var eventsList = {
+                        onclick: 'elementClick',
+                        ondblclick: 'elementDblClick',
+                        onmouseover: 'elementMouseover',
+                        onmouseleave: 'elementMouseout',
+                        onmousemove: 'elementMousemove',
+                        onstatechange: 'stateChange',
+                        onrenderend: 'renderEnd'
+                    };
+
+                    DfxGcChartUtil.setRunTimeAttributes(scope, 'multibar', eventsList, $timeout);
+                    DfxGcChartUtil.watchRunTimeAttributes(scope, $timeout);
+                }
+
+                DfxGcChartUtil.adjustContainerHeight(scope);
+            });
+
+            DfxGcChartUtil.setAttributesBeforeInit(scope, attrs, chartOptions, chartData);
+        }
+    }
+}]);
+
+dfxGCC.directive('dfxGccWebPiechart', ['$timeout', '$filter', function($timeout, $filter) {
+    return {
+        restrict: 'A',
+        require: '^dfxGccWebBase',
+        scope: true,
+        link: function(scope, element, attrs, basectrl) {
+            var component = scope.getComponent(element);
+
+            var chartData    = [
+                {
+                    key: "One",
+                    y: 5
+                },
+                {
+                    key: "Two",
+                    y: 2
+                },
+                {
+                    key: "Three",
+                    y: 9
+                },
+                {
+                    key: "Four",
+                    y: 7
+                },
+                {
+                    key: "Five",
+                    y: 4
+                }
+            ];
+            var chartOptions = {
+                chart: {
+                    type: 'pieChart',
+                    margin : {
+                        top: 20,
+                        right: 20,
+                        bottom: 50,
+                        left: 55
+                    },
+                    x: function(d){return d.key;},
+                    y: function(d){return d.y;},
+                    showLabels: true,
+                    duration: 500,
+                    labelThreshold: 0.01,
+                    labelSunbeamLayout: true,
+                    legend: {
+                        margin: {
+                            top: 5,
+                            right: 5,
+                            bottom: 5,
+                            left: 0
+                        }
+                    }
+                },
+                title: {
+                    text: 'Pie Chart',
+                    enable: true
+                }
+            };
+
+            basectrl.init(scope, element, component, attrs, 'piechart').then(function () {
+                if (scope.attributes.dynamicOptions) scope.attributes.dynamicOptions.status = "overridden";
+                scope.attributes.flex.status = "overridden";
+
+                DfxGcChartUtil.setRunTimeChartNameVariable(scope, basectrl, component, $timeout);
+
+                basectrl.bindScopeVariable(scope, component.attributes.title.value);
+
+                // dynamicOptions is a priority over all static options, title and events (ex. onclick)
+                if (scope.attributes.dynamicOptions && scope.attributes.dynamicOptions.value) {
+                    scope.attributes.options.value = scope[scope.attributes.dynamicOptions.value];
+                } else {
+                    scope.attributes.options.value = chartOptions;
+
+                    var eventsList = {
+                        onclick: 'elementClick',
+                        ondblclick: 'elementDblClick',
+                        onmouseover: 'elementMouseover',
+                        onmouseleave: 'elementMouseout',
+                        onmousemove: 'elementMousemove',
+                        onstatechange: 'stateChange',
+                        onrenderend: 'renderEnd'
+                    };
+
+                    DfxGcChartUtil.setRunTimeAttributes(scope, 'pie', eventsList, $timeout);
+                    DfxGcChartUtil.watchRunTimeAttributes(scope, $timeout);
+                }
+
+                DfxGcChartUtil.adjustContainerHeight(scope);
+            });
+
+            DfxGcChartUtil.setAttributesBeforeInit(scope, attrs, chartOptions, chartData);
+        }
+    }
+}]);
+
+dfxGCC.directive('dfxGccWebDonutchart', ['$timeout', '$filter', function($timeout, $filter) {
+    return {
+        restrict: 'A',
+        require: '^dfxGccWebBase',
+        scope: true,
+        link: function(scope, element, attrs, basectrl) {
+            var component = scope.getComponent(element);
+
+            var chartData    = [
+                {
+                    key: "One",
+                    y: 5
+                },
+                {
+                    key: "Two",
+                    y: 2
+                },
+                {
+                    key: "Three",
+                    y: 9
+                },
+                {
+                    key: "Four",
+                    y: 7
+                },
+                {
+                    key: "Five",
+                    y: 4
+                }
+            ];
+            var chartOptions = {
+                chart: {
+                    type: 'pieChart',
+                    donut: true,
+                    margin : {
+                        top: 20,
+                        right: 20,
+                        bottom: 50,
+                        left: 55
+                    },
+                    x: function(d){return d.key;},
+                    y: function(d){return d.y;},
+                    showLabels: true,
+                    donutRatio: 0.35,//default
+                    duration: 500,
+                    legend: {
+                        margin: {
+                            top: 5,
+                            right: 35,
+                            bottom: 5,
+                            left: 0
+                        }
+                    },
+                    pie: {
+                        startAngle: function(d) { return d.startAngle - Math.PI },
+                        endAngle: function(d) { return d.endAngle - Math.PI }
+                    }
+                },
+                title: {
+                    text: 'Donut Chart',
+                    enable: true
+                }
+            };
+
+            basectrl.init(scope, element, component, attrs, 'donutchart').then(function () {
+                if (scope.attributes.dynamicOptions) scope.attributes.dynamicOptions.status = "overridden";
+                scope.attributes.flex.status = "overridden";
+
+                DfxGcChartUtil.setRunTimeChartNameVariable(scope, basectrl, component, $timeout);
+
+                basectrl.bindScopeVariable(scope, component.attributes.title.value);
+
+                // dynamicOptions is a priority over all static options, title and events (ex. onclick)
+                if (scope.attributes.dynamicOptions && scope.attributes.dynamicOptions.value) {
+                    scope.attributes.options.value = scope[scope.attributes.dynamicOptions.value];
+                } else {
+                    scope.attributes.options.value = chartOptions;
+
+                    var eventsList = {
+                        onclick: 'elementClick',
+                        ondblclick: 'elementDblClick',
+                        onmouseover: 'elementMouseover',
+                        onmouseleave: 'elementMouseout',
+                        onmousemove: 'elementMousemove',
+                        onstatechange: 'stateChange',
+                        onrenderend: 'renderEnd'
+                    };
+
+                    DfxGcChartUtil.setRunTimeAttributes(scope, 'pie', eventsList, $timeout);
+                    DfxGcChartUtil.watchRunTimeAttributes(scope, $timeout);
+                }
+
+                DfxGcChartUtil.adjustContainerHeight(scope);
+            });
+
+            DfxGcChartUtil.setAttributesBeforeInit(scope, attrs, chartOptions, chartData);
+        }
+    }
+}]);
+
+dfxGCC.directive('dfxGccWebLinechart', ['$timeout', '$filter', function($timeout, $filter) {
+    return {
+        restrict: 'A',
+        require: '^dfxGccWebBase',
+        scope: true,
+        link: function(scope, element, attrs, basectrl) {
+            var component = scope.getComponent(element);
+
+            function lineChartDesignData() {
+                var sin = [], sin2 = [],
+                    cos = [];
+
+                //Data is represented as an array of {x,y} pairs.
+                for (var i = 0; i < 100; i++) {
+                    sin.push({x: i, y: Math.sin(i / 10)});
+                    sin2.push({x: i, y: i % 10 == 5 ? null : Math.sin(i / 10) * 0.25 + 0.5});
+                    cos.push({x: i, y: .5 * Math.cos(i / 10 + 2) + Math.random() / 10});
+                }
+
+                //Line chart data should be sent as an array of series objects.
+                return [
+                    {
+                        values: sin,      //values - represents the array of {x,y} data points
+                        key:    'Sine Wave', //key  - the name of the series.
+                        color:  '#ff7f0e'  //color - optional: choose your own line color.
+                    },
+                    {
+                        values: cos,
+                        key:    'Cosine Wave',
+                        color:  '#2ca02c'
+                    },
+                    {
+                        values: sin2,
+                        key:    'Another sine wave',
+                        color:  '#7777ff',
+                        area:   true      //area - set to true if you want this line to turn into a filled area chart.
+                    }
+                ];
+            };
+            var chartData    = lineChartDesignData();
+
+            var chartOptions = {
+                chart: {
+                    type: 'lineChart',
+                    margin : {
+                        top: 20,
+                        right: 20,
+                        bottom: 50,
+                        left: 55
+                    },
+                    x: function(d){return d.x;},
+                    y: function(d){return d.y;},
+                    useInteractiveGuideline: true,
+                    xAxis: {
+                        axisLabel: 'X Axis'
+                    },
+                    yAxis: {
+                        axisLabel: 'Y Axis',
+                        axisLabelDistance: -10
+                    }
+                },
+                title: {
+                    text: 'Line Chart',
+                    enable: true
+                }
+            };
+
+            basectrl.init(scope, element, component, attrs, 'linechart').then(function () {
+                if (scope.attributes.dynamicOptions) scope.attributes.dynamicOptions.status = "overridden";
+                scope.attributes.flex.status = "overridden";
+
+                DfxGcChartUtil.setRunTimeChartNameVariable(scope, basectrl, component, $timeout);
+
+                basectrl.bindScopeVariable(scope, component.attributes.title.value);
+
+                // dynamicOptions is a priority over all static options, title and events (ex. onclick)
+                if (scope.attributes.dynamicOptions && scope.attributes.dynamicOptions.value) {
+                    scope.attributes.options.value = scope[scope.attributes.dynamicOptions.value];
+                } else {
+                    scope.attributes.options.value = chartOptions;
+
+                    var eventsList = {
+                        onclick: 'elementClick',
+                        onmouseover: 'elementMouseover',
+                        onmouseleave: 'elementMouseout',
+                        onstatechange: 'stateChange',
+                        onrenderend: 'renderEnd'
+                    };
+
+                    DfxGcChartUtil.setRunTimeAttributes(scope, 'lines', eventsList, $timeout);
+                    DfxGcChartUtil.watchRunTimeAttributes(scope, $timeout);
+                }
+
+                DfxGcChartUtil.adjustContainerHeight(scope);
+            });
+
+            DfxGcChartUtil.setAttributesBeforeInit(scope, attrs, chartOptions, chartData);
+        }
+    }
+}]);
+
+dfxGCC.directive('dfxGccWebCmlinechart', ['$timeout', '$filter', function($timeout, $filter) {
+    return {
+        restrict: 'A',
+        require: '^dfxGccWebBase',
+        scope: true,
+        link: function(scope, element, attrs, basectrl) {
+            var component = scope.getComponent(element);
+
+            var chartData    = [
+                {
+                    key: "Long",
+                    values: [ [ 1283227200000, 248.308], [ 1285819200000, 278.148], [ 1288497600000, 292.692], [ 1291093200000, 300.842], [ 1293771600000, 326.172]],
+                    mean: 250
+                },
+                {
+                    key: "Short",
+                    values: [ [ 1283227200000, -85.397], [ 1285819200000, -94.738], [ 1288497600000, -98.661], [ 1291093200000, -99.609], [ 1293771600000, -103.570]],
+                    mean: -60
+                }
+            ];
+            var chartOptions = {
+                chart: {
+                    type: 'cumulativeLineChart',
+                    margin : {
+                        top: 20,
+                        right: 20,
+                        bottom: 50,
+                        left: 55
+                    },
+                    x: function(d){ return d[0]; },
+                    y: function(d){ return d[1]/100; },
+                    average: function(d) { return d.mean/100; },
+
+                    color: d3.scale.category10().range(),
+                    duration: 300,
+                    useInteractiveGuideline: true,
+                    clipVoronoi: false,
+                    interactive: true,
+                    rescaleY: true,
+
+                    xAxis: {
+                        axisLabel: 'X Axis',
+                        tickFormat: function(d) {
+                            return d3.time.format('%m/%d/%y')(new Date(d))
+                        },
+                        showMaxMin: false,
+                        staggerLabels: true
+                    },
+
+                    yAxis: {
+                        tickFormat: function(d){
+                            return d3.format(',.1%')(d);
+                        },
+                        axisLabelDistance: 20
+                    }
+                },
+                title: {
+                    text: 'Cumulative Line Chart',
+                    enable: true
+                }
+            };
+
+            basectrl.init(scope, element, component, attrs, 'cmlinechart').then(function () {
+                if (scope.attributes.dynamicOptions) scope.attributes.dynamicOptions.status = "overridden";
+                scope.attributes.flex.status = "overridden";
+
+                DfxGcChartUtil.setRunTimeChartNameVariable(scope, basectrl, component, $timeout);
+
+                basectrl.bindScopeVariable(scope, component.attributes.title.value);
+
+                // dynamicOptions is a priority over all static options, title and events (ex. onclick)
+                if (scope.attributes.dynamicOptions && scope.attributes.dynamicOptions.value) {
+                    scope.attributes.options.value = scope[scope.attributes.dynamicOptions.value];
+                } else {
+                    scope.attributes.options.value = chartOptions;
+
+                    var eventsList = {
+                        onclick: 'elementClick',
+                        onmouseover: 'elementMouseover',
+                        onmouseleave: 'elementMouseout',
+                        onstatechange: 'stateChange',
+                        onrenderend: 'renderEnd'
+                    };
+
+                    DfxGcChartUtil.setRunTimeAttributes(scope, 'interactiveLayer', eventsList, $timeout);
+                    DfxGcChartUtil.watchRunTimeAttributes(scope, $timeout);
+                }
+
+                DfxGcChartUtil.adjustContainerHeight(scope);
+            });
+
+            DfxGcChartUtil.setAttributesBeforeInit(scope, attrs, chartOptions, chartData);
+        }
+    }
+}]);
+
 /* Directive for Dynamic ng-models */
 dfxGCC.directive('dfxComplexNgModel', ['$timeout', '$compile', '$parse', function ($timeout, $compile, $parse) {
     return {
