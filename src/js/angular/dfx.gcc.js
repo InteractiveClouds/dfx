@@ -3039,6 +3039,56 @@ dfxGCC.directive('dfxGccWebTextarea', ['$timeout', function($timeout) {
     }
 }]);
 
+dfxGCC.directive('dfxGccWebChips', ['$timeout', function($timeout) {
+    return {
+        restrict: 'A',
+        require: '^dfxGccWebBase',
+        scope: true,
+        link: function(scope, element, attrs, basectrl) {
+            var component = scope.$parent.getComponent(element);
+            scope.$gcscope = scope;
+            basectrl.init(scope, element, component, attrs, 'chips').then(function(){
+                if(!scope.attributes.hasOwnProperty('isBindEmpty')){scope.attributes.isBindEmpty = { "value": true };}
+                if(scope.attributes.hasOwnProperty('property1')){delete scope.attributes.property1;}
+                if(scope.attributes.hasOwnProperty('property2')){delete scope.attributes.property2;}
+                if(scope.attributes.hasOwnProperty('customItems')){delete scope.attributes.customItems;}
+
+                scope.attributes.flex.status = "overridden" ;
+                scope.attributes.binding.status = "overridden" ;
+                scope.attributes.isBindEmpty.status = "overridden" ;
+                scope.attributes.selectedInput.status = "overridden" ;
+                scope.attributes.newItem = function(chip) {
+                    return { name: chip, type: 'unknown' };
+                };
+                scope.$watch('attributes.binding.value', function(binding){
+                    binding ? scope.attributes.isBindEmpty.value = false : scope.attributes.isBindEmpty.value = true;
+                });
+                scope.$watch('attributes.selectedInput.value', function(newValue){
+                        $timeout(function () {
+                            try{
+                                scope.chips = '#' + scope.component_id + '> div > md-chips > md-chips-wrap';
+                                $(scope.chips).css("padding-top", "8px");
+                            }catch(e){
+                                /*console.log(e.message);*/
+                            }
+                        },0);
+                    scope.attributes.isBindEmpty.status = "overridden" ;
+                });
+                basectrl.bindScopeVariable(scope, component.attributes.binding.value);
+
+                scope.attributes.bindEmptyModel = function() {
+                    return scope.attributes.defaultArray.value;
+                };
+
+                scope.changeWidth = function(){
+                    $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+                };
+                scope.changeWidth();
+            });
+        }
+    }
+}]);
+
 /* Directive for Dynamic ng-models */
 dfxGCC.directive('dfxComplexNgModel', ['$timeout', '$compile', '$parse', function ($timeout, $compile, $parse) {
     return {
