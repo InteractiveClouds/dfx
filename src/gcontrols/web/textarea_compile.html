@@ -16,7 +16,7 @@
                 <label ATTR-IF{{ng-bind="attributes.label.value"}}></label>
 
                 <textarea ng-if="attributes.maxlength.value" name="cur_textarea" style="padding-left: 5px"
-                      ng-model="$gcscope[attributes.binding.value]"
+                      ATTR-IF{{ng-model="attributes.binding.value"}}
                       columns="1" md-maxlength="attributes.maxlength.value"
                       ATTR-IF{{ng-required="attributes.required.value"}}
                       ATTR-IF{{rows="attributes.rowsNumber.value"}}
@@ -36,7 +36,7 @@
                       ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
                       ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}></textarea>
                 <textarea ng-if="!isMaxLength()" name="cur_textarea" style="padding-left: 5px"
-                          ng-model="$gcscope[attributes.binding.value]"
+                          ATTR-IF{{ng-model="attributes.binding.value"}}
                           columns="1" ATTR-IF{{ng-required="attributes.required.value"}}
                           ATTR-IF{{rows="attributes.rowsNumber.value"}}
                           ATTR-IF{{ng-disabled="attributes.disabled.value"}}
@@ -76,7 +76,7 @@
             <label ATTR-IF{{ng-bind="attributes.label.value"}}></label>
 
             <textarea ng-if="attributes.maxlength.value" name="cur_textarea" style="padding-left: 5px"
-                  ng-model="$gcscope[attributes.binding.value]"
+                  ATTR-IF{{ng-model="attributes.binding.value"}}
                   columns="1" md-maxlength="attributes.maxlength.value" ATTR-IF{{ng-required="attributes.required.value"}}
                   ATTR-IF{{rows="attributes.rowsNumber.value"}}
                   ATTR-IF{{ng-disabled="attributes.disabled.value"}}
@@ -96,7 +96,7 @@
                   ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}></textarea>
 
             <textarea ng-if="!isMaxLength()" name="cur_textarea" style="padding-left: 5px"
-                  ng-model="$gcscope[attributes.binding.value]"
+                  ATTR-IF{{ng-model="attributes.binding.value"}}
                   columns="1" ATTR-IF{{ng-required="attributes.required.value"}}
                   ATTR-IF{{rows="attributes.rowsNumber.value"}}
                   ATTR-IF{{ng-disabled="attributes.disabled.value"}}
