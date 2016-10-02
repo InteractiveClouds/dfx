@@ -1894,16 +1894,7 @@ dfxGCC.directive('dfxGccWebRating', function() {
                     if ( !scope.attributes.icon.hasOwnProperty('type') ) { scope.attributes.icon.type = 'fa-icon'; }
                     if ( !scope.attributes.icon.hasOwnProperty('size') ) { scope.attributes.icon.size = 21; }
                     if ( scope.attributes.range.hasOwnProperty('values') ) {delete scope.attributes.range.values; }
-                    scope.ifShowIconTypes = function( icon ) {
-                        var regexp = /(^\')(.*)(\'$)/gm, filtered = regexp.exec( icon );
-                        if ( icon && ( icon.indexOf('+') >= 0 ) ) { filtered = false; }
-                        if ( icon === '' ) { filtered = true; }
-                        if ( icon.indexOf("'") === 0 && icon.indexOf('+') === -1 && icon.charAt(icon.length-1) === "'" ) {
-                            icon.indexOf("'fa-") === 0 ? scope.attributes.icon.type = 'fa-icon' : scope.attributes.icon.type = 'svg-icon';
-                        }
-                        scope.showIconTypes = filtered ? false : true;
-                    }
-                    scope.ifShowIconTypes(scope.attributes.icon.value);
+
                     scope.$gcscope = scope;
                     basectrl.bindScopeVariable(scope, component.attributes.binding.value);
 
@@ -3020,16 +3011,7 @@ dfxGCC.directive('dfxGccWebTextarea', ['$timeout', function($timeout) {
                     }
                 }
                 if ( !scope.attributes.icon.hasOwnProperty('size') ) { scope.attributes.icon.size = 21; }
-                scope.ifShowIconTypes = function( icon ) {
-                    var regexp = /(^\')(.*)(\'$)/gm, filtered = regexp.exec( icon );
-                    if ( icon && ( icon.indexOf('+') >= 0 ) ) { filtered = false; }
-                    if ( icon === '' ) { filtered = true; }
-                    if ( icon.indexOf("'") === 0 && icon.indexOf('+') === -1 && icon.charAt(icon.length-1) === "'" ) {
-                        icon.indexOf("'fa-") === 0 ? scope.attributes.icon.type = 'fa-icon' : scope.attributes.icon.type = 'svg-icon';
-                    }
-                    scope.showIconTypes = filtered ? false : true;
-                }
-                scope.ifShowIconTypes(scope.attributes.icon.value);
+                
                 scope.changeWidth = function(){
                     $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
                 };
@@ -3079,6 +3061,152 @@ dfxGCC.directive('dfxGccWebChips', ['$timeout', function($timeout) {
                 scope.attributes.bindEmptyModel = function() {
                     return scope.attributes.defaultArray.value;
                 };
+
+                scope.changeWidth = function(){
+                    $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+                };
+                scope.changeWidth();
+            });
+        }
+    }
+}]);
+
+dfxGCC.directive('dfxGccWebSlider', ['$timeout', '$mdDialog', '$q', '$http', '$mdToast', '$compile', function($timeout, $mdDialog, $q, $http, $mdToast, $compile) {
+    return {
+        restrict: 'A',
+        require: '^dfxGccWebBase',
+        scope: true,
+        link: function(scope, element, attrs, basectrl) {
+            var component = scope.getComponent(element);
+            scope.$gcscope = scope;
+            basectrl.init(scope, element, component, attrs, 'slider').then(function(){
+                if(!scope.attributes.hasOwnProperty('isBindingPresent')){scope.attributes.isBindingPresent = { "value": "" };}
+                if(!scope.attributes.hasOwnProperty('dynamicPresent')){scope.attributes.dynamicPresent = { "value": false };}
+                if(!scope.attributes.hasOwnProperty('counterCheck')){scope.attributes.counterCheck = { "value": "" };}
+                if(!scope.attributes.hasOwnProperty('selectedIndex')){scope.attributes.selectedIndex = { "value": "" };}
+                if ( !scope.attributes.hasOwnProperty('flex') ) { scope.attributes.flex = { "value": 50 }; }
+                scope.attributes.binding.status = "overridden";
+                scope.attributes.isBindingPresent.status = "overridden";
+                scope.attributes.flex.status = "overridden";
+                scope.attributes.buttonClass.value = scope.attributes.buttonClass.value.replace("md-primary", "");
+
+                if(scope.attributes.isBindingPresent.value){
+                    if(scope.$gcscope[scope.attributes.binding.value] instanceof Array){
+                        for(var i = 0; i < scope.$gcscope[scope.attributes.binding.value].length; i++){
+                            if(!isNaN(scope.$gcscope[scope.attributes.binding.value][i][scope.attributes.displayValue.value])){
+                                scope.$gcscope[scope.attributes.binding.value][i][scope.attributes.displayValue.value] = parseInt(scope.$gcscope[scope.attributes.binding.value][i][scope.attributes.displayValue.value]);
+                            }else{
+                                /*console.log('Values should be numeric.');*/
+                                break;
+                            }
+                        }
+                    }else{
+                        /*console.log('Binding data should be an array.');*/
+                    }
+                }
+
+                if(scope.attributes.inputVisible.value === ""){
+                    scope.attributes.inputVisible.value = "true";
+                    scope.attributes.discrete.value = false;
+                    scope.attributes.selectedIndex.value = 0;
+                    scope.attributes.counterCheck.value = 1;
+                    scope.attributes.isBindingPresent.value = false;
+                }
+
+                scope.$watch('attributes.selectedIndex.value', function(newValue){
+                    scope.attributes.selectedIndex.status = "overridden";
+                    scope.attributes.selectedIndex.value = parseInt(newValue);
+                });
+
+                scope.$watch('attributes.binding.value', function(newValue){
+                    if(newValue){
+                        scope.attributes.isBindingPresent.value = true;
+                    }else{
+                        scope.attributes.isBindingPresent.value = false;
+                    }
+                });
+
+                scope.$watch('attributes.source.value', function(newValue){
+                    if(newValue){
+                        scope.attributes.dynamicPresent.value = true;
+                    }else{
+                        scope.attributes.dynamicPresent.value = false;
+                    }
+                });
+
+                basectrl.bindScopeVariable(scope, component.attributes.binding.value);
+                basectrl.bindScopeVariable(scope, component.attributes.source.value);
+
+                scope.changeWidth = function(){
+                    $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+                };
+                scope.changeWidth();
+            });
+        }
+    }
+}]);
+
+dfxGCC.directive('dfxGccWebInput', ['$timeout', '$compile', function($timeout, $compile) {
+    return {
+        restrict: 'A',
+        require: '^dfxGccWebBase',
+        scope: true,
+        link: function(scope, element, attrs, basectrl) {
+            var component = scope.$parent.getComponent(element);
+            scope.$gcscope = scope;
+            basectrl.init(scope, element, component, attrs, 'input').then(function(){
+                scope.attributes.binding.status = 'overridden';
+                if ( !scope.attributes.hasOwnProperty('flex') ) { scope.attributes.flex = { "value": 50 }; }
+                scope.attributes.flex.status = "overridden";
+                scope.attributes.minlength.value = parseInt(scope.attributes.minlength.value);
+                scope.attributes.maxlength.value = parseInt(scope.attributes.maxlength.value);
+                scope.attributes.minNumber.value = parseInt(scope.attributes.minNumber.value);
+                scope.attributes.maxNumber.value = parseInt(scope.attributes.maxNumber.value);
+
+                scope.bindingType = {"value": "noBinding"};
+                if(scope.attributes.binding.value!==''){
+                    if(scope.attributes.binding.value.indexOf('$dfx_item') >-1 || scope.attributes.binding.value.indexOf('.') > -1 || scope.attributes.binding.value.indexOf('[') > -1) {
+                        scope.bindingType.value = "complexBinding";
+                    } else {
+                        scope.bindingType.value = "simpleBinding";
+                    }
+                }
+                scope.isSimpleIcon = {"value": true};
+                if(scope.attributes.icon.value!==''){
+                    if(scope.attributes.icon.value.indexOf('$dfx_item')>-1){
+                        scope.isSimpleIcon.value = false;
+                        scope.attributes.icon.value = '' + scope.attributes.icon.value;
+                    }else if(scope.attributes.icon.value.indexOf(".")>-1 || scope.attributes.icon.value.indexOf("[")>-1){
+                        scope.isSimpleIcon.value = false;
+                        scope.attributes.icon.value = '$parent_scope.' + scope.attributes.icon.value;
+                    }
+                }
+                $timeout(function() {
+                    if(scope.attributes.selectedType.value!=='number'){
+                        if (!scope.attributes.minlength.value){
+                            $("#"+component.id+' input').removeAttr('minlength');
+                        }
+                        if (!scope.attributes.maxlength.value){
+                            $("#"+component.id+' input').removeAttr('md-maxlength');
+                        }
+                    } else {
+                        if (!scope.attributes.minNumber.value){
+                            $("#"+component.id+' input').removeAttr('min');
+                        }
+                        if (!scope.attributes.maxNumber.value){
+                            $("#"+component.id+' input').removeAttr('max');
+                        }
+                    }
+                }, 0);
+
+                if ( typeof scope.attributes.icon === 'string' ) {
+                    var tempIcon = scope.attributes.icon;
+                    scope.attributes.icon = {
+                        "value": tempIcon,
+                        "type": scope.attributes.hasOwnProperty('iconType') ? scope.attributes.iconType : 'fa-icon'
+                    }
+                }
+                if ( !scope.attributes.icon.hasOwnProperty('size') ) { scope.attributes.icon.size = 21; }
 
                 scope.changeWidth = function(){
                     $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');

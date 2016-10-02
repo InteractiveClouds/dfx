@@ -2,7 +2,7 @@
   "template": 			 { "value": "default" },
 	"name":            { "value": "slSlider1" },
 	"binding":         { "value": "" },
-  "source":          { "value": "" },  
+  "source":          { "value": "" },
   "bindingLabel":    { "value": "" },
   "displayValue":    { "value": "" },
   "buttonClass":     { "value": "" },
@@ -33,5 +33,6 @@
   "onmouseenter":    { "value": "" },
   "onmousemove":     { "value": "" },
   "onmouseleave":    { "value": "" },
-  "onmouseup":       { "value": "" }
+  "onmouseup":       { "value": "" },
+  "onmousedown":     { "value": "" }
 }
