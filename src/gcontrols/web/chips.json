@@ -2,7 +2,7 @@
   "template": 			  { "value": "default" },
   "name":             { "value": "chpChips1" },
   "label":            { "value": "" },
-  "flex":             { "value": 50 }, 
+  "flex":             { "value": 50 },
   "binding":          { "value": "" },
   "chipsTypes":       [ "standard" ],
   "selectedType":     { "value": "standard" },
@@ -29,5 +29,6 @@
   "onmouseenter":     { "value": "" },
   "onmousemove":      { "value": "" },
   "onmouseleave":     { "value": "" },
-  "onmouseup":        { "value": "" }
+  "onmouseup":        { "value": "" },
+  "onmousedown":      { "value": "" }
 }

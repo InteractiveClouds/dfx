@@ -1,4 +1,4 @@
-var dfxSystemModules = ['ngRoute', 'ngMaterial', 'dfxGControls', 'dfxAppServices', 'dfxStudioApi', 'nvd3'];
+var dfxSystemModules = ['ngRoute', 'ngMaterial', 'dfxAppServices', 'dfxStudioApi', 'nvd3'];
 if (typeof dfxAppRuntimeModules != 'undefined')
     dfxSystemModules = dfxSystemModules.concat(dfxAppRuntimeModules);
 var dfxAppRuntime = angular.module('dfxAppRuntime', dfxSystemModules);
