@@ -2982,6 +2982,63 @@ dfxGCC.directive('dfxGccWebCmlinechart', ['$timeout', '$filter', function($timeo
     }
 }]);
 
+dfxGCC.directive('dfxGccWebTextarea', ['$timeout', function($timeout) {
+    return {
+        restrict: 'A',
+        require: '^dfxGccWebBase',
+        scope: true,
+        link: function(scope, element, attrs, basectrl) {
+            var component = scope.$parent.getComponent(element);
+            scope.$gcscope = scope;
+            basectrl.init(scope, element, component, attrs, 'textarea').then(function(){
+                scope.isMaxLength = function() {
+                    return scope.attributes.maxlength.value ? true : false;
+                };
+
+                if ( !scope.attributes.hasOwnProperty('flex') ) { scope.attributes.flex = { "value": 50 }; }
+                scope.attributes.flex.status = "overridden" ;
+                scope.attributes.icon.status = "overridden" ;
+                scope.$watch('attributes.rowsNumber.value', function(newValue){
+                    scope.attributes.rowsNumber.value = parseInt(newValue);
+                });
+                scope.$watch("$gcscope[attributes.binding.value]", function(newValue){
+                    if (!angular.isDefined(attrs.dfxGcDesign) && !angular.isDefined(attrs.dfxGcEdit)) {
+                        if(scope.attributes.binding.value !== ""){
+                            var bindingString = scope.attributes.binding.value;
+                            eval("scope." + bindingString + "= newValue ;");
+                        }
+                    }
+                });
+
+                basectrl.bindScopeVariable( scope, component.attributes.binding.value );
+
+                if ( typeof scope.attributes.icon === 'string' ) {
+                    var tempIcon = scope.attributes.icon;
+                    scope.attributes.icon = {
+                        "value": tempIcon,
+                        "type": scope.attributes.hasOwnProperty('iconType') ? scope.attributes.iconType : 'fa-icon'
+                    }
+                }
+                if ( !scope.attributes.icon.hasOwnProperty('size') ) { scope.attributes.icon.size = 21; }
+                scope.ifShowIconTypes = function( icon ) {
+                    var regexp = /(^\')(.*)(\'$)/gm, filtered = regexp.exec( icon );
+                    if ( icon && ( icon.indexOf('+') >= 0 ) ) { filtered = false; }
+                    if ( icon === '' ) { filtered = true; }
+                    if ( icon.indexOf("'") === 0 && icon.indexOf('+') === -1 && icon.charAt(icon.length-1) === "'" ) {
+                        icon.indexOf("'fa-") === 0 ? scope.attributes.icon.type = 'fa-icon' : scope.attributes.icon.type = 'svg-icon';
+                    }
+                    scope.showIconTypes = filtered ? false : true;
+                }
+                scope.ifShowIconTypes(scope.attributes.icon.value);
+                scope.changeWidth = function(){
+                    $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+                };
+                scope.changeWidth();
+            });
+        }
+    }
+}]);
+
 /* Directive for Dynamic ng-models */
 dfxGCC.directive('dfxComplexNgModel', ['$timeout', '$compile', '$parse', function ($timeout, $compile, $parse) {
     return {
