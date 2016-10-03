@@ -3138,12 +3138,7 @@ dfxGCC.directive('dfxGccWebSlider', ['$timeout', '$mdDialog', '$q', '$http', '$m
                 basectrl.bindScopeVariable(scope, component.attributes.binding.value);
                 basectrl.bindScopeVariable(scope, component.attributes.source.value);
 
-                //console.log('scope.attributes.isBindingPresent.value: ', scope.attributes.isBindingPresent.value);
-                //scope.getDynamicItems = function() {
-                //    return scope.$gcscope[scope.attributes.dynamic.value];
-                //};
                 scope.getStaticItems = function() {
-                    //console.log('scope.attributes.slidersArray.value: ', scope.attributes.slidersArray.value);
                     return scope.attributes.slidersArray.value;
                 };
 

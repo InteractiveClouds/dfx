@@ -4,8 +4,8 @@ FRAG-IF{{attributes.binding.repeatable === false}}
     ATTR-IF{{style="attributes.style.value"}}
     ATTR-IF{{class="attributes.classes.value"}}
     ATTR-IF{{ng-class="attributes.dynamicClasses.value"}} >
-    <div ng-if="attributes.selectedType.value!=='number'" layout="row" ng-style="{'flex-direction': attributes.icon.value !=='' && attributes.position.value === 'right' ? 'row-reverse' : 'row'}">
-        <div class="gc_w_input_icon_wrap_preview" flex="none" ng-if="attributes.icon.value !== ''">
+    <div ng-if="ATTR-EXP{{attributes.selectedType.value!=='number' ? 'true' : 'false'}}ATTR-ENDEXP" layout="row" ng-style="{'flex-direction': ATTR-EXP{{attributes.icon.value !=='' && attributes.position.value === 'right' ? 'row-reverse' : 'row'}}ATTR-ENDEXP}">
+        <div class="gc_w_input_icon_wrap_preview" flex="none" ng-if="ATTR-EXP{{attributes.icon.value !== '' ? 'true' : 'false'}}ATTR-ENDEXP">
             <span class="gc_w_input_icon">
                 <md-icon ng-if="attributes.icon.type ==='fa-icon' && isSimpleIcon.value" class="fa {{$eval(attributes.icon.value)}} {{attributes.icon.class}}" style="{{attributes.icon.style}}; font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
                 <md-icon ng-if="attributes.icon.type ==='fa-icon' && !isSimpleIcon.value" class="fa {{$eval($eval(attributes.icon.value))}} {{attributes.icon.class}}" style="{{attributes.icon.style}}; font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
@@ -17,7 +17,7 @@ FRAG-IF{{attributes.binding.repeatable === false}}
             <md-input-container flex class="gc-input-icon-container" >
                 <label ATTR-IF{{ng-bind="attributes.label.value"}}></label>
                 <input ng-if="bindingType.value==='noBinding'" ATTR-IF{{name="attributes.name.value"}} ATTR-IF{{type="attributes.selectedType.value"}}
-                    ng-model="attributes.binding.value"
+                    ng-model="ATTR-EXP{{attributes.binding.value ? attributes.binding.value : attributes.name.value}}ATTR-ENDEXP"
                     ATTR-IF{{ng-change="attributes.onchange.value"}}
                     ATTR-IF{{minlength="attributes.minlength.value"}} ATTR-IF{{md-maxlength="attributes.maxlength.value"}}
                     ATTR-IF{{ng-pattern="attributes.pattern.value"}} ATTR-IF{{ng-required="attributes.required.value"}}
@@ -67,8 +67,8 @@ FRAG-IF{{attributes.binding.repeatable === false}}
             </md-input-container>
         </div>
     </div>
-    <div ng-if="attributes.selectedType.value==='number'" layout="row" ng-style="{'flex-direction': attributes.icon.value !=='' && attributes.position.value === 'right' ? 'row-reverse' : 'row'}">
-        <div class="gc_w_input_icon_wrap_preview" flex="none" ng-if="attributes.icon.value !== ''">
+    <div ng-if="ATTR-EXP{{attributes.selectedType.value==='number' ? 'true' : 'false'}}ATTR-ENDEXP" layout="row" ng-style="{'flex-direction': ATTR-EXP{{attributes.icon.value !=='' && attributes.position.value === 'right' ? 'row-reverse' : 'row'}}ATTR-ENDEXP}">
+        <div class="gc_w_input_icon_wrap_preview" flex="none" ng-if="ATTR-EXP{{attributes.icon.value !== '' ? 'true' : 'false'}}ATTR-ENDEXP">
             <span class="gc_w_input_icon">
                 <md-icon ng-if="attributes.icon.type ==='fa-icon' && isSimpleIcon.value" class="fa {{$eval(attributes.icon.value)}} {{attributes.icon.class}}" style="{{attributes.icon.style}}; font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
                 <md-icon ng-if="attributes.icon.type ==='fa-icon' && !isSimpleIcon.value" class="fa {{$eval($eval(attributes.icon.value))}} {{attributes.icon.class}}" style="{{attributes.icon.style}}; font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
@@ -80,7 +80,7 @@ FRAG-IF{{attributes.binding.repeatable === false}}
             <md-input-container flex class="gc-input-icon-container" >
                 <label ATTR-IF{{ng-bind="attributes.label.value"}}></label>
                 <input ng-if="bindingType.value==='noBinding'" ATTR-IF{{name="attributes.name.value"}} type="number"
-                    ng-model="attributes.binding.value"
+                    ng-model="ATTR-EXP{{attributes.binding.value ? attributes.binding.value : attributes.name.value}}ATTR-ENDEXP"
                     ATTR-IF{{ng-change="attributes.onchange.value)"
                     ATTR-IF{{min="attributes.minNumber.value"}} ATTR-IF{{max="attributes.maxNumber.value"}} step="any"
                     ATTR-IF{{ng-disabled="attributes.disabled.value)" ATTR-IF{{ng-required="attributes.required.value)"
@@ -133,8 +133,8 @@ FRAG-IF{{attributes.binding.repeatable === true}}
     ATTR-IF{{style="attributes.style.value"}}
     ATTR-IF{{class="attributes.classes.value"}}
     ATTR-IF{{ng-class="attributes.dynamicClasses.value"}} >
-    <div ng-if="attributes.selectedType.value!=='number'" layout="row" ng-style="{'flex-direction': attributes.icon.value !=='' && attributes.position.value === 'right' ? 'row-reverse' : 'row'}">
-        <div class="gc_w_input_icon_wrap_preview" flex="none" ng-if="attributes.icon.value !== ''">
+    <div ng-if="ATTR-EXP{{attributes.selectedType.value!=='number' ? 'true' : 'false'}}ATTR-ENDEXP" layout="row" ng-style="{'flex-direction': ATTR-EXP{{attributes.icon.value !=='' && attributes.position.value === 'right' ? 'row-reverse' : 'row'}}ATTR-ENDEXP}">
+        <div class="gc_w_input_icon_wrap_preview" flex="none" ng-if="ATTR-EXP{{attributes.icon.value !== '' ? 'true' : 'false'}}ATTR-ENDEXP">
             <span class="gc_w_input_icon">
                 <md-icon ng-if="attributes.icon.type ==='fa-icon' && isSimpleIcon.value" class="fa {{$eval(attributes.icon.value)}} {{attributes.icon.class}}" style="{{attributes.icon.style}}; font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
                 <md-icon ng-if="attributes.icon.type ==='fa-icon' && !isSimpleIcon.value" class="fa {{$eval($eval(attributes.icon.value))}} {{attributes.icon.class}}" style="{{attributes.icon.style}}; font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
@@ -167,8 +167,8 @@ FRAG-IF{{attributes.binding.repeatable === true}}
             </md-input-container>
         </div>
     </div>
-    <div ng-if="attributes.selectedType.value==='number'" layout="row" ng-style="{'flex-direction': attributes.icon.value !=='' && attributes.position.value === 'right' ? 'row-reverse' : 'row'}">
-        <div class="gc_w_input_icon_wrap_preview" flex="none" ng-if="attributes.icon.value !== ''">
+    <div ng-if="ATTR-EXP{{attributes.selectedType.value==='number' ? 'true' : 'false'}}ATTR-ENDEXP" layout="row" ng-style="{'flex-direction': ATTR-EXP{{attributes.icon.value !=='' && attributes.position.value === 'right' ? 'row-reverse' : 'row'}}ATTR-ENDEXP}">
+        <div class="gc_w_input_icon_wrap_preview" flex="none" ng-if="ATTR-EXP{{attributes.icon.value !== '' ? 'true' : 'false'}}ATTR-ENDEXP">
             <span class="gc_w_input_icon">
                 <md-icon ng-if="attributes.icon.type ==='fa-icon' && isSimpleIcon.value" class="fa {{$eval(attributes.icon.value)}} {{attributes.icon.class}}" style="{{attributes.icon.style}}; font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
                 <md-icon ng-if="attributes.icon.type ==='fa-icon' && !isSimpleIcon.value" class="fa {{$eval($eval(attributes.icon.value))}} {{attributes.icon.class}}" style="{{attributes.icon.style}}; font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
