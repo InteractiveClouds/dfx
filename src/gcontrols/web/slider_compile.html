@@ -17,7 +17,7 @@
                 <div flex="none" ng-if="ATTR-EXP{{attributes.direction.value === 'row' ? 'true' : 'false'}}ATTR-ENDEXP" style="margin:-11px 5px 0 0; padding-left: 5px"><span>{{$eval(item[attributes.bindingLabel.value]) || item[attributes.bindingLabel.value]}}</span></div>
                 <md-slider flex ng-if="ATTR-EXP{{attributes.discrete.value ? 'true' : 'false'}}ATTR-ENDEXP" md-discrete
                     class="md-altTheme-theme md-primary flex"
-                    ng-model="$gcscope[attributes.binding.value][$index]"
+                    ng-model="$parent_scope['attributes.binding.value'][$index]"
                     ATTR-IF{{min="attributes.minValue.value"}}
                     ATTR-IF{{max="attributes.maxValue.value"}}
                     ATTR-IF{{step="attributes.step.value"}}
@@ -40,7 +40,7 @@
                 </md-slider>
                 <md-slider flex ng-if="ATTR-EXP{{!attributes.discrete.value ? 'true' : 'false'}}ATTR-ENDEXP"
                     class="md-altTheme-theme md-primary flex"
-                    ng-model="$gcscope[attributes.binding.value][$index]"
+                    ng-model="$parent_scope['attributes.binding.value'][$index]"
                     ATTR-IF{{min="attributes.minValue.value"}}
                     ATTR-IF{{max="attributes.maxValue.value"}}
                     aria-label="attributes.name.value}},{{attributes.discrete.value}}"
@@ -63,7 +63,7 @@
                 <div flex="none" layout layout-align="center center"
                      ATTR-IF{{ng-show="attributes.inputVisible.value"}}>
                     <input ATTR-IF{{ng-disabled="attributes.disabled.value"}} type="number" style="text-align: center; width:55px; margin:-13px 10px 0 5px"
-                        ng-model="$gcscope[attributes.binding.value][$index]"
+                        ng-model="$parent_scope['attributes.binding.value'][$index]"
                         ATTR-IF{{ng-change="attributes.onchange.value"}}
                         ATTR-IF{{ng-focus="attributes.onfocus.value"}}
                         ATTR-IF{{ng-blur="attributes.onblur.value"}}
@@ -97,7 +97,7 @@
                 <div flex="none" ng-if="ATTR-EXP{{attributes.direction.value === 'row' ? 'true' : 'false'}}ATTR-ENDEXP" style="margin:-11px 5px 0 0; padding-left: 5px" ng-bind="$eval(item.label)"></div>
                 <md-slider flex ng-if="ATTR-EXP{{attributes.discrete.value ? 'true' : 'false'}}ATTR-ENDEXP" md-discrete
                     class="md-altTheme-theme md-primary flex"
-                    ng-model="$gcscope[attributes.binding.value][$index]"
+                    ng-model="$parent_scope['attributes.binding.value'][$index]"
                     ATTR-IF{{min="attributes.minValue.value"}}
                     ATTR-IF{{max="attributes.maxValue.value"}}
                     ATTR-IF{{step="attributes.step.value"}}
@@ -120,7 +120,7 @@
                 </md-slider>
                 <md-slider flex ng-if="ATTR-EXP{{!attributes.discrete.value ? 'true' : 'false'}}ATTR-ENDEXP"
                     class="md-altTheme-theme md-primary flex"
-                    ng-model="$gcscope[attributes.binding.value][$index]"
+                    ng-model="$parent_scope['attributes.binding.value'][$index]"
                     ATTR-IF{{min="attributes.minValue.value"}}
                     ATTR-IF{{max="attributes.maxValue.value"}}
                     aria-label="{{attributes.name.value}},{{attributes.discrete.value}}"
@@ -143,7 +143,7 @@
                 <div flex="none" layout layout-align="center center"
                      ATTR-IF{{ng-show="attributes.inputVisible.value"}}>
                     <input ATTR-IF{{ng-disabled="attributes.disabled.value"}} type="number" style="text-align: center; width:55px; margin:-13px 10px 0 5px"
-                        ng-model="$gcscope[attributes.binding.value][$index]"
+                        ng-model="$parent_scope['attributes.binding.value'][$index]"
                         ATTR-IF{{ng-change="attributes.onchange.value"}}
                         ATTR-IF{{ng-focus="attributes.onfocus.value"}}
                         ATTR-IF{{ng-blur="attributes.onblur.value"}}

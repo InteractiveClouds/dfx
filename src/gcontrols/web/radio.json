@@ -3,6 +3,7 @@
     "name":                 { "value": "rdRadio1" },
     "label":                { "value": "'Select option'" },
     "binding":              { "value": "" },
+    "bindingType":          { "value": "noBinding" },
     "empty":                { "value": "" },
     "bindingProperty":      { "value": "" },
     "propToDisplay":        { "value": "" },
