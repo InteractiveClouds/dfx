@@ -522,7 +522,6 @@ dfxGCC.directive('dfxGccWebTreeview', [ '$timeout', '$compile', '$q', '$http', '
 
                 scope.getDynamicItems = function() {
                     return scope.$gcscope[scope.attributes.dynamic.value];
-                    //return scope.attributes.dynamic.value;
                 };
                 scope.getStaticItems = function() {
                     return scope.attributes.static.value;
@@ -1896,16 +1895,7 @@ dfxGCC.directive('dfxGccWebRating', function() {
                     if ( !scope.attributes.icon.hasOwnProperty('type') ) { scope.attributes.icon.type = 'fa-icon'; }
                     if ( !scope.attributes.icon.hasOwnProperty('size') ) { scope.attributes.icon.size = 21; }
                     if ( scope.attributes.range.hasOwnProperty('values') ) {delete scope.attributes.range.values; }
-                    scope.ifShowIconTypes = function( icon ) {
-                        var regexp = /(^\')(.*)(\'$)/gm, filtered = regexp.exec( icon );
-                        if ( icon && ( icon.indexOf('+') >= 0 ) ) { filtered = false; }
-                        if ( icon === '' ) { filtered = true; }
-                        if ( icon.indexOf("'") === 0 && icon.indexOf('+') === -1 && icon.charAt(icon.length-1) === "'" ) {
-                            icon.indexOf("'fa-") === 0 ? scope.attributes.icon.type = 'fa-icon' : scope.attributes.icon.type = 'svg-icon';
-                        }
-                        scope.showIconTypes = filtered ? false : true;
-                    }
-                    scope.ifShowIconTypes(scope.attributes.icon.value);
+
                     scope.$gcscope = scope;
                     basectrl.bindScopeVariable(scope, component.attributes.binding.value);
 
@@ -2016,6 +2006,1222 @@ dfxGCC.directive('dfxGccWebKnob', ['$timeout', '$compile', function($timeout, $c
                         $timeout(function() {$compile($('.'+component.id+'_dfx_ng_knob').contents())(scope);}, 0);
                     }
                 }, 0);
+            });
+        }
+    }
+}]);
+
+var DfxGcChartUtil = (function () {
+    var api = {};
+
+    var removeBracketsFromEventListener = function(eventListener) {
+        return (eventListener) ? eventListener.replace(/\(.*?\)/g, "") : eventListener;
+    };
+    var refreshChartToReflectFlexSize = function(scope, isDesignTime, $timeout, oldFlexValue) {
+          $timeout(function() {
+              if (scope[scope.attributes.name.value].refresh) {
+                  oldFlexValue = oldFlexValue || 100;
+
+                  // remove old flex class and add new manually because it's not done automatically after chart dropping
+                  if (oldFlexValue) { $('#' + scope.component_id).removeClass('flex' + '-' + oldFlexValue); }
+                  $('#' + scope.component_id).attr('flex', scope.attributes.flex.value);
+                  $('#' + scope.component_id).addClass('flex' + '-' + scope.attributes.flex.value);
+
+                  // for the case when panel column layout direction = column
+                  $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+
+                  scope[scope.attributes.name.value].refresh();
+              }
+          }, 0);
+    };
+
+    api.adjustContainerHeight = function(scope) {
+        // adjust container height to include title height
+        var containerHeight = $('#' + scope.component_id).find('.dfx-core-gc-chart').height();
+        var chartTitleHeight = $('#' + scope.component_id).find('.title').height() * 1.5 || 30;
+        $('#' + scope.component_id).height(containerHeight + chartTitleHeight);
+    };
+
+    api.setAttributesBeforeInit = function (scope, attrs, chartOptions, chartData) {
+        //must set main chart options before reading json definition from file,
+        //otherwise, chart is not constructed - and when attributes are reset from file - chart does not exist and nvd3.watch is useless
+        scope.attributes = scope.attributes || { 'options': {} };
+        scope.attributes.options = {value: chartOptions};
+
+        scope.$gcscope = scope; //also, must set it here, before reading data from file
+    };
+
+    api.setRunTimeAttributes = function (scope, chartTypeDef, chartEventNames, $timeout) {
+        if (scope.attributes.title.value) {
+            scope.attributes.options.value.title = {
+                text: scope.attributes.title.value,
+                enable: true
+            };
+        }
+        if (scope.attributes.options.xAxisLabel) {
+            scope.attributes.options.value.chart.xAxis.axisLabel = scope.attributes.options.xAxisLabel;
+            scope.attributes.options.value.chart.yAxis.axisLabel = scope.attributes.options.yAxisLabel;
+        }
+        if (scope.attributes.options.xAxisLabelDistance) {
+            scope.attributes.options.value.chart.xAxis.axisLabelDistance = scope.attributes.options.xAxisLabelDistance;
+            scope.attributes.options.value.chart.yAxis.axisLabelDistance = scope.attributes.options.yAxisLabelDistance;
+        }
+        if (scope.attributes.options.duration) {
+            scope.attributes.options.value.chart.duration = scope.attributes.options.duration;
+        }
+        if (scope.attributes.options.showValues) {
+            scope.attributes.options.value.chart.showValues = scope.attributes.options.showValues;
+        }
+        if (scope.attributes.options.showXAxis) {
+            scope.attributes.options.value.chart.showXAxis = scope.attributes.options.showXAxis;
+            scope.attributes.options.value.chart.showYAxis = scope.attributes.options.showYAxis;
+        }
+        if (scope.attributes.options.showControls) {
+            scope.attributes.options.value.chart.showControls = scope.attributes.options.showControls;
+        }
+        if (scope.attributes.options.showLegend) {
+            scope.attributes.options.value.chart.showLegend = scope.attributes.options.showLegend;
+        }
+        if (scope.attributes.options.stacked) {
+            scope.attributes.options.value.chart.stacked = scope.attributes.options.stacked;
+        }
+        if (scope.attributes.options.useInteractiveGuideline) {
+            scope.attributes.options.value.chart.useInteractiveGuideline = scope.attributes.options.useInteractiveGuideline;
+        }
+        if (scope.attributes.options.rescaleY) {
+            scope.attributes.options.value.chart.rescaleY = scope.attributes.options.rescaleY;
+        }
+        if (scope.attributes.options.labelSunbeamLayout) {
+            scope.attributes.options.value.chart.labelSunbeamLayout = scope.attributes.options.labelSunbeamLayout;
+        }
+        if (scope.attributes.options.labelThreshold) {
+            scope.attributes.options.value.chart.labelThreshold = scope.attributes.options.labelThreshold;
+        }
+        if (scope.attributes.options.donutLabelsOutside) {
+            scope.attributes.options.value.chart.donutLabelsOutside = scope.attributes.options.donutLabelsOutside;
+        }
+        if (scope.attributes.options.showLabels) {
+            scope.attributes.options.value.chart.showLabels = scope.attributes.options.showLabels;
+        }
+        if (scope.attributes.options.cornerRadius) {
+            scope.attributes.options.value.chart.cornerRadius = scope.attributes.options.cornerRadius;
+        }
+        if (scope.attributes.options.growOnHover) {
+            scope.attributes.options.value.chart.growOnHover = scope.attributes.options.growOnHover;
+        }
+        if (scope.attributes.options.donutRatio) {
+            scope.attributes.options.value.chart.donutRatio = scope.attributes.options.donutRatio;
+        }
+
+        var assignEvent = function(eventName, dispatch) {
+            if (scope.attributes[eventName] && scope.attributes[eventName].value) {
+                var normalizedEvent = removeBracketsFromEventListener(scope.attributes[eventName].value);
+                dispatch[ chartEventNames[eventName] ] = scope.$gcscope[normalizedEvent];
+            }
+        };
+        // global chart dispatch
+        var generalDispatch = {};
+        assignEvent('onbeforeupdate', generalDispatch);
+        assignEvent('onstatechange', generalDispatch);
+        assignEvent('onrenderend', generalDispatch);
+        scope.attributes.options.value.chart.dispatch = generalDispatch;
+
+        // specific chart dispatch
+        var specificDispatch = {};
+        assignEvent('onclick', specificDispatch);
+        assignEvent('ondblclick', specificDispatch);
+        assignEvent('onmouseover', specificDispatch);
+        assignEvent('onmouseleave', specificDispatch);
+        assignEvent('onmousemove', specificDispatch);
+        assignEvent('onareaclick', specificDispatch);
+        assignEvent('onareamouseover', specificDispatch);
+        assignEvent('onareamouseleave', specificDispatch);
+        scope.attributes.options.value.chart[chartTypeDef] = { dispatch: specificDispatch };
+
+        refreshChartToReflectFlexSize(scope, false, $timeout);
+    };
+    api.setRunTimeChartNameVariable = function (scope, basectrl, component, $timeout) {
+        $timeout(function() {
+            //first, create variable with real chart name and assign to it the value from temp chart name
+            scope[component.attributes.name.value] = scope.dfx_chart_api;
+
+            //then, create this variable in parent scope (it does not exist there - not like other vars from attributes)
+            scope.$parent_scope[component.attributes.name.value] = scope[component.attributes.name.value];
+
+            //then, bind this scope variable
+            basectrl.bindScopeVariable(scope, component.attributes.name.value);
+        }, 0);
+    };
+
+    api.watchRunTimeAttributes = function (scope, $timeout) {
+        scope.$gcscope.$watch(scope.attributes.title.value, function(newValue) {
+            scope.attributes.options.value.title.text = newValue;
+        });
+        if (scope.attributes.options.xAxisLabel) {
+            scope.$gcscope.$watch(scope.attributes.options.xAxisLabel, function (newValue) {
+                scope.attributes.options.value.chart.xAxis.axisLabel = newValue;
+            });
+            scope.$gcscope.$watch(scope.attributes.options.yAxisLabel, function (newValue) {
+                scope.attributes.options.value.chart.yAxis.axisLabel = newValue;
+            });
+        }
+        if (scope.attributes.options.xAxisLabelDistance) {
+            scope.$gcscope.$watch(scope.attributes.options.xAxisLabelDistance, function (newValue) {
+                scope.attributes.options.value.chart.xAxis.axisLabelDistance = newValue;
+            });
+            scope.$gcscope.$watch(scope.attributes.options.yAxisLabelDistance, function (newValue) {
+                scope.attributes.options.value.chart.yAxis.axisLabelDistance = newValue;
+            });
+        }
+        if (scope.attributes.options.duration) {
+            scope.$gcscope.$watch(scope.attributes.options.duration, function (newValue) {
+                scope.attributes.options.value.chart.duration = newValue;
+            });
+        }
+        if (scope.attributes.options.showValues) {
+            scope.$gcscope.$watch(scope.attributes.options.showValues, function (newValue, oldValue) {
+                scope.attributes.options.value.chart.showValues = newValue;
+                refreshChartToReflectFlexSize(scope, false, $timeout, oldValue);
+            });
+        }
+        if (scope.attributes.options.showXAxis) {
+            scope.$gcscope.$watch(scope.attributes.options.showXAxis, function (newValue) {
+                scope.attributes.options.value.chart.showXAxis = newValue;
+            });
+            scope.$gcscope.$watch(scope.attributes.options.showYAxis, function (newValue) {
+                scope.attributes.options.value.chart.showYAxis = newValue;
+            });
+        }
+        if (scope.attributes.options.showControls) {
+            scope.$gcscope.$watch(scope.attributes.options.showControls, function (newValue, oldValue) {
+                scope.attributes.options.value.chart.showControls = newValue;
+                refreshChartToReflectFlexSize(scope, false, $timeout, oldValue);
+            });
+        }
+        if (scope.attributes.options.showLegend) {
+            scope.$gcscope.$watch(scope.attributes.options.showLegend, function (newValue, oldValue) {
+                scope.attributes.options.value.chart.showLegend = newValue;
+                refreshChartToReflectFlexSize(scope, false, $timeout, oldValue);
+            });
+        }
+        if (scope.attributes.options.stacked) {
+            scope.$gcscope.$watch(scope.attributes.options.stacked, function (newValue, oldValue) {
+                scope.attributes.options.value.chart.stacked = newValue;
+                refreshChartToReflectFlexSize(scope, false, $timeout, oldValue);
+            });
+        }
+        if (scope.attributes.options.useInteractiveGuideline) {
+            scope.$gcscope.$watch(scope.attributes.options.useInteractiveGuideline, function (newValue, oldValue) {
+                scope.attributes.options.value.chart.useInteractiveGuideline = newValue;
+                refreshChartToReflectFlexSize(scope, false, $timeout, oldValue);
+            });
+        }
+        if (scope.attributes.options.rescaleY) {
+            scope.$gcscope.$watch(scope.attributes.options.rescaleY, function (newValue, oldValue) {
+                scope.attributes.options.value.chart.rescaleY = newValue;
+                refreshChartToReflectFlexSize(scope, false, $timeout, oldValue);
+            });
+        }
+        if (scope.attributes.options.labelSunbeamLayout) {
+            scope.$gcscope.$watch(scope.attributes.options.labelSunbeamLayout, function (newValue) {
+                scope.attributes.options.value.chart.labelSunbeamLayout = newValue;
+            });
+        }
+        if (scope.attributes.options.labelThreshold) {
+            scope.$gcscope.$watch(scope.attributes.options.labelThreshold, function (newValue) {
+                scope.attributes.options.value.chart.labelThreshold = newValue;
+            });
+        }
+        if (scope.attributes.options.donutLabelsOutside) {
+            scope.$gcscope.$watch(scope.attributes.options.donutLabelsOutside, function (newValue) {
+                scope.attributes.options.value.chart.donutLabelsOutside = newValue;
+            });
+        }
+        if (scope.attributes.options.showLabels) {
+            scope.$gcscope.$watch(scope.attributes.options.showLabels, function (newValue) {
+                scope.attributes.options.value.chart.showLabels = newValue;
+            });
+        }
+        if (scope.attributes.options.cornerRadius) {
+            scope.$gcscope.$watch(scope.attributes.options.cornerRadius, function (newValue) {
+                scope.attributes.options.value.chart.cornerRadius = newValue;
+            });
+        }
+        if (scope.attributes.options.growOnHover) {
+            scope.$gcscope.$watch(scope.attributes.options.growOnHover, function (newValue) {
+                scope.attributes.options.value.chart.growOnHover = newValue;
+            });
+        }
+        if (scope.attributes.options.donutRatio) {
+            scope.$gcscope.$watch(scope.attributes.options.donutRatio, function (newValue) {
+                scope.attributes.options.value.chart.donutRatio = newValue;
+            });
+        }
+    };
+
+    return api;
+}());
+
+dfxGCC.directive('dfxGccWebAreachart', ['$timeout', '$filter', function($timeout, $filter) {
+    return {
+        restrict: 'A',
+        require: '^dfxGccWebBase',
+        scope: true,
+        link: function(scope, element, attrs, basectrl) {
+            var component = scope.getComponent(element);
+
+            var chartData    = [
+                {
+                    "key" : "North America" ,
+                    "values" : [ [ 1320033600000 , 26.672] , [ 1322629200000 , 27.297] , [ 1325307600000 , 20.174] , [ 1327986000000 , 19.631] , [ 1330491600000 , 20.366] , [ 1333166400000 , 19.284] , [ 1335758400000 , 19.157]]
+                },
+                {
+                    "key" : "Europe" ,
+                    "values" : [ [ 1320033600000 , 35.611] , [ 1322629200000 , 35.320] , [ 1325307600000 , 31.564] , [ 1327986000000 , 32.074] , [ 1330491600000 , 35.053] , [ 1333166400000 , 33.873] , [ 1335758400000 , 32.321]]
+                },
+                {
+                    "key" : "Australia" ,
+                    "values" : [ [ 1320033600000 , 5.453] , [ 1322629200000 , 7.672] , [ 1325307600000 , 8.014] , [ 1327986000000 , 0] , [ 1330491600000 , 0] , [ 1333166400000 , 0] , [ 1335758400000 , 0]]
+                }
+            ];
+            var chartOptions = {
+                chart: {
+                    type: 'stackedAreaChart',
+                    margin : {
+                        top: 20,
+                        right: 20,
+                        bottom: 50,
+                        left: 55
+                    },
+                    x: function(d){return d[0];},
+                    y: function(d){return d[1];},
+                    useVoronoi: false,
+                    clipEdge: true,
+                    duration: 100,
+                    useInteractiveGuideline: true,
+                    xAxis: {
+                        showMaxMin: false,
+                        tickFormat: function(d) {
+                            return d3.time.format('%x')(new Date(d))
+                        },
+                        axisLabel: 'X Axis'
+                    },
+                    yAxis: {
+                        tickFormat: function(d){
+                            return d3.format(',.2f')(d);
+                        }
+                    }
+                },
+                title: {
+                    text: 'Stacked Area Chart',
+                    enable: true
+                }
+            };
+
+            basectrl.init(scope, element, component, attrs, 'areachart').then(function () {
+                if (scope.attributes.dynamicOptions) scope.attributes.dynamicOptions.status = "overridden";
+                scope.attributes.flex.status = "overridden";
+
+                DfxGcChartUtil.setRunTimeChartNameVariable(scope, basectrl, component, $timeout);
+
+                basectrl.bindScopeVariable(scope, component.attributes.title.value);
+
+                // dynamicOptions is a priority over all static options, title and events (ex. onclick)
+                if (scope.attributes.dynamicOptions && scope.attributes.dynamicOptions.value) {
+                    scope.attributes.options.value = scope[scope.attributes.dynamicOptions.value];
+                } else {
+                    scope.attributes.options.value = chartOptions;
+
+                    var eventsList = {
+                        onareaclick: 'areaClick',
+                        onareamouseover: 'areaMouseover',
+                        onareamouseleave: 'areaMouseout',
+                        onstatechange: 'stateChange',
+                        onrenderend: 'renderEnd'
+                    };
+
+                    DfxGcChartUtil.setRunTimeAttributes(scope, 'stacked', eventsList, $timeout);
+                    DfxGcChartUtil.watchRunTimeAttributes(scope, $timeout);
+                }
+
+                DfxGcChartUtil.adjustContainerHeight(scope);
+            });
+
+            DfxGcChartUtil.setAttributesBeforeInit(scope, attrs, chartOptions, chartData);
+        }
+    }
+}]);
+
+dfxGCC.directive('dfxGccWebBarchart', ['$timeout', '$filter', function($timeout, $filter) {
+    return {
+        restrict: 'A',
+        require: '^dfxGccWebBase',
+        scope: true,
+        link: function(scope, element, attrs, basectrl) {
+            var component = scope.getComponent(element);
+
+            var chartData    = [{
+                key:    "Cumulative Return",
+                values: [
+                    {
+                        "label": "A",
+                        "value": -29.76
+                    },
+                    {
+                        "label": "B",
+                        "value": 32.80
+                    },
+                    {
+                        "label": "C",
+                        "value": 196.45
+                    },
+                    {
+                        "label": "D",
+                        "value": -98.07
+                    },
+                    {
+                        "label": "E",
+                        "value": -13.92
+                    }
+                ]
+            }];
+            var chartOptions = {
+                chart: {
+                    type: 'discreteBarChart',
+                    margin : {
+                        top: 20,
+                        right: 20,
+                        bottom: 50,
+                        left: 55
+                    },
+                    x: function(d){return d.label;},
+                    y: function(d){return d.value;},
+                    showValues:  true,
+                    valueFormat: function (d) {
+                        return d3.format(',.4f')(d);
+                    },
+                    duration:    500,
+                    xAxis:       {
+                        axisLabel: 'X Axis',
+                        axisLabelDistance: -5
+                    },
+                    yAxis:       {
+                        axisLabel: 'Y Axis',
+                        axisLabelDistance: -5
+                    }
+                },
+                title: {
+                    text: 'Bar Chart',
+                    enable: true
+                }
+            };
+
+            basectrl.init(scope, element, component, attrs, 'barchart').then(function () {
+                if (scope.attributes.dynamicOptions) scope.attributes.dynamicOptions.status = "overridden";
+                scope.attributes.flex.status = "overridden";
+
+                DfxGcChartUtil.setRunTimeChartNameVariable(scope, basectrl, component, $timeout);
+
+                basectrl.bindScopeVariable(scope, component.attributes.title.value);
+
+                // dynamicOptions is a priority over all static options, title and events (ex. onclick)
+                if (scope.attributes.dynamicOptions && scope.attributes.dynamicOptions.value) {
+                    scope.attributes.options.value = scope[scope.attributes.dynamicOptions.value];
+                } else {
+                    scope.attributes.options.value = chartOptions;
+
+                    var eventsList = {
+                        onclick: 'elementClick',
+                        ondblclick: 'elementDblClick',
+                        onmouseover: 'elementMouseover',
+                        onmouseleave: 'elementMouseout',
+                        onmousemove: 'elementMousemove',
+                        onbeforeupdate: 'beforeUpdate',
+                        onrenderend: 'renderEnd'
+                    };
+
+                    DfxGcChartUtil.setRunTimeAttributes(scope, 'discretebar', eventsList, $timeout);
+                    DfxGcChartUtil.watchRunTimeAttributes(scope, $timeout);
+                }
+
+                DfxGcChartUtil.adjustContainerHeight(scope);
+            });
+
+            DfxGcChartUtil.setAttributesBeforeInit(scope, attrs, chartOptions, chartData);
+        }
+    }
+}]);
+
+dfxGCC.directive('dfxGccWebHzbarchart', ['$timeout', '$filter', function($timeout, $filter) {
+    return {
+        restrict: 'A',
+        require: '^dfxGccWebBase',
+        scope: true,
+        link: function(scope, element, attrs, basectrl) {
+            var component = scope.getComponent(element);
+
+            var chartData = [
+                {
+                    "key": "Series1",
+                    "color": "#d62728",
+                    "values": [
+                        {
+                            "label" : "Group A" ,
+                            "value" : -1.874
+                        },
+                        {
+                            "label" : "Group B" ,
+                            "value" : -8.096
+                        },
+                        {
+                            "label" : "Group C" ,
+                            "value" : -0.570
+                        },
+                        {
+                            "label" : "Group D" ,
+                            "value" : -2.417
+                        },
+                        {
+                            "label" : "Group E" ,
+                            "value" : -0.720
+                        }
+                    ]
+                },
+                {
+                    "key": "Series2",
+                    "color": "#1f77b4",
+                    "values": [
+                        {
+                            "label" : "Group A" ,
+                            "value" : 25.307
+                        },
+                        {
+                            "label" : "Group B" ,
+                            "value" : 16.756
+                        },
+                        {
+                            "label" : "Group C" ,
+                            "value" : 18.451
+                        },
+                        {
+                            "label" : "Group D" ,
+                            "value" : 8.614
+                        },
+                        {
+                            "label" : "Group E" ,
+                            "value" : 7.808
+                        }
+                    ]
+                }
+            ];
+            var chartOptions = {
+                chart: {
+                    type: 'multiBarHorizontalChart',
+                    margin : {
+                        top: 20,
+                        right: 20,
+                        bottom: 50,
+                        left: 55
+                    },
+                    x: function(d){return d.label;},
+                    y: function(d){return d.value;},
+                    showControls: true,
+                    showValues:  true,
+                    duration:    500,
+                    xAxis:       {
+                        showMaxMin: false,
+                        axisLabel: ''
+                    },
+                    yAxis:       {
+                        axisLabel: 'Values',
+                        tickFormat: function(d) {
+                            return d3.format(',.2f')(d);
+                        }
+                    }
+                },
+                title: {
+                    text: 'Horizontal Bar Chart',
+                    enable: true
+                }
+            };
+
+            basectrl.init(scope, element, component, attrs, 'hzbarchart').then(function () {
+                if (scope.attributes.dynamicOptions) scope.attributes.dynamicOptions.status = "overridden";
+                scope.attributes.flex.status = "overridden";
+
+                DfxGcChartUtil.setRunTimeChartNameVariable(scope, basectrl, component, $timeout);
+
+                basectrl.bindScopeVariable(scope, component.attributes.title.value);
+
+                // dynamicOptions is a priority over all static options, title and events (ex. onclick)
+                if (scope.attributes.dynamicOptions && scope.attributes.dynamicOptions.value) {
+                    scope.attributes.options.value = scope[scope.attributes.dynamicOptions.value];
+                } else {
+                    scope.attributes.options.value = chartOptions;
+
+                    var eventsList = {
+                        onclick: 'elementClick',
+                        ondblclick: 'elementDblClick',
+                        onmouseover: 'elementMouseover',
+                        onmouseleave: 'elementMouseout',
+                        onmousemove: 'elementMousemove',
+                        onstatechange: 'stateChange',
+                        onrenderend: 'renderEnd'
+                    };
+
+                    DfxGcChartUtil.setRunTimeAttributes(scope, 'multibar', eventsList, $timeout);
+                    DfxGcChartUtil.watchRunTimeAttributes(scope, $timeout);
+                }
+
+                DfxGcChartUtil.adjustContainerHeight(scope);
+            });
+
+            DfxGcChartUtil.setAttributesBeforeInit(scope, attrs, chartOptions, chartData);
+        }
+    }
+}]);
+
+dfxGCC.directive('dfxGccWebPiechart', ['$timeout', '$filter', function($timeout, $filter) {
+    return {
+        restrict: 'A',
+        require: '^dfxGccWebBase',
+        scope: true,
+        link: function(scope, element, attrs, basectrl) {
+            var component = scope.getComponent(element);
+
+            var chartData    = [
+                {
+                    key: "One",
+                    y: 5
+                },
+                {
+                    key: "Two",
+                    y: 2
+                },
+                {
+                    key: "Three",
+                    y: 9
+                },
+                {
+                    key: "Four",
+                    y: 7
+                },
+                {
+                    key: "Five",
+                    y: 4
+                }
+            ];
+            var chartOptions = {
+                chart: {
+                    type: 'pieChart',
+                    margin : {
+                        top: 20,
+                        right: 20,
+                        bottom: 50,
+                        left: 55
+                    },
+                    x: function(d){return d.key;},
+                    y: function(d){return d.y;},
+                    showLabels: true,
+                    duration: 500,
+                    labelThreshold: 0.01,
+                    labelSunbeamLayout: true,
+                    legend: {
+                        margin: {
+                            top: 5,
+                            right: 5,
+                            bottom: 5,
+                            left: 0
+                        }
+                    }
+                },
+                title: {
+                    text: 'Pie Chart',
+                    enable: true
+                }
+            };
+
+            basectrl.init(scope, element, component, attrs, 'piechart').then(function () {
+                if (scope.attributes.dynamicOptions) scope.attributes.dynamicOptions.status = "overridden";
+                scope.attributes.flex.status = "overridden";
+
+                DfxGcChartUtil.setRunTimeChartNameVariable(scope, basectrl, component, $timeout);
+
+                basectrl.bindScopeVariable(scope, component.attributes.title.value);
+
+                // dynamicOptions is a priority over all static options, title and events (ex. onclick)
+                if (scope.attributes.dynamicOptions && scope.attributes.dynamicOptions.value) {
+                    scope.attributes.options.value = scope[scope.attributes.dynamicOptions.value];
+                } else {
+                    scope.attributes.options.value = chartOptions;
+
+                    var eventsList = {
+                        onclick: 'elementClick',
+                        ondblclick: 'elementDblClick',
+                        onmouseover: 'elementMouseover',
+                        onmouseleave: 'elementMouseout',
+                        onmousemove: 'elementMousemove',
+                        onstatechange: 'stateChange',
+                        onrenderend: 'renderEnd'
+                    };
+
+                    DfxGcChartUtil.setRunTimeAttributes(scope, 'pie', eventsList, $timeout);
+                    DfxGcChartUtil.watchRunTimeAttributes(scope, $timeout);
+                }
+
+                DfxGcChartUtil.adjustContainerHeight(scope);
+            });
+
+            DfxGcChartUtil.setAttributesBeforeInit(scope, attrs, chartOptions, chartData);
+        }
+    }
+}]);
+
+dfxGCC.directive('dfxGccWebDonutchart', ['$timeout', '$filter', function($timeout, $filter) {
+    return {
+        restrict: 'A',
+        require: '^dfxGccWebBase',
+        scope: true,
+        link: function(scope, element, attrs, basectrl) {
+            var component = scope.getComponent(element);
+
+            var chartData    = [
+                {
+                    key: "One",
+                    y: 5
+                },
+                {
+                    key: "Two",
+                    y: 2
+                },
+                {
+                    key: "Three",
+                    y: 9
+                },
+                {
+                    key: "Four",
+                    y: 7
+                },
+                {
+                    key: "Five",
+                    y: 4
+                }
+            ];
+            var chartOptions = {
+                chart: {
+                    type: 'pieChart',
+                    donut: true,
+                    margin : {
+                        top: 20,
+                        right: 20,
+                        bottom: 50,
+                        left: 55
+                    },
+                    x: function(d){return d.key;},
+                    y: function(d){return d.y;},
+                    showLabels: true,
+                    donutRatio: 0.35,//default
+                    duration: 500,
+                    legend: {
+                        margin: {
+                            top: 5,
+                            right: 35,
+                            bottom: 5,
+                            left: 0
+                        }
+                    },
+                    pie: {
+                        startAngle: function(d) { return d.startAngle - Math.PI },
+                        endAngle: function(d) { return d.endAngle - Math.PI }
+                    }
+                },
+                title: {
+                    text: 'Donut Chart',
+                    enable: true
+                }
+            };
+
+            basectrl.init(scope, element, component, attrs, 'donutchart').then(function () {
+                if (scope.attributes.dynamicOptions) scope.attributes.dynamicOptions.status = "overridden";
+                scope.attributes.flex.status = "overridden";
+
+                DfxGcChartUtil.setRunTimeChartNameVariable(scope, basectrl, component, $timeout);
+
+                basectrl.bindScopeVariable(scope, component.attributes.title.value);
+
+                // dynamicOptions is a priority over all static options, title and events (ex. onclick)
+                if (scope.attributes.dynamicOptions && scope.attributes.dynamicOptions.value) {
+                    scope.attributes.options.value = scope[scope.attributes.dynamicOptions.value];
+                } else {
+                    scope.attributes.options.value = chartOptions;
+
+                    var eventsList = {
+                        onclick: 'elementClick',
+                        ondblclick: 'elementDblClick',
+                        onmouseover: 'elementMouseover',
+                        onmouseleave: 'elementMouseout',
+                        onmousemove: 'elementMousemove',
+                        onstatechange: 'stateChange',
+                        onrenderend: 'renderEnd'
+                    };
+
+                    DfxGcChartUtil.setRunTimeAttributes(scope, 'pie', eventsList, $timeout);
+                    DfxGcChartUtil.watchRunTimeAttributes(scope, $timeout);
+                }
+
+                DfxGcChartUtil.adjustContainerHeight(scope);
+            });
+
+            DfxGcChartUtil.setAttributesBeforeInit(scope, attrs, chartOptions, chartData);
+        }
+    }
+}]);
+
+dfxGCC.directive('dfxGccWebLinechart', ['$timeout', '$filter', function($timeout, $filter) {
+    return {
+        restrict: 'A',
+        require: '^dfxGccWebBase',
+        scope: true,
+        link: function(scope, element, attrs, basectrl) {
+            var component = scope.getComponent(element);
+
+            function lineChartDesignData() {
+                var sin = [], sin2 = [],
+                    cos = [];
+
+                //Data is represented as an array of {x,y} pairs.
+                for (var i = 0; i < 100; i++) {
+                    sin.push({x: i, y: Math.sin(i / 10)});
+                    sin2.push({x: i, y: i % 10 == 5 ? null : Math.sin(i / 10) * 0.25 + 0.5});
+                    cos.push({x: i, y: .5 * Math.cos(i / 10 + 2) + Math.random() / 10});
+                }
+
+                //Line chart data should be sent as an array of series objects.
+                return [
+                    {
+                        values: sin,      //values - represents the array of {x,y} data points
+                        key:    'Sine Wave', //key  - the name of the series.
+                        color:  '#ff7f0e'  //color - optional: choose your own line color.
+                    },
+                    {
+                        values: cos,
+                        key:    'Cosine Wave',
+                        color:  '#2ca02c'
+                    },
+                    {
+                        values: sin2,
+                        key:    'Another sine wave',
+                        color:  '#7777ff',
+                        area:   true      //area - set to true if you want this line to turn into a filled area chart.
+                    }
+                ];
+            };
+            var chartData    = lineChartDesignData();
+
+            var chartOptions = {
+                chart: {
+                    type: 'lineChart',
+                    margin : {
+                        top: 20,
+                        right: 20,
+                        bottom: 50,
+                        left: 55
+                    },
+                    x: function(d){return d.x;},
+                    y: function(d){return d.y;},
+                    useInteractiveGuideline: true,
+                    xAxis: {
+                        axisLabel: 'X Axis'
+                    },
+                    yAxis: {
+                        axisLabel: 'Y Axis',
+                        axisLabelDistance: -10
+                    }
+                },
+                title: {
+                    text: 'Line Chart',
+                    enable: true
+                }
+            };
+
+            basectrl.init(scope, element, component, attrs, 'linechart').then(function () {
+                if (scope.attributes.dynamicOptions) scope.attributes.dynamicOptions.status = "overridden";
+                scope.attributes.flex.status = "overridden";
+
+                DfxGcChartUtil.setRunTimeChartNameVariable(scope, basectrl, component, $timeout);
+
+                basectrl.bindScopeVariable(scope, component.attributes.title.value);
+
+                // dynamicOptions is a priority over all static options, title and events (ex. onclick)
+                if (scope.attributes.dynamicOptions && scope.attributes.dynamicOptions.value) {
+                    scope.attributes.options.value = scope[scope.attributes.dynamicOptions.value];
+                } else {
+                    scope.attributes.options.value = chartOptions;
+
+                    var eventsList = {
+                        onclick: 'elementClick',
+                        onmouseover: 'elementMouseover',
+                        onmouseleave: 'elementMouseout',
+                        onstatechange: 'stateChange',
+                        onrenderend: 'renderEnd'
+                    };
+
+                    DfxGcChartUtil.setRunTimeAttributes(scope, 'lines', eventsList, $timeout);
+                    DfxGcChartUtil.watchRunTimeAttributes(scope, $timeout);
+                }
+
+                DfxGcChartUtil.adjustContainerHeight(scope);
+            });
+
+            DfxGcChartUtil.setAttributesBeforeInit(scope, attrs, chartOptions, chartData);
+        }
+    }
+}]);
+
+dfxGCC.directive('dfxGccWebCmlinechart', ['$timeout', '$filter', function($timeout, $filter) {
+    return {
+        restrict: 'A',
+        require: '^dfxGccWebBase',
+        scope: true,
+        link: function(scope, element, attrs, basectrl) {
+            var component = scope.getComponent(element);
+
+            var chartData    = [
+                {
+                    key: "Long",
+                    values: [ [ 1283227200000, 248.308], [ 1285819200000, 278.148], [ 1288497600000, 292.692], [ 1291093200000, 300.842], [ 1293771600000, 326.172]],
+                    mean: 250
+                },
+                {
+                    key: "Short",
+                    values: [ [ 1283227200000, -85.397], [ 1285819200000, -94.738], [ 1288497600000, -98.661], [ 1291093200000, -99.609], [ 1293771600000, -103.570]],
+                    mean: -60
+                }
+            ];
+            var chartOptions = {
+                chart: {
+                    type: 'cumulativeLineChart',
+                    margin : {
+                        top: 20,
+                        right: 20,
+                        bottom: 50,
+                        left: 55
+                    },
+                    x: function(d){ return d[0]; },
+                    y: function(d){ return d[1]/100; },
+                    average: function(d) { return d.mean/100; },
+
+                    color: d3.scale.category10().range(),
+                    duration: 300,
+                    useInteractiveGuideline: true,
+                    clipVoronoi: false,
+                    interactive: true,
+                    rescaleY: true,
+
+                    xAxis: {
+                        axisLabel: 'X Axis',
+                        tickFormat: function(d) {
+                            return d3.time.format('%m/%d/%y')(new Date(d))
+                        },
+                        showMaxMin: false,
+                        staggerLabels: true
+                    },
+
+                    yAxis: {
+                        tickFormat: function(d){
+                            return d3.format(',.1%')(d);
+                        },
+                        axisLabelDistance: 20
+                    }
+                },
+                title: {
+                    text: 'Cumulative Line Chart',
+                    enable: true
+                }
+            };
+
+            basectrl.init(scope, element, component, attrs, 'cmlinechart').then(function () {
+                if (scope.attributes.dynamicOptions) scope.attributes.dynamicOptions.status = "overridden";
+                scope.attributes.flex.status = "overridden";
+
+                DfxGcChartUtil.setRunTimeChartNameVariable(scope, basectrl, component, $timeout);
+
+                basectrl.bindScopeVariable(scope, component.attributes.title.value);
+
+                // dynamicOptions is a priority over all static options, title and events (ex. onclick)
+                if (scope.attributes.dynamicOptions && scope.attributes.dynamicOptions.value) {
+                    scope.attributes.options.value = scope[scope.attributes.dynamicOptions.value];
+                } else {
+                    scope.attributes.options.value = chartOptions;
+
+                    var eventsList = {
+                        onclick: 'elementClick',
+                        onmouseover: 'elementMouseover',
+                        onmouseleave: 'elementMouseout',
+                        onstatechange: 'stateChange',
+                        onrenderend: 'renderEnd'
+                    };
+
+                    DfxGcChartUtil.setRunTimeAttributes(scope, 'interactiveLayer', eventsList, $timeout);
+                    DfxGcChartUtil.watchRunTimeAttributes(scope, $timeout);
+                }
+
+                DfxGcChartUtil.adjustContainerHeight(scope);
+            });
+
+            DfxGcChartUtil.setAttributesBeforeInit(scope, attrs, chartOptions, chartData);
+        }
+    }
+}]);
+
+dfxGCC.directive('dfxGccWebTextarea', ['$timeout', function($timeout) {
+    return {
+        restrict: 'A',
+        require: '^dfxGccWebBase',
+        scope: true,
+        link: function(scope, element, attrs, basectrl) {
+            var component = scope.$parent.getComponent(element);
+            scope.$gcscope = scope;
+            basectrl.init(scope, element, component, attrs, 'textarea').then(function(){
+                scope.isMaxLength = function() {
+                    return scope.attributes.maxlength.value ? true : false;
+                };
+
+                if ( !scope.attributes.hasOwnProperty('flex') ) { scope.attributes.flex = { "value": 50 }; }
+                scope.attributes.flex.status = "overridden" ;
+                scope.attributes.icon.status = "overridden" ;
+                scope.$watch('attributes.rowsNumber.value', function(newValue){
+                    scope.attributes.rowsNumber.value = parseInt(newValue);
+                });
+                scope.$watch("$gcscope[attributes.binding.value]", function(newValue){
+                    if (!angular.isDefined(attrs.dfxGcDesign) && !angular.isDefined(attrs.dfxGcEdit)) {
+                        if(scope.attributes.binding.value !== ""){
+                            var bindingString = scope.attributes.binding.value;
+                            eval("scope." + bindingString + "= newValue ;");
+                        }
+                    }
+                });
+
+                basectrl.bindScopeVariable( scope, component.attributes.binding.value );
+
+                if ( typeof scope.attributes.icon === 'string' ) {
+                    var tempIcon = scope.attributes.icon;
+                    scope.attributes.icon = {
+                        "value": tempIcon,
+                        "type": scope.attributes.hasOwnProperty('iconType') ? scope.attributes.iconType : 'fa-icon'
+                    }
+                }
+                if ( !scope.attributes.icon.hasOwnProperty('size') ) { scope.attributes.icon.size = 21; }
+
+                scope.changeWidth = function(){
+                    $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+                };
+                scope.changeWidth();
+            });
+        }
+    }
+}]);
+
+dfxGCC.directive('dfxGccWebChips', ['$timeout', function($timeout) {
+    return {
+        restrict: 'A',
+        require: '^dfxGccWebBase',
+        scope: true,
+        link: function(scope, element, attrs, basectrl) {
+            var component = scope.$parent.getComponent(element);
+            scope.$gcscope = scope;
+            basectrl.init(scope, element, component, attrs, 'chips').then(function(){
+                if(!scope.attributes.hasOwnProperty('isBindEmpty')){scope.attributes.isBindEmpty = { "value": true };}
+                if(scope.attributes.hasOwnProperty('property1')){delete scope.attributes.property1;}
+                if(scope.attributes.hasOwnProperty('property2')){delete scope.attributes.property2;}
+                if(scope.attributes.hasOwnProperty('customItems')){delete scope.attributes.customItems;}
+
+                scope.attributes.flex.status = "overridden" ;
+                scope.attributes.binding.status = "overridden" ;
+                scope.attributes.isBindEmpty.status = "overridden" ;
+                scope.attributes.selectedInput.status = "overridden" ;
+                scope.attributes.newItem = function(chip) {
+                    return { name: chip, type: 'unknown' };
+                };
+                scope.$watch('attributes.binding.value', function(binding){
+                    binding ? scope.attributes.isBindEmpty.value = false : scope.attributes.isBindEmpty.value = true;
+                });
+                scope.$watch('attributes.selectedInput.value', function(newValue){
+                        $timeout(function () {
+                            try{
+                                scope.chips = '#' + scope.component_id + '> div > md-chips > md-chips-wrap';
+                                $(scope.chips).css("padding-top", "8px");
+                            }catch(e){
+                                /*console.log(e.message);*/
+                            }
+                        },0);
+                    scope.attributes.isBindEmpty.status = "overridden" ;
+                });
+                basectrl.bindScopeVariable(scope, component.attributes.binding.value);
+
+                scope.attributes.bindEmptyModel = function() {
+                    return scope.attributes.defaultArray.value;
+                };
+
+                scope.changeWidth = function(){
+                    $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+                };
+                scope.changeWidth();
+            });
+        }
+    }
+}]);
+
+dfxGCC.directive('dfxGccWebSlider', ['$timeout', '$mdDialog', '$q', '$http', '$mdToast', '$compile', function($timeout, $mdDialog, $q, $http, $mdToast, $compile) {
+    return {
+        restrict: 'A',
+        require: '^dfxGccWebBase',
+        scope: true,
+        link: function(scope, element, attrs, basectrl) {
+            var component = scope.getComponent(element);
+            scope.$gcscope = scope;
+            basectrl.init(scope, element, component, attrs, 'slider').then(function(){
+                if(!scope.attributes.hasOwnProperty('isBindingPresent')){scope.attributes.isBindingPresent = { "value": "" };}
+                if(!scope.attributes.hasOwnProperty('dynamicPresent')){scope.attributes.dynamicPresent = { "value": false };}
+                if(!scope.attributes.hasOwnProperty('counterCheck')){scope.attributes.counterCheck = { "value": "" };}
+                if(!scope.attributes.hasOwnProperty('selectedIndex')){scope.attributes.selectedIndex = { "value": "" };}
+                if ( !scope.attributes.hasOwnProperty('flex') ) { scope.attributes.flex = { "value": 50 }; }
+                scope.attributes.binding.status = "overridden";
+                scope.attributes.isBindingPresent.status = "overridden";
+                scope.attributes.flex.status = "overridden";
+                scope.attributes.buttonClass.value = scope.attributes.buttonClass.value.replace("md-primary", "");
+
+                if(scope.attributes.isBindingPresent.value){
+                    if(scope.$gcscope[scope.attributes.binding.value] instanceof Array){
+                        for(var i = 0; i < scope.$gcscope[scope.attributes.binding.value].length; i++){
+                            if(!isNaN(scope.$gcscope[scope.attributes.binding.value][i][scope.attributes.displayValue.value])){
+                                scope.$gcscope[scope.attributes.binding.value][i][scope.attributes.displayValue.value] = parseInt(scope.$gcscope[scope.attributes.binding.value][i][scope.attributes.displayValue.value]);
+                            }else{
+                                /*console.log('Values should be numeric.');*/
+                                break;
+                            }
+                        }
+                    }else{
+                        /*console.log('Binding data should be an array.');*/
+                    }
+                }
+
+                if(scope.attributes.inputVisible.value === ""){
+                    scope.attributes.inputVisible.value = "true";
+                    scope.attributes.discrete.value = false;
+                    scope.attributes.selectedIndex.value = 0;
+                    scope.attributes.counterCheck.value = 1;
+                    scope.attributes.isBindingPresent.value = false;
+                }
+
+                scope.$watch('attributes.selectedIndex.value', function(newValue){
+                    scope.attributes.selectedIndex.status = "overridden";
+                    scope.attributes.selectedIndex.value = parseInt(newValue);
+                });
+
+                scope.$watch('attributes.binding.value', function(newValue){
+                    if(newValue){
+                        scope.attributes.isBindingPresent.value = true;
+                    }else{
+                        scope.attributes.isBindingPresent.value = false;
+                    }
+                });
+
+                scope.$watch('attributes.source.value', function(newValue){
+                    if(newValue){
+                        scope.attributes.dynamicPresent.value = true;
+                    }else{
+                        scope.attributes.dynamicPresent.value = false;
+                    }
+                });
+
+                basectrl.bindScopeVariable(scope, component.attributes.binding.value);
+                basectrl.bindScopeVariable(scope, component.attributes.source.value);
+
+                //console.log('scope.attributes.isBindingPresent.value: ', scope.attributes.isBindingPresent.value);
+                //scope.getDynamicItems = function() {
+                //    return scope.$gcscope[scope.attributes.dynamic.value];
+                //};
+                scope.getStaticItems = function() {
+                    //console.log('scope.attributes.slidersArray.value: ', scope.attributes.slidersArray.value);
+                    return scope.attributes.slidersArray.value;
+                };
+
+                scope.changeWidth = function(){
+                    $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+                };
+                scope.changeWidth();
+            });
+        }
+    }
+}]);
+
+dfxGCC.directive('dfxGccWebInput', ['$timeout', '$compile', function($timeout, $compile) {
+    return {
+        restrict: 'A',
+        require: '^dfxGccWebBase',
+        scope: true,
+        link: function(scope, element, attrs, basectrl) {
+            var component = scope.$parent.getComponent(element);
+            scope.$gcscope = scope;
+            basectrl.init(scope, element, component, attrs, 'input').then(function(){
+                scope.attributes.binding.status = 'overridden';
+                if ( !scope.attributes.hasOwnProperty('flex') ) { scope.attributes.flex = { "value": 50 }; }
+                scope.attributes.flex.status = "overridden";
+                scope.attributes.minlength.value = parseInt(scope.attributes.minlength.value);
+                scope.attributes.maxlength.value = parseInt(scope.attributes.maxlength.value);
+                scope.attributes.minNumber.value = parseInt(scope.attributes.minNumber.value);
+                scope.attributes.maxNumber.value = parseInt(scope.attributes.maxNumber.value);
+
+                scope.bindingType = {"value": "noBinding"};
+                if(scope.attributes.binding.value!==''){
+                    if(scope.attributes.binding.value.indexOf('$dfx_item') >-1 || scope.attributes.binding.value.indexOf('.') > -1 || scope.attributes.binding.value.indexOf('[') > -1) {
+                        scope.bindingType.value = "complexBinding";
+                    } else {
+                        scope.bindingType.value = "simpleBinding";
+                    }
+                }
+                scope.isSimpleIcon = {"value": true};
+                if(scope.attributes.icon.value!==''){
+                    if(scope.attributes.icon.value.indexOf('$dfx_item')>-1){
+                        scope.isSimpleIcon.value = false;
+                        scope.attributes.icon.value = '' + scope.attributes.icon.value;
+                    }else if(scope.attributes.icon.value.indexOf(".")>-1 || scope.attributes.icon.value.indexOf("[")>-1){
+                        scope.isSimpleIcon.value = false;
+                        scope.attributes.icon.value = '$parent_scope.' + scope.attributes.icon.value;
+                    }
+                }
+                $timeout(function() {
+                    if(scope.attributes.selectedType.value!=='number'){
+                        if (!scope.attributes.minlength.value){
+                            $("#"+component.id+' input').removeAttr('minlength');
+                        }
+                        if (!scope.attributes.maxlength.value){
+                            $("#"+component.id+' input').removeAttr('md-maxlength');
+                        }
+                    } else {
+                        if (!scope.attributes.minNumber.value){
+                            $("#"+component.id+' input').removeAttr('min');
+                        }
+                        if (!scope.attributes.maxNumber.value){
+                            $("#"+component.id+' input').removeAttr('max');
+                        }
+                    }
+                }, 0);
+
+                if ( typeof scope.attributes.icon === 'string' ) {
+                    var tempIcon = scope.attributes.icon;
+                    scope.attributes.icon = {
+                        "value": tempIcon,
+                        "type": scope.attributes.hasOwnProperty('iconType') ? scope.attributes.iconType : 'fa-icon'
+                    }
+                }
+                if ( !scope.attributes.icon.hasOwnProperty('size') ) { scope.attributes.icon.size = 21; }
+
+                scope.changeWidth = function(){
+                    $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+                };
+                scope.changeWidth();
             });
         }
     }
