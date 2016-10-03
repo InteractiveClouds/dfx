@@ -1700,6 +1700,8 @@ dfxViewEditorApp.directive('dfxVePickerIcon', ['$q', '$http', '$mdDialog', '$tim
                     angular.element($('.dfx-ve-dialog')).remove();
                     $('.sp-container').remove();
                     if($('#dfx-ve-menu-editor-dialog').length > 0) $('#dfx-ve-menu-editor-dialog').focus();
+
+                    scope.$parent.overrideAttribute('icon');
                 }, 250);
             }
         }
