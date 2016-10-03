@@ -13,7 +13,7 @@
   "maxlength":      { "value": "" },
   "minNumber":      { "value": "" },
   "maxNumber":      { "value": "" },
-  "pattern":        { "value": ".*", "errorMessage": "The value is invalid" },
+  "pattern":        { "value": "", "errorMessage": "The value is invalid" },
   "temporary":      { "value": "" },
   "classes":        { "value": "" },
   "flex":           { "value": 50 },

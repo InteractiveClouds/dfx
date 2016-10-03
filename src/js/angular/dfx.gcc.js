@@ -260,44 +260,42 @@ dfxGCC.directive('dfxGccWebCarousel', ['$http', '$sce', '$mdDialog', '$mdToast',
                     scope.carouselDataName.value = scope.attributes.optionsType.value === 'dynamic' ? scope.attributes.optionItemNames.value.source : 'attributes.static.value';
                 }
                 scope.compileSlides = function(){
-                    if (!angular.isDefined(attrs.dfxGcDesign) && !angular.isDefined(attrs.dfxGcEdit)) {
-                        $timeout(function(){
-                            var screenSlides = $("#" + component.id + "_dfx_gc_web_carousel .dfx-carousel-item");
-                            if ( scope.attributes.optionsType.value === 'dynamic' ) {
-                                var slidesCount = scope.$parent_scope[scope.attributes.optionItemNames.value.source].length;
-                                for ( var i = 0; i < slidesCount; i++ ) {
-                                    $(screenSlides).eq(i+1).find('img').attr('ng-src', '{{'+scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.src]+'}}');
-                                    $(screenSlides).eq(i+1).find('.dfx-carousel-item-title').html(scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.title]);
-                                    $(screenSlides).eq(i+1).find('.dfx-carousel-item-description').html(scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.description]);
-                                    $(screenSlides).eq(i+1).find('img').attr('ng-click', scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.onclick]);
-                                    if(i===0){
-                                        $(screenSlides).eq(slidesCount+1).find('img').attr('ng-src', '{{'+scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.src]+'}}');
-                                        $(screenSlides).eq(slidesCount+1).find('.dfx-carousel-item-title').html(scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.title]);
-                                        $(screenSlides).eq(slidesCount+1).find('.dfx-carousel-item-description').html(scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.description]);
-                                    }
-                                    if(i===slidesCount-1){
-                                        $(screenSlides).eq(0).find('img').attr('ng-src', '{{'+scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.src]+'}}');
-                                        $(screenSlides).eq(0).find('.dfx-carousel-item-title').html(scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.title]);
-                                        $(screenSlides).eq(0).find('.dfx-carousel-item-description').html(scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.description]);
-                                    }
+                    $timeout(function(){
+                        var screenSlides = $("#" + component.id + "_dfx_gc_web_carousel .dfx-carousel-item");
+                        if ( scope.attributes.optionsType.value === 'dynamic' ) {
+                            var slidesCount = scope.$parent_scope[scope.attributes.optionItemNames.value.source].length;
+                            for ( var i = 0; i < slidesCount; i++ ) {
+                                $(screenSlides).eq(i+1).find('img').attr('ng-src', '{{'+scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.src]+'}}');
+                                $(screenSlides).eq(i+1).find('.dfx-carousel-item-title').html(scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.title]);
+                                $(screenSlides).eq(i+1).find('.dfx-carousel-item-description').html(scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.description]);
+                                $(screenSlides).eq(i+1).find('img').attr('ng-click', scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.onclick]);
+                                if(i===0){
+                                    $(screenSlides).eq(slidesCount+1).find('img').attr('ng-src', '{{'+scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.src]+'}}');
+                                    $(screenSlides).eq(slidesCount+1).find('.dfx-carousel-item-title').html(scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.title]);
+                                    $(screenSlides).eq(slidesCount+1).find('.dfx-carousel-item-description').html(scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.description]);
                                 }
-                            } else {
-                                for ( var i = 0; i < scope.attributes.static.value.length; i++ ) {
-                                    $(screenSlides).eq(i+1).find('img').attr('ng-click', '$eval(attributes.static.value['+[i]+'].onclick)');
+                                if(i===slidesCount-1){
+                                    $(screenSlides).eq(0).find('img').attr('ng-src', '{{'+scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.src]+'}}');
+                                    $(screenSlides).eq(0).find('.dfx-carousel-item-title').html(scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.title]);
+                                    $(screenSlides).eq(0).find('.dfx-carousel-item-description').html(scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.description]);
                                 }
                             }
-                            $compile($("#" + component.id + "_dfx_gc_web_carousel .dfx-carousel-item-image-container").contents())(scope);
-                            $compile($("#" + component.id + "_dfx_gc_web_carousel .dfx-carousel-item-title").contents())(scope);
-                            $compile($("#" + component.id + "_dfx_gc_web_carousel .dfx-carousel-item-description").contents())(scope);
-                        }, 0);
-                    }
+                        } else {
+                            for ( var i = 0; i < scope.attributes.static.value.length; i++ ) {
+                                $(screenSlides).eq(i+1).find('img').attr('ng-click', '$eval(attributes.static.value['+[i]+'].onclick)');
+                            }
+                        }
+                        $compile($("#" + component.id + "_dfx_gc_web_carousel .dfx-carousel-item-image-container").contents())(scope);
+                        $compile($("#" + component.id + "_dfx_gc_web_carousel .dfx-carousel-item-title").contents())(scope);
+                        $compile($("#" + component.id + "_dfx_gc_web_carousel .dfx-carousel-item-description").contents())(scope);
+                    }, 0);
                 }
                 scope.simpleCarousel = function() {
                     scope.setCarouselDataSource();
                     var simpleCarouselSnippet = '<jk-carousel data="<<carouselSource>>" item-template-url="\'<<carouselTemplate>>\'" max-width="<<carouselMaxWidth>>" max-height="<<carouselMaxHeight>>"></jk-carousel>',
                         parsedSimpleCarousel = simpleCarouselSnippet
                             .replace('<<carouselSource>>', scope.carouselDataName.value)
-                            .replace('<<carouselTemplate>>', scope.attributes.optionsType.value === 'dynamic' && (!angular.isDefined(attrs.dfxGcDesign) && !angular.isDefined(attrs.dfxGcEdit)) ? '/gcontrols/web/carousel_item_dynamic.html' : '/gcontrols/web/carousel_item_static.html')
+                            .replace('<<carouselTemplate>>', scope.attributes.optionsType.value === 'dynamic' && '/gcontrols/web/carousel_item_dynamic.html')
                             .replace('<<carouselMaxWidth>>', scope.attributes.maxWidth.value)
                             .replace('<<carouselMaxHeight>>', scope.attributes.maxHeight.value);
                     $timeout(function(){
@@ -313,7 +311,7 @@ dfxGCC.directive('dfxGccWebCarousel', ['$http', '$sce', '$mdDialog', '$mdToast',
                     var autoCarouselSnippet = '<jk-carousel data="<<carouselSource>>" item-template-url="\'<<carouselTemplate>>\'" auto-slide="<<carouselAutoSlide>>" auto-slide-time="<<carouselSlideInterval>>" max-width="<<carouselMaxWidth>>" max-height="<<carouselMaxHeight>>"></jk-carousel>',
                         parsedAutoCarousel = autoCarouselSnippet
                             .replace('<<carouselSource>>', scope.carouselDataName.value)
-                            .replace('<<carouselTemplate>>', scope.attributes.optionsType.value === 'dynamic' && (!angular.isDefined(attrs.dfxGcDesign) && !angular.isDefined(attrs.dfxGcEdit)) ? '/gcontrols/web/carousel_item_dynamic.html' : '/gcontrols/web/carousel_item_static.html')
+                            .replace('<<carouselTemplate>>', scope.attributes.optionsType.value === 'dynamic' && '/gcontrols/web/carousel_item_dynamic.html')
                             .replace('<<carouselAutoSlide>>', scope.attributes.autoSlide.value)
                             .replace('<<carouselSlideInterval>>', scope.attributes.slideInterval.value)
                             .replace('<<carouselMaxWidth>>', scope.attributes.maxWidth.value)
@@ -348,23 +346,21 @@ dfxGCC.directive('dfxGccWebCarousel', ['$http', '$sce', '$mdDialog', '$mdToast',
                     }, 0);
                 }
 
-                if (!angular.isDefined(attrs.dfxGcDesign) && !angular.isDefined(attrs.dfxGcEdit)) {
-                    if ( scope.attributes.optionsType.value === 'dynamic' ) {
-                        scope.$watch('$parent_scope[attributes.optionItemNames.value.source]', function(newValue, oldValue) {
-                            if ( newValue ) {
+                if ( scope.attributes.optionsType.value === 'dynamic' ) {
+                    scope.$watch('$parent_scope[attributes.optionItemNames.value.source]', function(newValue, oldValue) {
+                        if ( newValue ) {
+                            scope.rebuildCarousel();
+                        }
+                    }, true);
+                    // basectrl.bindScopeVariable(scope, component.attributes.dynamic.value);
+                } else {
+                    scope.$watch('attributes.static.value', function(newValue, oldValue) {
+                        if ( newValue ) {
+                            $timeout(function(){
                                 scope.rebuildCarousel();
-                            }
-                        }, true);
-                        // basectrl.bindScopeVariable(scope, component.attributes.dynamic.value);
-                    } else {
-                        scope.$watch('attributes.static.value', function(newValue, oldValue) {
-                            if ( newValue ) {
-                                $timeout(function(){
-                                    scope.rebuildCarousel();
-                                }, 0, false);
-                            }
-                        }, true);
-                    }
+                            }, 0, false);
+                        }
+                    }, true);
                 }
             });
         }
@@ -3222,6 +3218,91 @@ dfxGCC.directive('dfxGccWebInput', ['$timeout', '$compile', function($timeout, $
     }
 }]);
 
+dfxGCC.directive('dfxGccWebFab', ['$timeout', function($timeout) {
+	return {
+        restrict: 'A',
+        require: '^dfxGccWebBase',
+        scope: true,
+		link: {
+			pre : function(scope, element, attrs, basectrl) {
+				var component = scope.getComponent(element);
+				scope.component_id = component.id;
+				basectrl.init(scope, element, component, attrs, 'fab').then(function() {
+					scope.attributes.dynamicPresent.status = "overridden";
+					scope.attributes.dynamic.status = "overridden";
+					scope.attributes.icon.status = "overridden";
+					scope.attributes.menuItemsType.status = "overridden";
+					scope.attributes.menuItemNames.status = "overridden";
+					scope.itemNames = scope.attributes.menuItemNames.value;
+
+					if(scope.attributes.dynamicPresent.value){
+						scope.dynamicItems = eval('scope.' + scope.attributes.dynamic.value);
+						try{
+							if(scope.dynamicItems.constructor === Array ){
+								if(scope.dynamicItems.length > 0){
+									scope.attributes.dynamicPresent.value = true;
+								}else{
+									scope.attributes.dynamicPresent.value = false;
+								}
+							}else{
+								scope.attributes.dynamicPresent.value = false;
+							}
+						}catch(e){
+							scope.attributes.dynamicPresent.value = false;
+						}
+					}else{
+						scope.attributes.dynamicPresent.value = false;
+					}
+					scope.cleanFabClasses = function( fab ){
+						if ( fab.class.indexOf('md-fab') > -1 ) { fab.class = fab.class.replace('md-fab', ""); }
+						if ( fab.class.indexOf('md-raised') > -1 ) { fab.class = fab.class.replace('md-raised', ""); }
+						if ( fab.class.indexOf('md-mini') > -1 ) { fab.class = fab.class.replace('md-mini', ""); }
+					}
+					scope.cleanFabClasses(scope.attributes.triggerButton);
+					scope.cleanFabClasses(scope.attributes.actionButton);
+					if ( !scope.attributes.hasOwnProperty('label') ) {scope.attributes.label = {"value":""}}
+					if ( !scope.attributes.triggerButton.hasOwnProperty('tooltip') ) {scope.attributes.triggerButton.tooltip = { "direction": "top", "style": "", "classes": "" }}
+					if ( !scope.attributes.actionButton.hasOwnProperty('tooltip') ) {scope.attributes.actionButton.tooltip = { "direction": "top", "style": "", "classes": "" }}
+					if ( !scope.attributes.icon.hasOwnProperty('size') ) { scope.attributes.icon.size = 24; }
+					if ( !scope.attributes.actionButton.icon.hasOwnProperty('size') ) { scope.attributes.actionButton.icon.size = 20; }
+					if ( !scope.attributes.icon.hasOwnProperty('type') ) { scope.attributes.icon.type = 'fa-icon'; }
+					scope.ifShowIconTypes = function( icon ) {
+						var regexp = /(^\')(.*)(\'$)/gm, filtered = regexp.exec( icon );
+						if ( icon && ( icon.indexOf('+') >= 0 ) ) { filtered = false; }
+						if ( icon === '' ) { filtered = true; }
+						if ( icon.indexOf("'") === 0 && icon.indexOf('+') === -1 && icon.charAt(icon.length-1) === "'" ) {
+							icon.indexOf("'fa-") === 0 ? scope.attributes.icon.type = 'fa-icon' : scope.attributes.icon.type = 'svg-icon';
+						}
+						scope.showIconTypes = filtered ? false : true;
+					}
+					scope.ifShowIconTypes(scope.attributes.icon.value);
+					scope.checkIconType = function( menuList ) {
+						for (var i = 0; i < menuList.length; i++) {
+							if ( typeof menuList[i].icon === 'string' ) {
+								var tempIcon = menuList[i].icon;
+								menuList[i].icon = {
+									"value": tempIcon,
+									"type": menuList[i].hasOwnProperty('iconType') ? menuList[i].iconType : 'fa-icon'
+								}
+							}
+						}
+					}
+					scope.checkIconType( scope.attributes.menuItems.value );
+					if (!angular.isDefined(attrs.dfxGcEdit) && !angular.isDefined(attrs.dfxGcDesign)) {
+						if(scope.attributes.dynamicPresent.value){
+							scope.attributes.menuItems.value = scope.dynamicItems;
+						}
+					}
+					scope.hideTooltip = function () {
+						$('body md-tooltip').remove();
+					}
+					scope.hideTooltip();
+				});
+			}
+		}
+    }
+}]);
+
 dfxGCC.directive('dfxGccWebCheckbox', ['$timeout', '$compile', function($timeout, $compile) {
     return {
         restrict: 'A',
@@ -3442,12 +3523,12 @@ dfxGCC.directive('dfxGccWebList', ['$timeout', '$compile', function($timeout, $c
                     listString = '',
                     listSourceObject;
                 scope.togglingArray = [];
-                scope.selected_items = [];  
-                scope.selected_indexes = [];                  
+                scope.selected_items = [];
+                scope.selected_indexes = [];
                 scope.sourceList = {"value": []};
                 scope.dfxGetSource = function(sourceType){
                     if(sourceType==='static'){
-                        return scope.attributes.static.value;                        
+                        return scope.attributes.static.value;
                     }else if(sourceType==='dynamic'){
                         if(scope.attributes.optionItemNames.value.source.indexOf('$dfx_item')===-1) listString = 'scope.$parent_scope.';
                         listSourceObject = listString + scope.attributes.optionItemNames.value.source;
@@ -3476,7 +3557,7 @@ dfxGCC.directive('dfxGccWebList', ['$timeout', '$compile', function($timeout, $c
                             var tempIndex = scope.togglingArray.indexOf(obj);
                             scope.selected_indexes.push(tempIndex);
                         });
-                    }else{                            
+                    }else{
                         if (it_is === -1) {
                             scope.selected_items.push(it);
                             scope.selected_indexes.push(curr_ind);
@@ -4162,7 +4243,7 @@ dfxGCC.directive('dfxGccWebIconbar', ['$mdMenu', '$timeout', '$compile', '$filte
                             scope.iconbarBuilder();
                         }, 0);
                     }
-                }, true);                
+                }, true);
                 scope.iconbarBuilder();
             });
         }

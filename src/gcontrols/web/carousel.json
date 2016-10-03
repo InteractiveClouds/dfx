@@ -10,7 +10,7 @@
     "maxWidth":         { "value": "1200" },
     "maxHeight":        { "value": "600" },
     "dynamic":          { "value": "" },
-    "static":           { "value": 
+    "static":           { "value":
         [
             {
                 "name": "slide1",
@@ -49,5 +49,6 @@
     "onmouseenter":     { "value": "" },
     "onmousemove":      { "value": "" },
     "onmouseleave":     { "value": "" },
-    "onmouseup":        { "value": "" }
+    "onmouseup":        { "value": "" },
+    "onmousedown":      { "value": "" }
 }
