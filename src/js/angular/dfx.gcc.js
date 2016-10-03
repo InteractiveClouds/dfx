@@ -901,16 +901,15 @@ dfxGCC.directive('dfxGccWebButton', ['$timeout', '$compile', '$filter', function
                     };
                     scope.menuPosition = function(button){
                         var buttonWidth;
-                        if(button){
-                            buttonWidth = $(element).find('button.gc-btn-group-first').eq(0).css('width');
-                        }else{
-                            buttonWidth = $('#' + scope.component_id + ' button.gc-btn-group-first').eq(0).css('width');
-                        }
-                        buttonWidth = parseInt(buttonWidth);
-                        if(buttonWidth > 256){
-                            scope.positionModeSide = 'right';
-                            scope.positionOffsetLeft = 35;
-                        }
+                        $timeout(function() {
+                            if(button){
+                                buttonWidth = $(element).find('button.gc-btn-group-first').eq(0).css('width');
+                            }else{
+                                buttonWidth = $('#' + scope.component_id + ' button.gc-btn-group-first').eq(0).css('width');
+                            }
+                            buttonWidth = parseInt(buttonWidth);
+                            if(buttonWidth > 220) scope.positionModeSide = 'right';
+                        }, 0);
                     }
                     if (!angular.isDefined(attrs.dfxGcEdit)) {
                         scope.changeWidth();
@@ -1802,42 +1801,44 @@ dfxGCC.directive('dfxGccWebToolbar', function($sce, $compile, $timeout) {
                     }
                 }, 0);
             }
-            if (scope.attributes.toolbar.leftMenu.menuItemsType.value === 'static') {
-                scope.$watch('attributes.toolbar.leftMenu.menuItems.value', function(newVal, oldVal) {
-                    if ( newVal != null && scope.attributes.toolbar.leftMenu.type.value !== 'Fab' ) {
-                        $timeout(function() {
-                            scope.iconbarBuilder('left');
-                        }, 0);
-                    }
-                }, true);
-            }
-            if (scope.attributes.toolbar.leftMenu.menuItemsType.value === 'dynamic'){
-                scope.$watch('$parent_scope.'+scope.attributes.toolbar.leftMenu.menuItemNames.value.main.source, function(newVal, oldVal) {
-                    if ( newVal != null && scope.attributes.toolbar.leftMenu.type.value !== 'Fab' ) {
-                        $timeout(function() {
-                            scope.iconbarBuilder('left');
-                        }, 0);
-                    }
-                }, true);
-            }
-            if(scope.attributes.toolbar.rightMenu.menuItemsType.value === 'static') {
-                scope.$watch('attributes.toolbar.rightMenu.menuItems.value', function(newVal, oldVal) {
-                    if ( newVal != null && scope.attributes.toolbar.rightMenu.type.value !== 'Fab' ) {
-                        $timeout(function() {
-                            scope.iconbarBuilder('right');
-                        }, 0);
-                    }
-                }, true);
-            }
-            if (scope.attributes.toolbar.rightMenu.menuItemsType.value === 'dynamic') {
-                scope.$watch('$parent_scope.'+scope.attributes.toolbar.rightMenu.menuItemNames.value.main.source, function(newVal, oldVal) {
-                    if ( newVal != null && scope.attributes.toolbar.rightMenu.type.value !== 'Fab' ) {
-                        $timeout(function() {
-                            scope.iconbarBuilder('right');
-                        }, 0);
-                    }
-                }, true);
-            }
+            $timeout(function() {
+                if (scope.attributes.toolbar.leftMenu.menuItemsType.value === 'static') {
+                    scope.$watch('attributes.toolbar.leftMenu.menuItems.value', function(newVal, oldVal) {
+                        if ( newVal != null && scope.attributes.toolbar.leftMenu.type.value !== 'Fab' ) {
+                            $timeout(function() {
+                                scope.iconbarBuilder('left');
+                            }, 0);
+                        }
+                    }, true);
+                }
+                if (scope.attributes.toolbar.leftMenu.menuItemsType.value === 'dynamic'){
+                    scope.$watch('$parent_scope.'+scope.attributes.toolbar.leftMenu.menuItemNames.value.main.source, function(newVal, oldVal) {
+                        if ( newVal != null && scope.attributes.toolbar.leftMenu.type.value !== 'Fab' ) {
+                            $timeout(function() {
+                                scope.iconbarBuilder('left');
+                            }, 0);
+                        }
+                    }, true);
+                }
+                if(scope.attributes.toolbar.rightMenu.menuItemsType.value === 'static') {
+                    scope.$watch('attributes.toolbar.rightMenu.menuItems.value', function(newVal, oldVal) {
+                        if ( newVal != null && scope.attributes.toolbar.rightMenu.type.value !== 'Fab' ) {
+                            $timeout(function() {
+                                scope.iconbarBuilder('right');
+                            }, 0);
+                        }
+                    }, true);
+                }
+                if (scope.attributes.toolbar.rightMenu.menuItemsType.value === 'dynamic') {
+                    scope.$watch('$parent_scope.'+scope.attributes.toolbar.rightMenu.menuItemNames.value.main.source, function(newVal, oldVal) {
+                        if ( newVal != null && scope.attributes.toolbar.rightMenu.type.value !== 'Fab' ) {
+                            $timeout(function() {
+                                scope.iconbarBuilder('right');
+                            }, 0);
+                        }
+                    }, true);
+                }
+            }, 0);
             scope.unfocusButton = function(event){
                 var target = $(event.target);
                 target.is("button") ? target.blur() : $(target.parent()[0]).blur();
@@ -2015,6 +2016,214 @@ dfxGCC.directive('dfxGccWebKnob', ['$timeout', '$compile', function($timeout, $c
                         $timeout(function() {$compile($('.'+component.id+'_dfx_ng_knob').contents())(scope);}, 0);
                     }
                 }, 0);
+            });
+        }
+    }
+}]);
+
+dfxGCC.directive('dfxGccWebCheckbox', ['$timeout', '$compile', function($timeout, $compile) {
+    return {
+        restrict: 'A',
+        require: '^dfxGccWebBase',
+        scope: true,        
+        link: function(scope, element, attrs, basectrl) {
+            var component = scope.$parent.getComponent(element);
+            basectrl.init(scope, element, component, attrs, 'checkbox').then(function(){
+                scope.dfxCheckValueType = function(val){
+                    if(typeof val === 'string') val="'"+val+"'";
+                    return val;
+                }
+                scope.parseStaticItemValue = function(value){
+                    if(value!==''){
+                        if(value==='true'){value = true;} 
+                        else if(value==='false'){value=false;} 
+                        else if(!isNaN(value)){value=Number(value);}
+                    }
+                }
+                for (var i = 0; i < scope.attributes.staticArray.value.length; i++) {
+                    scope.parseStaticItemValue(scope.attributes.staticArray.value[i].checked);
+                    scope.parseStaticItemValue(scope.attributes.staticArray.value[i].unchecked);
+                };
+                scope.dfxGetSource = function(sourceType){
+                    if(sourceType==='dynamic'){
+                        if(scope.attributes.source.value !== ''){
+                            var sourceString = '', sourceArray = '';
+                            if(scope.attributes.source.value.indexOf('$dfx_item') === -1) sourceString = 'scope.$parent_scope.';
+                            sourceArray = sourceString + scope.attributes.source.value;
+                        }                    
+                        return eval(sourceArray);
+                    }else if(sourceType==='static'){
+                        return scope.attributes.staticArray.value;
+                    }
+                }
+                scope.dfxGetBinding = function() {
+                    if(scope.attributes.binding.value !== ''){
+                        var bindingString = '', bindingObject = '';
+                        if(scope.attributes.binding.value.indexOf('$dfx_item') === -1) bindingString = 'scope.$parent_scope.';
+                        bindingObject = bindingString + scope.attributes.binding.value;
+                    }
+                    return eval(bindingObject);
+                }
+                scope.dfxGetChecked = function(item){
+                    return new Function('_', 'return _.' + scope.attributes.checkValue.trueCheckValue)(item);
+                }
+                scope.dfxGetUnchecked = function(item){
+                    return new Function('_', 'return _.' + scope.attributes.checkValue.falseCheckValue)(item);
+                }
+                scope.dfxGetItemLabel = function(item){
+                    return new Function('_', 'return _.' + scope.attributes.checkValue.label)(item);
+                }
+            });
+        }
+    }
+}]);
+
+dfxGCC.directive('dfxGccWebSwitch', ['$timeout', '$compile', function($timeout, $compile) {
+    return {
+        restrict: 'A',
+        require: '^dfxGccWebBase',
+        scope: true,        
+        link: function(scope, element, attrs, basectrl) {
+            var component = scope.$parent.getComponent(element);
+            basectrl.init(scope, element, component, attrs, 'switch').then(function(){
+                scope.dfxCheckValueType = function(val){
+                    if(typeof val === 'string') val="'"+val+"'";
+                    return val;
+                }
+                scope.parseStaticItemValue = function(value){
+                    if(value!==''){
+                        if(value==='true'){value = true;} 
+                        else if(value==='false'){value=false;} 
+                        else if(!isNaN(value)){value=Number(value);}
+                    }
+                }
+                for (var i = 0; i < scope.attributes.staticArray.value.length; i++) {
+                    scope.parseStaticItemValue(scope.attributes.staticArray.value[i].checked);
+                    scope.parseStaticItemValue(scope.attributes.staticArray.value[i].unchecked);
+                };
+                scope.dfxGetSource = function(sourceType){
+                    if(sourceType==='dynamic'){
+                        if(scope.attributes.source.value !== ''){
+                            var sourceString = '', sourceArray = '';
+                            if(scope.attributes.source.value.indexOf('$dfx_item') === -1) sourceString = 'scope.$parent_scope.';
+                            sourceArray = sourceString + scope.attributes.source.value;
+                        }                    
+                        return eval(sourceArray);
+                    }else if(sourceType==='static'){
+                        return scope.attributes.staticArray.value;
+                    }
+                }
+                scope.dfxGetBinding = function() {
+                    if(scope.attributes.binding.value !== ''){
+                        var bindingString = '', bindingObject = '';
+                        if(scope.attributes.binding.value.indexOf('$dfx_item') === -1) bindingString = 'scope.$parent_scope.';
+                        bindingObject = bindingString + scope.attributes.binding.value;
+                    }
+                    return eval(bindingObject);
+                }
+                scope.dfxGetChecked = function(item){
+                    return new Function('_', 'return _.' + scope.attributes.switchValue.trueSwitchValue)(item);
+                }
+                scope.dfxGetUnchecked = function(item){
+                    return new Function('_', 'return _.' + scope.attributes.switchValue.falseSwitchValue)(item);
+                }
+                scope.dfxGetItemLabel = function(item){
+                    return new Function('_', 'return _.' + scope.attributes.switchValue.label)(item);
+                }
+            });
+        }
+    }
+}]);
+
+dfxGCC.directive('dfxGccWebRadio', ['$timeout', '$compile', function($timeout, $compile) {
+    return {
+        restrict: 'A',
+        require: '^dfxGccWebBase',
+        scope: true,        
+        link: function(scope, element, attrs, basectrl) {
+            var component = scope.$parent.getComponent(element);
+            basectrl.init(scope, element, component, attrs, 'radio').then(function(){
+                for (var i = 0; i < scope.attributes.radioItems.value.length; i++) {
+                    if(scope.attributes.radioItems.value[i].value!==''){
+                        if(scope.attributes.radioItems.value[i].value==='true'){scope.attributes.radioItems.value[i].value = true;}
+                        else if(scope.attributes.radioItems.value[i].value==='false'){scope.attributes.radioItems.value[i].value=false;}
+                        else if(!isNaN(scope.attributes.radioItems.value[i].value)){scope.attributes.radioItems.value[i].value=Number(scope.attributes.radioItems.value[i].value);}
+                    }
+                };
+                scope.dfxGetSource = function(sourceType){
+                    if(sourceType==='dynamic'){
+                        if(scope.attributes.source.value !== ''){
+                            var sourceString = '', sourceArray = '';
+                            if(scope.attributes.source.value.indexOf('$dfx_item') === -1) sourceString = 'scope.$parent_scope.';
+                            sourceArray = sourceString + scope.attributes.source.value;
+                        }                    
+                        return eval(sourceArray);
+                    }else if(sourceType==='static'){
+                        return scope.attributes.radioItems.value;
+                    }
+                }
+                scope.dfxGetValue = function(item){
+                    return new Function('_', 'return _.' + scope.attributes.bindingProperty.value)(item);
+                }
+                scope.dfxGetLabel = function(item){
+                    return new Function('_', 'return _.' + scope.attributes.propToDisplay.value)(item);
+                }
+            });
+        }
+    }
+}]);
+
+dfxGCC.directive('dfxGccWebSelect', ['$timeout', '$compile', function($timeout, $compile) {
+    return {
+        restrict: 'A',
+        require: '^dfxGccWebBase',
+        scope: true,        
+        link: function(scope, element, attrs, basectrl) {
+            var component = scope.$parent.getComponent(element);
+            basectrl.init(scope, element, component, attrs, 'select').then(function(){
+                scope.isSimpleBinding = {"value": false};
+                if(scope.attributes.binding.value.indexOf('$dfx_item') === -1 && scope.attributes.binding.value.indexOf('.') === -1 && scope.attributes.binding.value.indexOf('[') === -1){
+                    scope.isSimpleBinding.value = true;
+                }
+                for (var i = 0; i < scope.attributes.staticOptions.value.length; i++) {
+                    switch ( scope.attributes.staticOptions.value[i].value ) {
+                        case 'true': scope.attributes.staticOptions.value[i].value = true; break;
+                        case 'false': scope.attributes.staticOptions.value[i].value = false; break;
+                    }
+                }
+                if(scope.attributes.currentItem.value==='true'){
+                    scope.attributes.currentItem.value = true;
+                } else if (scope.attributes.currentItem.value==='false'){
+                    scope.attributes.currentItem.value = false;
+                }
+                scope.dfxGetSource = function(sourceType){
+                    if(sourceType==='dynamic'){
+                        if(scope.attributes.options.source !== ''){
+                            var sourceString = '', sourceArray = '';
+                            if(scope.attributes.options.source.indexOf('$dfx_item') === -1) sourceString = 'scope.$parent_scope.';
+                            sourceArray = sourceString + scope.attributes.options.source;
+                        }                    
+                        return eval(sourceArray);
+                    }else if(sourceType==='static'){
+                        return scope.attributes.staticOptions.value;
+                    }
+                }
+                scope.dfxGetValue = function(option){
+                    return new Function('_', 'return _.' + scope.attributes.options.value)(option);
+                }
+                scope.dfxGetLabel = function(option){
+                    return new Function('_', 'return _.' + scope.attributes.options.display)(option);
+                }
+                scope.changeWidth = function(){
+                    $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+                };
+                if (!angular.isDefined(attrs.dfxGcEdit)) {
+                    scope.changeWidth();
+                }
+                scope.hideWebGcSelectMask = function() {
+                    $('body > md-backdrop, body > div.md-scroll-mask, body > div.md-select-menu-container.md-active').fadeOut(250);
+                }
+                $('body > md-backdrop').on('click', function(){ scope.hideWebGcSelectMask(); });
             });
         }
     }
