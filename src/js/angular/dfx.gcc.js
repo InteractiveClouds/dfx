@@ -3218,6 +3218,91 @@ dfxGCC.directive('dfxGccWebInput', ['$timeout', '$compile', function($timeout, $
     }
 }]);
 
+dfxGCC.directive('dfxGccWebFab', ['$timeout', function($timeout) {
+	return {
+        restrict: 'A',
+        require: '^dfxGccWebBase',
+        scope: true,
+		link: {
+			pre : function(scope, element, attrs, basectrl) {
+				var component = scope.getComponent(element);
+				scope.component_id = component.id;
+				basectrl.init(scope, element, component, attrs, 'fab').then(function() {
+					scope.attributes.dynamicPresent.status = "overridden";
+					scope.attributes.dynamic.status = "overridden";
+					scope.attributes.icon.status = "overridden";
+					scope.attributes.menuItemsType.status = "overridden";
+					scope.attributes.menuItemNames.status = "overridden";
+					scope.itemNames = scope.attributes.menuItemNames.value;
+
+					if(scope.attributes.dynamicPresent.value){
+						scope.dynamicItems = eval('scope.' + scope.attributes.dynamic.value);
+						try{
+							if(scope.dynamicItems.constructor === Array ){
+								if(scope.dynamicItems.length > 0){
+									scope.attributes.dynamicPresent.value = true;
+								}else{
+									scope.attributes.dynamicPresent.value = false;
+								}
+							}else{
+								scope.attributes.dynamicPresent.value = false;
+							}
+						}catch(e){
+							scope.attributes.dynamicPresent.value = false;
+						}
+					}else{
+						scope.attributes.dynamicPresent.value = false;
+					}
+					scope.cleanFabClasses = function( fab ){
+						if ( fab.class.indexOf('md-fab') > -1 ) { fab.class = fab.class.replace('md-fab', ""); }
+						if ( fab.class.indexOf('md-raised') > -1 ) { fab.class = fab.class.replace('md-raised', ""); }
+						if ( fab.class.indexOf('md-mini') > -1 ) { fab.class = fab.class.replace('md-mini', ""); }
+					}
+					scope.cleanFabClasses(scope.attributes.triggerButton);
+					scope.cleanFabClasses(scope.attributes.actionButton);
+					if ( !scope.attributes.hasOwnProperty('label') ) {scope.attributes.label = {"value":""}}
+					if ( !scope.attributes.triggerButton.hasOwnProperty('tooltip') ) {scope.attributes.triggerButton.tooltip = { "direction": "top", "style": "", "classes": "" }}
+					if ( !scope.attributes.actionButton.hasOwnProperty('tooltip') ) {scope.attributes.actionButton.tooltip = { "direction": "top", "style": "", "classes": "" }}
+					if ( !scope.attributes.icon.hasOwnProperty('size') ) { scope.attributes.icon.size = 24; }
+					if ( !scope.attributes.actionButton.icon.hasOwnProperty('size') ) { scope.attributes.actionButton.icon.size = 20; }
+					if ( !scope.attributes.icon.hasOwnProperty('type') ) { scope.attributes.icon.type = 'fa-icon'; }
+					scope.ifShowIconTypes = function( icon ) {
+						var regexp = /(^\')(.*)(\'$)/gm, filtered = regexp.exec( icon );
+						if ( icon && ( icon.indexOf('+') >= 0 ) ) { filtered = false; }
+						if ( icon === '' ) { filtered = true; }
+						if ( icon.indexOf("'") === 0 && icon.indexOf('+') === -1 && icon.charAt(icon.length-1) === "'" ) {
+							icon.indexOf("'fa-") === 0 ? scope.attributes.icon.type = 'fa-icon' : scope.attributes.icon.type = 'svg-icon';
+						}
+						scope.showIconTypes = filtered ? false : true;
+					}
+					scope.ifShowIconTypes(scope.attributes.icon.value);
+					scope.checkIconType = function( menuList ) {
+						for (var i = 0; i < menuList.length; i++) {
+							if ( typeof menuList[i].icon === 'string' ) {
+								var tempIcon = menuList[i].icon;
+								menuList[i].icon = {
+									"value": tempIcon,
+									"type": menuList[i].hasOwnProperty('iconType') ? menuList[i].iconType : 'fa-icon'
+								}
+							}
+						}
+					}
+					scope.checkIconType( scope.attributes.menuItems.value );
+					if (!angular.isDefined(attrs.dfxGcEdit) && !angular.isDefined(attrs.dfxGcDesign)) {
+						if(scope.attributes.dynamicPresent.value){
+							scope.attributes.menuItems.value = scope.dynamicItems;
+						}
+					}
+					scope.hideTooltip = function () {
+						$('body md-tooltip').remove();
+					}
+					scope.hideTooltip();
+				});
+			}
+		}
+    }
+}]);
+
 dfxGCC.directive('dfxGccWebCheckbox', ['$timeout', '$compile', function($timeout, $compile) {
     return {
         restrict: 'A',
@@ -3438,12 +3523,12 @@ dfxGCC.directive('dfxGccWebList', ['$timeout', '$compile', function($timeout, $c
                     listString = '',
                     listSourceObject;
                 scope.togglingArray = [];
-                scope.selected_items = [];  
-                scope.selected_indexes = [];                  
+                scope.selected_items = [];
+                scope.selected_indexes = [];
                 scope.sourceList = {"value": []};
                 scope.dfxGetSource = function(sourceType){
                     if(sourceType==='static'){
-                        return scope.attributes.static.value;                        
+                        return scope.attributes.static.value;
                     }else if(sourceType==='dynamic'){
                         if(scope.attributes.optionItemNames.value.source.indexOf('$dfx_item')===-1) listString = 'scope.$parent_scope.';
                         listSourceObject = listString + scope.attributes.optionItemNames.value.source;
@@ -3472,7 +3557,7 @@ dfxGCC.directive('dfxGccWebList', ['$timeout', '$compile', function($timeout, $c
                             var tempIndex = scope.togglingArray.indexOf(obj);
                             scope.selected_indexes.push(tempIndex);
                         });
-                    }else{                            
+                    }else{
                         if (it_is === -1) {
                             scope.selected_items.push(it);
                             scope.selected_indexes.push(curr_ind);
@@ -4158,7 +4243,7 @@ dfxGCC.directive('dfxGccWebIconbar', ['$mdMenu', '$timeout', '$compile', '$filte
                             scope.iconbarBuilder();
                         }, 0);
                     }
-                }, true);                
+                }, true);
                 scope.iconbarBuilder();
             });
         }
