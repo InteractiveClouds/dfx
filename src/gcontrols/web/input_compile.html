@@ -20,7 +20,7 @@ FRAG-IF{{attributes.binding.repeatable === false}}
                     ng-model="ATTR-EXP{{attributes.binding.value ? attributes.binding.value : attributes.name.value}}ATTR-ENDEXP"
                     ATTR-IF{{ng-change="attributes.onchange.value"}}
                     ATTR-IF{{minlength="attributes.minlength.value"}} ATTR-IF{{md-maxlength="attributes.maxlength.value"}}
-                    ng-pattern="'attributes.pattern.value'" ATTR-IF{{ng-required="attributes.required.value"}}
+                    ng-pattern="attributes.pattern.value" ATTR-IF{{ng-required="attributes.required.value"}}
                     ATTR-IF{{ng-disabled="attributes.disabled.value"}} style="padding-left: 5px"
                     ATTR-IF{{ng-focus="attributes.onfocus.value"}} ATTR-IF{{ng-blur="attributes.onblur.value"}}
                     ATTR-IF{{ng-click="attributes.onclick.value"}} ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
@@ -33,7 +33,7 @@ FRAG-IF{{attributes.binding.repeatable === false}}
                     ng-model="$parent_scope[attributes.binding.value]"
                     ATTR-IF{{ng-change="attributes.onchange.value"}}
                     ATTR-IF{{minlength="attributes.minlength.value"}} ATTR-IF{{md-maxlength="attributes.maxlength.value"}}
-                    ng-pattern="'attributes.pattern.value'" ATTR-IF{{ng-required="attributes.required.value"}}
+                    ng-pattern="attributes.pattern.value" ATTR-IF{{ng-required="attributes.required.value"}}
                     ATTR-IF{{ng-disabled="attributes.disabled.value"}} style="padding-left: 5px"
                     ATTR-IF{{ng-focus="attributes.onfocus.value"}} ATTR-IF{{ng-blur="attributes.onblur.value"}}
                     ATTR-IF{{ng-click="attributes.onclick.value"}} ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
@@ -47,7 +47,7 @@ FRAG-IF{{attributes.binding.repeatable === false}}
                         dfx-complex-ng-model
                         ATTR-IF{{ng-change="attributes.onchange.value"}}
                         ATTR-IF{{minlength="attributes.minlength.value"}} ATTR-IF{{md-maxlength="attributes.maxlength.value"}}
-                        ng-pattern="'attributes.pattern.value'" ATTR-IF{{ng-required="attributes.required.value"}}
+                        ng-pattern="attributes.pattern.value" ATTR-IF{{ng-required="attributes.required.value"}}
                         ATTR-IF{{ng-disabled="attributes.disabled.value"}} style="padding-left: 5px"
                         ATTR-IF{{ng-focus="attributes.onfocus.value"}} ATTR-IF{{ng-blur="attributes.onblur.value"}}
                         ATTR-IF{{ng-click="attributes.onclick.value"}} ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}

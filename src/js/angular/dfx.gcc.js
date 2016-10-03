@@ -3226,7 +3226,7 @@ dfxGCC.directive('dfxGccWebCheckbox', ['$timeout', '$compile', function($timeout
     return {
         restrict: 'A',
         require: '^dfxGccWebBase',
-        scope: true,        
+        scope: true,
         link: function(scope, element, attrs, basectrl) {
             var component = scope.$parent.getComponent(element);
             basectrl.init(scope, element, component, attrs, 'checkbox').then(function(){
@@ -3236,8 +3236,8 @@ dfxGCC.directive('dfxGccWebCheckbox', ['$timeout', '$compile', function($timeout
                 }
                 scope.parseStaticItemValue = function(value){
                     if(value!==''){
-                        if(value==='true'){value = true;} 
-                        else if(value==='false'){value=false;} 
+                        if(value==='true'){value = true;}
+                        else if(value==='false'){value=false;}
                         else if(!isNaN(value)){value=Number(value);}
                     }
                 }
@@ -3251,7 +3251,7 @@ dfxGCC.directive('dfxGccWebCheckbox', ['$timeout', '$compile', function($timeout
                             var sourceString = '', sourceArray = '';
                             if(scope.attributes.source.value.indexOf('$dfx_item') === -1) sourceString = 'scope.$parent_scope.';
                             sourceArray = sourceString + scope.attributes.source.value;
-                        }                    
+                        }
                         return eval(sourceArray);
                     }else if(sourceType==='static'){
                         return scope.attributes.staticArray.value;
@@ -3283,7 +3283,7 @@ dfxGCC.directive('dfxGccWebSwitch', ['$timeout', '$compile', function($timeout, 
     return {
         restrict: 'A',
         require: '^dfxGccWebBase',
-        scope: true,        
+        scope: true,
         link: function(scope, element, attrs, basectrl) {
             var component = scope.$parent.getComponent(element);
             basectrl.init(scope, element, component, attrs, 'switch').then(function(){
@@ -3293,8 +3293,8 @@ dfxGCC.directive('dfxGccWebSwitch', ['$timeout', '$compile', function($timeout, 
                 }
                 scope.parseStaticItemValue = function(value){
                     if(value!==''){
-                        if(value==='true'){value = true;} 
-                        else if(value==='false'){value=false;} 
+                        if(value==='true'){value = true;}
+                        else if(value==='false'){value=false;}
                         else if(!isNaN(value)){value=Number(value);}
                     }
                 }
@@ -3308,7 +3308,7 @@ dfxGCC.directive('dfxGccWebSwitch', ['$timeout', '$compile', function($timeout, 
                             var sourceString = '', sourceArray = '';
                             if(scope.attributes.source.value.indexOf('$dfx_item') === -1) sourceString = 'scope.$parent_scope.';
                             sourceArray = sourceString + scope.attributes.source.value;
-                        }                    
+                        }
                         return eval(sourceArray);
                     }else if(sourceType==='static'){
                         return scope.attributes.staticArray.value;
@@ -3340,7 +3340,7 @@ dfxGCC.directive('dfxGccWebRadio', ['$timeout', '$compile', function($timeout, $
     return {
         restrict: 'A',
         require: '^dfxGccWebBase',
-        scope: true,        
+        scope: true,
         link: function(scope, element, attrs, basectrl) {
             var component = scope.$parent.getComponent(element);
             basectrl.init(scope, element, component, attrs, 'radio').then(function(){
@@ -3357,7 +3357,7 @@ dfxGCC.directive('dfxGccWebRadio', ['$timeout', '$compile', function($timeout, $
                             var sourceString = '', sourceArray = '';
                             if(scope.attributes.source.value.indexOf('$dfx_item') === -1) sourceString = 'scope.$parent_scope.';
                             sourceArray = sourceString + scope.attributes.source.value;
-                        }                    
+                        }
                         return eval(sourceArray);
                     }else if(sourceType==='static'){
                         return scope.attributes.radioItems.value;
@@ -3378,7 +3378,7 @@ dfxGCC.directive('dfxGccWebSelect', ['$timeout', '$compile', function($timeout, 
     return {
         restrict: 'A',
         require: '^dfxGccWebBase',
-        scope: true,        
+        scope: true,
         link: function(scope, element, attrs, basectrl) {
             var component = scope.$parent.getComponent(element);
             basectrl.init(scope, element, component, attrs, 'select').then(function(){
@@ -3403,7 +3403,7 @@ dfxGCC.directive('dfxGccWebSelect', ['$timeout', '$compile', function($timeout, 
                             var sourceString = '', sourceArray = '';
                             if(scope.attributes.options.source.indexOf('$dfx_item') === -1) sourceString = 'scope.$parent_scope.';
                             sourceArray = sourceString + scope.attributes.options.source;
-                        }                    
+                        }
                         return eval(sourceArray);
                     }else if(sourceType==='static'){
                         return scope.attributes.staticOptions.value;
@@ -3488,7 +3488,306 @@ dfxGCC.directive('dfxGccWebList', ['$timeout', '$compile', function($timeout, $c
                     }
                     scope.$parent_scope[scope.attributes.selected.value] = scope.selected_items;
                 }
+                scope.changeWidth = function(){
+                    $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+                };
+                scope.changeWidth();
                 // scope.$parent_scope[scope.attributes.selected.value] = scope.selected_items;
+            });
+        }
+    }
+}]);
+
+dfxGCC.directive('dfxGccWebRichtext', function($timeout, $compile) {
+    return {
+        restrict: 'A',
+        require: '^dfxGccWebBase',
+        scope: true,
+        link: function(scope, element, attrs, basectrl) {
+            var component = scope.getComponent(element);
+            scope.$gcscope = scope;
+            basectrl.init(scope, element, component, attrs, 'richtext').then(function() {
+                scope.attributes.bindedData.status = "overridden";
+                scope.attributes.toolbar.status = "overridden";
+                scope.attributes.flex.status = "overridden";
+                $(element).css('opacity', 0);
+                scope.changeWidth = function(){
+                    $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+                };
+                if (!angular.isDefined(attrs.dfxGcEdit)) {
+                    scope.changeWidth();
+                }
+                var dfxRichText = '<ng-quill-editor name="'+scope.attributes.name.value+'" ';
+                if (!angular.isDefined(attrs.dfxGcDesign) && !angular.isDefined(attrs.dfxGcEdit)) {
+                    dfxRichText += scope.attributes.binding.value !== '' ? 'ng-model="'+scope.attributes.binding.value+'" ' : 'ng-model="attributes.bindedData.value" ';
+                } else {
+                    dfxRichText += 'ng-model="attributes.bindedData.value" ';
+                }
+                dfxRichText += 'toolbar-entries="<<toolbarEntries>>" toolbar="true" show-toolbar="'+scope.attributes.toolbar.visible.value+'" link-tooltip="true" image-tooltip="true" editor-required="true" required="" error-class="input-error" class="dfx-core-gc-richtext"';
+
+                dfxRichText += scope.attributes.display.value !=='' ? 'ng-show="'+scope.attributes.display.value+'" ' : '';
+                dfxRichText += scope.attributes.disabled.value !=='' ? 'read-only="'+scope.attributes.disabled.value+'" ' : '';
+                dfxRichText += scope.attributes.dynamicClasses.value !=='' ? 'ng-class="'+scope.attributes.dynamicClasses.value+'" ' : '';
+                dfxRichText += scope.attributes.onchange.value !=='' ? 'ng-change="'+scope.attributes.onchange.value+'" ' : '';
+                dfxRichText += scope.attributes.onfocus.value !=='' ? 'ng-focus="'+scope.attributes.onfocus.value+'" ' : '';
+                dfxRichText += scope.attributes.onblur.value !=='' ? 'ng-blur="'+scope.attributes.onblur.value+'" ' : '';
+                dfxRichText += scope.attributes.onclick.value !=='' ? 'ng-click="'+scope.attributes.onclick.value+'" ' : '';
+                dfxRichText += scope.attributes.ondblclick.value !=='' ? 'ng-dblclick="'+scope.attributes.ondblclick.value+'" ' : '';
+                dfxRichText += scope.attributes.onkeypress.value !=='' ? 'ng-keypress="'+scope.attributes.onkeypress.value+'" ' : '';
+                dfxRichText += scope.attributes.onkeydown.value !=='' ? 'ng-keydown="'+scope.attributes.onkeydown.value+'" ' : '';
+                dfxRichText += scope.attributes.onkeyup.value !=='' ? 'ng-keyup="'+scope.attributes.onkeyup.value+'" ' : '';
+                dfxRichText += scope.attributes.onmouseover.value !=='' ? 'ng-mouseover="'+scope.attributes.onmouseover.value+'" ' : '';
+                dfxRichText += scope.attributes.onmouseenter.value !=='' ? 'ng-mouseenter="'+scope.attributes.onmouseenter.value+'" ' : '';
+                dfxRichText += scope.attributes.onmousemove.value !=='' ? 'ng-mousemove="'+scope.attributes.onmousemove.value+'" ' : '';
+                dfxRichText += scope.attributes.onmouseleave.value !=='' ? 'ng-mouseleave="'+scope.attributes.onmouseleave.value+'" ' : '';
+                dfxRichText += scope.attributes.onmousedown.value !=='' ? 'ng-mousedown="'+scope.attributes.onmousedown.value+'" ' : '';
+                dfxRichText += scope.attributes.onmouseup.value !=='' ? 'ng-mouseup="'+scope.attributes.onmouseup.value+'"' : '';
+
+                dfxRichText += '></ng-quill-editor>';
+                scope.rebuildQuillEditor = function(){
+                    dfxRichText = dfxRichText.replace('<<toolbarEntries>>', scope.quillEditorEntries);
+                    $("." + component.id + "_ng_quill_editor").html(dfxRichText);
+                    $timeout(function(){
+                        $compile($("." + component.id + "_ng_quill_editor").contents())(scope);
+                    }, 0).then(function(){
+                        $timeout(function() {
+                            $(element).css('opacity', 1);
+                        }, 250);
+                    });
+                };
+                scope.rebuildQuillEntries = function(){
+                    scope.quillEditorEntries = '';
+                    for ( var i = 0; i < scope.attributes.toolbar.entries.value.length; i++ ) {
+                        if ( scope.attributes.toolbar.entries.value[i].value === true ) {
+                            for ( var j = 0; j < scope.attributes.toolbar.entries.value[i].entries.length; j++ ) {
+                                scope.quillEditorEntries = scope.quillEditorEntries + ' ' + scope.attributes.toolbar.entries.value[i].entries[j];
+                            }
+                        }
+                    }
+                    scope.rebuildQuillEditor();
+                };
+                $timeout(function(){
+                    scope.rebuildQuillEntries();
+                }, 0);
+
+                scope.$on("editorCreated", function (event, quillEditor) {
+                    scope.$parent_scope.$watch('$parent_scope[attributes.binding.value]', function(newValue, oldValue) {
+                        if ( newValue && angular.equals(newValue, oldValue) ) {
+                            $timeout(function(){
+                                quillEditor.setHTML(newValue);
+                            }, 0);
+                        }
+                    }, true);
+                });
+                basectrl.bindScopeVariable( scope, component.attributes.binding.value );
+            });
+        }
+    }
+});
+
+dfxGCC.directive('dfxGccWebJson', ['$http', '$sce', '$mdDialog', '$timeout', '$compile', '$parse', 'dfxMessaging', function($http, $sce, $mdDialog, $timeout, $compile, $parse, dfxMessaging) {
+    return {
+        restrict: 'A',
+        require: '^dfxGccWebBase',
+        scope: true,
+        link: function(scope, element, attrs, basectrl) {
+            var component = scope.getComponent(element);
+            scope.$gcscope = scope;
+            basectrl.init(scope, element, component, attrs, 'gc_json').then(function() {
+                scope.attributes.flex.status = 'overridden';
+                scope.attributes.type.status = 'overridden';
+                scope.attributes.mode.status = 'overridden';
+                if(scope.attributes.binding.value!==''){scope.attributes.binding.status = 'overridden';}
+                if(scope.attributes.binding.value!==''){scope.attributes.binding.status = 'overridden';}
+                if(!scope.attributes.hasOwnProperty('headerVisible')){scope.attributes.headerVisible = {"value":true};}
+                scope.stringModel = {"value":""};
+                scope.viewDialog = { "mode": false };
+                scope.dfxJeOnChange = function(){
+                    var dfxJeChanged = scope.dfxJsonEditor.get();
+                    if(scope.attributes.binding.value!==''){
+                        if(!angular.equals(scope.$gcscope[scope.attributes.binding.value], dfxJeChanged)){
+                            scope.$gcscope[scope.attributes.binding.value] = dfxJeChanged;
+                            scope.stringModel.value = angular.toJson(dfxJeChanged);
+                            eval(scope.attributes.onchange.value);
+                            // console.log('*******onChange******', scope.dfxJsonEditor.get());
+                            // dfxMessaging.showMessage(scope.dfxJsonEditor.get());
+                        }
+                    }else{
+                        if(!angular.equals(scope.attributes.content.value, dfxJeChanged)){
+                            scope.attributes.content.value = dfxJeChanged;
+                            scope.stringModel.value = angular.toJson(dfxJeChanged);
+                            eval(scope.attributes.onchange.value);
+                            // console.log('*******onChange******', scope.dfxJsonEditor.get());
+                            // dfxMessaging.showMessage(scope.dfxJsonEditor.get());
+                        }
+                    }
+                }
+                scope.dfxJeOnModeChange = function( newMode, oldMode ){
+                    eval(scope.attributes.onmodechange.value);
+                    if (!scope.isDisabled){
+                        scope.lastMode = newMode;
+                    }
+                    // console.log('*******onModeChange******', 'Mode switched from '+oldMode+' to '+newMode);
+                    // dfxMessaging.showMessage('Mode switched from '+oldMode+' to '+newMode);
+                }
+                scope.dfxJeOnError = function( err ){
+                    eval(scope.attributes.onerror.value);
+                    // console.log('*******onError******', ''+err);
+                    // dfxMessaging.showError(''+err);
+                }
+                scope.checkHeaderVisibility = function () {
+                    var panelToolbar = $('#'+component.id+' md-toolbar.dfx-je-toolbar'),
+                        panelBody = $('#'+component.id+' div.jsoneditor-outer');
+                    if(!scope.attributes.headerVisible.value){
+                        panelToolbar.hide();
+                        panelBody.css({'margin':0,"padding":0});
+                    }else{
+                        panelToolbar.show();
+                        panelBody.css({'margin':"-48px 0 0","padding":"48px 0 0"});
+                    }
+                }
+                scope.runJsonEditor = function( container, mode, model ){
+                    scope.dfxJsonEditor = null;
+                    var options = {
+                        mode:           mode,
+                        modes:          ['tree','form','code','text','view'],
+                        history:        true,
+                        onChange:       function(){scope.dfxJeOnChange();},
+                        onModeChange:   function(newMode, oldMode){scope.dfxJeOnModeChange(newMode,oldMode);},
+                        onError:        function(err){scope.dfxJeOnError(err);}
+                    }
+                    $timeout(function() {
+                        scope.dfxJsonEditor = new JSONEditor(container, options, model);
+                        scope.checkHeaderVisibility();
+                        scope.lastMode = mode;
+                    }, 0);
+                }
+                scope.inputToJson = function(){
+                    try {
+                        if(JSON.parse(scope.stringModel.value)){
+                            var inputJson = angular.fromJson(scope.stringModel.value);
+                            if(scope.attributes.binding.value!==''){
+                                if(!angular.equals(scope.$gcscope[scope.attributes.binding.value], inputJson)) {
+                                    scope.$gcscope[scope.attributes.binding.value] = inputJson;
+                                }
+                            }else{
+                                if(!angular.equals(scope.attributes.content.value, inputJson)) {
+                                    scope.attributes.content.value = inputJson;
+                                }
+                            }
+                            angular.element($('#'+component.id+'_scopeInput')).data('$ngModelController').$setValidity('editorInput', true);
+                        }
+                    }
+                    catch(err) {
+                        if (!angular.isDefined(attrs.dfxGcDesign) && !angular.isDefined(attrs.dfxGcEdit)) {
+                            angular.element($('#'+component.id+'_scopeInput')).data('$ngModelController').$setValidity('editorInput', false);
+                        }
+                    }
+                }
+                scope.showJsonDialog = function(ev) {
+                    $mdDialog.show({
+                        scope: scope.$new(),
+                        parent: angular.element(document.body),
+                        targetEvent: ev,
+                        clickOutsideToClose: true,
+                        ariaLabel: 'dialog-json-editor',
+                        templateUrl: '/gcontrols/web/gc_json_dialog.html',
+                        onComplete: function() {
+                            var container = document.getElementById(component.id+'_dfx_json_editor_dialog_panel');
+                            if(container){
+                                $(container).empty();
+                                if (scope.attributes.binding.value!==''){
+                                    scope.runJsonEditor(container, scope.attributes.mode.value, scope.$gcscope[scope.attributes.binding.value]);
+                                } else {
+                                    scope.runJsonEditor(container, scope.attributes.mode.value, scope.attributes.content.value);
+                                }
+                                $(".dfx-dialog-json-editor .dfx-web-gc-json-dialog-tab").fadeIn();
+                            }
+                        },
+                        controller: function() {
+                            scope.closeJsonDialog = function() {
+                                $mdDialog.hide();
+                            }
+                        }
+                    });
+                }
+                scope.buildJsonEditor = function(){
+                    if(scope.attributes.type.value==='panel'){
+                        $timeout(function() {
+                            var container = document.getElementById(component.id+'_dfx_gc_web_json_panel');
+                            if(container){
+                                scope.runJsonEditor(container, scope.attributes.mode.value, scope.attributes.content.value);
+                            }
+                        }, 0);
+                    }
+                }
+
+                if (scope.attributes.type.value==='panel') {
+                    $timeout(function() {
+                        var container = document.getElementById(component.id+'_dfx_gc_web_json_panel');
+                        if (container){
+                            $(container).empty();
+                            if (scope.attributes.binding.value!==''){
+                                scope.runJsonEditor(container, scope.attributes.mode.value, scope.$gcscope[scope.attributes.binding.value]);
+                            } else {
+                                scope.runJsonEditor(container, scope.attributes.mode.value, scope.attributes.content.value);
+                            }
+                            $timeout(function() {
+                                if(eval('scope.'+scope.attributes.disabled.value)){
+                                    scope.dfxJsonEditor.setMode('view');
+                                    $timeout(function() {
+                                        var initModeBtn = $("#" + component.id + "_dfx_gc_web_json_panel button.jsoneditor-modes");
+                                        $(initModeBtn).attr('disabled', true);
+                                    }, 0);
+                                }else{
+                                }
+                                // $compile($('#'+component.id+'_dfx_gc_web_json_panel md-toolbar'))(scope);
+                            }, 0);
+                        }
+                        scope.$watch(scope.attributes.disabled.value, function(newValue){
+                            if(scope.dfxJsonEditor){
+                                if(eval(newValue)){
+                                    scope.isDisabled = true;
+                                    scope.dfxJsonEditor.setMode('view');
+                                    var modeBtn = $("#" + component.id + "_dfx_gc_web_json_panel button.jsoneditor-modes");
+                                    $(modeBtn).attr('disabled',true);
+                                } else {
+                                    scope.isDisabled = false;
+                                    scope.dfxJsonEditor.setMode(scope.lastMode);
+                                    var modeBtn = $("#" + component.id + "_dfx_gc_web_json_panel button.jsoneditor-modes");
+                                    $(modeBtn).attr('disabled',false);
+                                }
+                            }
+                        }, true);
+                    }, 0);
+                } else {
+                    if(scope.attributes.binding.value!==''){
+                        scope.stringModel.value = angular.toJson(scope.$gcscope[scope.attributes.binding.value]);
+                    }else{
+                        scope.stringModel.value = angular.toJson(scope.attributes.content.value);
+                    }
+                }
+                if (!angular.isDefined(attrs.dfxGcDesign) && !angular.isDefined(attrs.dfxGcEdit)) {
+                    if(scope.attributes.binding.value!==''){
+                        basectrl.bindScopeVariable(scope, component.attributes.binding.value);
+                        scope.$watch('$gcscope[attributes.binding.value]', function(newValue){
+                            if (newValue) {
+                                if (scope.dfxJsonEditor) {
+                                    var editorData = scope.dfxJsonEditor.get();
+                                    if(!angular.equals(newValue, editorData)) {
+                                        scope.dfxJsonEditor.set(newValue);
+                                    }
+                                }
+                                scope.stringModel.value = angular.toJson(newValue);
+                            }
+                        }, true);
+                    }
+                }
+
+                scope.changeWidth = function(){
+                    $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+                };
+                scope.changeWidth();
             });
         }
     }
