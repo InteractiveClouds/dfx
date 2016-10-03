@@ -260,44 +260,42 @@ dfxGCC.directive('dfxGccWebCarousel', ['$http', '$sce', '$mdDialog', '$mdToast',
                     scope.carouselDataName.value = scope.attributes.optionsType.value === 'dynamic' ? scope.attributes.optionItemNames.value.source : 'attributes.static.value';
                 }
                 scope.compileSlides = function(){
-                    if (!angular.isDefined(attrs.dfxGcDesign) && !angular.isDefined(attrs.dfxGcEdit)) {
-                        $timeout(function(){
-                            var screenSlides = $("#" + component.id + "_dfx_gc_web_carousel .dfx-carousel-item");
-                            if ( scope.attributes.optionsType.value === 'dynamic' ) {
-                                var slidesCount = scope.$parent_scope[scope.attributes.optionItemNames.value.source].length;
-                                for ( var i = 0; i < slidesCount; i++ ) {
-                                    $(screenSlides).eq(i+1).find('img').attr('ng-src', '{{'+scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.src]+'}}');
-                                    $(screenSlides).eq(i+1).find('.dfx-carousel-item-title').html(scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.title]);
-                                    $(screenSlides).eq(i+1).find('.dfx-carousel-item-description').html(scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.description]);
-                                    $(screenSlides).eq(i+1).find('img').attr('ng-click', scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.onclick]);
-                                    if(i===0){
-                                        $(screenSlides).eq(slidesCount+1).find('img').attr('ng-src', '{{'+scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.src]+'}}');
-                                        $(screenSlides).eq(slidesCount+1).find('.dfx-carousel-item-title').html(scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.title]);
-                                        $(screenSlides).eq(slidesCount+1).find('.dfx-carousel-item-description').html(scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.description]);
-                                    }
-                                    if(i===slidesCount-1){
-                                        $(screenSlides).eq(0).find('img').attr('ng-src', '{{'+scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.src]+'}}');
-                                        $(screenSlides).eq(0).find('.dfx-carousel-item-title').html(scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.title]);
-                                        $(screenSlides).eq(0).find('.dfx-carousel-item-description').html(scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.description]);
-                                    }
+                    $timeout(function(){
+                        var screenSlides = $("#" + component.id + "_dfx_gc_web_carousel .dfx-carousel-item");
+                        if ( scope.attributes.optionsType.value === 'dynamic' ) {
+                            var slidesCount = scope.$parent_scope[scope.attributes.optionItemNames.value.source].length;
+                            for ( var i = 0; i < slidesCount; i++ ) {
+                                $(screenSlides).eq(i+1).find('img').attr('ng-src', '{{'+scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.src]+'}}');
+                                $(screenSlides).eq(i+1).find('.dfx-carousel-item-title').html(scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.title]);
+                                $(screenSlides).eq(i+1).find('.dfx-carousel-item-description').html(scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.description]);
+                                $(screenSlides).eq(i+1).find('img').attr('ng-click', scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.onclick]);
+                                if(i===0){
+                                    $(screenSlides).eq(slidesCount+1).find('img').attr('ng-src', '{{'+scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.src]+'}}');
+                                    $(screenSlides).eq(slidesCount+1).find('.dfx-carousel-item-title').html(scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.title]);
+                                    $(screenSlides).eq(slidesCount+1).find('.dfx-carousel-item-description').html(scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.description]);
                                 }
-                            } else {
-                                for ( var i = 0; i < scope.attributes.static.value.length; i++ ) {
-                                    $(screenSlides).eq(i+1).find('img').attr('ng-click', '$eval(attributes.static.value['+[i]+'].onclick)');
+                                if(i===slidesCount-1){
+                                    $(screenSlides).eq(0).find('img').attr('ng-src', '{{'+scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.src]+'}}');
+                                    $(screenSlides).eq(0).find('.dfx-carousel-item-title').html(scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.title]);
+                                    $(screenSlides).eq(0).find('.dfx-carousel-item-description').html(scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.description]);
                                 }
                             }
-                            $compile($("#" + component.id + "_dfx_gc_web_carousel .dfx-carousel-item-image-container").contents())(scope);
-                            $compile($("#" + component.id + "_dfx_gc_web_carousel .dfx-carousel-item-title").contents())(scope);
-                            $compile($("#" + component.id + "_dfx_gc_web_carousel .dfx-carousel-item-description").contents())(scope);
-                        }, 0);
-                    }
+                        } else {
+                            for ( var i = 0; i < scope.attributes.static.value.length; i++ ) {
+                                $(screenSlides).eq(i+1).find('img').attr('ng-click', '$eval(attributes.static.value['+[i]+'].onclick)');
+                            }
+                        }
+                        $compile($("#" + component.id + "_dfx_gc_web_carousel .dfx-carousel-item-image-container").contents())(scope);
+                        $compile($("#" + component.id + "_dfx_gc_web_carousel .dfx-carousel-item-title").contents())(scope);
+                        $compile($("#" + component.id + "_dfx_gc_web_carousel .dfx-carousel-item-description").contents())(scope);
+                    }, 0);
                 }
                 scope.simpleCarousel = function() {
                     scope.setCarouselDataSource();
                     var simpleCarouselSnippet = '<jk-carousel data="<<carouselSource>>" item-template-url="\'<<carouselTemplate>>\'" max-width="<<carouselMaxWidth>>" max-height="<<carouselMaxHeight>>"></jk-carousel>',
                         parsedSimpleCarousel = simpleCarouselSnippet
                             .replace('<<carouselSource>>', scope.carouselDataName.value)
-                            .replace('<<carouselTemplate>>', scope.attributes.optionsType.value === 'dynamic' && (!angular.isDefined(attrs.dfxGcDesign) && !angular.isDefined(attrs.dfxGcEdit)) ? '/gcontrols/web/carousel_item_dynamic.html' : '/gcontrols/web/carousel_item_static.html')
+                            .replace('<<carouselTemplate>>', scope.attributes.optionsType.value === 'dynamic' && '/gcontrols/web/carousel_item_dynamic.html')
                             .replace('<<carouselMaxWidth>>', scope.attributes.maxWidth.value)
                             .replace('<<carouselMaxHeight>>', scope.attributes.maxHeight.value);
                     $timeout(function(){
@@ -313,7 +311,7 @@ dfxGCC.directive('dfxGccWebCarousel', ['$http', '$sce', '$mdDialog', '$mdToast',
                     var autoCarouselSnippet = '<jk-carousel data="<<carouselSource>>" item-template-url="\'<<carouselTemplate>>\'" auto-slide="<<carouselAutoSlide>>" auto-slide-time="<<carouselSlideInterval>>" max-width="<<carouselMaxWidth>>" max-height="<<carouselMaxHeight>>"></jk-carousel>',
                         parsedAutoCarousel = autoCarouselSnippet
                             .replace('<<carouselSource>>', scope.carouselDataName.value)
-                            .replace('<<carouselTemplate>>', scope.attributes.optionsType.value === 'dynamic' && (!angular.isDefined(attrs.dfxGcDesign) && !angular.isDefined(attrs.dfxGcEdit)) ? '/gcontrols/web/carousel_item_dynamic.html' : '/gcontrols/web/carousel_item_static.html')
+                            .replace('<<carouselTemplate>>', scope.attributes.optionsType.value === 'dynamic' && '/gcontrols/web/carousel_item_dynamic.html')
                             .replace('<<carouselAutoSlide>>', scope.attributes.autoSlide.value)
                             .replace('<<carouselSlideInterval>>', scope.attributes.slideInterval.value)
                             .replace('<<carouselMaxWidth>>', scope.attributes.maxWidth.value)
@@ -348,23 +346,21 @@ dfxGCC.directive('dfxGccWebCarousel', ['$http', '$sce', '$mdDialog', '$mdToast',
                     }, 0);
                 }
 
-                if (!angular.isDefined(attrs.dfxGcDesign) && !angular.isDefined(attrs.dfxGcEdit)) {
-                    if ( scope.attributes.optionsType.value === 'dynamic' ) {
-                        scope.$watch('$parent_scope[attributes.optionItemNames.value.source]', function(newValue, oldValue) {
-                            if ( newValue ) {
+                if ( scope.attributes.optionsType.value === 'dynamic' ) {
+                    scope.$watch('$parent_scope[attributes.optionItemNames.value.source]', function(newValue, oldValue) {
+                        if ( newValue ) {
+                            scope.rebuildCarousel();
+                        }
+                    }, true);
+                    // basectrl.bindScopeVariable(scope, component.attributes.dynamic.value);
+                } else {
+                    scope.$watch('attributes.static.value', function(newValue, oldValue) {
+                        if ( newValue ) {
+                            $timeout(function(){
                                 scope.rebuildCarousel();
-                            }
-                        }, true);
-                        // basectrl.bindScopeVariable(scope, component.attributes.dynamic.value);
-                    } else {
-                        scope.$watch('attributes.static.value', function(newValue, oldValue) {
-                            if ( newValue ) {
-                                $timeout(function(){
-                                    scope.rebuildCarousel();
-                                }, 0, false);
-                            }
-                        }, true);
-                    }
+                            }, 0, false);
+                        }
+                    }, true);
                 }
             });
         }
