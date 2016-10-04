@@ -522,6 +522,10 @@ dfxGCC.directive('dfxGccWebTreeview', [ '$timeout', '$compile', '$q', '$http', '
                 scope.getStaticItems = function() {
                     return scope.attributes.static.value;
                 };
+                scope.changeWidth = function(){
+                    $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+                };
+                scope.changeWidth();
             });
         }
     }

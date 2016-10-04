@@ -158,6 +158,9 @@ md-fab-speed-dial {
     width: 20px;
     height: 20px;
 }
+div:not([style]).md-fab-action-item button.dfx-core-gc-fab-item {
+    width: 0px;  
+}
 .dfx-core-gc-fab.md-button.md-fab:not([disabled]).md-focused,
 .dfx-core-gc-fab.md-button.md-fab:not([disabled]):hover,
 .dfx-core-gc-fab-item.md-button.md-fab:not([disabled]).md-focused,
