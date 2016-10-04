@@ -572,7 +572,7 @@ dfxAppRuntime.directive('dfxViewWrapper', [ '$http', '$compile', function($http,
     }
 }]);
 
-dfxAppRuntime.directive('dfxView', [ '$http', '$timeout', function($http, $timeout) {
+dfxAppRuntime.directive('dfxView', [ '$http', '$timeout', '$compile', function($http, $timeout, $compile) {
     return {
         restrict: 'A',
         controller: function($scope, $element, $attrs) {
@@ -597,7 +597,7 @@ dfxAppRuntime.directive('dfxView', [ '$http', '$timeout', function($http, $timeo
                                 });
                             });
                         } else {
-                            $http.get( 'views/' + $attrs.dfxView + '.json' ).success(function(response) {
+                            $http.get( 'views/' + $attrs.dfxView + '/' + $attrs.dfxView + '.json' ).success(function(response) {
                                 var view_definition = JSON.parse(response.src);
                                 var animation = (view_definition.definition[new_card][0].animation) ? view_definition.definition[new_card][0].animation : {
                                   in: 'fadeIn',
@@ -607,6 +607,13 @@ dfxAppRuntime.directive('dfxView', [ '$http', '$timeout', function($http, $timeo
                                   angular.element($('#' + $scope.view_id)).html('');
                                   $('#' + $scope.view_id).removeClass().addClass('animated ' + animation.in + ' flex layout-column');
                                   $scope.addComponents( view_definition.definition, { "id": $scope.view_id }, '', $scope.dfxViewCard, $scope.view_id );
+
+                                    $http.get( 'views/' + $attrs.dfxView +'/' + $attrs.dfxView + '_' + $scope.dfxViewCard + '.html' ).success(function(response) {
+                                        angular.element($('#'+ $scope.view_id)).html(response);
+                                        $compile(angular.element($('#'+ $scope.view_id)).contents())($scope);
+                                    });
+
+
                                 });
                             });
                         }
