@@ -516,12 +516,12 @@ dfxGCC.directive('dfxGccWebTreeview', [ '$timeout', '$compile', '$q', '$http', '
                     scope.rebuildSelectedArray('dynamic');
                 }
 
-                scope.getDynamicItems = function() {
-                    return scope.$gcscope[scope.attributes.dynamic.value];
-                };
-                scope.getStaticItems = function() {
-                    return scope.attributes.static.value;
-                };
+                // scope.getDynamicItems = function() {
+                //     return scope.$gcscope[scope.attributes.dynamic.value];
+                // };
+                // scope.getStaticItems = function() {
+                //     return scope.attributes.static.value;
+                // };
                 scope.changeWidth = function(){
                     $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
                 };
@@ -3523,25 +3523,10 @@ dfxGCC.directive('dfxGccWebList', ['$timeout', '$compile', function($timeout, $c
         link: function (scope, element, attrs, basectrl) {
             var component = scope.$parent.getComponent(element);
             basectrl.init(scope, element, component, attrs, 'list').then(function () {
-                var listContainer = $('#'+component.id+'_selectable_list'),
-                    listString = '',
-                    listSourceObject;
                 scope.togglingArray = [];
                 scope.selected_items = [];
                 scope.selected_indexes = [];
                 scope.sourceList = {"value": []};
-                scope.dfxGetSource = function(sourceType){
-                    if(sourceType==='static'){
-                        return scope.attributes.static.value;
-                    }else if(sourceType==='dynamic'){
-                        if(scope.attributes.optionItemNames.value.source.indexOf('$dfx_item')===-1) listString = 'scope.$parent_scope.';
-                        listSourceObject = listString + scope.attributes.optionItemNames.value.source;
-                        return eval(listSourceObject);
-                    }
-                }
-                scope.dfxGetData = function(item){
-                    return new Function('_', 'return _.' + scope.attributes.optionItemNames.value.data)(item);
-                }
                 scope.itemSelected = function(it){
                     return scope.selected_items.indexOf(it) > -1;
                 }
@@ -3573,11 +3558,15 @@ dfxGCC.directive('dfxGccWebList', ['$timeout', '$compile', function($timeout, $c
                     }
                     scope.$parent_scope[scope.attributes.selected.value] = scope.selected_items;
                 }
+                if(scope.attributes.optionsType.value === 'dynamic'){    
+                    scope.togglingArray = scope.$parent_scope[scope.attributes.optionItemNames.value.source];
+                }else{
+                    scope.togglingArray = scope.attributes.static.value;
+                }
                 scope.changeWidth = function(){
                     $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
                 };
                 scope.changeWidth();
-                // scope.$parent_scope[scope.attributes.selected.value] = scope.selected_items;
             });
         }
     }
