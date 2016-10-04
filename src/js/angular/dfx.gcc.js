@@ -516,12 +516,12 @@ dfxGCC.directive('dfxGccWebTreeview', [ '$timeout', '$compile', '$q', '$http', '
                     scope.rebuildSelectedArray('dynamic');
                 }
 
-                scope.getDynamicItems = function() {
-                    return scope.$gcscope[scope.attributes.dynamic.value];
-                };
-                scope.getStaticItems = function() {
-                    return scope.attributes.static.value;
-                };
+                // scope.getDynamicItems = function() {
+                //     return scope.$gcscope[scope.attributes.dynamic.value];
+                // };
+                // scope.getStaticItems = function() {
+                //     return scope.attributes.static.value;
+                // };
                 scope.changeWidth = function(){
                     $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
                 };
@@ -3523,25 +3523,10 @@ dfxGCC.directive('dfxGccWebList', ['$timeout', '$compile', function($timeout, $c
         link: function (scope, element, attrs, basectrl) {
             var component = scope.$parent.getComponent(element);
             basectrl.init(scope, element, component, attrs, 'list').then(function () {
-                var listContainer = $('#'+component.id+'_selectable_list'),
-                    listString = '',
-                    listSourceObject;
                 scope.togglingArray = [];
                 scope.selected_items = [];
                 scope.selected_indexes = [];
                 scope.sourceList = {"value": []};
-                scope.dfxGetSource = function(sourceType){
-                    if(sourceType==='static'){
-                        return scope.attributes.static.value;
-                    }else if(sourceType==='dynamic'){
-                        if(scope.attributes.optionItemNames.value.source.indexOf('$dfx_item')===-1) listString = 'scope.$parent_scope.';
-                        listSourceObject = listString + scope.attributes.optionItemNames.value.source;
-                        return eval(listSourceObject);
-                    }
-                }
-                scope.dfxGetData = function(item){
-                    return new Function('_', 'return _.' + scope.attributes.optionItemNames.value.data)(item);
-                }
                 scope.itemSelected = function(it){
                     return scope.selected_items.indexOf(it) > -1;
                 }
@@ -3573,11 +3558,15 @@ dfxGCC.directive('dfxGccWebList', ['$timeout', '$compile', function($timeout, $c
                     }
                     scope.$parent_scope[scope.attributes.selected.value] = scope.selected_items;
                 }
+                if(scope.attributes.optionsType.value === 'dynamic'){    
+                    scope.togglingArray = scope.$parent_scope[scope.attributes.optionItemNames.value.source];
+                }else{
+                    scope.togglingArray = scope.attributes.static.value;
+                }
                 scope.changeWidth = function(){
                     $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
                 };
                 scope.changeWidth();
-                // scope.$parent_scope[scope.attributes.selected.value] = scope.selected_items;
             });
         }
     }
@@ -4774,4 +4763,74 @@ dfxGCC.directive('dfxComplexValue', ['$timeout', '$compile', '$parse', function 
             }, 10);
         }
     };
+}]);
+
+dfxGCC.directive('dfxGccWebWizard', ['$mdDialog', '$timeout', '$compile', function($mdDialog, $timeout, $compile) {
+    return {
+        restrict: 'A',
+        require: '^dfxGccWebBase',
+        scope: true,
+        link: function(scope, element, attrs, basectrl) {
+            var component = scope.$parent.getComponent(element);
+            basectrl.init(scope, element, component, attrs, 'wizard').then(function(){
+                scope.attributes.layoutType = {"value": "wizard"};
+                scope.attributes.initialized = {"value": true};
+                if(!scope.attributes.hasOwnProperty('stepIndex')){scope.attributes.stepIndex = { "value": "" }}
+                if(scope.attributes.stepIndex.value === ""){scope.attributes.stepIndex.value = 0;}
+                scope.attributes.steps.status = "overridden";
+                scope.attributes.centerSteps.status = "overridden";
+                scope.attributes.stepIndex.status = "overridden" ;
+                scope.attributes.flex.status = "overridden";
+                scope.attributes.toolbar.leftMenu.equalButtonSize = { "value": false };
+                scope.attributes.toolbar.leftMenu.initialClick = { "value": false };
+                scope.attributes.toolbar.leftMenu.dynamicPresent = { "value": false };
+                scope.attributes.toolbar.rightMenu.equalButtonSize = { "value": false };
+                scope.attributes.toolbar.rightMenu.initialClick = { "value": false };
+                scope.attributes.toolbar.rightMenu.dynamicPresent = { "value": false };
+                if(scope.attributes.toolbar.leftMenu.hasOwnProperty('iconStyle')){delete scope.attributes.toolbar.leftMenu.iconStyle;}
+                if(scope.attributes.toolbar.leftMenu.hasOwnProperty('iconClass')){delete scope.attributes.toolbar.leftMenu.iconClass;}
+                if(scope.attributes.toolbar.leftMenu.hasOwnProperty('iconBarClass')){delete scope.attributes.toolbar.leftMenu.iconBarClass;}
+                if(scope.attributes.toolbar.leftMenu.hasOwnProperty('buttonStyle')){delete scope.attributes.toolbar.leftMenu.buttonStyle;}
+                if(scope.attributes.toolbar.leftMenu.hasOwnProperty('buttonClass')){delete scope.attributes.toolbar.leftMenu.buttonClass;}
+                if(scope.attributes.toolbar.rightMenu.hasOwnProperty('iconStyle')){delete scope.attributes.toolbar.rightMenu.iconStyle;}
+                if(scope.attributes.toolbar.rightMenu.hasOwnProperty('iconClass')){delete scope.attributes.toolbar.rightMenu.iconClass;}
+                if(scope.attributes.toolbar.rightMenu.hasOwnProperty('iconBarClass')){delete scope.attributes.toolbar.rightMenu.iconBarClass;}
+                if(scope.attributes.toolbar.rightMenu.hasOwnProperty('buttonStyle')){delete scope.attributes.toolbar.rightMenu.buttonStyle;}
+                if(scope.attributes.toolbar.rightMenu.hasOwnProperty('buttonClass')){delete scope.attributes.toolbar.rightMenu.buttonClass;}
+
+                scope.incrIndex = function(){
+                    scope.attributes.stepIndex.value++;
+                };
+
+                scope.decrIndex = function(){
+                    scope.attributes.stepIndex.value--;
+                };
+
+                scope.prevent = function(event){
+                    event.preventDefault();
+                    event.stopPropagation();
+                };
+
+				$('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+				if (!scope.attributes.autoHeight || scope.attributes.autoHeight.value != true) {
+                    $timeout(function () {
+                        var $md_tab_content_wrapper = $('#' + scope.component_id + ' > div > div > md-content > form > md-tabs > md-tabs-content-wrapper');
+                        $md_tab_content_wrapper.addClass('flex-100');
+                        $md_tab_content_wrapper.addClass('layout-column');
+
+                        var $md_tab_content = $md_tab_content_wrapper.children('md-tab-content');
+                        $md_tab_content.addClass('flex-100');
+                        $md_tab_content.css('height', '100%');
+                        $md_tab_content.addClass('layout-column');
+
+                        var $md_tabs_template = $md_tab_content.children('div[md-tabs-template]');
+                        $md_tabs_template.addClass('flex-100');
+                        $md_tabs_template.css('height', '100%');
+                        $md_tabs_template.addClass('layout-column');
+                    }, 0);
+                }
+
+            });
+        }
+    }
 }]);
