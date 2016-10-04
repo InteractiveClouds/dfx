@@ -1,6 +1,6 @@
 <div ng-show="attributes.display.value"
     ATTR-IF{{style="attributes.style.value"}}
-    ng-class="[$eval(attributes.dynamicClasses.value), $eval(attributes.classes.value), $eval(attributes.whiteframe.value)]" flex="100" layout="column">
+    ng-class="[$eval(attributes.dynamicClasses.value), $eval(attributes.classes.value), 'attributes.whiteframe.value']" flex="100" layout="column">
     <div dfx-gcc-web-toolbar></div>
     <md-content flex="100" ATTR-IF{{style="attributes.bodyStyle.value"}} ATTR-IF{{ng-hide="attributes.toolbar.collapsed.value"}} layout="column">
         <md-tabs md-no-ink-bar="ATTR-EXP{{attributes.inkBar.value==='disabled' ? 'true': 'false'}}ATTR-ENDEXP"
@@ -20,14 +20,18 @@
                  ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
                  ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}
                  flex="100" layout="column">
-            <md-tab ng-repeat="tab in tabs_values track by $index" label="{{$eval(tab.label)}}"
+
+             LAYOUT-RENDERING-TABS
+            <!--md-tab ng-repeat="tab in tabs_values track by $index" label="{{$eval(tab.label)}}"
                 ng-disabled="$eval(tab.disabled.value)">
                 <md-content flex="100" layout="row" layout-padding style="height:100%;{{tab.style.value}}"
                     ng-class="[tab.classes.value, $eval(tab.dynamicClasses.value)]">
                     <div flex="100" id="{{component_id}}_tab_{{$index}}" layout="column">
                         <div ng-repeat="row in tab.layout.rows track by $index" id="{{component_id}}_layout_{{$parent.$index}}_row_{{$index}}" layout="row" layout-wrap
                             flex="{{ATTR-EXP{{(!attributes.autoHeight || attributes.autoHeight.value != true) ? 'row.height.value' : 'none'}}ATTR-ENDEXP}}">
-                            <div ng-repeat="col in row.cols track by $index" id="{{component_id}}_layout_{{$parent.$parent.$index}}_row_{{$parent.$index}}_column_{{$index}}"
+
+                            <div ng-repeat="col in row.cols track by $index"
+                                 id="{{component_id}}_layout_{{$parent.$parent.$index}}_row_{{$parent.$index}}_column_{{$index}}"
                                  flex="col.width.value"
                                  gc-container="layout_{{$parent.$parent.$index}}_row_{{$parent.$index}}_column_{{$index}}"
                                  gc-parent="component_id"
@@ -40,7 +44,7 @@
                         </div>
                     </div>
                 </md-content>
-            </md-tab>
+            </md-tab-->
         </md-tabs>
     </md-content>
 </div>

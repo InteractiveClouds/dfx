@@ -4625,7 +4625,7 @@ dfxGCC.directive('dfxGccWebTabs', ['$timeout', '$compile', function($timeout, $c
 
                 scope.checkCollapses();
 
-                var flexTabInRunTime = function(){
+                var flexTabInRunTime = function() {
                     if (!scope.attributes.autoHeight || scope.attributes.autoHeight.value != true) {
                         $timeout(function () {
                             var $md_tab_content_wrapper = $('#' + scope.component_id + ' > div > md-content > md-tabs > md-tabs-content-wrapper');
@@ -4645,13 +4645,16 @@ dfxGCC.directive('dfxGccWebTabs', ['$timeout', '$compile', function($timeout, $c
                         }, 0);
                     }
                 };
+                flexTabInRunTime();
 
+                /*
                 // directive html treated by angular first, so, fill values in next js cycle
                 scope.tabs_values = [];
                 $timeout(function () {
                     scope.tabs_values = scope.attributes.tabs.value;
                     flexTabInRunTime();
                 }, 0);
+                */
             });
         }
     }
