@@ -522,6 +522,10 @@ dfxGCC.directive('dfxGccWebTreeview', [ '$timeout', '$compile', '$q', '$http', '
                 scope.getStaticItems = function() {
                     return scope.attributes.static.value;
                 };
+                scope.changeWidth = function(){
+                    $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+                };
+                scope.changeWidth();
             });
         }
     }
@@ -4465,6 +4469,73 @@ dfxGCC.directive('dfxGccWebHorizontalmenu', ['$mdMenu', '$timeout', '$compile', 
         }
     }
 }]);
+
+dfxGCC.directive('dfxGccWebTreemenu', ['$timeout', '$compile', function($timeout, $compile) {
+    return {
+        restrict: 'A',
+        require: '^dfxGccWebBase',
+        scope: true,
+        link: function(scope, element, attrs, basectrl) {
+            var component = scope.$parent.getComponent(element),
+                PADDING = 16;
+            basectrl.init(scope, element, component, attrs, 'treemenu').then(function() {
+                if(!scope.attributes.menuItemNames.value.hasOwnProperty('actions')){
+                    scope.attributes.menuItemNames.value.actions = {
+                        "actions": {
+                        "name": "",
+                        "icon": {"value":"","name":"","type":"","style":"","class":""},
+                        "display": "",
+                        "disabled": "",
+                        "onclick": "",
+                        "actionItems": {
+                            "name": "",
+                            "type": "",
+                            "label": "",
+                            "icon": {"value":"","name":"","type":"","style":"","class":""},
+                            "display": "",
+                            "disabled": "",
+                            "onclick": ""
+                        }
+                    }
+                    }
+                }
+                scope.attributes.dynamicPresent.value = scope.attributes.dynamic.value.length > 0 ? true : false;
+                scope.attributes.menuItems.status = "overridden";
+                scope.attributes.dynamicPresent.status = "overridden";
+                scope.attributes.dynamic.status = "overridden";
+                scope.attributes.menuItemsType.status = "overridden";
+                scope.attributes.menuItemNames.status = "overridden";
+                scope.itemNames = scope.attributes.menuItemNames.value;
+                scope.menuToggle = function(ev) {
+                    var clickedItem = ev.target,
+                        treeButton = $(clickedItem);
+                        clickedItemPadding = parseFloat($(clickedItem).css('padding-left')),
+                        subMenu = $(clickedItem).parent().siblings(),
+                        treeItem = $(clickedItem).parent();
+                    treeButton.toggleClass('opened');
+                    subMenu.toggleClass('opened');
+                    subMenu.slideToggle();
+                    if ( subMenu.hasClass('opened') ) {
+                        subMenu.children().find('md-menu-item > button, md-menu-item > div').css('padding-left', clickedItemPadding + PADDING);
+                    } else {
+                        treeItem.parent().find('ul.opened').slideUp();
+                        treeItem.parent().find('.opened').removeClass('opened');
+                        subMenu.children().find('md-menu-item > button, md-menu-item > div').css('padding-left', clickedItemPadding);
+                    }
+                };
+                $timeout(function() {
+                    var btns = $('#' + component.id).find('button, div');
+                    btns.each(function(index, element) {
+                        if ( $(element).parents('.tree-menu-item').length > 1 ) {
+                            var buttonPadding = PADDING * $(element).parents('.tree-menu-item').length - PADDING + 'px';
+                            $(element).css('padding-left', buttonPadding);
+                        }
+                    });
+                }, 0);
+            });
+        }
+    }
+}]); 
 
 dfxGCC.directive('dfxGccWebTabs', ['$timeout', '$compile', function($timeout, $compile) {
     return {
