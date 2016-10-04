@@ -4495,23 +4495,6 @@ dfxGCC.directive('dfxGccWebTreemenu', ['$timeout', '$compile', function($timeout
                     }
                     }
                 }
-                scope.dfxGetSource = function(sourceType){
-                    if(sourceType==='dynamic'){
-                        if(scope.attributes.options.source !== ''){
-                            var sourceString = '', sourceArray = '';
-                            if(scope.attributes.options.source.indexOf('$dfx_item') === -1) sourceString = 'scope.$parent_scope.';
-                            sourceArray = sourceString + scope.attributes.options.source;
-                        }
-                        return eval(sourceArray);
-                    }else{
-                        
-                    }
-                }
-                // if (scope.$parent.col.orientation.value == 'row') {
-                //     element.addClass('flex-100');
-                // } else {
-                //     element.attr('style', 'width:100%');
-                // }
                 scope.attributes.dynamicPresent.value = scope.attributes.dynamic.value.length > 0 ? true : false;
                 scope.attributes.menuItems.status = "overridden";
                 scope.attributes.dynamicPresent.status = "overridden";
@@ -4544,7 +4527,7 @@ dfxGCC.directive('dfxGccWebTreemenu', ['$timeout', '$compile', function($timeout
                             $(element).css('padding-left', buttonPadding);
                         }
                     });
-                }, 0);                               
+                }, 0); 
             });
         }
     }

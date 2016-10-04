@@ -261,6 +261,9 @@ button[disabled="disabled"].dfx-core-gc-button.md-button md-icon, button[disable
     height:300px;
 }
 /* Tree menu */
+div[dfx-gcc-web-treemenu] {
+    width: 100%;
+}
 .dfx-core-gc-treemenu {
     width: 100%;
     /*background-color: rgb(33, 150, 243);*/
@@ -303,6 +306,9 @@ button[disabled="disabled"].dfx-core-gc-button.md-button md-icon, button[disable
 }
 .dfx-core-gc-treemenu button .tree-menu-label {
     flex-grow:1;
+}
+.dfx-core-gc-treemenu button .trigger-icon-box {
+    padding-left: 16px;  
 }
 .dfx-core-gc-treemenu button .trigger-icon {    
     width: 16px;
