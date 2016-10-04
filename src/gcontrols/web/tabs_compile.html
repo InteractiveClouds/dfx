@@ -20,13 +20,13 @@
                  ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
                  ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}
                  flex="100" layout="column">
-            <md-tab ng-repeat="tab in getTabsValues() track by $index" label="{{$eval(tab.label)}}"
-                ng-disabled="tab.disabled.value">
+            <md-tab ng-repeat="tab in tabs_values track by $index" label="{{$eval(tab.label)}}"
+                ng-disabled="$eval(tab.disabled.value)">
                 <md-content flex="100" layout="row" layout-padding style="height:100%;{{tab.style.value}}"
                     ng-class="[tab.classes.value, $eval(tab.dynamicClasses.value)]">
                     <div flex="100" id="{{component_id}}_tab_{{$index}}" layout="column">
                         <div ng-repeat="row in tab.layout.rows track by $index" id="{{component_id}}_layout_{{$parent.$index}}_row_{{$index}}" layout="row" layout-wrap
-                            flex="ATTR-EXP{{(!attributes.autoHeight || attributes.autoHeight.value != true) ? 'row.height.value' : 'none'}}ATTR-ENDEXP">
+                            flex="{{ATTR-EXP{{(!attributes.autoHeight || attributes.autoHeight.value != true) ? 'row.height.value' : 'none'}}ATTR-ENDEXP}}">
                             <div ng-repeat="col in row.cols track by $index" id="{{component_id}}_layout_{{$parent.$parent.$index}}_row_{{$parent.$index}}_column_{{$index}}"
                                  flex="col.width.value"
                                  gc-container="layout_{{$parent.$parent.$index}}_row_{{$parent.$index}}_column_{{$index}}"
