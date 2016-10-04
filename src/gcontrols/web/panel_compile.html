@@ -1,4 +1,4 @@
-FRAG-IF{{attributes.repeat_in.value != '' && attributes.repeat_title.value === 'false'}}
+FRAG-IF{{attributes.repeat_in.value != '' && attributes.repeat_title.value === false}}
 <div ng-class="attributes.dynamicClasses.value" layout="column" flex="100" style="ATTR-EXP{{(!attributes.autoHeight || attributes.autoHeight.value != true) ? 'height:100%;' : ''}}ATTR-ENDEXP">
     <section id="{{component_id}}_panel" class="dfx-core-gc-panel" ATTR-IF{{style="attributes.style.value"}} ng-show="attributes.display.value" dfx-gc-web-container layout="column" flex="100"
         ATTR-IF{{ng-click="attributes.onclick.value"}}
@@ -18,7 +18,7 @@ FRAG-IF{{attributes.repeat_in.value != '' && attributes.repeat_title.value === '
     </section>
 </div>
 FRAG-ENDIF
-FRAG-IF{{attributes.repeat_in.value != '' && attributes.repeat_title.value === 'true'}}
+FRAG-IF{{attributes.repeat_in.value != '' && attributes.repeat_title.value === true}}
 <div ng-repeat-start="$dfx_item in attributes.repeat_in.value" flex="attributes.flex.value" dfx-repeatable-panel="{{$index}}" style="width: attributes.flex.value%; ATTR-EXP{{(!attributes.autoHeight || attributes.autoHeight.value != true) ? 'height:100%;' : ''}}ATTR-ENDEXP" ng-repeat-end>
     <section id="{{component_id}}_panel_{{$index}}" dfx-gc-compiled ng-class="[attributes.whiteframe.value, attributes.classes.value, attributes.dynamicClasses.value]" class="dfx-core-gc-panel" style="attributes.style.value" dfx-ng-if="ng-if,display" dfx-gc-web-container layout="column" flex="100"
       ATTR-IF{{ng-click="attributes.onclick.value"}}

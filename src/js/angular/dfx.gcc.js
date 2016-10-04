@@ -4535,7 +4535,7 @@ dfxGCC.directive('dfxGccWebTreemenu', ['$timeout', '$compile', function($timeout
             });
         }
     }
-}]); 
+}]);
 
 dfxGCC.directive('dfxGccWebTabs', ['$timeout', '$compile', function($timeout, $compile) {
     return {
@@ -4840,6 +4840,22 @@ dfxGCC.directive('dfxGccWebWizard', ['$mdDialog', '$timeout', '$compile', functi
                         $md_tabs_template.addClass('layout-column');
                     }, 0);
                 }
+
+				scope.$watch('attributes.stepIndex.value', function(newValue, oldValue){
+                    for(var i =0; i < scope.attributes.steps.value.length; i++){
+                        if(i < scope.attributes.steps.value.length-1){
+                            scope.attributes.steps.value[i].isLast.value = false;
+                        }else{
+                            scope.attributes.steps.value[scope.attributes.steps.value.length - 1].isLast.value = true;
+                        }
+                        if (!angular.isDefined(attrs.dfxGcEdit) && !angular.isDefined(attrs.dfxGcDesign)){
+                            var stepFormName = 'stepForm' + scope.attributes.stepIndex.value;
+                            $timeout(function () {
+                                scope.stepForm = (scope.wizardForm[stepFormName]);
+                            },0);
+                        }
+                    }
+                });
 
             });
         }

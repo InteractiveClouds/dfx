@@ -12,7 +12,7 @@
 	ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}}
 	ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
 	ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}>
-        <div dfx-gc-web-toolbar></div>
+        <div dfx-gcc-web-toolbar></div>
         <md-content flex="100" style="{{attributes.bodyStyle.value}}" ng-hide="$eval(ATTR-STATIC{{toolbar.collapsed.value}})" layout="column">
             <form name="form_{{component_id}}" id="form_{{component_id}}" ng-submit="attributes.formSubmit.value" role="form" layout="column" flex="100">
                 <md-tabs md-no-ink-bar="ATTR-EXP{{(attributes.inkBar.value==='disabled') ? 'true': 'false'}}ATTR-ENDEXP" md-center-tabs="attributes.centerSteps.value"
