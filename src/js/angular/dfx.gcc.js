@@ -522,6 +522,10 @@ dfxGCC.directive('dfxGccWebTreeview', [ '$timeout', '$compile', '$q', '$http', '
                 scope.getStaticItems = function() {
                     return scope.attributes.static.value;
                 };
+                scope.changeWidth = function(){
+                    $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+                };
+                scope.changeWidth();
             });
         }
     }
@@ -4461,6 +4465,267 @@ dfxGCC.directive('dfxGccWebHorizontalmenu', ['$mdMenu', '$timeout', '$compile', 
                     }
                 }, true);
                 scope.iconbarBuilder();
+            });
+        }
+    }
+}]);
+
+dfxGCC.directive('dfxGccWebTreemenu', ['$timeout', '$compile', function($timeout, $compile) {
+    return {
+        restrict: 'A',
+        require: '^dfxGccWebBase',
+        scope: true,
+        link: function(scope, element, attrs, basectrl) {
+            var component = scope.$parent.getComponent(element),
+                PADDING = 16;
+            basectrl.init(scope, element, component, attrs, 'treemenu').then(function() {
+                if(!scope.attributes.menuItemNames.value.hasOwnProperty('actions')){
+                    scope.attributes.menuItemNames.value.actions = {
+                        "actions": {
+                        "name": "",
+                        "icon": {"value":"","name":"","type":"","style":"","class":""},
+                        "display": "",
+                        "disabled": "",
+                        "onclick": "",
+                        "actionItems": {
+                            "name": "",
+                            "type": "",
+                            "label": "",
+                            "icon": {"value":"","name":"","type":"","style":"","class":""},
+                            "display": "",
+                            "disabled": "",
+                            "onclick": ""
+                        }
+                    }
+                    }
+                }
+                scope.attributes.dynamicPresent.value = scope.attributes.dynamic.value.length > 0 ? true : false;
+                scope.attributes.menuItems.status = "overridden";
+                scope.attributes.dynamicPresent.status = "overridden";
+                scope.attributes.dynamic.status = "overridden";
+                scope.attributes.menuItemsType.status = "overridden";
+                scope.attributes.menuItemNames.status = "overridden";
+                scope.itemNames = scope.attributes.menuItemNames.value;
+                scope.menuToggle = function(ev) {
+                    var clickedItem = ev.target,
+                        treeButton = $(clickedItem);
+                        clickedItemPadding = parseFloat($(clickedItem).css('padding-left')),
+                        subMenu = $(clickedItem).parent().siblings(),
+                        treeItem = $(clickedItem).parent();
+                    treeButton.toggleClass('opened');
+                    subMenu.toggleClass('opened');
+                    subMenu.slideToggle();
+                    if ( subMenu.hasClass('opened') ) {
+                        subMenu.children().find('md-menu-item > button, md-menu-item > div').css('padding-left', clickedItemPadding + PADDING);
+                    } else {
+                        treeItem.parent().find('ul.opened').slideUp();
+                        treeItem.parent().find('.opened').removeClass('opened');
+                        subMenu.children().find('md-menu-item > button, md-menu-item > div').css('padding-left', clickedItemPadding);
+                    }
+                };
+                $timeout(function() {
+                    var btns = $('#' + component.id).find('button, div');
+                    btns.each(function(index, element) {
+                        if ( $(element).parents('.tree-menu-item').length > 1 ) {
+                            var buttonPadding = PADDING * $(element).parents('.tree-menu-item').length - PADDING + 'px';
+                            $(element).css('padding-left', buttonPadding);
+                        }
+                    });
+                }, 0);
+            });
+        }
+    }
+}]); 
+
+dfxGCC.directive('dfxGccWebTabs', ['$timeout', '$compile', function($timeout, $compile) {
+    return {
+        restrict: 'A',
+        require: '^dfxGccWebBase',
+        scope: true,
+        link: function(scope, element, attrs, basectrl) {
+            var component = scope.$parent.getComponent(element);
+            basectrl.init(scope, element, component, attrs, 'tabs').then(function(){
+                scope.attributes.layoutType = { "value": "tabs" };
+                scope.attributes.initialized = { "value": true };
+                if(!scope.attributes.hasOwnProperty('tabIndex')){scope.attributes.tabIndex = { "value": "" }}
+                if(!scope.attributes.toolbar.hasOwnProperty('collapsible')){scope.attributes.toolbar.collapsible = { "value": "false" }}
+                if(!scope.attributes.toolbar.hasOwnProperty('collapsed')){scope.attributes.toolbar.collapsed = { "value": "false" }}
+                scope.attributes.toolbar.leftMenu.equalButtonSize = { "value": false };
+                scope.attributes.toolbar.leftMenu.initialClick = { "value": false };
+                scope.attributes.toolbar.leftMenu.dynamicPresent = { "value": false };
+                scope.attributes.toolbar.rightMenu.equalButtonSize = { "value": false };
+                scope.attributes.toolbar.rightMenu.initialClick = { "value": false };
+                scope.attributes.toolbar.rightMenu.dynamicPresent = { "value": false };
+                if(scope.attributes.toolbar.leftMenu.hasOwnProperty('iconBarClass')){delete scope.attributes.toolbar.leftMenu.iconBarClass;}
+                if(scope.attributes.toolbar.rightMenu.hasOwnProperty('iconBarClass')){delete scope.attributes.toolbar.rightMenu.iconBarClass;}
+                if(scope.attributes.toolbar.leftMenu.hasOwnProperty('buttonClass')){delete scope.attributes.toolbar.leftMenu.buttonClass;}
+                if(scope.attributes.toolbar.rightMenu.hasOwnProperty('buttonClass')){delete scope.attributes.toolbar.rightMenu.buttonClass;}
+                scope.attributes.flex.status = "overridden" ;
+                scope.attributes.tabs.status = "overridden" ;
+                scope.attributes.centerTabs.status = "overridden" ;
+                if(scope.attributes.tabIndex.value === ""){
+                    scope.attributes.tabIndex.value = 0;
+                }
+
+                scope.setClasses = function(){
+                    $timeout(function () {
+                        try{
+                            for(var k = 0; k < scope.attributes.tabs.value.length; k++){
+                                var tabLayoutRows = $('#' + scope.component_id + '_tab_' + k).children();
+                                for(var i = 0; i < tabLayoutRows.length; i++){
+                                    var tabLayoutRowsCols = $(tabLayoutRows[i]).children() ;
+                                    for(var j = 0; j < tabLayoutRowsCols.length; j++){
+                                        if(scope.attributes.tabs.value[k].layout.rows[i].cols[j].orientation.value === 'row'){
+                                            $(tabLayoutRowsCols[j]).removeClass('layout-column');
+                                            $(tabLayoutRowsCols[j]).addClass('layout-row');
+                                        }else{
+                                            $(tabLayoutRowsCols[j]).removeClass('layout-row');
+                                            $(tabLayoutRowsCols[j]).addClass('layout-column');
+                                        }
+                                        $(tabLayoutRowsCols[j]).addClass('flex' + '-' + scope.attributes.tabs.value[k].layout.rows[i].cols[j].width.value);
+                                    }
+                                }
+                            }
+                        }catch(e){
+                            /*console.log(e.message);*/
+                        }
+                    },0);
+                };
+
+                scope.setWidth = function(rowIndex, colIndex){
+                    $timeout(function () {
+                        var tabLayoutRows = $('#' + scope.component_id + '_tab_' + scope.attributes.tabIndex.value).children();
+                        var tabLayoutRowsCols = $(tabLayoutRows[rowIndex]).children();
+                        if(scope.attributes.tabs.value[scope.attributes.tabIndex.value].layout.rows[rowIndex].cols[colIndex].orientation.value === 'row'){
+                            $(tabLayoutRowsCols[colIndex]).removeClass('layout-column');
+                            $(tabLayoutRowsCols[colIndex]).addClass('layout-row');
+
+                        }else{
+                            $(tabLayoutRowsCols[colIndex]).removeClass('layout-row');
+                            $(tabLayoutRowsCols[colIndex]).addClass('layout-column');
+                        }
+                    },0);
+                };
+
+                scope.setTabWidth = function() {
+                    $timeout(function () {
+                        try{
+                            var paginationWrapper = '#' + scope.component_id + '> div.flex > md-content > md-tabs > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper';
+                            var inkBar = '#' + scope.component_id + '> div.flex > md-content > md-tabs > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper > md-ink-bar';
+                            $(paginationWrapper).css('width', '100%');
+                            var temp = $($(paginationWrapper).children()[0]).css('width');
+                            var stepWidth = parseInt(temp.substring(0, temp.length - 2));
+                            var left = stepWidth * scope.attributes.tabIndex.value + 'px';
+                            var right = stepWidth * (scope.attributes.tabs.value.length - 1 - scope.attributes.tabIndex.value) + 'px';
+                            $(inkBar).css('left', left);
+                            $(inkBar).css('right', right);
+                        }catch(e){
+                            /*console.log(e.message);*/
+                        }
+                    },0);
+                };
+
+                scope.$watchCollection('attributes.tabs.value[attributes.tabIndex.value].layout.rows', function(newValue){
+                    scope.setClasses();
+                 });
+
+                scope.$watch('attributes.stretching.value', function(newValue){
+                    if(newValue === 'always'){
+                        scope.setTabWidth();
+                    }
+                });
+
+                scope.changeWidth = function(){
+                    $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+                };
+                if (!angular.isDefined(attrs.dfxGcEdit)) {
+                    scope.changeWidth();
+                }
+                scope.collapsePanelBody = function(isCollapsed, index) {
+                    if ( scope.attributes.repeat_title.value ) {
+                        basectrl.bindScopeVariable( scope, component.attributes.repeat_in.value );
+                    } else {
+                        basectrl.bindScopeVariable( scope, component.attributes.toolbar.collapsed.value );
+                    }
+                    if ( scope.attributes.toolbar.collapsed.value == 'true' || scope.attributes.toolbar.collapsed.value == 'false' ) {
+                        if ( isCollapsed ) {
+                            scope.attributes.toolbar.collapsed.value = 'false';
+                        } else {
+                            scope.attributes.toolbar.collapsed.value = 'true';
+                        }
+                    } else {
+                        if ( scope.attributes.repeat_title.value ) {
+                            var collapsedEl = scope.attributes.toolbar.collapsed.value.replace("$dfx_item.", "");
+                            if ( isCollapsed ) {
+                                scope[scope.attributes.repeat_in.value][index][collapsedEl] = false;
+                            } else {
+                                scope[scope.attributes.repeat_in.value][index][collapsedEl] = true;
+                            }
+                        } else {
+                            if ( isCollapsed ) {
+                                scope.$parent_scope[scope.attributes.toolbar.collapsed.value] = false;
+                            } else {
+                                scope.$parent_scope[scope.attributes.toolbar.collapsed.value] = true;
+                            }
+                        }
+                    }
+                }
+
+                scope.checkPanelBody = function() {
+                    if ( scope.attributes.toolbar.collapsed.value == 'true' ) {
+                        scope.attributes.toolbar.collapsed.designValue = true;
+                    } else {
+                        scope.attributes.toolbar.collapsed.designValue = false;
+                    }
+                }
+
+                scope.checkCollapses = function() {
+                    if ( !scope.attributes.toolbar.hasOwnProperty('collapsed') ) {
+                        var addCollapsed = { "collapsed": { "value": "false" }};
+                        scope.attributes.toolbar.collapsed = addCollapsed.collapsed;
+                    }
+                    if ( !scope.attributes.toolbar.hasOwnProperty('collapsible') ) {
+                        var addCollapsible = { "collapsible": { "value": "false" }};
+                        scope.attributes.toolbar.collapsible = addCollapsible.collapsible;
+                    }
+                    if ( !scope.attributes.hasOwnProperty('repeat_title') ) {
+                        var addRepeatTitle = { "repeat_title": { "value": false }};
+                        scope.attributes.repeat_title = addRepeatTitle.repeat_title;
+                    }
+                }
+
+                scope.checkCollapses();
+
+                var flexTabInRunTime = function() {
+                    if (!scope.attributes.autoHeight || scope.attributes.autoHeight.value != true) {
+                        $timeout(function () {
+                            var $md_tab_content_wrapper = $('#' + scope.component_id + ' > div > md-content > md-tabs > md-tabs-content-wrapper');
+                            $md_tab_content_wrapper.attr('flex', '100');
+                            $md_tab_content_wrapper.addClass('flex-100');
+                            $md_tab_content_wrapper.attr('layout', 'column');
+
+                            var $md_tab_content = $md_tab_content_wrapper.children('md-tab-content');
+                            $md_tab_content.attr('flex', '100');
+                            $md_tab_content.css('height', '100%');
+                            $md_tab_content.attr('layout', 'column');
+
+                            var $md_tabs_template = $md_tab_content.children('div[md-tabs-template]');
+                            $md_tabs_template.attr('flex', '100');
+                            $md_tabs_template.css('height', '100%');
+                            $md_tabs_template.attr('layout', 'column');
+                        }, 0);
+                    }
+                };
+                flexTabInRunTime();
+
+                /*
+                // directive html treated by angular first, so, fill values in next js cycle
+                scope.tabs_values = [];
+                $timeout(function () {
+                    scope.tabs_values = scope.attributes.tabs.value;
+                    flexTabInRunTime();
+                }, 0);
+                */
             });
         }
     }

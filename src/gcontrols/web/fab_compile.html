@@ -1,5 +1,5 @@
 <div layout="column" layout-align="center end" style="{{attributes.style.value}}" ATTR-IF{{class="attributes.classes.value"}} ATTR-IF{{ng-class="attributes.dynamicClasses.value"}} ng-show="attributes.display.value">
-  <md-fab-speed-dial md-direction="{{attributes.fabDirection.value}}" ATTR-IF{{ng-class="attributes.animation.value"}} ng-disabled="attributes.disabled.value">
+  <md-fab-speed-dial md-direction="attributes.fabDirection.value" ng-class="'attributes.animation.value'" ng-disabled="attributes.disabled.value">
     <md-fab-trigger ng-disabled="attributes.disabled.value">
       <md-button id="{{component_id}}_fab_menu" aria-label="{{component_id}}_fab_menu" class="ATTR-NONV{{triggerButton.class}} dfx-core-gc-fab md-fab" style="ATTR-NONV{{triggerButton.style}}"
 		ATTR-IF{{ng-focus="attributes.onfocus.value"}}

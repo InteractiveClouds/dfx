@@ -38,12 +38,12 @@
         "triggerButton": {
           "label": "'Home'", "style": "", "class": "",
           "icon": { "value": "'fa-bars'", "type": "fa-icon", "size": 24, "style": "", "class": "" },
-          "tooltip": { "direction": "top", "style": "", "class": "" } 
+          "tooltip": { "direction": "top", "style": "", "class": "" }
         },
         "actionButton": {
           "style": "", "class": "",
           "icon": { "value": "", "type": "", "size": 20, "style": "", "class": "" },
-          "tooltip": { "direction": "top", "style": "", "class": "" } 
+          "tooltip": { "direction": "top", "style": "", "class": "" }
         }
       },
       "iconBar": {
@@ -115,12 +115,12 @@
         "triggerButton": {
           "label": "'Home'", "style": "", "class": "",
           "icon": { "value": "'fa-bars'", "type": "fa-icon", "size": 24, "style": "", "class": "" },
-          "tooltip": { "direction": "top", "style": "", "class": "" } 
+          "tooltip": { "direction": "top", "style": "", "class": "" }
         },
         "actionButton": {
           "style": "", "class": "",
           "icon": { "value": "", "type": "", "size": 20, "style": "", "class": "" },
-          "tooltip": { "direction": "top", "style": "", "class": "" } 
+          "tooltip": { "direction": "top", "style": "", "class": "" }
         }
       },
       "iconBar": {
@@ -213,7 +213,7 @@
           "classes":        { "value": "" },
           "dynamicClasses": { "value": "" },
           "style":          { "value": "" }
-        } 
+        }
       },
       {
         "label":          "'Tab 2'",
@@ -248,7 +248,7 @@
       }
     ]
   },
-  "flex": { "value": 100 },  
+  "flex": { "value": 100 },
   "style":          { "value": "" },
   "bodyStyle":      { "value": "" },
   "classes":        { "value": "" },
@@ -264,5 +264,6 @@
   "onmouseenter":   { "value": "" },
   "onmousemove":    { "value": "" },
   "onmouseleave":   { "value": "" },
-  "onmouseup":      { "value": "" }
+  "onmouseup":      { "value": "" },
+  "onmousedown":    { "value": "" }
 }
