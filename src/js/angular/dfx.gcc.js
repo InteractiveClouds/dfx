@@ -4801,15 +4801,6 @@ dfxGCC.directive('dfxGccWebTabs', ['$timeout', '$compile', function($timeout, $c
                     }
                 };
                 flexTabInRunTime();
-
-                /*
-                // directive html treated by angular first, so, fill values in next js cycle
-                scope.tabs_values = [];
-                $timeout(function () {
-                    scope.tabs_values = scope.attributes.tabs.value;
-                    flexTabInRunTime();
-                }, 0);
-                */
             });
         }
     }
