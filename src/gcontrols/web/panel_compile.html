@@ -52,7 +52,7 @@ FRAG-IF{{attributes.repeat_in.value == ''}}
         ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
         ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}>
         <div dfx-gcc-web-toolbar></div>
-        <md-content flex="100" ng-hide="attributes.toolbar.collapsed.value" style="attributes.bodyStyle.value" dfx-sidenav-and-bottomsheet="{{component_id}}" layout="column">
+        <md-content flex="100" ng-hide="collapsedType.value==='boolean' ? dfxCollapsed.value : $eval(collapsedPath)" style="attributes.bodyStyle.value" dfx-sidenav-and-bottomsheet="{{component_id}}" layout="column">
 			LAYOUT-RENDERING{{0}}
         </md-content>
     </section>

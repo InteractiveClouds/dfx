@@ -179,6 +179,8 @@ dfxGCC.directive('dfxGccWebPanel', ['$timeout', '$compile', function($timeout, $
                 scope.collapsed_element;
                 scope.collapsedType = {"value": ''};
                 scope.collapsibleType = {"value": ''};
+                scope.isRepeatablePanel = scope.attributes.repeat_in.value !== '' ? true : false;
+                scope.isRepeatableTitle = scope.attributes.repeat_in.value !== '' && scope.attributes.repeat_title.value ? true : false;
 				var itemCollapsed,
                     itemCollapsible,
                     collapsedPath = scope.attributes.toolbar.collapsed.value,
