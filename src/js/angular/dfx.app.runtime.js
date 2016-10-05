@@ -576,6 +576,12 @@ dfxAppRuntime.directive('dfxView', [ '$http', '$timeout', '$compile', function($
     return {
         restrict: 'A',
         controller: function($scope, $element, $attrs) {
+            var renderHtml = function() {
+                $http.get( 'views/' + $attrs.dfxView +'/' + $attrs.dfxView + '_' + $scope.dfxViewCard + '.html' ).success(function(response) {
+                    angular.element($('#'+ $scope.view_id)).html(response);
+                    $compile(angular.element($('#'+ $scope.view_id)).contents())($scope);
+                });
+            }
             $timeout( function() {
                 $scope.view_id = $attrs.id;
                 $scope.$parent.view_id = $attrs.id;
@@ -608,11 +614,7 @@ dfxAppRuntime.directive('dfxView', [ '$http', '$timeout', '$compile', function($
                                   $('#' + $scope.view_id).removeClass().addClass('animated ' + animation.in + ' flex layout-column');
                                   $scope.addComponents( view_definition.definition, { "id": $scope.view_id }, '', $scope.dfxViewCard, $scope.view_id );
 
-                                    $http.get( 'views/' + $attrs.dfxView +'/' + $attrs.dfxView + '_' + $scope.dfxViewCard + '.html' ).success(function(response) {
-                                        angular.element($('#'+ $scope.view_id)).html(response);
-                                        $compile(angular.element($('#'+ $scope.view_id)).contents())($scope);
-                                    });
-
+                                  renderHtml();
 
                                 });
                             });
