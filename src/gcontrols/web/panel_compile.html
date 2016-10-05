@@ -12,14 +12,14 @@ FRAG-IF{{attributes.repeat_in.value != '' && attributes.repeat_title.value === f
         ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
         ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}>
         <div dfx-gcc-web-toolbar></div>
-        <md-content flex="100" ng-repeat="$dfx_item in attributes.repeat_in.value" ng-hide="attributes.toolbar.collapsed.value" style="attributes.bodyStyle.value" dfx-sidenav-and-bottomsheet="{{component_id}}" layout="column">
+        <md-content flex="100" ng-repeat="$dfx_item in attributes.repeat_in.value" ng-init="getDfxItem($dfx_item, $index); $last ? finishedNgRepeat() : null" ng-hide="attributes.toolbar.collapsed.value" style="attributes.bodyStyle.value" dfx-sidenav-and-bottomsheet="{{component_id}}" layout="column">
 			LAYOUT-RENDERING{{0}}
         </md-content>
     </section>
 </div>
 FRAG-ENDIF
 FRAG-IF{{attributes.repeat_in.value != '' && attributes.repeat_title.value === true}}
-<div ng-repeat="$dfx_item in attributes.repeat_in.value" flex="attributes.flex.value" ng-show="attributes.display.value" style="width: attributes.flex.value%; ATTR-EXP{{(!attributes.autoHeight || attributes.autoHeight.value != true) ? 'height:100%;' : ''}}ATTR-ENDEXP">
+<div ng-repeat="$dfx_item in attributes.repeat_in.value" ng-init="getDfxItem($dfx_item, $index); $last ? finishedNgRepeat() : null" flex="attributes.flex.value" ng-show="attributes.display.value" style="width: attributes.flex.value%; ATTR-EXP{{(!attributes.autoHeight || attributes.autoHeight.value != true) ? 'height:100%;' : ''}}ATTR-ENDEXP">
     <section id="{{component_id}}_panel_{{$index}}" ng-class="['attributes.whiteframe.value', 'attributes.classes.value', 'attributes.dynamicClasses.value']" class="dfx-core-gc-panel" style="attributes.style.value" dfx-ng-if="ng-if,display" dfx-gc-web-container layout="column" flex="100"
       ATTR-IF{{ng-click="attributes.onclick.value"}}
       ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
@@ -52,7 +52,7 @@ FRAG-IF{{attributes.repeat_in.value == ''}}
         ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
         ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}>
         <div dfx-gcc-web-toolbar></div>
-        <md-content flex="100" ng-hide="attributes.toolbar.collapsed.value" style="attributes.bodyStyle.value" dfx-sidenav-and-bottomsheet="{{component_id}}" layout="column">
+        <md-content flex="100" ng-hide="collapsedType.value==='boolean' ? dfxCollapsed.value : $eval(collapsedPath)" style="attributes.bodyStyle.value" dfx-sidenav-and-bottomsheet="{{component_id}}" layout="column">
 			LAYOUT-RENDERING{{0}}
         </md-content>
     </section>
