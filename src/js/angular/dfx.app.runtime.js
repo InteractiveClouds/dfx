@@ -367,8 +367,8 @@ dfxAppRuntime.directive('dfxPageTemplate', ['$compile', '$mdSidenav', '$timeout'
         link: function($scope, $element, $attrs) {
             var tpl_snippet = '',
                 page_auto_height = $scope.selected_page.autoHeight,
-                flex_row = (page_auto_height != true) ? '{{row.height}}' : 'none',
-                flex_view = (page_auto_height != true) ? '' : 'none';
+                flex_row = (page_auto_height != true) ? '{{row.height}}' : '',
+                flex_view = (page_auto_height != true) ? '{{row.height}}' : '';
 
             // Header
             tpl_snippet = '<div layout="row" ng-show="selected_template.layout.header.display==\'true\'" style="min-height:{{selected_template.layout.header.height}}"><div layout layout-align="{{selected_template.layout.header.halignment}} {{selected_template.layout.header.valignment}}" flex="100" style="height:{{selected_template.layout.header.height}};{{selected_template.layout.header.style}}" dfx-page-include-template="header"></div></div>';
@@ -386,7 +386,7 @@ dfxAppRuntime.directive('dfxPageTemplate', ['$compile', '$mdSidenav', '$timeout'
             tpl_snippet += '<div layout="column" flex="{{col.width}}" data-row="{{$parent.$index}}" data-column="{{$index}}" ng-repeat="col in row.columns" style="padding:5px">';
             tpl_snippet += '<div layout="column" flex="' + flex_view + '" ng-repeat="view in col.views">';
 
-            tpl_snippet += '<div id="wrapper" dfx-view-wrapper="view.name" dfx-view-wrapper-id="view.id" flex layout="column">';
+            tpl_snippet += '<div id="wrapper" dfx-view-wrapper="view.name" dfx-view-wrapper-id="view.id" flex="100" layout="column">';
             tpl_snippet += '</div>';
             tpl_snippet += '</div>';
             tpl_snippet += '</div>';
@@ -554,7 +554,7 @@ dfxAppRuntime.directive('dfxViewWrapper', [ '$http', '$compile', function($http,
         },
         priority: 100000,
         link: function($scope, $element, $attrs) {
-            var wrapper_snippet = '<div id="' + $scope.wrapper_view_id + '" dfx-view="' + $scope.wrapper_view_name + '" dfx-view-card="default" ng-controller="dfx_view_controller" style="width:100%" layout="column" flex="100"></div>';
+            var wrapper_snippet = '<div id="' + $scope.wrapper_view_id + '" dfx-view="' + $scope.wrapper_view_name + '" dfx-view-card="default" ng-controller="dfx_view_controller" class="flex-100" style="width:100%" layout="column" flex="100"></div>';
             $element.attr('ng-controller', $scope.wrapper_view_name + 'Controller');
             $element.append(wrapper_snippet);
             $element.removeAttr('dfx-view-wrapper');
@@ -609,9 +609,9 @@ dfxAppRuntime.directive('dfxView', [ '$http', '$timeout', '$compile', function($
                                   in: 'fadeIn',
                                   out: 'slideOutLeft'
                                 };
-                                $('#' + $scope.view_id).removeClass().addClass('animated ' + animation.out + ' flex layout-column').one('animationend', function(eventOne) {
+                                $('#' + $scope.view_id).removeClass().addClass('animated ' + animation.out + ' flex-100 layout-column').one('animationend', function(eventOne) {
                                   angular.element($('#' + $scope.view_id)).html('');
-                                  $('#' + $scope.view_id).removeClass().addClass('animated ' + animation.in + ' flex layout-column');
+                                  $('#' + $scope.view_id).removeClass().addClass('animated ' + animation.in + ' flex-100 layout-column');
                                   $scope.addComponents( view_definition.definition, { "id": $scope.view_id }, '', $scope.dfxViewCard, $scope.view_id );
 
                                   renderHtml();
