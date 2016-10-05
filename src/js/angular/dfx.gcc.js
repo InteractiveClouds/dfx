@@ -175,6 +175,16 @@ dfxGCC.directive('dfxGccWebPanel', ['$timeout', '$compile', function($timeout, $
                 if(scope.attributes.hasOwnProperty('collapsible')){delete scope.attributes.collapsible;}
                 if(scope.attributes.toolbar.leftMenu.hasOwnProperty('iconBarClass')){delete scope.attributes.toolbar.leftMenu.iconBarClass;}
                 if(scope.attributes.toolbar.rightMenu.hasOwnProperty('iconBarClass')){delete scope.attributes.toolbar.rightMenu.iconBarClass;}
+
+				scope.htmlTitleObject;
+                if (scope.attributes.toolbar.title.bindingHtml.value.indexOf('$dfx_item')===-1) titleString = '$parent_scope.';
+            	scope.htmlTitleObject = titleString + scope.attributes.toolbar.title.bindingHtml.value;
+
+				var itemCollapsed,
+                    itemCollapsible,
+                    collapsedPath = scope.attributes.toolbar.collapsed.value,
+                    collapsiblePath = scope.attributes.toolbar.collapsible.value;
+				
             });
         }
     }
