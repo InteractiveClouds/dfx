@@ -107,17 +107,8 @@ dfxGCC.directive('dfxGccWebBase', ['$rootScope', '$http', '$compile', '$injector
                             $rootScope.$emit(scope.component_id + '_rendering_completed');
                         }
                     });
-                    if (angular.isDefined(attrs.dfxGcDesign)) {
-                        if (component.children.length >0) {
-                            for (var i=0; i<component.children.length; i++) {
-                                scope.rendering_children[component.children[i].id] = { 'rendered': false };
-                            }
-                            scope.$parent.addComponents(component.children, component, null, scope.component_id, attrs.viewId);
-                        }
-                    } else {
-                        if (scope.parent_id!=null && scope.parent_id!='') {
-                            $rootScope.$emit(scope.parent_id + '_child_rendered', scope.component_id);
-                        }
+                    if (scope.parent_id!=null && scope.parent_id!='') {
+                        $rootScope.$emit(scope.parent_id + '_child_rendered', scope.component_id);
                     }
                 });
 
@@ -712,39 +703,23 @@ dfxGCC.directive('dfxGccWebButton', ['$timeout', '$compile', '$filter', function
                                 }
                                 if ( nextLevel[i].menuItems.value.length > 0 ) {
                                     next = nextLevel[i].menuItems.value;
-                                    if (angular.isDefined(attrs.dfxGcEdit) || angular.isDefined(attrs.dfxGcDesign)) {
-                                        var iconbarItem = iconbarMenuItem.replace('{{itemDisplay}}', true);
-                                    } else {
-                                        var iconbarItem = iconbarMenuItem.replace('{{itemDisplay}}', typeof nextLevel[i].display === 'string' ? nextLevel[i].display.replace(/"/g, '\'') : nextLevel[i].display);
-                                    }
+                                    var iconbarItem = iconbarMenuItem.replace('{{itemDisplay}}', typeof nextLevel[i].display === 'string' ? nextLevel[i].display.replace(/"/g, '\'') : nextLevel[i].display);
+
                                     scope.iconBar = scope.iconBar + iconbarItem + '<md-menu>';
-                                    if (angular.isDefined(attrs.dfxGcEdit) || angular.isDefined(attrs.dfxGcDesign)) {
-                                        var singleMenu = singleMenuItem
-                                            .replace('{{ifFaIcon}}', nextLevel[i].icon.value.length > 0 && nextLevel[i].icon.type === 'fa-icon' ? true : false )
-                                            .replace('{{ifSvgIcon}}', nextLevel[i].icon.value.length > 0 && nextLevel[i].icon.type === 'svg-icon' ? true : false )
-                                            .replace('{{faIcon}}', nextLevel[i].icon.value.indexOf("'") == -1 ? 'fa-home' : eval(nextLevel[i].icon.value.replace(/"/g, '\'')) )
-                                            .replace('{{svgIcon}}', nextLevel[i].icon.value.indexOf("'") == -1 ? 'home' : eval(nextLevel[i].icon.value.replace(/"/g, '\'')) )
-                                            .replace('{{itemLabel}}', $filter('checkExpression')(nextLevel[i].label.replace(/"/g, '\'')))
-                                            .replace('{{itemShortcut}}', nextLevel[i].shortcut.replace(/"/g, '\''))
-                                            .replace('{{ifItemNotification}}', nextLevel[i].notification !=='' ? true : false )
-                                            .replace('{{itemNotification}}', nextLevel[i].notification )
-                                            .replace('{{itemDisplay}}', typeof nextLevel[i].display === 'string' ? nextLevel[i].display.replace(/"/g, '\'') : nextLevel[i].display)
-                                            .replace('{{itemDisabled}}', typeof nextLevel[i].disabled === 'string' ? nextLevel[i].disabled.replace(/"/g, '\'') : nextLevel[i].disabled)
-                                            .replace('{{itemClick}}', '$mdOpenMenu();'+nextLevel[i].onclick.replace(/"/g, '\''));
-                                    } else {
-                                        var singleMenu = singleMenuItem
-                                            .replace('{{ifFaIcon}}', nextLevel[i].icon.value.length > 0 && nextLevel[i].icon.type === 'fa-icon' ? true : false )
-                                            .replace('{{ifSvgIcon}}', nextLevel[i].icon.value.length > 0 && nextLevel[i].icon.type === 'svg-icon' ? true : false )
-                                            .replace('{{faIcon}}', nextLevel[i].icon.value.indexOf("'") == -1 ? '{{'+nextLevel[i].icon.value+'}}' : eval(nextLevel[i].icon.value.replace(/"/g, '\'')) )
-                                            .replace('{{svgIcon}}', nextLevel[i].icon.value.indexOf("'") == -1 ? '{{'+nextLevel[i].icon.value+'}}' : eval(nextLevel[i].icon.value.replace(/"/g, '\'')) )
-                                            .replace('{{itemLabel}}', '{{'+nextLevel[i].label.replace(/"/g, '\'')+'}}' )
-                                            .replace('{{itemShortcut}}', nextLevel[i].shortcut)
-                                            .replace('{{ifItemNotification}}', nextLevel[i].notification !=='' ? true : false )
-                                            .replace('{{itemNotification}}', '{{'+nextLevel[i].notification+'}}' )
-                                            .replace('{{itemDisplay}}', typeof nextLevel[i].display === 'string' ? nextLevel[i].display.replace(/"/g, '\'') : nextLevel[i].display)
-                                            .replace('{{itemDisabled}}', typeof nextLevel[i].disabled === 'string' ? nextLevel[i].disabled.replace(/"/g, '\'') : nextLevel[i].disabled)
-                                            .replace('{{itemClick}}', '$mdOpenMenu();'+nextLevel[i].onclick.replace(/"/g, '\''));
-                                    }
+
+                                    var singleMenu = singleMenuItem
+                                        .replace('{{ifFaIcon}}', nextLevel[i].icon.value.length > 0 && nextLevel[i].icon.type === 'fa-icon' ? true : false )
+                                        .replace('{{ifSvgIcon}}', nextLevel[i].icon.value.length > 0 && nextLevel[i].icon.type === 'svg-icon' ? true : false )
+                                        .replace('{{faIcon}}', nextLevel[i].icon.value.indexOf("'") == -1 ? '{{'+nextLevel[i].icon.value+'}}' : eval(nextLevel[i].icon.value.replace(/"/g, '\'')) )
+                                        .replace('{{svgIcon}}', nextLevel[i].icon.value.indexOf("'") == -1 ? '{{'+nextLevel[i].icon.value+'}}' : eval(nextLevel[i].icon.value.replace(/"/g, '\'')) )
+                                        .replace('{{itemLabel}}', '{{'+nextLevel[i].label.replace(/"/g, '\'')+'}}' )
+                                        .replace('{{itemShortcut}}', nextLevel[i].shortcut)
+                                        .replace('{{ifItemNotification}}', nextLevel[i].notification !=='' ? true : false )
+                                        .replace('{{itemNotification}}', '{{'+nextLevel[i].notification+'}}' )
+                                        .replace('{{itemDisplay}}', typeof nextLevel[i].display === 'string' ? nextLevel[i].display.replace(/"/g, '\'') : nextLevel[i].display)
+                                        .replace('{{itemDisabled}}', typeof nextLevel[i].disabled === 'string' ? nextLevel[i].disabled.replace(/"/g, '\'') : nextLevel[i].disabled)
+                                        .replace('{{itemClick}}', '$mdOpenMenu();'+nextLevel[i].onclick.replace(/"/g, '\''));
+
                                     scope.iconBar = scope.iconBar + singleMenu +'<md-menu-content width="4">';
                                     buildNextLevel(next, optionsType);
                                     scope.iconBar = scope.iconBar + '</md-menu-content></md-menu></md-menu-item>';
@@ -753,39 +728,23 @@ dfxGCC.directive('dfxGccWebButton', ['$timeout', '$compile', '$filter', function
                                         scope.iconBar = scope.iconBar + '<md-menu-divider></md-menu-divider>';
                                     } else {
                                         if ( !nextLevel[i].hasOwnProperty('iconType') && !nextLevel[i].divider && !nextLevel[i].title) { nextLevel[i].iconType = 'fa-icon'; }
-                                        if (angular.isDefined(attrs.dfxGcEdit) || angular.isDefined(attrs.dfxGcDesign)) {
-                                            var iconbarItem = iconbarMenuItem.replace('{{itemDisplay}}', true);
-                                        } else {
-                                            var iconbarItem = iconbarMenuItem.replace('{{itemDisplay}}', typeof nextLevel[i].display === 'string' ? nextLevel[i].display.replace(/"/g, '\'') : nextLevel[i].display);
-                                        }
+                                        var iconbarItem = iconbarMenuItem.replace('{{itemDisplay}}', true);
+
                                         scope.iconBar = scope.iconBar + iconbarItem;
-                                        if (angular.isDefined(attrs.dfxGcEdit) || angular.isDefined(attrs.dfxGcDesign)) {
-                                            var singleMenu = singleMenuItem
-                                                .replace('{{ifFaIcon}}', nextLevel[i].icon.value.length > 0 && nextLevel[i].icon.type === 'fa-icon' ? true : false )
-                                                .replace('{{ifSvgIcon}}', nextLevel[i].icon.value.length > 0 && nextLevel[i].icon.type === 'svg-icon' ? true : false )
-                                                .replace('{{faIcon}}', nextLevel[i].icon.value.indexOf("'") == -1 ? 'fa-home' : eval(nextLevel[i].icon.value.replace(/"/g, '\'')) )
-                                                .replace('{{svgIcon}}', nextLevel[i].icon.value.indexOf("'") == -1 ? 'home' : eval(nextLevel[i].icon.value.replace(/"/g, '\'')) )
-                                                .replace('{{itemLabel}}', $filter('checkExpression')(nextLevel[i].label.replace(/"/g, '\'')))
-                                                .replace('{{itemShortcut}}', nextLevel[i].shortcut.replace(/"/g, '\''))
-                                                .replace('{{ifItemNotification}}', nextLevel[i].notification !=='' ? true : false )
-                                                .replace('{{itemNotification}}', nextLevel[i].notification )
-                                                .replace('{{itemDisplay}}', true)
-                                                .replace('{{itemDisabled}}', typeof nextLevel[i].disabled === 'string' ? nextLevel[i].disabled.replace(/"/g, '\'') : nextLevel[i].disabled)
-                                                .replace('{{itemClick}}', nextLevel[i].onclick.replace(/"/g, '\''));
-                                        } else {
-                                            var singleMenu = singleMenuItem
-                                                .replace('{{ifFaIcon}}', nextLevel[i].icon.value.length > 0 && nextLevel[i].icon.type === 'fa-icon' ? true : false )
-                                                .replace('{{ifSvgIcon}}', nextLevel[i].icon.value.length > 0 && nextLevel[i].icon.type === 'svg-icon' ? true : false )
-                                                .replace('{{faIcon}}', nextLevel[i].icon.value.indexOf("'") == -1 ? '{{'+nextLevel[i].icon.value+'}}' : eval(nextLevel[i].icon.value.replace(/"/g, '\'')) )
-                                                .replace('{{svgIcon}}', nextLevel[i].icon.value.indexOf("'") == -1 ? '{{'+nextLevel[i].icon.value+'}}' : eval(nextLevel[i].icon.value.replace(/"/g, '\'')) )
-                                                .replace('{{itemLabel}}', '{{'+nextLevel[i].label.replace(/"/g, '\'')+'}}' )
-                                                .replace('{{itemShortcut}}', nextLevel[i].shortcut.replace(/"/g, '\''))
-                                                .replace('{{ifItemNotification}}', nextLevel[i].notification !=='' ? true : false )
-                                                .replace('{{itemNotification}}', '{{'+nextLevel[i].notification+'}}' )
-                                                .replace('{{itemDisplay}}', typeof nextLevel[i].display === 'string' ? nextLevel[i].display.replace(/"/g, '\'') : nextLevel[i].display)
-                                                .replace('{{itemDisabled}}', typeof nextLevel[i].disabled === 'string' ? nextLevel[i].disabled.replace(/"/g, '\'') : nextLevel[i].disabled)
-                                                .replace('{{itemClick}}', nextLevel[i].onclick.replace(/"/g, '\''));
-                                        }
+
+                                        var singleMenu = singleMenuItem
+                                            .replace('{{ifFaIcon}}', nextLevel[i].icon.value.length > 0 && nextLevel[i].icon.type === 'fa-icon' ? true : false )
+                                            .replace('{{ifSvgIcon}}', nextLevel[i].icon.value.length > 0 && nextLevel[i].icon.type === 'svg-icon' ? true : false )
+                                            .replace('{{faIcon}}', nextLevel[i].icon.value.indexOf("'") == -1 ? '{{'+nextLevel[i].icon.value+'}}' : eval(nextLevel[i].icon.value.replace(/"/g, '\'')) )
+                                            .replace('{{svgIcon}}', nextLevel[i].icon.value.indexOf("'") == -1 ? '{{'+nextLevel[i].icon.value+'}}' : eval(nextLevel[i].icon.value.replace(/"/g, '\'')) )
+                                            .replace('{{itemLabel}}', '{{'+nextLevel[i].label.replace(/"/g, '\'')+'}}' )
+                                            .replace('{{itemShortcut}}', nextLevel[i].shortcut.replace(/"/g, '\''))
+                                            .replace('{{ifItemNotification}}', nextLevel[i].notification !=='' ? true : false )
+                                            .replace('{{itemNotification}}', '{{'+nextLevel[i].notification+'}}' )
+                                            .replace('{{itemDisplay}}', typeof nextLevel[i].display === 'string' ? nextLevel[i].display.replace(/"/g, '\'') : nextLevel[i].display)
+                                            .replace('{{itemDisabled}}', typeof nextLevel[i].disabled === 'string' ? nextLevel[i].disabled.replace(/"/g, '\'') : nextLevel[i].disabled)
+                                            .replace('{{itemClick}}', nextLevel[i].onclick.replace(/"/g, '\''));
+
                                         scope.iconBar = scope.iconBar + singleMenu + '</md-menu-item>';
                                     }
                                 }
@@ -839,54 +798,24 @@ dfxGCC.directive('dfxGccWebButton', ['$timeout', '$compile', '$filter', function
                         }
                     }
                     scope.buttonMenuBuilder = function() {
-                        if (!angular.isDefined(attrs.dfxGcEdit) && !angular.isDefined(attrs.dfxGcDesign)) {
-                                if(scope.attributes.menuItemsType.value === 'dynamic'){
-                                    scope.iconbarArray = scope.$parent_scope[scope.itemNames.main.source];
-                                }else{
-                                    scope.iconbarArray = scope.attributes.menuItems.value;
-                                }
-                            }else{
-                                scope.iconbarArray = scope.attributes.menuItems.value;
-                            }
+                        if(scope.attributes.menuItemsType.value === 'dynamic'){
+                            scope.iconbarArray = scope.$parent_scope[scope.itemNames.main.source];
+                        }else{
+                            scope.iconbarArray = scope.attributes.menuItems.value;
+                        }
                         if ( scope.iconbarArray.length > 0 ) {
                             scope.iconBar = '';
-                            if (!angular.isDefined(attrs.dfxGcEdit) && !angular.isDefined(attrs.dfxGcDesign)){
-                                buildNextLevel(scope.iconbarArray, scope.attributes.menuItemsType.value);
-                            } else {
-                                buildNextLevel(scope.iconbarArray, 'static');
-                            }
+                            buildNextLevel(scope.iconbarArray, scope.attributes.menuItemsType.value);
+
                             $timeout(function() {
                                 $('.' + scope.component_class + '_button_menu').empty();
-                                if (!angular.isDefined(attrs.dfxGcEdit) && !angular.isDefined(attrs.dfxGcDesign)) {
-                                    $('.' + scope.component_class + '_button_menu').load('/gcontrols/web/button_menu.html', function(){
-                                        $('.' + scope.component_class + '_button_menu md-menu-content').html(scope.iconBarMenu);
-                                        $compile($('.' + scope.component_class + '_button_menu').contents())(scope);
-                                        $timeout(function() {
-                                            scope.menuPosition();
-                                        }, 0);
-                                    });
-                                } else {
-                                    if ( scope.component_class.indexOf('renderer') === -1 ) {
-                                        $('.' + scope.component_class + '_button_menu').load('/gcontrols/web/button_menu_design.html', function(){
-                                            $('.' + scope.component_class + '_button_menu md-menu-content.root-content').html(scope.iconBarMenu);
-                                            $compile($('.' + scope.component_class + '_button_menu').contents())(scope);
-                                            $timeout(function() {
-                                                scope.menuPosition();
-                                            }, 0);
-                                        });
-                                    } else {
-                                        $timeout(function() {
-                                            var tableButtons = $('.' + scope.component_class + '_button_menu');
-                                            $(tableButtons).each(function(index, element) {
-                                                tableButtons.eq(index).empty().load('/gcontrols/web/button_menu_design.html', function() {
-                                                    tableButtons.eq(index).find('md-menu-content.root-menu-container').html(scope.iconBarMenu);
-                                                    $compile(tableButtons.eq(index).contents())(scope);
-                                                    if(index===0) scope.menuPosition(element);
-                                                });
-                                            });
-                                        }, 0, false);
-                                    }
-                                }
+                                $('.' + scope.component_class + '_button_menu').load('/gcontrols/web/button_menu.html', function(){
+                                    $('.' + scope.component_class + '_button_menu md-menu-content').html(scope.iconBarMenu);
+                                    $compile($('.' + scope.component_class + '_button_menu').contents())(scope);
+                                    $timeout(function() {
+                                        scope.menuPosition();
+                                    }, 0);
+                                });
                             }, 0);
                         }
                     }
@@ -897,9 +826,7 @@ dfxGCC.directive('dfxGccWebButton', ['$timeout', '$compile', '$filter', function
                                 'width': 'auto',
                                 'max-width': '100%'
                             });
-                            if (!angular.isDefined(attrs.dfxGcDesign) && !angular.isDefined(attrs.dfxGcEdit)){
-                                scope.attributes.flex.value = 'none';
-                            }
+                            scope.attributes.flex.value = 'none';
                         }else{
                             $('#' + scope.component_id).css({
                                 'flex': scope.attributes.flex.value + '%',
@@ -1190,20 +1117,18 @@ dfxGCC.directive('dfxGccWebToolbar', function($sce, $compile, $timeout) {
                         }
                         break;
                 }
-                if (!angular.isDefined(attrs.dfxGcEdit) && !angular.isDefined(attrs.dfxGcDesign) && stateObject.binding !== '') {
-                    if (optionsType==='static') {
-                        if ( stateObject.binding === 'true' || stateObject.binding === 'false' ) {
-                            stateObject.binding = stateObject.binding === 'true' ? 'false' : 'true';
-                        } else {
-                            if ( scope.$parent_scope[stateObject.binding] === 'true' || scope.$parent_scope[stateObject.binding] === 'false' ) {
-                                scope.$parent_scope[stateObject.binding] = scope.$parent_scope[stateObject.binding] === 'true' ? 'false' : 'true';
-                            } else if ( typeof scope.$parent_scope[stateObject.binding] === 'boolean' ) {
-                                scope.$parent_scope[stateObject.binding] = scope.$parent_scope[stateObject.binding] ? false : true;
-                            }
-                        }
+                if (optionsType==='static') {
+                    if ( stateObject.binding === 'true' || stateObject.binding === 'false' ) {
+                        stateObject.binding = stateObject.binding === 'true' ? 'false' : 'true';
                     } else {
-                        scope.$parent_scope[stateObject[stateBindingName]] = scope.$parent_scope[stateObject[stateBindingName]] ? false : true;
+                        if ( scope.$parent_scope[stateObject.binding] === 'true' || scope.$parent_scope[stateObject.binding] === 'false' ) {
+                            scope.$parent_scope[stateObject.binding] = scope.$parent_scope[stateObject.binding] === 'true' ? 'false' : 'true';
+                        } else if ( typeof scope.$parent_scope[stateObject.binding] === 'boolean' ) {
+                            scope.$parent_scope[stateObject.binding] = scope.$parent_scope[stateObject.binding] ? false : true;
+                        }
                     }
+                } else {
+                    scope.$parent_scope[stateObject[stateBindingName]] = scope.$parent_scope[stateObject[stateBindingName]] ? false : true;
                 }
             }
 
@@ -3004,11 +2929,9 @@ dfxGCC.directive('dfxGccWebTextarea', ['$timeout', function($timeout) {
                     scope.attributes.rowsNumber.value = parseInt(newValue);
                 });
                 scope.$watch("$gcscope[attributes.binding.value]", function(newValue){
-                    if (!angular.isDefined(attrs.dfxGcDesign) && !angular.isDefined(attrs.dfxGcEdit)) {
-                        if(scope.attributes.binding.value !== ""){
-                            var bindingString = scope.attributes.binding.value;
-                            eval("scope." + bindingString + "= newValue ;");
-                        }
+                    if(scope.attributes.binding.value !== ""){
+                        var bindingString = scope.attributes.binding.value;
+                        eval("scope." + bindingString + "= newValue ;");
                     }
                 });
 
@@ -3302,10 +3225,8 @@ dfxGCC.directive('dfxGccWebFab', ['$timeout', function($timeout) {
 						}
 					}
 					scope.checkIconType( scope.attributes.menuItems.value );
-					if (!angular.isDefined(attrs.dfxGcEdit) && !angular.isDefined(attrs.dfxGcDesign)) {
-						if(scope.attributes.dynamicPresent.value){
-							scope.attributes.menuItems.value = scope.dynamicItems;
-						}
+					if(scope.attributes.dynamicPresent.value){
+						scope.attributes.menuItems.value = scope.dynamicItems;
 					}
 					scope.hideTooltip = function () {
 						$('body md-tooltip').remove();
@@ -3602,11 +3523,8 @@ dfxGCC.directive('dfxGccWebRichtext', function($timeout, $compile) {
                     scope.changeWidth();
                 }
                 var dfxRichText = '<ng-quill-editor name="'+scope.attributes.name.value+'" ';
-                if (!angular.isDefined(attrs.dfxGcDesign) && !angular.isDefined(attrs.dfxGcEdit)) {
-                    dfxRichText += scope.attributes.binding.value !== '' ? 'ng-model="'+scope.attributes.binding.value+'" ' : 'ng-model="attributes.bindedData.value" ';
-                } else {
-                    dfxRichText += 'ng-model="attributes.bindedData.value" ';
-                }
+                dfxRichText += scope.attributes.binding.value !== '' ? 'ng-model="'+scope.attributes.binding.value+'" ' : 'ng-model="attributes.bindedData.value" ';
+
                 dfxRichText += 'toolbar-entries="<<toolbarEntries>>" toolbar="true" show-toolbar="'+scope.attributes.toolbar.visible.value+'" link-tooltip="true" image-tooltip="true" editor-required="true" required="" error-class="input-error" class="dfx-core-gc-richtext"';
 
                 dfxRichText += scope.attributes.display.value !=='' ? 'ng-show="'+scope.attributes.display.value+'" ' : '';
@@ -3763,9 +3681,7 @@ dfxGCC.directive('dfxGccWebJson', ['$http', '$sce', '$mdDialog', '$timeout', '$c
                         }
                     }
                     catch(err) {
-                        if (!angular.isDefined(attrs.dfxGcDesign) && !angular.isDefined(attrs.dfxGcEdit)) {
-                            angular.element($('#'+component.id+'_scopeInput')).data('$ngModelController').$setValidity('editorInput', false);
-                        }
+                        angular.element($('#'+component.id+'_scopeInput')).data('$ngModelController').$setValidity('editorInput', false);
                     }
                 }
                 scope.showJsonDialog = function(ev) {
@@ -3851,21 +3767,19 @@ dfxGCC.directive('dfxGccWebJson', ['$http', '$sce', '$mdDialog', '$timeout', '$c
                         scope.stringModel.value = angular.toJson(scope.attributes.content.value);
                     }
                 }
-                if (!angular.isDefined(attrs.dfxGcDesign) && !angular.isDefined(attrs.dfxGcEdit)) {
-                    if(scope.attributes.binding.value!==''){
-                        basectrl.bindScopeVariable(scope, component.attributes.binding.value);
-                        scope.$watch('$gcscope[attributes.binding.value]', function(newValue){
-                            if (newValue) {
-                                if (scope.dfxJsonEditor) {
-                                    var editorData = scope.dfxJsonEditor.get();
-                                    if(!angular.equals(newValue, editorData)) {
-                                        scope.dfxJsonEditor.set(newValue);
-                                    }
+                if(scope.attributes.binding.value!==''){
+                    basectrl.bindScopeVariable(scope, component.attributes.binding.value);
+                    scope.$watch('$gcscope[attributes.binding.value]', function(newValue){
+                        if (newValue) {
+                            if (scope.dfxJsonEditor) {
+                                var editorData = scope.dfxJsonEditor.get();
+                                if(!angular.equals(newValue, editorData)) {
+                                    scope.dfxJsonEditor.set(newValue);
                                 }
-                                scope.stringModel.value = angular.toJson(newValue);
                             }
-                        }, true);
-                    }
+                            scope.stringModel.value = angular.toJson(newValue);
+                        }
+                    }, true);
                 }
 
                 scope.changeWidth = function(){
@@ -4847,12 +4761,10 @@ dfxGCC.directive('dfxGccWebWizard', ['$mdDialog', '$timeout', '$compile', functi
                         }else{
                             scope.attributes.steps.value[scope.attributes.steps.value.length - 1].isLast.value = true;
                         }
-                        if (!angular.isDefined(attrs.dfxGcEdit) && !angular.isDefined(attrs.dfxGcDesign)){
-                            var stepFormName = 'stepForm' + scope.attributes.stepIndex.value;
-                            $timeout(function () {
-                                scope.stepForm = (scope.wizardForm[stepFormName]);
-                            },0);
-                        }
+                        var stepFormName = 'stepForm' + scope.attributes.stepIndex.value;
+                        $timeout(function () {
+                            scope.stepForm = (scope.wizardForm[stepFormName]);
+                        },0);
                     }
                 });
 
