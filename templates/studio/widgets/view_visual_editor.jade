@@ -92,9 +92,13 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", layout="co
                                         ng-md-icon(icon="tune")
                                         span(style="padding-left:10px") Settings
                                 md-menu-item
-                                    md-button(ng-click="openPreviewInPage()")
+                                    md-button(ng-click="openPreviewInPage($event)")
                                         ng-md-icon(icon="ondemand_video")
                                         span(style="padding-left:10px") Preview in Page
+                                md-menu-item
+                                    md-button(ng-click="compileView($event)")
+                                        ng-md-icon(icon="track_changes")
+                                        span(style="padding-left:10px") Compile View
                         div(style="color:#fff;display: inline-block;margin-left: 10px;", ng-if="preview_wait_icon_visible === true")
                             md-icon.fa.fa-spinner.fa-pulse(style="font-size: 24px;")
                             span(style="padding-left:10px") compiling
