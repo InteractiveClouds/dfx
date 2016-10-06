@@ -167,7 +167,19 @@ dfxGCC.directive('dfxGccWebPanel', ['$timeout', '$compile', function($timeout, $
                 if(scope.attributes.toolbar.leftMenu.hasOwnProperty('iconBarClass')){delete scope.attributes.toolbar.leftMenu.iconBarClass;}
                 if(scope.attributes.toolbar.rightMenu.hasOwnProperty('iconBarClass')){delete scope.attributes.toolbar.rightMenu.iconBarClass;}
 
-				scope.htmlTitleObject;
+				scope.changeWidth = function(){
+                    if ( !angular.isDefined(attrs.dfxGcDesign) && !angular.isDefined(attrs.dfxGcEdit) ) {
+                        if ( !scope.attributes.repeat_title.value ) {
+                            $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+                        }
+                    } else {
+                        $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+                    }
+                };
+
+				scope.changeWidth();
+
+				var titleString = '';
                 if (scope.attributes.toolbar.title.bindingHtml.value.indexOf('$dfx_item')===-1) {
 					titleString = '$parent_scope.';
 				}
