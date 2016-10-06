@@ -167,7 +167,19 @@ dfxGCC.directive('dfxGccWebPanel', ['$timeout', '$compile', function($timeout, $
                 if(scope.attributes.toolbar.leftMenu.hasOwnProperty('iconBarClass')){delete scope.attributes.toolbar.leftMenu.iconBarClass;}
                 if(scope.attributes.toolbar.rightMenu.hasOwnProperty('iconBarClass')){delete scope.attributes.toolbar.rightMenu.iconBarClass;}
 
-				scope.htmlTitleObject;
+				scope.changeWidth = function(){
+                    if ( !angular.isDefined(attrs.dfxGcDesign) && !angular.isDefined(attrs.dfxGcEdit) ) {
+                        if ( !scope.attributes.repeat_title.value ) {
+                            $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+                        }
+                    } else {
+                        $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+                    }
+                };
+
+				scope.changeWidth();
+
+				var titleString = '';
                 if (scope.attributes.toolbar.title.bindingHtml.value.indexOf('$dfx_item')===-1) {
 					titleString = '$parent_scope.';
 				}
@@ -461,7 +473,7 @@ dfxGCC.directive('dfxGccWebCarousel', ['$http', '$sce', '$mdDialog', '$mdToast',
                     var simpleCarouselSnippet = '<jk-carousel data="<<carouselSource>>" item-template-url="\'<<carouselTemplate>>\'" max-width="<<carouselMaxWidth>>" max-height="<<carouselMaxHeight>>"></jk-carousel>',
                         parsedSimpleCarousel = simpleCarouselSnippet
                             .replace('<<carouselSource>>', scope.carouselDataName.value)
-                            .replace('<<carouselTemplate>>', scope.attributes.optionsType.value === 'dynamic' && '/gcontrols/web/carousel_item_dynamic.html')
+                            .replace('<<carouselTemplate>>', scope.attributes.optionsType.value === 'dynamic' ? '/gcontrols/web/carousel_item_dynamic.html' : '/gcontrols/web/carousel_item_static.html')
                             .replace('<<carouselMaxWidth>>', scope.attributes.maxWidth.value)
                             .replace('<<carouselMaxHeight>>', scope.attributes.maxHeight.value);
                     $timeout(function(){
@@ -477,7 +489,7 @@ dfxGCC.directive('dfxGccWebCarousel', ['$http', '$sce', '$mdDialog', '$mdToast',
                     var autoCarouselSnippet = '<jk-carousel data="<<carouselSource>>" item-template-url="\'<<carouselTemplate>>\'" auto-slide="<<carouselAutoSlide>>" auto-slide-time="<<carouselSlideInterval>>" max-width="<<carouselMaxWidth>>" max-height="<<carouselMaxHeight>>"></jk-carousel>',
                         parsedAutoCarousel = autoCarouselSnippet
                             .replace('<<carouselSource>>', scope.carouselDataName.value)
-                            .replace('<<carouselTemplate>>', scope.attributes.optionsType.value === 'dynamic' && '/gcontrols/web/carousel_item_dynamic.html')
+                            .replace('<<carouselTemplate>>', scope.attributes.optionsType.value === 'dynamic' ? '/gcontrols/web/carousel_item_dynamic.html' : '/gcontrols/web/carousel_item_static.html')
                             .replace('<<carouselAutoSlide>>', scope.attributes.autoSlide.value)
                             .replace('<<carouselSlideInterval>>', scope.attributes.slideInterval.value)
                             .replace('<<carouselMaxWidth>>', scope.attributes.maxWidth.value)
@@ -528,6 +540,10 @@ dfxGCC.directive('dfxGccWebCarousel', ['$http', '$sce', '$mdDialog', '$mdToast',
                         }
                     }, true);
                 }
+                scope.changeWidth = function(){
+                    $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+                };
+                scope.changeWidth();
             });
         }
     }
