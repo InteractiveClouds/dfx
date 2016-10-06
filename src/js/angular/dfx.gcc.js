@@ -528,6 +528,10 @@ dfxGCC.directive('dfxGccWebCarousel', ['$http', '$sce', '$mdDialog', '$mdToast',
                         }
                     }, true);
                 }
+                scope.changeWidth = function(){
+                    $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+                };
+                scope.changeWidth();
             });
         }
     }
