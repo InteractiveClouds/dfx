@@ -30,7 +30,7 @@ FRAG-IF{{attributes.binding.repeatable === false}}
                     ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}} ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
                     ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}>
                 <input ng-if="bindingType.value==='simpleBinding'" ATTR-IF{{name="attributes.name.value"}} ATTR-IF{{type="attributes.selectedType.value"}}
-                    ng-model="$parent_scope[attributes.binding.value]"
+                    ng-model="$parent_scope.ATTR-NONV{{binding.value}}"
                     ATTR-IF{{ng-change="attributes.onchange.value"}}
                     ATTR-IF{{minlength="attributes.minlength.value"}} ATTR-IF{{md-maxlength="attributes.maxlength.value"}}
                     ng-pattern="attributes.pattern.value" ATTR-IF{{ng-required="attributes.required.value"}}
@@ -44,7 +44,7 @@ FRAG-IF{{attributes.binding.repeatable === false}}
                     ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}>
                 <div ng-if="bindingType.value==='complexBinding'">
                     <input ATTR-IF{{name="attributes.name.value"}} ATTR-IF{{type="attributes.selectedType.value"}}
-                        dfx-complex-ng-model
+                        ng-model="ATTR-NONV{{binding.value}}"
                         ATTR-IF{{ng-change="attributes.onchange.value"}}
                         ATTR-IF{{minlength="attributes.minlength.value"}} ATTR-IF{{md-maxlength="attributes.maxlength.value"}}
                         ng-pattern="attributes.pattern.value" ATTR-IF{{ng-required="attributes.required.value"}}
@@ -92,7 +92,7 @@ FRAG-IF{{attributes.binding.repeatable === false}}
                     ATTR-IF{{ng-mousemove="attributes.onmousemove.value)" ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value)"
                     ATTR-IF{{ng-mousedown="attributes.onmousedown.value)" ATTR-IF{{ng-mouseup="attributes.onmouseup.value)">
                 <input ng-if="bindingType.value==='simpleBinding'" ATTR-IF{{name="attributes.name.value"}} type="number"
-                    ng-model="$parent_scope[attributes.binding.value]"
+                    ng-model="$parent_scope.ATTR-NONV{{binding.value}}"
                     ATTR-IF{{ng-change="attributes.onchange.value)"
                     ATTR-IF{{min="attributes.minNumber.value"}} ATTR-IF{{max="attributes.maxNumber.value"}} step="any"
                     ATTR-IF{{ng-disabled="attributes.disabled.value)" ATTR-IF{{ng-required="attributes.required.value)"
@@ -105,7 +105,7 @@ FRAG-IF{{attributes.binding.repeatable === false}}
                     ATTR-IF{{ng-mousedown="attributes.onmousedown.value)" ATTR-IF{{ng-mouseup="attributes.onmouseup.value)">
                 <div ng-if="bindingType.value==='complexBinding'">
                 <input ATTR-IF{{name="attributes.name.value"}} type="number"
-                    dfx-complex-ng-model
+                    ng-model="ATTR-NONV{{binding.value}}"
                     ATTR-IF{{ng-change="attributes.onchange.value)"
                     ATTR-IF{{min="attributes.minNumber.value"}} ATTR-IF{{max="attributes.maxNumber.value"}} step="any"
                     ATTR-IF{{ng-disabled="attributes.disabled.value)" ATTR-IF{{ng-required="attributes.required.value)"

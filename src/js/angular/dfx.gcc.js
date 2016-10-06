@@ -168,15 +168,10 @@ dfxGCC.directive('dfxGccWebPanel', ['$timeout', '$compile', function($timeout, $
                 if(scope.attributes.toolbar.rightMenu.hasOwnProperty('iconBarClass')){delete scope.attributes.toolbar.rightMenu.iconBarClass;}
 
 				scope.changeWidth = function(){
-                    if ( !angular.isDefined(attrs.dfxGcDesign) && !angular.isDefined(attrs.dfxGcEdit) ) {
-                        if ( !scope.attributes.repeat_title.value ) {
-                            $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
-                        }
-                    } else {
-                        $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+                    if ( !scope.attributes.repeat_title.value ) {
+                        $('#' + scope.component_id).addClass('flex' + '-' + scope.attributes.flex.value);
                     }
                 };
-
 				scope.changeWidth();
 
 				var titleString = '';
