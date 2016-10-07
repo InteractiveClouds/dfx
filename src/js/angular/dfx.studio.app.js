@@ -2913,7 +2913,7 @@ dfxStudioApp.directive('dropzone', ['dfxApplications','$timeout', '$mdDialog', '
                     }
                     if(is_unique){
                         scope.data.items.push({
-                            'path': file.name,
+                            'path': file.name.replace(/ /g,'').replace(/-/g,'').replace(/:/g,''),
                             'type': file.type,
                             'size': (file.size/1000).toFixed(1),
                             'is_uploaded': false
