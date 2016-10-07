@@ -4,8 +4,8 @@
         <md-checkbox ng-model="item.isChecked" class="dfx-core-gc-checkbox-button md-altTheme-theme md-primary" ng-class="attributes.itemStyle.item.class"  style="{{attributes.itemStyle.item.style}}" aria-label="item.isChecked">
             <span class="{{attributes.itemStyle.label.class}}" style="{{attributes.itemStyle.label.style}}">{{ item.label | checkExpression }}</span>
             <span ng-if="attributes.displayValue.value" style="{{attributes.itemStyle.val.style}}" class="{{attributes.itemStyle.val.class}}"> 
-                <span ng-if="item.isChecked" ng-bind="item.checked"></span>
-                <span ng-if="!item.isChecked" ng-bind="item.unchecked"></span>
+                <span ng-if="item.isChecked">{{ item.checked | checkExpression }}</span>
+                <span ng-if="!item.isChecked">{{ item.unchecked | checkExpression }}</span>
             </span>
         </md-checkbox>
     </div>
