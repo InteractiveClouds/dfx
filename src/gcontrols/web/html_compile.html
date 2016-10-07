@@ -3,8 +3,7 @@ FRAG-IF{{attributes.binding.value}}
 	dfx-aria-label="aria-label,name"
 	ng-show="attributes.display.value"
 	ng-bind-html="gcSnippetTrustAsHtml('attributes.binding.value')"
-	style="ATTR-NONV{{style.value}}"
-  class="ATTR-NONV{{classes.value}} md-block md-altTheme-theme glyph"
+	class="ATTR-NONV{{classes.value}} md-block md-altTheme-theme glyph"
 	ATTR-IF{{ng-class="attributes.dynamicClasses.value"}}
 	ATTR-IF{{style="attributes.style.value"}}
 	ATTR-IF{{ng-click="attributes.onclick.value"}}
@@ -25,10 +24,9 @@ FRAG-IF{{!attributes.binding.value}}
 	dfx-aria-label="aria-label,name"
 	ng-show="attributes.display.value"
 	ng-bind-html="gcSnippetTrustAsHtml('attributes.content.value')"
-  style="ATTR-NONV{{style.value}}"
   class="ATTR-NONV{{classes.value}} md-block md-altTheme-theme glyph"
   ATTR-IF{{ng-class="attributes.dynamicClasses.value"}}
-  ATTR-IF{{style="attributes.style.value.value"}}
+  ATTR-IF{{style="attributes.style.value"}}
   ATTR-IF{{ng-click="attributes.onclick.value"}}
   ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
   ATTR-IF{{ng-keypress="attributes.onkeypress.value"}}
