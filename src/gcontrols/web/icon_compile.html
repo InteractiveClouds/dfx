@@ -41,7 +41,7 @@ FRAG-IF{{!attributes.state.value && attributes.waiting.value == ''}}
                 ATTR-IF{{ng-disabled="attributes.disabled.value"}}>
             </ng-md-icon>
         </div>
-        <div style="text-align: center" ng-show="attributes.label.value !== ''">
+        <div style="text-align: center">
             <span ATTR-IF{{ng-bind="attributes.label.value"}} ng-style="{color: 'inherit'}"></span>
         </div>
     </div>
@@ -129,7 +129,7 @@ FRAG-IF{{attributes.state.value && attributes.waiting.value == ''}}
                 ATTR-IF{{ng-disabled="attributes.disabled.value"}}>
             </ng-md-icon>
         </div>
-        <div style="text-align: center" ng-show="attributes.label.value !== ''">
+        <div style="text-align: center">
             <span ATTR-IF{{ng-bind="attributes.label.value"}} ng-style="{color: 'inherit'}"></span>
         </div>
     </div>
@@ -185,7 +185,7 @@ FRAG-IF{{attributes.waiting.value !== ''}}
                 style="{{attributes.waiting.icon.style}} color: rgba(0,0,0,0.26) !important;cursor: wait;">
             </ng-md-icon>
         </div>
-        <div ng-show="attributes.label.value !== ''" style="text-align: center">
+        <div style="text-align: center">
             <span ATTR-IF{{ng-bind="attributes.label.value"}}
                 style="color: {{$eval(attributes.waiting.autoDisabled) ? 'rgba(0,0,0,0.26)!important' : 'inherit'}}">
             </span>

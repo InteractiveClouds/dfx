@@ -1105,6 +1105,7 @@ dfxGCC.directive('dfxGccWebToolbar', function($sce, $compile, $timeout) {
 
                 scope.runToolbar = function(){
                     $timeout(function(){
+
                         scope.attributes.toolbar.rightMenu.initialClick.value = false;
                         scope.attributes.toolbar.leftMenu.initialClick.value = false;
                         if(scope.attributes.layoutType.value === 'panel'){
@@ -1130,7 +1131,12 @@ dfxGCC.directive('dfxGccWebToolbar', function($sce, $compile, $timeout) {
                         }
                     },0);
                 };
-                scope.runToolbar();
+
+                var toolbarAttrs = setInterval(function() {
+                    if (typeof scope.attributes === 'undefined') return;
+                    clearInterval(toolbarAttrs);
+                    scope.runToolbar();
+                }, 10);
 
                 scope.setButtonsWidth = function(isEqual, side){
                     $timeout(function(){
