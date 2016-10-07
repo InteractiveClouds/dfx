@@ -441,42 +441,61 @@ dfxAppRuntime.directive('dfxViewPreviewCompiled', ['$compile', function($compile
     }
 }]);
 
-dfxAppRuntime.directive('dfxViewPreview', function() {
-    return {
-        restrict: 'A',
-        controller: function($scope, $element, $attrs) {
-            $scope.view_id = $attrs.id;
-            $scope.$parent.dfxViewCard = $attrs.dfxViewCard;
-            var widget_definition = JSON.parse(window.localStorage.getItem( 'dfx_' + $attrs.dfxViewPreview ));
-            $scope.$watch('dfxViewCard', function(new_card, old_card) {
-                if (new_card!=null) {
-                  var animation = (widget_definition.definition[new_card][0].animation) ? widget_definition.definition[new_card][0].animation : {
-                    in: 'fadeIn',
-                    out: 'slideOutLeft'
-                  };
-                  $('#dfx_view_preview_container').removeClass().addClass('animated ' + animation.out).one('animationend', function(eventOne) {
-                    angular.element($('#dfx_view_preview_container')).html('');
-                    $('#dfx_view_preview_container').removeClass().addClass('animated ' + animation.in);
-                    $scope.addComponents( widget_definition.definition, { "id": "dfx_view_preview_container" }, '', new_card, 'dfx_view_preview_container' );
-                  });
-                }
-            });
-        }
-    }
-});
+/* it seems we don't use it */
 
-dfxAppRuntime.directive('dfxViewPreviewInDialog', [ '$http', function( $http ) {
+//dfxAppRuntime.directive('dfxViewPreview', function() {
+//    return {
+//        restrict: 'A',
+//        controller: function($scope, $element, $attrs) {
+//            $scope.view_id = $attrs.id;
+//            $scope.$parent.dfxViewCard = $attrs.dfxViewCard;
+//            var widget_definition = JSON.parse(window.localStorage.getItem( 'dfx_' + $attrs.dfxViewPreview ));
+//            $scope.$watch('dfxViewCard', function(new_card, old_card) {
+//                if (new_card!=null) {
+//                  var animation = (widget_definition.definition[new_card][0].animation) ? widget_definition.definition[new_card][0].animation : {
+//                    in: 'fadeIn',
+//                    out: 'slideOutLeft'
+//                  };
+//                  $('#dfx_view_preview_container').removeClass().addClass('animated ' + animation.out).one('animationend', function(eventOne) {
+//                    angular.element($('#dfx_view_preview_container')).html('');
+//                    $('#dfx_view_preview_container').removeClass().addClass('animated ' + animation.in);
+//                    $scope.addComponents( widget_definition.definition, { "id": "dfx_view_preview_container" }, '', new_card, 'dfx_view_preview_container' );
+//                  });
+//                }
+//            });
+//        }
+//    }
+//});
+
+dfxAppRuntime.directive('dfxViewPreviewInDialog', [ '$http', '$timeout', '$compile', function( $http, $timeout, $compile ) {
     return {
         restrict: 'A',
         controller: function($scope, $element, $attrs) {
+            var renderHtmlForRuntime = function() {
+                $http.get( 'views/' + $attrs.dfxViewPreviewInDialog+'/' + $attrs.dfxViewPreviewInDialog + '_' + $attrs.dfxCard+ '.html' ).success(function(response) {
+                    angular.element($("#dfx_view_preview_container_in_dialog_" + component_id)).html(response);
+                    $compile(angular.element($("#dfx_view_preview_container_in_dialog_" + component_id)).contents())($scope);
+                });
+            }
+            var renderHtmlForPreview = function() {
+                var response = window.localStorage.getItem( 'DFX_view_compiled_' + $attrs.dfxViewPreviewInDialog + '_' + $attrs.dfxCard );
+                angular.element($("#dfx_view_preview_container_in_dialog_" + component_id)).html(response);
+                $compile(angular.element($("#dfx_view_preview_container_in_dialog_" + component_id)).contents())($scope);
+            }
             var view_object = $('#' + $scope.$parent._view_id)[0];
             var component_id = $('div:first',view_object).attr('id');
             var widget_definition = window.localStorage.getItem('dfx_' + $attrs.dfxViewPreviewInDialog);
             if (widget_definition) {
                 $scope.addComponents( JSON.parse(widget_definition).definition, { "id": "dfx_view_preview_container_in_dialog_" + component_id  }, '', $attrs.dfxCard, 'dfx_view_preview_container_in_dialog_' + component_id  );
+                $timeout(function(){
+                    renderHtmlForPreview();
+                },0);
             } else {
-                $http.get('views/' + $attrs.dfxViewPreviewInDialog + '.json').then(function (response) {
+                $http.get('views/' + $attrs.dfxViewPreviewInDialog + '/' + $attrs.dfxViewPreviewInDialog + '.json').then(function (response) {
                     $scope.addComponents( JSON.parse(response.data.src).definition, { "id": "dfx_view_preview_container_in_dialog_" + component_id  }, '', $attrs.dfxCard, 'dfx_view_preview_container_in_dialog_' + component_id  );
+                    $timeout(function(){
+                        renderHtmlForRuntime();
+                    },0);
                 }, function (err) {
                     console.log("Can't get view " + $attrs.dfxViewPreviewInDialog + " defintion");
                 });
@@ -485,18 +504,35 @@ dfxAppRuntime.directive('dfxViewPreviewInDialog', [ '$http', function( $http ) {
     }
 }]);
 
-dfxAppRuntime.directive('dfxViewPreviewInSidenav', [ '$http', function( $http ) {
+dfxAppRuntime.directive('dfxViewPreviewInSidenav', [ '$http', '$compile', '$timeout', function( $http, $compile, $timeout ) {
     return {
         restrict: 'A',
         controller: function($scope, $element, $attrs) {
+            var renderHtmlForRuntime = function() {
+                $http.get( 'views/' + $attrs.dfxViewPreviewInSidenav+'/' + $attrs.dfxViewPreviewInSidenav + '_' + $attrs.dfxCard+ '.html' ).success(function(response) {
+                    angular.element($("#dfx_view_preview_container_in_sidenav_" + component_id)).html(response);
+                    $compile(angular.element($("#dfx_view_preview_container_in_sidenav_" + component_id)).contents())($scope);
+                });
+            }
+            var renderHtmlForPreview = function() {
+                var response = window.localStorage.getItem( 'DFX_view_compiled_' + $attrs.dfxViewPreviewInSidenav + '_' + $attrs.dfxCard );
+                angular.element($("#dfx_view_preview_container_in_sidenav_" + component_id)).html(response);
+                $compile(angular.element($("#dfx_view_preview_container_in_sidenav_" + component_id)).contents())($scope);
+            }
             var view_object = $('#' + $scope.$parent._view_id)[0];
             var component_id = $('div:first',view_object).attr('id');
             var widget_definition = window.localStorage.getItem('dfx_' + $attrs.dfxViewPreviewInSidenav);
             if (widget_definition) {
                 $scope.addComponents( JSON.parse(widget_definition).definition, { "id": "dfx_view_preview_container_in_sidenav_" + component_id }, '', $attrs.dfxCard, 'dfx_view_preview_container_in_sidenav_' + component_id );
+                $timeout(function(){
+                    renderHtmlForPreview();
+                },0);
             } else {
-                $http.get('views/' + $attrs.dfxViewPreviewInSidenav + '.json').then(function (response) {
+                $http.get('views/' + $attrs.dfxViewPreviewInSidenav + '/' + $attrs.dfxViewPreviewInSidenav + '.json').then(function (response) {
                     $scope.addComponents( JSON.parse(response.data.src).definition, { "id": "dfx_view_preview_container_in_sidenav_" + component_id }, '', $attrs.dfxCard, 'dfx_view_preview_container_in_sidenav_' + component_id );
+                    $timeout(function(){
+                        renderHtmlForRuntime();
+                    },0);
                 }, function (err) {
                     console.log("Can't get view " + $attrs.dfxViewPreviewInSidenav + " defintion");
                 });
@@ -505,18 +541,35 @@ dfxAppRuntime.directive('dfxViewPreviewInSidenav', [ '$http', function( $http ) 
     }
 }]);
 
-dfxAppRuntime.directive('dfxViewPreviewInBottom', [ '$http', function( $http ) {
+dfxAppRuntime.directive('dfxViewPreviewInBottom', [ '$http', '$timeout', '$compile', function( $http, $timeout, $compile ) {
     return {
         restrict: 'A',
         controller: function($scope, $element, $attrs) {
+            var renderHtmlForRuntime = function() {
+                $http.get( 'views/' + $attrs.dfxViewPreviewInBottom+'/' + $attrs.dfxViewPreviewInBottom + '_' + $attrs.dfxCard+ '.html' ).success(function(response) {
+                    angular.element($("#dfx_view_preview_container_in_bottom_" + component_id)).html(response);
+                    $compile(angular.element($("#dfx_view_preview_container_in_bottom_" + component_id)).contents())($scope);
+                });
+            }
+            var renderHtmlForPreview = function() {
+                var response = window.localStorage.getItem( 'DFX_view_compiled_' + $attrs.dfxViewPreviewInBottom + '_' + $attrs.dfxCard );
+                angular.element($("#dfx_view_preview_container_in_bottom_" + component_id)).html(response);
+                $compile(angular.element($("#dfx_view_preview_container_in_bottom_" + component_id)).contents())($scope);
+            }
             var view_object = $('#' + $scope.$parent._view_id)[0];
             var component_id = $('div:first',view_object).attr('id');
             var widget_definition = window.localStorage.getItem('dfx_' + $attrs.dfxViewPreviewInBottom);
             if (widget_definition) {
                 $scope.addComponents( JSON.parse(widget_definition).definition, { "id": "dfx_view_preview_container_in_bottom_" + component_id  }, '', $attrs.dfxCard, 'dfx_view_preview_container_in_bottom_' + component_id  );
+                $timeout(function(){
+                    renderHtmlForPreview();
+                },0);
             } else {
-                $http.get('views/' + $attrs.dfxViewPreviewInBottom + '.json').then(function (response) {
+                $http.get('views/' + $attrs.dfxViewPreviewInBottom + '/' + $attrs.dfxViewPreviewInBottom + '.json').then(function (response) {
                     $scope.addComponents( JSON.parse(response.data.src).definition, { "id": "dfx_view_preview_container_in_bottom_" + component_id  }, '', $attrs.dfxCard, 'dfx_view_preview_container_in_bottom_' + component_id  );
+                    $timeout(function(){
+                        renderHtmlForRuntime();
+                    },0);
                 }, function (err) {
                     console.log("Can't get view " + $attrs.dfxViewPreviewInBottom + " defintion");
                 });
@@ -525,20 +578,37 @@ dfxAppRuntime.directive('dfxViewPreviewInBottom', [ '$http', function( $http ) {
     }
 }]);
 
-dfxAppRuntime.directive('dfxViewPreviewWithCard', [ '$http', function( $http ) {
+dfxAppRuntime.directive('dfxViewPreviewWithCard', [ '$http', '$timeout', '$compile', function( $http, $timeout, $compile ) {
     return {
         restrict: 'A',
         controller: function($scope, $element, $attrs) {
+            var renderHtmlForRuntime = function() {
+                $http.get( 'views/' + $attrs.dfxViewPreviewWithCard+'/' + $attrs.dfxViewPreviewWithCard + '_' + $attrs.dfxCard+ '.html' ).success(function(response) {
+                    angular.element($("#dfx_view_preview_with_card_content_" + component_id)).html(response);
+                    $compile(angular.element($("#dfx_view_preview_with_card_content_" + component_id)).contents())($scope);
+                });
+            }
+            var renderHtmlForPreview = function() {
+                var response = window.localStorage.getItem( 'DFX_view_compiled_' + $attrs.dfxViewPreviewWithCard + '_' + $attrs.dfxCard );
+                angular.element($("#dfx_view_preview_with_card_content_" + component_id)).html(response);
+                $compile(angular.element($("#dfx_view_preview_with_card_content_" + component_id)).contents())($scope);
+            }
             var view_object = $('#' + $scope.$parent._view_id)[0];
             var component_id = $('div:first',view_object).attr('id');
             var widget_definition = window.localStorage.getItem('dfx_' + $attrs.dfxViewPreviewWithCard);
             if (widget_definition) {
                 $scope.addComponents( JSON.parse(widget_definition).definition, { "id": "dfx_view_preview_with_card_content_" + component_id  }, '', $attrs.dfxCard, 'dfx_view_preview_with_card_content_' + component_id  );
+                $timeout(function(){
+                    renderHtmlForPreview();
+                },0);
             } else {
-                $http.get('views/' + $attrs.dfxViewPreviewWithCard + '.json').then(function (response) {
+                $http.get('views/' + $attrs.dfxViewPreviewWithCard + '/' + $attrs.dfxViewPreviewWithCard + '.json').then(function (response) {
                     $scope.addComponents( JSON.parse(response.data.src).definition, { "id": "dfx_view_preview_with_card_content_" + component_id  }, '', $attrs.dfxCard, 'dfx_view_preview_with_card_content_' + component_id  );
+                    $timeout(function(){
+                        renderHtmlForRuntime();
+                    },0);
                 }, function (err) {
-                    console.log("Can't get view " + $attrs.dfxViewPreviewInBottom + " defintion");
+                    console.log("Can't get view " + $attrs.dfxViewPreviewWithCard + " defintion");
                 });
             }
         }
