@@ -1,9 +1,9 @@
 <div
   ng-show="attributes.display.value"
-  class="{{attributes.classes.value}} dfx-core-gc-image"
+  class="ATTR-NONV{{classes.value}} dfx-core-gc-image"
   ATTR-IF{{style="attributes.style.value"}}
   ATTR-IF{{ng-class="attributes.dynamicClasses.value"}}>
-    <img dfx-ng-src
+    <img ng-src="{{ ATTR-NONV{{src.value}} }}"
       ATTR-IF{{ng-click="attributes.onclick.value"}}
       ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
       ATTR-IF{{ng-keypress="attributes.onkeypress.value"}}
