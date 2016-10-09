@@ -859,7 +859,7 @@ dfxGCC.directive('dfxGccWebButton', ['$timeout', '$compile', '$filter', function
 
                     }
                     scope.ifShowIconTypes(scope.attributes.icon.value);
-                    var singleMenuItem = '<md-button ng-show="{{itemDisplay}}" ng-disabled="{{itemDisabled}}" ng-click="{{itemClick}}" class="dfx-menu-button {{attributes.singleMenu.class}}" style="{{attributes.singleMenu.style}}" aria-label="iconbar-button" >'+
+                    var singleMenuItem = '<md-button ng-show="{{itemDisplay}}" ng-disabled="{{itemDisabled}}" ng-click="{{itemClick}}" class="dfx-menu-button {{attributes.singleMenu.button.class}}" style="{{attributes.singleMenu.button.style}}" aria-label="iconbar-button" >'+
                             '<md-icon ng-if="{{ifFaIcon}}" class="fa {{faIcon}} dfx-menu-button-icon {{attributes.singleMenu.icon.class}}" style="font-size:{{attributes.singleMenu.icon.size}}px; {{attributes.singleMenu.icon.style}}"></md-icon>'+
                             '<ng-md-icon ng-if="{{ifSvgIcon}}" icon="{{svgIcon}}" size="{{attributes.singleMenu.icon.size}}" class="dfx-menu-button-icon {{attributes.singleMenu.icon.class}}" style="{{attributes.singleMenu.icon.style}}"></ng-md-icon>'+
                             '<span>{{itemLabel}}</span>'+
