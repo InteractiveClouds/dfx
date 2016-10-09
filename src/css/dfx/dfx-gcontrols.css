@@ -998,6 +998,16 @@ md-input-container label:not(.md-container-ignore) {
 md-input-container {
     margin: 0;
 }
+
+/* DFX md-tooltip */
+md-tooltip {
+    background-color: rgb(97,97,97);
+}
+md-tooltip.md-show div.md-content {
+    background: none;
+}
+
+/* DFX md-button group */
 .gc-btn-group {
     display:inline-flex;
     flex-direction:row;
