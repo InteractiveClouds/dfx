@@ -17,7 +17,7 @@
         <div ATTR-IF{{layout="attributes.direction.value"}} flex style="padding-top: 1px">
             <div flex layout layout-align="start center" ng-repeat="item in ATTR-NONV{{source.value}} track by $index">
                 <div flex="none" ng-if="ATTR-EXP{{attributes.direction.value === 'row' ? 'true' : 'false'}}ATTR-ENDEXP" style="margin:-11px 5px 0 0; padding-left: 5px"><span>{{ item.ATTR-NONV{{bindingLabel.value}} }}</span></div>
-                <md-slider flex ng-if="ATTR-EXP{{attributes.discrete.value ? 'true' : 'false'}}ATTR-ENDEXP" md-discrete
+                <md-slider flex ng-if="attributes.discrete.value" md-discrete
                     class="md-altTheme-theme md-primary flex"
                     ng-model="ATTR-NONV{{binding.value}}[$index]"
                     ATTR-IF{{min="attributes.minValue.value"}}
@@ -40,7 +40,7 @@
                     ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}
                     ATTR-IF{{ng-disabled="attributes.disabled.value"}}>
                 </md-slider>
-                <md-slider flex ng-if="ATTR-EXP{{!attributes.discrete.value ? 'true' : 'false'}}ATTR-ENDEXP"
+                <md-slider flex ng-if="!attributes.discrete.value"
                     class="md-altTheme-theme md-primary flex"
                     ng-model="ATTR-NONV{{binding.value}}[$index]"
                     ATTR-IF{{min="attributes.minValue.value"}}
@@ -97,7 +97,7 @@
         <div ATTR-IF{{layout="attributes.direction.value"}} flex style="padding-top: 1px">
             <div flex layout layout-align="start center" ng-repeat="item in ATTR-STATIC{{slidersArray.value}} track by $index">
                 <div flex="none" ng-if="ATTR-EXP{{attributes.direction.value === 'row' ? 'true' : 'false'}}ATTR-ENDEXP" style="margin:-11px 5px 0 0; padding-left: 5px" ng-bind="$eval(item.label)"></div>
-                <md-slider flex ng-if="ATTR-EXP{{attributes.discrete.value ? 'true' : 'false'}}ATTR-ENDEXP" md-discrete
+                <md-slider flex ng-if="attributes.discrete.value" md-discrete
                     class="md-altTheme-theme md-primary flex"
                     ng-model="ATTR-NONV{{binding.value}}[$index]"
                     ATTR-IF{{min="attributes.minValue.value"}}
@@ -120,7 +120,7 @@
                     ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}
                     ATTR-IF{{ng-disabled="attributes.disabled.value"}}>
                 </md-slider>
-                <md-slider flex ng-if="ATTR-EXP{{!attributes.discrete.value ? 'true' : 'false'}}ATTR-ENDEXP"
+                <md-slider flex ng-if="!attributes.discrete.value"
                     class="md-altTheme-theme md-primary flex"
                     ng-model="ATTR-NONV{{binding.value}}[$index]"
                     ATTR-IF{{min="attributes.minValue.value"}}
@@ -188,7 +188,7 @@
         <div ATTR-IF{{layout="attributes.direction.value"}} flex style="padding-top: 1px">
             <div flex layout layout-align="start center" ng-repeat="item in ATTR-NONV{{source.value}} track by $index">
                 <div flex="none" ng-if="ATTR-EXP{{attributes.direction.value === 'row' ? 'true' : 'false'}}ATTR-ENDEXP" style="margin:-11px 5px 0 0; padding-left: 5px"><span>{{ item.ATTR-NONV{{bindingLabel.value}} }}</span></div>
-                <md-slider flex ng-if="ATTR-EXP{{attributes.discrete.value ? 'true' : 'false'}}ATTR-ENDEXP" md-discrete
+                <md-slider flex ng-if="attributes.discrete.value" md-discrete
                     class="md-altTheme-theme md-primary flex"
                     ng-model="item[attributes.displayValue.value]"
                     ATTR-IF{{min="attributes.minValue.value"}}
@@ -211,7 +211,7 @@
                     ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}
                     ATTR-IF{{ng-disabled="attributes.disabled.value"}}>
                 </md-slider>
-                <md-slider flex ng-if="ATTR-EXP{{!attributes.discrete.value ? 'true' : 'false'}}ATTR-ENDEXP"
+                <md-slider flex ng-if="!attributes.discrete.value"
                     class="md-altTheme-theme md-primary flex"
                     ng-model="item[attributes.displayValue.value]"
                     ATTR-IF{{min="attributes.minValue.value"}}
@@ -267,7 +267,7 @@
         <div ATTR-IF{{layout="attributes.direction.value"}} flex style="padding-top: 1px">
             <div flex layout layout-align="start center" ng-repeat="item in ATTR-STATIC{{slidersArray.value}} track by $index">
                 <div flex="none" ng-if="ATTR-EXP{{attributes.direction.value === 'row' ? 'true' : 'false'}}ATTR-ENDEXP" style="margin:-11px 5px 0 0; padding-left: 5px" ng-bind="$eval(item.label)"></div>
-                <md-slider flex ng-if="ATTR-EXP{{attributes.discrete.value ? 'true' : 'false'}}ATTR-ENDEXP" md-discrete
+                <md-slider flex ng-if="attributes.discrete.value" md-discrete
                     class="md-altTheme-theme md-primary flex"
                     ng-model="item.value"
                     ATTR-IF{{min="attributes.minValue.value"}}
@@ -290,7 +290,7 @@
                     ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}
                     ATTR-IF{{ng-disabled="attributes.disabled.value"}}>
                 </md-slider>
-                <md-slider flex ng-if="ATTR-EXP{{!attributes.discrete.value ? 'true' : 'false'}}ATTR-ENDEXP"
+                <md-slider flex ng-if="!attributes.discrete.value"
                     class="md-altTheme-theme md-primary flex"
                     ng-model="item.value"
                     ATTR-IF{{min="attributes.minValue.value"}}
