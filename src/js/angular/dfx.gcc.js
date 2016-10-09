@@ -4596,7 +4596,7 @@ dfxGCC.directive('dfxGccWebTabs', ['$timeout', '$compile', function($timeout, $c
                 });
 
                 scope.changeWidth = function(){
-                    $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+                    $('#' + scope.component_id).addClass('flex' + '-' + scope.attributes.flex.value);
                 };
                 if (!angular.isDefined(attrs.dfxGcEdit)) {
                     scope.changeWidth();
@@ -4737,8 +4737,7 @@ dfxGCC.directive('dfxGccWebWizard', ['$mdDialog', '$timeout', '$compile', functi
             basectrl.init(scope, element, component, attrs, 'wizard').then(function(){
                 scope.attributes.layoutType = {"value": "wizard"};
                 scope.attributes.initialized = {"value": true};
-                if(!scope.attributes.hasOwnProperty('stepIndex')){scope.attributes.stepIndex = { "value": "" }}
-                if(scope.attributes.stepIndex.value === ""){scope.attributes.stepIndex.value = 0;}
+                scope.attributes.stepIndex = {'value': 0};
                 scope.attributes.steps.status = "overridden";
                 scope.attributes.centerSteps.status = "overridden";
                 scope.attributes.stepIndex.status = "overridden" ;
@@ -4759,9 +4758,111 @@ dfxGCC.directive('dfxGccWebWizard', ['$mdDialog', '$timeout', '$compile', functi
                 if(scope.attributes.toolbar.rightMenu.hasOwnProperty('iconBarClass')){delete scope.attributes.toolbar.rightMenu.iconBarClass;}
                 if(scope.attributes.toolbar.rightMenu.hasOwnProperty('buttonStyle')){delete scope.attributes.toolbar.rightMenu.buttonStyle;}
                 if(scope.attributes.toolbar.rightMenu.hasOwnProperty('buttonClass')){delete scope.attributes.toolbar.rightMenu.buttonClass;}
+                var previousButton = scope.attributes.previousButton.classes.value.replace("md-raised", "");
+                    previousButton = previousButton.replace("md-primary", "");
+                    scope.attributes.previousButton.classes.value = previousButton;
+                var nextButton = scope.attributes.nextButton.classes.value.replace("md-raised", "");
+                    nextButton = nextButton.replace("md-primary", "");
+                    scope.attributes.nextButton.classes.value = nextButton;
+                var submitButton = scope.attributes.submitButton.classes.value.replace("md-raised", "");
+                    submitButton = submitButton.replace("md-primary", "");
+                    scope.attributes.submitButton.classes.value = submitButton;
 
-                scope.incrIndex = function(){
-                    scope.attributes.stepIndex.value++;
+                for (var s = 0; s < scope.attributes.steps.value.length; s++) {
+                    if(!scope.attributes.steps.value[s].hasOwnProperty('percent')){scope.attributes.steps.value[s].percent = { "value": 0 };}
+                    if(!scope.attributes.steps.value[s].hasOwnProperty('isLast')){scope.attributes.steps.value[s].isLast = { "value": "" };}
+                };
+
+                scope.setClasses = function(){
+                    $timeout(function () {
+                        try{
+                            for(var k = 0; k < scope.attributes.steps.value.length; k++){
+                                var stepLayoutRows = $('#' + scope.component_id + '_step_' + k).children();
+                                for(var i = 0; i < stepLayoutRows.length; i++){
+                                    var stepLayoutRowsCols = $(stepLayoutRows[i]).children() ;
+                                    for(var j = 0; j < stepLayoutRowsCols.length; j++){
+                                        if(scope.attributes.steps.value[k].layout.rows[i].cols[j].orientation.value === 'row'){
+                                            $(stepLayoutRowsCols[j]).removeClass('layout-column');
+                                            $(stepLayoutRowsCols[j]).addClass('layout-row');
+                                        }else{
+                                            $(stepLayoutRowsCols[j]).removeClass('layout-row');
+                                            $(stepLayoutRowsCols[j]).addClass('layout-column');
+                                        }
+                                        $(stepLayoutRowsCols[j]).addClass('flex' + '-' + scope.attributes.steps.value[k].layout.rows[i].cols[j].width.value);
+                                    }
+                                }
+                            }
+                        }catch(e){
+                            //console.log(e.message);
+                        }
+                    },0);
+                };
+
+                scope.setClasses();
+
+                $timeout(function () {
+                    try{
+                        scope.wizardForm = eval('scope.form_' + scope.component_id);
+                        var formName = '#form_' + scope.component_id ;
+                        var inputs = $(formName).find('md-input-container');
+                        scope.totalInputsNumber = inputs.length;
+                        if(scope.totalInputsNumber > 0){
+                            for(var i =0; i < scope.attributes.steps.value.length; i++){
+                                var stepFormName = '#form_' + scope.component_id + '_step_' + i;
+                                var stepInputs = $(stepFormName).find('md-input-container');
+                                scope.attributes.steps.value[i].percent.value =  100 * stepInputs.length/scope.totalInputsNumber;
+                            }
+                        }
+                    }catch(e){
+                        /*console.log(e.message);*/
+                    }
+                },0);
+
+                scope.setStepWidth = function() {
+                    try{
+                        var paginationWrapper = '#' + scope.component_id + '> div.layout-align-center-center.layout-row.flex > div > md-content > md-tabs > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper';
+                        var inkBar = '#' + scope.component_id + '> div.layout-align-center-center.layout-row.flex > div > md-content > md-tabs > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper > md-ink-bar';
+                        $(paginationWrapper).css('width', '100%');
+                        var temp = $($(paginationWrapper).children()[0]).css('width');
+                        var stepWidth = parseInt(temp.substring(0, temp.length - 2));
+                        var left = stepWidth * scope.attributes.tabIndex.value + 'px';
+                        var right = stepWidth * (scope.attributes.tabs.value.length - 1 - scope.attributes.tabIndex.value) + 'px';
+                        $(inkBar).css('left', left);
+                        $(inkBar).css('right', right);
+                    }catch(e){
+                        console.log(e.message);
+                    }
+                };
+
+                scope.$watch('attributes.stretching.value', function(newValue){
+                    if(newValue === 'always'){
+                        scope.setStepWidth();
+                    }
+                });
+
+                var changeStepform = function() {
+                    for(var i =0; i < scope.attributes.steps.value.length; i++){
+                        if(i < scope.attributes.steps.value.length-1){
+                            scope.attributes.steps.value[i].isLast.value = false;
+                        }else{
+                            scope.attributes.steps.value[scope.attributes.steps.value.length - 1].isLast.value = true;
+                        }
+
+                        var stepFormName = 'stepForm' + scope.attributes.stepIndex.value;
+                        scope.stepForm = (scope.wizardForm[stepFormName]);
+                    }
+                };
+
+                scope.incrIndex = function() {
+                    scope.attributes.stepIndex.value++;// change selected step
+
+                    changeStepform();
+
+                    // change form validation
+                    if(scope.stepForm.$valid){
+                        scope.attributes.steps.value[ scope.attributes.stepIndex.value - 1 ].validDisabled.value = true;
+                        scope.calcPercent();
+                    }
                 };
 
                 scope.decrIndex = function(){
@@ -4773,8 +4874,28 @@ dfxGCC.directive('dfxGccWebWizard', ['$mdDialog', '$timeout', '$compile', functi
                     event.stopPropagation();
                 };
 
-				$('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
-				if (!scope.attributes.autoHeight || scope.attributes.autoHeight.value != true) {
+                scope.$watchCollection('attributes.steps[attributes.stepIndex.value].layout.rows', function(newValue){
+                    scope.setClasses();
+                });
+
+                scope.calcPercent = function(){
+                    scope.attributes.percentage.value = 0;
+                    $timeout(function () {
+                        for(var i =0; i < scope.attributes.steps.value.length; i++){
+                             if(scope.wizardForm['stepForm'+i].$valid){
+                                 scope.attributes.percentage.value = scope.attributes.percentage.value + scope.attributes.steps.value[i].percent.value ;
+                             }
+                        }
+                        scope.attributes.percentage.value = Math.round(scope.attributes.percentage.value);
+                    },0);
+                };
+
+                scope.changeWidth = function(){
+                    $('#' + scope.component_id).addClass('flex' + '-' + scope.attributes.flex.value);
+                };
+                scope.changeWidth();
+
+                if (!scope.attributes.autoHeight || scope.attributes.autoHeight.value != true) {
                     $timeout(function () {
                         var $md_tab_content_wrapper = $('#' + scope.component_id + ' > div > div > md-content > form > md-tabs > md-tabs-content-wrapper');
                         $md_tab_content_wrapper.addClass('flex-100');
@@ -4791,21 +4912,6 @@ dfxGCC.directive('dfxGccWebWizard', ['$mdDialog', '$timeout', '$compile', functi
                         $md_tabs_template.addClass('layout-column');
                     }, 0);
                 }
-
-				scope.$watch('attributes.stepIndex.value', function(newValue, oldValue){
-                    for(var i =0; i < scope.attributes.steps.value.length; i++){
-                        if(i < scope.attributes.steps.value.length-1){
-                            scope.attributes.steps.value[i].isLast.value = false;
-                        }else{
-                            scope.attributes.steps.value[scope.attributes.steps.value.length - 1].isLast.value = true;
-                        }
-                        var stepFormName = 'stepForm' + scope.attributes.stepIndex.value;
-                        $timeout(function () {
-                            scope.stepForm = (scope.wizardForm[stepFormName]);
-                        },0);
-                    }
-                });
-
             });
         }
     }

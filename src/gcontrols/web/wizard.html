@@ -17,7 +17,10 @@
         <md-content flex="100" style="{{attributes.bodyStyle.value}}" ng-hide="$eval(attributes.toolbar.collapsed.value)" layout="column">
             <form name="form_{{component_id}}" id="form_{{component_id}}" ng-submit="$eval(attributes.formSubmit.value)" role="form" layout="column" flex="100">
                 <md-tabs md-no-ink-bar="{{attributes.inkBar.value==='disabled' ? 'true': 'false'}}" md-center-tabs="{{attributes.centerSteps.value}}"
-                         md-dynamic-height md-border-bottom md-selected="attributes.stepIndex.value" md-align-tabs="{{attributes.stepAlign.value}}" md-stretch-tabs="{{attributes.stretching.value}}"
+                         md-dynamic-height md-border-bottom
+                         md-selected="attributes.stepIndex.value"
+                         md-align-tabs="{{attributes.stepAlign.value}}"
+                         md-stretch-tabs="{{attributes.stretching.value}}"
                          flex="100" layout="column">
                     <md-tab ng-repeat="step in attributes.steps.value track by $index" label="{{$eval(step.label)}}" ng-disabled="$eval(step.disabled.value) || step.validDisabled.value"> <!--md-on-select="$eval(attributes.onSelect.value)" md-on-deselect="$eval(attributes.onDeselect.value)"-->
                         <div ng-form name="stepForm{{$index}}" id="form_{{component_id}}_step_{{$index}}" layout="column" flex="100">
