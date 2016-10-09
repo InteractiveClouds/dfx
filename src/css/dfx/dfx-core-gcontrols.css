@@ -318,8 +318,8 @@ div[dfx-gcc-web-treemenu] {
 }
 .dfx-core-gc-treemenu button .tree-menu-icon, .dfx-core-gc-treemenu button .tree-menu-action-icon {
     color: inherit;
-    width: 16px;
-    height:16px;
+    /*width: 16px;*/
+    /*height:16px;*/
     min-width: 16px;
     min-height:16px;
     margin:auto 16px auto 0;
