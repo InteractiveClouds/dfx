@@ -1730,7 +1730,7 @@ dfxGCC.directive('dfxGccWebToolbar', function($sce, $compile, $timeout) {
                             }
                             scope.rootMenuItem = scope.leftRootMenuItem;
                             if ( scope.attributes.toolbar.leftMenu.type.value === 'Buttons' ) {
-                                scope.iconBar = '<md-menu-bar style="display:flex;padding:0;">';
+                                scope.iconBar = '<md-menu-bar class="dfx_toolbar_menubar">';
                             } else {
                                 scope.iconBar = '<md-menu-bar style="display:flex;">';
                             }
@@ -1803,7 +1803,7 @@ dfxGCC.directive('dfxGccWebToolbar', function($sce, $compile, $timeout) {
                             }
                             scope.rootMenuItem = scope.rightRootMenuItem;
                             if ( scope.attributes.toolbar.rightMenu.type.value === 'Buttons' ) {
-                                scope.iconBar = '<md-menu-bar style="display:flex;padding:0;">';
+                                scope.iconBar = '<md-menu-bar class="dfx_toolbar_menubar">';
                             } else {
                                 scope.iconBar = '<md-menu-bar style="display:flex;">';
                             }
@@ -1813,7 +1813,7 @@ dfxGCC.directive('dfxGccWebToolbar', function($sce, $compile, $timeout) {
                             if(scope.attributes.toolbar.leftMenu.menuItemsType.value === 'static') {
                                 for ( var item = 0; item < scope.iconbarArray.length; item++ ) {
                                     if ( scope.attributes.toolbar.leftMenu.type.value === 'Buttons' ) {
-                                        scope.iconBar = scope.iconBar + '<md-menu class="toolbar-button" style="padding: 1px">';
+                                        scope.iconBar = scope.iconBar + '<md-menu class="toolbar-button">';
                                     } else {
                                         scope.iconBar = scope.iconBar + '<md-menu style="display:flex;">';
                                     }
@@ -1829,7 +1829,7 @@ dfxGCC.directive('dfxGccWebToolbar', function($sce, $compile, $timeout) {
                             } else {
                                 for ( var item = 0; item < scope.iconbarArray.length; item++ ) {
                                     if ( scope.attributes.toolbar.leftMenu.type.value === 'Buttons' ) {
-                                        scope.iconBar = scope.iconBar + '<md-menu class="toolbar-button" style="padding: 1px">';
+                                        scope.iconBar = scope.iconBar + '<md-menu class="toolbar-button">';
                                     } else {
                                         scope.iconBar = scope.iconBar + '<md-menu style="display:flex;">';
                                     }
@@ -1847,7 +1847,7 @@ dfxGCC.directive('dfxGccWebToolbar', function($sce, $compile, $timeout) {
                             if(scope.attributes.toolbar.rightMenu.menuItemsType.value === 'static') {
                                 for ( var item = 0; item < scope.iconbarArray.length; item++ ) {
                                     if ( scope.attributes.toolbar.rightMenu.type.value === 'Buttons' ) {
-                                        scope.iconBar = scope.iconBar + '<md-menu class="toolbar-button" style="padding: 1px">';
+                                        scope.iconBar = scope.iconBar + '<md-menu class="toolbar-button">';
                                     } else {
                                         scope.iconBar = scope.iconBar + '<md-menu style="display:flex;">';
                                     }
@@ -1863,7 +1863,7 @@ dfxGCC.directive('dfxGccWebToolbar', function($sce, $compile, $timeout) {
                             } else {
                                 for ( var item = 0; item < scope.iconbarArray.length; item++ ) {
                                     if ( scope.attributes.toolbar.rightMenu.type.value === 'Buttons' ) {
-                                        scope.iconBar = scope.iconBar + '<md-menu class="toolbar-button" style="padding: 1px">';
+                                        scope.iconBar = scope.iconBar + '<md-menu class="toolbar-button">';
                                     } else {
                                         scope.iconBar = scope.iconBar + '<md-menu style="display:flex;">';
                                     }
