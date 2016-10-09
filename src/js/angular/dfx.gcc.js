@@ -4425,6 +4425,10 @@ dfxGCC.directive('dfxGccWebHorizontalmenu', ['$mdMenu', '$timeout', '$compile', 
                     }
                 }, true);
                 scope.iconbarBuilder();
+                scope.changeWidth = function(){
+                    $('#' + scope.component_id).addClass('flex' + '-' + scope.attributes.flex.value);
+                };
+                scope.changeWidth();
             });
         }
     }
@@ -4598,9 +4602,7 @@ dfxGCC.directive('dfxGccWebTabs', ['$timeout', '$compile', function($timeout, $c
                 scope.changeWidth = function(){
                     $('#' + scope.component_id).addClass('flex' + '-' + scope.attributes.flex.value);
                 };
-                if (!angular.isDefined(attrs.dfxGcEdit)) {
-                    scope.changeWidth();
-                }
+                scope.changeWidth();
                 scope.collapsePanelBody = function(isCollapsed, index) {
                     if ( scope.attributes.repeat_title.value ) {
                         basectrl.bindScopeVariable( scope, component.attributes.repeat_in.value );
