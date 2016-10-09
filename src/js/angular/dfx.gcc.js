@@ -498,17 +498,17 @@ dfxGCC.directive('dfxGccWebCarousel', ['$http', '$sce', '$mdDialog', '$mdToast',
                     }, 0);
                 }
                 scope.parseSlideSrc = function() {
-                    for ( var i = 0; i < scope.attributes.static.value.length; i++ ) {
-                        var testSrc = scope.attributes.static.value[i].src;
-                        if (testSrc.indexOf("'") == -1) {
-                            scope.attributes.static.value[i].parsedSrc = scope.$gcscope[scope.attributes.static.value[i].src];
-                        } else if (testSrc.indexOf("'") == 0 && testSrc.lastIndexOf("'") == (testSrc.length - 1) && testSrc.length > 2) {
-                            var srcWithoutQuotes = testSrc.replace(/'/g, '');
-                            scope.attributes.static.value[i].parsedSrc = srcWithoutQuotes;
-                        } else {
-                            scope.attributes.static.value[i].parsedSrc = scope.attributes.static.value[i].src;
-                        }
-                    }
+                    // for ( var i = 0; i < scope.attributes.static.value.length; i++ ) {
+                    //     var testSrc = scope.attributes.static.value[i].src;
+                    //     if (testSrc.indexOf("'") == -1) {
+                    //         scope.attributes.static.value[i].parsedSrc = scope.$gcscope[scope.attributes.static.value[i].src];
+                    //     } else if (testSrc.indexOf("'") == 0 && testSrc.lastIndexOf("'") == (testSrc.length - 1) && testSrc.length > 2) {
+                    //         var srcWithoutQuotes = testSrc.replace(/'/g, '');
+                    //         scope.attributes.static.value[i].parsedSrc = srcWithoutQuotes;
+                    //     } else {
+                    //         scope.attributes.static.value[i].parsedSrc = scope.attributes.static.value[i].src;
+                    //     }
+                    // }
                 }
                 scope.rebuildCarousel = function() {
                     if ( scope.attributes.optionsType.value === 'static' && scope.attributes.static.value.length > 0 ) {
@@ -1105,6 +1105,7 @@ dfxGCC.directive('dfxGccWebToolbar', function($sce, $compile, $timeout) {
 
                 scope.runToolbar = function(){
                     $timeout(function(){
+
                         scope.attributes.toolbar.rightMenu.initialClick.value = false;
                         scope.attributes.toolbar.leftMenu.initialClick.value = false;
                         if(scope.attributes.layoutType.value === 'panel'){
@@ -1130,7 +1131,12 @@ dfxGCC.directive('dfxGccWebToolbar', function($sce, $compile, $timeout) {
                         }
                     },0);
                 };
-                scope.runToolbar();
+
+                var toolbarAttrs = setInterval(function() {
+                    if (typeof scope.attributes === 'undefined') return;
+                    clearInterval(toolbarAttrs);
+                    scope.runToolbar();
+                }, 10);
 
                 scope.setButtonsWidth = function(isEqual, side){
                     $timeout(function(){
