@@ -2036,10 +2036,6 @@ dfxGCC.directive('dfxGccWebRating', function($timeout) {
                     scope.showDfxRatingElement = function(dfxItem){
                         scope.dfxRepeatableRatingElement = dfxItem;
                     }
-                    scope.$watch('attributes.binding.value',  function(newValue) { if (newValue) { updateStars(); } });
-                    scope.$watch('attributes.range.value',    function(newValue) { if (newValue) { updateStars(); } });
-                    scope.$watch('attributes.maxValue.value', function(newValue) { if (newValue) { updateStars(); } });
-                    scope.$watch('attributes.disabled.value', function(newValue) { if (newValue) { updateStars(); } });                    
                     if(scope.attributes.binding.value.indexOf('$dfx_item') > -1){
                         scope.isDfxRepeatableRating = true;
                         scope.$watch('dfxRepeatableRatingElement', function(newValue){
