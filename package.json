@@ -60,7 +60,7 @@
     "lodash": "*",
     "mime": "^1.2.11",
     "mkdirp": "^0.5.1",
-    "mongodb": "2.0.14",
+    "mongodb": "2.2.10",
     "ng-knob": "https://github.com/RadMie/ng-knob.git",
     "ng-quill": "^1.4.3",
     "node-uuid": ">= 1.4.0",
