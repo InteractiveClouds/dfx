@@ -2029,7 +2029,7 @@ dfxGCC.directive('dfxGccWebRating', function($timeout) {
                         }                        
                     };
                     scope.toggle = function(index) {
-                        scope.attributes.disabled.value === "false" ? newRating = index*rangeStep + rangeStep : index*rangeStep;
+                        newRating = index*rangeStep + rangeStep;
                         updateStars(newRating);
                         return newRating;
                     };
