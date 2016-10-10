@@ -803,7 +803,7 @@ dfxGCC.directive('dfxGccWebButton', ['$timeout', '$compile', '$filter', function
         link: {
             pre: function(scope, element, attrs, basectrl) {
                 var component = scope.getComponent(element);
-                scope.component_id = component.id;
+				scope.component_id = ($(element).parent().attr('dfx-gcc-renderer')!=null) ? $(element).attr('id') : component.id;
                 basectrl.init(scope, element, component, attrs, 'button').then(function() {
                     scope.attributes.dynamic.status = "overridden";
                     scope.attributes.icon.status = "overridden";
@@ -997,14 +997,14 @@ dfxGCC.directive('dfxGccWebButton', ['$timeout', '$compile', '$filter', function
                     }
                     scope.changeWidth = function(){
                         if(scope.attributes.notFlex.value) {
-                            $('#' + scope.component_id).css({
+                            $(element).css({
                                 'flex': '0',
                                 'width': 'auto',
                                 'max-width': '100%'
                             });
                             scope.attributes.flex.value = 'none';
                         }else{
-                            $('#' + scope.component_id).css({
+                            $(element).css({
                                 'flex': scope.attributes.flex.value + '%',
                                 'width': scope.attributes.flex.value + '%',
                                 'max-width': scope.attributes.flex.value + '%'
@@ -1014,11 +1014,7 @@ dfxGCC.directive('dfxGccWebButton', ['$timeout', '$compile', '$filter', function
                     scope.menuPosition = function(button){
                         var buttonWidth;
                         $timeout(function() {
-                            if(button){
-                                buttonWidth = $(element).find('button.gc-btn-group-first').eq(0).css('width');
-                            }else{
-                                buttonWidth = $('#' + scope.component_id + ' button.gc-btn-group-first').eq(0).css('width');
-                            }
+							buttonWidth = $(element).find('button.gc-btn-group-first').eq(0).css('width');
                             buttonWidth = parseInt(buttonWidth);
                             if(buttonWidth > 220) scope.positionModeSide = 'right';
                         }, 0);
@@ -2026,7 +2022,7 @@ dfxGCC.directive('dfxGccWebRating', function($timeout) {
                             scope.stars.push({
                                 filled: i*rangeStep < rating
                             });
-                        }                        
+                        }
                     };
                     scope.toggle = function(index) {
                         scope.attributes.disabled.value === "false" ? newRating = index*rangeStep + rangeStep : index*rangeStep;
@@ -2039,7 +2035,7 @@ dfxGCC.directive('dfxGccWebRating', function($timeout) {
                     scope.$watch('attributes.binding.value',  function(newValue) { if (newValue) { updateStars(); } });
                     scope.$watch('attributes.range.value',    function(newValue) { if (newValue) { updateStars(); } });
                     scope.$watch('attributes.maxValue.value', function(newValue) { if (newValue) { updateStars(); } });
-                    scope.$watch('attributes.disabled.value', function(newValue) { if (newValue) { updateStars(); } });                    
+                    scope.$watch('attributes.disabled.value', function(newValue) { if (newValue) { updateStars(); } });
                     if(scope.attributes.binding.value.indexOf('$dfx_item') > -1){
                         scope.isDfxRepeatableRating = true;
                         scope.$watch('dfxRepeatableRatingElement', function(newValue){
@@ -2054,7 +2050,7 @@ dfxGCC.directive('dfxGccWebRating', function($timeout) {
                             if (newValue) {
                                 updateStars(newValue);
                             }
-                        });                        
+                        });
                     }
                 });
             }
