@@ -7,11 +7,10 @@
     <label style="font-size: 11px; margin-top: 6px; margin-bottom: 3px"
            ATTR-IF{{ng-class="attributes.labelClass"}}
            ATTR-IF{{ng-bind="attributes.label.value"}}></label>
-    <div>
+    <div ng-if="isLoaded.value">
         FRAG-IF{{attributes.selectedType.value !== 'ranged'}}
         <md-datepicker name="dateField"
-                       ng-model="attributes.bindingDateModel"
-                       ng-model-options="{ getterSetter: true }"
+                       ng-model="ATTR-STATIC{{bindingDate.value}}"
                        ATTR-IF{{ng-required="attributes.isDateRequired.value"}}
                        ATTR-IF{{ng-disabled="attributes.disabled.value"}} md-placeholder="Enter date"
                        ATTR-IF{{ng-change="attributes.onchange.value"}}
@@ -31,8 +30,7 @@
         FRAG-ENDIF
         FRAG-IF{{attributes.selectedType.value === 'ranged'}}
         <md-datepicker name="dateField"
-                       ng-model="attributes.bindingDateModel"
-                       ng-model-options="{ getterSetter: true }"
+                       ng-model="ATTR-STATIC{{bindingDate.value}}"
                        ATTR-IF{{ng-required="attributes.isDateRequired.value"}}
                        ATTR-IF{{ng-disabled="attributes.disabled.value"}} md-placeholder="Enter date"
                        md-min-date="minDate" md-max-date="maxDate"
@@ -51,8 +49,10 @@
                        ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
                        ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}></md-datepicker>
         FRAG-ENDIF
-        <div ng-messages="dateForm.dateField.$error">
-            <div class="validation-messages" ng-message="required">This date is required.</div>
+        <div class="validation-messages" ng-messages="dateForm.dateField.$error">
+            <div ng-message="required">This date is required!</div>
+            <div ng-message="mindate">Date is too early!</div>
+            <div ng-message="maxdate">Date is too late!</div>
         </div>
     </div>
 </div>

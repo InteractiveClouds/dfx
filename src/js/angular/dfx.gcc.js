@@ -716,7 +716,7 @@ dfxGCC.directive('dfxGccWebDatepicker', ['$timeout', function($timeout) {
         link: function(scope, element, attrs, basectrl) {
             var component = scope.$parent.getComponent(element);
             scope.dp_input;
-
+            scope.isLoaded = {"value": false};
             basectrl.init(scope, element, component, attrs, 'datepicker').then(function() {
                 if ( !scope.attributes.hasOwnProperty('flex') ) { scope.attributes.flex = { "value": 20 }; }
                 scope.attributes.bindingDate.status = "overridden";
@@ -738,7 +738,7 @@ dfxGCC.directive('dfxGccWebDatepicker', ['$timeout', function($timeout) {
                 if(!scope.attributes.labelClass){
                     scope.attributes.labelClass = 'dp-label-focus-off';
                 }
-
+                scope.isLoaded.value = true;
                 scope.$watch('attributes.ranged.monthsBefore', function(monthsBefore){
                     scope.minDate = new Date(
                         eval(scope.attributes.bindingDate.value).getFullYear(),
