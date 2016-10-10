@@ -729,8 +729,8 @@ md-checkbox > div.md-container.md-ink-ripple::after{
 }
 
 .gc-textarea-icon-container{
-    padding-left: 5px !important;
-    padding-right: 0 !important;
+    /*padding-left: 5px !important;
+    padding-right: 0 !important;*/
 }
 
 form > md-tabs > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper{
