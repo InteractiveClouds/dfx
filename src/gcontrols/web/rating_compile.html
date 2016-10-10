@@ -5,7 +5,7 @@
 	ATTR-IF{{ng-class="attributes.dynamicClasses.value"}}>
 	<label ATTR-IF{{ng-bind="attributes.label.value"}}></label>
 	<ul class="star-rating"
-				ng-model="$gcscope[scope.attributes.binding.value]"
+				ng-model="attributes.binding.value"
 				ATTR-IF{{aria-label="attributes.name.value"}}
 				ATTR-IF{{ng-click="attributes.onclick.value"}}
 				ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}}

@@ -249,12 +249,12 @@ dfxAppRuntime.controller('dfx_view_controller', [ '$scope', '$rootScope', '$comp
 
     $scope.getComponent = function( element ) {
         var id = $(element).attr('id');
-        if ($(element).attr('dfx-gc-renderer-content')!=null) {
+        if ($(element).parent().attr('dfx-gcc-renderer')!=null) {
             var component_id = $(element).parent().attr('component-id');
             var column_id = $(element).parent().attr('column-id');
             var row_id = $(element).parent().attr('row-id');
             var component = $scope.gc_instances[component_id].attributes.columns.value[column_id].renderer;
-            component.id = component_id + '_renderer_' + row_id + '_' + column_id;
+            component.id = $(element).attr('id');
             return component;
         } else {
             return $scope.gc_instances[id];

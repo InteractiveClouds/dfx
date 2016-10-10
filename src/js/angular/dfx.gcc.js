@@ -4914,3 +4914,234 @@ dfxGCC.directive('dfxGccWebIcon', ['$http', '$mdDialog', '$timeout', '$filter', 
         }
     }
 }]);
+
+dfxGCC.directive('dfxGccWebDatatable', ['$timeout', '$mdDialog', '$filter', '$http', function($timeout, $mdDialog, $filter, $http) {
+    return {
+        restrict: 'A',
+        require: '^dfxGccWebBase',
+        scope: true,
+        link: {
+            pre : function(scope, element, attrs, basectrl) {
+                var component = scope.getComponent(element);
+                scope.component_id = component.id;
+                var orderBy = $filter('orderBy');
+                var filterBy = $filter('filter');
+                scope.$gcscope = scope;
+                scope._selectedAllRows=false;
+                scope._selectedRows=[];
+                scope.dynamicPresent = false;
+                basectrl.init(scope, element, component, attrs, 'table').then(function(){
+                    scope.attributes.rangeStart = { "value": 1 };
+                    scope.attributes.tableRows = { "value": [] };
+                    scope.attributes.columnIndex = { "value": "" };
+                    scope.attributes.newId = { "value": "" };
+                    if(!scope.attributes.hasOwnProperty('flex')){scope.attributes.flex = {"value": 100}}
+                    if(!scope.attributes.hasOwnProperty('modulo')){scope.attributes.modulo = {"value":""}}
+
+                    if(!angular.isDefined(attrs.dfxGcDesign) && !angular.isDefined(attrs.dfxGcEdit)){
+                        scope.attributes.columnIndex.value = parseInt(scope.attributes.columnIndex.value);
+                        scope.attributes.newId.value = scope.attributes.columns.value.length + 1;
+                        scope.attributes.rowCount.value = parseInt(scope.attributes.rowCount.value);
+                        scope.attributes.stepsNumber.value = 3;
+                        scope.attributes.stepCounter.value = 1;
+                        scope.attributes.rangeEnd.value = parseInt(scope.attributes.rowCount.value);
+                        scope.attributes.rangeStart.value = 1;
+                        scope.attributes.modulo.value = 0;
+                        var originalBindingClone = [];
+
+                        if ( !scope.attributes.hasOwnProperty('filterable') ) { scope.attributes.filterable = { "value": false } }
+                        if ( !scope.attributes.hasOwnProperty('filterBy') ) { scope.attributes.filterBy = { "value": "" } }
+                        if ( !scope.attributes.hasOwnProperty('headerVisible') ) { scope.attributes.filterBy = { "headerVisible": true } }
+
+                        if (scope.attributes.checkBinding.value!='') {
+                            scope.dynamicPresent = true;
+                            scope._selectedRows = scope.$parent_scope[scope.attributes.checkBinding.value];
+                            scope.$watch( '$parent_scope[attributes.checkBinding.value]', function( newValue ) {
+                                if ( newValue ) {
+                                    scope._selectedRows = newValue;
+                                }
+                                if ( newValue.length!==0 && angular.equals( newValue, scope.attributes.binding.value ) ) {
+                                    scope._selectedAllRows = true;
+                                } else {
+                                    scope._selectedAllRows = false;
+                                }
+                            });
+                        } else {
+                            scope._selectedRows = [];
+                        }
+
+                        scope.$watch(scope.attributes.binding.value, function(value) {
+                            var val = value || null;
+                            if (val) {
+                                scope.attributes.stepsNumber.value = (scope.attributes.binding.value.length - scope.attributes.binding.value.length % scope.attributes.rowCount.value)/scope.attributes.rowCount.value;
+                                originalBindingClone = scope.attributes.binding.value;
+                            }
+                        }, true);
+                    }
+                	scope.attributes.columns.status = "overridden";
+                    if(scope.attributes.columnIndex.value === "") {
+                        scope.attributes.columnIndex.value = 0;
+                        scope.attributes.newId.value = scope.attributes.columns.value.length + 1;
+                        //scope.attributes.titleVisible.value = true;
+                        //scope.attributes.paging.value = true;
+                        //scope.attributes.rowCount.value = 3;
+                        scope.attributes.stepsNumber.value = 3;
+                        scope.attributes.stepCounter.value = 1;
+                        scope.attributes.rangeEnd.value = parseInt(scope.attributes.rowCount.value);
+                        scope.attributes.rangeStart.value = 1;
+                        scope.attributes.modulo.value = 0;
+                    }
+
+                    scope.activeOption = function() {
+                        $timeout(function(){
+                            $('.menu-structure li').removeClass('active');
+                            $('.menu-structure li').eq( scope.attributes.columnIndex.value ).addClass('active');
+                        }, 0);
+                    }
+
+                    scope.updateSteps = function(){
+                        scope.attributes.rangeStart.value = 1;
+                        scope.attributes.rangeEnd.value = parseInt(scope.attributes.rowCount.value);
+                    }
+
+                    scope.plusStep = function(){
+                        if (!angular.isDefined(attrs.dfxGcDesign) && !angular.isDefined(attrs.dfxGcEdit)) {
+                            if(scope.attributes.stepCounter.value <= scope.attributes.stepsNumber.value){
+                                scope.attributes.stepCounter.value++;
+                                if(scope.attributes.stepCounter.value === scope.attributes.stepsNumber.value+1){
+                                    scope.attributes.rangeEnd.value = scope.attributes.binding.value.length;
+                                    scope.attributes.modulo.value = scope.attributes.binding.value.length % scope.attributes.rowCount.value ;
+                                    if(scope.attributes.modulo.value!==0){
+                                        scope.attributes.rangeStart.value = scope.attributes.rangeEnd.value - scope.attributes.modulo.value + 1;
+                                    }else{
+                                        return;
+                                    }
+                                }else{
+                                    scope.attributes.modulo.value = 0;
+                                    scope.attributes.rangeEnd.value = scope.attributes.rowCount.value * scope.attributes.stepCounter.value;
+                                    scope.attributes.rangeStart.value = scope.attributes.rangeEnd.value - scope.attributes.rowCount.value + 1;
+                                }
+                            }
+                        }
+                    };
+
+                    scope.minusStep = function(){
+                        if(scope.attributes.stepCounter.value > 1){
+                            scope.attributes.stepCounter.value-- ;
+                            scope.attributes.rangeEnd.value = scope.attributes.rowCount.value * scope.attributes.stepCounter.value;
+                            scope.attributes.rangeStart.value = scope.attributes.rangeEnd.value - scope.attributes.rowCount.value + 1;
+                        }
+                    };
+
+                    scope.sortOn = function (arr, prop, reverse, numeric) {
+                         if (!prop || !arr) {
+                            return arr
+                         }
+                         if(arr.constructor !== Array){
+                            arr = [].slice.call(arr) ;
+                         }
+                         var sort_by = function (field, rev, primer) {
+                            return function (a, b) {
+                             a = primer(a[field]), b = primer(b[field]);
+                             return ((a < b) ? -1 : ((a > b) ? 1 : 0)) * (rev ? -1 : 1);
+                            }
+                         }
+                         if (numeric) {
+                                 arr.sort(sort_by(prop, reverse, function (a) {
+                                 return parseFloat(String(a).replace(/[^0-9.-]+/g, ''));
+                             }));
+                         } else {
+                             arr.sort(sort_by(prop, reverse, function (a) {
+                             return String(a).toUpperCase();
+                             }));
+                         }
+                     };
+
+                    scope.changeIndexAndSortDir = function(index){
+                        if(scope.attributes.columns.value[index].value === scope.attributes.sortedBy.value){
+                            if(scope.attributes.columns.value[index].isAscending === "true"){
+                                scope.attributes.columns.value[index].isAscending = "false";
+                            } else{
+                                scope.attributes.columns.value[index].isAscending = "true";
+                            }
+                        }
+                        scope.attributes.columnIndex.value = index;
+                        scope.attributes.sortedBy.value = scope.attributes.columns.value[index].value;
+                        if (!angular.isDefined(attrs.dfxGcDesign) && !angular.isDefined(attrs.dfxGcEdit)) {
+                            scope.attributes.binding.value = orderBy(scope.attributes.binding.value, scope.attributes.sortedBy.value, scope.attributes.columns.value[index].isAscending === "true");
+                            originalBindingClone = scope.attributes.binding.value;
+                        }
+                    };
+
+                    scope.isSelectedRows = function() {
+                        return scope._selectedAllRows;
+                    };
+
+                    scope.isSelectedRow = function(item) {
+                        return (scope._selectedRows.indexOf(item)>-1);
+                    };
+
+                    scope.toggleSelectRows = function() {
+                        scope._selectedAllRows = !scope._selectedAllRows;
+                        var nb_rows = scope.$parent_scope[scope.attributes.binding.value].length;
+                        scope._selectedRows.splice(0, scope._selectedRows.length);
+                        if (scope._selectedAllRows) {
+                            for (var i=0; i<nb_rows; i++) {
+                                scope._selectedRows.push(scope.$parent_scope[scope.attributes.binding.value][i]);
+                            }
+                        }
+                    };
+
+                    scope.toggleSelectRow = function(item) {
+                        if (scope._selectedAllRows) {
+                            scope._selectedAllRows = false;
+                        }
+                        var pos_index = scope._selectedRows.indexOf(item);
+                        if (pos_index == -1) {
+                            scope._selectedRows.push(item);
+                        } else {
+                            scope._selectedRows.splice(pos_index, 1);
+                        }
+                        if ( !angular.isDefined(attrs.dfxGcDesign) && !angular.isDefined(attrs.dfxGcEdit) && scope.dynamicPresent ) {
+                            scope.$parent_scope[scope.attributes.checkBinding.value] = scope._selectedRows;
+                        }
+                    };
+
+                    scope.$watch('attributes.rowCount.value', function(newValue, oldValue){
+                        if (newValue!=null) {
+                            // if (newValue !== oldValue) {
+                                scope.attributes.rowCount.status = 'overridden';
+                                if (!angular.isDefined(attrs.dfxGcDesign) && !angular.isDefined(attrs.dfxGcEdit)) {
+                                    scope.attributes.stepsNumber.value = (scope.attributes.binding.value.length - scope.attributes.binding.value.length % newValue)/newValue;
+                                    scope.attributes.stepCounter.value = 1;
+                                    scope.attributes.rangeEnd.value = newValue;
+                                    scope.attributes.rangeStart.value = 1;
+                                }
+                            // }
+                        }
+                    });
+
+                    scope.filterTableData = function( filterQuery ) {
+                        if(!angular.isDefined(attrs.dfxGcDesign) && !angular.isDefined(attrs.dfxGcEdit)){
+                            if ( filterQuery !== '' ) {
+                                scope.attributes.binding.value = filterBy(originalBindingClone, filterQuery, 'strict');
+                            } else {
+                                scope.attributes.binding.value = originalBindingClone;
+                            }
+                            $timeout(function(){
+                                scope.attributes.rangeStart.value = 1;
+                                scope.attributes.stepCounter.value = 1;
+                                scope.attributes.rangeEnd.value = parseInt(scope.attributes.rowCount.value);
+                            }, 0);
+                        }
+                    }
+
+                    scope.changeWidth = function(){
+                        $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+                    };
+                    scope.changeWidth();
+                });
+            }
+        }
+    }
+}]);
