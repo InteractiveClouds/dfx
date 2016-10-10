@@ -934,12 +934,12 @@ dfxGCC.directive('dfxGccWebButton', ['$timeout', '$compile', '$filter', function
                                     var singleMenu = singleMenuItem
                                         .replace('{{ifFaIcon}}', nextLevel[i][scope.itemNames.main.icon.value] && nextLevel[i][scope.itemNames.main.icon.value][scope.itemNames.main.icon.name] && nextLevel[i][scope.itemNames.main.icon.value][scope.itemNames.main.icon.type] === 'fa-icon' ? true : false )
                                         .replace('{{ifSvgIcon}}', nextLevel[i][scope.itemNames.main.icon.value] && nextLevel[i][scope.itemNames.main.icon.value][scope.itemNames.main.icon.name] && nextLevel[i][scope.itemNames.main.icon.value][scope.itemNames.main.icon.type] === 'svg-icon' ? true : false )
-                                        .replace('{{faIcon}}', nextLevel[i][scope.itemNames.main.icon.value] && nextLevel[i][scope.itemNames.main.icon.value][scope.itemNames.main.icon.name] ? '{{'+nextLevel[i][scope.itemNames.main.icon.value][scope.itemNames.main.icon.name]+'}}' : '')
-                                        .replace('{{svgIcon}}', nextLevel[i][scope.itemNames.main.icon.value] && nextLevel[i][scope.itemNames.main.icon.value][scope.itemNames.main.icon.name] ? '{{'+nextLevel[i][scope.itemNames.main.icon.value][scope.itemNames.main.icon.name]+'}}' : '' )
-                                        .replace('{{itemLabel}}', '{{'+nextLevel[i][scope.itemNames.main.label]+'}}' )
+                                        .replace('{{faIcon}}', nextLevel[i][scope.itemNames.main.icon.value] && nextLevel[i][scope.itemNames.main.icon.value][scope.itemNames.main.icon.name] ? '{{\''+nextLevel[i][scope.itemNames.main.icon.value][scope.itemNames.main.icon.name]+'\'}}' : '')
+                                        .replace('{{svgIcon}}', nextLevel[i][scope.itemNames.main.icon.value] && nextLevel[i][scope.itemNames.main.icon.value][scope.itemNames.main.icon.name] ? '{{\''+nextLevel[i][scope.itemNames.main.icon.value][scope.itemNames.main.icon.name]+'\'}}' : '' )
+                                        .replace('{{itemLabel}}', nextLevel[i][scope.itemNames.main.label] ? '{{\''+nextLevel[i][scope.itemNames.main.label]+'\'}}' : '' )
                                         .replace('{{itemShortcut}}', nextLevel[i][scope.itemNames.main.shortcut])
                                         .replace('{{ifItemNotification}}', nextLevel[i][scope.itemNames.main.notification] !=='' ? true : false )
-                                        .replace('{{itemNotification}}', '{{'+nextLevel[i][scope.itemNames.main.notification]+'}}' )
+                                        .replace('{{itemNotification}}', '{{\''+nextLevel[i][scope.itemNames.main.notification]+'\'}}' )
                                         .replace('{{itemDisplay}}', scope.itemNames.main.display !=='' ? nextLevel[i][scope.itemNames.main.display] : true)
                                         .replace('{{itemDisabled}}', scope.itemNames.main.disabled !=='' ? nextLevel[i][scope.itemNames.main.disabled] : false)
                                         .replace('{{itemClick}}', '$mdOpenMenu();'+ scope.itemNames.main.onclick !=='' ? nextLevel[i][scope.itemNames.main.onclick] : '');
@@ -950,19 +950,19 @@ dfxGCC.directive('dfxGccWebButton', ['$timeout', '$compile', '$filter', function
                                     if ( nextLevel[i][scope.itemNames.main.type] === 'divider' ) {
                                         scope.iconBar = scope.iconBar + '<md-menu-divider></md-menu-divider>';
                                     } else if ( nextLevel[i][scope.itemNames.main.type] === 'title' ) {
-                                        scope.iconBar = scope.iconBar + '<md-menu-item class="tree-menu-title"><div>{{'+nextLevel[i][scope.itemNames.main.label]+'}}</div></md-menu-item>';
+                                        scope.iconBar = scope.iconBar + '<md-menu-item class="tree-menu-title"><div>{{\''+nextLevel[i][scope.itemNames.main.label]+'\'}}</div></md-menu-item>';
                                     } else {
                                         var iconbarItem = iconbarMenuItem.replace('{{itemDisplay}}', scope.itemNames.main.display !=='' ? nextLevel[i][scope.itemNames.main.display] : true);
                                         scope.iconBar = scope.iconBar + iconbarItem;
                                         var singleMenu = singleMenuItem
                                             .replace('{{ifFaIcon}}', nextLevel[i][scope.itemNames.main.icon.value] && nextLevel[i][scope.itemNames.main.icon.value][scope.itemNames.main.icon.name] && nextLevel[i][scope.itemNames.main.icon.value][scope.itemNames.main.icon.type] === 'fa-icon' ? true : false )
                                             .replace('{{ifSvgIcon}}', nextLevel[i][scope.itemNames.main.icon.value] && nextLevel[i][scope.itemNames.main.icon.value][scope.itemNames.main.icon.name] && nextLevel[i][scope.itemNames.main.icon.value][scope.itemNames.main.icon.type] === 'svg-icon' ? true : false )
-                                            .replace('{{faIcon}}', nextLevel[i][scope.itemNames.main.icon.value] && nextLevel[i][scope.itemNames.main.icon.value][scope.itemNames.main.icon.name] ? '{{'+nextLevel[i][scope.itemNames.main.icon.value][scope.itemNames.main.icon.name]+'}}' : '')
-                                            .replace('{{svgIcon}}', nextLevel[i][scope.itemNames.main.icon.value] && nextLevel[i][scope.itemNames.main.icon.value][scope.itemNames.main.icon.name] ? '{{'+nextLevel[i][scope.itemNames.main.icon.value][scope.itemNames.main.icon.name]+'}}' : '' )
-                                            .replace('{{itemLabel}}', '{{'+nextLevel[i][scope.itemNames.main.label]+'}}' )
+                                            .replace('{{faIcon}}', nextLevel[i][scope.itemNames.main.icon.value] && nextLevel[i][scope.itemNames.main.icon.value][scope.itemNames.main.icon.name] ? '{{\''+nextLevel[i][scope.itemNames.main.icon.value][scope.itemNames.main.icon.name]+'\'}}' : '')
+                                            .replace('{{svgIcon}}', nextLevel[i][scope.itemNames.main.icon.value] && nextLevel[i][scope.itemNames.main.icon.value][scope.itemNames.main.icon.name] ? '{{\''+nextLevel[i][scope.itemNames.main.icon.value][scope.itemNames.main.icon.name]+'\'}}' : '' )
+                                            .replace('{{itemLabel}}', nextLevel[i][scope.itemNames.main.label] ? '{{\''+nextLevel[i][scope.itemNames.main.label]+'\'}}' : '')
                                             .replace('{{itemShortcut}}', nextLevel[i][scope.itemNames.main.shortcut])
                                             .replace('{{ifItemNotification}}', nextLevel[i][scope.itemNames.main.notification] !=='' ? true : false )
-                                            .replace('{{itemNotification}}', '{{'+nextLevel[i][scope.itemNames.main.notification]+'}}' )
+                                            .replace('{{itemNotification}}', '{{\''+nextLevel[i][scope.itemNames.main.notification]+'\'}}' )
                                             .replace('{{itemDisplay}}', scope.itemNames.main.display !=='' ? nextLevel[i][scope.itemNames.main.display] : true)
                                             .replace('{{itemDisabled}}', scope.itemNames.main.disabled !=='' ? nextLevel[i][scope.itemNames.main.disabled] : false)
                                             .replace('{{itemClick}}',  scope.itemNames.main.onclick !=='' ? nextLevel[i][scope.itemNames.main.onclick] : '');
@@ -1352,7 +1352,7 @@ dfxGCC.directive('dfxGccWebToolbar', function($sce, $compile, $timeout) {
                                 if ( nextLevel[i][scope.itemNames.main.type] === 'divider' ) {
                                     scope.iconBar = scope.iconBar + '<md-menu-divider></md-menu-divider>';
                                 } else if ( nextLevel[i][scope.itemNames.main.type] === 'title' ) {
-                                    scope.iconBar = scope.iconBar + '<md-menu-item class="tree-menu-title"><div>{{'+nextLevel[i][scope.itemNames.main.label]+'}}</div></md-menu-item>';
+                                    scope.iconBar = scope.iconBar + '<md-menu-item class="tree-menu-title"><div>{{\''+nextLevel[i][scope.itemNames.main.label]+'\'}}</div></md-menu-item>';
                                 } else {
                                     var iconbarItem = iconbarMenuItem.replace('{{itemDisplay}}', nextLevel[i][scope.itemNames.main.display]);
                                     scope.iconBar = scope.iconBar + iconbarItem;
@@ -1468,10 +1468,10 @@ dfxGCC.directive('dfxGccWebToolbar', function($sce, $compile, $timeout) {
                         }
                     } else {
                         var tempPropObject = {};
-                        tempPropObject.faIcon =                 dfxMenuItem[scope.itemNames.main.icon.value] ? '{{'+dfxMenuItem[scope.itemNames.main.icon.value][scope.itemNames.main.icon.name]+'}}' : '';
-                        tempPropObject.svgIcon =                dfxMenuItem[scope.itemNames.main.icon.value] ? '{{'+dfxMenuItem[scope.itemNames.main.icon.value][scope.itemNames.main.icon.name]+'}}' : '';
+                        tempPropObject.faIcon =                 dfxMenuItem[scope.itemNames.main.icon.value] ? '{{\''+dfxMenuItem[scope.itemNames.main.icon.value][scope.itemNames.main.icon.name]+'\'}}' : '';
+                        tempPropObject.svgIcon =                dfxMenuItem[scope.itemNames.main.icon.value] ? '{{\''+dfxMenuItem[scope.itemNames.main.icon.value][scope.itemNames.main.icon.name]+'\'}}' : '';
                         tempPropObject.faItemIndex =            level >= 0 ? level + ',' + index : index;
-                        tempPropObject.itemLabel =              '{{'+dfxMenuItem[scope.itemNames.main.label]+'}}';
+                        tempPropObject.itemLabel =              dfxMenuItem[scope.itemNames.main.label] ? '{{\''+dfxMenuItem[scope.itemNames.main.label]+'\'}}' : '';
                         tempPropObject.itemIndex =              level || level >= 0 ? level + ',' + index : index;
                         tempPropObject.itemDisabled =           dfxMenuItem[scope.itemNames.main.disabled] ? dfxMenuItem[scope.itemNames.main.disabled] : false;
                         tempPropObject.itemDisplay =            dfxMenuItem[scope.itemNames.main.display] ? dfxMenuItem[scope.itemNames.main.display] : true;
@@ -1479,7 +1479,7 @@ dfxGCC.directive('dfxGccWebToolbar', function($sce, $compile, $timeout) {
                         if ( type === 'singleMenuItem' ) {
                             tempPropObject.itemShortcut =       dfxMenuItem[scope.itemNames.main.shortcut];
                             tempPropObject.ifItemNotification = dfxMenuItem[scope.itemNames.main.notification] !=='' ? true : false;
-                            tempPropObject.itemNotification =   '{{'+dfxMenuItem[scope.itemNames.main.notification]+'}}';
+                            tempPropObject.itemNotification =   '{{\''+dfxMenuItem[scope.itemNames.main.notification]+'\'}}';
                         }
                         if ( toolbarType==='iconBar' ) {
                             // if ( dfxMenuItem.hasOwnProperty('waiting')) { delete dfxMenuItem.waiting; }
@@ -1495,10 +1495,10 @@ dfxGCC.directive('dfxGccWebToolbar', function($sce, $compile, $timeout) {
                                 tempPropObject.ifTrueStateSvgIcon =     dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.checkedIcon.value] && dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.checkedIcon.value][scope.itemNames.state.checkedIcon.name].length > 0 && dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.checkedIcon.value][scope.itemNames.state.checkedIcon.type] === 'svg-icon' ? true : false;
                                 tempPropObject.ifFalseStateFaIcon =     dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.uncheckedIcon.value] && dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.uncheckedIcon.value][scope.itemNames.state.uncheckedIcon.name].length > 0 && dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.uncheckedIcon.value][scope.itemNames.state.uncheckedIcon.type] === 'fa-icon' ? true : false;
                                 tempPropObject.ifFalseStateSvgIcon =    dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.uncheckedIcon.value] && dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.uncheckedIcon.value][scope.itemNames.state.uncheckedIcon.name].length > 0 && dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.uncheckedIcon.value][scope.itemNames.state.uncheckedIcon.type] === 'svg-icon' ? true : false;
-                                tempPropObject.trueStateFaIcon =        dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.checkedIcon.value] ? '{{'+dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.checkedIcon.value][scope.itemNames.state.checkedIcon.name]+'}}' : '';
-                                tempPropObject.falseStateFaIcon =       dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.uncheckedIcon.value] ? '{{'+dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.uncheckedIcon.value][scope.itemNames.state.uncheckedIcon.name]+'}}' : '';
-                                tempPropObject.trueStateSvgIcon =       dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.checkedIcon.value] ? '{{'+dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.checkedIcon.value][scope.itemNames.state.checkedIcon.name]+'}}' : '';
-                                tempPropObject.falseStateSvgIcon =      dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.uncheckedIcon.value] ? '{{'+dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.uncheckedIcon.value][scope.itemNames.state.uncheckedIcon.name]+'}}' : '';
+                                tempPropObject.trueStateFaIcon =        dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.checkedIcon.value] ? '{{\''+dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.checkedIcon.value][scope.itemNames.state.checkedIcon.name]+'\'}}' : '';
+                                tempPropObject.falseStateFaIcon =       dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.uncheckedIcon.value] ? '{{\''+dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.uncheckedIcon.value][scope.itemNames.state.uncheckedIcon.name]+'\'}}' : '';
+                                tempPropObject.trueStateSvgIcon =       dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.checkedIcon.value] ? '{{\''+dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.checkedIcon.value][scope.itemNames.state.checkedIcon.name]+'\'}}' : '';
+                                tempPropObject.falseStateSvgIcon =      dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.uncheckedIcon.value] ? '{{\''+dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.uncheckedIcon.value][scope.itemNames.state.uncheckedIcon.name]+'\'}}' : '';
                                 tempPropObject.trueStateFaIconStyle =   dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.checkedIcon.value] && dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.checkedIcon.value][scope.itemNames.state.checkedIcon.style];
                                 tempPropObject.falseStateFaIconStyle =  dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.uncheckedIcon.value] && dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.uncheckedIcon.value][scope.itemNames.state.uncheckedIcon.style];
                                 tempPropObject.trueStateSvgIconStyle =  dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.checkedIcon.value] && dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.checkedIcon.value][scope.itemNames.state.checkedIcon.style];
@@ -3958,7 +3958,7 @@ dfxGCC.directive('dfxGccWebIconbar', ['$mdMenu', '$timeout', '$compile', '$filte
                                 if ( nextLevel[i][scope.itemNames.main.type] === 'divider' ) {
                                     scope.iconBar = scope.iconBar + '<md-menu-divider></md-menu-divider>';
                                 } else if ( nextLevel[i][scope.itemNames.main.type] === 'title' ) {
-                                    scope.iconBar = scope.iconBar + '<md-menu-item class="tree-menu-title"><div>{{'+nextLevel[i][scope.itemNames.main.label]+'}}</div></md-menu-item>';
+                                    scope.iconBar = scope.iconBar + '<md-menu-item class="tree-menu-title"><div>{{\''+nextLevel[i][scope.itemNames.main.label]+'\'}}</div></md-menu-item>';
                                 } else {
                                     var iconbarItem = iconbarMenuItem.replace('{{itemDisplay}}', true);
                                     scope.iconBar = scope.iconBar + iconbarItem;
@@ -4005,7 +4005,7 @@ dfxGCC.directive('dfxGccWebIconbar', ['$mdMenu', '$timeout', '$compile', '$filte
                         tempPropObject.trueStateSvgIconClass =      dfxMenuItem.state.checkedIcon.class;
                         tempPropObject.falseStateSvgIconClass =     dfxMenuItem.state.uncheckedIcon.class;
                         tempPropObject.faIcon =                 dfxMenuItem.icon.value.indexOf("'") == -1 ? '{{'+dfxMenuItem.icon.value+'}}' : eval(dfxMenuItem.icon.value);
-                        tempPropObject.svgIcon =                dfxMenuItem.icon.value.indexOf("'") == -1 ? '{{'+dfxMenuItem.icon.value+'}}' : eval(dfxMenuItem.icon.value);
+                        tempPropObject.svgIcon =                dfxMenuItem.icon.value.indexOf("'") == -1 ? '{{'+dfxMenuItem.icon.value+'}}' : eval(dfxMenuItem.icon.value);                        
                         tempPropObject.trueState =              dfxMenuItem.state.binding;
                         tempPropObject.falseState =             dfxMenuItem.state.binding;
                         tempPropObject.trueStateFaIcon =        dfxMenuItem.state.checkedIcon.value.indexOf("'") == -1 ? '{{'+dfxMenuItem.state.checkedIcon.value+'}}' : '{{'+dfxMenuItem.state.checkedIcon.value+'}}';
@@ -4029,8 +4029,8 @@ dfxGCC.directive('dfxGccWebIconbar', ['$mdMenu', '$timeout', '$compile', '$filte
                         tempPropObject.itemIndex =                  level || level >= 0 ? level + ',' + index : index;
                         tempPropObject.ifFaIcon =               dfxMenuItem[scope.itemNames.main.icon.value] && dfxMenuItem[scope.itemNames.main.icon.value][scope.itemNames.main.icon.name].length > 0 && dfxMenuItem[scope.itemNames.main.icon.value][scope.itemNames.main.icon.type] === 'fa-icon' ? true : false;
                         tempPropObject.ifSvgIcon =              dfxMenuItem[scope.itemNames.main.icon.value] && dfxMenuItem[scope.itemNames.main.icon.value][scope.itemNames.main.icon.name].length > 0 && dfxMenuItem[scope.itemNames.main.icon.value][scope.itemNames.main.icon.type] === 'svg-icon' ? true : false;
-                        tempPropObject.faIcon =                 dfxMenuItem[scope.itemNames.main.icon.value] && dfxMenuItem[scope.itemNames.main.icon.value][scope.itemNames.main.icon.name] ? '{{'+dfxMenuItem[scope.itemNames.main.icon.value][scope.itemNames.main.icon.name]+'}}' : '';
-                        tempPropObject.svgIcon =                dfxMenuItem[scope.itemNames.main.icon.value] && dfxMenuItem[scope.itemNames.main.icon.value][scope.itemNames.main.icon.name] ? '{{'+dfxMenuItem[scope.itemNames.main.icon.value][scope.itemNames.main.icon.name]+'}}' : '';
+                        tempPropObject.faIcon =                 dfxMenuItem[scope.itemNames.main.icon.value] && dfxMenuItem[scope.itemNames.main.icon.value][scope.itemNames.main.icon.name] ? '{{\''+dfxMenuItem[scope.itemNames.main.icon.value][scope.itemNames.main.icon.name]+'\'}}' : '';
+                        tempPropObject.svgIcon =                dfxMenuItem[scope.itemNames.main.icon.value] && dfxMenuItem[scope.itemNames.main.icon.value][scope.itemNames.main.icon.name] ? '{{\''+dfxMenuItem[scope.itemNames.main.icon.value][scope.itemNames.main.icon.name]+'\'}}' : '';
                         tempPropObject.itemDisplay =            dfxMenuItem[scope.itemNames.main.display] ? dfxMenuItem[scope.itemNames.main.display] : true;
                         tempPropObject.itemDisabled =           dfxMenuItem[scope.itemNames.main.disabled] ? dfxMenuItem[scope.itemNames.main.disabled] : false;
                         if ( scope.itemNames.state && dfxMenuItem.hasOwnProperty(scope.itemNames.state.name) ) {
@@ -4042,10 +4042,10 @@ dfxGCC.directive('dfxGccWebIconbar', ['$mdMenu', '$timeout', '$compile', '$filte
                             tempPropObject.ifFalseStateFaIcon =         dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.uncheckedIcon.value] && dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.uncheckedIcon.value][scope.itemNames.state.uncheckedIcon.name].length > 0 && dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.uncheckedIcon.value][scope.itemNames.state.uncheckedIcon.type ]=== 'fa-icon' ? true : false;
                             tempPropObject.ifTrueStateSvgIcon =         dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.checkedIcon.value] && dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.checkedIcon.value][scope.itemNames.state.checkedIcon.name].length > 0 && dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.checkedIcon.value][scope.itemNames.state.checkedIcon.type] === 'svg-icon' ? true : false;
                             tempPropObject.ifFalseStateSvgIcon =        dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.uncheckedIcon.value] && dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.uncheckedIcon.value][scope.itemNames.state.uncheckedIcon.name].length > 0 && dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.uncheckedIcon.value][scope.itemNames.state.uncheckedIcon.type ]=== 'svg-icon' ? true : false;
-                            tempPropObject.trueStateFaIcon =            dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.checkedIcon.value] ? '{{'+dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.checkedIcon.value][scope.itemNames.state.checkedIcon.name]+'}}' : '';
-                            tempPropObject.falseStateFaIcon =           dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.uncheckedIcon.value] ? '{{'+dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.uncheckedIcon.value][scope.itemNames.state.uncheckedIcon.name]+'}}' : '';
-                            tempPropObject.trueStateSvgIcon =           dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.checkedIcon.value] ? '{{'+dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.checkedIcon.value][scope.itemNames.state.checkedIcon.name]+'}}' : '';
-                            tempPropObject.falseStateSvgIcon =          dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.uncheckedIcon.value] ? '{{'+dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.uncheckedIcon.value][scope.itemNames.state.uncheckedIcon.name]+'}}' : '';
+                            tempPropObject.trueStateFaIcon =            dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.checkedIcon.value] ? '{{\''+dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.checkedIcon.value][scope.itemNames.state.checkedIcon.name]+'\'}}' : '';
+                            tempPropObject.falseStateFaIcon =           dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.uncheckedIcon.value] ? '{{\''+dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.uncheckedIcon.value][scope.itemNames.state.uncheckedIcon.name]+'\'}}' : '';
+                            tempPropObject.trueStateSvgIcon =           dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.checkedIcon.value] ? '{{\''+dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.checkedIcon.value][scope.itemNames.state.checkedIcon.name]+'\'}}' : '';
+                            tempPropObject.falseStateSvgIcon =          dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.uncheckedIcon.value] ? '{{\''+dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.uncheckedIcon.value][scope.itemNames.state.uncheckedIcon.name]+'\'}}' : '';
                             tempPropObject.trueStateFaIconStyle =       dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.checkedIcon.value] && dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.checkedIcon.value][scope.itemNames.state.checkedIcon.style];
                             tempPropObject.falseStateFaIconStyle =      dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.uncheckedIcon.value] && dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.uncheckedIcon.value][scope.itemNames.state.uncheckedIcon.style];
                             tempPropObject.trueStateSvgIconStyle =      dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.checkedIcon.value] && dfxMenuItem[scope.itemNames.state.name][scope.itemNames.state.checkedIcon.value][scope.itemNames.state.checkedIcon.style];
@@ -4069,10 +4069,10 @@ dfxGCC.directive('dfxGccWebIconbar', ['$mdMenu', '$timeout', '$compile', '$filte
                             }
                         }
                         if ( type === 'singleMenuItem' ) {
-                            tempPropObject.itemLabel =          '{{'+dfxMenuItem[scope.itemNames.main.label]+'}}';
+                            tempPropObject.itemLabel =          dfxMenuItem[scope.itemNames.main.label] ? '{{\''+dfxMenuItem[scope.itemNames.main.label]+'\'}}' : '';
                             tempPropObject.itemShortcut =       dfxMenuItem[scope.itemNames.main.shortcut];
                             tempPropObject.ifItemNotification = dfxMenuItem[scope.itemNames.main.notification] !=='' ? true : false;
-                            tempPropObject.itemNotification =   '{{'+dfxMenuItem[scope.itemNames.main.notification]+'}}';
+                            tempPropObject.itemNotification =   '{{\''+dfxMenuItem[scope.itemNames.main.notification]+'\'}}';
                         }
                     }
                     var tempMenu = '';
@@ -4197,8 +4197,9 @@ dfxGCC.directive('dfxGccWebIconbar', ['$mdMenu', '$timeout', '$compile', '$filte
                     scope.iconBar = scope.iconBar + '</md-menu-bar>';
                     scope.iconBarMenu = scope.iconBar;
                     $timeout(function() {
-                        $('#' + component.id + '_menu_bar').html(scope.iconBarMenu);
-                        $compile($('#' + component.id + '_menu_bar').contents())(scope);
+                        $('#' + component.id + '_menu_bar').html(scope.iconBarMenu).promise().done(function(){
+                            $compile($('#' + component.id + '_menu_bar').contents())(scope);
+                        });
                     }, 0);
                 }
                 scope.$watch('attributes.menuItems.value', function(newVal, oldVal) {
@@ -4245,14 +4246,14 @@ dfxGCC.directive('dfxGccWebHorizontalmenu', ['$mdMenu', '$timeout', '$compile', 
                         '</md-button>',
                     iconbarMenuItem =   '<md-menu-item ng-if="{{itemDisplay}}">';
 
-                var buildNextLevel = function (nextLevel, optionsType) {
+                var buildNextLevel = function (nextLevel, item, optionsType) {
                     if(optionsType==='static'){
                         for (var i = 0; i < nextLevel.length; i++) {
                             if ( nextLevel[i].menuItems.value.length > 0 ) {
                                 var iconbarItem = iconbarMenuItem.replace('{{itemDisplay}}', typeof nextLevel[i].display === 'string' ? nextLevel[i].display.replace(/"/g, '\'') : nextLevel[i].display);
                                 scope.iconBar = scope.iconBar + iconbarItem + '<md-menu>';
                                 createDfxMenuItem( nextLevel[i], 'singleMenuItem', optionsType);
-                                buildNextLevel( nextLevel[i].menuItems.value, optionsType );
+                                buildNextLevel( nextLevel[i].menuItems.value, i, optionsType );
                                 scope.iconBar = scope.iconBar + '</md-menu-content></md-menu></md-menu-item>';
                             } else {
                                 if ( nextLevel[i].divider === true ) {
@@ -4279,7 +4280,7 @@ dfxGCC.directive('dfxGccWebHorizontalmenu', ['$mdMenu', '$timeout', '$compile', 
                                 if ( nextLevel[i][scope.itemNames.main.type] === 'divider' ) {
                                     scope.iconBar = scope.iconBar + '<md-menu-divider></md-menu-divider>';
                                 } else if ( nextLevel[i][scope.itemNames.main.type] === 'title' ) {
-                                    scope.iconBar = scope.iconBar + '<md-menu-item class="tree-menu-title"><div>{{'+nextLevel[i][scope.itemNames.main.label]+'}}</div></md-menu-item>';
+                                    scope.iconBar = scope.iconBar + '<md-menu-item class="tree-menu-title"><div>{{\''+nextLevel[i][scope.itemNames.main.label]+'\'}}</div></md-menu-item>';
                                 } else {
                                     var iconbarItem = iconbarMenuItem.replace('{{itemDisplay}}', nextLevel[i][scope.itemNames.main.display] ? nextLevel[i][scope.itemNames.main.display] : true);
                                     scope.iconBar = scope.iconBar + iconbarItem;
@@ -4318,10 +4319,10 @@ dfxGCC.directive('dfxGccWebHorizontalmenu', ['$mdMenu', '$timeout', '$compile', 
                         tempPropObject.ifItemShortcut =         dfxMenuItem[scope.itemNames.main.shortcut] && dfxMenuItem[scope.itemNames.main.shortcut].length > 0 ? true : false;
                         tempPropObject.itemShortcut =           dfxMenuItem[scope.itemNames.main.shortcut];
                         tempPropObject.ifItemNotification =     dfxMenuItem[scope.itemNames.main.notification] && dfxMenuItem[scope.itemNames.main.notification].length > 0 ? true : false;
-                        tempPropObject.faIcon =                 dfxMenuItem[scope.itemNames.main.icon.value] && dfxMenuItem[scope.itemNames.main.icon.value][scope.itemNames.main.icon.name] ? '{{'+dfxMenuItem[scope.itemNames.main.icon.value][scope.itemNames.main.icon.name]+'}}' : '';
-                        tempPropObject.svgIcon =                dfxMenuItem[scope.itemNames.main.icon.value] && dfxMenuItem[scope.itemNames.main.icon.value][scope.itemNames.main.icon.name] ? '{{'+dfxMenuItem[scope.itemNames.main.icon.value][scope.itemNames.main.icon.name]+'}}' : '';
-                        tempPropObject.itemLabel =              '{{'+dfxMenuItem[scope.itemNames.main.label]+'}}';
-                        tempPropObject.itemNotification =       '{{'+dfxMenuItem[scope.itemNames.main.notification]+'}}';
+                        tempPropObject.faIcon =                 dfxMenuItem[scope.itemNames.main.icon.value] && dfxMenuItem[scope.itemNames.main.icon.value][scope.itemNames.main.icon.name] ? '{{\''+dfxMenuItem[scope.itemNames.main.icon.value][scope.itemNames.main.icon.name]+'\'}}' : '';
+                        tempPropObject.svgIcon =                dfxMenuItem[scope.itemNames.main.icon.value] && dfxMenuItem[scope.itemNames.main.icon.value][scope.itemNames.main.icon.name] ? '{{\''+dfxMenuItem[scope.itemNames.main.icon.value][scope.itemNames.main.icon.name]+'\'}}' : '';
+                        tempPropObject.itemLabel =              dfxMenuItem[scope.itemNames.main.label] ? '{{\''+dfxMenuItem[scope.itemNames.main.label]+'\'}}' : '';
+                        tempPropObject.itemNotification =       dfxMenuItem[scope.itemNames.main.notification] ? '{{\''+dfxMenuItem[scope.itemNames.main.notification]+'\'}}' : '';
                         tempPropObject.itemDisabled =           dfxMenuItem[scope.itemNames.main.disabled] ? dfxMenuItem[scope.itemNames.main.disabled] : false;
                         tempPropObject.itemDisplay =            dfxMenuItem[scope.itemNames.main.display] ? dfxMenuItem[scope.itemNames.main.display] : true;
                         tempPropObject.itemClick =              dfxMenuItem[scope.itemNames.main.scopeItems] && dfxMenuItem[scope.itemNames.main.scopeItems].length > 0 ? '$mdOpenMenu();'+(dfxMenuItem[scope.itemNames.main.onclick] ? dfxMenuItem[scope.itemNames.main.onclick] : '') : (dfxMenuItem[scope.itemNames.main.onclick] ? dfxMenuItem[scope.itemNames.main.onclick] : '');
