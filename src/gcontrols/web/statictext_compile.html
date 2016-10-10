@@ -13,8 +13,8 @@
 	ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
 	ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}>
 	FRAG-IF{{attributes.tooltipProperties.toolTipText!=''}}
-    <md-tooltip md-direction='{{attributes.tooltipProperties.direction}}'>
-        <span ng-bind="attributes.tooltipProperties.toolTipText"></span>
+    <md-tooltip md-direction="ATTR-NONV{{tooltipProperties.direction}}" style="ATTR-NONV{{tooltipProperties.style}}" class="ATTR-NONV{{tooltipProperties.class}}">
+        <span ATTR-IF{{ng-bind="attributes.tooltipProperties.toolTipText"}}></span>
     </md-tooltip>
 	FRAG-ENDIF
 </div>

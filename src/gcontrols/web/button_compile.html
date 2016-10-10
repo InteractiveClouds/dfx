@@ -31,7 +31,7 @@ FRAG-IF{{attributes.menuItemsType.value === 'static'}}
 FRAG-ENDIF
 FRAG-IF{{attributes.menuItemsType.value === 'dynamic'}}
 <div class="dfx-core-gc-button-container">
-    <md-button class="dfx-core-gc-button md-raised md-primary ATTR-EXP{{(attributes.classes.value!='') ? attributes.classes.value : ''}}ATTR-ENDEXP md-altTheme-theme ATTR-EXP{{(attributes.waiting.value!='') ? 'dfx-core-button-wait' : ''}}ATTR-ENDEXP"
+    <md-button ng-if="ATTR-EXP{{attributes.menuItemNames.value.main.source =='' ? 'true' : 'false'}}ATTR-ENDEXP" class="dfx-core-gc-button md-raised md-primary ATTR-EXP{{(attributes.classes.value!='') ? attributes.classes.value : ''}}ATTR-ENDEXP md-altTheme-theme ATTR-EXP{{(attributes.waiting.value!='') ? 'dfx-core-button-wait' : ''}}ATTR-ENDEXP"
 		ATTR-IF{{style="attributes.style.value"}}
 		ng-show="attributes.display.value"
 		ATTR-IF{{ng-class="attributes.dynamicClasses.value"}}
@@ -57,6 +57,6 @@ FRAG-IF{{attributes.menuItemsType.value === 'dynamic'}}
             <span ng-if="ATTR-EXP{{(attributes.label.value!=='') ? 'true' : false}}ATTR-ENDEXP" ng-bind="attributes.label.value" class="dfx-gc-core-button-label"></span>
         </div>
     </md-button>
-    <div class="{{component_id}}_button_menu" ng-if="attributes.menuItemNames.value.main.source!=''"></div>
+    <div class="{{component_id}}_button_menu" ng-if="ATTR-EXP{{attributes.menuItemNames.value.main.source !='' ? 'true' : 'false'}}ATTR-ENDEXP"></div>
 </div>
 FRAG-ENDIF

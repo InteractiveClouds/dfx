@@ -3547,7 +3547,7 @@ dfxViewEditorApp.directive('dfxGcToolbarDesign', function($sce, $compile, $timeo
                         scope.iconbarArray = scope.attributes.toolbar.leftMenu.menuItems.value;
                         scope.rootMenuItem = scope.leftRootMenuItem;
                         if ( scope.attributes.toolbar.leftMenu.type.value === 'Buttons' ) {
-                            scope.iconBar = '<md-menu-bar style="padding: 0">';
+                            scope.iconBar = '<md-menu-bar class="dfx_toolbar_menubar">';
                         } else {
                             scope.iconBar = '<md-menu-bar>';
                         }
@@ -3599,7 +3599,7 @@ dfxViewEditorApp.directive('dfxGcToolbarDesign', function($sce, $compile, $timeo
                         scope.iconbarArray = scope.attributes.toolbar.rightMenu.menuItems.value;
                         scope.rootMenuItem = scope.rightRootMenuItem;
                         if ( scope.attributes.toolbar.rightMenu.type.value === 'Buttons' ) {
-                            scope.iconBar = '<md-menu-bar style="padding: 0">';
+                            scope.iconBar = '<md-menu-bar class="dfx_toolbar_menubar">';
                         } else {
                             scope.iconBar = '<md-menu-bar>';
                         }
@@ -3608,13 +3608,13 @@ dfxViewEditorApp.directive('dfxGcToolbarDesign', function($sce, $compile, $timeo
                     for ( var item = 0; item < scope.iconbarArray.length; item++ ) {
                         if ( side === 'left' ) {
                             if ( scope.attributes.toolbar.leftMenu.type.value === 'Buttons' ) {
-                                scope.iconBar = scope.iconBar + '<md-menu class="toolbar-button" style="padding: 1px">';
+                                scope.iconBar = scope.iconBar + '<md-menu class="toolbar-button">';
                             } else {
                                 scope.iconBar = scope.iconBar + '<md-menu>';
                             }
                         } else {
                             if ( scope.attributes.toolbar.rightMenu.type.value === 'Buttons' ) {
-                                scope.iconBar = scope.iconBar + '<md-menu class="toolbar-button" style="padding: 1px">';
+                                scope.iconBar = scope.iconBar + '<md-menu class="toolbar-button">';
                             } else {
                                 scope.iconBar = scope.iconBar + '<md-menu>';
                             }

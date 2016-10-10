@@ -2,6 +2,24 @@ md-toolbar.dfx-core-gc-toolbar {
     display: flex;
     flex-direction: row;
 }
+.dfx_toolbar_leftmenu, .dfx_toolbar_rightmenu {
+    display: -webkit-flex;
+    -webkit-align-items: center;
+    display: flex;
+    align-items: center;
+}
+.dfx_toolbar_rightmenu {
+    -webkit-justify-content: flex-end;
+    justify-content: flex-end;
+}
+md-menu-bar.dfx_toolbar_menubar {
+    display: -webkit-flex;
+    display: flex;
+    padding: 0px;
+}
+.toolbar_html_title {
+    color: #000000;
+}
 md-toolbar:not(.md-menu-toolbar) md-icon.dfx-core-gc-toolbar-left-menu-icon, md-toolbar:not(.md-menu-toolbar) ng-md-icon.dfx-core-gc-toolbar-left-menu-icon {
     color: #757575;
     font-size: 20px;
@@ -300,8 +318,8 @@ div[dfx-gcc-web-treemenu] {
 }
 .dfx-core-gc-treemenu button .tree-menu-icon, .dfx-core-gc-treemenu button .tree-menu-action-icon {
     color: inherit;
-    width: 16px;
-    height:16px;
+    /*width: 16px;*/
+    /*height:16px;*/
     min-width: 16px;
     min-height:16px;
     margin:auto 16px auto 0;

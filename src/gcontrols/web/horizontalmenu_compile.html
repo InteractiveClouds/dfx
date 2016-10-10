@@ -1,4 +1,4 @@
-<div layout="row" ng-show="attributes.display.value" ATTR-IF{{style="attributes.style.value"}} class="ATTR-EXP{{(attributes.classes.value!='') ? attributes.classes.value : ''}}ATTR-ENDEXP dfx-core-gc-horizontalmenu" ATTR-IF{{ng-class="attributes.dynamicClasses.value"}}>
+<div layout="row" ng-show="attributes.display.value" ATTR-IF{{style="attributes.style.value"}} class="ATTR-NONV{{classes.value}} dfx-core-gc-horizontalmenu" ATTR-IF{{ng-class="attributes.dynamicClasses.value"}}>
   <div id="{{component_id}}_menu_bar" ng-if="ATTR-EXP{{(attributes.menuItems.value.length > 0 || scope.attributes.dynamicPresent.value) ? 'true' : 'false'}}ATTR-ENDEXP"
        ATTR-IF{{ng-click="attributes.onclick.value"}}
        ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
