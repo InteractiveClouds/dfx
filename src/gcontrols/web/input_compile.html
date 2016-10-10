@@ -4,13 +4,14 @@ FRAG-IF{{attributes.binding.repeatable === false}}
     ATTR-IF{{style="attributes.style.value"}}
     ATTR-IF{{class="attributes.classes.value"}}
     ATTR-IF{{ng-class="attributes.dynamicClasses.value"}} >
-    <div ng-if="ATTR-EXP{{attributes.selectedType.value!=='number' ? 'true' : 'false'}}ATTR-ENDEXP" layout="row" ng-style="{'flex-direction': ATTR-EXP{{attributes.icon.value !=='' && attributes.position.value === 'right' ? 'row-reverse' : 'row'}}ATTR-ENDEXP}">
+    <div ng-if="ATTR-EXP{{attributes.selectedType.value!=='number' ? 'true' : 'false'}}ATTR-ENDEXP" layout="row"
+        ng-style="{'flex-direction': ATTR-EXP{{attributes.icon.value !=='' && attributes.position.value === 'right' ? '\'row-reverse\'' : '\'row\''}}ATTR-ENDEXP}">
         <div class="gc_w_input_icon_wrap_preview" flex="none" ng-if="ATTR-EXP{{attributes.icon.value !== '' ? 'true' : 'false'}}ATTR-ENDEXP">
             <span class="gc_w_input_icon">
                 <md-icon ng-if="attributes.icon.type ==='fa-icon' && isSimpleIcon.value" class="fa {{attributes.icon.value}} {{attributes.icon.class}}" style="{{attributes.icon.style}}; font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
-                <md-icon ng-if="attributes.icon.type ==='fa-icon' && !isSimpleIcon.value" class="fa {{$eval(attributes.icon.value)}} {{attributes.icon.class}}" style="{{attributes.icon.style}}; font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
+                <md-icon ng-if="attributes.icon.type ==='fa-icon' && !isSimpleIcon.value" class="fa {{attributes.icon.value}} {{attributes.icon.class}}" style="{{attributes.icon.style}}; font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
                 <ng-md-icon ng-if="attributes.icon.type ==='svg-icon' && isSimpleIcon.value" icon="{{attributes.icon.value}}" size="{{attributes.icon.size}}" style="{{attributes.icon.style}}; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;" class="{{attributes.icon.class}}"></ng-md-icon>
-                <ng-md-icon ng-if="attributes.icon.type ==='svg-icon' && !isSimpleIcon.value" icon="{{$eval(attributes.icon.value)}}" size="{{attributes.icon.size}}" style="{{attributes.icon.style}}; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;" class="{{attributes.icon.class}}"></ng-md-icon>
+                <ng-md-icon ng-if="attributes.icon.type ==='svg-icon' && !isSimpleIcon.value" icon="{{attributes.icon.value}}" size="{{attributes.icon.size}}" style="{{attributes.icon.style}}; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;" class="{{attributes.icon.class}}"></ng-md-icon>
             </span>
         </div>
         <div class="layout-row flex">
@@ -67,13 +68,14 @@ FRAG-IF{{attributes.binding.repeatable === false}}
             </md-input-container>
         </div>
     </div>
-    <div ng-if="ATTR-EXP{{attributes.selectedType.value==='number' ? 'true' : 'false'}}ATTR-ENDEXP" layout="row" ng-style="{'flex-direction': ATTR-EXP{{attributes.icon.value !=='' && attributes.position.value === 'right' ? 'row-reverse' : 'row'}}ATTR-ENDEXP}">
+    <div ng-if="ATTR-EXP{{attributes.selectedType.value==='number' ? 'true' : 'false'}}ATTR-ENDEXP" layout="row"
+        ng-style="{'flex-direction': ATTR-EXP{{attributes.icon.value !=='' && attributes.position.value === 'right' ? '\'row-reverse\'' : '\'row\''}}ATTR-ENDEXP}">
         <div class="gc_w_input_icon_wrap_preview" flex="none" ng-if="ATTR-EXP{{attributes.icon.value !== '' ? 'true' : 'false'}}ATTR-ENDEXP">
             <span class="gc_w_input_icon">
                 <md-icon ng-if="attributes.icon.type ==='fa-icon' && isSimpleIcon.value" class="fa {{attributes.icon.value}} {{attributes.icon.class}}" style="{{attributes.icon.style}}; font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
-                <md-icon ng-if="attributes.icon.type ==='fa-icon' && !isSimpleIcon.value" class="fa {{($eval(attributes.icon.value)}} {{attributes.icon.class}}" style="{{attributes.icon.style}}; font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
+                <md-icon ng-if="attributes.icon.type ==='fa-icon' && !isSimpleIcon.value" class="fa {{attributes.icon.value}} {{attributes.icon.class}}" style="{{attributes.icon.style}}; font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
                 <ng-md-icon ng-if="attributes.icon.type ==='svg-icon' && isSimpleIcon.value" icon="{{attributes.icon.value}}" size="{{attributes.icon.size}}" style="{{attributes.icon.style}}; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;" class="{{attributes.icon.class}}"></ng-md-icon>
-                <ng-md-icon ng-if="attributes.icon.type ==='svg-icon' && !isSimpleIcon.value" icon="{{$eval(attributes.icon.value)}}" size="{{attributes.icon.size}}" style="{{attributes.icon.style}}; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;" class="{{attributes.icon.class}}"></ng-md-icon>
+                <ng-md-icon ng-if="attributes.icon.type ==='svg-icon' && !isSimpleIcon.value" icon="{{attributes.icon.value}}" size="{{attributes.icon.size}}" style="{{attributes.icon.style}}; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;" class="{{attributes.icon.class}}"></ng-md-icon>
             </span>
         </div>
         <div class="layout-row flex">
@@ -133,13 +135,14 @@ FRAG-IF{{attributes.binding.repeatable === true}}
     ATTR-IF{{style="attributes.style.value"}}
     ATTR-IF{{class="attributes.classes.value"}}
     ATTR-IF{{ng-class="attributes.dynamicClasses.value"}} >
-    <div ng-if="ATTR-EXP{{attributes.selectedType.value!=='number' ? 'true' : 'false'}}ATTR-ENDEXP" layout="row" ng-style="{'flex-direction': ATTR-EXP{{attributes.icon.value !=='' && attributes.position.value === 'right' ? 'row-reverse' : 'row'}}ATTR-ENDEXP}">
+    <div ng-if="ATTR-EXP{{attributes.selectedType.value!=='number' ? 'true' : 'false'}}ATTR-ENDEXP" layout="row"
+        ng-style="{'flex-direction': ATTR-EXP{{attributes.icon.value !=='' && attributes.position.value === 'right' ? '\'row-reverse\'' : '\'row\''}}ATTR-ENDEXP}">
         <div class="gc_w_input_icon_wrap_preview" flex="none" ng-if="ATTR-EXP{{attributes.icon.value !== '' ? 'true' : 'false'}}ATTR-ENDEXP">
             <span class="gc_w_input_icon">
                 <md-icon ng-if="attributes.icon.type ==='fa-icon' && isSimpleIcon.value" class="fa {{attributes.icon.value}} {{attributes.icon.class}}" style="{{attributes.icon.style}}; font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
-                <md-icon ng-if="attributes.icon.type ==='fa-icon' && !isSimpleIcon.value" class="fa {{$eval(attributes.icon.value)}} {{attributes.icon.class}}" style="{{attributes.icon.style}}; font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
+                <md-icon ng-if="attributes.icon.type ==='fa-icon' && !isSimpleIcon.value" class="fa {{attributes.icon.value}} {{attributes.icon.class}}" style="{{attributes.icon.style}}; font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
                 <ng-md-icon ng-if="attributes.icon.type ==='svg-icon' && isSimpleIcon.value" icon="{{attributes.icon.value}}" size="{{attributes.icon.size}}" style="{{attributes.icon.style}}; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;" class="{{attributes.icon.class}}"></ng-md-icon>
-                <ng-md-icon ng-if="attributes.icon.type ==='svg-icon' && !isSimpleIcon.value" icon="{{$eval(attributes.icon.value)}}" size="{{attributes.icon.size}}" style="{{attributes.icon.style}}; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;" class="{{attributes.icon.class}}"></ng-md-icon>
+                <ng-md-icon ng-if="attributes.icon.type ==='svg-icon' && !isSimpleIcon.value" icon="{{attributes.icon.value}}" size="{{attributes.icon.size}}" style="{{attributes.icon.style}}; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;" class="{{attributes.icon.class}}"></ng-md-icon>
             </span>
         </div>
         <div class="layout-row flex">
@@ -167,13 +170,14 @@ FRAG-IF{{attributes.binding.repeatable === true}}
             </md-input-container>
         </div>
     </div>
-    <div ng-if="ATTR-EXP{{attributes.selectedType.value==='number' ? 'true' : 'false'}}ATTR-ENDEXP" layout="row" ng-style="{'flex-direction': ATTR-EXP{{attributes.icon.value !=='' && attributes.position.value === 'right' ? 'row-reverse' : 'row'}}ATTR-ENDEXP}">
+    <div ng-if="ATTR-EXP{{attributes.selectedType.value==='number' ? 'true' : 'false'}}ATTR-ENDEXP" layout="row"
+        ng-style="{'flex-direction': ATTR-EXP{{attributes.icon.value !=='' && attributes.position.value === 'right' ? '\'row-reverse\'' : '\'row\''}}ATTR-ENDEXP}">
         <div class="gc_w_input_icon_wrap_preview" flex="none" ng-if="ATTR-EXP{{attributes.icon.value !== '' ? 'true' : 'false'}}ATTR-ENDEXP">
             <span class="gc_w_input_icon">
                 <md-icon ng-if="attributes.icon.type ==='fa-icon' && isSimpleIcon.value" class="fa {{attributes.icon.value}} {{attributes.icon.class}}" style="{{attributes.icon.style}}; font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
-                <md-icon ng-if="attributes.icon.type ==='fa-icon' && !isSimpleIcon.value" class="fa {{$eval(attributes.icon.value)}} {{attributes.icon.class}}" style="{{attributes.icon.style}}; font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
+                <md-icon ng-if="attributes.icon.type ==='fa-icon' && !isSimpleIcon.value" class="fa {{attributes.icon.value}} {{attributes.icon.class}}" style="{{attributes.icon.style}}; font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
                 <ng-md-icon ng-if="attributes.icon.type ==='svg-icon' && isSimpleIcon.value" icon="{{attributes.icon.value}}" size="{{attributes.icon.size}}" style="{{attributes.icon.style}}; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;" class="{{attributes.icon.class}}"></ng-md-icon>
-                <ng-md-icon ng-if="attributes.icon.type ==='svg-icon' && !isSimpleIcon.value" icon="{{$eval(attributes.icon.value)}}" size="{{attributes.icon.size}}" style="{{attributes.icon.style}}; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;" class="{{attributes.icon.class}}"></ng-md-icon>
+                <ng-md-icon ng-if="attributes.icon.type ==='svg-icon' && !isSimpleIcon.value" icon="{{attributes.icon.value}}" size="{{attributes.icon.size}}" style="{{attributes.icon.style}}; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;" class="{{attributes.icon.class}}"></ng-md-icon>
             </span>
         </div>
         <div class="layout-row flex">

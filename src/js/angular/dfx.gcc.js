@@ -4774,33 +4774,6 @@ dfxGCC.directive('dfxGccWebWizard', ['$mdDialog', '$timeout', '$compile', functi
                     if(!scope.attributes.steps.value[s].hasOwnProperty('isLast')){scope.attributes.steps.value[s].isLast = { "value": "" };}
                 };
 
-                /*scope.setClasses = function(){
-                    $timeout(function () {
-                        try{
-                            for(var k = 0; k < scope.attributes.steps.value.length; k++){
-                                var stepLayoutRows = $('#' + scope.component_id + '_step_' + k).children();
-                                for(var i = 0; i < stepLayoutRows.length; i++){
-                                    var stepLayoutRowsCols = $(stepLayoutRows[i]).children() ;
-                                    for(var j = 0; j < stepLayoutRowsCols.length; j++){
-                                        if(scope.attributes.steps.value[k].layout.rows[i].cols[j].orientation.value === 'row'){
-                                            $(stepLayoutRowsCols[j]).removeClass('layout-column');
-                                            $(stepLayoutRowsCols[j]).addClass('layout-row');
-                                        }else{
-                                            $(stepLayoutRowsCols[j]).removeClass('layout-row');
-                                            $(stepLayoutRowsCols[j]).addClass('layout-column');
-                                        }
-                                        $(stepLayoutRowsCols[j]).addClass('flex' + '-' + scope.attributes.steps.value[k].layout.rows[i].cols[j].width.value);
-                                    }
-                                }
-                            }
-                        }catch(e){
-                            //console.log(e.message);
-                        }
-                    },0);
-                };
-
-                scope.setClasses();*/
-
                 $timeout(function () {
                     try{
                         scope.wizardForm = eval('scope.form_' + scope.component_id);
@@ -4818,29 +4791,7 @@ dfxGCC.directive('dfxGccWebWizard', ['$mdDialog', '$timeout', '$compile', functi
                         /*console.log(e.message);*/
                     }
                 },0);
-/*
-                scope.setStepWidth = function() {
-                    try{
-                        var paginationWrapper = '#' + scope.component_id + '> div.layout-align-center-center.layout-row.flex > div > md-content > md-tabs > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper';
-                        var inkBar = '#' + scope.component_id + '> div.layout-align-center-center.layout-row.flex > div > md-content > md-tabs > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper > md-ink-bar';
-                        $(paginationWrapper).css('width', '100%');
-                        var temp = $($(paginationWrapper).children()[0]).css('width');
-                        var stepWidth = parseInt(temp.substring(0, temp.length - 2));
-                        var left = stepWidth * scope.attributes.tabIndex.value + 'px';
-                        var right = stepWidth * (scope.attributes.tabs.value.length - 1 - scope.attributes.tabIndex.value) + 'px';
-                        $(inkBar).css('left', left);
-                        $(inkBar).css('right', right);
-                    }catch(e){
-                        console.log(e.message);
-                    }
-                };
 
-                scope.$watch('attributes.stretching.value', function(newValue){
-                    if(newValue === 'always'){
-                        scope.setStepWidth();
-                    }
-                });
-*/
                 var changeStepform = function() {
                     for(var i =0; i < scope.attributes.steps.value.length; i++){
                         if(i < scope.attributes.steps.value.length-1){
@@ -4874,11 +4825,7 @@ dfxGCC.directive('dfxGccWebWizard', ['$mdDialog', '$timeout', '$compile', functi
                     event.preventDefault();
                     event.stopPropagation();
                 };
-/*
-                scope.$watchCollection('attributes.steps[attributes.stepIndex.value].layout.rows', function(newValue){
-                    scope.setClasses();
-                });
-*/
+
                 scope.calcPercent = function(){
                     scope.attributes.percentage.value = 0;
                     $timeout(function () {
