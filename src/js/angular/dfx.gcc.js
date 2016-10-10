@@ -716,7 +716,7 @@ dfxGCC.directive('dfxGccWebDatepicker', ['$timeout', function($timeout) {
         link: function(scope, element, attrs, basectrl) {
             var component = scope.$parent.getComponent(element);
             scope.dp_input;
-
+            scope.isLoaded = {"value": false};
             basectrl.init(scope, element, component, attrs, 'datepicker').then(function() {
                 if ( !scope.attributes.hasOwnProperty('flex') ) { scope.attributes.flex = { "value": 20 }; }
                 scope.attributes.bindingDate.status = "overridden";
@@ -738,7 +738,7 @@ dfxGCC.directive('dfxGccWebDatepicker', ['$timeout', function($timeout) {
                 if(!scope.attributes.labelClass){
                     scope.attributes.labelClass = 'dp-label-focus-off';
                 }
-
+                scope.isLoaded.value = true;
                 scope.$watch('attributes.ranged.monthsBefore', function(monthsBefore){
                     scope.minDate = new Date(
                         eval(scope.attributes.bindingDate.value).getFullYear(),
@@ -2025,17 +2025,13 @@ dfxGCC.directive('dfxGccWebRating', function($timeout) {
                         }
                     };
                     scope.toggle = function(index) {
-                        scope.attributes.disabled.value === "false" ? newRating = index*rangeStep + rangeStep : index*rangeStep;
+                        newRating = index*rangeStep + rangeStep;
                         updateStars(newRating);
                         return newRating;
                     };
                     scope.showDfxRatingElement = function(dfxItem){
                         scope.dfxRepeatableRatingElement = dfxItem;
                     }
-                    scope.$watch('attributes.binding.value',  function(newValue) { if (newValue) { updateStars(); } });
-                    scope.$watch('attributes.range.value',    function(newValue) { if (newValue) { updateStars(); } });
-                    scope.$watch('attributes.maxValue.value', function(newValue) { if (newValue) { updateStars(); } });
-                    scope.$watch('attributes.disabled.value', function(newValue) { if (newValue) { updateStars(); } });
                     if(scope.attributes.binding.value.indexOf('$dfx_item') > -1){
                         scope.isDfxRepeatableRating = true;
                         scope.$watch('dfxRepeatableRatingElement', function(newValue){
@@ -2066,62 +2062,14 @@ dfxGCC.directive('dfxGccWebKnob', ['$timeout', '$compile', function($timeout, $c
         link: function (scope, element, attrs, basectrl) {
             var component = scope.$parent.getComponent(element);
             basectrl.init(scope, element, component, attrs, 'knob').then(function () {
-                scope.attributes.binding.status = 'overridden';
-                if ( !scope.attributes.options.value.hasOwnProperty('size') ){
-                    scope.attributes.options.value = {
-                        "animate": {"enabled":true,"duration":1000,"ease":"bounce"},
-                        "barCap": 20,
-                        "barColor": "#e65d5d",
-                        "barWidth": 40,
-                        "bgColor": "",
-                        "fontSize": "auto",
-                        "displayInput": true,
-                        "dynamicOptions": true,
-                        "displayPrevious": false,
-                        "size": 300,
-                        "min": 0,
-                        "max": 100,
-                        "step": 1,
-                        "startAngle": 0,
-                        "endAngle": 360,
-                        "textColor": "#222222",
-                        "prevBarColor": "rgba(0,0,0,0)",
-                        "trackColor": "#ffe6e6",
-                        "trackWidth": 50,
-                        "readOnly": false,
-                        "unit": "%",
-                        "subText": {"enabled":true, "text":"Sub text", "color":"#808080", "font":"auto"},
-                        "skin": {"type":"tron","width":10,"color":"rgba(255,0,0,.5)","spaceWidth":5},
-                        "scale": {"enabled":true,"type":"lines","color":"#808080","width":3,"quantity":20,"height":10,"spaceWidth":15}
-                    };
+                scope.isLoaded = {"value": false};
+                if(typeof scope.attributes.options.value.readOnly === 'string'){
+                    switch(scope.attributes.options.value.readOnly){
+                        case 'true': scope.attributes.options.value.readOnly = true; break;
+                        case 'false': scope.attributes.options.value.readOnly = false; break;
+                    }
                 }
-                scope.attributes.options.status = 'overridden';
-                $timeout(function() {
-                    scope.isRepeatable = {"value":false};
-                    if(typeof scope.attributes.options.value.readOnly === 'string'){
-                        switch(scope.attributes.options.value.readOnly){
-                            case 'true': scope.attributes.options.value.readOnly = true; break;
-                            case 'false': scope.attributes.options.value.readOnly = false; break;
-                        }
-                    }
-                    if(scope.attributes.binding.value.indexOf('$dfx_item') >= 0) {
-                        scope.isRepeatable.value = true;
-                        scope.repeated_id = Math.floor(Math.random() * 100000);
-                        var repeatedKnobId = component.id+'_dfx_ng_knob_'+scope.repeated_id;
-                        $timeout(function() {
-                            var repeatedKnob = angular.element(document.getElementById(repeatedKnobId));
-                            repeatedKnob.attr('value', scope.attributes.binding.value);
-                            scope = repeatedKnob.scope();
-                            $injector = repeatedKnob.injector();
-                            $injector.invoke(function($compile){
-                                $compile(repeatedKnob)(scope);
-                            })
-                        }, 0);
-                    } else {
-                        $('.'+component.id+'_dfx_ng_knob').empty().html('<ui-knob value="' + scope.attributes.binding.value + '" options="attributes.options.value"></ui-knob>');
-                        $timeout(function() {$compile($('.'+component.id+'_dfx_ng_knob').contents())(scope);}, 0);
-                    }
-                }, 0);
+                scope.isLoaded.value = true;
             });
         }
     }
@@ -4774,33 +4722,6 @@ dfxGCC.directive('dfxGccWebWizard', ['$mdDialog', '$timeout', '$compile', functi
                     if(!scope.attributes.steps.value[s].hasOwnProperty('isLast')){scope.attributes.steps.value[s].isLast = { "value": "" };}
                 };
 
-                /*scope.setClasses = function(){
-                    $timeout(function () {
-                        try{
-                            for(var k = 0; k < scope.attributes.steps.value.length; k++){
-                                var stepLayoutRows = $('#' + scope.component_id + '_step_' + k).children();
-                                for(var i = 0; i < stepLayoutRows.length; i++){
-                                    var stepLayoutRowsCols = $(stepLayoutRows[i]).children() ;
-                                    for(var j = 0; j < stepLayoutRowsCols.length; j++){
-                                        if(scope.attributes.steps.value[k].layout.rows[i].cols[j].orientation.value === 'row'){
-                                            $(stepLayoutRowsCols[j]).removeClass('layout-column');
-                                            $(stepLayoutRowsCols[j]).addClass('layout-row');
-                                        }else{
-                                            $(stepLayoutRowsCols[j]).removeClass('layout-row');
-                                            $(stepLayoutRowsCols[j]).addClass('layout-column');
-                                        }
-                                        $(stepLayoutRowsCols[j]).addClass('flex' + '-' + scope.attributes.steps.value[k].layout.rows[i].cols[j].width.value);
-                                    }
-                                }
-                            }
-                        }catch(e){
-                            //console.log(e.message);
-                        }
-                    },0);
-                };
-
-                scope.setClasses();*/
-
                 $timeout(function () {
                     try{
                         scope.wizardForm = eval('scope.form_' + scope.component_id);
@@ -4818,29 +4739,7 @@ dfxGCC.directive('dfxGccWebWizard', ['$mdDialog', '$timeout', '$compile', functi
                         /*console.log(e.message);*/
                     }
                 },0);
-/*
-                scope.setStepWidth = function() {
-                    try{
-                        var paginationWrapper = '#' + scope.component_id + '> div.layout-align-center-center.layout-row.flex > div > md-content > md-tabs > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper';
-                        var inkBar = '#' + scope.component_id + '> div.layout-align-center-center.layout-row.flex > div > md-content > md-tabs > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper > md-ink-bar';
-                        $(paginationWrapper).css('width', '100%');
-                        var temp = $($(paginationWrapper).children()[0]).css('width');
-                        var stepWidth = parseInt(temp.substring(0, temp.length - 2));
-                        var left = stepWidth * scope.attributes.tabIndex.value + 'px';
-                        var right = stepWidth * (scope.attributes.tabs.value.length - 1 - scope.attributes.tabIndex.value) + 'px';
-                        $(inkBar).css('left', left);
-                        $(inkBar).css('right', right);
-                    }catch(e){
-                        console.log(e.message);
-                    }
-                };
 
-                scope.$watch('attributes.stretching.value', function(newValue){
-                    if(newValue === 'always'){
-                        scope.setStepWidth();
-                    }
-                });
-*/
                 var changeStepform = function() {
                     for(var i =0; i < scope.attributes.steps.value.length; i++){
                         if(i < scope.attributes.steps.value.length-1){
@@ -4874,11 +4773,7 @@ dfxGCC.directive('dfxGccWebWizard', ['$mdDialog', '$timeout', '$compile', functi
                     event.preventDefault();
                     event.stopPropagation();
                 };
-/*
-                scope.$watchCollection('attributes.steps[attributes.stepIndex.value].layout.rows', function(newValue){
-                    scope.setClasses();
-                });
-*/
+
                 scope.calcPercent = function(){
                     scope.attributes.percentage.value = 0;
                     $timeout(function () {
