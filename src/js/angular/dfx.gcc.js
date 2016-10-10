@@ -4596,11 +4596,14 @@ dfxGCC.directive('dfxGccWebTabs', ['$timeout', '$compile', function($timeout, $c
                 });
 
                 scope.changeWidth = function(){
+                    var parent_column_orientation = $('#' + scope.component_id).parent().attr('layout');
+                    if (parent_column_orientation == 'column') {
+                        $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+                    }
                     $('#' + scope.component_id).addClass('flex' + '-' + scope.attributes.flex.value);
                 };
-                if (!angular.isDefined(attrs.dfxGcEdit)) {
-                    scope.changeWidth();
-                }
+                scope.changeWidth();
+
                 scope.collapsePanelBody = function(isCollapsed, index) {
                     if ( scope.attributes.repeat_title.value ) {
                         basectrl.bindScopeVariable( scope, component.attributes.repeat_in.value );
@@ -4773,7 +4776,7 @@ dfxGCC.directive('dfxGccWebWizard', ['$mdDialog', '$timeout', '$compile', functi
                     if(!scope.attributes.steps.value[s].hasOwnProperty('isLast')){scope.attributes.steps.value[s].isLast = { "value": "" };}
                 };
 
-                scope.setClasses = function(){
+                /*scope.setClasses = function(){
                     $timeout(function () {
                         try{
                             for(var k = 0; k < scope.attributes.steps.value.length; k++){
@@ -4798,7 +4801,7 @@ dfxGCC.directive('dfxGccWebWizard', ['$mdDialog', '$timeout', '$compile', functi
                     },0);
                 };
 
-                scope.setClasses();
+                scope.setClasses();*/
 
                 $timeout(function () {
                     try{
@@ -4817,7 +4820,7 @@ dfxGCC.directive('dfxGccWebWizard', ['$mdDialog', '$timeout', '$compile', functi
                         /*console.log(e.message);*/
                     }
                 },0);
-
+/*
                 scope.setStepWidth = function() {
                     try{
                         var paginationWrapper = '#' + scope.component_id + '> div.layout-align-center-center.layout-row.flex > div > md-content > md-tabs > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper';
@@ -4839,7 +4842,7 @@ dfxGCC.directive('dfxGccWebWizard', ['$mdDialog', '$timeout', '$compile', functi
                         scope.setStepWidth();
                     }
                 });
-
+*/
                 var changeStepform = function() {
                     for(var i =0; i < scope.attributes.steps.value.length; i++){
                         if(i < scope.attributes.steps.value.length-1){
@@ -4873,11 +4876,11 @@ dfxGCC.directive('dfxGccWebWizard', ['$mdDialog', '$timeout', '$compile', functi
                     event.preventDefault();
                     event.stopPropagation();
                 };
-
+/*
                 scope.$watchCollection('attributes.steps[attributes.stepIndex.value].layout.rows', function(newValue){
                     scope.setClasses();
                 });
-
+*/
                 scope.calcPercent = function(){
                     scope.attributes.percentage.value = 0;
                     $timeout(function () {
@@ -4891,6 +4894,10 @@ dfxGCC.directive('dfxGccWebWizard', ['$mdDialog', '$timeout', '$compile', functi
                 };
 
                 scope.changeWidth = function(){
+                    var parent_column_orientation = $('#' + scope.component_id).parent().attr('layout');
+                    if (parent_column_orientation == 'column') {
+                        $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+                    }
                     $('#' + scope.component_id).addClass('flex' + '-' + scope.attributes.flex.value);
                 };
                 scope.changeWidth();

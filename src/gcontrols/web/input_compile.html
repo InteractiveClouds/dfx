@@ -58,10 +58,10 @@ FRAG-IF{{attributes.binding.repeatable === false}}
                         ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}>
                 </div>
                 <div ng-if="inputForm.$dirty" ng-messages="inputForm['attributes.name.value']['$error']">
-                    <span ng-message="required">{{$eval(attributes.label.value)}} is required.</span>
+                    <span ng-message="required">ATTR-NONV{{label.value}} is required.</span>
                     <span ng-message="email">Email address is invalid.</span>
-                    <span ng-message="minlength">{{$eval(attributes.label.value)}} has to be not less than {{attributes.minlength.value}} characters long.</span>
-                    <span ng-message="md-maxlength">{{$eval(attributes.label.value)}} has to be not more than {{attributes.maxlength.value}} characters long.</span>
+                    <span ng-message="minlength">ATTR-NONV{{label.value}} has to be not less than {{attributes.minlength.value}} characters long.</span>
+                    <span ng-message="md-maxlength">ATTR-NONV{{label.value}} has to be not more than {{attributes.maxlength.value}} characters long.</span>
                     <span ng-message="pattern">{{attributes.pattern.errorMessage}}</span>
                 </div>
             </md-input-container>
@@ -117,8 +117,8 @@ FRAG-IF{{attributes.binding.repeatable === false}}
                     ATTR-IF{{ng-mousemove="attributes.onmousemove.value)" ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value)"
                     ATTR-IF{{ng-mousedown="attributes.onmousedown.value)" ATTR-IF{{ng-mouseup="attributes.onmouseup.value)">
                 </div>
-                <div ng-if="inputForm.$dirty" ng-messages="inputForm[attributes.name.value].$error">
-                    <span ng-message="required">{{$eval(attributes.label.value)}} is required.</span>
+                <div ng-if="inputForm.$dirty" ng-messages="inputForm['attributes.name.value']['$error']">
+                    <span ng-message="required">ATTR-NONV{{label.value}} is required.</span>
                     <span ng-message="min">The number has to be not less than {{attributes.minNumber.value}}.</span>
                     <span ng-message="max">The number has to be not more than {{attributes.maxNumber.value}}.</span>
                 </div>
@@ -158,10 +158,10 @@ FRAG-IF{{attributes.binding.repeatable === true}}
                     ATTR-IF{{ng-mousemove="attributes.onmousemove.value)" ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value)"
                     ATTR-IF{{ng-mousedown="attributes.onmousedown.value)" ATTR-IF{{ng-mouseup="attributes.onmouseup.value)">
                 <div ng-if="inputForm.$dirty" ng-messages="inputForm['attributes.name.value']['$error']">
-                    <span ng-message="required">{{$eval(attributes.label.value)}} is required.</span>
+                    <span ng-message="required">ATTR-NONV{{label.value}} is required.</span>
                     <span ng-message="email">Email address is invalid.</span>
-                    <span ng-message="minlength">{{$eval(attributes.label.value)}} has to be not less than {{attributes.minlength.value}} characters long.</span>
-                    <span ng-message="md-maxlength">{{$eval(attributes.label.value)}} has to be not more than {{attributes.maxlength.value}} characters long.</span>
+                    <span ng-message="minlength">ATTR-NONV{{label.value}} has to be not less than {{attributes.minlength.value}} characters long.</span>
+                    <span ng-message="md-maxlength">ATTR-NONV{{label.value}} has to be not more than {{attributes.maxlength.value}} characters long.</span>
                     <span ng-message="pattern">{{attributes.pattern.errorMessage}}</span>
                 </div>
             </md-input-container>
@@ -191,8 +191,8 @@ FRAG-IF{{attributes.binding.repeatable === true}}
                     ATTR-IF{{ng-mouseover="attributes.onmouseover.value)" ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value)"
                     ATTR-IF{{ng-mousemove="attributes.onmousemove.value)" ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value)"
                     ATTR-IF{{ng-mousedown="attributes.onmousedown.value)" ATTR-IF{{ng-mouseup="attributes.onmouseup.value)">
-                <div ng-if="inputForm.$dirty" ng-messages="inputForm[attributes.name.value].$error">
-                    <span ng-message="required">{{$eval(attributes.label.value)}} is required.</span>
+                <div ng-if="inputForm.$dirty" ng-messages="inputForm['attributes.name.value']['$error']">
+                    <span ng-message="required">ATTR-NONV{{label.value}} is required.</span>
                     <span ng-message="min">The number has to be not less than {{attributes.minNumber.value}}.</span>
                     <span ng-message="max">The number has to be not more than {{attributes.maxNumber.value}}.</span>
                 </div>
