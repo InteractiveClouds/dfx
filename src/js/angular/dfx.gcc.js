@@ -2001,7 +2001,7 @@ dfxGCC.directive('dfxGccWebProgressbar', ['$timeout', function( $timeout ) {
     }
 }]);
 
-dfxGCC.directive('dfxGccWebRating', function() {
+dfxGCC.directive('dfxGccWebRating', function($timeout) {
     return {
         restrict: 'A',
         require: '^dfxGccWebBase',
@@ -2015,50 +2015,43 @@ dfxGCC.directive('dfxGccWebRating', function() {
                     scope.attributes.binding.status = "overridden";
                     scope.attributes.maxValue.status = "overridden";
                     scope.attributes.icon.status = "overridden";
-                    if ( !scope.attributes.icon.hasOwnProperty('type') ) { scope.attributes.icon.type = 'fa-icon'; }
-                    if ( !scope.attributes.icon.hasOwnProperty('size') ) { scope.attributes.icon.size = 21; }
-                    if ( scope.attributes.range.hasOwnProperty('values') ) {delete scope.attributes.range.values; }
-
-                    scope.$gcscope = scope;
-                    basectrl.bindScopeVariable(scope, component.attributes.binding.value);
-
-                    function updateStars() {
+                    var rangeStep = scope.attributes.maxValue.value/scope.attributes.range.value,
+                        newRating;
+                    scope.isDfxRepeatableRating = false;
+                    scope.dfxRepeatableRatingElement;
+                    function updateStars(rating) {
                         scope.stars = [];
                         for (var i = 0; i < scope.attributes.range.value; i++) {
                             var rangeStep = scope.attributes.maxValue.value/scope.attributes.range.value;
                             scope.stars.push({
-                                filled: i*rangeStep < scope.$gcscope[scope.attributes.binding.value]
+                                filled: i*rangeStep < rating
                             });
-                        }
+                        }                        
                     };
                     scope.toggle = function(index) {
-                        var rangeStep = scope.attributes.maxValue.value/scope.attributes.range.value;
-                        scope.attributes.disabled.value === "false" ? scope.$gcscope[scope.attributes.binding.value] = index*rangeStep + rangeStep : index*rangeStep;
-                        updateStars();
+                        newRating = index*rangeStep + rangeStep;
+                        updateStars(newRating);
+                        return newRating;
                     };
-                    scope.$watch('attributes.binding.value', function(newValue) {
-                        if (newValue) {
-                            updateStars();
-                        }
-                    });
-                    scope.$watch('attributes.range.value', function(newValue) {
-                        if (newValue) {
-                            updateStars();
-                        }
-                    });
-                    scope.$watch('attributes.maxValue.value', function(newValue) {
-                        if (newValue) {
-                            updateStars();
-                        }
-                    });
-                    scope.$watch('attributes.disabled.value', function(newValue) {
-                        if (newValue) {
-                            updateStars();
-                        }
-                    });
-                    scope.$watch("$gcscope[attributes.binding.value]", function(newValue){
-                        updateStars();
-                    });
+                    scope.showDfxRatingElement = function(dfxItem){
+                        scope.dfxRepeatableRatingElement = dfxItem;
+                    }
+                    if(scope.attributes.binding.value.indexOf('$dfx_item') > -1){
+                        scope.isDfxRepeatableRating = true;
+                        scope.$watch('dfxRepeatableRatingElement', function(newValue){
+                            if (newValue) {
+                                var tempRating = scope.attributes.binding.value.replace('$dfx_item', ''),
+                                    newRate = eval('newValue' + tempRating);
+                                updateStars(newRate);
+                            }
+                        }, true);
+                    }else{
+                        scope.$watch('$parent_scope.' + scope.attributes.binding.value, function(newValue){
+                            if (newValue) {
+                                updateStars(newValue);
+                            }
+                        });                        
+                    }
                 });
             }
         }
