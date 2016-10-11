@@ -196,6 +196,23 @@ md-tooltip.dfx-core-gc-fab-tooltip .md-content, md-tooltip.dfx-core-gc-fab-toolt
 .dfx-core-gc-icon {
     color: #757575;
 }
+.dfx-core-gc-icon-button {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    padding: 0;
+    background: none;
+    border: none;
+    overflow: hidden;
+}
+button.dfx-core-gc-icon-button[disabled="disabled"] {
+    color: rgba(0,0,0,0.26)!important;
+}
 .dfx-core-gc-iconbar-button ng-md-icon {
     color: #757575;
 }

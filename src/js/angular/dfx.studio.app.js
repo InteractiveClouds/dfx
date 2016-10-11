@@ -1831,7 +1831,7 @@ dfxStudioApp.controller("dfx_studio_samples_controller", [ '$scope', '$http', '$
     };
 
     $scope.readDocumentation = function(sample) {
-        $window( sample.content.documentation, '_blank' );
+        $window.open( sample.content.documentation, '_blank' );
     };
 
     $scope.openInstallSample = function(sample) {
