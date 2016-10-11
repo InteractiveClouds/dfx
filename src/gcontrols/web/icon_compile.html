@@ -13,12 +13,7 @@
         ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
         ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
         ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}
-        ng-disabled="
-
-            ATTR-EXP{{attributes.disabled.value !=='' ? attributes.disabled.value : ''}}ATTR-ENDEXP || 
-            ATTR-EXP{{(attributes.waiting.value !=='' && attributes.waiting.autoDisabled !=='') ? 
-            attributes.waiting.autoDisabled : 'false'}}ATTR-ENDEXP"
-        
+        ng-disabled="ATTR-EXP{{attributes.disabled.value !=='' ? attributes.disabled.value : 'false'}}ATTR-ENDEXP || ATTR-EXP{{(attributes.waiting.value !=='' && attributes.waiting.autoDisabled !=='') ? attributes.waiting.autoDisabled : 'false'}}ATTR-ENDEXP"
         ng-click="
         
             ATTR-EXP{{attributes.state.bindingType ==='boolean' ? 'checkState(); ' : ''}}ATTR-ENDEXP
