@@ -532,26 +532,6 @@ md-radio-button > div.md-label{
     margin-right: 8px;
 }
 
-
-/* Stars rating styles */
-.star-rating {
-    margin: 3px 0 0 0;
-    padding: 0;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-order: 2;
-    -ms-flex-order: 2;
-    order: 2;
-}
-.star-rating .star {
-    padding: 2px 1px;
-    text-shadow: .05em .05em #aaa;
-    list-style-type: none;
-    display: inline-flex;
-    cursor: pointer;
-}
-
 /* Datatable */
 .dt_toolbar {    
     padding: 0 24px;    
@@ -729,8 +709,8 @@ md-checkbox > div.md-container.md-ink-ripple::after{
 }
 
 .gc-textarea-icon-container{
-    padding-left: 5px !important;
-    padding-right: 0 !important;
+    /*padding-left: 5px !important;
+    padding-right: 0 !important;*/
 }
 
 form > md-tabs > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper{
@@ -998,6 +978,16 @@ md-input-container label:not(.md-container-ignore) {
 md-input-container {
     margin: 0;
 }
+
+/* DFX md-tooltip */
+md-tooltip {
+    background-color: rgb(97,97,97);
+}
+md-tooltip.md-show div.md-content {
+    background: none;
+}
+
+/* DFX md-button group */
 .gc-btn-group {
     display:inline-flex;
     flex-direction:row;

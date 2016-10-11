@@ -1,4 +1,4 @@
-<div layout="column" layout-align="center end" style="{{attributes.style.value}}" ATTR-IF{{class="attributes.classes.value"}} ATTR-IF{{ng-class="attributes.dynamicClasses.value"}} ng-show="attributes.display.value">
+<div layout="column" layout-align="center end" style="ATTR-NONV{{style.value}}" ATTR-IF{{class="attributes.classes.value"}} ATTR-IF{{ng-class="attributes.dynamicClasses.value"}} ng-show="attributes.display.value">
   <md-fab-speed-dial md-direction="attributes.fabDirection.value" ng-class="'attributes.animation.value'" ng-disabled="attributes.disabled.value">
     <md-fab-trigger ng-disabled="attributes.disabled.value">
       <md-button id="{{component_id}}_fab_menu" aria-label="{{component_id}}_fab_menu" class="ATTR-NONV{{triggerButton.class}} dfx-core-gc-fab md-fab" style="ATTR-NONV{{triggerButton.style}}"
@@ -15,7 +15,7 @@
         ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
         ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}
         ng-disabled="attributes.disabled.value">
-        <md-tooltip ng-if="ATTR-EXP{{(attributes.label.value.length>0) ? 'true' : 'false'}}ATTR-ENDEXP" md-autohide="true" md-direction="ATTR-NONV{{triggerButton.tooltip.direction}}" class="dfx-core-gc-fab-tooltip ATTR-NONV{{triggerButton.tooltip.classes}}" style="ATTR-NONV{{triggerButton.tooltip.style}}">{{$eval(attributes.label.value)}}</md-tooltip>
+        <md-tooltip ng-if="ATTR-EXP{{(attributes.label.value !=='' ) ? 'true' : 'false'}}ATTR-ENDEXP" md-autohide="true" md-direction="ATTR-NONV{{triggerButton.tooltip.direction}}" class="dfx-core-gc-fab-tooltip ATTR-NONV{{triggerButton.tooltip.classes}}" style="ATTR-NONV{{triggerButton.tooltip.style}}" ATTR-IF{{ng-bind="attributes.label.value"}}></md-tooltip>
         <md-icon ng-if="ATTR-EXP{{(attributes.icon.type ==='fa-icon') ? 'true' : 'false'}}ATTR-ENDEXP"  class="fa {{$eval(attributes.icon.value) || 'fa-bars'}} dfx-core-gc-fab-icon" style="ATTR-NONV{{icon.style}};font-size:ATTR-NONV{{icon.size}}px;width:ATTR-NONV{{icon.size}}px;height:ATTR-NONV{{icon.size}}px;"></md-icon>
         <ng-md-icon ng-if="ATTR-EXP{{(attributes.icon.type ==='svg-icon') ? 'true' : 'false'}}ATTR-ENDEXP" icon="{{$eval(attributes.icon.value) || 'menu'}}" size="ATTR-NONV{{icon.size}}" class="dfx-core-gc-fab-icon" style="ATTR-NONV{{icon.style}};width:ATTR-NONV{{icon.size}}px;height:ATTR-NONV{{icon.size}}px;"></ng-md-icon>
       </md-button>

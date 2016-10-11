@@ -2,6 +2,24 @@ md-toolbar.dfx-core-gc-toolbar {
     display: flex;
     flex-direction: row;
 }
+.dfx_toolbar_leftmenu, .dfx_toolbar_rightmenu {
+    display: -webkit-flex;
+    -webkit-align-items: center;
+    display: flex;
+    align-items: center;
+}
+.dfx_toolbar_rightmenu {
+    -webkit-justify-content: flex-end;
+    justify-content: flex-end;
+}
+md-menu-bar.dfx_toolbar_menubar {
+    display: -webkit-flex;
+    display: flex;
+    padding: 0px;
+}
+.toolbar_html_title {
+    color: #000000;
+}
 md-toolbar:not(.md-menu-toolbar) md-icon.dfx-core-gc-toolbar-left-menu-icon, md-toolbar:not(.md-menu-toolbar) ng-md-icon.dfx-core-gc-toolbar-left-menu-icon {
     color: #757575;
     font-size: 20px;
@@ -178,6 +196,23 @@ md-tooltip.dfx-core-gc-fab-tooltip .md-content, md-tooltip.dfx-core-gc-fab-toolt
 .dfx-core-gc-icon {
     color: #757575;
 }
+.dfx-core-gc-icon-button {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    padding: 0;
+    background: none;
+    border: none;
+    overflow: hidden;
+}
+button.dfx-core-gc-icon-button[disabled="disabled"] {
+    color: rgba(0,0,0,0.26)!important;
+}
 .dfx-core-gc-iconbar-button ng-md-icon {
     color: #757575;
 }
@@ -300,8 +335,8 @@ div[dfx-gcc-web-treemenu] {
 }
 .dfx-core-gc-treemenu button .tree-menu-icon, .dfx-core-gc-treemenu button .tree-menu-action-icon {
     color: inherit;
-    width: 16px;
-    height:16px;
+    /*width: 16px;*/
+    /*height:16px;*/
     min-width: 16px;
     min-height:16px;
     margin:auto 16px auto 0;
@@ -699,6 +734,33 @@ md-list .md-subheader.dfx-core-gc-list-subheader {
 .dfx-core-gc-list-item-text.md-list-item-text {
     display: flex;
     align-items: center;
+}
+
+/* GC Rating */
+.dfx-core-gc-rating {
+    padding: 0;
+    line-height: 100%;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-order: 2;
+    -ms-flex-order: 2;
+    order: 2;
+    margin: 3px 0 0 0;
+}
+.dfx-core-gc-rating .dfx-core-gc-rating-item {
+    list-style: none;
+    list-style-type: none;
+    display: inline-flex;
+}
+button.dfx-core-gc-rating-button {
+    padding: 0px;
+    border: none;
+    background: none;
+    margin: 2px 1px;
+}
+.dfx-core-gc-rating-icon {
+    text-shadow: .05em .05em #aaa;    
 }
 
 /* Animation */

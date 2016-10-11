@@ -1,4 +1,5 @@
-<div ATTR-IF{{style="attributes.style.value"}} class="dfx-core-gc-progressbar"
+<div ATTR-IF{{style="attributes.style.value"}} class="dfx-core-gc-progressbar ATTR-NONV{{classes.value}}"
+     ATTR-IF{{ng-class="attributes.dynamicClasses.value"}}
      ATTR-IF{{ng-click="attributes.onclick.value"}}
      ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
      ATTR-IF{{ng-keypress="attributes.onkeypress.value"}}
@@ -14,8 +15,7 @@
 
     <div class="gc-checkbox-label-preview">{{attributes.label.value}}</div>
 
-    <md-progress-linear class="md-altTheme-theme {{attributes.classes.value}}"
-      ATTR-IF{{ng-class="attributes.dynamicClasses.value"}}
+    <md-progress-linear class="md-altTheme-theme"
       ATTR-IF{{md-mode="attributes.selectedType.value"}}
       value="{{attributes.binding.value}}">
     </md-progress-linear>
