@@ -1,6 +1,6 @@
 <div ng-show="attributes.display.value"
     ATTR-IF{{style="attributes.style.value"}}
-    ng-class="[$eval(attributes.dynamicClasses.value), $eval(attributes.classes.value), 'attributes.whiteframe.value']" flex="100" layout="column">
+    ng-class="['attributes.dynamicClasses.value', 'attributes.classes.value', 'attributes.whiteframe.value']" flex="100" layout="column">
     <div dfx-gcc-web-toolbar></div>
     <md-content flex="100" ATTR-IF{{style="attributes.bodyStyle.value"}} ATTR-IF{{ng-hide="attributes.toolbar.collapsed.value"}} layout="column">
         <md-tabs md-no-ink-bar="ATTR-EXP{{attributes.inkBar.value==='disabled' ? 'true': 'false'}}ATTR-ENDEXP"
