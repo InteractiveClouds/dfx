@@ -2008,9 +2008,6 @@ dfxGCC.directive('dfxGccWebRating', function($timeout) {
                 scope.component_id = component.id;
                 scope.attributes = null;
                 basectrl.init(scope, element, component, attrs, 'rating').then(function(){
-                    scope.attributes.binding.status = "overridden";
-                    scope.attributes.maxValue.status = "overridden";
-                    scope.attributes.icon.status = "overridden";
                     var rangeStep = scope.attributes.maxValue.value/scope.attributes.range.value,
                         newRating;
                     scope.isDfxRepeatableRating = false;
@@ -2018,11 +2015,10 @@ dfxGCC.directive('dfxGccWebRating', function($timeout) {
                     function updateStars(rating) {
                         scope.stars = [];
                         for (var i = 0; i < scope.attributes.range.value; i++) {
-                            var rangeStep = scope.attributes.maxValue.value/scope.attributes.range.value;
                             scope.stars.push({
                                 filled: i*rangeStep < rating
                             });
-                        }
+                        }                        
                     };
                     scope.toggle = function(index) {
                         newRating = index*rangeStep + rangeStep;
@@ -2034,6 +2030,7 @@ dfxGCC.directive('dfxGccWebRating', function($timeout) {
                     }
                     if(scope.attributes.binding.value.indexOf('$dfx_item') > -1){
                         scope.isDfxRepeatableRating = true;
+                        updateStars(0);
                         scope.$watch('dfxRepeatableRatingElement', function(newValue){
                             if (newValue) {
                                 var tempRating = scope.attributes.binding.value.replace('$dfx_item', ''),
@@ -2046,7 +2043,7 @@ dfxGCC.directive('dfxGccWebRating', function($timeout) {
                             if (newValue) {
                                 updateStars(newValue);
                             }
-                        });
+                        });                        
                     }
                 });
             }
@@ -4824,56 +4821,12 @@ dfxGCC.directive('dfxGccWebIcon', ['$http', '$mdDialog', '$timeout', '$filter', 
         scope: true,
         link: function(scope, element, attrs, basectrl) {
             var component = scope.getComponent(element);
-            scope.$parent_scope = scope;
             basectrl.init(scope, element, component, attrs, 'icon').then(function() {
-                scope.attributes.icon.status = "overridden";
-                scope.attributes.state.status = "overridden";
-                scope.attributes.waiting.status = "overridden";
-                if ( typeof scope.attributes.icon === 'string' ) {
-                    var tempIcon = scope.attributes.icon;
-                    scope.attributes.icon = {
-                        "value": tempIcon,
-                        "type": scope.attributes.hasOwnProperty('iconType') ? scope.attributes.iconType : 'fa-icon'
-                    }
-                }
-                if ( !scope.attributes.icon.hasOwnProperty('size') ) {
-                    if ( scope.attributes.size ) {
-                        scope.attributes.icon.size = scope.attributes.size.value;
-                        delete scope.attributes.size;
-                    } else {
-                        scope.attributes.icon.size = 36;
-                    }
-                }
-                if ( scope.attributes.state.icon ) {
-                    scope.attributes.state.icon.color = ""; scope.attributes.state.checkedIcon.color = ""; scope.attributes.state.uncheckedIcon.color = "";
-                }
-                scope.ifShowIconTypes = function( icon, type ) {
-                    var regexp = /(^\')(.*)(\'$)/gm, filtered = regexp.exec( icon );
-                    if ( icon && ( icon.indexOf('+') >= 0 ) ) { filtered = false; }
-                    if ( icon === '' ) { filtered = true; }
-                    if ( icon.indexOf("'") === 0 && icon.indexOf('+') === -1 && icon.charAt(icon.length-1) === "'" && !type ) {
-                        icon.indexOf("'fa-") === 0 ? scope.attributes.icon.type = 'fa-icon' : scope.attributes.icon.type = 'svg-icon';
-                    } else if ( icon.indexOf("'") === 0 && icon.indexOf('+') === -1 && icon.charAt(icon.length-1) === "'" && type !== '' ) {
-                        switch ( type ) {
-                            case 'checked': icon.indexOf("'fa-") === 0 ? scope.attributes.state.checkedIcon.type = 'fa-icon' : scope.attributes.state.checkedIcon.type = 'svg-icon'; break;
-                            case 'unchecked': icon.indexOf("'fa-") === 0 ? scope.attributes.state.uncheckedIcon.type = 'fa-icon' : scope.attributes.state.uncheckedIcon.type = 'svg-icon'; break;
-                            case 'waiting': icon.indexOf("'fa-") === 0 ? scope.attributes.waiting.icon.type = 'fa-icon' : scope.attributes.waiting.icon.type = 'svg-icon'; break;
-                        }
-                    }
-                    if ( !type ) {
-                        scope.showIconTypes = filtered ? false : true;
-                    } else if ( type !== '' ) {
-                        switch ( type ) {
-                            case 'checked': scope.showCheckedIconTypes = filtered ? false : true; break;
-                            case 'unchecked': scope.showUncheckedIconTypes = filtered ? false : true; break;
-                            case 'waiting': scope.showWaitingIconTypes = filtered ? false : true; break;
-                        }
-                    }
-
-                }
-                scope.ifShowIconTypes(scope.attributes.icon.value);
+                if(scope.attributes.state.binding === 'true') scope.attributes.state.binding = true;
+                if(scope.attributes.state.binding === 'false') scope.attributes.state.binding = false;
                 scope.checkState = function(){
                     if ( scope.attributes.state.binding !== '' ) {
+                        console.log(scope.attributes.state.binding);
                         if ( scope.attributes.state.binding === 'true' || scope.attributes.state.binding === 'false' ) {
                             switch ( scope.attributes.state.binding ) {
                                 case 'true': scope.attributes.state.binding = 'false'; scope.attributes.state.icon = scope.attributes.state.uncheckedIcon; break;
@@ -4894,15 +4847,7 @@ dfxGCC.directive('dfxGccWebIcon', ['$http', '$mdDialog', '$timeout', '$filter', 
                         }
                     }
                 }
-                if ( !scope.attributes.hasOwnProperty('waiting') ) {
-                    scope.attributes.waiting = {
-                        "value": "",
-                        "autoDisabled": false,
-                        "icon": { "value": "'fa-spinner'", "type": "fa-icon", "style": "", "class": "fa-pulse" }
-                    }
-                }
                 if ( scope.attributes.state.binding !== '' && scope.attributes.state.binding !== 'true' && scope.attributes.state.binding !== 'false' ) {
-                    basectrl.bindScopeVariable(scope, component.attributes.state.binding);
                     if ( scope.$parent_scope[scope.attributes.state.binding] === true || scope.$parent_scope[scope.attributes.state.binding] === 'true' ) {
                         scope.attributes.state.icon = scope.attributes.state.checkedIcon;
                     } else if ( scope.$parent_scope[scope.attributes.state.binding] === 'false' || !scope.$parent_scope[scope.attributes.state.binding] ) {
@@ -4918,7 +4863,7 @@ dfxGCC.directive('dfxGccWebIcon', ['$http', '$mdDialog', '$timeout', '$filter', 
                 }
                 var iconStateString = '';
                 scope.iconStateObj = '';
-                if(scope.attributes.state.binding !== '' && scope.attributes.state.binding !== 'true' && scope.attributes.state.binding !== 'false') {
+                if(scope.attributes.state.binding !== '' && typeof scope.attributes.state.binding !== 'boolean' && scope.attributes.state.binding !== 'true' && scope.attributes.state.binding !== 'false') {
                     if(scope.attributes.state.binding.indexOf('$dfx_item') ===-1 ) iconStateString = '$parent_scope.';
                     scope.iconStateObj = iconStateString + scope.attributes.state.binding;
                 }
