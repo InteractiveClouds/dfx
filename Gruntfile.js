@@ -53,8 +53,7 @@ module.exports = function (grunt) {
         'copy:fonts',
         'copy:build_fonts',
         'copy:build_img',
-        'copy:images',
-        'copy:vb_icons'
+        'copy:images'
     ]);
 
     grunt.registerTask('console', [

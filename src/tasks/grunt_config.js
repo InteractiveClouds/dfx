@@ -79,16 +79,8 @@ var exports = (function () {
         images:            {
             expand: true,
             cwd:    src + 'images/',
-            src:    ['*'],
-            dest:   pub + 'images/',
-            filter: 'isFile'
-        },
-        vb_icons:            {
-            expand: true,
-            cwd:    src + 'images/vb/icons',
-            src:    ['*'],
-            dest:   pub + 'images/vb/icons',
-            filter: 'isFile'
+            src:    ['**'],
+            dest:   pub + 'images/'
         },
         build_fonts:             {
             expand: true,
