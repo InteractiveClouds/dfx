@@ -2008,9 +2008,6 @@ dfxGCC.directive('dfxGccWebRating', function($timeout) {
                 scope.component_id = component.id;
                 scope.attributes = null;
                 basectrl.init(scope, element, component, attrs, 'rating').then(function(){
-                    scope.attributes.binding.status = "overridden";
-                    scope.attributes.maxValue.status = "overridden";
-                    scope.attributes.icon.status = "overridden";
                     var rangeStep = scope.attributes.maxValue.value/scope.attributes.range.value,
                         newRating;
                     scope.isDfxRepeatableRating = false;
@@ -2018,11 +2015,10 @@ dfxGCC.directive('dfxGccWebRating', function($timeout) {
                     function updateStars(rating) {
                         scope.stars = [];
                         for (var i = 0; i < scope.attributes.range.value; i++) {
-                            var rangeStep = scope.attributes.maxValue.value/scope.attributes.range.value;
                             scope.stars.push({
                                 filled: i*rangeStep < rating
                             });
-                        }
+                        }                        
                     };
                     scope.toggle = function(index) {
                         newRating = index*rangeStep + rangeStep;
@@ -2034,6 +2030,7 @@ dfxGCC.directive('dfxGccWebRating', function($timeout) {
                     }
                     if(scope.attributes.binding.value.indexOf('$dfx_item') > -1){
                         scope.isDfxRepeatableRating = true;
+                        updateStars(0);
                         scope.$watch('dfxRepeatableRatingElement', function(newValue){
                             if (newValue) {
                                 var tempRating = scope.attributes.binding.value.replace('$dfx_item', ''),
@@ -2046,7 +2043,7 @@ dfxGCC.directive('dfxGccWebRating', function($timeout) {
                             if (newValue) {
                                 updateStars(newValue);
                             }
-                        });
+                        });                        
                     }
                 });
             }
