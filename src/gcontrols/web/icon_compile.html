@@ -4,41 +4,28 @@ FRAG-IF{{!attributes.state.value && attributes.waiting.value == ''}}
     class="dfx-core-gc-icon {{attributes.classes.value}}"
     ATTR-IF{{ng-class="attributes.dynamicClasses.value"}}>
     <div style="display: inline-block">
-        <div style="text-align: center">
+        <div style="text-align: center"
+            ATTR-IF{{ng-click="attributes.onclick.value"}}
+            ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
+            ATTR-IF{{ng-keypress="attributes.onkeypress.value"}}
+            ATTR-IF{{ng-keydown="attributes.onkeydown.value"}}
+            ATTR-IF{{ng-keyup="attributes.onkeyup.value"}}
+            ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}}
+            ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}}
+            ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}}
+            ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
+            ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
+            ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}
+            ATTR-IF{{ng-disabled="attributes.disabled.value"}}>
             <md-icon ng-if="ATTR-EXP{{attributes.icon.type ==='fa-icon' ? 'true' : 'false'}}ATTR-ENDEXP"
-                class="fa {{attributes.icon.value || 'fa-home'}} md-font md-altTheme-theme glyph"
-                aria-label="{{ attributes.icon.value + attributes.icon.size }}"
+                class="fa {{attributes.icon.value}} md-font md-altTheme-theme glyph"
                 ng-style="{'font-size': attributes.icon.size + 'px', color: 'inherit', width: attributes.icon.size + 'px', height: attributes.icon.size + 'px', 'vertical-align': 'top'}"
-                style="color: {{attributes.state.icon.color}}"
-                ATTR-IF{{ng-click="attributes.onclick.value"}}
-                ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
-                ATTR-IF{{ng-keypress="attributes.onkeypress.value"}}
-                ATTR-IF{{ng-keydown="attributes.onkeydown.value"}}
-                ATTR-IF{{ng-keyup="attributes.onkeyup.value"}}
-                ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}}
-                ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}}
-                ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}}
-                ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
-                ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
-                ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}
-                ATTR-IF{{ng-disabled="attributes.disabled.value"}}>
+                style="color: {{attributes.state.icon.color}}">
             </md-icon>
             <ng-md-icon ng-if="ATTR-EXP{{attributes.icon.type ==='svg-icon' ? 'true' : 'false'}}ATTR-ENDEXP"
-                icon="{{attributes.icon.value || 'home'}}"
+                icon="{{attributes.icon.value}}"
                 ATTR-IF{{size="attributes.icon.size"}}
-                style="color: {{attributes.state.icon.color}}"
-                ATTR-IF{{ng-click="attributes.onclick.value"}}
-                ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
-                ATTR-IF{{ng-keypress="attributes.onkeypress.value"}}
-                ATTR-IF{{ng-keydown="attributes.onkeydown.value"}}
-                ATTR-IF{{ng-keyup="attributes.onkeyup.value"}}
-                ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}}
-                ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}}
-                ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}}
-                ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
-                ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
-                ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}
-                ATTR-IF{{ng-disabled="attributes.disabled.value"}}>
+                style="color: {{attributes.state.icon.color}}">
             </ng-md-icon>
         </div>
         <div style="text-align: center">
@@ -53,80 +40,55 @@ FRAG-IF{{attributes.state.value && attributes.waiting.value == ''}}
     class="dfx-core-gc-icon dfx-core-state-icons {{attributes.classes.value}}"
     ATTR-IF{{ng-class="attributes.dynamicClasses.value"}}>
     <div style="display: inline-block">
-        <div style="text-align: center" ng-if="$eval(iconStateObj)">
+        <div style="text-align: center" ng-if="$eval(iconStateObj)" 
+            ng-click="checkState();$eval(attributes.onclick.value)"
+            ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
+            ATTR-IF{{ng-keypress="attributes.onkeypress.value"}}
+            ATTR-IF{{ng-keydown="attributes.onkeydown.value"}}
+            ATTR-IF{{ng-keyup="attributes.onkeyup.value"}}
+            ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}}
+            ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}}
+            ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}}
+            ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
+            ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
+            ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}
+            ATTR-IF{{ng-disabled="attributes.disabled.value"}}>
             <md-icon ng-if="ATTR-EXP{{attributes.state.checkedIcon.type ==='fa-icon' ? 'true' : 'false'}}ATTR-ENDEXP"
-                class="fa {{attributes.state.checkedIcon.value || 'fa-home'}} md-font md-altTheme-theme glyph {{attributes.state.checkedIcon.class}}"
-                aria-label="{{ attributes.state.checkedIcon.value + attributes.icon.size }}"
+                class="fa {{attributes.state.checkedIcon.value}} md-font md-altTheme-theme glyph {{attributes.state.checkedIcon.class}}"
                 ng-style="{'font-size': attributes.icon.size + 'px', color: 'inherit', width: attributes.icon.size + 'px', height: attributes.icon.size + 'px', 'vertical-align': 'top'}"
-                ATTR-IF{{style="attributes.state.checkedIcon.style"}}
-                ng-click="checkState();$eval(attributes.onclick.value)"
-                ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
-                ATTR-IF{{ng-keypress="attributes.onkeypress.value"}}
-                ATTR-IF{{ng-keydown="attributes.onkeydown.value"}}
-                ATTR-IF{{ng-keyup="attributes.onkeyup.value"}}
-                ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}}
-                ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}}
-                ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}}
-                ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
-                ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
-                ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}
-                ATTR-IF{{ng-disabled="attributes.disabled.value"}}>
+                ATTR-IF{{style="attributes.state.checkedIcon.style"}}>
             </md-icon>
             <ng-md-icon ng-if="ATTR-EXP{{attributes.state.checkedIcon.type ==='svg-icon' ? 'true' : 'false'}}ATTR-ENDEXP"
-                icon="{{attributes.state.checkedIcon.value || 'home'}}"
+                icon="{{attributes.state.checkedIcon.value}}"
                 ATTR-IF{{size="attributes.icon.size"}}
                 ATTR-IF{{style="attributes.state.checkedIcon.style"}}
-                ATTR-IF{{class="attributes.state.checkedIcon.class"}}
-                ng-click="checkState();$eval(attributes.onclick.value)"
-                ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
-                ATTR-IF{{ng-keypress="attributes.onkeypress.value"}}
-                ATTR-IF{{ng-keydown="attributes.onkeydown.value"}}
-                ATTR-IF{{ng-keyup="attributes.onkeyup.value"}}
-                ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}}
-                ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}}
-                ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}}
-                ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
-                ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
-                ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}
-                ATTR-IF{{ng-disabled="attributes.disabled.value"}}>
+                ATTR-IF{{class="attributes.state.checkedIcon.class"}}>
             </ng-md-icon>
         </div>
-        <div style="text-align: center" ng-if="!$eval(iconStateObj)">
+        <div style="text-align: center" ng-if="!$eval(iconStateObj)"
+            ng-click="checkState();$eval(attributes.onclick.value)"
+            ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
+            ATTR-IF{{ng-keypress="attributes.onkeypress.value"}}
+            ATTR-IF{{ng-keydown="attributes.onkeydown.value"}}
+            ATTR-IF{{ng-keyup="attributes.onkeyup.value"}}
+            ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}}
+            ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}}
+            ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}}
+            ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
+            ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
+            ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}
+            ATTR-IF{{ng-disabled="attributes.disabled.value"}}>
             <md-icon ng-if="ATTR-EXP{{attributes.state.uncheckedIcon.type ==='fa-icon' ? 'true' : 'false'}}ATTR-ENDEXP"
-                class="fa {{attributes.state.uncheckedIcon.value || 'fa-home'}} md-font md-altTheme-theme glyph {{attributes.state.uncheckedIcon.class}}"
+                class="fa {{attributes.state.uncheckedIcon.value}} md-font md-altTheme-theme glyph {{attributes.state.uncheckedIcon.class}}"
                 aria-label="{{ attributes.state.uncheckedIcon.value + attributes.icon.size }}"
                 ng-style="{'font-size': attributes.icon.size + 'px', color: 'inherit', width: attributes.icon.size + 'px', height: attributes.icon.size + 'px', 'vertical-align': 'top'}"
-                ATTR-IF{{style="attributes.state.uncheckedIcon.style"}}
-                ng-click="checkState();$eval(attributes.onclick.value)"
-                ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
-                ATTR-IF{{ng-keypress="attributes.onkeypress.value"}}
-                ATTR-IF{{ng-keydown="attributes.onkeydown.value"}}
-                ATTR-IF{{ng-keyup="attributes.onkeyup.value"}}
-                ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}}
-                ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}}
-                ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}}
-                ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
-                ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
-                ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}
-                ATTR-IF{{ng-disabled="attributes.disabled.value"}}>
+                ATTR-IF{{style="attributes.state.uncheckedIcon.style"}}>
             </md-icon>
             <ng-md-icon ng-if="ATTR-EXP{{attributes.state.uncheckedIcon.type ==='svg-icon' ? 'true' : 'false'}}ATTR-ENDEXP"
-                icon="{{attributes.state.uncheckedIcon.value || 'home'}}"
+                icon="{{attributes.state.uncheckedIcon.value}}"
                 ATTR-IF{{size="attributes.icon.size"}}
                 ATTR-IF{{style="attributes.state.uncheckedIcon.style"}}
-                ATTR-IF{{class="attributes.state.uncheckedIcon.class"}}
-                ng-click="checkState();$eval(attributes.onclick.value)"
-                ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
-                ATTR-IF{{ng-keypress="attributes.onkeypress.value"}}
-                ATTR-IF{{ng-keydown="attributes.onkeydown.value"}}
-                ATTR-IF{{ng-keyup="attributes.onkeyup.value"}}
-                ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}}
-                ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}}
-                ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}}
-                ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
-                ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
-                ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}
-                ATTR-IF{{ng-disabled="attributes.disabled.value"}}>
+                ATTR-IF{{class="attributes.state.uncheckedIcon.class"}}>
             </ng-md-icon>
         </div>
         <div style="text-align: center">
