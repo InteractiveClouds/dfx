@@ -716,7 +716,7 @@ dfxGCC.directive('dfxGccWebDatepicker', ['$timeout', function($timeout) {
         link: function(scope, element, attrs, basectrl) {
             var component = scope.$parent.getComponent(element);
             scope.dp_input;
-
+            scope.isLoaded = {"value": false};
             basectrl.init(scope, element, component, attrs, 'datepicker').then(function() {
                 if ( !scope.attributes.hasOwnProperty('flex') ) { scope.attributes.flex = { "value": 20 }; }
                 scope.attributes.bindingDate.status = "overridden";
@@ -738,7 +738,7 @@ dfxGCC.directive('dfxGccWebDatepicker', ['$timeout', function($timeout) {
                 if(!scope.attributes.labelClass){
                     scope.attributes.labelClass = 'dp-label-focus-off';
                 }
-
+                scope.isLoaded.value = true;
                 scope.$watch('attributes.ranged.monthsBefore', function(monthsBefore){
                     scope.minDate = new Date(
                         eval(scope.attributes.bindingDate.value).getFullYear(),
@@ -803,7 +803,7 @@ dfxGCC.directive('dfxGccWebButton', ['$timeout', '$compile', '$filter', function
         link: {
             pre: function(scope, element, attrs, basectrl) {
                 var component = scope.getComponent(element);
-                scope.component_id = component.id;
+				scope.component_id = ($(element).parent().attr('dfx-gcc-renderer')!=null) ? $(element).attr('id') : component.id;
                 basectrl.init(scope, element, component, attrs, 'button').then(function() {
                     scope.attributes.dynamic.status = "overridden";
                     scope.attributes.icon.status = "overridden";
@@ -997,14 +997,14 @@ dfxGCC.directive('dfxGccWebButton', ['$timeout', '$compile', '$filter', function
                     }
                     scope.changeWidth = function(){
                         if(scope.attributes.notFlex.value) {
-                            $('#' + scope.component_id).css({
+                            $(element).css({
                                 'flex': '0',
                                 'width': 'auto',
                                 'max-width': '100%'
                             });
                             scope.attributes.flex.value = 'none';
                         }else{
-                            $('#' + scope.component_id).css({
+                            $(element).css({
                                 'flex': scope.attributes.flex.value + '%',
                                 'width': scope.attributes.flex.value + '%',
                                 'max-width': scope.attributes.flex.value + '%'
@@ -1014,11 +1014,7 @@ dfxGCC.directive('dfxGccWebButton', ['$timeout', '$compile', '$filter', function
                     scope.menuPosition = function(button){
                         var buttonWidth;
                         $timeout(function() {
-                            if(button){
-                                buttonWidth = $(element).find('button.gc-btn-group-first').eq(0).css('width');
-                            }else{
-                                buttonWidth = $('#' + scope.component_id + ' button.gc-btn-group-first').eq(0).css('width');
-                            }
+							buttonWidth = $(element).find('button.gc-btn-group-first').eq(0).css('width');
                             buttonWidth = parseInt(buttonWidth);
                             if(buttonWidth > 220) scope.positionModeSide = 'right';
                         }, 0);
@@ -2026,7 +2022,7 @@ dfxGCC.directive('dfxGccWebRating', function($timeout) {
                             scope.stars.push({
                                 filled: i*rangeStep < rating
                             });
-                        }                        
+                        }
                     };
                     scope.toggle = function(index) {
                         newRating = index*rangeStep + rangeStep;
@@ -2050,7 +2046,7 @@ dfxGCC.directive('dfxGccWebRating', function($timeout) {
                             if (newValue) {
                                 updateStars(newValue);
                             }
-                        });                        
+                        });
                     }
                 });
             }
@@ -2066,62 +2062,14 @@ dfxGCC.directive('dfxGccWebKnob', ['$timeout', '$compile', function($timeout, $c
         link: function (scope, element, attrs, basectrl) {
             var component = scope.$parent.getComponent(element);
             basectrl.init(scope, element, component, attrs, 'knob').then(function () {
-                scope.attributes.binding.status = 'overridden';
-                if ( !scope.attributes.options.value.hasOwnProperty('size') ){
-                    scope.attributes.options.value = {
-                        "animate": {"enabled":true,"duration":1000,"ease":"bounce"},
-                        "barCap": 20,
-                        "barColor": "#e65d5d",
-                        "barWidth": 40,
-                        "bgColor": "",
-                        "fontSize": "auto",
-                        "displayInput": true,
-                        "dynamicOptions": true,
-                        "displayPrevious": false,
-                        "size": 300,
-                        "min": 0,
-                        "max": 100,
-                        "step": 1,
-                        "startAngle": 0,
-                        "endAngle": 360,
-                        "textColor": "#222222",
-                        "prevBarColor": "rgba(0,0,0,0)",
-                        "trackColor": "#ffe6e6",
-                        "trackWidth": 50,
-                        "readOnly": false,
-                        "unit": "%",
-                        "subText": {"enabled":true, "text":"Sub text", "color":"#808080", "font":"auto"},
-                        "skin": {"type":"tron","width":10,"color":"rgba(255,0,0,.5)","spaceWidth":5},
-                        "scale": {"enabled":true,"type":"lines","color":"#808080","width":3,"quantity":20,"height":10,"spaceWidth":15}
-                    };
+                scope.isLoaded = {"value": false};
+                if(typeof scope.attributes.options.value.readOnly === 'string'){
+                    switch(scope.attributes.options.value.readOnly){
+                        case 'true': scope.attributes.options.value.readOnly = true; break;
+                        case 'false': scope.attributes.options.value.readOnly = false; break;
+                    }
                 }
-                scope.attributes.options.status = 'overridden';
-                $timeout(function() {
-                    scope.isRepeatable = {"value":false};
-                    if(typeof scope.attributes.options.value.readOnly === 'string'){
-                        switch(scope.attributes.options.value.readOnly){
-                            case 'true': scope.attributes.options.value.readOnly = true; break;
-                            case 'false': scope.attributes.options.value.readOnly = false; break;
-                        }
-                    }
-                    if(scope.attributes.binding.value.indexOf('$dfx_item') >= 0) {
-                        scope.isRepeatable.value = true;
-                        scope.repeated_id = Math.floor(Math.random() * 100000);
-                        var repeatedKnobId = component.id+'_dfx_ng_knob_'+scope.repeated_id;
-                        $timeout(function() {
-                            var repeatedKnob = angular.element(document.getElementById(repeatedKnobId));
-                            repeatedKnob.attr('value', scope.attributes.binding.value);
-                            scope = repeatedKnob.scope();
-                            $injector = repeatedKnob.injector();
-                            $injector.invoke(function($compile){
-                                $compile(repeatedKnob)(scope);
-                            })
-                        }, 0);
-                    } else {
-                        $('.'+component.id+'_dfx_ng_knob').empty().html('<ui-knob value="' + scope.attributes.binding.value + '" options="attributes.options.value"></ui-knob>');
-                        $timeout(function() {$compile($('.'+component.id+'_dfx_ng_knob').contents())(scope);}, 0);
-                    }
-                }, 0);
+                scope.isLoaded.value = true;
             });
         }
     }
