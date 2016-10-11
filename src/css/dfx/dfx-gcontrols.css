@@ -532,26 +532,6 @@ md-radio-button > div.md-label{
     margin-right: 8px;
 }
 
-
-/* Stars rating styles */
-.star-rating {
-    margin: 3px 0 0 0;
-    padding: 0;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-order: 2;
-    -ms-flex-order: 2;
-    order: 2;
-}
-.star-rating .star {
-    padding: 2px 1px;
-    text-shadow: .05em .05em #aaa;
-    list-style-type: none;
-    display: inline-flex;
-    cursor: pointer;
-}
-
 /* Datatable */
 .dt_toolbar {    
     padding: 0 24px;    

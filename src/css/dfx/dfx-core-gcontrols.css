@@ -719,6 +719,33 @@ md-list .md-subheader.dfx-core-gc-list-subheader {
     align-items: center;
 }
 
+/* GC Rating */
+.dfx-core-gc-rating {
+    padding: 0;
+    line-height: 100%;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-order: 2;
+    -ms-flex-order: 2;
+    order: 2;
+    margin: 3px 0 0 0;
+}
+.dfx-core-gc-rating .dfx-core-gc-rating-item {
+    list-style: none;
+    list-style-type: none;
+    display: inline-flex;
+}
+button.dfx-core-gc-rating-button {
+    padding: 0px;
+    border: none;
+    background: none;
+    margin: 2px 1px;
+}
+.dfx-core-gc-rating-icon {
+    text-shadow: .05em .05em #aaa;    
+}
+
 /* Animation */
 @charset "UTF-8";
 
