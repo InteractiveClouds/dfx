@@ -2,13 +2,13 @@
     <button class="dfx-core-gc-icon-button">
         <div ng-if="!attributes.state.value && attributes.waiting.value !== 'true'">
             <div style="text-align: center">
-                <md-icon ng-if="attributes.icon.type ==='fa-icon'" class="fa {{$eval(attributes.icon.value) || 'fa-home'}} {{attributes.icon.class}}" style="font-size: {{attributes.icon.size}}px, width: {{attributes.icon.size}}px, height: {{attributes.icon.size}}px; {{attributes.icon.style}}" aria-label="GC Icon"></md-icon>
+                <md-icon ng-if="attributes.icon.type ==='fa-icon'" class="fa {{$eval(attributes.icon.value) || 'fa-home'}} {{attributes.icon.class}}" style="font-size: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; {{attributes.icon.style}}" aria-label="GC Icon"></md-icon>
                 <ng-md-icon ng-if="attributes.icon.type ==='svg-icon'" icon="{{$eval(attributes.icon.value) || 'home'}}" size="{{attributes.icon.size}}" style="{{attributes.icon.style}}" class="{{attributes.icon.class}}"></ng-md-icon>
             </div>            
         </div>
         <div ng-if="attributes.state.value && attributes.waiting.value !== 'true'">
             <div style="text-align: center">
-                <md-icon ng-if="attributes.state.icon.type ==='fa-icon'" class="fa {{$eval(attributes.state.icon.value) || 'fa-home'}} {{attributes.icon.class}} {{attributes.state.icon.class}}" style="font-size: {{attributes.icon.size}}px, width: {{attributes.icon.size}}px, height: {{attributes.icon.size}}px; {{attributes.icon.style}}; {{attributes.state.icon.style}}" aria-label="GC Icon"></md-icon>
+                <md-icon ng-if="attributes.state.icon.type ==='fa-icon'" class="fa {{$eval(attributes.state.icon.value) || 'fa-home'}} {{attributes.icon.class}} {{attributes.state.icon.class}}" style="font-size: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; {{attributes.icon.style}}; {{attributes.state.icon.style}}" aria-label="GC Icon"></md-icon>
                 <ng-md-icon ng-if="attributes.state.icon.type ==='svg-icon'" icon="{{$eval(attributes.state.icon.value) || 'home'}}" size="{{attributes.icon.size}}" style="{{attributes.icon.style}}; {{attributes.state.icon.style}}" class="{{attributes.icon.class}} {{attributes.state.icon.class}}"></ng-md-icon>
             </div>        
         </div>
