@@ -74,7 +74,7 @@
                     <span class="col-md-4">Icon if Closed:</span>
                     <div class="col-md-8" layout="row">
                         <input class="col-md-12" type="text" ng-model="attributes.isClosed.value" ng-change="overrideAttribute('isClosed');ifShowIconTypes(attributes.isClosed.value, 'isClosed')" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue('isClosed', $event)" ng-blur="cacheAttributeNewValue('isClosed')"/>
-                        <md-icon ng-click="showFontIcons($event, attributes.icon)" dfx-ve-picker-icon dfx-picker-property="icon" class="dfx-ve-picker-icon fa fa-ellipsis-h"></md-icon>
+                        <md-icon ng-click="showFontIcons($event, attributes.isClosed)" dfx-ve-picker-icon dfx-picker-property="icon" class="dfx-ve-picker-icon fa fa-ellipsis-h"></md-icon>
                     </div>
                 </li>
                 <li class="col-md-12" ng-show="showClosedIconTypes">

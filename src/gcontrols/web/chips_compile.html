@@ -5,7 +5,7 @@
     ATTR-IF{{ng-class="attributes.dynamicClasses.value"}}>
 
     FRAG-IF{{attributes.selectedType.value==='standard' && attributes.selectedInput.value!=='number'}}
-    <md-chips ng-model="$gcscope[attributes.binding.value]"
+    <md-chips ng-model="ATTR-EXP{{ (attributes.binding.value.indexOf('.')>-1 || attributes.binding.value.indexOf('$dfx_iten')>-1) ? attributes.binding.value : '$parent_scope.' + attributes.binding.value }}ATTR-ENDEXP"
               ATTR-IF{{placeholder="attributes.addPlaceholder.value"}}
               ATTR-IF{{readonly="attributes.disabled.value"}}
               md-on-add="attributes.onAdd.value" md-on-select="attributes.onSelect.value" md-on-remove="attributes.onRemove.value"
@@ -24,7 +24,7 @@
     </md-chips>
     FRAG-ENDIF
     FRAG-IF{{attributes.selectedType.value==='standard' && attributes.selectedInput.value==='number'}}
-    <md-chips ng-model="$gcscope[attributes.binding.value]"
+    <md-chips ng-model="ATTR-EXP{{ (attributes.binding.value.indexOf('.')>-1 || attributes.binding.value.indexOf('$dfx_iten')>-1) ? attributes.binding.value : '$parent_scope.' + attributes.binding.value }}ATTR-ENDEXP"
               ATTR-IF{{placeholder="attributes.addPlaceholder.value"}}
               ATTR-IF{{readonly="attributes.disabled.value"}}
               md-on-add="attributes.onAdd.value" md-on-select="attributes.onSelect.value" md-on-remove="attributes.onRemove.value"

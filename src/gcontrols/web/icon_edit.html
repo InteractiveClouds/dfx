@@ -191,26 +191,65 @@
 		<li>
 			<input class="dfx-ve-property-treeview-button" type="checkbox" id="item-3" />
 			<label for="item-3">Styling Attributes</label>
-			<ul class="dfx-ve-property-treeview-content">
+			<ul class="dfx-ve-property-treeview-content">								
 				<li class="col-md-12">
-                    <span class="col-md-5">Icon Size:</span>
-                    <input class="col-md-7" type="number" ng-model="attributes.icon.size" ng-change="overrideAttribute('icon.size')" />
-                </li>				
-				<li class="col-md-12">
-					<span class="col-md-5">Style:</span>
-					<div class="col-md-7" layout="row">
-						<input class="col-md-12" type="text" ng-model="attributes.style.value" ng-change="overrideAttribute('style')" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue('style', $event)" ng-blur="cacheAttributeNewValue('style')"/>
-						<dfx-ve-css-style></dfx-ve-css-style>
-					</div>
-				</li>
-				<li class="col-md-12">
-					<span class="col-md-5">Class:</span>
-					<input class="col-md-7" type="text" ng-model="attributes.classes.value" ng-change="overrideAttribute('classes')" ng-focus="cacheAttributeOldValue('classes', $event)" ng-blur="cacheAttributeNewValue('classes')"/>
-				</li>
-				<li class="col-md-12">
-					<span class="col-md-5">Dynamic Class:</span>
-					<input class="col-md-7" type="text" ng-model="attributes.dynamicClasses.value" ng-change="overrideAttribute('dynamicClasses')" ng-focus="cacheAttributeOldValue('dynamicClasses', $event)" ng-blur="cacheAttributeNewValue('dynamicClasses')"/>
-				</li>
+                    <input class="dfx-ve-property-treeview-button" type="checkbox" checked aria-label="container-styles" id="container-styles" />
+                    <label for="container-styles" class="dfx-ve-property-title-level-1"><span>Container Styling</span></label>
+                    <ul class="dfx-ve-property-treeview-content">
+                        <li class="col-md-12">
+                            <span class="col-md-5">Style:</span>
+                            <div class="col-md-7" layout="row"><input class="col-md-12" type="text" ng-model="attributes.style.value" ng-change="overrideAttribute('style')" style="margin-left:-15px;"/><dfx-ve-css-style></dfx-ve-css-style></div>
+                        </li>                        
+                        <li class="col-md-12">
+                            <span class="col-md-5">Class:</span>
+                            <input class="col-md-7" type="text" ng-model="attributes.classes.value" ng-change="overrideAttribute('classes')"/>
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-5">Dynamic Class:</span>
+                            <input class="col-md-7" type="text" ng-model="attributes.dynamicClasses.value"  ng-change="overrideAttribute('dynamicClasses')"/>
+                        </li>   
+                    </ul>
+                </li> 
+                <li class="col-md-12">
+                    <input class="dfx-ve-property-treeview-button" type="checkbox" checked aria-label="icon-styles" id="icon-styles" />
+                    <label for="icon-styles" class="dfx-ve-property-title-level-1"><span>Icon Styling</span></label>
+                    <ul class="dfx-ve-property-treeview-content">
+                        <li class="col-md-12">
+                            <span class="col-md-5">Icon Size:</span>
+                            <input class="col-md-7" type="number" ng-model="attributes.icon.size" ng-change="overrideAttribute('icon.size')" />
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-5">Style:</span>
+                            <div class="col-md-7" layout="row"><input class="col-md-12" type="text" ng-model="attributes.icon.style" ng-change="overrideAttribute('icon.style')" style="margin-left:-15px;"/><dfx-ve-css-style></dfx-ve-css-style></div>
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-5">Class:</span>
+                            <input class="col-md-7" type="text" ng-model="attributes.icon.class" ng-change="overrideAttribute('icon.class')"/>
+                        </li>                        
+                        <li class="col-md-12">
+                            <span class="col-md-5">Dynamic Classes:</span>
+                            <input class="col-md-7" type="text" ng-model="attributes.icon.dynamicClass" ng-change="overrideAttribute('icon.dynamicClass')"/>
+                        </li>                        
+                    </ul>
+                </li>
+                <li class="col-md-12">
+                    <input class="dfx-ve-property-treeview-button" type="checkbox" checked aria-label="label-styles" id="label-styles" />
+                    <label for="label-styles" class="dfx-ve-property-title-level-1"><span>Label Styling</span></label>
+                    <ul class="dfx-ve-property-treeview-content">
+                        <li class="col-md-12">
+                            <span class="col-md-5">Style:</span>
+                            <div class="col-md-7" layout="row"><input class="col-md-12" type="text" ng-model="attributes.label.style" ng-change="overrideAttribute('label.style')" style="margin-left:-15px;"/><dfx-ve-css-style></dfx-ve-css-style></div>
+                        </li>                        
+                        <li class="col-md-12">
+                            <span class="col-md-5">Classes:</span>
+                            <input class="col-md-7" type="text" ng-model="attributes.label.class" ng-change="overrideAttribute('label.class')"/>
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-5">Dynamic Classes:</span>
+                            <input class="col-md-7" type="text" ng-model="attributes.label.dynamicClass" ng-change="overrideAttribute('label.dynamicClass')"/>
+                        </li>
+                    </ul>
+                </li>
 			</ul>
 		</li>
 	</ul>

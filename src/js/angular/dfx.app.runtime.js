@@ -4,7 +4,7 @@ if (typeof dfxAppRuntimeModules != 'undefined')
 var dfxAppRuntime = angular.module('dfxAppRuntime', dfxSystemModules);
 
 dfxAppRuntime
-    .config( function($routeProvider) {
+    .config( function($routeProvider, $locationProvider) {
         $routeProvider
             .when('/page.html', {
                 controller: 'dfx_page_controller',
@@ -149,7 +149,7 @@ dfxAppRuntime.controller('dfx_app_controller', [ '$scope', '$rootScope', 'dfxAut
     }
 
 	$scope.routeToPage = function(page_name) {
-        $location.search( 'name', page_name );
+        $location.url( '/page.html?name=' + page_name );
         //$scope.$apply();
     };
 }]);
@@ -170,7 +170,11 @@ dfxAppRuntime.controller('dfx_page_controller', [ '$scope', '$rootScope', 'dfxAu
                 url: '/studio/screen/item/' + $scope.page_name + '/' + $scope.app_name + '/' + 'web'
             }).then(function successCallback(response) {
                 $scope.selected_page = response.data.screen;
-                $scope.loadPageTemplate(response.data.screen.template);
+				var current_template = $('[dfx-page-template]').attr('dfx-page-template');
+				if (current_template!=response.data.screen.template) {
+					$('#dfx_page_content').empty();
+                	$scope.loadPageTemplate(response.data.screen.template);
+				}
             });
         } else {
             $http({
@@ -178,7 +182,11 @@ dfxAppRuntime.controller('dfx_page_controller', [ '$scope', '$rootScope', 'dfxAu
                 url: 'pages/' + $scope.page_name + '.json'
             }).then(function successCallback(request) {
                 $scope.selected_page = request.data;
-                $scope.loadPageTemplate(request.data.template);
+				var current_template = $('[dfx-page-template]').attr('dfx-page-template');
+				if (current_template!=request.data.template) {
+					$('#dfx_page_content').empty();
+                	$scope.loadPageTemplate(request.data.template);
+				}
             });
         }
     };
@@ -198,7 +206,7 @@ dfxAppRuntime.controller('dfx_page_controller', [ '$scope', '$rootScope', 'dfxAu
             }).then(function successCallback(request) {
                 $scope.selected_template = request.data.screenTemplate;
                 var snippet = '<div layout="column" flex dfx-page-template="' + template + '"></div>';
-                $('#dfx_page_content').empty();
+                $('#pagebody').empty();
                 angular.element(document.getElementById('dfx_page_content')).append($compile(snippet)($scope));
             });
         } else {
@@ -208,14 +216,14 @@ dfxAppRuntime.controller('dfx_page_controller', [ '$scope', '$rootScope', 'dfxAu
             }).then(function successCallback(request) {
                 $scope.selected_template = request.data;
                 var snippet = '<div layout="column" flex dfx-page-template="' + template + '"></div>';
-                $('#dfx_page_content').empty();
+                $('#pagebody').empty();
                 angular.element(document.getElementById('dfx_page_content')).append($compile(snippet)($scope));
             });
         }
     };
 
     $scope.routeToPage = function(page_name) {
-        $location.search( 'name', page_name );
+        $location.url( '/page.html?name=' + page_name );
         //$scope.$apply();
     };
 
