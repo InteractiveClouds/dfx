@@ -1,6 +1,8 @@
 <div layout="row" style="{{attributes.style.value}}" class="{{attributes.classes.value}} dfx-core-gc-horizontalmenu">
-  <md-menu-bar ng-if="attributes.menuItems.value.length === 0">
-    <md-button class="md-button md-icon-button dfx-horizontalmenu-root-button" aria-label="md-icon-buton"><md-icon class="fa fa-home dfx-horizontalmenu-root-icon" style="font-size:24px;"></md-icon></md-button>
-  </md-menu-bar>
-  <div id="{{component_id}}_menu_bar" ng-if="attributes.menuItems.value.length > 0"></div>
+	<md-menu-bar ng-if="attributes.menuItems.value.length === 0">
+		<md-button class="md-button md-icon-button dfx-horizontalmenu-root-button" aria-label="md-icon-buton">
+			<ng-md-icon icon="home" size="16" class="dfx-horizontalmenu-root-icon"></ng-md-icon>
+		</md-button>
+	</md-menu-bar>
+	<div id="{{component_id}}_menu_bar" ng-if="attributes.menuItems.value.length > 0"></div>
 </div>

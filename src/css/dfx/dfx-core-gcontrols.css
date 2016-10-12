@@ -208,7 +208,7 @@ md-tooltip.dfx-core-gc-fab-tooltip .md-content, md-tooltip.dfx-core-gc-fab-toolt
     padding: 0;
     background: none;
     border: none;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 button.dfx-core-gc-icon-button[disabled="disabled"] {
     color: rgba(0,0,0,0.26)!important;
@@ -436,11 +436,11 @@ md-menu-content md-menu-item .md-button[disabled] .treemenu-actionbar-item-icon 
     padding: 0px;
 }
 .dfx-core-gc-horizontalmenu button, .dfx-core-gc-horizontalmenu button * {
-    transition: all .5s;
-    color: #707070;
+    /*transition: all .5s;*/
 }
 .dfx-core-gc-horizontalmenu button.dfx-horizontalmenu-root-button {
     font-size: 15px;
+    color: #707070;
     line-height: 15px;
     padding: 0 16px;
     height: 48px;
@@ -453,8 +453,8 @@ md-menu-content md-menu-item .md-button[disabled] .treemenu-actionbar-item-icon 
     font-size: 15px;
     text-align:center;
     display: inline-flex;
-    width: 16px;
-    height:16px;
+    min-width: 16px;
+    min-height:16px;
     margin:auto 8px auto 0;
 }
 .dfx-core-gc-horizontalmenu md-menu button small {

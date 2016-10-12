@@ -45,6 +45,8 @@
     "style":            { "value": "" },
     "classes":          { "value": "" },
     "dynamicClasses":   { "value": "" },
+    "rootMenu":         { "button": { "style": "", "class": "" }, "icon": { "size": 16, "style": "", "class": "" } },
+    "singleMenu":       { "button": { "style": "", "class": "" }, "icon": { "size": 16, "style": "", "class": "" } },
     "onclick":          { "value": "" },
     "ondblclick":       { "value": "" },
     "onkeypress":       { "value": "" },

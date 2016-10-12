@@ -140,6 +140,16 @@ dfxGCC.directive('dfxGccWebBase', ['$rootScope', '$http', '$compile', '$injector
                     scope[scope_variable_name] = newValue;
                 });
             };
+
+            this.changeWidth = function(scope) {
+                var parent_column_orientation = $('#' + scope.component_id).parent().attr('layout');
+                if (parent_column_orientation == 'column') {
+                    $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+                } else {
+                    $('#' + scope.component_id).removeClass('flex-100');
+                    $('#' + scope.component_id).addClass('flex' + '-' + scope.attributes.flex.value);
+                }
+            };
         }
     }
 }]);
@@ -169,7 +179,7 @@ dfxGCC.directive('dfxGccWebPanel', ['$timeout', '$compile', function($timeout, $
 
 				scope.changeWidth = function(){
                     if ( !scope.attributes.repeat_title.value ) {
-                        $('#' + scope.component_id).addClass('flex' + '-' + scope.attributes.flex.value);
+                        basectrl.changeWidth(scope);
                     }
                 };
 				scope.changeWidth();
@@ -438,17 +448,17 @@ dfxGCC.directive('dfxGccWebCarousel', ['$http', '$sce', '$mdDialog', '$mdToast',
                         if ( scope.attributes.optionsType.value === 'dynamic' ) {
                             var slidesCount = scope.$parent_scope[scope.attributes.optionItemNames.value.source].length;
                             for ( var i = 0; i < slidesCount; i++ ) {
-                                $(screenSlides).eq(i+1).find('img').attr('ng-src', '{{'+scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.src]+'}}');
+                                $(screenSlides).eq(i+1).find('img').attr('ng-src', '{{\''+scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.src]+'\'}}');
                                 $(screenSlides).eq(i+1).find('.dfx-carousel-item-title').html(scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.title]);
                                 $(screenSlides).eq(i+1).find('.dfx-carousel-item-description').html(scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.description]);
                                 $(screenSlides).eq(i+1).find('img').attr('ng-click', scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.onclick]);
                                 if(i===0){
-                                    $(screenSlides).eq(slidesCount+1).find('img').attr('ng-src', '{{'+scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.src]+'}}');
+                                    $(screenSlides).eq(slidesCount+1).find('img').attr('ng-src', '{{\''+scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.src]+'\'}}');
                                     $(screenSlides).eq(slidesCount+1).find('.dfx-carousel-item-title').html(scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.title]);
                                     $(screenSlides).eq(slidesCount+1).find('.dfx-carousel-item-description').html(scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.description]);
                                 }
                                 if(i===slidesCount-1){
-                                    $(screenSlides).eq(0).find('img').attr('ng-src', '{{'+scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.src]+'}}');
+                                    $(screenSlides).eq(0).find('img').attr('ng-src', '{{\''+scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.src]+'\'}}');
                                     $(screenSlides).eq(0).find('.dfx-carousel-item-title').html(scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.title]);
                                     $(screenSlides).eq(0).find('.dfx-carousel-item-description').html(scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.description]);
                                 }
@@ -2018,7 +2028,7 @@ dfxGCC.directive('dfxGccWebRating', function($timeout) {
                             scope.stars.push({
                                 filled: i*rangeStep < rating
                             });
-                        }                        
+                        }
                     };
                     scope.toggle = function(index) {
                         newRating = index*rangeStep + rangeStep;
@@ -2043,7 +2053,7 @@ dfxGCC.directive('dfxGccWebRating', function($timeout) {
                             if (newValue) {
                                 updateStars(newValue);
                             }
-                        });                        
+                        });
                     }
                 });
             }
@@ -2078,18 +2088,15 @@ var DfxGcChartUtil = (function () {
     var removeBracketsFromEventListener = function(eventListener) {
         return (eventListener) ? eventListener.replace(/\(.*?\)/g, "") : eventListener;
     };
-    var refreshChartToReflectFlexSize = function(scope, isDesignTime, $timeout, oldFlexValue) {
+    var refreshChartToReflectFlexSize = function(scope, isDesignTime, basectrl, $timeout, oldFlexValue) {
           $timeout(function() {
               if (scope[scope.attributes.name.value].refresh) {
                   oldFlexValue = oldFlexValue || 100;
 
-                  // remove old flex class and add new manually because it's not done automatically after chart dropping
+                  // remove old flex class manually because it's not done automatically after chart dropping
                   if (oldFlexValue) { $('#' + scope.component_id).removeClass('flex' + '-' + oldFlexValue); }
-                  $('#' + scope.component_id).attr('flex', scope.attributes.flex.value);
-                  $('#' + scope.component_id).addClass('flex' + '-' + scope.attributes.flex.value);
 
-                  // for the case when panel column layout direction = column
-                  $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+                  basectrl.changeWidth(scope);
 
                   scope[scope.attributes.name.value].refresh();
               }
@@ -2112,7 +2119,7 @@ var DfxGcChartUtil = (function () {
         scope.$gcscope = scope; //also, must set it here, before reading data from file
     };
 
-    api.setRunTimeAttributes = function (scope, chartTypeDef, chartEventNames, $timeout) {
+    api.setRunTimeAttributes = function (scope, chartTypeDef, chartEventNames, basectrl, $timeout) {
         if (scope.attributes.title.value) {
             scope.attributes.options.value.title = {
                 text: scope.attributes.title.value,
@@ -2199,7 +2206,7 @@ var DfxGcChartUtil = (function () {
         assignEvent('onareamouseleave', specificDispatch);
         scope.attributes.options.value.chart[chartTypeDef] = { dispatch: specificDispatch };
 
-        refreshChartToReflectFlexSize(scope, false, $timeout);
+        refreshChartToReflectFlexSize(scope, false, basectrl, $timeout);
     };
     api.setRunTimeChartNameVariable = function (scope, basectrl, component, $timeout) {
         $timeout(function() {
@@ -2214,7 +2221,7 @@ var DfxGcChartUtil = (function () {
         }, 0);
     };
 
-    api.watchRunTimeAttributes = function (scope, $timeout) {
+    api.watchRunTimeAttributes = function (scope, basectrl, $timeout) {
         scope.$gcscope.$watch(scope.attributes.title.value, function(newValue) {
             scope.attributes.options.value.title.text = newValue;
         });
@@ -2242,7 +2249,7 @@ var DfxGcChartUtil = (function () {
         if (scope.attributes.options.showValues) {
             scope.$gcscope.$watch(scope.attributes.options.showValues, function (newValue, oldValue) {
                 scope.attributes.options.value.chart.showValues = newValue;
-                refreshChartToReflectFlexSize(scope, false, $timeout, oldValue);
+                refreshChartToReflectFlexSize(scope, false, basectrl, $timeout, oldValue);
             });
         }
         if (scope.attributes.options.showXAxis) {
@@ -2256,31 +2263,31 @@ var DfxGcChartUtil = (function () {
         if (scope.attributes.options.showControls) {
             scope.$gcscope.$watch(scope.attributes.options.showControls, function (newValue, oldValue) {
                 scope.attributes.options.value.chart.showControls = newValue;
-                refreshChartToReflectFlexSize(scope, false, $timeout, oldValue);
+                refreshChartToReflectFlexSize(scope, false, basectrl, $timeout, oldValue);
             });
         }
         if (scope.attributes.options.showLegend) {
             scope.$gcscope.$watch(scope.attributes.options.showLegend, function (newValue, oldValue) {
                 scope.attributes.options.value.chart.showLegend = newValue;
-                refreshChartToReflectFlexSize(scope, false, $timeout, oldValue);
+                refreshChartToReflectFlexSize(scope, false, basectrl, $timeout, oldValue);
             });
         }
         if (scope.attributes.options.stacked) {
             scope.$gcscope.$watch(scope.attributes.options.stacked, function (newValue, oldValue) {
                 scope.attributes.options.value.chart.stacked = newValue;
-                refreshChartToReflectFlexSize(scope, false, $timeout, oldValue);
+                refreshChartToReflectFlexSize(scope, false, basectrl, $timeout, oldValue);
             });
         }
         if (scope.attributes.options.useInteractiveGuideline) {
             scope.$gcscope.$watch(scope.attributes.options.useInteractiveGuideline, function (newValue, oldValue) {
                 scope.attributes.options.value.chart.useInteractiveGuideline = newValue;
-                refreshChartToReflectFlexSize(scope, false, $timeout, oldValue);
+                refreshChartToReflectFlexSize(scope, false, basectrl, $timeout, oldValue);
             });
         }
         if (scope.attributes.options.rescaleY) {
             scope.$gcscope.$watch(scope.attributes.options.rescaleY, function (newValue, oldValue) {
                 scope.attributes.options.value.chart.rescaleY = newValue;
-                refreshChartToReflectFlexSize(scope, false, $timeout, oldValue);
+                refreshChartToReflectFlexSize(scope, false, basectrl, $timeout, oldValue);
             });
         }
         if (scope.attributes.options.labelSunbeamLayout) {
@@ -2401,8 +2408,8 @@ dfxGCC.directive('dfxGccWebAreachart', ['$timeout', '$filter', function($timeout
                         onrenderend: 'renderEnd'
                     };
 
-                    DfxGcChartUtil.setRunTimeAttributes(scope, 'stacked', eventsList, $timeout);
-                    DfxGcChartUtil.watchRunTimeAttributes(scope, $timeout);
+                    DfxGcChartUtil.setRunTimeAttributes(scope, 'stacked', eventsList, basectrl, $timeout);
+                    DfxGcChartUtil.watchRunTimeAttributes(scope, basectrl, $timeout);
                 }
 
                 DfxGcChartUtil.adjustContainerHeight(scope);
@@ -2501,8 +2508,8 @@ dfxGCC.directive('dfxGccWebBarchart', ['$timeout', '$filter', function($timeout,
                         onrenderend: 'renderEnd'
                     };
 
-                    DfxGcChartUtil.setRunTimeAttributes(scope, 'discretebar', eventsList, $timeout);
-                    DfxGcChartUtil.watchRunTimeAttributes(scope, $timeout);
+                    DfxGcChartUtil.setRunTimeAttributes(scope, 'discretebar', eventsList, basectrl, $timeout);
+                    DfxGcChartUtil.watchRunTimeAttributes(scope, basectrl, $timeout);
                 }
 
                 DfxGcChartUtil.adjustContainerHeight(scope);
@@ -2630,8 +2637,8 @@ dfxGCC.directive('dfxGccWebHzbarchart', ['$timeout', '$filter', function($timeou
                         onrenderend: 'renderEnd'
                     };
 
-                    DfxGcChartUtil.setRunTimeAttributes(scope, 'multibar', eventsList, $timeout);
-                    DfxGcChartUtil.watchRunTimeAttributes(scope, $timeout);
+                    DfxGcChartUtil.setRunTimeAttributes(scope, 'multibar', eventsList, basectrl, $timeout);
+                    DfxGcChartUtil.watchRunTimeAttributes(scope, basectrl, $timeout);
                 }
 
                 DfxGcChartUtil.adjustContainerHeight(scope);
@@ -2726,8 +2733,8 @@ dfxGCC.directive('dfxGccWebPiechart', ['$timeout', '$filter', function($timeout,
                         onrenderend: 'renderEnd'
                     };
 
-                    DfxGcChartUtil.setRunTimeAttributes(scope, 'pie', eventsList, $timeout);
-                    DfxGcChartUtil.watchRunTimeAttributes(scope, $timeout);
+                    DfxGcChartUtil.setRunTimeAttributes(scope, 'pie', eventsList, basectrl, $timeout);
+                    DfxGcChartUtil.watchRunTimeAttributes(scope, basectrl, $timeout);
                 }
 
                 DfxGcChartUtil.adjustContainerHeight(scope);
@@ -2826,8 +2833,8 @@ dfxGCC.directive('dfxGccWebDonutchart', ['$timeout', '$filter', function($timeou
                         onrenderend: 'renderEnd'
                     };
 
-                    DfxGcChartUtil.setRunTimeAttributes(scope, 'pie', eventsList, $timeout);
-                    DfxGcChartUtil.watchRunTimeAttributes(scope, $timeout);
+                    DfxGcChartUtil.setRunTimeAttributes(scope, 'pie', eventsList, basectrl, $timeout);
+                    DfxGcChartUtil.watchRunTimeAttributes(scope, basectrl, $timeout);
                 }
 
                 DfxGcChartUtil.adjustContainerHeight(scope);
@@ -2927,8 +2934,8 @@ dfxGCC.directive('dfxGccWebLinechart', ['$timeout', '$filter', function($timeout
                         onrenderend: 'renderEnd'
                     };
 
-                    DfxGcChartUtil.setRunTimeAttributes(scope, 'lines', eventsList, $timeout);
-                    DfxGcChartUtil.watchRunTimeAttributes(scope, $timeout);
+                    DfxGcChartUtil.setRunTimeAttributes(scope, 'lines', eventsList, basectrl, $timeout);
+                    DfxGcChartUtil.watchRunTimeAttributes(scope, basectrl, $timeout);
                 }
 
                 DfxGcChartUtil.adjustContainerHeight(scope);
@@ -3023,8 +3030,8 @@ dfxGCC.directive('dfxGccWebCmlinechart', ['$timeout', '$filter', function($timeo
                         onrenderend: 'renderEnd'
                     };
 
-                    DfxGcChartUtil.setRunTimeAttributes(scope, 'interactiveLayer', eventsList, $timeout);
-                    DfxGcChartUtil.watchRunTimeAttributes(scope, $timeout);
+                    DfxGcChartUtil.setRunTimeAttributes(scope, 'interactiveLayer', eventsList, basectrl, $timeout);
+                    DfxGcChartUtil.watchRunTimeAttributes(scope, basectrl, $timeout);
                 }
 
                 DfxGcChartUtil.adjustContainerHeight(scope);
@@ -3088,7 +3095,6 @@ dfxGCC.directive('dfxGccWebChips', ['$timeout', function($timeout) {
         scope: true,
         link: function(scope, element, attrs, basectrl) {
             var component = scope.$parent.getComponent(element);
-            scope.$gcscope = scope;
             basectrl.init(scope, element, component, attrs, 'chips').then(function(){
                 if(!scope.attributes.hasOwnProperty('isBindEmpty')){scope.attributes.isBindEmpty = { "value": true };}
                 if(scope.attributes.hasOwnProperty('property1')){delete scope.attributes.property1;}
@@ -3116,7 +3122,6 @@ dfxGCC.directive('dfxGccWebChips', ['$timeout', function($timeout) {
                         },0);
                     scope.attributes.isBindEmpty.status = "overridden" ;
                 });
-                basectrl.bindScopeVariable(scope, component.attributes.binding.value);
 
                 scope.attributes.bindEmptyModel = function() {
                     return scope.attributes.defaultArray.value;
@@ -4168,16 +4173,16 @@ dfxGCC.directive('dfxGccWebHorizontalmenu', ['$mdMenu', '$timeout', '$compile', 
                 scope.attributes.menuItemNames.status = "overridden";
                 scope.itemNames = scope.attributes.menuItemNames.value;
                 scope.attributes.dynamicPresent.value = scope.attributes.dynamic.value.length > 0 ? true : false;
-                var rootMenuItem = '<button ng-click="{{itemClick}}" ng-show="{{itemDisplay}}" ng-disabled="{{itemDisabled}}" aria-label="button" class="dfx-horizontalmenu-root-button">'+
-                        '<md-icon ng-if="{{ifFaIcon}}" class="fa {{faIcon}} dfx-horizontalmenu-root-icon"></md-icon>'+
-                        '<ng-md-icon ng-if="{{ifSvgIcon}}" icon="{{svgIcon}}" size="16" class="dfx-horizontalmenu-root-icon"></ng-md-icon>'+
+                var rootMenuItem = '<button ng-click="{{itemClick}}" ng-show="{{itemDisplay}}" ng-disabled="{{itemDisabled}}" style="{{attributes.rootMenu.button.style}}" aria-label="button" class="dfx-horizontalmenu-root-button {{attributes.rootMenu.button.class}}">'+
+                        '<md-icon ng-if="{{ifFaIcon}}" style="font-size:{{attributes.rootMenu.icon.size}}px; {{attributes.rootMenu.icon.style}}" class="fa {{faIcon}} dfx-horizontalmenu-root-icon {{attributes.rootMenu.icon.class}}"></md-icon>'+
+                        '<ng-md-icon ng-if="{{ifSvgIcon}}" icon="{{svgIcon}}" size="{{attributes.rootMenu.icon.size}}" style="{{attributes.rootMenu.icon.style}}" class="dfx-horizontalmenu-root-icon {{attributes.rootMenu.icon.class}}"></ng-md-icon>'+
                         '<span>{{itemLabel}}</span>'+
                         '<span ng-if="{{ifItemShortcut}}" style="margin:0 8px;">{{itemShortcut}}</span>'+
                         '<small ng-if="{{ifItemNotification}}">{{itemNotification}}</small>'+
                         '</button>',
-                    singleMenuItem =    '<md-button ng-show="{{itemDisplay}}" ng-disabled="{{itemDisabled}}" ng-click="{{itemClick}}" aria-label="iconbar-button" class="dfx-horizontalmenu-button dfx-menu-button">'+
-                        '<md-icon ng-if="{{ifFaIcon}}" class="fa {{faIcon}} dfx-menu-button-icon"></md-icon>'+
-                        '<ng-md-icon ng-if="{{ifSvgIcon}}" icon="{{svgIcon}}" size="16" class="dfx-menu-button-icon"></ng-md-icon>'+
+                    singleMenuItem =    '<md-button ng-show="{{itemDisplay}}" ng-disabled="{{itemDisabled}}" ng-click="{{itemClick}}" aria-label="iconbar-button" style="{{attributes.singleMenu.button.style}}" class="dfx-horizontalmenu-button dfx-menu-button {{attributes.singleMenu.button.class}}">'+
+                        '<md-icon ng-if="{{ifFaIcon}}" class="fa {{faIcon}} dfx-menu-button-icon {{attributes.singleMenu.icon.class}}" style="font-size:{{attributes.singleMenu.icon.size}}px; {{attributes.singleMenu.icon.style}}"></md-icon>'+
+                        '<ng-md-icon ng-if="{{ifSvgIcon}}" icon="{{svgIcon}}" size="{{attributes.singleMenu.icon.size}}" class="dfx-menu-button-icon {{attributes.singleMenu.icon.class}}" style="{{attributes.singleMenu.icon.style}}"></ng-md-icon>'+
                         '<span>{{itemLabel}}</span>'+
                         '<span ng-if="{{ifItemShortcut}}" class="md-alt-text">{{itemShortcut}}</span>'+
                         '<small ng-if="{{ifItemNotification}}">{{itemNotification}}</small>'+
@@ -4538,14 +4543,7 @@ dfxGCC.directive('dfxGccWebTabs', ['$timeout', '$compile', function($timeout, $c
                     }
                 });
 
-                scope.changeWidth = function(){
-                    var parent_column_orientation = $('#' + scope.component_id).parent().attr('layout');
-                    if (parent_column_orientation == 'column') {
-                        $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
-                    }
-                    $('#' + scope.component_id).addClass('flex' + '-' + scope.attributes.flex.value);
-                };
-                scope.changeWidth();
+                basectrl.changeWidth(scope);
 
                 scope.collapsePanelBody = function(isCollapsed, index) {
                     if ( scope.attributes.repeat_title.value ) {
@@ -4783,14 +4781,7 @@ dfxGCC.directive('dfxGccWebWizard', ['$mdDialog', '$timeout', '$compile', functi
                     },0);
                 };
 
-                scope.changeWidth = function(){
-                    var parent_column_orientation = $('#' + scope.component_id).parent().attr('layout');
-                    if (parent_column_orientation == 'column') {
-                        $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
-                    }
-                    $('#' + scope.component_id).addClass('flex' + '-' + scope.attributes.flex.value);
-                };
-                scope.changeWidth();
+                basectrl.changeWidth(scope);
 
                 if (!scope.attributes.autoHeight || scope.attributes.autoHeight.value != true) {
                     $timeout(function () {
@@ -4821,7 +4812,6 @@ dfxGCC.directive('dfxGccWebIcon', ['$http', '$mdDialog', '$timeout', '$filter', 
         scope: true,
         link: function(scope, element, attrs, basectrl) {
             var component = scope.getComponent(element);
-            scope.$parent_scope = scope;
             basectrl.init(scope, element, component, attrs, 'icon').then(function() {
                 scope.checkState = function( dfxIsState ){
                     if(scope.attributes.state.bindingType === 'boolean'){
