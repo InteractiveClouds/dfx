@@ -208,7 +208,7 @@ md-tooltip.dfx-core-gc-fab-tooltip .md-content, md-tooltip.dfx-core-gc-fab-toolt
     padding: 0;
     background: none;
     border: none;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 button.dfx-core-gc-icon-button[disabled="disabled"] {
     color: rgba(0,0,0,0.26)!important;
