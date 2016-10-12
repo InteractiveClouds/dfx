@@ -117,8 +117,8 @@ div.wizard-submit-step{
     -o-transition: all 0.3s ease;
     transition: all 0.3s ease;
 }
-div.wizard-submit-step.is-wizard-submit-step { 
-    opacity: 1 !important 
+div.wizard-submit-step.is-wizard-submit-step {
+    opacity: 1 !important
 }
 .md-button.glyph.dfx-core-gc-wizard-submit:not([disabled]).md-focused,
 .md-button.glyph.dfx-core-gc-wizard-submit:not([disabled]):hover,
@@ -177,7 +177,7 @@ md-fab-speed-dial {
     height: 20px;
 }
 div:not([style]).md-fab-action-item button.dfx-core-gc-fab-item {
-    width: 0px;  
+    width: 0px;
 }
 .dfx-core-gc-fab.md-button.md-fab:not([disabled]).md-focused,
 .dfx-core-gc-fab.md-button.md-fab:not([disabled]):hover,
@@ -240,7 +240,7 @@ button[disabled].dfx-core-gc-icon md-icon, button[disabled].dfx-core-gc-icon ng-
 .dfx-core-gc-button {
     width: 100%;
     margin: 0px;
-    min-width: 0px; 
+    min-width: 0px;
 }
 .dfx-core-gc-button-icon, .dfx-core-gc-button-icon.fa {
     margin: auto 0px;
@@ -329,9 +329,9 @@ div[dfx-gcc-web-treemenu] {
     flex-grow:1;
 }
 .dfx-core-gc-treemenu button .trigger-icon-box {
-    padding-left: 16px;  
+    padding-left: 16px;
 }
-.dfx-core-gc-treemenu button .trigger-icon {    
+.dfx-core-gc-treemenu button .trigger-icon {
     width: 16px;
     height: 16px;
     margin: 0;
@@ -530,7 +530,7 @@ md-checkbox.dfx-core-gc-treeview-checkbox {
     color: rgba(0,0,0,0.54);
 }
 md-checkbox[type="checkbox"].dfx-core-gc-checkbox-button {
-    height: 26px; 
+    height: 26px;
     margin: 0 0 0 5px;
     display: -webkit-flex;
     -webkit-flex-direction: row;
@@ -743,7 +743,7 @@ button.dfx-core-gc-rating-button {
     margin: 2px 1px;
 }
 .dfx-core-gc-rating-icon {
-    text-shadow: .05em .05em #aaa;    
+    text-shadow: .05em .05em #aaa;
 }
 
 /* Animation */
