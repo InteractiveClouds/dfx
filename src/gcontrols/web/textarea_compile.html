@@ -1,6 +1,6 @@
 <div ng-form name="textareaForm"
     ng-show="attributes.display.value"
-    ATTR-IF{{style="attributes.style.value"}}
+    style="height:88px;ATTR-NONV{{style.value}}"
     ATTR-IF{{class="attributes.classes.value"}}
     ATTR-IF{{ng-class="attributes.dynamicClasses.value"}}>
     <div layout="row" style="flex-direction: {{ ATTR-STATIC{{position.value}} === 'left' ? 'row' : 'row-reverse'}}">
