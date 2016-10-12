@@ -4168,16 +4168,16 @@ dfxGCC.directive('dfxGccWebHorizontalmenu', ['$mdMenu', '$timeout', '$compile', 
                 scope.attributes.menuItemNames.status = "overridden";
                 scope.itemNames = scope.attributes.menuItemNames.value;
                 scope.attributes.dynamicPresent.value = scope.attributes.dynamic.value.length > 0 ? true : false;
-                var rootMenuItem = '<button ng-click="{{itemClick}}" ng-show="{{itemDisplay}}" ng-disabled="{{itemDisabled}}" aria-label="button" class="dfx-horizontalmenu-root-button">'+
-                        '<md-icon ng-if="{{ifFaIcon}}" class="fa {{faIcon}} dfx-horizontalmenu-root-icon"></md-icon>'+
-                        '<ng-md-icon ng-if="{{ifSvgIcon}}" icon="{{svgIcon}}" size="16" class="dfx-horizontalmenu-root-icon"></ng-md-icon>'+
+                var rootMenuItem = '<button ng-click="{{itemClick}}" ng-show="{{itemDisplay}}" ng-disabled="{{itemDisabled}}" style="{{attributes.rootMenu.button.style}}" aria-label="button" class="dfx-horizontalmenu-root-button {{attributes.rootMenu.button.class}}">'+
+                        '<md-icon ng-if="{{ifFaIcon}}" style="font-size:{{attributes.rootMenu.icon.size}}px; {{attributes.rootMenu.icon.style}}" class="fa {{faIcon}} dfx-horizontalmenu-root-icon {{attributes.rootMenu.icon.class}}"></md-icon>'+
+                        '<ng-md-icon ng-if="{{ifSvgIcon}}" icon="{{svgIcon}}" size="{{attributes.rootMenu.icon.size}}" style="{{attributes.rootMenu.icon.style}}" class="dfx-horizontalmenu-root-icon {{attributes.rootMenu.icon.class}}"></ng-md-icon>'+
                         '<span>{{itemLabel}}</span>'+
                         '<span ng-if="{{ifItemShortcut}}" style="margin:0 8px;">{{itemShortcut}}</span>'+
                         '<small ng-if="{{ifItemNotification}}">{{itemNotification}}</small>'+
                         '</button>',
-                    singleMenuItem =    '<md-button ng-show="{{itemDisplay}}" ng-disabled="{{itemDisabled}}" ng-click="{{itemClick}}" aria-label="iconbar-button" class="dfx-horizontalmenu-button dfx-menu-button">'+
-                        '<md-icon ng-if="{{ifFaIcon}}" class="fa {{faIcon}} dfx-menu-button-icon"></md-icon>'+
-                        '<ng-md-icon ng-if="{{ifSvgIcon}}" icon="{{svgIcon}}" size="16" class="dfx-menu-button-icon"></ng-md-icon>'+
+                    singleMenuItem =    '<md-button ng-show="{{itemDisplay}}" ng-disabled="{{itemDisabled}}" ng-click="{{itemClick}}" aria-label="iconbar-button" style="{{attributes.singleMenu.button.style}}" class="dfx-horizontalmenu-button dfx-menu-button {{attributes.singleMenu.button.class}}">'+
+                        '<md-icon ng-if="{{ifFaIcon}}" class="fa {{faIcon}} dfx-menu-button-icon {{attributes.singleMenu.icon.class}}" style="font-size:{{attributes.singleMenu.icon.size}}px; {{attributes.singleMenu.icon.style}}"></md-icon>'+
+                        '<ng-md-icon ng-if="{{ifSvgIcon}}" icon="{{svgIcon}}" size="{{attributes.singleMenu.icon.size}}" class="dfx-menu-button-icon {{attributes.singleMenu.icon.class}}" style="{{attributes.singleMenu.icon.style}}"></ng-md-icon>'+
                         '<span>{{itemLabel}}</span>'+
                         '<span ng-if="{{ifItemShortcut}}" class="md-alt-text">{{itemShortcut}}</span>'+
                         '<small ng-if="{{ifItemNotification}}">{{itemNotification}}</small>'+
@@ -4821,7 +4821,6 @@ dfxGCC.directive('dfxGccWebIcon', ['$http', '$mdDialog', '$timeout', '$filter', 
         scope: true,
         link: function(scope, element, attrs, basectrl) {
             var component = scope.getComponent(element);
-            scope.$parent_scope = scope;
             basectrl.init(scope, element, component, attrs, 'icon').then(function() {
                 scope.checkState = function( dfxIsState ){
                     if(scope.attributes.state.bindingType === 'boolean'){
