@@ -4175,16 +4175,16 @@ dfxGCC.directive('dfxGccWebHorizontalmenu', ['$mdMenu', '$timeout', '$compile', 
                 scope.attributes.menuItemNames.status = "overridden";
                 scope.itemNames = scope.attributes.menuItemNames.value;
                 scope.attributes.dynamicPresent.value = scope.attributes.dynamic.value.length > 0 ? true : false;
-                var rootMenuItem = '<button ng-click="{{itemClick}}" ng-show="{{itemDisplay}}" ng-disabled="{{itemDisabled}}" aria-label="button" class="dfx-horizontalmenu-root-button">'+
-                        '<md-icon ng-if="{{ifFaIcon}}" class="fa {{faIcon}} dfx-horizontalmenu-root-icon"></md-icon>'+
-                        '<ng-md-icon ng-if="{{ifSvgIcon}}" icon="{{svgIcon}}" size="16" class="dfx-horizontalmenu-root-icon"></ng-md-icon>'+
+                var rootMenuItem = '<button ng-click="{{itemClick}}" ng-show="{{itemDisplay}}" ng-disabled="{{itemDisabled}}" style="{{attributes.rootMenu.button.style}}" aria-label="button" class="dfx-horizontalmenu-root-button {{attributes.rootMenu.button.class}}">'+
+                        '<md-icon ng-if="{{ifFaIcon}}" style="font-size:{{attributes.rootMenu.icon.size}}px; {{attributes.rootMenu.icon.style}}" class="fa {{faIcon}} dfx-horizontalmenu-root-icon {{attributes.rootMenu.icon.class}}"></md-icon>'+
+                        '<ng-md-icon ng-if="{{ifSvgIcon}}" icon="{{svgIcon}}" size="{{attributes.rootMenu.icon.size}}" style="{{attributes.rootMenu.icon.style}}" class="dfx-horizontalmenu-root-icon {{attributes.rootMenu.icon.class}}"></ng-md-icon>'+
                         '<span>{{itemLabel}}</span>'+
                         '<span ng-if="{{ifItemShortcut}}" style="margin:0 8px;">{{itemShortcut}}</span>'+
                         '<small ng-if="{{ifItemNotification}}">{{itemNotification}}</small>'+
                         '</button>',
-                    singleMenuItem =    '<md-button ng-show="{{itemDisplay}}" ng-disabled="{{itemDisabled}}" ng-click="{{itemClick}}" aria-label="iconbar-button" class="dfx-horizontalmenu-button dfx-menu-button">'+
-                        '<md-icon ng-if="{{ifFaIcon}}" class="fa {{faIcon}} dfx-menu-button-icon"></md-icon>'+
-                        '<ng-md-icon ng-if="{{ifSvgIcon}}" icon="{{svgIcon}}" size="16" class="dfx-menu-button-icon"></ng-md-icon>'+
+                    singleMenuItem =    '<md-button ng-show="{{itemDisplay}}" ng-disabled="{{itemDisabled}}" ng-click="{{itemClick}}" aria-label="iconbar-button" style="{{attributes.singleMenu.button.style}}" class="dfx-horizontalmenu-button dfx-menu-button {{attributes.singleMenu.button.class}}">'+
+                        '<md-icon ng-if="{{ifFaIcon}}" class="fa {{faIcon}} dfx-menu-button-icon {{attributes.singleMenu.icon.class}}" style="font-size:{{attributes.singleMenu.icon.size}}px; {{attributes.singleMenu.icon.style}}"></md-icon>'+
+                        '<ng-md-icon ng-if="{{ifSvgIcon}}" icon="{{svgIcon}}" size="{{attributes.singleMenu.icon.size}}" class="dfx-menu-button-icon {{attributes.singleMenu.icon.class}}" style="{{attributes.singleMenu.icon.style}}"></ng-md-icon>'+
                         '<span>{{itemLabel}}</span>'+
                         '<span ng-if="{{ifItemShortcut}}" class="md-alt-text">{{itemShortcut}}</span>'+
                         '<small ng-if="{{ifItemNotification}}">{{itemNotification}}</small>'+
@@ -4814,103 +4814,13 @@ dfxGCC.directive('dfxGccWebIcon', ['$http', '$mdDialog', '$timeout', '$filter', 
         scope: true,
         link: function(scope, element, attrs, basectrl) {
             var component = scope.getComponent(element);
-            scope.$parent_scope = scope;
             basectrl.init(scope, element, component, attrs, 'icon').then(function() {
-                scope.attributes.icon.status = "overridden";
-                scope.attributes.state.status = "overridden";
-                scope.attributes.waiting.status = "overridden";
-                if ( typeof scope.attributes.icon === 'string' ) {
-                    var tempIcon = scope.attributes.icon;
-                    scope.attributes.icon = {
-                        "value": tempIcon,
-                        "type": scope.attributes.hasOwnProperty('iconType') ? scope.attributes.iconType : 'fa-icon'
-                    }
-                }
-                if ( !scope.attributes.icon.hasOwnProperty('size') ) {
-                    if ( scope.attributes.size ) {
-                        scope.attributes.icon.size = scope.attributes.size.value;
-                        delete scope.attributes.size;
-                    } else {
-                        scope.attributes.icon.size = 36;
-                    }
-                }
-                if ( scope.attributes.state.icon ) {
-                    scope.attributes.state.icon.color = ""; scope.attributes.state.checkedIcon.color = ""; scope.attributes.state.uncheckedIcon.color = "";
-                }
-                scope.ifShowIconTypes = function( icon, type ) {
-                    var regexp = /(^\')(.*)(\'$)/gm, filtered = regexp.exec( icon );
-                    if ( icon && ( icon.indexOf('+') >= 0 ) ) { filtered = false; }
-                    if ( icon === '' ) { filtered = true; }
-                    if ( icon.indexOf("'") === 0 && icon.indexOf('+') === -1 && icon.charAt(icon.length-1) === "'" && !type ) {
-                        icon.indexOf("'fa-") === 0 ? scope.attributes.icon.type = 'fa-icon' : scope.attributes.icon.type = 'svg-icon';
-                    } else if ( icon.indexOf("'") === 0 && icon.indexOf('+') === -1 && icon.charAt(icon.length-1) === "'" && type !== '' ) {
-                        switch ( type ) {
-                            case 'checked': icon.indexOf("'fa-") === 0 ? scope.attributes.state.checkedIcon.type = 'fa-icon' : scope.attributes.state.checkedIcon.type = 'svg-icon'; break;
-                            case 'unchecked': icon.indexOf("'fa-") === 0 ? scope.attributes.state.uncheckedIcon.type = 'fa-icon' : scope.attributes.state.uncheckedIcon.type = 'svg-icon'; break;
-                            case 'waiting': icon.indexOf("'fa-") === 0 ? scope.attributes.waiting.icon.type = 'fa-icon' : scope.attributes.waiting.icon.type = 'svg-icon'; break;
-                        }
-                    }
-                    if ( !type ) {
-                        scope.showIconTypes = filtered ? false : true;
-                    } else if ( type !== '' ) {
-                        switch ( type ) {
-                            case 'checked': scope.showCheckedIconTypes = filtered ? false : true; break;
-                            case 'unchecked': scope.showUncheckedIconTypes = filtered ? false : true; break;
-                            case 'waiting': scope.showWaitingIconTypes = filtered ? false : true; break;
-                        }
-                    }
-
-                }
-                scope.ifShowIconTypes(scope.attributes.icon.value);
-                scope.checkState = function(){
-                    if ( scope.attributes.state.binding !== '' ) {
-                        if ( scope.attributes.state.binding === 'true' || scope.attributes.state.binding === 'false' ) {
-                            switch ( scope.attributes.state.binding ) {
-                                case 'true': scope.attributes.state.binding = 'false'; scope.attributes.state.icon = scope.attributes.state.uncheckedIcon; break;
-                                case 'false': scope.attributes.state.binding = 'true'; scope.attributes.state.icon = scope.attributes.state.checkedIcon; break;
-                            }
-                        } else {
-                            if ( scope.$parent_scope[scope.attributes.state.binding] || !scope.$parent_scope[scope.attributes.state.binding] ) {
-                                if ( scope.$parent_scope[scope.attributes.state.binding] === 'true' ) {
-                                    scope.$parent_scope[scope.attributes.state.binding] = 'false'; scope.attributes.state.icon = scope.attributes.state.uncheckedIcon;
-                                } else if ( scope.$parent_scope[scope.attributes.state.binding] === true ) {
-                                    scope.$parent_scope[scope.attributes.state.binding] = false; scope.attributes.state.icon = scope.attributes.state.uncheckedIcon;
-                                } else if ( scope.$parent_scope[scope.attributes.state.binding] === 'false' ) {
-                                    scope.$parent_scope[scope.attributes.state.binding] = 'true'; scope.attributes.state.icon = scope.attributes.state.checkedIcon;
-                                } else if ( !scope.$parent_scope[scope.attributes.state.binding] ) {
-                                    scope.$parent_scope[scope.attributes.state.binding] = true; scope.attributes.state.icon = scope.attributes.state.checkedIcon;
-                                }
-                            }
-                        }
-                    }
-                }
-                if ( !scope.attributes.hasOwnProperty('waiting') ) {
-                    scope.attributes.waiting = {
-                        "value": "",
-                        "autoDisabled": false,
-                        "icon": { "value": "'fa-spinner'", "type": "fa-icon", "style": "", "class": "fa-pulse" }
-                    }
-                }
-                if ( scope.attributes.state.binding !== '' && scope.attributes.state.binding !== 'true' && scope.attributes.state.binding !== 'false' ) {
-                    basectrl.bindScopeVariable(scope, component.attributes.state.binding);
-                    if ( scope.$parent_scope[scope.attributes.state.binding] === true || scope.$parent_scope[scope.attributes.state.binding] === 'true' ) {
-                        scope.attributes.state.icon = scope.attributes.state.checkedIcon;
-                    } else if ( scope.$parent_scope[scope.attributes.state.binding] === 'false' || !scope.$parent_scope[scope.attributes.state.binding] ) {
-                        scope.attributes.state.icon = scope.attributes.state.uncheckedIcon;
-                    }
-                } else {
-                    if ( scope.attributes.state.binding === 'true' || scope.attributes.state.binding === 'false' ) {
-                        switch ( scope.attributes.state.binding ) {
-                            case 'true': scope.attributes.state.icon = scope.attributes.state.checkedIcon; break;
-                            case 'false': scope.attributes.state.icon = scope.attributes.state.uncheckedIcon; break;
-                        }
-                    }
-                }
-                var iconStateString = '';
-                scope.iconStateObj = '';
-                if(scope.attributes.state.binding !== '' && scope.attributes.state.binding !== 'true' && scope.attributes.state.binding !== 'false') {
-                    if(scope.attributes.state.binding.indexOf('$dfx_item') ===-1 ) iconStateString = '$parent_scope.';
-                    scope.iconStateObj = iconStateString + scope.attributes.state.binding;
+                scope.checkState = function( dfxIsState ){
+                    if(scope.attributes.state.bindingType === 'boolean'){
+                        scope.attributes.state.binding = scope.attributes.state.binding === 'true' ? 'false' : 'true';
+                        return;
+                    }                    
+                    return !dfxIsState;
                 }
             });
         }
