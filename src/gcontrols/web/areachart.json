@@ -1,59 +1,29 @@
 {
-	"template": 			{ "value": "default" },
-	"name": {
-		"value": "areaChart1"
+	"template": 				{ "value": "default" },
+	"name": 						{ "value": "areaChart1" },
+	"flex":						 	{ "value": 50 },
+	"binding": 					{ "value": "" },
+	"title": 						{ "value": "'Stacked Area Chart'" },
+	"chartType": 				{ "value": "stackedAreaChart" },
+	"display": 					{ "value": "true" },
+	"options": 					{
+  	"xAxisLabel": "'X Axis'",
+		"yAxisLabel": "'Y Axis'",
+		"xAxisLabelDistance": -5,
+  	"yAxisLabelDistance": 0,
+  	"duration": 500,
+  	"showXAxis": "true",
+  	"showYAxis": "true",
+		"showLegend": "true",
+		"useInteractiveGuideline": "true"
 	},
-	"flex": {
-	  	"value": 50
-	},
-	"binding": {
-	  	"value": ""
-	},
-	"title": {
-	  	"value": "'Stacked Area Chart'"
-	},
-  	"chartType": {
-	  "value": "stackedAreaChart"
-	},
-	"display": {
-		"value": "true"
-	},
-	"options": {
-	  	"xAxisLabel": "'X Axis'",
-			"yAxisLabel": "'Y Axis'",
-			"xAxisLabelDistance": -5,
-	  	"yAxisLabelDistance": 0,
-	  	"duration": 500,
-	  	"showXAxis": "true",
-	  	"showYAxis": "true",
-			"showLegend": "true",
-			"useInteractiveGuideline": "true"
-	},
-	"dynamicOptions": {
-	  	"value": ""
-	},
-	"style": {
-	  	"value": ""
-	},
-	"classes": {
-		"value": ""
-	},
-	"dynamicClasses": {
-		"value": ""
-	},
-	"onareaclick": {
-	  	"value": ""
-	},
-	"onareamouseover": {
-	  	"value": ""
-	},
-	"onareamouseleave": {
-	  	"value": ""
-	},
-	"onstatechange": {
-	 	"value": ""
-	},
-	"onrenderend": {
-	  	"value": ""
-	}
+	"dynamicOptions": 	{ "value": "" },
+	"style": 						{ "value": "" },
+	"classes": 					{ "value": "" },
+	"dynamicClasses": 	{ "value": "" },
+	"onareaclick": 			{ "value": "" },
+	"onareamouseover": 	{ "value": "" },
+	"onareamouseleave":	{ "value": "" },
+	"onstatechange": 		{ "value": "" },
+	"onrenderend": 			{ "value": "" }
 }

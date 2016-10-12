@@ -1,10 +1,11 @@
 <div class="dfx-core-gc-treeview {{attributes.classes.value}}" style="{{attributes.style.value}}" ng-class="$eval(attributes.dynamicClasses.value)" ng-show="$eval(attributes.display.value)">
-    <div ng-if="attributes.dynamic.value !==''">
+    <div ng-if="attributes.treeItemsType.value ==='dynamic'">
         <script type="text/ng-template" id="{{component_id}}_dynamic_tree_view">
             <md-icon ng-if="$dfx_item.expanded && $dfx_item[attributes.repeatable_property.value].length > 0 && attributes.isOpened.type === 'fa-icon'" ng-click="toggleNode($event, $dfx_item)" style="color: {{attributes.color.value}};" class="fa node-trigger {{ $eval(attributes.isOpened.value) || 'fa-minus' }}"></md-icon>
             <md-icon ng-if="!$dfx_item.expanded && $dfx_item[attributes.repeatable_property.value].length > 0 && attributes.isClosed.type === 'fa-icon'" ng-click="toggleNode($event, $dfx_item)" style="color: {{attributes.color.value}};" class="fa node-trigger {{ $eval(attributes.isClosed.value)  || 'fa-plus' }}"></md-icon>
             <ng-md-icon ng-if="$dfx_item.expanded && $dfx_item[attributes.repeatable_property.value].length > 0 && attributes.isOpened.type ==='svg-icon'" ng-click="toggleNode($event, $dfx_item)" style="color: {{attributes.color.value}}" class="node-trigger" icon="{{ $eval(attributes.isOpened.value) || 'expand_more' }}" size="16"></ng-md-icon>
             <ng-md-icon ng-if="!$dfx_item.expanded && $dfx_item[attributes.repeatable_property.value].length > 0 && attributes.isClosed.type ==='svg-icon'" ng-click="toggleNode($event, $dfx_item)" style="color: {{attributes.color.value}}" class="node-trigger" icon="{{ $eval(attributes.isClosed.value)  || 'chevron_right'}}" size="16"></ng-md-icon>
+            <md-checkbox ng-if="attributes.selected.value!==''" ng-checked="isSelectedItem($dfx_item)" ng-click="toggleSelectedItem($dfx_item, nodeIndexes, 'dynamic')" class="dfx-core-gc-treeview-checkbox md-altTheme-theme md-primary" aria-label="Tree Item checkbox"></md-checkbox>
             <a href="#" ng-click="$eval(attributes.onclick.value)"
                ng-dblclick="$eval(attributes.ondblclick.value)"
                ng-keypress="$eval(attributes.onkeypress.value)"
@@ -17,12 +18,12 @@
                ng-mousedown="$eval(attributes.onmousedown.value)"
                ng-mouseup="$eval(attributes.onmouseup.value)">{{ $eval($dfx_item[attributes.label.value]) }}</a>
             <ul ng-if="$dfx_item[attributes.repeatable_property.value].length > 0" ng-show="$dfx_item.expanded">
-                <li ng-repeat="$dfx_item in $dfx_item[attributes.repeatable_property.value] track by $index" class="tree-view-item" ng-include="'{{component_id}}_dynamic_tree_view'"></li>
+                <li ng-repeat="$dfx_item in $dfx_item[attributes.repeatable_property.value] track by $index" ng-init="nodeIndexes = nodeIndexes +','+ $index" class="tree-view-item" ng-include="'{{component_id}}_dynamic_tree_view'"></li>
             </ul>
         </script>
-        <ul><li ng-repeat="$dfx_item in $gcscope[attributes.dynamic.value] track by $index" class="tree-view-item" ng-include="'{{component_id}}_dynamic_tree_view'"></li></ul>
+        <ul><li ng-repeat="$dfx_item in $gcscope[attributes.dynamic.value] track by $index" ng-init="nodeIndexes = $index" class="tree-view-item" ng-include="'{{component_id}}_dynamic_tree_view'"></li></ul>
     </div>
-    <div ng-if="attributes.dynamic.value ===''">
+    <div ng-if="attributes.treeItemsType.value ==='static'">
         <script type="text/ng-template" id="{{component_id}}_static_tree_view">
             <md-icon ng-if="$dfx_item.expanded && $dfx_item.children.length > 0 && attributes.isOpened.type === 'fa-icon'" ng-click="toggleNode($event, $dfx_item)" style="color: {{attributes.color.value}};" class="fa node-trigger {{ $eval(attributes.isOpened.value) || 'fa-minus' }}"></md-icon>
             <md-icon ng-if="!$dfx_item.expanded && $dfx_item.children.length > 0 && attributes.isClosed.type === 'fa-icon'" ng-click="toggleNode($event, $dfx_item)" style="color: {{attributes.color.value}};" class="fa node-trigger {{ $eval(attributes.isClosed.value)  || 'fa-plus' }}"></md-icon>
@@ -30,6 +31,7 @@
               icon="{{ $eval(attributes.isOpened.value) || 'expand_more' }}" size="16"></ng-md-icon>
             <ng-md-icon ng-if="!$dfx_item.expanded && $dfx_item.children.length > 0 && attributes.isClosed.type ==='svg-icon'" ng-click="toggleNode($event, $dfx_item)" style="color: {{attributes.color.value}}" class="node-trigger"
               icon="{{ $eval(attributes.isClosed.value)  || 'chevron_right'}}" size="16"></ng-md-icon>
+            <md-checkbox ng-if="attributes.selected.value!==''" ng-checked="isSelectedItem($dfx_item)" ng-click="toggleSelectedItem($dfx_item, nodeIndexes, 'static')" class="dfx-core-gc-treeview-checkbox md-altTheme-theme md-primary" aria-label="Tree Item checkbox"></md-checkbox>
             <a href="#" ng-click="$eval(attributes.onclick.value)"
                ng-dblclick="$eval(attributes.ondblclick.value)"
                ng-keypress="$eval(attributes.onkeypress.value)"
@@ -42,9 +44,9 @@
                ng-mousedown="$eval(attributes.onmousedown.value)"
                ng-mouseup="$eval(attributes.onmouseup.value)">{{ $eval($dfx_item.name) }}</a>
             <ul ng-if="$dfx_item.children.length > 0" ng-show="$dfx_item.expanded">
-                <li ng-repeat="$dfx_item in $dfx_item.children track by $index" class="tree-view-item" ng-include="'{{component_id}}_static_tree_view'"></li>
+                <li ng-repeat="$dfx_item in $dfx_item.children track by $index" ng-init="nodeIndexes = nodeIndexes +','+ $index" class="tree-view-item" ng-class ng-include="'{{component_id}}_static_tree_view'"></li>
             </ul>
         </script>
-        <ul><li ng-repeat="$dfx_item in attributes.static.value track by $index" class="tree-view-item" ng-include="'{{component_id}}_static_tree_view'"></li></ul>
+        <ul><li ng-repeat="$dfx_item in attributes.static.value track by $index" ng-init="nodeIndexes = $index" class="tree-view-item" ng-include="'{{component_id}}_static_tree_view'"></li></ul>
     </div>
 </div>

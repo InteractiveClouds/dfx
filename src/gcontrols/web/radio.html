@@ -1,81 +1,55 @@
-<div ng-show="$eval(attributes.display.value)" ng-if="attributes.isBindingPresent.value=== true"
-     style="{{attributes.style.value}}" ng-class="$eval(attributes.dynamicClasses.value)" class="{{attributes.classes.value}}">
-    <div class="gc-radio-label-preview"><span ng-bind="$eval(attributes.label.value)"></span></div>
-    <md-radio-group ng-if="attributes.dynamicPresent.value=== true" ng-model="$gcscope[attributes.binding.value]" ng-change="$eval(attributes.onchange.value)" ng-class="attributes.buttonClass.value">
-        <md-radio-button ng-repeat="it in $gcscope[attributes.source.value] track by $id(it)"
-                         ng-focus="$eval(attributes.onfocus.value)"
-                         ng-blur="$eval(attributes.onblur.value)"
-                         ng-click="$eval(attributes.onclick.value)"
-                         ng-dblclick="$eval(attributes.ondblclick.value)"
-                         ng-keypress="$eval(attributes.onkeypress.value)"
-                         ng-keydown="$eval(attributes.onkeydown.value)"
-                         ng-keyup="$eval(attributes.onkeyup.value)"
-                         ng-mouseover="$eval(attributes.onmouseover.value)"
-                         ng-mouseenter="$eval(attributes.onmouseenter.value)"
-                         ng-mousemove="$eval(attributes.onmousemove.value)"
-                         ng-mouseleave="$eval(attributes.onmouseleave.value)"
-                         ng-mousedown="$eval(attributes.onmousedown.value)"
-                         ng-mouseup="$eval(attributes.onmouseup.value)"
-                         ng-value="it[attributes.bindingProperty.value] || it.$$hashKey" class="gc-radio" aria-label="{{it[attributes.bindingProperty.value]}}"
-                         ng-disabled="$eval(attributes.disabled.value)">{{it[attributes.propToDisplay.value]}}
-        </md-radio-button>
-    </md-radio-group>
-    <md-radio-group ng-if="attributes.dynamicPresent.value=== false" ng-model="attributes.empty.value" ng-change="$eval(attributes.onchange.value)" ng-class="attributes.buttonClass.value">
-        <md-radio-button ng-repeat="it in attributes.radioItems.value "
-                         ng-focus="$eval(attributes.onfocus.value)"
-                         ng-blur="$eval(attributes.onblur.value)"
-                         ng-click="$eval(attributes.onclick.value)"
-                         ng-dblclick="$eval(attributes.ondblclick.value)"
-                         ng-keypress="$eval(attributes.onkeypress.value)"
-                         ng-keydown="$eval(attributes.onkeydown.value)"
-                         ng-keyup="$eval(attributes.onkeyup.value)"
-                         ng-mouseover="$eval(attributes.onmouseover.value)"
-                         ng-mouseenter="$eval(attributes.onmouseenter.value)"
-                         ng-mousemove="$eval(attributes.onmousemove.value)"
-                         ng-mouseleave="$eval(attributes.onmouseleave.value)"
-                         ng-mousedown="$eval(attributes.onmousedown.value)"
-                         ng-mouseup="$eval(attributes.onmouseup.value)"
-                         ng-value="it.value" class="gc-radio" aria-label="{{it.value}}"
-                         ng-disabled="$eval(attributes.disabled.value)">{{$eval(it.display)}}
-        </md-radio-button>
-    </md-radio-group>
+<div ng-if="isBindingPresent.value=== true" ng-show="$eval(attributes.display.value)" style="{{attributes.style.value}}" class="dfx-core-gc-radio {{attributes.classes.value}}" ng-class="$eval(attributes.dynamicClasses.value)">
+    <div><span style="{{attributes.labelStyle.style}}" class="gc-radio-label-preview dfx-core-gc-radio-label {{attributes.labelStyle.class}}" ng-bind="$eval(attributes.label.value)"></span></div>
+    <div ng-if="attributes.optionsType.value==='dynamic'">
+        <md-radio-group ng-if="bindingType.value === 'noBinding'" ng-model="attribtes.binding.value" ng-change="$eval(attributes.onchange.value)" class="dfx-core-gc-radio-group md-primary" ng-style="{'flex-direction': attributes.direction.value }" aria-label="{{dfxRadioBinding}}">
+            <md-radio-button style="{{attributes.itemStyle.item.style}}" class="dfx-core-gc-radio-button gc-radio {{attributes.itemStyle.item.class}}" ng-repeat="it in $eval(attributes.source.value) track by $id(it)" ng-init="dfxRadioValue = $eval('it.' + attributes.bindingProperty.value)" ng-value="dfxRadioValue || it.$$hashKey" ng-focus="$eval(attributes.onfocus.value)" ng-blur="$eval(attributes.onblur.value)" ng-click="$eval(attributes.onclick.value)" ng-dblclick="$eval(attributes.ondblclick.value)" ng-keypress="$eval(attributes.onkeypress.value)" ng-keydown="$eval(attributes.onkeydown.value)" ng-keyup="$eval(attributes.onkeyup.value)" ng-mouseover="$eval(attributes.onmouseover.value)" ng-mouseenter="$eval(attributes.onmouseenter.value)" ng-mousemove="$eval(attributes.onmousemove.value)" ng-mouseleave="$eval(attributes.onmouseleave.value)" ng-mousedown="$eval(attributes.onmousedown.value)" ng-mouseup="$eval(attributes.onmouseup.value)" ng-disabled="$eval(attributes.disabled.value)" aria-label="{{dfxRadioValue}}">
+            <span class="{{attributes.itemStyle.label.class}}" style="{{attributes.itemStyle.label.style}}" ng-init="dfxRadioLabel = $eval('it.' + attributes.propToDisplay.value)" ng-bind="dfxRadioLabel"></span>
+            </md-radio-button>
+        </md-radio-group>
+        <md-radio-group ng-if="bindingType.value === 'simpleBinding'" ng-model="$parent_scope[attribtes.binding.value]" ng-change="$eval(attributes.onchange.value)" class="dfx-core-gc-radio-group md-primary" ng-style="{'flex-direction': attributes.direction.value }" aria-label="{{dfxRadioBinding}}">
+            <md-radio-button style="{{attributes.itemStyle.item.style}}" class="dfx-core-gc-radio-button gc-radio {{attributes.itemStyle.item.class}}" ng-repeat="it in $eval(attributes.source.value) track by $id(it)" ng-init="dfxRadioValue = $eval('it.' + attributes.bindingProperty.value)" ng-value="dfxRadioValue || it.$$hashKey" ng-focus="$eval(attributes.onfocus.value)" ng-blur="$eval(attributes.onblur.value)" ng-click="$eval(attributes.onclick.value)" ng-dblclick="$eval(attributes.ondblclick.value)" ng-keypress="$eval(attributes.onkeypress.value)" ng-keydown="$eval(attributes.onkeydown.value)" ng-keyup="$eval(attributes.onkeyup.value)" ng-mouseover="$eval(attributes.onmouseover.value)" ng-mouseenter="$eval(attributes.onmouseenter.value)" ng-mousemove="$eval(attributes.onmousemove.value)" ng-mouseleave="$eval(attributes.onmouseleave.value)" ng-mousedown="$eval(attributes.onmousedown.value)" ng-mouseup="$eval(attributes.onmouseup.value)" ng-disabled="$eval(attributes.disabled.value)" aria-label="{{dfxRadioValue}}">
+            <span class="{{attributes.itemStyle.label.class}}" style="{{attributes.itemStyle.label.style}}" ng-init="dfxRadioLabel = $eval('it.' + attributes.propToDisplay.value)" ng-bind="dfxRadioLabel"></span>
+            </md-radio-button>
+        </md-radio-group>
+        <md-radio-group ng-if="bindingType.value === 'complexBinding'" dfx-complex-ng-model ng-change="$eval(attributes.onchange.value)" class="dfx-core-gc-radio-group md-primary" ng-style="{'flex-direction': attributes.direction.value }" aria-label="{{dfxRadioBinding}}">
+            <md-radio-button style="{{attributes.itemStyle.item.style}}" class="dfx-core-gc-radio-button gc-radio {{attributes.itemStyle.item.class}}" ng-repeat="it in $eval(attributes.source.value) track by $id(it)" ng-init="dfxRadioValue = $eval('it.' + attributes.bindingProperty.value)" ng-value="dfxRadioValue || it.$$hashKey" ng-focus="$eval(attributes.onfocus.value)" ng-blur="$eval(attributes.onblur.value)" ng-click="$eval(attributes.onclick.value)" ng-dblclick="$eval(attributes.ondblclick.value)" ng-keypress="$eval(attributes.onkeypress.value)" ng-keydown="$eval(attributes.onkeydown.value)" ng-keyup="$eval(attributes.onkeyup.value)" ng-mouseover="$eval(attributes.onmouseover.value)" ng-mouseenter="$eval(attributes.onmouseenter.value)" ng-mousemove="$eval(attributes.onmousemove.value)" ng-mouseleave="$eval(attributes.onmouseleave.value)" ng-mousedown="$eval(attributes.onmousedown.value)" ng-mouseup="$eval(attributes.onmouseup.value)" ng-disabled="$eval(attributes.disabled.value)" aria-label="{{dfxRadioValue}}">
+            <span class="{{attributes.itemStyle.label.class}}" style="{{attributes.itemStyle.label.style}}" ng-init="dfxRadioLabel = $eval('it.' + attributes.propToDisplay.value)" ng-bind="dfxRadioLabel"></span>
+            </md-radio-button>
+        </md-radio-group>
+    </div>
+    <div ng-if="attributes.optionsType.value==='static'">
+        <md-radio-group ng-if="bindingType.value === 'noBinding'" ng-model="attributes.binding.value" ng-change="$eval(attributes.onchange.value)" class="dfx-core-gc-radio-group md-primary" ng-style="{'flex-direction': attributes.direction.value }">
+            <md-radio-button style="{{attributes.itemStyle.item.style}}" class="dfx-core-gc-radio-button gc-radio {{attributes.itemStyle.item.class}}" ng-repeat="it in attributes.radioItems.value " ng-value="it.value" ng-focus="$eval(attributes.onfocus.value)" ng-blur="$eval(attributes.onblur.value)" ng-click="$eval(attributes.onclick.value)" ng-dblclick="$eval(attributes.ondblclick.value)" ng-keypress="$eval(attributes.onkeypress.value)" ng-keydown="$eval(attributes.onkeydown.value)" ng-keyup="$eval(attributes.onkeyup.value)" ng-mouseover="$eval(attributes.onmouseover.value)" ng-mouseenter="$eval(attributes.onmouseenter.value)" ng-mousemove="$eval(attributes.onmousemove.value)" ng-mouseleave="$eval(attributes.onmouseleave.value)" ng-mousedown="$eval(attributes.onmousedown.value)" ng-mouseup="$eval(attributes.onmouseup.value)" ng-disabled="$eval(attributes.disabled.value)" aria-label="{{it.value}}">
+                <span class="{{attributes.itemStyle.label.class}}" style="{{attributes.itemStyle.label.style}}" ng-bind="$eval(it.display)"></span>
+            </md-radio-button>
+        </md-radio-group>
+        <md-radio-group ng-if="bindingType.value === 'simpleBinding'" ng-model="$parent_scope[attributes.binding.value]" ng-change="$eval(attributes.onchange.value)" class="dfx-core-gc-radio-group md-primary" ng-style="{'flex-direction': attributes.direction.value }">
+            <md-radio-button style="{{attributes.itemStyle.item.style}}" class="dfx-core-gc-radio-button gc-radio {{attributes.itemStyle.item.class}}" ng-repeat="it in attributes.radioItems.value " ng-value="it.value" ng-focus="$eval(attributes.onfocus.value)" ng-blur="$eval(attributes.onblur.value)" ng-click="$eval(attributes.onclick.value)" ng-dblclick="$eval(attributes.ondblclick.value)" ng-keypress="$eval(attributes.onkeypress.value)" ng-keydown="$eval(attributes.onkeydown.value)" ng-keyup="$eval(attributes.onkeyup.value)" ng-mouseover="$eval(attributes.onmouseover.value)" ng-mouseenter="$eval(attributes.onmouseenter.value)" ng-mousemove="$eval(attributes.onmousemove.value)" ng-mouseleave="$eval(attributes.onmouseleave.value)" ng-mousedown="$eval(attributes.onmousedown.value)" ng-mouseup="$eval(attributes.onmouseup.value)" ng-disabled="$eval(attributes.disabled.value)" aria-label="{{it.value}}">
+                <span class="{{attributes.itemStyle.label.class}}" style="{{attributes.itemStyle.label.style}}" ng-bind="$eval(it.display)"></span>
+            </md-radio-button>
+        </md-radio-group>
+        <md-radio-group ng-if="bindingType.value === 'complexBinding'" dfx-complex-ng-model ng-change="$eval(attributes.onchange.value)" class="dfx-core-gc-radio-group md-primary" ng-style="{'flex-direction': attributes.direction.value }">
+            <md-radio-button style="{{attributes.itemStyle.item.style}}" class="dfx-core-gc-radio-button gc-radio {{attributes.itemStyle.item.class}}" ng-repeat="it in attributes.radioItems.value " ng-value="it.value" ng-focus="$eval(attributes.onfocus.value)" ng-blur="$eval(attributes.onblur.value)" ng-click="$eval(attributes.onclick.value)" ng-dblclick="$eval(attributes.ondblclick.value)" ng-keypress="$eval(attributes.onkeypress.value)" ng-keydown="$eval(attributes.onkeydown.value)" ng-keyup="$eval(attributes.onkeyup.value)" ng-mouseover="$eval(attributes.onmouseover.value)" ng-mouseenter="$eval(attributes.onmouseenter.value)" ng-mousemove="$eval(attributes.onmousemove.value)" ng-mouseleave="$eval(attributes.onmouseleave.value)" ng-mousedown="$eval(attributes.onmousedown.value)" ng-mouseup="$eval(attributes.onmouseup.value)" ng-disabled="$eval(attributes.disabled.value)" aria-label="{{it.value}}">
+                <span class="{{attributes.itemStyle.label.class}}" style="{{attributes.itemStyle.label.style}}" ng-bind="$eval(it.display)"></span>
+            </md-radio-button>
+        </md-radio-group>
+    </div>
 </div>
 
-<div ng-show="$eval(attributes.display.value)" ng-if="attributes.isBindingPresent.value=== false"
-     style="{{attributes.style.value}}" ng-class="$eval(attributes.dynamicClasses.value)" class="{{attributes.classes.value}}">
-    <div class="gc-radio-label-preview"><span ng-bind="$eval(attributes.label.value)"></span></div>
-    <md-radio-group ng-if="attributes.dynamicPresent.value=== true" ng-model="attributes.empty.value" ng-change="$eval(attributes.onchange.value)" ng-class="attributes.buttonClass.value">
-        <md-radio-button ng-repeat="it in $gcscope[attributes.source.value] track by $id(it)"
-                         ng-focus="$eval(attributes.onfocus.value)"
-                         ng-blur="$eval(attributes.onblur.value)"
-                         ng-click="$eval(attributes.onclick.value)"
-                         ng-dblclick="$eval(attributes.ondblclick.value)"
-                         ng-keypress="$eval(attributes.onkeypress.value)"
-                         ng-keydown="$eval(attributes.onkeydown.value)"
-                         ng-keyup="$eval(attributes.onkeyup.value)"
-                         ng-mouseover="$eval(attributes.onmouseover.value)"
-                         ng-mouseenter="$eval(attributes.onmouseenter.value)"
-                         ng-mousemove="$eval(attributes.onmousemove.value)"
-                         ng-mouseleave="$eval(attributes.onmouseleave.value)"
-                         ng-mousedown="$eval(attributes.onmousedown.value)"
-                         ng-mouseup="$eval(attributes.onmouseup.value)"
-                         ng-value="it[attributes.bindingProperty.value] || it.$$hashKey" class="gc-radio" aria-label="{{it[attributes.propToDisplay.value]}}" ng-disabled="$eval(attributes.disabled.value)">{{it[attributes.propToDisplay.value]}}</md-radio-button>
-    </md-radio-group>
-    <md-radio-group ng-if="attributes.dynamicPresent.value=== false" ng-model="attributes.currentItem" ng-change="$eval(attributes.onchange.value)" ng-class="attributes.buttonClass.value">
-        <md-radio-button ng-repeat="it in attributes.radioItems.value track by $index"
-                         ng-focus="$eval(attributes.onfocus.value)"
-                         ng-blur="$eval(attributes.onblur.value)"
-                         ng-click="$eval(attributes.onclick.value)"
-                         ng-dblclick="$eval(attributes.ondblclick.value)"
-                         ng-keypress="$eval(attributes.onkeypress.value)"
-                         ng-keydown="$eval(attributes.onkeydown.value)"
-                         ng-keyup="$eval(attributes.onkeyup.value)"
-                         ng-mouseover="$eval(attributes.onmouseover.value)"
-                         ng-mouseenter="$eval(attributes.onmouseenter.value)"
-                         ng-mousemove="$eval(attributes.onmousemove.value)"
-                         ng-mouseleave="$eval(attributes.onmouseleave.value)"
-                         ng-mousedown="$eval(attributes.onmousedown.value)"
-                         ng-mouseup="$eval(attributes.onmouseup.value)"
-                         ng-value="it" class="gc-radio" aria-label="{{it.value}}" ng-disabled="$eval(attributes.disabled.value)">{{$eval(it.display)}}</md-radio-button>
-    </md-radio-group>
+<div ng-if="isBindingPresent.value=== false" ng-show="$eval(attributes.display.value)" style="{{attributes.style.value}}" class="dfx-core-gc-radio {{attributes.classes.value}}" ng-class="$eval(attributes.dynamicClasses.value)">
+    <div><span style="{{attributes.labelStyle.style}}" class="gc-radio-label-preview dfx-core-gc-radio-label {{attributes.labelStyle.class}}" ng-bind="$eval(attributes.label.value)"></span></div>
+    <div ng-if="attributes.optionsType.value==='dynamic'">
+        <md-radio-group ng-model="attribtes.binding.value" ng-change="$eval(attributes.onchange.value)" class="dfx-core-gc-radio-group md-primary" ng-style="{'flex-direction': attributes.direction.value }" aria-label="{{dfxRadioBinding}}">
+            <md-radio-button style="{{attributes.itemStyle.item.style}}" class="dfx-core-gc-radio-button gc-radio {{attributes.itemStyle.item.class}}" ng-repeat="it in $eval(attributes.source.value) track by $id(it)" ng-init="dfxRadioValue = $eval('it.' + attributes.bindingProperty.value)" ng-value="dfxRadioValue || it.$$hashKey" ng-focus="$eval(attributes.onfocus.value)" ng-blur="$eval(attributes.onblur.value)" ng-click="$eval(attributes.onclick.value)" ng-dblclick="$eval(attributes.ondblclick.value)" ng-keypress="$eval(attributes.onkeypress.value)" ng-keydown="$eval(attributes.onkeydown.value)" ng-keyup="$eval(attributes.onkeyup.value)" ng-mouseover="$eval(attributes.onmouseover.value)" ng-mouseenter="$eval(attributes.onmouseenter.value)" ng-mousemove="$eval(attributes.onmousemove.value)" ng-mouseleave="$eval(attributes.onmouseleave.value)" ng-mousedown="$eval(attributes.onmousedown.value)" ng-mouseup="$eval(attributes.onmouseup.value)" ng-disabled="$eval(attributes.disabled.value)" aria-label="{{dfxRadioValue}}">
+            <span class="{{attributes.itemStyle.label.class}}" style="{{attributes.itemStyle.label.style}}" ng-init="dfxRadioLabel = $eval('it.' + attributes.propToDisplay.value)" ng-bind="dfxRadioLabel"></span>
+            </md-radio-button>
+        </md-radio-group>
+    </div>
+    <div ng-if="attributes.optionsType.value==='static'">
+        <md-radio-group ng-model="attributes.binding.value" ng-change="$eval(attributes.onchange.value)" class="dfx-core-gc-radio-group md-primary" ng-style="{'flex-direction': attributes.direction.value }">
+            <md-radio-button style="{{attributes.itemStyle.item.style}}" class="dfx-core-gc-radio-button gc-radio {{attributes.itemStyle.item.class}}" ng-repeat="it in attributes.radioItems.value " ng-value="it.value" ng-focus="$eval(attributes.onfocus.value)" ng-blur="$eval(attributes.onblur.value)" ng-click="$eval(attributes.onclick.value)" ng-dblclick="$eval(attributes.ondblclick.value)" ng-keypress="$eval(attributes.onkeypress.value)" ng-keydown="$eval(attributes.onkeydown.value)" ng-keyup="$eval(attributes.onkeyup.value)" ng-mouseover="$eval(attributes.onmouseover.value)" ng-mouseenter="$eval(attributes.onmouseenter.value)" ng-mousemove="$eval(attributes.onmousemove.value)" ng-mouseleave="$eval(attributes.onmouseleave.value)" ng-mousedown="$eval(attributes.onmousedown.value)" ng-mouseup="$eval(attributes.onmouseup.value)" ng-disabled="$eval(attributes.disabled.value)" aria-label="{{it.value}}">
+                <span class="{{attributes.itemStyle.label.class}}" style="{{attributes.itemStyle.label.style}}" ng-bind="$eval(it.display)"></span>
+            </md-radio-button>
+        </md-radio-group>
+    </div>
 </div>

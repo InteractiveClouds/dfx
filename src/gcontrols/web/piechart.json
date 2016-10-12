@@ -1,63 +1,29 @@
 {
 	"template": 			{ "value": "default" },
-	"name": {
-		"value": "pieChart1"
-	},
-	"flex": {
-	  	"value": 50
-	},
-	"binding": {
-	  	"value": ""
-	},
-	"title": {
-	  	"value": "'Pie Chart'"
-	},
-  	"chartType": {
-	  	"value": "pieChart"
-	},
-	"display": {
-		"value": "true"
-	},
+	"name": 					{ "value": "pieChart1" },
+	"flex": 					{ "value": 50 },
+	"binding": 				{ "value": "" },
+	"title": 					{ "value": "'Pie Chart'" },
+	"chartType":			{ "value": "pieChart" },
+	"display": 				{ "value": "true" },
 	"options": {
-	  	"labelSunbeamLayout": "true",
-			"labelThreshold": 0.01,
-			"donutLabelsOutside": "false",
-			"showLabels": "true",
-			"showLegend": "true",
-			"cornerRadius": 0,
-			"growOnHover": "true"
+  	"labelSunbeamLayout": "true",
+		"labelThreshold": 0.01,
+		"donutLabelsOutside": "false",
+		"showLabels": "true",
+		"showLegend": "true",
+		"cornerRadius": 0,
+		"growOnHover": "true"
 	},
-	"dynamicOptions": {
-	  	"value": ""
-	},
-	"style": {
-	  	"value": ""
-	},
-	"classes": {
-		"value": ""
-	},
-	"dynamicClasses": {
-		"value": ""
-	},
-	"onclick": {
-		"value": ""
-	},
-	"ondblclick": {
-	  	"value": ""
-	},
-	"onmouseover": {
-	  	"value": ""
-	},
-	"onmouseleave": {
-	  	"value": ""
-	},
-	"onmousemove": {
-	  	"value": ""
-	},
-	"onstatechange": {
-	  	"value": ""
-	},
-	"onrenderend": {
-	  	"value": ""
-	}
+	"dynamicOptions": { "value": "" },
+	"style": 					{ "value": "" },
+	"classes": 				{ "value": "" },
+	"dynamicClasses": { "value": "" },
+	"onclick": 				{ "value": "" },
+	"ondblclick": 		{ "value": "" },
+	"onmouseover": 		{ "value": "" },
+	"onmouseleave": 	{ "value": "" },
+	"onmousemove": 		{ "value": "" },
+	"onstatechange": 	{ "value": "" },
+	"onrenderend": 		{ "value": "" }
 }

@@ -30,10 +30,10 @@
                         <dfx-ve-expression-editor></dfx-ve-expression-editor>
                     </div>
                 </li>
-                <li class="col-md-12" dfx-gc-property="icon">
+                <li class="col-md-12">
                     <span class="col-md-6">Icon:</span>
                     <div class="col-md-6" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.icon.value" style="margin-left:-15px;" ng-change="overrideAttribute('icon');ifShowIconTypes(attributes.icon.value)"/>
+                        <input class="col-md-12" type="text" ng-model="attributes.icon.value" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" style="margin-left:-15px;" ng-change="overrideAttribute('icon');ifShowIconTypes(attributes.icon.value)"/>
                         <md-icon ng-click="showFontIcons($event, attributes.icon)" dfx-ve-picker-icon dfx-picker-property="icon" class="dfx-ve-picker-icon fa fa-ellipsis-h"></md-icon>
                     </div>
                 </li>
@@ -41,8 +41,8 @@
                     <span class="col-md-6">Icon Type:</span>
                     <div class="col-md-6" layout="row" style="padding: 0 0 8px 0">
                         <md-radio-group ng-model="attributes.icon.type">
-                            <md-radio-button value="fa-icon" ngChange="overrideAttribute('icon')" style="margin: 0;" class="md-primary">Font Awesome Icon</md-radio-button>
-                            <md-radio-button value="svg-icon" ngChange="overrideAttribute('icon')" style="margin: 0;" class="md-primary">SVG Icon</md-radio-button>
+                            <md-radio-button value="fa-icon" ngChange="overrideAttribute('icon.type')" style="margin: 0;" class="md-primary">Font Awesome Icon</md-radio-button>
+                            <md-radio-button value="svg-icon" ngChange="overrideAttribute('icon.type')" style="margin: 0;" class="md-primary">SVG Icon</md-radio-button>
                         </md-radio-group>
                     </div>
                 </li>
@@ -79,7 +79,6 @@
             </ul>
         </li>
     </ul>
-
     <ul>
         <li>
             <input class="dfx-ve-property-treeview-button" type="checkbox" id="item-2" />
@@ -111,7 +110,7 @@
                 </li>
                 <li class="col-md-12" ng-if="attributes.selectedType.value !=='number'">
                     <input class="dfx-ve-property-treeview-button" type="checkbox" id="item-6" />
-                    <label for="item-6" style="font-weight:500; padding-left: 18px;">Regular Expression</label>
+                    <label for="item-6" class="dfx-ve-property-title-level-1"><span>Regular Expression</span></label>
                     <ul class="dfx-ve-property-treeview-content">
                         <li class="col-md-12">
                             <span class="col-md-1"></span>
@@ -121,53 +120,75 @@
                         <li class="col-md-12">
                             <span class="col-md-1"></span>
                             <span class="col-md-5">error message:</span>
-                            <input class="col-md-6" type="text" ng-model="attributes.pattern.errorMessage" ng-change="overrideAttribute('pattern')"/>
+                            <input class="col-md-6" type="text" ng-model="attributes.pattern.errorMessage" ng-change="overrideAttribute('pattern.errorMessage')"/>
                         </li>
                     </ul>
                 </li>
             </ul>
         </li>
     </ul>
-
     <ul>
         <li>
             <input class="dfx-ve-property-treeview-button" type="checkbox" id="item-1" />
             <label for="item-1">Styling Attributes</label>
             <ul class="dfx-ve-property-treeview-content">
                 <li class="col-md-12">
-					<span class="col-md-12">
-						<div layout>
-                            <md-slider class="md-primary" flex ng-model="attributes.flex.value" step="5" min="0" max="100" aria-label="Flex width:" ng-change="overrideAttribute('flex');changeWidth()" ng-model-options="{ debounce: 500 }">
-                            </md-slider>
-                            <div flex="20" layout layout-align="center center">
-                                <input flex type="number" step="5" min="0" max="100" ng-model="attributes.flex.value" aria-label="blue" aria-controls="flex-width" style="margin-left:5px; text-align: center" ng-change="overrideAttribute('flex');changeWidth()">
+                    <input class="dfx-ve-property-treeview-button" type="checkbox" checked aria-label="container-styles" id="container-styles" />
+                    <label for="container-styles" class="dfx-ve-property-title-level-1"><span>Container Styling</span></label>
+                    <ul class="dfx-ve-property-treeview-content">                    
+                        <li class="col-md-12">
+                            <span class="col-md-12">
+                                <div layout>
+                                    <span class="col-md-3" style="margin-top:10px;margin-left:-5px;">Flex Width:</span>
+                                    <md-slider class="md-primary" flex ng-model="attributes.flex.value" step="5" min="0" max="100" aria-label="Flex width:" ng-change="overrideAttribute('flex');changeWidth()" ng-model-options="{ debounce: 500 }">
+                                    </md-slider>
+                                    <div flex="20" layout layout-align="center center">
+                                        <input flex type="number" step="5" min="0" max="100" ng-model="attributes.flex.value" aria-label="blue" aria-controls="flex-width" style="margin-left:5px; text-align: center" ng-change="overrideAttribute('flex');changeWidth()">
+                                    </div>
+                                </div>
+                            </span>
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-6">Style:</span>
+                            <div class="col-md-6" layout="row">
+                                <input class="col-md-12" type="text" ng-model="attributes.style.value" style="margin-left:-15px;" ng-change="overrideAttribute('style')"/>
+                                <dfx-ve-css-style></dfx-ve-css-style>
                             </div>
-                        </div>
-	  				</span>
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-6">Class:</span>
+                            <input class="col-md-6" type="text" ng-model="attributes.classes.value" ng-change="overrideAttribute('classes')"/>
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-6">Dynamic Class:</span>
+                            <input class="col-md-6" type="text" ng-model="attributes.dynamicClasses.value" ng-change="overrideAttribute('dynamicClasses')"/>
+                        </li>
+                    </ul>
                 </li>
                 <li class="col-md-12">
-                    <span class="col-md-6">Icon Size:</span>
-                    <input class="col-md-6" type="number" ng-model="attributes.icon.size" ng-change="overrideAttribute('icon')" />
-                </li>   
-                <li class="col-md-12">
-                    <span class="col-md-6">Style:</span>
-                    <div class="col-md-6" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.style.value" style="margin-left:-15px;" ng-change="overrideAttribute('style')"/>
-                        <dfx-ve-css-style></dfx-ve-css-style>
-                    </div>
-                </li>
-                <li class="col-md-12">
-                    <span class="col-md-6">Class:</span>
-                    <input class="col-md-6" type="text" ng-model="attributes.classes.value" ng-change="overrideAttribute('classes')"/>
-                </li>
-                <li class="col-md-12">
-                    <span class="col-md-6">Dynamic Class:</span>
-                    <input class="col-md-6" type="text" ng-model="attributes.dynamicClasses.value" ng-change="overrideAttribute('dynamicClasses')"/>
+                    <input class="dfx-ve-property-treeview-button" type="checkbox" checked aria-label="icon-styles" id="icon-styles" />
+                    <label for="icon-styles" class="dfx-ve-property-title-level-1"><span>Icon Styling</span></label>
+                    <ul class="dfx-ve-property-treeview-content">                    
+                        <li class="col-md-12">
+                            <span class="col-md-6">Size:</span>
+                            <input class="col-md-6" type="number" ng-model="attributes.icon.size" ng-change="overrideAttribute('icon.size')" />
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-6">Style:</span>
+                            <div class="col-md-6" layout="row">
+                                <input class="col-md-12" type="text" ng-model="attributes.icon.style" style="margin-left:-15px;" ng-change="overrideAttribute('icon.style')"/>
+                                <dfx-ve-css-style></dfx-ve-css-style>
+                            </div>
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-6">Class:</span>
+                            <input class="col-md-6" type="text" ng-model="attributes.icon.class" ng-change="overrideAttribute('icon.class')" />
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </li>
     </ul>
-
     <ul>
         <li>
             <input class="dfx-ve-property-treeview-button" type="checkbox" checked id="item-3" />

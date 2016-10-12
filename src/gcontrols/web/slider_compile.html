@@ -1,0 +1,340 @@
+<div ng-if="attributes.isBindingPresent.value === true"
+     ng-show="attributes.display.value"
+     ATTR-IF{{class="attributes.classes.value"}}
+     ATTR-IF{{ng-class="attributes.dynamicClasses.value"}}
+     ATTR-IF{{style="attributes.style.value"}}>
+    <div class="gc-checkbox-label-preview">{{$eval(attributes.label.value)}}</div>
+
+    FRAG-IF{{attributes.optionsType.value==='dynamic'}}
+    <div layout="row">
+        <div ng-if="ATTR-EXP{{attributes.direction.value === 'column' ? 'true' : 'false'}}ATTR-ENDEXP" layout="column" style="margin-right: 5px">
+            <div ng-repeat="item in ATTR-NONV{{source.value}} track by $index" layout layout-align="start center"
+                 style="padding-left: 5px;margin-bottom: 3px;"
+                 ng-style="{'margin-top' : $index === 0? '3px' : '18px'}">
+                 <span>{{ item.ATTR-NONV{{bindingLabel.value}} }}</span>
+             </div>
+        </div>
+        <div ATTR-IF{{layout="attributes.direction.value"}} flex style="padding-top: 1px">
+            <div flex layout layout-align="start center" ng-repeat="item in ATTR-NONV{{source.value}} track by $index">
+                <div flex="none" ng-if="ATTR-EXP{{attributes.direction.value === 'row' ? 'true' : 'false'}}ATTR-ENDEXP" style="margin:-11px 5px 0 0; padding-left: 5px"><span>{{ item.ATTR-NONV{{bindingLabel.value}} }}</span></div>
+                <md-slider flex ng-if="attributes.discrete.value" md-discrete
+                    class="md-altTheme-theme md-primary flex"
+                    ng-model="ATTR-NONV{{binding.value}}[$index]"
+                    ATTR-IF{{min="attributes.minValue.value"}}
+                    ATTR-IF{{max="attributes.maxValue.value"}}
+                    ATTR-IF{{step="attributes.step.value"}}
+                    aria-label="{{attributes.name.value}},{{attributes.discrete.value}}"
+                    id="{{attributes.name.value}}-slider"
+                    style="margin-top: -11px; margin-bottom: 4px;"
+                    ATTR-IF{{ng-class="attributes.buttonClass.value"}}
+                    ATTR-IF{{ng-click="attributes.onclick.value"}}
+                    ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
+                    ATTR-IF{{ng-keypress="attributes.onkeypress.value"}}
+                    ATTR-IF{{ng-keydown="attributes.onkeydown.value"}}
+                    ATTR-IF{{ng-keyup="attributes.onkeyup.value"}}
+                    ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}}
+                    ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}}
+                    ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}}
+                    ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
+                    ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
+                    ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}
+                    ATTR-IF{{ng-disabled="attributes.disabled.value"}}>
+                </md-slider>
+                <md-slider flex ng-if="!attributes.discrete.value"
+                    class="md-altTheme-theme md-primary flex"
+                    ng-model="ATTR-NONV{{binding.value}}[$index]"
+                    ATTR-IF{{min="attributes.minValue.value"}}
+                    ATTR-IF{{max="attributes.maxValue.value"}}
+                    aria-label="attributes.name.value}},{{attributes.discrete.value}}"
+                    id="{{attributes.name.value}}-slider"
+                    style="margin-top: -11px;margin-bottom: 4px;"
+                    ATTR-IF{{ng-class="attributes.buttonClass.value"}}
+                    ATTR-IF{{ng-click="attributes.onclick.value"}}
+                    ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
+                    ATTR-IF{{ng-keypress="attributes.onkeypress.value"}}
+                    ATTR-IF{{ng-keydown="attributes.onkeydown.value"}}
+                    ATTR-IF{{ng-keyup="attributes.onkeyup.value"}}
+                    ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}}
+                    ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}}
+                    ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}}
+                    ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
+                    ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
+                    ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}
+                    ATTR-IF{{ng-disabled="attributes.disabled.value"}}>
+                </md-slider>
+                <div flex="none" layout layout-align="center center"
+                     ATTR-IF{{ng-show="attributes.inputVisible.value"}}>
+                    <input ATTR-IF{{ng-disabled="attributes.disabled.value"}} type="number" style="text-align: center; width:55px; margin:-13px 10px 0 5px"
+                        ng-model="ATTR-NONV{{binding.value}}[$index]"
+                        ATTR-IF{{ng-change="attributes.onchange.value"}}
+                        ATTR-IF{{ng-focus="attributes.onfocus.value"}}
+                        ATTR-IF{{ng-blur="attributes.onblur.value"}}
+                        ATTR-IF{{ng-click="attributes.onclick.value"}}
+                        ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
+                        ATTR-IF{{ng-keypress="attributes.onkeypress.value"}}
+                        ATTR-IF{{ng-keydown="attributes.onkeydown.value"}}
+                        ATTR-IF{{ng-keyup="attributes.onkeyup.value"}}
+                        ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}}
+                        ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}}
+                        ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}}
+                        ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
+                        ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
+                        ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}
+                        ATTR-IF{{aria-label="attributes.name.value"}}
+                        aria-controls="{{attributes.name.value}}-slider">
+                </div>
+            </div>
+        </div>
+    </div>
+    FRAG-ENDIF
+    FRAG-IF{{attributes.optionsType.value==='static'}}
+    <div layout="row">
+        <div ng-if="ATTR-EXP{{attributes.direction.value === 'column' ? 'true' : 'false'}}ATTR-ENDEXP" layout="column" style="margin-right: 5px">
+            <div ng-repeat="item in ATTR-STATIC{{slidersArray.value}} track by $index" layout layout-align="start center"
+                 style="padding-left: 5px;margin-bottom: 3px;"
+                 ng-style="{'margin-top' : $index === 0? '3px' : '18px'}" ng-bind="$eval(item.label)"></div>
+        </div>
+        <div ATTR-IF{{layout="attributes.direction.value"}} flex style="padding-top: 1px">
+            <div flex layout layout-align="start center" ng-repeat="item in ATTR-STATIC{{slidersArray.value}} track by $index">
+                <div flex="none" ng-if="ATTR-EXP{{attributes.direction.value === 'row' ? 'true' : 'false'}}ATTR-ENDEXP" style="margin:-11px 5px 0 0; padding-left: 5px" ng-bind="$eval(item.label)"></div>
+                <md-slider flex ng-if="attributes.discrete.value" md-discrete
+                    class="md-altTheme-theme md-primary flex"
+                    ng-model="ATTR-NONV{{binding.value}}[$index]"
+                    ATTR-IF{{min="attributes.minValue.value"}}
+                    ATTR-IF{{max="attributes.maxValue.value"}}
+                    ATTR-IF{{step="attributes.step.value"}}
+                    aria-label="{{attributes.name.value}},{{attributes.discrete.value}}"
+                    id="{{attributes.name.value}}-slider"
+                    style="margin-top: -11px; margin-bottom: 4px;"
+                    ATTR-IF{{ng-class="attributes.buttonClass.value"}}
+                    ATTR-IF{{ng-click="attributes.onclick.value"}}
+                    ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
+                    ATTR-IF{{ng-keypress="attributes.onkeypress.value"}}
+                    ATTR-IF{{ng-keydown="attributes.onkeydown.value"}}
+                    ATTR-IF{{ng-keyup="attributes.onkeyup.value"}}
+                    ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}}
+                    ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}}
+                    ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}}
+                    ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
+                    ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
+                    ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}
+                    ATTR-IF{{ng-disabled="attributes.disabled.value"}}>
+                </md-slider>
+                <md-slider flex ng-if="!attributes.discrete.value"
+                    class="md-altTheme-theme md-primary flex"
+                    ng-model="ATTR-NONV{{binding.value}}[$index]"
+                    ATTR-IF{{min="attributes.minValue.value"}}
+                    ATTR-IF{{max="attributes.maxValue.value"}}
+                    aria-label="{{attributes.name.value}},{{attributes.discrete.value}}"
+                    id="{{attributes.name.value}}-slider"
+                    style="margin-top: -11px;margin-bottom: 4px;"
+                    ATTR-IF{{ng-class="attributes.buttonClass.value"}}
+                    ATTR-IF{{ng-click="attributes.onclick.value"}}
+                    ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
+                    ATTR-IF{{ng-keypress="attributes.onkeypress.value"}}
+                    ATTR-IF{{ng-keydown="attributes.onkeydown.value"}}
+                    ATTR-IF{{ng-keyup="attributes.onkeyup.value"}}
+                    ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}}
+                    ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}}
+                    ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}}
+                    ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
+                    ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
+                    ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}
+                    ATTR-IF{{ng-disabled="attributes.disabled.value"}}>
+                </md-slider>
+                <div flex="none" layout layout-align="center center"
+                     ATTR-IF{{ng-show="attributes.inputVisible.value"}}>
+                    <input ATTR-IF{{ng-disabled="attributes.disabled.value"}} type="number" style="text-align: center; width:55px; margin:-13px 10px 0 5px"
+                        ng-model="ATTR-NONV{{binding.value}}[$index]"
+                        ATTR-IF{{ng-change="attributes.onchange.value"}}
+                        ATTR-IF{{ng-focus="attributes.onfocus.value"}}
+                        ATTR-IF{{ng-blur="attributes.onblur.value"}}
+                        ATTR-IF{{ng-click="attributes.onclick.value"}}
+                        ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
+                        ATTR-IF{{ng-keypress="attributes.onkeypress.value"}}
+                        ATTR-IF{{ng-keydown="attributes.onkeydown.value"}}
+                        ATTR-IF{{ng-keyup="attributes.onkeyup.value"}}
+                        ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}}
+                        ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}}
+                        ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}}
+                        ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
+                        ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
+                        ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}
+                        ATTR-IF{{aria-label="attributes.name.value"}}
+                        aria-controls="{{attributes.name.value}}-slider">
+                </div>
+            </div>
+        </div>
+    </div>
+    FRAG-ENDIF
+</div>
+
+<div ng-if="attributes.isBindingPresent.value === false"
+     ng-show="attributes.display.value"
+     ATTR-IF{{class="attributes.classes.value"}}
+     ATTR-IF{{ng-class="attributes.dynamicClasses.value"}}
+     ATTR-IF{{style="attributes.style.value"}}>
+    <div class="gc-checkbox-label-preview">{{$eval(attributes.label.value)}}</div>
+
+    FRAG-IF{{attributes.optionsType.value==='dynamic'}}
+    <div layout="row">
+        <div ng-if="ATTR-EXP{{attributes.direction.value === 'column' ? 'true' : 'false'}}ATTR-ENDEXP" layout="column" style="margin-right: 5px">
+            <div ng-repeat="item in ATTR-NONV{{source.value}} track by $index" layout layout-align="start center"
+                 style="padding-left: 5px;margin-bottom: 3px;"
+                 ng-style="{'margin-top' : $index === 0? '3px' : '18px'}">
+                 <span>{{ item.ATTR-NONV{{bindingLabel.value}} }}</span>
+             </div>
+        </div>
+        <div ATTR-IF{{layout="attributes.direction.value"}} flex style="padding-top: 1px">
+            <div flex layout layout-align="start center" ng-repeat="item in ATTR-NONV{{source.value}} track by $index">
+                <div flex="none" ng-if="ATTR-EXP{{attributes.direction.value === 'row' ? 'true' : 'false'}}ATTR-ENDEXP" style="margin:-11px 5px 0 0; padding-left: 5px"><span>{{ item.ATTR-NONV{{bindingLabel.value}} }}</span></div>
+                <md-slider flex ng-if="attributes.discrete.value" md-discrete
+                    class="md-altTheme-theme md-primary flex"
+                    ng-model="item[attributes.displayValue.value]"
+                    ATTR-IF{{min="attributes.minValue.value"}}
+                    ATTR-IF{{max="attributes.maxValue.value"}}
+                    ATTR-IF{{step="attributes.step.value"}}
+                    aria-label="{{attributes.name.value}},{{attributes.discrete.value}}"
+                    id="{{attributes.name.value}}-slider"
+                    style="margin-top: -11px; margin-bottom: 4px;"
+                    ATTR-IF{{ng-class="attributes.buttonClass.value"}}
+                    ATTR-IF{{ng-click="attributes.onclick.value"}}
+                    ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
+                    ATTR-IF{{ng-keypress="attributes.onkeypress.value"}}
+                    ATTR-IF{{ng-keydown="attributes.onkeydown.value"}}
+                    ATTR-IF{{ng-keyup="attributes.onkeyup.value"}}
+                    ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}}
+                    ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}}
+                    ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}}
+                    ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
+                    ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
+                    ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}
+                    ATTR-IF{{ng-disabled="attributes.disabled.value"}}>
+                </md-slider>
+                <md-slider flex ng-if="!attributes.discrete.value"
+                    class="md-altTheme-theme md-primary flex"
+                    ng-model="item[attributes.displayValue.value]"
+                    ATTR-IF{{min="attributes.minValue.value"}}
+                    ATTR-IF{{max="attributes.maxValue.value"}}
+                    aria-label="attributes.name.value}},{{attributes.discrete.value}}"
+                    id="{{attributes.name.value}}-slider"
+                    style="margin-top: -11px; margin-bottom: 4px;"
+                    ATTR-IF{{ng-class="attributes.buttonClass.value"}}
+                    ATTR-IF{{ng-click="attributes.onclick.value"}}
+                    ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
+                    ATTR-IF{{ng-keypress="attributes.onkeypress.value"}}
+                    ATTR-IF{{ng-keydown="attributes.onkeydown.value"}}
+                    ATTR-IF{{ng-keyup="attributes.onkeyup.value"}}
+                    ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}}
+                    ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}}
+                    ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}}
+                    ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
+                    ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
+                    ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}
+                    ATTR-IF{{ng-disabled="attributes.disabled.value"}}>
+                </md-slider>
+                <div flex="none" layout layout-align="center center" ATTR-IF{{ng-show="attributes.inputVisible.value"}}>
+                    <input ATTR-IF{{ng-disabled="attributes.disabled.value"}} type="number" style="text-align: center; width:55px; margin:-13px 10px 0 5px"
+                        ng-model="item[attributes.displayValue.value]"
+                        ATTR-IF{{ng-change="attributes.onchange.value"}}
+                        ATTR-IF{{ng-focus="attributes.onfocus.value"}}
+                        ATTR-IF{{ng-blur="attributes.onblur.value"}}
+                        ATTR-IF{{ng-click="attributes.onclick.value"}}
+                        ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
+                        ATTR-IF{{ng-keypress="attributes.onkeypress.value"}}
+                        ATTR-IF{{ng-keydown="attributes.onkeydown.value"}}
+                        ATTR-IF{{ng-keyup="attributes.onkeyup.value"}}
+                        ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}}
+                        ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}}
+                        ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}}
+                        ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
+                        ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
+                        ATTR-IF{{mouseup="attributes.onmouseup.value"}}
+                        ATTR-IF{{aria-label="attributes.name.value"}}
+                        aria-controls="{{attributes.name.value}}-slider">
+                </div>
+            </div>
+        </div>
+    </div>
+    FRAG-ENDIF
+    FRAG-IF{{attributes.optionsType.value==='static'}}
+    <div layout="row">
+        <div ng-if="attributes.direction.value === 'column'" layout="column" style="margin-right: 5px">
+            <div ng-repeat="item in ATTR-STATIC{{slidersArray.value}} track by $index" layout layout-align="start center"
+                 style="padding-left: 5px;margin-bottom: 3px;"
+                 ng-style="{'margin-top' : $index === 0? '3px' : '18px'}" ng-bind="$eval(item.label)"></div>
+        </div>
+        <div ATTR-IF{{layout="attributes.direction.value"}} flex style="padding-top: 1px">
+            <div flex layout layout-align="start center" ng-repeat="item in ATTR-STATIC{{slidersArray.value}} track by $index">
+                <div flex="none" ng-if="ATTR-EXP{{attributes.direction.value === 'row' ? 'true' : 'false'}}ATTR-ENDEXP" style="margin:-11px 5px 0 0; padding-left: 5px" ng-bind="$eval(item.label)"></div>
+                <md-slider flex ng-if="attributes.discrete.value" md-discrete
+                    class="md-altTheme-theme md-primary flex"
+                    ng-model="item.value"
+                    ATTR-IF{{min="attributes.minValue.value"}}
+                    ATTR-IF{{max="attributes.maxValue.value"}}
+                    ATTR-IF{{step="attributes.step.value"}}
+                    aria-label="{{attributes.name.value}},{{attributes.discrete.value}}"
+                    id="{{attributes.name.value}}-slider"
+                    style="margin-top: -11px; margin-bottom: 4px;"
+                    ATTR-IF{{ng-class="attributes.buttonClass.value"}}
+                    ATTR-IF{{ng-click="attributes.onclick.value"}}
+                    ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
+                    ATTR-IF{{ng-keypress="attributes.onkeypress.value"}}
+                    ATTR-IF{{ng-keydown="attributes.onkeydown.value"}}
+                    ATTR-IF{{ng-keyup="attributes.onkeyup.value"}}
+                    ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}}
+                    ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}}
+                    ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}}
+                    ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
+                    ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
+                    ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}
+                    ATTR-IF{{ng-disabled="attributes.disabled.value"}}>
+                </md-slider>
+                <md-slider flex ng-if="!attributes.discrete.value"
+                    class="md-altTheme-theme md-primary flex"
+                    ng-model="item.value"
+                    ATTR-IF{{min="attributes.minValue.value"}}
+                    ATTR-IF{{max="attributes.maxValue.value"}}
+                    aria-label="{{attributes.name.value}},{{attributes.discrete.value}}"
+                    id="{{attributes.name.value}}-slider"
+                    style="margin-top: -11px; margin-bottom: 4px;"
+                    ATTR-IF{{ng-class="attributes.buttonClass.value"}}
+                    ATTR-IF{{ng-click="attributes.onclick.value"}}
+                    ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
+                    ATTR-IF{{ng-keypress="attributes.onkeypress.value"}}
+                    ATTR-IF{{ng-keydown="attributes.onkeydown.value"}}
+                    ATTR-IF{{ng-keyup="attributes.onkeyup.value"}}
+                    ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}}
+                    ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}}
+                    ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}}
+                    ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
+                    ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
+                    ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}
+                    ATTR-IF{{ng-disabled="attributes.disabled.value"}}>
+                </md-slider>
+                <div flex="none" layout layout-align="center center"
+                     ATTR-IF{{ng-show="attributes.inputVisible.value"}}>
+                    <input ATTR-IF{{ng-disabled="attributes.disabled.value"}} type="number" style="text-align: center; width:55px; margin:-13px 10px 0 5px"
+                        ng-model="item.value"
+                        ATTR-IF{{ng-change="attributes.onchange.value"}}
+                        ATTR-IF{{ng-focus="attributes.onfocus.value"}}
+                        ATTR-IF{{ng-blur="attributes.onblur.value"}}
+                        ATTR-IF{{ng-click="attributes.onclick.value"}}
+                        ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
+                        ATTR-IF{{ng-keypress="attributes.onkeypress.value"}}
+                        ATTR-IF{{ng-keydown="attributes.onkeydown.value"}}
+                        ATTR-IF{{ng-keyup="attributes.onkeyup.value"}}
+                        ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}}
+                        ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}}
+                        ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}}
+                        ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
+                        ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
+                        ATTR-IF{{mouseup="attributes.onmouseup.value"}}
+                        ATTR-IF{{aria-label="attributes.name.value"}}
+                        aria-controls="{{attributes.name.value}}-slider">
+                </div>
+            </div>
+        </div>
+    </div>
+    FRAG-ENDIF
+</div>

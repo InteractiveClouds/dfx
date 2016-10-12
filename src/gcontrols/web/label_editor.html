@@ -1,11 +1,11 @@
-<md-dialog aria-label="textarea" ng-cloak>
+<md-dialog id="dfx-ve-expression-dialog" aria-label="textarea" ng-cloak>
 <form>
 <md-toolbar><div class="md-toolbar-tools">
 <h2>Expression editor</h2>
 </div></md-toolbar>
 <md-dialog-content id="{{component_id}}_md_dialog" layout-wrap layout-margin class="expression-editor">
 	<div class="expression-inner">
-		<textarea id="{{component_id}}_expression_textarea" class="expression-textarea" name="expression-edit"></textarea>
+		<textarea id="{{component_id}}_expression_textarea" class="expression-textarea" name="expression-edit" md-autofocus></textarea>
 	</div>
 	<div class="expression-variables">
 		<section id="{{component_id}}_panel_scope" class="md-whiteframe-1dp">

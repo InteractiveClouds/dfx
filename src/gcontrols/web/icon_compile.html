@@ -1,0 +1,143 @@
+<div ng-show="attributes.display.value"
+    ATTR-IF{{style="attributes.style.value"}}
+    class="dfx-core-gc-icon ATTR-NONV{{classes.value}}"
+    ATTR-IF{{ng-class="attributes.dynamicClasses.value"}}>
+    <button class="dfx-core-gc-icon-button"
+        ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
+        ATTR-IF{{ng-keypress="attributes.onkeypress.value"}}
+        ATTR-IF{{ng-keydown="attributes.onkeydown.value"}}
+        ATTR-IF{{ng-keyup="attributes.onkeyup.value"}}
+        ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}}
+        ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}}
+        ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}}
+        ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
+        ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
+        ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}
+        ng-disabled="ATTR-EXP{{attributes.disabled.value !=='' ? attributes.disabled.value : 'false'}}ATTR-ENDEXP || 
+            ATTR-EXP{{(attributes.waiting.value !=='' && attributes.waiting.autoDisabled !=='') ? attributes.waiting.autoDisabled : 'false'}}ATTR-ENDEXP"
+        ng-click="ATTR-EXP{{attributes.state.bindingType ==='boolean' ? 'checkState(); ' : ''}}ATTR-ENDEXP
+            ATTR-EXP{{attributes.state.bindingType ==='simple' ? '$parent_scope.' + attributes.state.binding + ' = checkState(' + attributes.state.binding + '); ' : ''}}ATTR-ENDEXP
+            ATTR-EXP{{attributes.state.bindingType ==='complex' ? attributes.state.binding + ' = checkState(' + attributes.state.binding + '); ' : ''}}ATTR-ENDEXP
+            ATTR-EXP{{attributes.onclick.value !=='' ? attributes.onclick.value : ''}}ATTR-ENDEXP">
+        FRAG-IF{{!attributes.state.value && attributes.waiting.value === ''}}
+        <div>
+            <div>
+                <md-icon ng-if="ATTR-EXP{{attributes.icon.type ==='fa-icon' ? 'true' : 'false'}}ATTR-ENDEXP"
+                    class="dfx-core-gc-icon-icon fa {{attributes.icon.value}} ATTR-NONV{{icon.class}}"
+                    style="font-size: ATTR-NONV{{icon.size}}px; width: ATTR-NONV{{icon.size}}px; height: ATTR-NONV{{icon.size}}px; ATTR-NONV{{icon.style}}"
+                    ATTR-IF{{ng-class="attributes.icon.dynamicClass"}}>
+                </md-icon>
+                <ng-md-icon ng-if="ATTR-EXP{{attributes.icon.type ==='svg-icon' ? 'true' : 'false'}}ATTR-ENDEXP"
+                    icon="{{attributes.icon.value}}" size="ATTR-NONV{{icon.size}}" class="dfx-core-gc-icon-icon ATTR-NONV{{icon.class}}"
+                    style="width: ATTR-NONV{{icon.size}}px; height: ATTR-NONV{{icon.size}}px; ATTR-NONV{{icon.style}}"
+                    ATTR-IF{{ng-class="attributes.icon.dynamicClass"}}>
+                </ng-md-icon>
+            </div>
+        </div>
+        FRAG-ENDIF
+        FRAG-IF{{attributes.state.value && attributes.waiting.value === ''}}
+        <div>
+            <div ng-if="$eval(attributes.state.binding)">
+                <md-icon ng-if="ATTR-EXP{{attributes.state.checkedIcon.type ==='fa-icon' ? 'true' : 'false'}}ATTR-ENDEXP"
+                    class="dfx-core-gc-icon-icon fa {{attributes.state.checkedIcon.value}} ATTR-NONV{{icon.class}} ATTR-NONV{{state.checkedIcon.class}}"
+                    style="font-size: ATTR-NONV{{icon.size}}px; width: ATTR-NONV{{icon.size}}px; height: ATTR-NONV{{icon.size}}px; ATTR-NONV{{icon.style}}; ATTR-NONV{{state.checkedIcon.style}}"
+                    ATTR-IF{{ng-class="attributes.icon.dynamicClass"}}>
+                </md-icon>
+                <ng-md-icon ng-if="ATTR-EXP{{attributes.state.checkedIcon.type ==='svg-icon' ? 'true' : 'false'}}ATTR-ENDEXP"
+                    icon="{{attributes.state.checkedIcon.value}}" size="ATTR-NONV{{icon.size}}"
+                    class="dfx-core-gc-icon-icon ATTR-NONV{{icon.class}} ATTR-NONV{{state.checkedIcon.class}}"
+                    style="width: ATTR-NONV{{icon.size}}px; height: ATTR-NONV{{icon.size}}px; ATTR-NONV{{icon.style}}; ATTR-NONV{{state.checkedIcon.style}}"
+                    ATTR-IF{{ng-class="attributes.icon.dynamicClass"}}>
+                </ng-md-icon>
+            </div>
+            <div ng-if="!$eval(attributes.state.binding)">
+                <md-icon ng-if="ATTR-EXP{{attributes.state.uncheckedIcon.type ==='fa-icon' ? 'true' : 'false'}}ATTR-ENDEXP"
+                    class="dfx-core-gc-icon-icon fa {{attributes.state.uncheckedIcon.value}} ATTR-NONV{{icon.class}} ATTR-NONV{{state.uncheckedIcon.class}}"
+                    style="font-size: ATTR-NONV{{icon.size}}px; width: ATTR-NONV{{icon.size}}px; height: ATTR-NONV{{icon.size}}px; ATTR-NONV{{icon.style}}; ATTR-NONV{{state.uncheckedIcon.style}}"
+                    ATTR-IF{{ng-class="attributes.icon.dynamicClass"}}>
+                </md-icon>
+                <ng-md-icon ng-if="ATTR-EXP{{attributes.state.uncheckedIcon.type ==='svg-icon' ? 'true' : 'false'}}ATTR-ENDEXP"
+                    icon="{{attributes.state.uncheckedIcon.value}}" size="ATTR-NONV{{icon.size}}"
+                    class="dfx-core-gc-icon-icon ATTR-NONV{{icon.class}} ATTR-NONV{{state.uncheckedIcon.class}}"
+                    style="width: ATTR-NONV{{icon.size}}px; height: ATTR-NONV{{icon.size}}px; ATTR-NONV{{icon.style}}; ATTR-NONV{{icon.style}}; ATTR-NONV{{state.uncheckedIcon.style}}"
+                    ATTR-IF{{ng-class="attributes.icon.dynamicClass"}}>
+                </ng-md-icon>
+            </div>
+        </div>
+        FRAG-ENDIF
+        FRAG-IF{{attributes.state.value && attributes.waiting.value !== ''}}
+        <div ng-if="ATTR-NONV{{waiting.value}}">
+            <div ng-if="ATTR-EXP{{attributes.waiting.icon.type ==='fa-icon' ? 'true' : 'false'}}ATTR-ENDEXP">
+                <md-icon class="fa {{attributes.waiting.icon.value || 'fa-spinner'}} ATTR-NONV{{icon.class}} ATTR-NONV{{waiting.icon.class}}"
+                    style="font-size: ATTR-NONV{{icon.size}}px; color: inherit; width: ATTR-NONV{{icon.size}}px; height: ATTR-NONV{{icon.size}}px; cursor: wait; ATTR-NONV{{icon.style}}; ATTR-NONV{{waiting.icon.style}}"
+                    ATTR-IF{{ng-class="attributes.icon.dynamicClass"}}>
+                </md-icon>
+            </div>
+            <div ng-if="ATTR-EXP{{attributes.waiting.icon.type==='svg-icon' ? 'true' : 'false'}}ATTR-ENDEXP">
+                <ng-md-icon icon="{{attributes.waiting.icon.value || 'track_changes'}}" size="ATTR-NONV{{icon.size}}"
+                    class="ATTR-NONV{{icon.class}} ATTR-NONV{{waiting.icon.class}}" style=" cursor: wait; ATTR-NONV{{icon.style}}; ATTR-NONV{{waiting.icon.style}}"
+                    ATTR-IF{{ng-class="attributes.icon.dynamicClass"}}>
+                </ng-md-icon>
+            </div>            
+        </div>  
+        <div ng-if="!ATTR-NONV{{waiting.value}}">
+            <div ng-if="$eval(attributes.state.binding)">
+                <md-icon ng-if="ATTR-EXP{{attributes.state.checkedIcon.type ==='fa-icon' ? 'true' : 'false'}}ATTR-ENDEXP"
+                    class="dfx-core-gc-icon-icon fa {{attributes.state.checkedIcon.value}} ATTR-NONV{{icon.class}} ATTR-NONV{{state.checkedIcon.class}}"
+                    style="font-size: ATTR-NONV{{icon.size}}px; width: ATTR-NONV{{icon.size}}px; height: ATTR-NONV{{icon.size}}px; ATTR-NONV{{icon.style}}; ATTR-NONV{{state.checkedIcon.style}}"
+                    ATTR-IF{{ng-class="attributes.icon.dynamicClass"}}>
+                </md-icon>
+                <ng-md-icon ng-if="ATTR-EXP{{attributes.state.checkedIcon.type ==='svg-icon' ? 'true' : 'false'}}ATTR-ENDEXP"
+                    icon="{{attributes.state.checkedIcon.value}}" size="ATTR-NONV{{icon.size}}"
+                    class="dfx-core-gc-icon-icon ATTR-NONV{{icon.class}} ATTR-NONV{{state.checkedIcon.class}}"
+                    style="width: ATTR-NONV{{icon.size}}px; height:ATTR-NONV{{icon.size}}px; ATTR-NONV{{icon.style}}; ATTR-NONV{{state.checkedIcon.style}}"
+                    ATTR-IF{{ng-class="attributes.icon.dynamicClass"}}>
+                </ng-md-icon>
+            </div>
+            <div ng-if="!$eval(attributes.state.binding)">
+                <md-icon ng-if="ATTR-EXP{{attributes.state.uncheckedIcon.type ==='fa-icon' ? 'true' : 'false'}}ATTR-ENDEXP"
+                    class="dfx-core-gc-icon-icon fa {{attributes.state.uncheckedIcon.value}} ATTR-NONV{{icon.class}} ATTR-NONV{{state.uncheckedIcon.class}}"
+                    style="font-size: ATTR-NONV{{icon.size}}px; width: ATTR-NONV{{icon.size}}px; height: ATTR-NONV{{icon.size}}px; ATTR-NONV{{icon.style}}; ATTR-NONV{{state.uncheckedIcon.style}}"
+                    ATTR-IF{{ng-class="attributes.icon.dynamicClass"}}>
+                </md-icon>
+                <ng-md-icon ng-if="ATTR-EXP{{attributes.state.uncheckedIcon.type ==='svg-icon' ? 'true' : 'false'}}ATTR-ENDEXP"
+                    icon="{{attributes.state.uncheckedIcon.value}}" size="ATTR-NONV{{icon.size}}"
+                    class="dfx-core-gc-icon-icon ATTR-NONV{{icon.class}} ATTR-NONV{{state.uncheckedIcon.class}}"
+                    style="width: ATTR-NONV{{icon.size}}px; height: ATTR-NONV{{icon.size}}px; ATTR-NONV{{icon.style}}; ATTR-NONV{{state.uncheckedIcon.style}}"
+                    ATTR-IF{{ng-class="attributes.icon.dynamicClass"}}>
+                </ng-md-icon>
+            </div>
+        </div>  
+        FRAG-ENDIF
+        FRAG-IF{{!attributes.state.value && attributes.waiting.value !== ''}}
+        <div ng-if="ATTR-NONV{{waiting.value}}">
+            <div ng-if="ATTR-EXP{{attributes.waiting.icon.type ==='fa-icon' ? 'true' : 'false'}}ATTR-ENDEXP">
+                <md-icon class="fa {{attributes.waiting.icon.value || 'fa-spinner'}} ATTR-NONV{{icon.class}} ATTR-NONV{{waiting.icon.class}}"
+                    style="font-size: ATTR-NONV{{icon.size}}px; color: inherit; width: ATTR-NONV{{icon.size}}px; height: ATTR-NONV{{icon.size}}px; cursor: wait; ATTR-NONV{{icon.style}}; ATTR-NONV{{waiting.icon.style}}"
+                    ATTR-IF{{ng-class="attributes.icon.dynamicClass"}}>
+                </md-icon>
+            </div>
+            <div ng-if="ATTR-EXP{{attributes.waiting.icon.type==='svg-icon' ? 'true' : 'false'}}ATTR-ENDEXP">
+                <ng-md-icon icon="{{attributes.waiting.icon.value || 'track_changes'}}" size="ATTR-NONV{{icon.size}}"
+                    class="ATTR-NONV{{icon.class}} ATTR-NONV{{waiting.icon.class}}" style="cursor: wait; ATTR-NONV{{icon.style}}; ATTR-NONV{{waiting.icon.style}}"
+                    ATTR-IF{{ng-class="attributes.icon.dynamicClass"}}>
+                </ng-md-icon>
+            </div>            
+        </div>
+        <div ng-if="!ATTR-NONV{{waiting.value}}">
+            <md-icon ng-if="ATTR-EXP{{attributes.icon.type ==='fa-icon' ? 'true' : 'false'}}ATTR-ENDEXP"
+                class="dfx-core-gc-icon-icon fa {{attributes.icon.value}} ATTR-NONV{{icon.class}}"
+                style="font-size: ATTR-NONV{{icon.size}}px; width: ATTR-NONV{{icon.size}}px; height: ATTR-NONV{{icon.size}}px ATTR-NONV{{icon.style}}"
+                ATTR-IF{{ng-class="attributes.icon.dynamicClass"}}>
+            </md-icon>
+            <ng-md-icon ng-if="ATTR-EXP{{attributes.icon.type ==='svg-icon' ? 'true' : 'false'}}ATTR-ENDEXP"
+                icon="{{attributes.icon.value}}" size="ATTR-NONV{{icon.size}}"
+                class="dfx-core-gc-icon-icon ATTR-NONV{{icon.class}}"
+                style="width: ATTR-NONV{{icon.size}}px; height: ATTR-NONV{{icon.size}}px; ATTR-NONV{{icon.style}}"
+                ATTR-IF{{ng-class="attributes.icon.dynamicClass"}}>
+            </ng-md-icon>
+        </div>  
+        FRAG-ENDIF
+        <span style="{{attributes.label.style}}" class="dfx-core-gc-icon-label {{attributes.label.class}}" ATTR-IF{{ng-bind="attributes.label.value"}} ATTR-IF{{ng-class="attributes.label.dynamicClass"}}></span>
+    </button>
+</div>

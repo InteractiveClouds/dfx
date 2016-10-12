@@ -30,11 +30,13 @@ md-toast.md-error-toast-theme div {
 
 #dfx-ve-header {
   background-color: #353535;
+  height:30px;
+  padding-top: 4px;
 }
 
 #dfx-ve-title {
   font-size: 16px;
-  padding-top: 1px; 
+  padding-top: 1px;
 }
 
 #dfx_src_widget_editor_title {
@@ -50,9 +52,9 @@ md-toast.md-error-toast-theme div {
 }
 
 #dfx-ve-toggle-property {
-  background: #B1B1B1;
-  margin: 0px !important;
-  height: 32px;
+  background: #4CD5F3;
+  margin: 0 0 0 5px!important;
+  height: 20px;
   color: #383838;
   padding: 0;
 }
@@ -60,7 +62,8 @@ md-toast.md-error-toast-theme div {
 /* Sidenav */
 
 #dfx-ve-sidenav-left {
-  width: 170px;
+  width: 85px;
+  min-width: 85px;
   background-color: #383838;
   color: #fff;
 }
@@ -68,36 +71,50 @@ md-toast.md-error-toast-theme div {
 #dfx-ve-sidenav-left-content {
   background-color: #383838;
   color: #fff;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+#dfx_visual_editor_gc_palette_content {
+  padding:0;
 }
 
 #dfx_visual_editor_gc_palette_content ul {
   background-color: #383838;
+  padding:0;
 }
 
 #dfx-ve-sidenav-right {
   width: 430px;
-  max-width: 430px;
+  min-width: 430px;
   background-color: #383838;
   color: #fff;
+  div.dfx-ve-property-treeview.hover {
+    width: 100%;
+  }
 }
 
 #dfx-ve-sidenav-right-content {
   background-color: #383838;
   color: #fff;
+  .dfx-ve-property-treeview.hover>ul:not(:first-child) {
+    margin-top: -10px;
+  }
 }
 
 /* Toolbar */
 
 .dfx-ve-toolbar {
-  background-color: #ececec !important;
+  background-color: #383838 !important;
   color: #000 !important;
-  min-height: 36px !important;
+  min-height: 48px !important;
+  border-top: 1px #6b6a6a solid;
 }
 
 .dfx-ve-toolbar-tools {
   padding: 0;
-  height: 36px !important;
-  max-height: 36px !important;
+  height: 48px !important;
+  max-height: 48px !important;
 }
 
 .dfx-ve-toolbar-button {
@@ -114,40 +131,26 @@ md-toast.md-error-toast-theme div {
   border-bottom: 2px red solid;
 }
 
+.dfx-ve-toolbar-icon {
+  width: 32px;
+  cursor: pointer;
+}
+
 /* GC Palette & Property Panel */
 
-#dfx-ve-palette-title {
-  height: 36px;
-  line-height: 36px;
-  margin: 0;
-  padding: 0;
-  font-size: 14px;
-  width: 170px;
-  background: #B1B1B1;
-}
-
-.dfx-ve-palette-title-collapsed {
-  width: 32px !important;
-}
-
-.dfx-ve-palette-title-text-collapsed {
-  display: none !important;
-}
-
-#dfx-ve-palette-title-text {
-  display: inline-block;
-  padding-left: 10px;
-  width: 138px;
+.dfx-ve-palette-icon {
+  width: 36px;
 }
 
 #dfx-ve-property-title {
-  height: 36px;
-  line-height: 36px;
+  height: 48px;
+  line-height: 48px;
   margin: 0;
   padding: 0;
   font-size: 14px;
   width: 430px;
-  background: #B1B1B1;
+  background: #4a4a4a;
+  color: #fff;
 }
 
 .dfx-ve-property-title-collapsed {
@@ -161,7 +164,55 @@ md-toast.md-error-toast-theme div {
 #dfx-ve-property-title-text {
   display: inline-block;
   padding-left: 10px;
-  width: 398px;
+  width: 388px;
+}
+
+.dfx-ve-property-title-level-1 {
+  width: 420px!important;
+  border-left: 1px #6b6a6a solid;
+  padding: 5px 10px 5px 15px !important;
+}
+
+.dfx-ve-property-title-level-1:before {
+  margin-left: -0.55em !important;
+  margin-top: 0.95em !important;
+}
+
+&:checked ~ .dfx-ve-property-title-level-1:before {
+  margin-left: -0.30em !important;
+  margin-top: 0.75em !important;
+}
+
+.dfx-ve-property-title-text-level-1 {
+  width: 400px;
+}
+
+.dfx-ve-property-title-level-2 {
+  width: 410px!important;
+  border-left: 1px #6b6a6a solid;
+  padding: 5px 10px 5px 15px !important;
+}
+.dfx-ve-property-title-level-3 {
+  width: 400px!important;
+  border-left: 1px #6b6a6a solid;
+  padding: 5px 10px 5px 15px !important;
+}
+.dfx-ve-property-title-level-4 {
+  width: 390px!important;
+  border-left: 1px #6b6a6a solid;
+  padding: 5px 10px 5px 15px !important;
+}
+.dfx-ve-property-title-level-2:before, .dfx-ve-property-title-level-3:before, .dfx-ve-property-title-level-4:before {
+  margin-left: -0.55em !important;
+  margin-top: 0.95em !important;
+}
+&:checked ~ .dfx-ve-property-title-level-2:before, &:checked ~ .dfx-ve-property-title-level-3:before, &:checked ~ .dfx-ve-property-title-level-4:before {
+  margin-left: -0.30em !important;
+  margin-top: 0.75em !important;
+}
+
+.dfx-ve-property-title-text-level-2 {
+  width: 380px;
 }
 
 #dfx-ve-sidenav-left {
@@ -174,6 +225,7 @@ md-toast.md-error-toast-theme div {
 
 .dfx_visual_editor_gc_cat_item_draggable {
   cursor: pointer;
+  padding: 2px;
 }
 
 #dfx_visual_editor_property_panel a {
@@ -223,20 +275,20 @@ md-toast.md-error-toast-theme div {
     opacity: 1.0;
     .transition-duration(0.5s);
   }
-  
+
   ul {
     .transition-duration;
     list-style: none;
     padding-left: 1em;
-    
+
     li {
       padding-left:0px;
-      padding-right:5px;
+      text-align:center;
       //Fade back to default
       span{
         .transition-property(color);
         .transition-duration;
-      
+
         //Highlight on hover
         &:hover {
           color: @hoverColor;
@@ -245,44 +297,52 @@ md-toast.md-error-toast-theme div {
       }
     }
   }
-  
+
   //Hide checkboxes
   input.dfx-ve-palette-treeview-button {
     display: none;
-    
+
     //Hide collapsed branches
     &:checked ~ ul {
       display: none;
     }
-     
+
     //Show pointer on collapsible rows
     & ~ label {
       cursor: pointer;
       font-weight: 700;
+      font-size: 12px;
+      padding: 10px;
+      width: 85px;
+      text-align: center;
+      border-top: 1px #6b6a6a solid;
+      border-bottom: 1px #6b6a6a solid;
+      background: #4a4a4a;
     }
-    
+
     //Expanded branch
-    & ~ label:before {
+    & ~ label span:before {
       content: '';
       width: 0;
       height: 0;
       position: absolute;
       margin-left: -1em;
-      margin-top: 0.4em;
+      margin-top: 0.55em;
       border-width: 4px;
       border-style: solid;
-      border-top-color: transparent;
-      border-right-color: @defaultColor;
-      border-bottom-color: @defaultColor;
+      border-top-color: @defaultColor;
+      border-right-color: transparent;
+      border-bottom-color: transparent;
       border-left-color: transparent;
       .transition-property(opacity);
       .transition-duration;
     }
 
     //Collapsed branch
-    &:checked ~ label:before {
+    &:checked ~ label span:before {
       margin-left: -0.8em;
-      border-width: 5px;
+      margin-top: 0.45em;
+      border-width: 4px;
       border-top-color: transparent;
       border-right-color: transparent;
       border-bottom-color: transparent;
@@ -297,6 +357,7 @@ md-toast.md-error-toast-theme div {
 
 .dfx-ve-palette-treeview-content {
   padding-left: 0px !important;
+  padding-bottom: 5px;
 }
 
 .dfx-ve-palette-treeview-content span {
@@ -320,12 +381,12 @@ md-dialog .dfx-ve-property-treeview {
     opacity: 1.0;
     .transition-duration(0.5s);
   }
-  
+
   ul {
     .transition-duration;
     list-style: none;
-    padding-left: 1em;
-    
+    padding-left: 0px;
+
     li {
       padding-left:0px;
       padding-right:0px;
@@ -333,7 +394,7 @@ md-dialog .dfx-ve-property-treeview {
       span{
         .transition-property(color);
         .transition-duration;
-      
+
         //Highlight on hover
         &:hover {
           color: @hoverColor;
@@ -342,22 +403,30 @@ md-dialog .dfx-ve-property-treeview {
       }
     }
   }
-  
+
   //Hide checkboxes
   input.dfx-ve-property-treeview-button {
     display: none;
-    
+
     //Hide collapsed branches
     &:checked ~ ul {
       display: none;
     }
-     
+
     //Show pointer on collapsible rows
     & ~ label {
       cursor: pointer;
       font-weight: 700;
+      font-size: 12px;
+      padding: 10px;
+      padding-left: 15px;
+      width: 430px;
+      text-align: left;
+      border-top: 1px #6b6a6a solid;
+      border-bottom: 1px #6b6a6a solid;
+      background: #4a4a4a;
     }
-    
+
     //Expanded branch
     & ~ label:before {
       content: '';
@@ -365,12 +434,12 @@ md-dialog .dfx-ve-property-treeview {
       height: 0;
       position: absolute;
       margin-left: -1em;
-      margin-top: 0.4em;
+      margin-top: 0.55em;
       border-width: 4px;
       border-style: solid;
-      border-top-color: transparent;
-      border-right-color: @defaultColor;
-      border-bottom-color: @defaultColor;
+      border-top-color: @defaultColor;
+      border-right-color: transparent;
+      border-bottom-color: transparent;
       border-left-color: transparent;
       .transition-property(opacity);
       .transition-duration;
@@ -379,12 +448,52 @@ md-dialog .dfx-ve-property-treeview {
     //Collapsed branch
     &:checked ~ label:before {
       margin-left: -0.8em;
-      border-width: 5px;
+      margin-top: 0.45em;
+      border-width: 4px;
       border-top-color: transparent;
       border-right-color: transparent;
       border-bottom-color: transparent;
       border-left-color: @defaultColor;
     }
+  }
+}
+
+.dfx-ve-property-treeview-radiogroup {
+  display: flex;
+  &.row-radio {
+    flex-direction: row;
+    height: 24px;
+  }
+  md-radio-button {
+    height: 24px;
+    margin-bottom: 0px;
+    margin-right: 10px;
+    &>div.md-label {
+      height: 24px;
+      display: flex;
+      align-items: center;
+      margin-left: 20px;
+      margin-right: 0px;
+    }
+    &:hover {
+      color: #2389da;
+    }
+  }
+}
+
+.dfx-ve-property-treeview-checkbox {
+  height: 24px;
+  margin: 0px;  
+}
+
+.dfx-ve-property-treeview-edit-button {
+  cursor:pointer;
+  &:hover {
+    color: #2389da;
+  }
+  .dfx-ve-property-treeview-edit-button-icon {
+    color: #2389da;
+    margin-right: 8px;
   }
 }
 
@@ -394,6 +503,7 @@ md-dialog .dfx-ve-property-treeview label:before {
 
 .dfx-ve-property-treeview-content {
   padding-left: 0px !important;
+  margin-left: 10px !important;
 }
 
 .dfx-ve-property-treeview-content span {
@@ -401,6 +511,10 @@ md-dialog .dfx-ve-property-treeview label:before {
   font-family: "Open Sans",Arial,sans-serif;
   font-size: 12px;
   line-height: 25px;
+}
+
+dfx-ve-property-treeview-content-level-1 {
+  margin-left: 10px !important;
 }
 
 .dfx-ve-gc-handle {
@@ -505,17 +619,40 @@ div[gc-type="panel"] > .dfx-ve-gc-handle-duplicate {
 }
 
 .dfx-ve-property-treeview-content md-input-container span.md-select-icon {
-  color: #333;
+  color: #fff;
 }
 
 .dfx-ve-property-treeview-content input {
-  border:1px #ddd solid;
-  color: #333;
+  border:1px #6b6a6a solid;
+  color: #fff;
+  background: transparent;
+}
+
+.dfx-ve-property-treeview-content md-select {
+  padding: 2px 0;
+  background: #383838;
 }
 
 .dfx-ve-property-treeview-content md-select-value {
   height: 24px;
   padding: 0 0 0 8px !important;
+  border:1px #6b6a6a solid;
+  color: #fff;
+  background: #383838;
+}
+.dfx-ve-property-treeview-content {
+  &>li {
+    &>div {
+      padding: 0px;
+      &>input {
+        margin-left: 0 !important;
+      }
+      &>md-icon {
+        margin: 0 !important;
+        text-align: center;
+      }
+    }
+  }
 }
 
 
@@ -544,16 +681,17 @@ div[gc-type="panel"] > .dfx-ve-gc-handle-duplicate {
 .dfx-ve-property-picker-content input {
   border: 1px #ccc solid;
 }
-/* Icons Dialogbox */
+/* Content Dialogbox */
 md-icon.dfx-ve-picker-icon {
   font-size: 16px;
   color:#97CFFF;
-  width: 13px;  
+  width: 13px;
   height:18px;
-  margin:2px 0 0 15px;
+  padding-top:4px;
   cursor:pointer;
+  text-align: center;
 }
-.dfx-ve-icons-dialog {
+.dfx-ve-content-dialog {
   display: flex;
   flex-direction: column;
   width: 1100px;
@@ -561,7 +699,7 @@ md-icon.dfx-ve-picker-icon {
   z-index: 1;
   top: 50%;
   left: 50%;
-  margin: -305px 0 0 -550px;
+  margin: -330px 0 0 -550px;
   background: #ffffff;
   border-radius: 4px;
   overflow: hidden;
@@ -569,7 +707,7 @@ md-icon.dfx-ve-picker-icon {
   .transition-duration(0.2s);
   box-shadow: 0 7px 8px -4px rgba(0,0,0,.2),0 13px 19px 2px rgba(0,0,0,.14),0 5px 24px 4px rgba(0,0,0,.12);
 }
-.dfx-ve-icons-dialog.active {
+.dfx-ve-content-dialog.active {
   opacity: 1;
 }
 .dfx-ve-actions {
@@ -596,51 +734,59 @@ md-icon.dfx-ve-picker-icon {
   border-radius: 2px;
   border: none;
 }
-.dfx-ve-icons-content {
+.dfx-ve-content-container {
   display: flex;
-  height: 500px;
+  height: 550px;
   width: 100%;
   padding: 0;
 }
-.dfx-ve-icons-categories {
+.dfx-ve-content-categories {
   background: #757575;
   color: #ffffff;
   width: 200px;
   min-width: 200px;
   padding: 8px 16px;
-  height: 500px;  
+  height: 550px;
 }
-.dfx-ve-icons-categories ul {
-  padding: 0;  
+.dfx-ve-content-categories ul {
+  padding: 0;
 }
-.dfx-ve-icons-categories li {
+.dfx-ve-content-categories li {
   list-style: none;
   padding: 1px 0;
+  text-align: left;
 }
-.dfx-ve-icons-categories li span {
-  margin-left: 8px;
+.dfx-ve-content-categories li span {
   cursor: pointer;
+  &:hover {
+    color: #73cbff;
+  }
   &.active {
     color: #73cbff;
   }
 }
-.dfx-ve-icons-categories li span.dfx-ve-icons-types {
+.dfx-ve-content-categories li span.dfx-ve-content-categories-types {
   font-size: 16px;
   font-weight: 600;
-  margin-left: 0px;
+  margin-left: -8px;
 }
-.dfx-ve-icons-list {
-  height: 492px;
+.dfx-ve-content-categories-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 8px 0 8px -8px;
+}
+.dfx-ve-content-data {
+  height: 550px;
   overflow: auto;
-  margin: 8px 0 0 8px;
+  //margin: 8px 0 0 8px;
   width: 100%;
 }
 .dfx-ve-icon-item {
   display:inline-flex;
-  align-items:center; 
-  cursor:pointer; 
-  width:210px; 
-  margin:5px 0px 0 5px;
+  align-items:center;
+  cursor:pointer;
+  width:210px;
+  margin:5px 0px 0 10px;
 }
 .dfx-ve-icon-item {
   span {
@@ -664,7 +810,7 @@ md-icon.dfx-ve-picker-icon {
   &:hover {
     span, md-icon, ng-md-icon {
       color: #73cbff;
-    }  
+    }
   }
 }
 .dfx-second-dialog-icons {
@@ -677,11 +823,17 @@ md-icon.dfx-ve-picker-icon {
   overflow: hidden;
   box-shadow: 0 7px 8px -4px rgba(0,0,0,.2),0 13px 19px 2px rgba(0,0,0,.14),0 5px 24px 4px rgba(0,0,0,.12);
 }
-.second-dialog-inner .dfx-ve-icons-content {
-  height: 564px;
-}
+//.second-dialog-inner .dfx-ve-icons-content {
+//  height: 564px;
+//}
 .dfx-ve-menu-icon-color-picker .sp-replacer {
   margin: 0 -4px 0 12px;
+}
+.dfx-ve-property-treeview-color-picker .sp-replacer {
+  border-color: #6b6a6a;
+  margin: 0 0 0 1px;
+  width: 23px;
+  height: 23px;
 }
 
 /* DFX Css Styles Editor Dialog */
@@ -697,7 +849,7 @@ md-icon.dfx-ve-picker-icon {
   width: 100%;
   height: 100%;
   background: rgba(33,33,33,1.0);
-  opacity: 0.5; 
+  opacity: 0.5;
 }
 .dfx-ve-css-style-editor {
   position: absolute;
@@ -721,7 +873,7 @@ md-icon.dfx-ve-picker-icon {
   }
   md-content {
     padding: 8px;
-    .dfx-ve-property-treeview > ul {
+    .dfx-ve-style-treeview > ul {
       height: 320px;
       overflow: auto;
       margin: 0px;
@@ -738,6 +890,111 @@ md-icon.dfx-ve-picker-icon {
     justify-content: flex-end;
   }
 }
+
+.dfx-ve-style-treeview {
+  float: left; //Prevent 100% width
+  .user-select; //Prevent accidental selection on dbl click to fast expand/collapse
+
+  //Fade back to default
+  &:hover input ~ label:before,
+  &.hover input ~ label:before{
+    opacity: 1.0;
+    .transition-duration(0.5s);
+  }
+
+  ul {
+    .transition-duration;
+    list-style: none;
+    padding-left: 0px;
+
+    li {
+      padding-left:0px;
+      padding-right:0px;
+      //Fade back to default
+      span{
+        .transition-property(color);
+        .transition-duration;
+
+        //Highlight on hover
+        &:hover {
+          color: @hoverColor;
+          .transition-duration(0.3s);
+        }
+      }
+    }
+  }
+
+  //Hide checkboxes
+  input.dfx-ve-style-treeview-button {
+    display: none;
+
+    //Hide collapsed branches
+    &:checked ~ ul {
+      display: none;
+    }
+
+    //Show pointer on collapsible rows
+    & ~ label {
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 12px;
+      padding: 10px;
+      padding-left: 15px;
+      width: 430px;
+      text-align: left;
+      background: #fff;
+    }
+
+    //Expanded branch
+    & ~ label:before {
+      content: '';
+      width: 0;
+      height: 0;
+      position: absolute;
+      margin-left: -1em;
+      margin-top: 0.55em;
+      border-width: 4px;
+      border-style: solid;
+      border-top-color: @defaultColor;
+      border-right-color: transparent;
+      border-bottom-color: transparent;
+      border-left-color: transparent;
+      .transition-property(opacity);
+      .transition-duration;
+    }
+
+    //Collapsed branch
+    &:checked ~ label:before {
+      margin-left: -0.8em;
+      margin-top: 0.45em;
+      border-width: 4px;
+      border-top-color: transparent;
+      border-right-color: transparent;
+      border-bottom-color: transparent;
+      border-left-color: @defaultColor;
+    }
+  }
+}
+
+.dfx-ve-style-treeview-content md-input-container {
+  margin: 0;
+  border:0px;
+  color: #383838;
+  background: #fff;
+  padding: 0px !important;
+  margin-bottom: 2px;
+}
+
+.dfx-ve-style-treeview-content md-input-container span.md-select-icon {
+  color: #383838;
+}
+
+.dfx-ve-style-treeview-content input {
+  border:1px #6b6a6a solid;
+  color: #383838;
+  background: transparent;
+}
+
 .dfx-css-style-preview-box {
   position: relative;
   z-index: 10;
@@ -747,7 +1004,7 @@ md-icon.dfx-ve-picker-icon {
   background-color: #fff;
   background-image: linear-gradient(45deg,#ddd 25%,transparent 25%,transparent 75%,#ddd 75%,#ddd),linear-gradient(45deg,#ddd 25%,transparent 25%,transparent 75%,#ddd 75%,#ddd);
   background-size: 8px 8px;
-  background-position: 4px 0,8px 4px; 
+  background-position: 4px 0,8px 4px;
   border-top: 0px solid #ffffff;
   border-right: 58px solid #ffffff;
   border-bottom: 10px solid #ffffff;
@@ -764,7 +1021,7 @@ md-icon.dfx-ve-picker-icon {
   background: #fff;
   -webkit-box-shadow: inset 0px 3px 5px -3px rgba(0,0,0,0.2);
   -moz-box-shadow: inset 0px 3px 5px -3px rgba(0,0,0,0.2);
-  box-shadow: inset 0px 3px 5px -3px rgba(0,0,0,0.2);   
+  box-shadow: inset 0px 3px 5px -3px rgba(0,0,0,0.2);
 }
 .dfx-css-style-preview-inner {
   text-align: center;
@@ -784,4 +1041,260 @@ md-icon.dfx-ve-picker-icon {
 }
 .dfx-css-style-preview-inner.md-button .dfx-css-style-preview-text {
   line-height: 36px;
+}
+
+/* Code Assistant */
+md-dialog .dfx-ca-property-treeview {
+  float: none;
+}
+.dfx-ca-property-treeview {
+  float: left; //Prevent 100% width
+  .user-select; //Prevent accidental selection on dbl click to fast expand/collapse
+
+  //Fade back to default
+  &:hover input ~ label:before,
+  &.hover input ~ label:before{
+    opacity: 1.0;
+    .transition-duration(0.5s);
+  }
+
+  ul {
+    .transition-duration;
+    list-style: none;
+    padding-left: 10px;
+
+    li {
+      padding-left:0px;
+      padding-right:0px;
+      //Fade back to default
+      span{
+        .transition-property(color);
+        .transition-duration;
+
+        //Highlight on hover
+        &:hover {
+          color: @hoverColor;
+          .transition-duration(0.3s);
+        }
+      }
+    }
+  }
+
+  //Hide checkboxes
+  input.dfx-ca-property-treeview-button {
+    display: none;
+
+    //Hide collapsed branches
+    &:checked ~ ul {
+      display: none;
+    }
+
+    //Show pointer on collapsible rows
+    & ~ label {
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 12px;
+      padding: 5px 5px 5px 15px;
+      text-align: left;
+      margin: 0;
+    }
+
+    //Expanded branch
+    & ~ label:before {
+      content: '';
+      width: 0;
+      height: 0;
+      position: absolute;
+      margin-left: -1em;
+      margin-top: 0.55em;
+      border-width: 4px;
+      border-style: solid;
+      border-top-color: @defaultColor;
+      border-right-color: transparent;
+      border-bottom-color: transparent;
+      border-left-color: transparent;
+      .transition-property(opacity);
+      .transition-duration;
+    }
+
+    //Collapsed branch
+    &:checked ~ label:before {
+      margin-left: -0.8em;
+      margin-top: 0.45em;
+      border-width: 4px;
+      border-top-color: transparent;
+      border-right-color: transparent;
+      border-bottom-color: transparent;
+      border-left-color: @defaultColor;
+    }
+  }
+}
+
+md-dialog .dfx-ca-property-treeview label:before {
+  margin-top: 3px !important;
+}
+
+.dfx-ca-property-treeview-content {
+  padding-left: 0px !important;
+  margin-left: 10px !important;
+}
+
+.dfx-ca-property-treeview-content span {
+  padding-left: 5px;
+  font-family: "Open Sans",Arial,sans-serif;
+  font-size: 12px;
+  line-height: 25px;
+}
+
+.CodeMirror-dialog-top button {
+  background-color: #2196F3 !important;
+  color: #fff !important;
+  border:none;
+  border-radius: 2px;
+  margin-top: -2px;
+  text-decoration: none;
+}
+
+/*view editor workspace cards*/
+md-content#dfx-ve-main-content > md-tabs {
+  height: 100%;
+
+  > md-tabs-content-wrapper {
+    flex: 100;
+
+    > md-tab-content {
+      height: 100%;
+
+      > div {
+        height: 100%;
+
+        > md-content {
+          height: 100%;
+        }
+      }
+    }
+  }
+}
+
+/*view editor tabs gc*/
+md-tabs[dfx-gc-tabs-design] > md-tabs-content-wrapper {
+  top: 0 !important;
+  flex: 100;
+
+  > md-tab-content {
+    height: 100%;
+
+    > div[md-tabs-template] {
+      height: 100%;
+
+      > md-content {
+        height: 100%;
+      }
+    }
+  }
+}
+
+/*view editor wizard gc*/
+md-tabs[dfx-gc-wizard-design] > md-tabs-content-wrapper {
+  top: 0 !important;
+  flex: 100;
+
+  > md-tab-content {
+    height: 100%;
+
+    > div[md-tabs-template] {
+      height: 100%;
+
+      > md-content {
+        //height: 100%;
+      }
+    }
+  }
+}
+
+/* Options Editor Dialog Radiobuttons */
+md-radio-group.dfx-ve-options-editor-radio-group {
+  margin-left: 16px;
+  md-radio-button.dfx-ve-options-editor-radio-button {
+    display: inline-block;
+    margin: 20px 16px 16px 0px;
+    text-transform: uppercase;
+    &>div.md-container {
+      margin-top: 1px;
+    }
+  }
+}
+
+/* Menu Editor Dialog Radiobuttons */
+md-radio-group.dfx-ve-menu-editor-radio-group {
+  margin-left: 8px;
+  md-radio-button.dfx-ve-menu-editor-radio-button {
+    display: inline-block;
+    margin: 12px 16px 20px 0px;
+    text-transform: uppercase;
+    &>div.md-container {
+      margin-top: 1px;
+
+    }
+  }
+}
+
+/* DFX Dynamic Options Samples List */
+.dfx-ve-samples-list {
+  ul {
+    padding: 0;
+    .dfx-ve-samples-list-item {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      a {
+        flex-grow: 1;
+        padding: 0 10px;
+        text-decoration: none;
+        &:hover {
+          background: rgba(236,236,236,.5);
+        }
+      }
+      md-icon {
+        color: #757575;
+        margin-left: 10px;
+        cursor: pointer;
+        &:hover {
+          color: #337ab7;        
+        }
+      }      
+      &.active {
+        a {
+          font-weight: 700;
+          background: #ECECEC;
+        }
+      }
+    }
+  }  
+}
+.dfx-ve-sample {
+  height: 460px;
+  position: relative;
+  z-index:0;
+  overflow: hidden;
+  .jsoneditor {
+    border-bottom: 1px solid rgba(0,0,0,0.12);
+  }
+  md-toolbar.dfx-je-toolbar {
+    background: rgba(128,128,128,0.46);
+  }
+  pre {
+    border: none;
+    height: 460px;
+    margin: 0px;
+    position: relative;
+    z-index: 10;
+  }
+  textarea {
+    position: absolute;
+    z-index: -1;
+    top:0px;
+    width:0px;
+    height:0px;
+  }
 }

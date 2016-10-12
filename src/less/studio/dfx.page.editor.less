@@ -20,15 +20,13 @@ md-toast.md-success-toast-theme div {
 
 #dfx-pe-header {
   background-color: #353535;
+  height:30px;
+  padding-top: 4px;
 }
 
 #dfx-pe-title {
   font-size: 16px;
-  padding-top: 1px; 
-}
-
-#dfx_widget_editor_title {
-  color: #2EA6CE;
+  padding-top: 1px;
 }
 
 #dfx-pe-toggle-palette {
@@ -40,9 +38,9 @@ md-toast.md-success-toast-theme div {
 }
 
 #dfx-pe-toggle-property {
-  background: #B1B1B1;
-  margin: 0px !important;
-  height: 32px;
+  background: #4CD5F3;
+  margin: 0 0 0 5px!important;
+  height: 20px;
   color: #383838;
   padding: 0;
 }
@@ -58,10 +56,17 @@ md-toast.md-success-toast-theme div {
 #dfx-pe-sidenav-left-content {
   background-color: #383838;
   color: #fff;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+#dfx_visual_editor_gc_palette_content {
+  padding:0;
 }
 
 #dfx_visual_editor_gc_palette_content ul {
   background-color: #383838;
+  padding:0;
 }
 
 #dfx-pe-sidenav-right {
@@ -79,15 +84,16 @@ md-toast.md-success-toast-theme div {
 /* Toolbar */
 
 .dfx-pe-toolbar {
-  background-color: #ececec !important;
+  background-color: #383838 !important;
   color: #000 !important;
-  min-height: 36px !important;
+  min-height: 48px !important;
+  border-top: 1px #6b6a6a solid;
 }
 
 .dfx-pe-toolbar-tools {
   padding: 0;
-  height: 36px !important;
-  max-height: 36px !important;
+  height: 48px !important;
+  max-height: 48px !important;
 }
 
 .dfx-pe-toolbar-button {
@@ -100,8 +106,9 @@ md-toast.md-success-toast-theme div {
   margin-top: 3px !important;
 }
 
-.dfx-pe-toolbar-button-selected {
-  border-bottom: 2px red solid;
+.dfx-pe-toolbar-icon {
+  width: 32px;
+  cursor: pointer;
 }
 
 /* GC Palette & Property Panel */
@@ -131,13 +138,14 @@ md-toast.md-success-toast-theme div {
 }
 
 #dfx-pe-property-title {
-  height: 36px;
-  line-height: 36px;
+  height: 48px;
+  line-height: 48px;
   margin: 0;
   padding: 0;
   font-size: 14px;
   width: 430px;
-  background: #B1B1B1;
+  background: #4a4a4a;
+  color: #fff;
 }
 
 .dfx-pe-property-title-collapsed {
@@ -151,7 +159,7 @@ md-toast.md-success-toast-theme div {
 #dfx-pe-property-title-text {
   display: inline-block;
   padding-left: 10px;
-  width: 398px;
+  width: 388px;
 }
 
 #dfx-pe-sidenav-left {
@@ -164,6 +172,7 @@ md-toast.md-success-toast-theme div {
 
 .dfx_visual_editor_gc_cat_item_draggable {
   cursor: pointer;
+  padding: 2px;
 }
 
 #dfx_visual_editor_property_panel a {
@@ -206,7 +215,6 @@ md-toast.md-success-toast-theme div {
 .dfx-pe-palette-treeview {
   float: left; //Prevent 100% width
   .user-select; //Prevent accidental selection on dbl click to fast expand/collapse
-  max-width: 100%;
 
   //Fade back to default
   &:hover input ~ label:before,
@@ -214,72 +222,74 @@ md-toast.md-success-toast-theme div {
     opacity: 1.0;
     .transition-duration(0.5s);
   }
-  
+
   ul {
     .transition-duration;
     list-style: none;
     padding-left: 1em;
-    
+
     li {
       padding-left:0px;
-      padding-right:5px;
+      text-align:center;
       //Fade back to default
       span{
         .transition-property(color);
         .transition-duration;
-      
+
         //Highlight on hover
         &:hover {
           color: @hoverColor;
           .transition-duration(0.3s);
         }
       }
-      div {
-        max-width: 100%;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-      }
     }
   }
-  
+
   //Hide checkboxes
   input.dfx-pe-palette-treeview-button {
     display: none;
-    
+
     //Hide collapsed branches
     &:checked ~ ul {
       display: none;
     }
-     
+
     //Show pointer on collapsible rows
     & ~ label {
       cursor: pointer;
       font-weight: 700;
+      font-size: 12px;
+      padding: 10px;
+      width: 170px;
+      text-align: center;
+      border-top: 1px #6b6a6a solid;
+      border-bottom: 1px #6b6a6a solid;
+      background: #4a4a4a;
     }
-    
+
     //Expanded branch
-    & ~ label:before {
+    & ~ label span:before {
       content: '';
       width: 0;
       height: 0;
       position: absolute;
       margin-left: -1em;
-      margin-top: 0.4em;
+      margin-top: 0.55em;
       border-width: 4px;
       border-style: solid;
-      border-top-color: transparent;
-      border-right-color: @defaultColor;
-      border-bottom-color: @defaultColor;
+      border-top-color: @defaultColor;
+      border-right-color: transparent;
+      border-bottom-color: transparent;
       border-left-color: transparent;
       .transition-property(opacity);
       .transition-duration;
     }
 
     //Collapsed branch
-    &:checked ~ label:before {
+    &:checked ~ label span:before {
       margin-left: -0.8em;
-      border-width: 5px;
+      margin-top: 0.45em;
+      border-width: 4px;
       border-top-color: transparent;
       border-right-color: transparent;
       border-bottom-color: transparent;
@@ -290,6 +300,7 @@ md-toast.md-success-toast-theme div {
 
 .dfx-pe-palette-treeview-content {
   padding-left: 0px !important;
+  padding-bottom: 5px;
 }
 
 .dfx-pe-palette-treeview-content span {
@@ -304,6 +315,7 @@ md-dialog .dfx-pe-property-treeview {
   float: none;
 }
 .dfx-pe-property-treeview {
+  padding: 0px;
   float: left; //Prevent 100% width
   .user-select; //Prevent accidental selection on dbl click to fast expand/collapse
 
@@ -313,12 +325,12 @@ md-dialog .dfx-pe-property-treeview {
     opacity: 1.0;
     .transition-duration(0.5s);
   }
-  
+
   ul {
     .transition-duration;
     list-style: none;
-    padding-left: 1em;
-    
+    padding-left: 0px;
+
     li {
       padding-left:0px;
       padding-right:0px;
@@ -326,7 +338,7 @@ md-dialog .dfx-pe-property-treeview {
       span{
         .transition-property(color);
         .transition-duration;
-      
+
         //Highlight on hover
         &:hover {
           color: @hoverColor;
@@ -335,22 +347,30 @@ md-dialog .dfx-pe-property-treeview {
       }
     }
   }
-  
+
   //Hide checkboxes
   input.dfx-pe-property-treeview-button {
     display: none;
-    
+
     //Hide collapsed branches
     &:checked ~ ul {
       display: none;
     }
-     
+
     //Show pointer on collapsible rows
     & ~ label {
       cursor: pointer;
       font-weight: 700;
+      font-size: 12px;
+      padding: 10px;
+      padding-left: 15px;
+      width: 430px;
+      text-align: left;
+      border-top: 1px #6b6a6a solid;
+      border-bottom: 1px #6b6a6a solid;
+      background: #4a4a4a;
     }
-    
+
     //Expanded branch
     & ~ label:before {
       content: '';
@@ -358,12 +378,12 @@ md-dialog .dfx-pe-property-treeview {
       height: 0;
       position: absolute;
       margin-left: -1em;
-      margin-top: 0.4em;
+      margin-top: 0.55em;
       border-width: 4px;
       border-style: solid;
-      border-top-color: transparent;
-      border-right-color: @defaultColor;
-      border-bottom-color: @defaultColor;
+      border-top-color: @defaultColor;
+      border-right-color: transparent;
+      border-bottom-color: transparent;
       border-left-color: transparent;
       .transition-property(opacity);
       .transition-duration;
@@ -372,7 +392,8 @@ md-dialog .dfx-pe-property-treeview {
     //Collapsed branch
     &:checked ~ label:before {
       margin-left: -0.8em;
-      border-width: 5px;
+      margin-top: 0.45em;
+      border-width: 4px;
       border-top-color: transparent;
       border-right-color: transparent;
       border-bottom-color: transparent;
@@ -459,17 +480,26 @@ md-dialog .dfx-pe-property-treeview label:before {
 }
 
 .dfx-pe-property-treeview-content md-input-container span.md-select-icon {
-  color: #333;
+  color: #fff;
 }
 
 .dfx-pe-property-treeview-content input {
-  border:1px #ddd solid;
-  color: #333;
+  border:1px #6b6a6a solid;
+  color: #fff;
+  background: transparent;
+}
+
+.dfx-pe-property-treeview-content md-select {
+  padding: 2px 0;
+  background: #383838;
 }
 
 .dfx-pe-property-treeview-content md-select-value {
   height: 24px;
   padding: 0 0 0 8px !important;
+  border:1px #6b6a6a solid;
+  color: #fff;
+  background: #383838;
 }
 
 /* Script Editor */
@@ -522,13 +552,13 @@ md-dialog .dfx-pe-property-treeview label:before {
   z-index: 2000;
   background: #F1F1F1;
   width: 150px;
-  height: 50px;
+  height: 32px;
   padding: 5px;
   cursor: pointer;
 }
 
 .dfx-pe-view-menu a {
-  color: #8DCEFF;
+  color: #383838;
   display: none;
   margin-left:5px;
 }

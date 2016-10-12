@@ -1,44 +1,49 @@
 div#dfx_page_editor(ng-cloak, ng-controller="dfx_page_editor_controller", layout="column", flex, style="height:100%;")
     div#dfx-pe-header
-        img(src="/images/df_logoBuilder.png")
-        div(style="color: #fff;font-size: 13px;font-style: italic;display: inline-block;") - Page Editor
-        div.pull-right(style="color: #fff;font-size: 13px;display: inline-block;margin-top:2px;margin-right:5px") {{page_name}}
+      img(src="/images/df_logo_blanc_1029x223.png", style="width: 90px;margin-top: -3px;margin-left:10px;")
+      div(style="color: #fff;font-size: 13px;font-style: italic;display: inline-block;") - Page Editor
+      div.pull-right(style="color: #fff;font-size: 13px;line-height:20px;display: inline-block;margin-top:2px;margin-right:20px;padding-left:5px; padding-right:5px; background:#2196F3;border-radius:3px") {{page_name}}
     div#dfx-pe-toolbar
         md-toolbar.dfx-pe-toolbar
-            div.dfx-pe-toolbar-tools.md-toolbar-tools
-                div#dfx-pe-palette-title
-                    div#dfx-pe-palette-title-text Elements
-                    md-button#dfx-pe-toggle-palette.dfx-pe-toolbar-button(aria-label="palette", ng-click="toggleLeft()")
-                        i#dfx-pe-toggle-palette-icon.fa.fa-angle-double-left
-                span(style="font-size:12px;margin-left:50px;margin-right:5px;margin-top:5px") Display:
-                md-button.dfx-pe-toolbar-button.dfx-pe-toolbar-button-selected.dfx-pe-toolbar-button-design.md-raised.dfx-ve-toolbar-button-selected(aria-label="design", ng-click="showDesign()")
-                    i.fa.fa-eye(title="design")
-                md-button.dfx-pe-toolbar-button.dfx-pe-toolbar-button-script.md-raised(aria-label="script", ng-click="showScript()")
-                    i.fa.fa-edit(title="script")
-                span(style="font-size:12px;margin-left:30px;margin-right:5px;margin-top:5px") Actions:
-                md-button.dfx-pe-toolbar-button.md-raised(aria-label="save", ng-click="saveView()")
-                    i.fa.fa-save(title="save", ng-click="savePageDefinition()")
-                md-button.dfx-pe-toolbar-button.md-raised(aria-label="preview", ng-click="openPreview()", ng-if="waitIconShow === false")
-                    i.fa.fa-play-circle-o(title="preview")
-                div(style="text-align: center;", ng-if="waitIconShow === true")
-                    md-icon.fa.fa-spinner.fa-pulse(style="font-size: 24px; color:#300000;")
-                md-button.dfx-pe-toolbar-button.md-raised(aria-label="preview", ng-click="exitPageEditor($event)")
-                    i.fa.fa-close(title="exit")
-                span.flex
-                div#dfx-pe-property-title
-                    md-button#dfx-pe-toggle-property.dfx-pe-toolbar-button(aria-label="properties", ng-click="toggleRight()")
-                        i#dfx-pe-toggle-property-icon.fa.fa-angle-double-right
-                    div#dfx-pe-property-title-text
-                        a(href="#") Page Properties
-                        div#dfx-pe-property-title-selected-gc(style="display:none")
-                            span(style="margin-left:5px;margin-right:5px") >
-                            a#dfx-pe-property-title-selected-gc-text(href="#", ng-click="reloadPropertyPanel()") Gc
-                        div#dfx-pe-property-title-selected-renderer(style="display:none")
-                            span(style="margin-left:5px;margin-right:5px") >
-                            a#dfx-pe-property-title-selected-renderer-text(href="#") Renderer
-    div(layout="column", flex, style="height:100%", ng-show="current_mode=='design'")
+          div.dfx-pe-toolbar-tools.md-toolbar-tools
+            span(style="width: 85px;height: 45px;padding-top: 5px;")
+                md-menu#dfx-ve-menu-view-mode(md-offset="0 36")
+                    label(md-menu-origin, style="font-size:12px;background: #4CD5F3;margin-left: 10px;padding: 4px 8px;color:#1f1f1f;margin-top:4px;margin-right:10px;cursor:pointer", ng-click="$mdOpenMenu($event)")
+                        span(style="margin-right:5px;font-weight:700") {{design_view_mode}}
+                    md-menu-content#dfx-ve-toolbarmenu(width="4")
+                        md-menu-item
+                            md-button(ng-click="changeViewMode('design')")
+                                ng-md-icon(icon="brush")
+                                span(style="padding-left:10px") Design
+                        md-menu-item
+                            md-button(ng-click="changeViewMode('script')")
+                                ng-md-icon(icon="code")
+                                span(style="padding-left:10px") Script
+            span.flex
+            span(style="font-size: 12px;margin-left: 1px;background: #4a4a4a;line-height: 48px;color: #fff;padding: 0 8px;border-left: 1px #6b6a6a solid;border-right: 1px #6b6a6a solid;", class="pull-right")
+                span(style="margin-right:5px") Preview:
+                img(src="/images/vb/icons/preview_local.png", class="dfx-pe-toolbar-icon", ng-click="openPreview()", title="Preview")
+            div(style="color:#fff;font-size: 14px;", ng-if="preview_wait_icon_visible === true")
+                md-icon.fa.fa-spinner.fa-pulse
+                span(style="padding-left:10px;padding-right:10px") compiling
+            span(style="font-size: 12px;margin-left: 1px;background: #4a4a4a;line-height: 48px;color: #fff;padding: 0 8px;border-left: 1px #6b6a6a solid;border-right: 1px #6b6a6a solid;", class="pull-right")
+                span(style="margin-right:5px") Actions:
+                img(src="/images/vb/icons/action_save.png", class="dfx-pe-toolbar-icon", ng-click="savePageDefinition()", title="Save")
+                img(src="/images/vb/icons/action_exit.png", class="dfx-pe-toolbar-icon", ng-click="exitPageEditor($event)", title="Exit the editor")
+            div#dfx-pe-property-title
+                md-button#dfx-pe-toggle-property.dfx-pe-toolbar-button(aria-label="properties", ng-click="toggleRight()")
+                    i#dfx-pe-toggle-property-icon.fa.fa-angle-double-right
+                div#dfx-pe-property-title-text
+                    a(href="#") Page Properties
+                    div#dfx-pe-property-title-selected-gc(style="display:none")
+                        span(style="margin-left:5px;margin-right:5px") >
+                        a#dfx-pe-property-title-selected-gc-text(href="#", ng-click="reloadPropertyPanel()") Gc
+                    div#dfx-pe-property-title-selected-renderer(style="display:none")
+                        span(style="margin-left:5px;margin-right:5px") >
+                        a#dfx-pe-property-title-selected-renderer-text(href="#") Renderer
+    div(layout="column", flex, style="height:100%", ng-show="design_view_mode=='Design'")
         section(layout="row", flex)
-            md-sidenav#dfx-pe-sidenav-left.md-sidenav-left.md-whiteframe-z2(md-component-id="left", md-is-locked-open="$mdMedia('gt-md')", ng-show="palette_visible")
+            md-sidenav#dfx-pe-sidenav-left.md-sidenav-left.md-whiteframe-z2(md-component-id="left", md-is-locked-open="$mdMedia('gt-md')")
                 md-content#dfx-pe-sidenav-left-content(layout-padding show-gt-md)
                     div#dfx_visual_editor_gc_palette_content.dfx-pe-palette-treeview.hover
                         ul
@@ -46,7 +51,7 @@ div#dfx_page_editor(ng-cloak, ng-controller="dfx_page_editor_controller", layout
                                 input#palette-item-0.dfx-pe-palette-treeview-button(type="checkbox")
                                 label(for="palette-item-0") Application
                                 ul.dfx-pe-palette-treeview-content(gc-cat="Application")
-                                    li(ng-repeat="(key_cat, value_cat) in app_view_catalog", style="margin-left:10px")
+                                    li(ng-repeat="(key_cat, value_cat) in app_view_catalog")
                                         input.dfx-pe-palette-treeview-button(id="palette-item-{{key_cat}}", type="checkbox")
                                         label(for="palette-item-{{key_cat}}") {{key_cat}}
                                         ul.dfx-pe-palette-treeview-content
@@ -60,10 +65,10 @@ div#dfx_page_editor(ng-cloak, ng-controller="dfx_page_editor_controller", layout
                 div#dfx_page_editor_container(layout="column", flex="flex", layout-align="start center", style="position:relative; height:100%")
                     div#dfx_page_editor_workspace(ng-class="{'dfx-pe-template-disabled': templatePropertyEditMode==false}", layout="column", flex="flex")
             md-sidenav#dfx-pe-sidenav-right.md-sidenav-right.md-whiteframe-z2(md-component-id="right", md-is-locked-open="$mdMedia('gt-md')", ng-show="property_visible")
-                md-content#dfx-pe-sidenav-right-content(layout-padding show-gt-md)
-                    div#dfx_page_editor_property
+                md-content#dfx-pe-sidenav-right-content(show-gt-md)
+                    div#dfx_page_editor_property(style="padding:0")
                         a#dfx_page_editor_property_title
                         div#dfx_page_editor_property_panel
                             div(dfx-page-properties)
-    div(layout="column", flex, style="height:100%", ng-show="current_mode=='script'")
+    div(layout="column", flex, style="height:100%", ng-show="design_view_mode=='Script'")
         pre#dfx_pe_script_editor(style="border-radius: 0;")

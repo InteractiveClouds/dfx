@@ -4,17 +4,17 @@
      style="{{attributes.style.value}}"
      ng-show="$eval(attributes.display.value)">
     <div class="gc-checkbox-label-preview">{{$eval(attributes.label.value)}}</div>
-    <div ng-if="attributes.dynamicPresent.value=== true" layout="row">
+    <div ng-if="attributes.optionsType.value==='dynamic'" layout="row">
         <div ng-if="attributes.direction.value === 'column'" layout="column" style="margin-right: 5px">
             <div ng-repeat="item in $gcscope[attributes.source.value] track by $index" layout layout-align="start center"
                  style="padding-left: 5px;margin-bottom: 3px;"
-                 ng-style="{'margin-top' : $index === 0? '3px' : '18px'}"><span>{{item[attributes.bindingLabel.value]}}</span></div>
+                 ng-style="{'margin-top' : $index === 0? '3px' : '18px'}"><span>{{$eval(item[attributes.bindingLabel.value]) || item[attributes.bindingLabel.value]}}</span></div>
         </div>
         <div layout="{{attributes.direction.value}}" flex style="padding-top: 1px">
             <div flex layout layout-align="start center" ng-repeat="item in $gcscope[attributes.source.value] track by $index">
-                <div flex="none" ng-if="attributes.direction.value === 'row'" style="margin:-11px 5px 0 0; padding-left: 5px"><span>{{item[attributes.bindingLabel.value]}}</span></div>
+                <div flex="none" ng-if="attributes.direction.value === 'row'" style="margin:-11px 5px 0 0; padding-left: 5px"><span>{{$eval(item[attributes.bindingLabel.value]) || item[attributes.bindingLabel.value]}}</span></div>
                 <md-slider flex ng-if="$eval(attributes.discrete.value)" md-discrete
-                    class="md-altTheme-theme flex"
+                    class="md-altTheme-theme md-primary flex"
                     ng-model="$gcscope[attributes.binding.value][$index]"
                     min="{{attributes.minValue.value}}"
                     max="{{attributes.maxValue.value}}"
@@ -37,7 +37,7 @@
                     ng-disabled="$eval(attributes.disabled.value)">
                 </md-slider>
                 <md-slider flex ng-if="!$eval(attributes.discrete.value)"
-                    class="md-altTheme-theme flex"
+                    class="md-altTheme-theme md-primary flex"
                     ng-model="$gcscope[attributes.binding.value][$index]"
                     min="{{attributes.minValue.value}}"
                     max="{{attributes.maxValue.value}}"
@@ -82,7 +82,7 @@
             </div>
         </div>
     </div>
-    <div ng-if="attributes.dynamicPresent.value=== false" layout="row">
+    <div ng-if="attributes.optionsType.value==='static'" layout="row">
         <div ng-if="attributes.direction.value === 'column'" layout="column" style="margin-right: 5px">
             <div ng-repeat="item in attributes.slidersArray.value track by $index" layout layout-align="start center"
                  style="padding-left: 5px;margin-bottom: 3px;"
@@ -92,7 +92,7 @@
             <div flex layout layout-align="start center" ng-repeat="item in attributes.slidersArray.value track by $index">
                 <div flex="none" ng-if="attributes.direction.value === 'row'" style="margin:-11px 5px 0 0; padding-left: 5px" ng-bind="$eval(item.label)"></div>
                 <md-slider flex ng-if="$eval(attributes.discrete.value)" md-discrete
-                    class="md-altTheme-theme flex"
+                    class="md-altTheme-theme md-primary flex"
                     ng-model="$gcscope[attributes.binding.value][$index]"
                     min="{{attributes.minValue.value}}"
                     max="{{attributes.maxValue.value}}"
@@ -115,7 +115,7 @@
                     ng-disabled="$eval(attributes.disabled.value)">
                 </md-slider>
                 <md-slider flex ng-if="!$eval(attributes.discrete.value)"
-                    class="md-altTheme-theme flex"
+                    class="md-altTheme-theme md-primary flex"
                     ng-model="$gcscope[attributes.binding.value][$index]"
                     min="{{attributes.minValue.value}}"
                     max="{{attributes.maxValue.value}}"
@@ -167,17 +167,17 @@
      style="{{attributes.style.value}}"
      ng-show="$eval(attributes.display.value)">
     <div class="gc-checkbox-label-preview">{{$eval(attributes.label.value)}}</div>
-    <div ng-if="attributes.dynamicPresent.value=== true" layout="row">
+    <div ng-if="attributes.optionsType.value==='dynamic'" layout="row">
         <div ng-if="attributes.direction.value === 'column'" layout="column" style="margin-right: 5px">
             <div ng-repeat="item in $gcscope[attributes.source.value] track by $index" layout layout-align="start center"
                  style="padding-left: 5px;margin-bottom: 3px;"
-                 ng-style="{'margin-top' : $index === 0? '3px' : '18px'}"><span>{{item.label}}</span></div>
+                 ng-style="{'margin-top' : $index === 0? '3px' : '18px'}"><span>{{$eval(item[attributes.bindingLabel.value]) || item[attributes.bindingLabel.value]}}</span></div>
         </div>
         <div layout="{{attributes.direction.value}}" flex style="padding-top: 1px">
             <div flex layout layout-align="start center" ng-repeat="item in $gcscope[attributes.source.value] track by $index">
-                <div flex="none" ng-if="attributes.direction.value === 'row'" style="margin:-11px 5px 0 0; padding-left: 5px"><span>{{item[[attributes.bindingLabel.value]]}}</span></div>
+                <div flex="none" ng-if="attributes.direction.value === 'row'" style="margin:-11px 5px 0 0; padding-left: 5px"><span>{{$eval(item[attributes.bindingLabel.value]) || item[attributes.bindingLabel.value]}}</span></div>
                 <md-slider flex ng-if="$eval(attributes.discrete.value)" md-discrete
-                    class="md-altTheme-theme flex"
+                    class="md-altTheme-theme md-primary flex"
                     ng-model="item[attributes.displayValue.value]"
                     min="{{attributes.minValue.value}}"
                     max="{{attributes.maxValue.value}}"
@@ -200,7 +200,7 @@
                     ng-disabled="$eval(attributes.disabled.value)">
                 </md-slider>
                 <md-slider flex ng-if="!$eval(attributes.discrete.value)"
-                    class="md-altTheme-theme flex"
+                    class="md-altTheme-theme md-primary flex"
                     ng-model="item[attributes.displayValue.value]"
                     min="{{attributes.minValue.value}}"
                     max="{{attributes.maxValue.value}}"
@@ -244,7 +244,7 @@
             </div>
         </div>
     </div>
-    <div ng-if="attributes.dynamicPresent.value=== false" layout="row">
+    <div ng-if="attributes.optionsType.value==='static'" layout="row">
         <div ng-if="attributes.direction.value === 'column'" layout="column" style="margin-right: 5px">
             <div ng-repeat="item in attributes.slidersArray.value track by $index" layout layout-align="start center"
                  style="padding-left: 5px;margin-bottom: 3px;"
@@ -254,7 +254,7 @@
             <div flex layout layout-align="start center" ng-repeat="item in attributes.slidersArray.value track by $index">
                 <div flex="none" ng-if="attributes.direction.value === 'row'" style="margin:-11px 5px 0 0; padding-left: 5px" ng-bind="$eval(item.label)"></div>
                 <md-slider flex ng-if="$eval(attributes.discrete.value)" md-discrete
-                    class="md-altTheme-theme flex"
+                    class="md-altTheme-theme md-primary flex"
                     ng-model="item.value"
                     min="{{attributes.minValue.value}}"
                     max="{{attributes.maxValue.value}}"
@@ -277,7 +277,7 @@
                     ng-disabled="$eval(attributes.disabled.value)">
                 </md-slider>
                 <md-slider flex ng-if="!$eval(attributes.discrete.value)"
-                    class="md-altTheme-theme flex"
+                    class="md-altTheme-theme md-primary flex"
                     ng-model="item.value"
                     min="{{attributes.minValue.value}}"
                     max="{{attributes.maxValue.value}}"

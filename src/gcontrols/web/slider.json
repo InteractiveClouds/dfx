@@ -1,85 +1,38 @@
 {
-    "template": 			{ "value": "default" },
-	"name": {
-		"value": "slSlider1"
-	},
-	"binding": {
-		"value": ""
-	},
-    "source": {
-      "value": ""
-    },
-    "isBindingPresent":{
-      "value": ""
-    },
-    "dynamicPresent": {
-      "value": false
-    },
-    "bindingLabel":{
-      "value": ""
-    },
-    "displayValue":{
-      "value": ""
-    },
-	"label": {
-		"value": "'Slider'"
-	},
-    "counterCheck":{
-      "value": ""
-    },
-	"minValue": {
-		"value": 0
-	},
-	"maxValue": {
-		"value": 5
-	},
-	"discrete": {
-		"value": ""
-	},
-    "inputVisible":{
-      "value": ""
-    },
-    "slidersArray": {
-      "value": [{"label":"'parameter 1: '", "value": 3}]
-    },
-    "selectedIndex":{
-      "value": ""
-    },
-    "direction":{
-      "value": "column"
-    },
-	"step": {
-		"value": 1
-	},
-	"display": {
-		"value": "true"
-	},
-	"disabled": {
-		"value": "false"
-	},
-	"classes": {
-		"value": ""
-	},
-    "buttonClass":{
-      "value": "md-primary"
-    },
-	"dynamicClasses": {
-		"value": ""
-	},
-	"style": {
-		"value": ""
-	},
-    "onclick": { "value": "" },
-    "ondblclick": { "value": "" },
-    "onchange": { "value": "" },
-    "onfocus": { "value": "" },
-    "onblur": { "value": "" },
-    "onkeypress": { "value": "" },
-    "onkeydown": { "value": "" },
-    "onkeyup": { "value": "" },
-    "onmouseover": { "value": "" },
-    "onmouseenter": { "value": "" },
-    "onmousemove": { "value": "" },
-    "onmouseleave": { "value": "" },
-    "onmouseup": { "value": "" }
+  "template": 			 { "value": "default" },
+	"name":            { "value": "slSlider1" },
+	"binding":         { "value": "" },
+  "source":          { "value": "" },
+  "bindingLabel":    { "value": "" },
+  "displayValue":    { "value": "" },
+  "buttonClass":     { "value": "" },
+  "step":            { "value": 1 },
+  "label":           { "value": "'Slider'" },
+  "minValue":        { "value": 0 },
+  "maxValue":        { "value": 5 },
+  "discrete":        { "value": "" },
+  "inputVisible":    { "value": "" },
+  "optionsType":     { "value": "static" },
+  "slidersArray":    { "value": [{"label":"'parameter 1: '", "value": 3}] },
+  "direction":       { "value": "column" },
+  "display":         { "value": "true" },
+  "disabled":        { "value": "false" },
+  "classes":         { "value": "" },
+	"dynamicClasses":  { "value": "" },
+  "flex":            { "value": 50 },
+	"style":           { "value": "" },
+  "onclick":         { "value": "" },
+  "ondblclick":      { "value": "" },
+  "onchange":        { "value": "" },
+  "onfocus":         { "value": "" },
+  "onblur":          { "value": "" },
+  "onkeypress":      { "value": "" },
+  "onkeydown":       { "value": "" },
+  "onkeyup":         { "value": "" },
+  "onmouseover":     { "value": "" },
+  "onmouseenter":    { "value": "" },
+  "onmousemove":     { "value": "" },
+  "onmouseleave":    { "value": "" },
+  "onmouseup":       { "value": "" },
+  "onmousedown":     { "value": "" }
 }

@@ -2,7 +2,7 @@
   "template":       { "value": "default" },
   "name":           { "value": "inpInput1" },
   "label":          { "value": "'Input label'" },
-  "icon":           { "value": "", "type": "svg-icon", "size": 21 },
+  "icon":           { "value": "", "type": "svg-icon", "size": 21, "style": "", "class": "" },
   "position":       { "value": "left" },
   "binding" :       { "value" : "", "repeatable" : false, "$itemValue": "" },
   "selectedType":   { "value": "text" },
@@ -13,9 +13,10 @@
   "maxlength":      { "value": "" },
   "minNumber":      { "value": "" },
   "maxNumber":      { "value": "" },
-  "pattern":        { "value": ".*", "errorMessage": "The value is invalid" },
+  "pattern":        { "value": "", "errorMessage": "The value is invalid" },
   "temporary":      { "value": "" },
   "classes":        { "value": "" },
+  "flex":           { "value": 50 },
   "dynamicClasses": { "value": "" },
   "style":          { "value": "" },
   "onclick":        { "value": "" },
@@ -30,5 +31,6 @@
   "onmouseenter":   { "value": "" },
   "onmousemove":    { "value": "" },
   "onmouseleave":   { "value": "" },
-  "onmouseup":      { "value": "" }
+  "onmouseup":      { "value": "" },
+  "onmousedown":    { "value": "" }
 }

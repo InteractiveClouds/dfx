@@ -1,4 +1,4 @@
-var dfxStudioApp = angular.module("dfxStudioApp", ['ngRoute', 'ngMaterial', 'dfxStudioApi', 'nvd3', 'monospaced.qrcode']);
+var dfxStudioApp = angular.module("dfxStudioApp", ['ngRoute', 'ngMaterial', 'dfxStudioApi', 'nvd3', 'monospaced.qrcode', 'nsPopover']);
 
 dfxStudioApp.config([ '$routeProvider', '$mdThemingProvider', function($routeProvider, $mdThemingProvider) {
 
@@ -139,8 +139,8 @@ dfxStudioApp.controller("dfx_studio_controller", [ '$scope', '$rootScope', '$mdD
     $scope.tenant_id = $('#dfx-studio-main-body').attr( 'data-tenantid' );
     $scope.studio_explorer_visible = true;
     $scope.dfx_version_major   = '3';
-    $scope.dfx_version_minor   = '02';
-    $scope.dfx_version_release = 'R6';
+    $scope.dfx_version_minor   = '1';
+    $scope.dfx_version_release = '0';
 
     $scope.initStudio = function() {
         return '/studio/home';
@@ -160,7 +160,7 @@ dfxStudioApp.controller("dfx_studio_controller", [ '$scope', '$rootScope', '$mdD
 
     $scope.redirectDocumentation = function(){
         $window.open("http://interactive-clouds.com/documentation/", "_blank") ;
-    };    
+    };
 
     $scope.signOut = function(path) {
         $window.location.href = '/studio/' + $scope.tenant_id + '/login';
@@ -267,7 +267,7 @@ dfxStudioApp.controller("dfx_studio_controller", [ '$scope', '$rootScope', '$mdD
                                              '<md-menu-item><md-button ng-click="copyCatBtn($event)"><md-icon class="fa fa-copy" aria-label="Copy"></md-icon>Copy Category to ...</md-button></md-menu-item>' +
                                              '<md-menu-item><md-button ng-click="confirmDelete($event)"><md-icon class="fa fa-trash" aria-label="Delete"></md-icon>Delete Category</md-button></md-menu-item>'; break;
                 }
-            }            
+            }
         } else if (entity === 'menuItem') {
             $scope.targetComponent = {
                 "name":        name,
@@ -300,7 +300,7 @@ dfxStudioApp.controller("dfx_studio_controller", [ '$scope', '$rootScope', '$mdD
 
     $scope.renameCategoryBtn = function($event) {
         var parentEl = angular.element(document.body);
-        
+
         $mdDialog.show({
             parent: parentEl,
             targetEvent: $event,
@@ -309,14 +309,14 @@ dfxStudioApp.controller("dfx_studio_controller", [ '$scope', '$rootScope', '$mdD
             templateUrl: 'studioviews/category_rename.html',
             controller: DialogController
         });
-        
+
         function DialogController($scope, $mdDialog) {
             $scope.renameCategory = function( newName ) {
                 if ( (newName !== '') && (/^[-a-zA-Z0-9_]+$/.test( newName )) ) {
-                    if ( $scope.cat_type === 'page' ) {                
+                    if ( $scope.cat_type === 'page' ) {
                         dfxPages.editCategory( $scope, $scope.cat_name, newName, $scope.cat_app, $scope.cat_platform ).then(function( data ) {
                             if ( data.data.data !== 'Current category name already exists!' ) {
-                                dfxMessaging.showMessage(data.data.data);                                
+                                dfxMessaging.showMessage(data.data.data);
                                 $scope.getAll();
                                 $route.reload();
                                 $mdDialog.hide();
@@ -324,10 +324,10 @@ dfxStudioApp.controller("dfx_studio_controller", [ '$scope', '$rootScope', '$mdD
                                 dfxMessaging.showWarning(data.data.data);
                             }
                         });
-                    } else if ( $scope.cat_type === 'view' ) {                
+                    } else if ( $scope.cat_type === 'view' ) {
                         dfxViews.editCategory( $scope, $scope.cat_name, newName, $scope.cat_app, $scope.cat_platform ).then(function( data ) {
                             if ( data.data.data !== 'Current category name already exists!' ) {
-                                dfxMessaging.showMessage(data.data.data);                                
+                                dfxMessaging.showMessage(data.data.data);
                                 $scope.getAll();
                                 $route.reload();
                                 $mdDialog.hide();
@@ -335,10 +335,10 @@ dfxStudioApp.controller("dfx_studio_controller", [ '$scope', '$rootScope', '$mdD
                                 dfxMessaging.showWarning(data.data.data);
                             }
                         });
-                    } else if ( $scope.cat_type === 'apiso' ) {                
-                        dfxApiServiceObjects.editCategory( $scope, $scope.cat_name, newName, $scope.cat_app ).then(function( data ) {                            
+                    } else if ( $scope.cat_type === 'apiso' ) {
+                        dfxApiServiceObjects.editCategory( $scope, $scope.cat_name, newName, $scope.cat_app ).then(function( data ) {
                             if ( data.data.data !== 'Current category name already exists!' ) {
-                                dfxMessaging.showMessage(data.data.data);                                
+                                dfxMessaging.showMessage(data.data.data);
                                 $scope.getAll();
                                 $route.reload();
                                 $mdDialog.hide();
@@ -351,7 +351,7 @@ dfxStudioApp.controller("dfx_studio_controller", [ '$scope', '$rootScope', '$mdD
                     dfxMessaging.showWarning('Not valid Category Name');
                 }
             }
-            
+
             $scope.closeDialog = function() {
                 $mdDialog.hide();
             }
@@ -369,7 +369,7 @@ dfxStudioApp.controller("dfx_studio_controller", [ '$scope', '$rootScope', '$mdD
                     dfxMessaging.showWarning(data.data.data);
                 }
             });
-        } else if ( $scope.cat_type === 'view' ) {                
+        } else if ( $scope.cat_type === 'view' ) {
             dfxViews.removeCategory( $scope, $scope.cat_name, $scope.cat_app, $scope.cat_platform ).then(function( data ) {
                 if ( data.status && data.status === 200 ) {
                     dfxMessaging.showMessage(data.data.data);
@@ -379,7 +379,7 @@ dfxStudioApp.controller("dfx_studio_controller", [ '$scope', '$rootScope', '$mdD
                     dfxMessaging.showWarning(data.data.data);
                 }
             });
-        } else if ( $scope.cat_type === 'apiso' ) {                
+        } else if ( $scope.cat_type === 'apiso' ) {
             dfxApiServiceObjects.removeCategory( $scope, $scope.cat_name, $scope.cat_app ).then(function( data ) {
                 if ( data.status && data.status === 200 ) {
                     dfxMessaging.showMessage(data.data.data);
@@ -455,7 +455,7 @@ dfxStudioApp.controller("dfx_studio_controller", [ '$scope', '$rootScope', '$mdD
         }
     }
 
-    $scope.copyToBtn = function($event) {
+    $scope.copyToBtn = function($event, callback) {
         var parentEl = angular.element(document.body);
 
         $mdDialog.show({
@@ -548,6 +548,9 @@ dfxStudioApp.controller("dfx_studio_controller", [ '$scope', '$rootScope', '$mdD
                                 case 'apiso': dfxMessaging.showMessage( 'API Service Object ' + $scope.toCopy.name + ' has been copyied successfully' ); break;
                             }
                             $scope.getAll();
+                            if (callback != null) {
+                                callback();
+                            }
                             $mdDialog.hide();
                         }
                     });
@@ -867,7 +870,7 @@ dfxStudioApp.controller("dfx_studio_category_controller", [ '$scope', '$routePar
             $scope.table_data = data.data[$scope.entity][$scope.cat_platform][$scope.category];
         }
     });
-    
+
     $scope.edit = function( name ) {
         switch ( $scope.entity ) {
             case 'pages':       $location.path('/page/update/' + $scope.app_name + '/' + $scope.cat_platform + '/'+ name); break;
@@ -1484,7 +1487,7 @@ dfxStudioApp.controller("dfx_studio_developers_controller", [ '$scope', 'dfxPlat
 }]);
 
 
-dfxStudioApp.controller("dfx_studio_home_controller", [ '$scope', 'dfxStats', '$timeout', '$compile', '$window', '$routeParams', 'dfxApplications', '$location', function($scope, dfxStats, $timeout, $compile, $window, $routeParams, dfxApplications, $location) {
+dfxStudioApp.controller("dfx_studio_home_controller", [ '$scope', 'dfxStats', '$timeout', '$compile', '$window', '$route', '$routeParams', '$mdDialog', 'dfxApplications', 'dfxViews', 'dfxPages', 'dfxApiServiceObjects', 'dfxMessaging', '$location', function($scope, dfxStats, $timeout, $compile, $window, $route, $routeParams, $mdDialog, dfxApplications, dfxViews, dfxPages, dfxApiServiceObjects, dfxMessaging, $location) {
     $scope.display_activity_panel = false;
     $scope.platform_stats = {};
     $scope.chart_pages_data = [];
@@ -1642,9 +1645,84 @@ dfxStudioApp.controller("dfx_studio_home_controller", [ '$scope', 'dfxStats', '$
     $scope.edit = function( item ) {
         switch ( $scope.entity ) {
             case 'pages':       $location.path('/page/update/' + $scope.appname + '/' + item.platform + '/' + item.name); break;
-            case 'views':       $location.path('/view/update/' + $scope.appname + '/' + item.platform + '/' + item.name); break;
+            //case 'views':       $location.path('/view/update/' + $scope.appname + '/' + item.platform + '/' + item.name); break;
+            case 'views':
+                window.localStorage.removeItem('pagePreviewName');
+                $window.open( '/studio/widget/' + item.platform + '/' + $scope.appname + '/' + item.name + '/index.html', '_blank' );
+                break;
             case 'apiServices': $location.path('/api_so/update/' + $scope.appname + '/' + item.name); break;
         }
+    };
+
+    $scope.copyEntity = function( item ) {
+        $scope.$parent.targetComponent = {
+            "name":        item.name,
+            "application": $scope.appname,
+            "category":    item.category,
+        }
+        if ($scope.entity=='views') {
+            $scope.$parent.targetComponent.type = 'view';
+            $scope.$parent.targetComponent.platform = item.platform;
+        } else if ($scope.entity=='pages') {
+            $scope.$parent.targetComponent.type = 'page';
+            $scope.$parent.targetComponent.platform = item.platform;
+        } else {
+            $scope.$parent.targetComponent.type = 'apiso';
+        }
+        $scope.copyToBtn(null, function() {
+            $route.reload();
+        });
+    };
+
+    $scope.infoEntity = function( item ) {
+        $location.path('/view/update/' + $scope.appname + '/' + item.platform + '/' + item.name);
+    };
+
+
+    $scope.removeEntity = function( item, ev ) {
+        $scope.$parent.targetComponent = {
+            "name":        item.name,
+            "application": $scope.appname,
+            "category":    item.category,
+        }
+        if ($scope.entity=='views') {
+            $scope.$parent.targetComponent.type = 'view';
+            $scope.$parent.targetComponent.platform = item.platform;
+        } else if ($scope.entity=='pages') {
+            $scope.$parent.targetComponent.type = 'page';
+            $scope.$parent.targetComponent.platform = item.platform;
+        } else {
+            $scope.$parent.targetComponent.type = 'apiso';
+        }
+        var confirm = $mdDialog.confirm()
+            .title('Are you sure you want delete this component?')
+            .textContent('The component will be removed permanently from the repository.')
+            .ariaLabel('delete component')
+            .targetEvent(ev)
+            .cancel('Cancel')
+            .ok('OK');
+        $mdDialog.show(confirm).then(function() {
+            if ($scope.entity=='views') {
+                dfxViews.delete( $scope, $scope.$parent.targetComponent ).then( function(data) {
+                    dfxMessaging.showMessage( 'The view has been deleted' );
+                    $scope.getAll();
+                    $route.reload();
+                });
+            } else if ($scope.entity=='pages') {
+                dfxPages.delete( $scope, $scope.$parent.targetComponent ).then( function(data) {
+                    dfxMessaging.showMessage( 'The page has been deleted' );
+                    $scope.getAll();
+                    $route.reload();
+                });
+            } else {
+                dfxApiServiceObjects.deleteSo( $scope, $scope.$parent.targetComponent ).then( function(data) {
+                    dfxMessaging.showMessage( 'The API Service Object has been deleted' );
+                    $scope.getAll();
+                    $route.reload();
+                });
+            }
+        }, function() {
+        });
     };
 
     $timeout(function(){
@@ -1693,7 +1771,7 @@ dfxStudioApp.controller("dfx_studio_stackoverflow_controller", [ '$scope', '$win
 }]);
 
 dfxStudioApp.controller("dfx_studio_samples_controller", [ '$scope', '$http', '$window', '$mdDialog', 'dfxMessaging', 'dfxSamples', 'dfxApplications', 'dfxViews', function($scope, $http, $window, $mdDialog, dfxMessaging, dfxSamples, dfxApplications, dfxViews) {
-    
+
     $scope.categories = [];
     $scope.samples = [];
     $scope.isCategoriesLoaded = false;
@@ -1733,7 +1811,7 @@ dfxStudioApp.controller("dfx_studio_samples_controller", [ '$scope', '$http', '$
             for (var i=0; i<contents.data.length; i++) {
                 if (contents.data[i].type=='file') {
                     dfxSamples.contents( $scope, contents.data[i].path ).then( function(file_contents) {
-                       $scope.loadFile( file_contents.data.url, $scope.samples, sample_name, cat_name ); 
+                       $scope.loadFile( file_contents.data.url, $scope.samples, sample_name, cat_name );
                     });
                 }
             }
@@ -1753,7 +1831,7 @@ dfxStudioApp.controller("dfx_studio_samples_controller", [ '$scope', '$http', '$
     };
 
     $scope.readDocumentation = function(sample) {
-        $window( sample.content.documentation, '_blank' );
+        $window.open( sample.content.documentation, '_blank' );
     };
 
     $scope.openInstallSample = function(sample) {
@@ -1819,7 +1897,7 @@ dfxStudioApp.controller("dfx_studio_samples_controller", [ '$scope', '$http', '$
                 var resource_cat;
                 var re = /[.]\w+$/;
                 var m;
-                 
+
                 if ((m = re.exec(resources.data[0].name)) !== null) {
                     if (m.index === re.lastIndex) {
                         re.lastIndex++;
@@ -1863,20 +1941,20 @@ dfxStudioApp.controller("dfx_studio_samples_controller", [ '$scope', '$http', '$
                             break;
                     }
                 }
-                
+
                 $scope.installSampleResource( resources.data[i].name, resources.data[i].path, mime_type, resource_cat );
             }
         });
-        
+
 
     };
 
     $scope.installSampleResource = function(resource_name, resource_path, mime_type, resource_cat) {
-        
+
         dfxSamples.contents( $scope, resource_path ).then( function(resource_content) {
-            
+
             var form_data = new FormData();
-            
+
             var bytes;
 
             if (resource_cat=='assets') {
@@ -1892,7 +1970,7 @@ dfxStudioApp.controller("dfx_studio_samples_controller", [ '$scope', '$http', '$
                 // Convert the string to bytes
                 bytes = atob(resource_content.data.content);
             }
-            
+
             var blob = new Blob([bytes], { type: mime_type});
             form_data.append( 'file', blob, resource_content.data.name);
 
@@ -1900,8 +1978,9 @@ dfxStudioApp.controller("dfx_studio_samples_controller", [ '$scope', '$http', '$
                 url: '/studio/resources/simulate_upload/' + $scope.selected_application + '/' + resource_cat,
                 type: 'POST',
                 data: form_data,
+                headers : {'X-DREAMFACE-TENANT' : $('body').attr('data-tenantid')},
                 processData: false,
-                contentType: false 
+                contentType: false
             });
 
         });
@@ -2834,7 +2913,7 @@ dfxStudioApp.directive('dropzone', ['dfxApplications','$timeout', '$mdDialog', '
                     }
                     if(is_unique){
                         scope.data.items.push({
-                            'path': file.name,
+                            'path': file.name.replace(/ /g,'').replace(/-/g,'').replace(/:/g,''),
                             'type': file.type,
                             'size': (file.size/1000).toFixed(1),
                             'is_uploaded': false
@@ -3943,7 +4022,7 @@ dfxStudioApp.controller("dfx_studio_view_create_controller", [ '$scope', '$route
                 dfxMessaging.showWarning( data.data.error.message );
             });
         } else {
-            dfxMessaging.showWarning('Not valid View Name'); 
+            dfxMessaging.showWarning('Not valid View Name');
             $("#view-name").focus();
         }
     };
@@ -4045,7 +4124,7 @@ dfxStudioApp.controller("dfx_studio_view_category_controller", [ '$scope', '$rou
             });
         } else if ( newName === $scope.scopeCategory.name ) {
             dfxMessaging.showWarning('Category with such name already exist!');
-            
+
         } else {
             dfxMessaging.showWarning('Not valid Category Name');
         }
@@ -4153,13 +4232,14 @@ dfxStudioApp.controller("dfx_studio_page_create_controller", [ '$scope', '$route
         "name": "NewPage",
         "application": $routeParams.appname,
         "title": "",
+        "autoHeight": false,
         "visibility": "visible",
         "platform" : "web",
         "template": "basic",
         "category": "Default",
         "script": "dfxAppRuntime.controller('dfx_page_controller', [ '$scope', '$rootScope', function( $scope, $rootScope) {\n\t// Insert your code here\n}]);",
         "layout": {
-            "rows" : [ { "columns" : [ {"width" : "100", "views" : []} ] } ]
+            "rows" : [ { "height" : "100", "columns" : [ {"width" : "100", "views" : []} ] } ]
         }
     };
 
@@ -4204,7 +4284,7 @@ dfxStudioApp.controller("dfx_studio_page_create_controller", [ '$scope', '$route
                 dfxMessaging.showWarning( data.data.error.message );
             });
         } else {
-            dfxMessaging.showWarning('Not valid Page Name'); 
+            dfxMessaging.showWarning('Not valid Page Name');
             $("#page-name").focus();
         }
     };
@@ -4306,7 +4386,7 @@ dfxStudioApp.controller("dfx_studio_page_category_controller", [ '$scope', '$rou
             });
         } else if ( newName === $scope.scopeCategory.name ) {
             dfxMessaging.showWarning('Category with such name already exist!');
-            
+
         } else {
             dfxMessaging.showWarning('Not valid Category Name');
         }
@@ -5267,7 +5347,17 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
         }
     }
 
-    $scope.updateApiSo = function() {
+    $scope.updateApiSo = function(obj) {
+
+        // save filters content bug
+        if (obj) {
+            switch( obj.type ) {
+                case 'precode': console.log("PRE_CODE"); $scope.api_so.apiRoutes[$scope.scopeServiceIndex].data.precode[$scope.codeArrayItemIndex].code = obj.value; break;
+                case 'postcode':  console.log("POST_CODE"); $scope.api_so.apiRoutes[$scope.scopeServiceIndex].data.postcode[$scope.codeArrayItemIndex].code = obj.value; break;
+            }
+            $scope.renderFilters( $scope.scopeService );
+        }
+
         $scope.api_so.application = $scope.app_name;
         $scope.renderRoutesFilters();
         if ( $scope.notRenderedFilters ) {
@@ -5367,6 +5457,8 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
                     "typerequest": "HTTP_GET",
                     "urlrandom": "0",
                     "auth_userid": "",
+                    "cache":"none",
+                    "cacheTimeExpiry" : 0,
                     "url": "",
                     "dbdriver": "",
                     "dbnames": { "database": "", "collection": "" }
@@ -5571,19 +5663,19 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
         $scope.parameters = parameters;
         $scope.body = body;
 
-        $.get('/api/tenant/get?tenantid=' + $('body').attr('data-tenantid'))
+        dfxApiServiceObjects.getTenant( $('body').attr('data-tenantid'))
             .then(function(tenant) {
-                if (tenant.data.databaseTokens) {
+                if (tenant.data.data.databaseTokens) {
                     var str = "curl -i ";
                         str += "-H 'Content-Type:application/json' ";
-                        str += "-H 'Authorization:Basic " + btoa($('body').attr('data-tenantid') + ":" + Object.keys(tenant.data.databaseTokens)[0]) + "==' ";
+                        str += "-H 'Authorization:Basic " + btoa($('body').attr('data-tenantid') + ":" + Object.keys(tenant.data.data.databaseTokens)[0]) + "==' ";
                         str += "-d '{}' ";
                         str += window.location.origin + '/api/' + $scope.app_name + '/apiRoute/' + serviceItem.name;
                     $scope.curlItemContent = str;
 
                     var str = "curl -i ";
                     str += "-H 'Content-Type:application/json' ";
-                    str += "-H 'Authorization:Basic " + btoa($('body').attr('data-tenantid') + ":" + Object.keys(tenant.data.databaseTokens)[0]) + "==' ";
+                    str += "-H 'Authorization:Basic " + btoa($('body').attr('data-tenantid') + ":" + Object.keys(tenant.data.data.databaseTokens)[0]) + "==' ";
                     str += "-d '" + JSON.stringify(queryString) + "' ";
                     str += window.location.origin + '/api/' + $scope.app_name + '/apiRoute/' + serviceItem.name;
                     $scope.curlItemContentWithParameters = str;
@@ -5592,12 +5684,12 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
 
                     $scope.postmanUrl = window.location.origin + '/api/' + $scope.app_name + '/apiRoute/' + serviceItem.name;
                     $scope.postmanUsername = $('body').attr('data-tenantid');
-                    $scope.postmanPassword = Object.keys(tenant.data.databaseTokens)[0];
+                    $scope.postmanPassword = Object.keys(tenant.data.data.databaseTokens)[0];
                 } else {
                     $scope.curlItemContent = "Can't get tenant token from server";
                 }
 
-            }).fail(function(err) {
+            },function(err) {
                 $scope.curlItemContent = "Can't get tenant token from server." + err;
             });
         var sideNavInstance = $mdSidenav('side_nav_curl');
@@ -5612,11 +5704,12 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
         $('#' + id +'_span').show();
     }
 
-    $scope.editService = function( serviceItem ) {
+    $scope.editService = function( serviceItem, index ) {
         $scope.selected_service_tab = 0;
         $scope.validUrlResult = '';
         $scope.serviceUrlError = '';
         $scope.scopeService = serviceItem;
+        $scope.scopeServiceIndex = index;
         $scope.editFilterTitle = null;
         if ( !serviceItem.data.parameters ) $scope.scopeService.data.parameters = [];
         if ( !serviceItem.data.precode ) $scope.scopeService.data.precode = [];
@@ -5906,37 +5999,39 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
     $scope.saveActions = function() {
         var editor = $('#dfx_filter_src_query_editor.CodeMirror')[0].CodeMirror,
             codeValue = editor.getValue();
-        switch( $scope.codeArrayName ) {
-            case 'precode': $scope.scopeService.data.precode[$scope.codeArrayItemIndex].code = codeValue; break;
-            case 'postcode': $scope.scopeService.data.postcode[$scope.codeArrayItemIndex].code = codeValue; break;
+
+        var obj = {
+            type : $scope.codeArrayName,
+            value : codeValue
         }
 
         $timeout(function(){
             $scope.editorOpened = false;
             editor.setValue('');
-            $scope.renderFilters( $scope.scopeService );
             if ( $scope.isEmptyFilterName ) {
                 dfxMessaging.showWarning("Filter name can't be empty");
                 $scope.selected_service_tab = 2;
             } else {
-                $scope.updateApiSo();
+                $scope.updateApiSo(obj);
             }
             $scope.editFilterTitle = null;
-        }, 0);
+        }, 200);
 
     }
 
     $scope.closeActionsEditor = function() {
-        var editor = $('#dfx_filter_src_query_editor.CodeMirror')[0].CodeMirror;
-            codeValue = editor.getValue();
+        if($scope.editorOpened){
+            var editor = $('#dfx_filter_src_query_editor.CodeMirror')[0].CodeMirror;
+                codeValue = editor.getValue();
 
-        switch( $scope.codeArrayName ) {
-            case 'precode': $scope.scopeService.data.precode[$scope.codeArrayItemIndex].code = codeValue; break;
-            case 'postcode': $scope.scopeService.data.postcode[$scope.codeArrayItemIndex].code = codeValue; break;
+            switch( $scope.codeArrayName ) {
+                case 'precode': $scope.scopeService.data.precode[$scope.codeArrayItemIndex].code = codeValue; break;
+                case 'postcode': $scope.scopeService.data.postcode[$scope.codeArrayItemIndex].code = codeValue; break;
+            }
+            $scope.editorOpened = false;
+            editor.setValue('');
+            $scope.editFilterTitle = null;
         }
-        $scope.editorOpened = false;
-        editor.setValue('');
-        $scope.editFilterTitle = null;
     }
 
     $scope.execute = function( event ) {
@@ -5978,6 +6073,9 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
         }
 
         simulateService.url = $scope.scopeService.data.settings.url;
+        simulateService.name = $scope.scopeService.name;
+        simulateService.cache = $scope.scopeService.data.settings.cache;
+        simulateService.cacheTimeExpiry = $scope.scopeService.data.settings.cacheTimeExpiry;
         simulateService.typeRequest = $scope.scopeService.data.settings.typerequest.replace('HTTP_', '');
         simulateService.urlRandom = $scope.scopeService.data.settings.urlrandom;
         simulateService.reqbody = $scope.scopeService.data.settings.postrequestbody;
@@ -5987,18 +6085,23 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
         simulateService.application = $scope.app_name;
         simulateService._ = $scope.serviceTimeStamp;
 
-        $.get('/studio/query/execute', simulateService)
+        $.ajax({
+            url: '/studio/query/execute',
+            data: simulateService,
+            type: 'POST',
+            headers : {'X-DREAMFACE-TENANT' : $('body').attr('data-tenantid')}
+        })
             .then(function(data) {
-                $scope.simulatedMeta = JSON.stringify(data.metadata, null, '\t');
-                $scope.simulatedResult = JSON.stringify(data.data, null, '\t');
-                $scope.simulatedRequest = JSON.stringify(data.requestData, null, '\t');
+                $scope.simulatedMeta = data.metadata;
+                $scope.simulatedResult = data.data;
+                $scope.simulatedRequest = data.requestData;
                 $timeout(function() {
                     $scope.isExecuted = true;
                 }, 0);
             }).fail(function(data) {
-                $scope.simulatedMeta = JSON.stringify(data, null, '\t');
-                $scope.simulatedResult = JSON.stringify(JSON.parse(data.responseText), null, '\t');
-                $scope.simulatedRequest = JSON.stringify(data, null, '\t');
+                $scope.simulatedMeta = data;
+                $scope.simulatedResult = data.responseText;
+                $scope.simulatedRequest = data;
                 $timeout(function() {
                     $scope.isExecuted = true;
                 }, 0);
@@ -6025,26 +6128,52 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
         //     executedMirror.refresh();
         // }, 0);
         sidenav.find("#executedResult").css( "height", sidenavHeight-245 );
+        var container = document.getElementById('executedResult'),
+            options = { mode: 'code', modes: ['tree','form','code','text','view'], history: true }
+        $timeout(function(){
+            if(!$scope.dfxSampleJsonEditor) $scope.dfxSampleJsonEditor = new JSONEditor(container, options, $scope.simulatedResult);
+        },0);
     }
 
     $scope.viewMetaData = function() {
         // var editor = $('#executedResult.CodeMirror')[0].CodeMirror;
         // editor.setValue( $scope.simulatedMeta );
-        $("#executedResult").val( $scope.simulatedMeta );
+        // $("#executedResult").val( $scope.simulatedMeta );
+        $scope.dfxSampleJsonEditor.set($scope.simulatedMeta);
         $("#showResults").css('opacity',1);
     }
 
     $scope.viewResult = function() {
         // var editor = $('#executedResult.CodeMirror')[0].CodeMirror;
         // editor.setValue( $scope.simulatedResult );
-        $("#executedResult").val( $scope.simulatedResult );
+        // $("#executedResult").val( $scope.simulatedResult );
+        $scope.dfxSampleJsonEditor.set($scope.simulatedResult);
+        // dfxApiServiceObjects.getSettings().then(function( response ){
+        //     var settings = response.data;
+        //     $scope.showFullResult = false;
+        //     if ((settings.api_so_response_max_size == 0) || ($scope.simulatedResult.length < settings.api_so_response_max_size)) {
+        //         $("#executedResult").val( $scope.simulatedResult );
+        //     } else {
+        //         $scope.showFullResult = true;
+        //         $scope.numberOfCutedChars = settings.api_so_response_max_size;
+        //         $("#executedResult").val( $scope.simulatedResult.slice(0,settings.api_so_response_max_size) );
+        //     }
+        // });
         $("#showResults").css('opacity',1);
     }
+
+    // $scope.showFullResultAction = function() {
+    //     $scope.showFullResult = false;
+    //     $("#executedResult").val("") ;
+    //     $("#executedResult").val( $scope.simulatedResult ) ;
+    //     $("#showResults").css('opacity',1);
+    // }
 
     $scope.viewRequest = function() {
         // var editor = $('#executedResult.CodeMirror')[0].CodeMirror;
         // editor.setValue( $scope.simulatedRequest );
-        $("#executedResult").val( $scope.simulatedRequest );
+        // $("#executedResult").val( $scope.simulatedRequest );
+        $scope.dfxSampleJsonEditor.set($scope.simulatedRequest);
         $("#showResults").css('opacity',1);
     }
 
@@ -6108,6 +6237,15 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
         }, function() {
         });
     };
+
+    $scope.clearCache = function(type) {
+        var obj = {type : type, application : $scope.app_name, name : $scope.scopeService.name};
+        dfxApiServiceObjects.clearCache(obj).then(function(){
+            dfxMessaging.showMessage("Сache was successfully cleared");
+        },function(err){
+            dfxMessaging.showWarning(err);
+        });
+    }
 }]);
 
 dfxStudioApp.directive('dfxApiSoSources', ['$mdDialog', '$timeout', 'dfxApiServiceObjects', function($mdDialog, $timeout, dfxApiServiceObjects) {
@@ -6215,11 +6353,11 @@ dfxStudioApp.controller("dfx_studio_api_so_category_controller", [ '$scope', '$r
     }
 
     $scope.editCategory = function( edited ) {
-        var newName = edited.name; 
+        var newName = edited.name;
         var regexp = /([a-z0-9_])(\w*)/gi;
         res = regexp.exec( newName );
         if ( res && newName && newName !== $scope.scopeCategory.name ) {
-            dfxApiServiceObjects.editCategory( $scope, $scope.scopeCategory.name, newName, $scope.app_name ).then(function( data ) {                
+            dfxApiServiceObjects.editCategory( $scope, $scope.scopeCategory.name, newName, $scope.app_name ).then(function( data ) {
                 if ( data.data.data !== 'Current category name already exists!' ) {
                     dfxMessaging.showMessage(data.data.data);
                     dfxApiServiceObjects.getCategories( $scope, $scope.app_name ).then(function( data ) {
@@ -6234,7 +6372,7 @@ dfxStudioApp.controller("dfx_studio_api_so_category_controller", [ '$scope', '$r
             });
         } else if ( newName === $scope.scopeCategory.name ) {
             dfxMessaging.showWarning('Category with such name already exist!');
-            
+
         } else {
             dfxMessaging.showWarning('Not valid Category Name');
         }

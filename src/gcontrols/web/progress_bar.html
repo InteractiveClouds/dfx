@@ -12,5 +12,5 @@
      ng-show="$eval(attributes.display.value)"
      ng-mouseup="$eval(attributes.onmouseup.value)">
     <div class="gc-checkbox-label-preview">{{$eval(attributes.label.value)}}</div>
-    <md-progress-linear class="{{attributes.classes.value}}" ng-class="$eval(attributes.dynamicClasses.value)" md-mode="{{attributes.selectedType.value}}" value="{{$gcscope[attributes.binding.value]}}"></md-progress-linear>
+    <md-progress-linear class="md-altTheme-theme {{attributes.classes.value}}" ng-class="$eval(attributes.dynamicClasses.value)" md-mode="{{attributes.selectedType.value}}" value="{{$parent_scope[attributes.binding.value]}}"></md-progress-linear>
 </div>

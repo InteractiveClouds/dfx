@@ -1,0 +1,8 @@
+<md-content id="{{component_id}}_selectable_list" tabindex="0" style="{{attributes.style.value}}" class="dfx-core-gc-list-container {{attributes.classes.value}}">
+    <md-list flex>
+        <md-subheader ng-if="attributes.labelVisible.value" style="{{attributes.labelStyle.style}}" class="dfx-core-gc-list-subheader md-no-sticky {{attributes.labelStyle.class}}"><span>{{ attributes.label.value | checkExpression }}</span></md-subheader>
+        <md-list-item class="dfx-core-gc-list-item md-3-line" ng-repeat="it in attributes.static.value track by $index" ng-click="toggleItem($event, it, $index)" ng-class="attributes.itemStyle.class" style="{{attributes.itemStyle.style}}; background-color: {{itemSelected(it) ? attributes.itemStyle.bgSelected : attributes.itemStyle.bgDefault}}" aria-label="List Item">
+            <div class="dfx-core-gc-list-item-inner md-list-item-inner" ng-bind-html="it.data"></div>
+        </md-list-item>        
+    </md-list>
+</md-content>

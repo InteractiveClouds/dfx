@@ -1,8 +1,8 @@
 <div ng-if="attributes.icon.value !== ''" layout="row" style="{{attributes.style.value}}" class="{{attributes.classes.value}}">
     <div class="gc_w_input_icon_wrap_design" flex="none" ng-if="attributes.position.value==='left'">
         <span class="gc_w_input_icon" style="text-align: right;">
-            <md-icon ng-if="attributes.icon.type ==='fa-icon'" class="fa {{$eval(attributes.icon.value) || 'fa-home'}}" style="font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
-            <ng-md-icon ng-if="attributes.icon.type ==='svg-icon'" icon="{{$eval(attributes.icon.value) || 'home'}}" size="{{attributes.icon.size}}" style="height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></ng-md-icon>
+            <md-icon ng-if="attributes.icon.type ==='fa-icon'" class="fa {{$eval(attributes.icon.value) || 'fa-home'}} {{attributes.icon.class}}" style="{{attributes.icon.style}}; font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
+            <ng-md-icon ng-if="attributes.icon.type ==='svg-icon'" icon="{{$eval(attributes.icon.value) || 'home'}}" size="{{attributes.icon.size}}" style="{{attributes.icon.style}}; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;" class="{{attributes.icon.class}}"></ng-md-icon>
         </span>
     </div>
     <md-input-container flex class="gc-textarea-icon-container">
@@ -11,8 +11,8 @@
     </md-input-container>
     <div class="gc_w_input_icon_wrap_design" flex="none" ng-if="attributes.position.value==='right'">
         <span class="gc_w_input_icon">
-            <md-icon ng-if="attributes.icon.type ==='fa-icon'" class="fa {{$eval(attributes.icon.value) || 'fa-home'}}" style="font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
-            <ng-md-icon ng-if="attributes.icon.type ==='svg-icon'" icon="{{$eval(attributes.icon.value) || 'home'}}" size="{{attributes.icon.size}}" style="height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></ng-md-icon>
+            <md-icon ng-if="attributes.icon.type ==='fa-icon'" class="fa {{$eval(attributes.icon.value) || 'fa-home'}} {{attributes.icon.class}}" style="{{attributes.icon.style}}; font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></md-icon>
+            <ng-md-icon ng-if="attributes.icon.type ==='svg-icon'" icon="{{$eval(attributes.icon.value) || 'home'}}" size="{{attributes.icon.size}}" style="{{attributes.icon.style}}; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;" class="{{attributes.icon.class}}"></ng-md-icon>
         </span>
     </div>
 </div>

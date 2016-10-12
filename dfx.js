@@ -25,11 +25,16 @@ var cookieParser = require('cookie-parser');
 var path = require('path');
 var fs = require('fs');
 var QFS = require('q-io/fs');
+var CHANNELS = require('./lib/channels').channels;
 var Q = require('q');
 var sockets = require('./lib/dfx_sockets');
 var version = require('./package.json').version;
 var isPortFree = require('./lib/utils/isPortFree');
 var pmx = require('pmx');
+var watcher = require('./lib/utils/watcher');
+var activator = require('./lib/utils/activator');
+var cache;
+
 
 var out = module.exports = {},
     Log,
@@ -37,6 +42,9 @@ var out = module.exports = {},
     isInited = false,
     host_app,
     server;
+
+var k = 0;
+var x = 0;
 
 var key = process.argv[2];
 
@@ -119,6 +127,40 @@ out.init = function ( settings ) {
         Log.init.file(  SETTINGS.logging.file);
     }
     log = new Log.Instance({label:'DFX_MAIN'});
+    
+    cache   = require('./lib/dfx_cache').init({
+        log : new Log.Instance({label:'CACHE'}),
+        selectDatabase : SETTINGS.selectRedisDatabase
+
+    }).client;
+
+    require('./lib/utils/redisLayer').init({
+        cache   : cache
+    });
+
+
+    // Verify if all folders name not empty in settings
+    if (!SETTINGS.tempDir) log.fatal('You must set tempDir in settings!');
+
+    // Verify if all obligate settings are set
+    var
+        settingsErrors = [],
+        obligateSETTINGS = ['auth_conf_path', 'tempDir'];
+    if (SETTINGS.studio) {
+        obligateSETTINGS = obligateSETTINGS.concat(['tempDirForTemplates', 'app_build_path', 'resources_development_path']);
+    } else {
+        obligateSETTINGS = obligateSETTINGS.concat(['fsdb_path', 'deploy_path']);
+    }
+    obligateSETTINGS.forEach(function(name){
+        if ( !SETTINGS.hasOwnProperty(name) || !isPathAbsolute(SETTINGS[name]) ) {
+            settingsErrors.push(name);
+        }
+    });
+    if ( settingsErrors.length ) log.fatal(
+        'Obligate settings are not set or are not absolute pathes : ' +
+        JSON.stringify(settingsErrors)
+    );
+
 
     log.info('this URL is : ' + SETTINGS.EXTERNAL_URL);
 
@@ -149,7 +191,7 @@ out.init = function ( settings ) {
     
             if ( !a.hasOwnProperty(param) ) {
                 console.log(
-                    'WARN   : Unknown parameter '         +
+                    'WARN   : Unknown parameter ' +
                     path.concat(param).join('.') +
                     ' is added to SETTINGS.'
                 );
@@ -191,7 +233,7 @@ out.start = function () {
         }
 
     }).then(function(){
-            var tokenFolder = path.join(__dirname, 'tmp/apptokens');
+            var tokenFolder = path.join(SETTINGS.tempDir + '/apptokens');
             var fsdbFolder = SETTINGS.fsdb_path;
 
             return QFS.exists( tokenFolder )
@@ -216,10 +258,7 @@ out.start = function () {
 
                 }).then(function () {
                     const
-                        tenants  = require('./lib/dfx_sysadmin/tenants'),
-                        cache    = require('./lib/dfx_cache').init({
-                                log : new Log.Instance({label:'CACHE'})
-                            });
+                        tenants = require('./lib/dfx_sysadmin/tenants');
 
                     if (SETTINGS.studio) {
                         const _storage = require('./lib/mdbw')(SETTINGS.mdbw_options);
@@ -229,7 +268,14 @@ out.start = function () {
                         require('./lib/dfx_sysadmin/authProviders').init({ storage: _storage });
                         require('./lib/dfx_sysadmin/dbDrivers').init({ storage: _storage });
 
-                        require('./lib/dfx_queries').init({ storage: _storage });
+                        cache.select(SETTINGS.selectRedisDatabase).then(function(){
+                            require('./lib/dfx_queries').init({
+                                storage : _storage,
+                                cache   : cache
+                            });
+                        });
+
+
                         require('./lib/authRequest_mod').oAuth2AccessTokens.init({ storage: _storage });
                         require('./lib/dfx_resources').api.init({ storage: _storage });
 
@@ -250,7 +296,6 @@ out.start = function () {
                             });
                     } else {
                         return initFileStorage(fsdbFolder).then(function(_storage) {
-
                             tenants.init({ storage: _storage });
 
                             require('./lib/dfx_sysadmin/authProviders').init({ storage: _storage });
@@ -261,7 +306,11 @@ out.start = function () {
                                 return _storage._updateAllCollectionsDocsLists();
                             }
 
-                            require('./lib/dfx_queries').init({ storage: _storage });
+                            require('./lib/dfx_queries').init({
+                                storage : _storage,
+                                cache   : cache
+                            });
+
                             require('./lib/authRequest_mod').oAuth2AccessTokens.init({ storage: _storage });
                             require('./lib/dfx_resources').api.init({ storage: _storage });
 
@@ -482,6 +531,64 @@ function _start () {
         Log.startServer();
     }
 
+    if ( SETTINGS['X-DREAMFACE-SERVER'] ) (function(){
+        const SERVER_NAME = SETTINGS['X-DREAMFACE-SERVER'];
+        log.info('the X-DREAMFACE-SERVER HTTP header is set to "' + SERVER_NAME + '"');
+        app.use(function(req, res, next){
+            res.set('X-DREAMFACE-SERVER', SERVER_NAME);
+            next();
+        });
+    })();
+
+    app.use(function(req, res, next) {
+        var cookies = watcher.parseCookies(req);
+        var tenantId = cookies['X-DREAMFACE-TENANT'];
+        if (tenantId) {
+            watcher.getInactiveTenants().then(function(inactiveTenants) {
+                activator.getAll().then(function (tenants) {
+                    if (((inactiveTenants.indexOf(tenantId) != -1) || (tenants.indexOf(tenantId) == -1)) && watcher.verifyAuthRequest(req.url)) {
+                        res.status(SETTINGS.loadBalancing.disabledRequestsStatus).send();
+                    } else {
+                        watcher.setRequestRun(tenantId);
+                        res.on('finish', function () {
+                            watcher.setRequestStop(tenantId);
+                        });
+                        next();
+                    }
+                })
+            })
+
+        } else {
+            next();
+        }
+    });
+
+    // Graceful Shutdown START
+    if (SETTINGS.enableGracefulShutdown) {
+
+        process.on("SIGINT", shutdown);
+        process.on('SIGTERM', shutdown);
+
+        function shutdown() {
+            function cbFunction() {
+                log.ok('All requests are finished!');
+                CHANNELS.root.unsubscribe('allTenantsRequestAreFinished', cbFunction);
+                process.exit();
+            }
+
+            if (watcher.isAllRequestsAreFinished()) {
+                cbFunction();
+            } else {
+                log.warn('You have some unfinished requests. Wait until finish or ' + SETTINGS.loadBalancing.pendingRequestsTimeOut / 1000 + ' seconds');
+                CHANNELS.root.subscribe('allTenantsRequestAreFinished', cbFunction);
+                setTimeout(cbFunction, SETTINGS.loadBalancing.pendingRequestsTimeOut);
+            }
+        }
+    }
+
+    // Graceful Shutdown END
+
+
     app.set('views', path.join(__dirname, 'templates'));
     app.set('view engine', 'jade');
 
@@ -496,9 +603,12 @@ function _start () {
             next();
         }
     })());
-    app.use("/deploy", express.static( SETTINGS.deploy_path ));
-    app.use("/resources", express.static(path.join(__dirname, SETTINGS.resources_deploy_path )));
-    app.use("/resources/development", express.static(SETTINGS.resources_development_path));
+    if (SETTINGS.studio) {
+        app.use("/resources/development", express.static(SETTINGS.resources_development_path));
+    } else {
+        app.use("/deploy", express.static( SETTINGS.deploy_path ));
+        app.use("/resources", express.static(path.join(__dirname, 'resources' )));
+    }
     app.use("/widgets", express.static(path.join(__dirname, 'widgets')));
     app.use("/css", express.static(path.join(__dirname, 'public', 'css')));
     app.use("/js", express.static(path.join(__dirname, 'public', 'js')));
@@ -515,7 +625,7 @@ function _start () {
     //app.use("/css/vendor", express.static(path.join(__dirname, 'public/css/vendor')));
     //app.use("/css/dfx", express.static(path.join(__dirname, 'public/css/dfx')));
     //app.use("/css/visualbuilder", express.static(path.join(__dirname, 'public/css/visualbuilder')));
-    app.use("/tmp", express.static(path.join(__dirname, 'tmp')));
+    app.use("/tmp", express.static(SETTINGS.tempDir));
     app.use("/fonts", express.static(path.join(__dirname, 'public/fonts')));
     app.use("/img", express.static(path.join(__dirname, 'public/images')));
     app.use("/images", express.static(path.join(__dirname, 'public/images')));
@@ -567,7 +677,30 @@ function _start () {
     proxy.initialize(app);
 
     if ( !host_app ) {
-        server.listen(SETTINGS.server_port, SETTINGS.server_host);
+        server.listen(
+            SETTINGS.server_port,
+            SETTINGS.server_host,
+            function(error, data){
+                if ( !SETTINGS.notify_on_start.url ) return;
+
+                const url = SETTINGS.notify_on_start.url +
+                        '?servertype=' + (SETTINGS.studio ? 'dev' : 'dep') +
+                        '&servername=' + SETTINGS['X-DREAMFACE-SERVER'] +
+                        '&notifyid=' + SETTINGS.notify_on_start.id
+
+                log.info('sending startup notification to ', url);
+
+                require('./lib/authRequest').getRequestInstance({}).get({
+                    url : url
+                })
+                .then(function(){
+                    log.ok('notifications sent');
+                })
+                .fail(function(error){
+                    log.fatal('could not notify after start. error : ', error);
+                });
+            }
+        );
         console.log( 'DreamFace starts ' + ( process.env.DFX_HTTPS ? 'HTTPS' : 'HTTP' ) + ' listener.');
     }
 
@@ -623,3 +756,7 @@ function setServerInfo (mdbw, SETTINGS) {
 }
 
 if ( !module.parent ) out.start();
+
+function isPathAbsolute ( a ) {
+    return path.resolve(a) === path.normalize(a).replace(/[\/\\]+$/, '');
+}
