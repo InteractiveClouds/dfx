@@ -3095,7 +3095,6 @@ dfxGCC.directive('dfxGccWebChips', ['$timeout', function($timeout) {
         scope: true,
         link: function(scope, element, attrs, basectrl) {
             var component = scope.$parent.getComponent(element);
-            scope.$gcscope = scope;
             basectrl.init(scope, element, component, attrs, 'chips').then(function(){
                 if(!scope.attributes.hasOwnProperty('isBindEmpty')){scope.attributes.isBindEmpty = { "value": true };}
                 if(scope.attributes.hasOwnProperty('property1')){delete scope.attributes.property1;}
@@ -3123,7 +3122,6 @@ dfxGCC.directive('dfxGccWebChips', ['$timeout', function($timeout) {
                         },0);
                     scope.attributes.isBindEmpty.status = "overridden" ;
                 });
-                basectrl.bindScopeVariable(scope, component.attributes.binding.value);
 
                 scope.attributes.bindEmptyModel = function() {
                     return scope.attributes.defaultArray.value;
