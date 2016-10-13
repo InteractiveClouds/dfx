@@ -4104,3 +4104,35 @@ button.dfx-core-gc-rating-button {
   -webkit-animation-name: slideOutUp;
   animation-name: slideOutUp;
 }
+
+/* App templates */
+.dfx-core-web-menu-item {
+	font-family:HelveticaNeue-Bold;
+	font-size:17px;
+	color:#ffffff;
+	letter-spacing:0px;
+	line-height:23px;
+	padding-left: 10px !important;
+	padding-right: 10px;
+	padding-bottom: 10px;
+	min-width: 100px;
+	text-align: center;
+	cursor: pointer;
+	border-bottom: 8px #00bae7 solid;
+}
+.dfx-core-web-menu-item-selected {
+	color:#434a54;
+	border-bottom: 8px #434a54 solid;
+}
+
+.dfx-core-web-footer {
+	background:#434a54;
+	height:60px;
+	font-family:HelveticaNeue;
+	font-style:italic;
+	font-size:14px;
+	color:#d6d6d6;
+	letter-spacing:1px;
+	line-height:38px;
+	text-align:right;
+}

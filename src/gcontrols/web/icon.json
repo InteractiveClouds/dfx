@@ -1,8 +1,8 @@
 {
     "template": 	   { "value": "default" },
     "name": 		   { "value": "icon1" },
-    "label": 		   { "value": "'Home'" },
-    "icon": 		   { "value": "'home'", "type": "svg-icon", "size": 36	},
+    "label": 		   { "value": "'Home'", "style": "", "class": "", "dynamicClass": "" },
+    "icon": 		   { "value": "'home'", "type": "svg-icon", "size": 36, "style": "", "class": "", "dynamicClass": "" },
     "display": 		   { "value": "true" },
     "disabled": 	   { "value": "false" },
     "state": 		   { 
