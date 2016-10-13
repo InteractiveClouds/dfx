@@ -1839,7 +1839,7 @@ dfxStudioApp.controller("dfx_studio_samples_controller", [ '$scope', '$http', '$
         dfxApplications.getAll( $scope ).then( function(apps) {
             $scope.applications = apps.data;
             $mdDialog.show({
-                scope: $scope,
+                scope: $scope.$new(),
                 controller: DialogController,
                 templateUrl: 'studioviews/samples_install_dialog.html',
                 parent: angular.element(document.body),
@@ -1855,8 +1855,8 @@ dfxStudioApp.controller("dfx_studio_samples_controller", [ '$scope', '$http', '$
 
     function DialogController($scope, $mdDialog) {
         $scope.install = function() {
+            $scope.installSample($scope.selected_application);
             $mdDialog.hide();
-            $scope.installSample();
         };
         $scope.hide = function() {
             $mdDialog.hide();
@@ -1866,7 +1866,7 @@ dfxStudioApp.controller("dfx_studio_samples_controller", [ '$scope', '$http', '$
         };
     }
 
-    $scope.installSample = function() {
+    $scope.installSample = function(app_name) {
         // Install View
         dfxSamples.contents( $scope, $scope.selected_sample.category + '/' + $scope.selected_sample.name + '/view/source.json' ).then( function(view_source) {
             dfxSamples.contents( $scope, $scope.selected_sample.category + '/' + $scope.selected_sample.name + '/view/script.js' ).then( function(view_script) {
@@ -1876,7 +1876,7 @@ dfxStudioApp.controller("dfx_studio_samples_controller", [ '$scope', '$http', '$
                         'description': $scope.selected_sample.content.title,
                         'category': 'Default',
                         'wtype': 'visual',
-                        'application': $scope.selected_application,
+                        'application': app_name,
                         'platform': 'web',
                         'src': atob(view_source.data.content),
                         'src_script': atob(view_script.data.content),
