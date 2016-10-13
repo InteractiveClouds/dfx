@@ -177,6 +177,13 @@ dfxGCC.directive('dfxGccWebPanel', ['$timeout', '$compile', function($timeout, $
                 if(scope.attributes.toolbar.leftMenu.hasOwnProperty('iconBarClass')){delete scope.attributes.toolbar.leftMenu.iconBarClass;}
                 if(scope.attributes.toolbar.rightMenu.hasOwnProperty('iconBarClass')){delete scope.attributes.toolbar.rightMenu.iconBarClass;}
 
+                if (scope.attributes.repeat_in.value != '' && $(element).parent().attr('layout') == 'row') {
+                    if (scope.attributes.repeat_title.value) {
+                        $(element).addClass('layout-row');
+                        $(element).css('flex-wrap', 'wrap');
+                    }
+                }
+
 				scope.changeWidth = function(){
                     if ( !scope.attributes.repeat_title.value ) {
                         basectrl.changeWidth(scope);
@@ -4817,7 +4824,7 @@ dfxGCC.directive('dfxGccWebIcon', ['$http', '$mdDialog', '$timeout', '$filter', 
                     if(scope.attributes.state.bindingType === 'boolean'){
                         scope.attributes.state.binding = scope.attributes.state.binding === 'true' ? 'false' : 'true';
                         return;
-                    }                    
+                    }
                     return !dfxIsState;
                 }
             });
