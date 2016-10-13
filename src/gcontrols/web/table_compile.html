@@ -16,7 +16,7 @@
             </div>
             <md-input-container ng-show="ATTR-STATIC{{filterable.value}}" class="dt_filter_block">
                 <label>Filter by:</label>
-                <input type="text" ng-model="ATTR-STATIC{{filterBy.value}}" ng-change="filterTableData( 'ATTR-STATIC{{filterBy.value}}' )"/>
+                <input type="text" ng-model="ATTR-STATIC{{filterBy.value}}" ng-change="filterTableData( ATTR-STATIC{{filterBy.value}} )"/>
                 <ng-md-icon icon="search" size="21"></ng-md-icon>
             </md-input-container>
         </div>
@@ -28,20 +28,20 @@
                         ng-disabled="ATTR-EXP{{(attributes.disabled.value || attributes.checkOption.value ==='single') ? 'true' : 'false'}}ATTR-ENDEXP" aria-label="Select Row" ng-click="toggleSelectRows()" ng-checked="isSelectedRows()"></md-checkbox></th>
                     <th ng-repeat="col in ATTR-STATIC{{columns.value}} track by $index">
                         <a ng-if="attributes.disabled.value === false" ng-click="changeIndexAndSortDir($index)" href="#" style="text-decoration: none;">
-                            <span ng-if="attributes.sortedBy.value === col.value && col.isNumeric ==='true'"><md-icon ng-if="attributes.columns.value[$index].isAscending === 'false'" style="padding-top: 5px" class="fa fa-arrow-down"></md-icon><md-icon ng-if="attributes.columns.value[$index].isAscending === 'true'" style="padding-top: 5px" class="fa fa-arrow-up"></md-icon></span>
+                            <span ng-if="ATTR-STATIC{{sortedBy.value}} === col.value && col.isNumeric ==='true'"><md-icon ng-if="ATTR-STATIC{{columns.value}}[$index].isAscending === 'false'" style="padding-top: 5px" class="fa fa-arrow-down"></md-icon><md-icon ng-if="ATTR-STATIC{{columns.value}}[$index].isAscending === 'true'" style="padding-top: 5px" class="fa fa-arrow-up"></md-icon></span>
                             <span>{{$eval(col.header)}}</span>
-                            <span ng-if="attributes.sortedBy.value === col.value && col.isNumeric ==='false'"><md-icon ng-if="attributes.columns.value[$index].isAscending === 'false'" style="padding-top: 5px" class="fa fa-arrow-down"></md-icon><md-icon ng-if="attributes.columns.value[$index].isAscending === 'true'" style="padding-top: 5px" class="fa fa-arrow-up"></md-icon></span>
+                            <span ng-if="ATTR-STATIC{{sortedBy.value}} === col.value && col.isNumeric ==='false'"><md-icon ng-if="ATTR-STATIC{{columns.value}}[$index].isAscending === 'false'" style="padding-top: 5px" class="fa fa-arrow-down"></md-icon><md-icon ng-if="ATTR-STATIC{{columns.value}}[$index].isAscending === 'true'" style="padding-top: 5px" class="fa fa-arrow-up"></md-icon></span>
                         </a>
                         <span ng-if="attributes.disabled.value === true">
-                            <span ng-if="attributes.sortedBy.value === col.value && col.isNumeric ==='true'"><md-icon ng-if="attributes.columns.value[$index].isAscending === 'false'" style="padding-top: 5px" class="fa fa-arrow-down"></md-icon><md-icon ng-if="attributes.columns.value[$index].isAscending === 'true'" style="padding-top: 5px" class="fa fa-arrow-up"></md-icon></span>
+                            <span ng-if="ATTR-STATIC{{sortedBy.value}} === col.value && col.isNumeric ==='true'"><md-icon ng-if="ATTR-STATIC{{columns.value}}[$index].isAscending === 'false'" style="padding-top: 5px" class="fa fa-arrow-down"></md-icon><md-icon ng-if="ATTR-STATIC{{columns.value}}[$index].isAscending === 'true'" style="padding-top: 5px" class="fa fa-arrow-up"></md-icon></span>
                             <span>{{$eval(col.header)}}</span>
-                            <span ng-if="attributes.sortedBy.value === col.value && col.isNumeric ==='false'"><md-icon ng-if="attributes.columns.value[$index].isAscending === 'false'" style="padding-top: 5px" class="fa fa-arrow-down"></md-icon><md-icon ng-if="attributes.columns.value[$index].isAscending === 'true'" style="padding-top: 5px" class="fa fa-arrow-up"></md-icon></span>
+                            <span ng-if="ATTR-STATIC{{sortedBy.value}} === col.value && col.isNumeric ==='false'"><md-icon ng-if="ATTR-STATIC{{columns.value}}[$index].isAscending === 'false'" style="padding-top: 5px" class="fa fa-arrow-down"></md-icon><md-icon ng-if="ATTR-STATIC{{columns.value}}[$index].isAscending === 'true'" style="padding-top: 5px" class="fa fa-arrow-up"></md-icon></span>
                         </span>
                     </th>
                 </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="$dfx_item in attributes.binding.value track by $index" dfx-datatable ng-if="(ATTR-STATIC{{paging.value}}==false) || (ATTR-STATIC{{paging.value}}==true && $index >= (ATTR-STATIC{{rangeStart.value}}-1)) && ($index < ATTR-STATIC{{rangeEnd.value}})">
+                    <tr ng-repeat="$dfx_item in ATTR-STATIC{{bindingClone.value}} track by $index" dfx-datatable ng-if="(ATTR-STATIC{{paging.value}}==false) || (ATTR-STATIC{{paging.value}}==true && $index >= (ATTR-STATIC{{rangeStart.value}}-1)) && ($index < ATTR-STATIC{{rangeEnd.value}})">
 						FRAG-IF{{attributes.checkOption.value !== 'none'}}
                         <td class="dt_checkbox"><md-checkbox class="md-primary" ng-disabled="attributes.disabled.value" aria-label="Select Row" ng-checked="isSelectedRows() || isSelectedRow($dfx_item)" ng-click="toggleSelectRow($dfx_item)"></md-checkbox></td>
 						FRAG-ENDIF
