@@ -31,7 +31,7 @@
                 <div style="padding:0;overflow-y:auto;">
                     <table class="datatable" style="width:100%;">
                         <tbody>
-                            <tr ng-repeat="item in table_data " ng-click="" style="cursor:pointer;">
+                            <tr ng-repeat="item in table_data " ng-if="item.platform !== 'tablet'" ng-click="" style="cursor:pointer;">
                                 <td width="15%">{{item.name}}</td>
                                 <td width="15%">{{appname}}</td>
                                 <td width="15%" ng-if="entity !== 'apiServices'" style="text-transform:capitalize;">{{item.platform === 'web' ? 'Desktop' : item.platform}}</td>
