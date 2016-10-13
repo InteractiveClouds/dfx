@@ -27,7 +27,7 @@
                 <div style="padding:0;overflow-y:auto;">
                     <table class="datatable" style="width:100%;">
                         <tbody>
-                            <tr ng-repeat="page in pagesArray track by $index" ng-click="" style="cursor:pointer;">
+                            <tr ng-repeat="page in pagesArray track by $index" ng-if="page.platform !== 'tablet'" ng-click="" style="cursor:pointer;">
                                 <td width="15%">{{page.name}}</td>
                                 <td width="15%">{{page.application}}</td>
                                 <td width="15%" style="text-transform:capitalize;">{{page.platform === 'web' ? 'Desktop' : page.platform}}</td>
@@ -65,7 +65,7 @@
                 <div style="padding:0;overflow-y:auto;">
                     <table class="datatable" style="width:100%;">
                         <tbody>
-                            <tr ng-repeat="view in viewsArray track by $index" ng-click="" style="cursor:pointer;">
+                            <tr ng-repeat="view in viewsArray track by $index" ng-if="view.platform !== 'tablet'" ng-click="" style="cursor:pointer;">
                                 <td width="15%">{{view.name}}</td>
                                 <td width="15%">{{view.application}}</td>
                                 <td width="15%" style="text-transform:capitalize;">{{view.platform === 'web' ? 'Desktop' : view.platform}}</td>

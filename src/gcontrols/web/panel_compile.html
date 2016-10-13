@@ -1,5 +1,5 @@
 FRAG-IF{{attributes.repeat_in.value != '' && attributes.repeat_title.value === false}}
-<div  ayout="column" flex="100" ng-show="attributes.display.value" style="ATTR-EXP{{(!attributes.autoHeight || attributes.autoHeight.value != true) ? 'height:100%;' : ''}}ATTR-ENDEXP">
+<div layout="column" flex="100" ng-show="attributes.display.value" style="ATTR-EXP{{(!attributes.autoHeight || attributes.autoHeight.value != true) ? 'height:100%;' : ''}}ATTR-ENDEXP">
     <section id="{{component_id}}_panel" ng-class="attributes.dynamicClasses.value" class="dfx-core-gc-panel ATTR-NONV{{whiteframe.value}} ATTR-NONV{{classes.value}}" ATTR-IF{{style="attributes.style.value"}} ng-show="attributes.display.value" dfx-gc-web-container layout="column" flex="100"
         ATTR-IF{{ng-click="attributes.onclick.value"}}
         ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
