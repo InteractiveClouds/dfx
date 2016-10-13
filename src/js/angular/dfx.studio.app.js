@@ -1885,6 +1885,9 @@ dfxStudioApp.controller("dfx_studio_samples_controller", [ '$scope', '$http', '$
                     dfxViews.createFromModel( $scope, new_view ).then( function(view) {
                         dfxMessaging.showMessage( $scope.selected_sample.content.title + ' has been installed!' );
                         $scope.getAll();
+                    },function( err ){
+                        dfxMessaging.showWarning( "Something went wrong or " + $scope.selected_sample.content.title + " was already installed" );
+                        $scope.getAll();
                     });
                 });
             });
