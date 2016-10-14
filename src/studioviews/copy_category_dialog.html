@@ -13,7 +13,7 @@
             <div class="md-dialog-content layout-column">
                 <md-input-container class="md-block flex" style="margin: 0;">
                     <label>Name:</label>
-                    <input id="copy-category" ng-model="categoryObject.categoryTarget" md-autofocus>
+                    <input id="copy-category" ng-model="categoryObject.categoryTarget" md-autofocus ng-keyup="( $event.keyCode == 13 && categoryObject.categoryTarget !=='') ? copyCat() : ''">
                 </md-input-container>
                 <md-input-container class="input-select-aligned margin-select">
                     <label>Application:</label>

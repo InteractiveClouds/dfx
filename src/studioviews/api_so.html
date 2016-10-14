@@ -469,7 +469,8 @@
 							</md-input-container>
 							<md-input-container class="input-select-aligned" style="width:68%">
 							  <label>Description</label>
-							  <input type="text" ng-model="api_so.description" aria-label="api_so.description" ng-keyup="($event.keyCode == 13 && api_so.name !=='' && serviceMode === 'serviceAdd') ? saveApiSo() : ''">
+							  <input ng-if="serviceMode === 'serviceAdd'" type="text" ng-model="api_so.description" aria-label="api_so.description" ng-keyup="($event.keyCode == 13 && api_so.name !=='') ? saveApiSo() : ''">
+							  <input ng-if="serviceMode === 'serviceEdit'" type="text" ng-model="api_so.description" aria-label="api_so.description" ng-keyup="($event.keyCode == 13 && api_so.name !=='') ? updateApiSo() : ''">
 							</md-input-container>							
 						</div>
 						<div>							

@@ -18,7 +18,7 @@
             <div class="md-dialog-content layout-column">
                 <md-input-container class="md-block flex" style="margin: 0;">
                     <label>Name:</label>
-                    <input id="to-copy-name" ng-model="toCopy.name" md-autofocus>
+                    <input id="to-copy-name" ng-model="toCopy.name" md-autofocus ng-keyup="($event.keyCode == 13 && toCopy.name !=='') ? copyComponent() : ''">
                 </md-input-container>
                 <md-input-container class="input-select-aligned margin-select">
                     <label>Application:</label>

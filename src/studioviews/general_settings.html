@@ -9,7 +9,7 @@
                 </md-input-container>
                 <md-input-container class="md-block flex-60">
                     <label>Title</label>
-                    <input ng-model="general.title">
+                    <input ng-model="general.title" ng-keyup="( $event.keyCode == 13 && general.title !=='') ? saveGeneral() : ''">
                 </md-input-container>
             </div>
             <div layout="row" class="layout-padding" style="padding-bottom: 0">

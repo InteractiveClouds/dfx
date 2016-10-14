@@ -12,13 +12,13 @@
             <div class="layout-column flex-100">
                 <md-input-container class="md-block flex" style="margin: 0;">
                     <label>Category Name</label>
-                    <input ng-model="scopeCategory.name" ng-disabled="categoryMode === 'editCategory'" md-autofocus>
+                    <input ng-model="scopeCategory.name" ng-disabled="categoryMode === 'editCategory'" md-autofocus ng-keyup="($event.keyCode == 13 && scopeCategory.name !=='') ? createCategory() : ''">
                 </md-input-container>
             </div>
             <div ng-if="categoryMode === 'editCategory'" class="layout-column flex-100">
                 <md-input-container class="md-block flex" style="margin: 0;">
                     <label>New Category Name</label>
-                    <input ng-model="toEdit.name" md-autofocus>
+                    <input ng-model="toEdit.name" md-autofocus ng-keyup="($event.keyCode == 13 && toEdit.name !=='') ? editCategory(toEdit) : ''">
                 </md-input-container>
             </div>
             <div style="display:flex; justify-content: flex-end;">

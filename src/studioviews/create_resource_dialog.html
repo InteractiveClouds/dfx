@@ -14,8 +14,8 @@
             <div class="md-dialog-content layout-row layout-padding">
                 <md-input-container class="md-block flex" style="margin: 0;">
                     <label>name</label>
-                    <input ng-if="current_resource_type !== 'dictionary'" id="new_resource_name" ng-model="resource_name.value" md-autofocus>
-                    <input ng-if="current_resource_type === 'dictionary'" ng-model="dictionary_name.value" md-autofocus>
+                    <input ng-if="current_resource_type !== 'dictionary'" id="new_resource_name" ng-model="resource_name.value" md-autofocus ng-keyup="( $event.keyCode == 13 && resource_name.value !=='') ? hide() : ''">
+                    <input ng-if="current_resource_type === 'dictionary'" ng-model="dictionary_name.value" md-autofocus ng-model="resource_name.value" md-autofocus ng-keyup="( $event.keyCode == 13 && dictionary_name.value !=='') ? hide() : ''">
                 </md-input-container>
             </div>
         </md-dialog-content>

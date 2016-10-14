@@ -10,11 +10,11 @@
     <div class="layout-row layout-padding" flex="100">
         <md-input-container class="md-block flex-40">
             <label>Your name:</label>
-            <input ng-model="contact_name.value">
+            <input ng-model="contact_name.value" ng-required="true" ng-keyup="($event.keyCode == 13 && !supportForm.$invalid) ? sendMail() : ''">
         </md-input-container>
         <md-input-container class="md-block flex-60" >
             <label>Your email:</label>
-            <input type="email" ng-model="contact_email.value">
+            <input type="email" ng-model="contact_email.value" ng-required="true" ng-keyup="($event.keyCode == 13 && !supportForm.$invalid) ? sendMail() : ''">
         </md-input-container>
     </div>
     <div class="layout-row layout-padding" flex="100">
@@ -24,7 +24,7 @@
         </md-input-container>
         <md-input-container flex="60">
             <label>Message:</label>
-            <textarea ng-model="contact_msg.value" columns="1"></textarea>
+            <textarea ng-model="contact_msg.value" columns="1" ng-required="true" ng-keyup="($event.keyCode == 13 && !supportForm.$invalid) ? sendMail() : ''"></textarea>
         </md-input-container>
     </div>
 </form>

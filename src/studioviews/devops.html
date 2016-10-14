@@ -12,7 +12,7 @@
             <div layout="row" class="layout-padding">
                 <md-input-container class="md-block flex-50">
                     <label>Channel</label>
-                    <input ng-model="devops.channel">
+                    <input ng-model="devops.channel" ng-keyup="( $event.keyCode == 13 && devops.channel !=='') ? saveCollaboration() : ''">
                 </md-input-container>
             </div>
             <div layout="row" layout-align ="start">
@@ -26,17 +26,17 @@
             <div layout="row" class="layout-padding">
                 <md-input-container class="md-block flex">
                     <label>Access token:</label>
-                    <input ng-model="devops.access_token" placeholder="Github personal access token">
+                    <input ng-model="devops.access_token" ng-required="true" placeholder="Github personal access token"  ng-keyup="( $event.keyCode == 13 && devops.access_token !=='' && devops.repository !=='' && devops.github_username !=='') ? saveGithub() : ''">
                 </md-input-container>
             </div>
             <div layout="row" class="layout-padding">
                 <md-input-container class="md-block flex-50">
                     <label>Name:</label>
-                    <input ng-model="devops.repository" placeholder="Repository name">
+                    <input ng-model="devops.repository" ng-required="true" placeholder="Repository name"  ng-keyup="( $event.keyCode == 13 && devops.access_token !=='' && devops.repository !=='' && devops.github_username !=='') ? saveGithub() : ''">
                 </md-input-container>
                 <md-input-container class="md-block flex-50">
                     <label>Owner's name:</label>
-                    <input ng-model="devops.github_username" placeholder="Repository owner name">
+                    <input ng-model="devops.github_username" ng-required="true" placeholder="Repository owner name"  ng-keyup="( $event.keyCode == 13 && devops.access_token !=='' && devops.repository !=='' && devops.github_username !=='') ? saveGithub() : ''">
                 </md-input-container>
             </div>
                 <div layout="row" layout-align="space-between center">
