@@ -11,11 +11,11 @@
 	<div layout="row" layout-padding>
 		<md-input-container flex="40">
 	        <label>Name</label>
-	        <input type="text" id="page-name" ng-model="page.name"/>
+	        <input type="text" id="page-name" ng-model="page.name" ng-keyup="($event.keyCode == 13 && page.name !=='') ? save() : ''"/>
 	    </md-input-container>
 		<md-input-container flex="60">
 	        <label>Title</label>
-	        <input type="text"  ng-model="page.title"/>
+	        <input type="text"  ng-model="page.title" ng-keyup="($event.keyCode == 13 && page.name !=='') ? save() : ''"/>
 	    </md-input-container>
 	</div>
 	<div layout="row" layout-padding>

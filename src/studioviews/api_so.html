@@ -462,14 +462,14 @@
 						<div>
 							<md-input-container class="input-select-aligned" ng-class="validNameResult === 'failed' ? 'md-input-invalid' : ''" style="width:30%;margin-right:14px;">
 							  <label>API Service Name</label>
-				  			<input type="text" ng-model="api_so.name" ng-disabled="serviceMode === 'serviceEdit'" ng-blur="validateServiceName( api_so.name )" aria-label="api_so.name">			  
+				  			<input type="text" ng-model="api_so.name" ng-disabled="serviceMode === 'serviceEdit'" ng-blur="validateServiceName( api_so.name )" aria-label="api_so.name" ng-keyup="($event.keyCode == 13 && api_so.name !=='' && serviceMode === 'serviceAdd') ? saveApiSo() : ''">			  
 				  			<div class="md-errors-spacer" style="float:left;">
 									<span style="color:#DD2C00; margin-top: 35px; font-size: 12px;">{{serviceNameError}}</span>
 				  			</div>			
 							</md-input-container>
 							<md-input-container class="input-select-aligned" style="width:68%">
 							  <label>Description</label>
-							  <input type="text" ng-model="api_so.description" aria-label="api_so.description">
+							  <input type="text" ng-model="api_so.description" aria-label="api_so.description" ng-keyup="($event.keyCode == 13 && api_so.name !=='' && serviceMode === 'serviceAdd') ? saveApiSo() : ''">
 							</md-input-container>							
 						</div>
 						<div>							
