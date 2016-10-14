@@ -734,8 +734,13 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
             category:    $scope.view_category
         };
 
-        // Update Widget Cache
+        // Compile & Update Widget Cache
         window.localStorage.setItem( 'dfx_' + $scope.view_name, editor.getValue() );
+		dfxRendering.render($scope, editor.getValue()).then( function(data) {
+			for (var card_name in data) {
+				window.localStorage.setItem('DFX_view_compiled_'+$scope.view_name+'_'+card_name, data[card_name]);
+			}
+        });
 
         $http({
             method: 'POST',
