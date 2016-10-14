@@ -148,6 +148,32 @@ dfxAppRuntime.controller('dfx_app_controller', [ '$scope', '$rootScope', 'dfxAut
         authRequest.removeToken();
     }
 
+    $scope.refreshDevice = function() {
+        var dfx_ve_platform = $('div[dfx-ve-platform]');
+        if ($scope.design_device_orientation=='Portrait') {
+            dfx_ve_platform.css('width', $scope.design_selected_device.portrait['width']);
+            dfx_ve_platform.css('height', $scope.design_selected_device.portrait['height']);
+            dfx_ve_platform.css('padding-top', $scope.design_selected_device.portrait['padding-top']);
+            dfx_ve_platform.css('padding-left', $scope.design_selected_device.portrait['padding-left']);
+            dfx_ve_platform.css('padding-right', $scope.design_selected_device.portrait['padding-right']);
+            dfx_ve_platform.css('padding-bottom', $scope.design_selected_device.portrait['padding-bottom']);
+            dfx_ve_platform.css( 'background', 'url(/images/' + $scope.design_selected_device.portrait['image'] + ') no-repeat' );
+        } else {
+            dfx_ve_platform.css('width', $scope.design_selected_device.landscape['width']);
+            dfx_ve_platform.css('height', $scope.design_selected_device.landscape['height']);
+            dfx_ve_platform.css('padding-top', $scope.design_selected_device.landscape['padding-top']);
+            dfx_ve_platform.css('padding-left', $scope.design_selected_device.landscape['padding-left']);
+            dfx_ve_platform.css('padding-right', $scope.design_selected_device.landscape['padding-right']);
+            dfx_ve_platform.css('padding-bottom', $scope.design_selected_device.landscape['padding-bottom']);
+            dfx_ve_platform.css( 'background', 'url(/images/' + $scope.design_selected_device.landscape['image'] + ') no-repeat' );
+        }
+    };
+
+    $scope.changeDevice = function(index) {
+        $scope.design_selected_device = $scope.design_devices[index];
+        $scope.refreshDevice();
+    };
+
 	/*$scope.routeToPage = function(page_name, ev) {
 		if ($('.dfx-core-web-menu-item-selected').size()>0) {
 			$('.dfx-core-web-menu-item-selected').removeClass('dfx-core-web-menu-item-selected');
