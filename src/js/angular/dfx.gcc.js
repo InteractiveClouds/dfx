@@ -1090,35 +1090,10 @@ dfxGCC.directive('dfxGccWebToolbar', function($sce, $compile, $timeout) {
         },
         link: {
             pre: function(scope, element, attrs) {
-                // scope.mainToolbarInitCounter = 0;
-                // scope.toolbarInitCounter = 0;
-                // scope.$gcscope = scope;
-                // scope.$watch('$parent.gc_instances', function(newVal){
-                //     if(newVal){
-                //         var parentPanel = (newVal[Object.keys(newVal)[0]].attributes) ;
-                //         if(parentPanel.initialized){
-                //             if(parentPanel.initialized.value=== true && scope.mainToolbarInitCounter ===0){
-                //                 scope.mainToolbarInitCounter++;
-                //                 scope.runToolbar();
-                //             }
-                //         }
-                //     }
-                // }, true);
-                // scope.$watch('$parent.gcontrol.attributes', function(newVal){
-                //     if(newVal){
-                //         if(newVal.initialized){
-                //             if(newVal.initialized.value === true && scope.toolbarInitCounter ===0){
-                //                 scope.toolbarInitCounter++;
-                //                 scope.runToolbar();
-                //             }
-                //         }
-                //     }
-                // }, true);
                 var toolbar_panel_index = scope.$parent.$dfx_index;
 
                 scope.runToolbar = function(){
                     $timeout(function(){
-
                         scope.attributes.toolbar.rightMenu.initialClick.value = false;
                         scope.attributes.toolbar.leftMenu.initialClick.value = false;
                         if(scope.attributes.layoutType.value === 'panel'){
@@ -1193,82 +1168,6 @@ dfxGCC.directive('dfxGccWebToolbar', function($sce, $compile, $timeout) {
                     }, 0);
                 };
                 var singleMenuItem = '', toolbarType='', iconbarMenuItem = '<md-menu-item ng-if="{{itemDisplay}}">';
-                var rebuildIcons = function( menuItems ) {
-                    for ( var i = 0; i < menuItems.length; i++ ) {
-                        if ( typeof menuItems[i].icon === 'string' ) {
-                            var tempIco = menuItems[i].icon;
-                            menuItems[i].icon = {
-                                "value": tempIco,
-                                "type": menuItems[i].hasOwnProperty('iconType') ? menuItems[i].iconType : 'fa-icon'
-                            }
-                        }
-                        if ( menuItems[i].menuItems.value.length > 0 ) {
-                            rebuildIcons( menuItems[i].menuItems.value );
-                        }
-                    }
-                }
-                scope.cleanFabClasses = function( fab ){
-                    if ( fab.class.indexOf('md-fab') > -1 ) { fab.class = fab.class.replace('md-fab', ""); }
-                    if ( fab.class.indexOf('md-raised') > -1 ) { fab.class = fab.class.replace('md-raised', ""); }
-                    if ( fab.class.indexOf('md-primary') > -1 ) { fab.class = fab.class.replace('md-primary', ""); }
-                    if ( fab.class.indexOf('md-mini') > -1 ) { fab.class = fab.class.replace('md-mini', ""); }
-                }
-                $timeout(function() {
-                    rebuildIcons( scope.attributes.toolbar.leftMenu.menuItems.value );
-                    rebuildIcons( scope.attributes.toolbar.rightMenu.menuItems.value );
-                    scope.cleanFabClasses(scope.attributes.toolbar.leftMenu.fab.triggerButton);
-                    scope.cleanFabClasses(scope.attributes.toolbar.leftMenu.fab.actionButton);
-                    scope.cleanFabClasses(scope.attributes.toolbar.rightMenu.fab.triggerButton);
-                    scope.cleanFabClasses(scope.attributes.toolbar.rightMenu.fab.actionButton);
-
-                    if ( !scope.attributes.toolbar.leftMenu.fab.triggerButton.icon.hasOwnProperty('size') ) {
-                        scope.attributes.toolbar.leftMenu.fab.triggerButton.label = "";
-                        scope.attributes.toolbar.leftMenu.fab.triggerButton.style = "";
-                        scope.attributes.toolbar.leftMenu.fab.triggerButton.tooltip = { "direction": "top", "style": "", "class": "" };
-                        scope.attributes.toolbar.leftMenu.fab.triggerButton.icon = { "size" : 24, "style": "", "class": "", "value": "'fa-bars'", "type" : "fa-icon" }
-                    }
-                    if ( !scope.attributes.toolbar.rightMenu.fab.triggerButton.icon.hasOwnProperty('size') ) {
-                        scope.attributes.toolbar.rightMenu.fab.triggerButton.label = "";
-                        scope.attributes.toolbar.rightMenu.fab.triggerButton.style = "";
-                        scope.attributes.toolbar.rightMenu.fab.triggerButton.tooltip = { "direction": "top", "style": "", "class": "" };
-                        scope.attributes.toolbar.rightMenu.fab.triggerButton.icon = { "size" : 24, "style": "", "class": "", "value": "'fa-bars'", "type" : "fa-icon" }
-                    }
-                    if ( !scope.attributes.toolbar.leftMenu.fab.actionButton.icon.hasOwnProperty('size') ) {
-                        scope.attributes.toolbar.leftMenu.fab.actionButton.style = "";
-                        scope.attributes.toolbar.leftMenu.fab.actionButton.icon = { "size" : 20, "style": "", "class": "" };
-                        scope.attributes.toolbar.leftMenu.fab.actionButton.tooltip = { "direction": "top", "style": "", "class": "" };
-                    }
-                    if ( !scope.attributes.toolbar.rightMenu.fab.actionButton.icon.hasOwnProperty('size') ) {
-                        scope.attributes.toolbar.rightMenu.fab.actionButton.style = "";
-                        scope.attributes.toolbar.rightMenu.fab.actionButton.icon = { "size" : 20, "style": "", "class": "" };
-                        scope.attributes.toolbar.rightMenu.fab.actionButton.tooltip = { "direction": "top", "style": "", "class": "" };
-                    }
-
-                    if ( !scope.attributes.toolbar.leftMenu.hasOwnProperty('iconBar') ) {
-                        scope.attributes.toolbar.leftMenu.iconBar = {
-                            "triggerButton": { "style": "", "class": "", "icon": { "size": 24, "style": "", "class": "" } },
-                            "actionButton": { "style": "", "class": "", "icon": { "size": 16, "style": "", "class": "" } }
-                        }
-                        scope.attributes.toolbar.leftMenu.buttons = {
-                            "triggerButton": { "style": "", "class": "", "icon": { "size": 20, "style": "", "class": "" } },
-                            "actionButton": { "style": "", "class": "", "icon": { "size": 16, "style": "", "class": "" } }
-                        }
-                        delete scope.attributes.toolbar.leftMenu.buttonStyle;
-                        delete scope.attributes.toolbar.leftMenu.iconStyle;
-                    }
-                    if ( !scope.attributes.toolbar.rightMenu.hasOwnProperty('iconBar') ) {
-                        scope.attributes.toolbar.rightMenu.iconBar = {
-                            "triggerButton": { "style": "", "class": "", "icon": { "size": 24, "style": "", "class": "" } },
-                            "actionButton": { "style": "", "class": "", "icon": { "size": 16, "style": "", "class": "" } }
-                        }
-                        scope.attributes.toolbar.rightMenu.buttons = {
-                            "triggerButton": { "style": "", "class": "", "icon": { "size": 20, "style": "", "class": "" } },
-                            "actionButton": { "style": "", "class": "", "icon": { "size": 16, "style": "", "class": "" } }
-                        }
-                        delete scope.attributes.toolbar.rightMenu.buttonStyle;
-                        delete scope.attributes.toolbar.rightMenu.iconStyle;
-                    }
-                }, 0);
 
                 scope.changeState = function( itemIndexes, ev, side, optionsType ) {
                     var levels = JSON.parse('['+itemIndexes+']'),
@@ -1935,44 +1834,45 @@ dfxGCC.directive('dfxGccWebToolbar', function($sce, $compile, $timeout) {
                         }
                     }, 0);
                 }
-                $timeout(function() {
-                    if (scope.attributes.toolbar.leftMenu.menuItemsType.value === 'static') {
-                        scope.$watch('attributes.toolbar.leftMenu.menuItems.value', function(newVal, oldVal) {
-                            if ( newVal != null && scope.attributes.toolbar.leftMenu.type.value !== 'Fab' ) {
-                                // $timeout(function() {
-                                    scope.iconbarBuilder('left');
-                                // }, 0);
-                            }
-                        }, true);
-                    }
-                    if (scope.attributes.toolbar.leftMenu.menuItemsType.value === 'dynamic'){
-                        scope.$watch('$parent_scope.'+scope.attributes.toolbar.leftMenu.menuItemNames.value.main.source, function(newVal, oldVal) {
-                            if ( newVal != null && scope.attributes.toolbar.leftMenu.type.value !== 'Fab' ) {
-                                // $timeout(function() {
-                                    scope.iconbarBuilder('left');
-                                // }, 0);
-                            }
-                        }, true);
-                    }
-                    if(scope.attributes.toolbar.rightMenu.menuItemsType.value === 'static') {
-                        scope.$watch('attributes.toolbar.rightMenu.menuItems.value', function(newVal, oldVal) {
-                            if ( newVal != null && scope.attributes.toolbar.rightMenu.type.value !== 'Fab' ) {
-                                // $timeout(function() {
-                                    scope.iconbarBuilder('right');
-                                // }, 0);
-                            }
-                        }, true);
-                    }
-                    if (scope.attributes.toolbar.rightMenu.menuItemsType.value === 'dynamic') {
-                        scope.$watch('$parent_scope.'+scope.attributes.toolbar.rightMenu.menuItemNames.value.main.source, function(newVal, oldVal) {
-                            if ( newVal != null && scope.attributes.toolbar.rightMenu.type.value !== 'Fab' ) {
-                                // $timeout(function() {
-                                    scope.iconbarBuilder('right');
-                                // }, 0);
-                            }
-                        }, true);
-                    }
-                }, 0);
+                // $timeout(function() {
+                //     if (scope.attributes.toolbar.leftMenu.menuItemsType.value === 'static') {
+                //         scope.$watch('attributes.toolbar.leftMenu.menuItems.value', function(newVal, oldVal) {
+                //             if ( newVal != null && scope.attributes.toolbar.leftMenu.type.value !== 'Fab' ) {
+                //                 // $timeout(function() {
+                //                     scope.iconbarBuilder('left');
+                //                 // }, 0);
+                //             }
+                //         }, true);
+                //     }
+                //     if (scope.attributes.toolbar.leftMenu.menuItemsType.value === 'dynamic'){
+                //         scope.$watch('$parent_scope.'+scope.attributes.toolbar.leftMenu.menuItemNames.value.main.source, function(newVal, oldVal) {
+                //             if ( newVal != null && scope.attributes.toolbar.leftMenu.type.value !== 'Fab' ) {
+                //                 // $timeout(function() {
+                //                     scope.iconbarBuilder('left');
+                //                 // }, 0);
+                //             }
+                //         }, true);
+                //     }
+                //     if(scope.attributes.toolbar.rightMenu.menuItemsType.value === 'static') {
+                //         scope.$watch('attributes.toolbar.rightMenu.menuItems.value', function(newVal, oldVal) {
+                //             if ( newVal != null && scope.attributes.toolbar.rightMenu.type.value !== 'Fab' ) {
+                //                 // $timeout(function() {
+                //                     scope.iconbarBuilder('right');
+                //                 // }, 0);
+                //             }
+                //         }, true);
+                //     }
+                //     if (scope.attributes.toolbar.rightMenu.menuItemsType.value === 'dynamic') {
+                //         scope.$watch('$parent_scope.'+scope.attributes.toolbar.rightMenu.menuItemNames.value.main.source, function(newVal, oldVal) {
+                //             if ( newVal != null && scope.attributes.toolbar.rightMenu.type.value !== 'Fab' ) {
+                //                 // $timeout(function() {
+                //                     scope.iconbarBuilder('right');
+                //                 // }, 0);
+                //             }
+                //         }, true);
+                //     }
+                // }, 0);
+
                 scope.unfocusButton = function(event){
                     var target = $(event.target);
                     target.is("button") ? target.blur() : $(target.parent()[0]).blur();
