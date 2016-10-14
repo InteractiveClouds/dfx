@@ -2049,7 +2049,7 @@ dfxStudioApi.factory('dfxApiServiceObjects', [ '$http', '$q', function($http, $q
 
         $http({
             method: 'POST',
-            url: '/studio/query/category/createCategory',
+            url: '/studio/query/createCategory',
             data: { name: category_name, ownerId: "", application: app_name }
         }).then(function successCallback(response) {
             deferred.resolve( response );
