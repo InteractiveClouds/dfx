@@ -12,7 +12,7 @@ FRAG-IF{{attributes.repeat_in.value != '' && attributes.repeat_title.value === f
         ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
         ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}>
         <div ng-show="attributes.toolbar.visible.value"><div dfx-gcc-web-toolbar></div></div>
-        <md-content flex="100" ng-repeat="$dfx_item in attributes.repeat_in.value" dfx-repeatable-panel="{{$index}}" ng-init="getDfxItem($dfx_item, $index); $last ? finishedNgRepeat() : null" ng-hide="collapsedType.value==='boolean' ? dfxCollapsed.value : $eval(attributes.toolbar.collapsed.value)" style="attributes.bodyStyle.value" dfx-sidenav-and-bottomsheet="{{component_id}}" layout="column">
+        <md-content flex="100" ng-repeat="$dfx_item in attributes.repeat_in.value" dfx-repeatable-panel="{{$index}}" ng-init="getDfxItem($dfx_item, $index);" ng-hide="collapsedType.value==='boolean' ? dfxCollapsed.value : $eval(attributes.toolbar.collapsed.value)" style="attributes.bodyStyle.value" dfx-sidenav-and-bottomsheet="{{component_id}}" layout="column">
 			LAYOUT-RENDERING{{0}}
         </md-content>
     </section>
