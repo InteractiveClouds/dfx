@@ -177,19 +177,31 @@ dfxGCC.directive('dfxGccWebPanel', ['$timeout', '$compile', function($timeout, $
                 if(scope.attributes.toolbar.leftMenu.hasOwnProperty('iconBarClass')){delete scope.attributes.toolbar.leftMenu.iconBarClass;}
                 if(scope.attributes.toolbar.rightMenu.hasOwnProperty('iconBarClass')){delete scope.attributes.toolbar.rightMenu.iconBarClass;}
 
-                if (scope.attributes.repeat_in.value != '' && $(element).parent().attr('layout') == 'row') {
-                    if (scope.attributes.repeat_title.value) {
-                        $(element).addClass('layout-row');
-                        $(element).css('flex-wrap', 'wrap');
-                    }
-                }
-
-				scope.changeWidth = function(){
+                scope.changeWidth = function(){
                     if ( !scope.attributes.repeat_title.value ) {
                         basectrl.changeWidth(scope);
                     }
                 };
 				scope.changeWidth();
+
+                /* Repeatable Panel adaptation to parent layout orientation - START */
+                var adaptRepeatableToParentOrientation = function() {
+                    if (scope.attributes.repeat_in.value != '') {
+                        var parent_orientation = $(element).parent().attr('layout');
+
+                        if (parent_orientation == 'row' && scope.attributes.repeat_title.value) {
+                            $(element).addClass('layout-row');
+                            $(element).css('flex-wrap', 'wrap');
+                        } else if (parent_orientation == 'column' && scope.attributes.repeat_title.value) {
+                            $(element).css('width', scope.attributes.flex.value + '%');
+                            $(element).children('div').removeClass('flex-' + scope.attributes.flex.value);
+                            $(element).children('div').addClass('flex-100');
+                            $(element).children('div').css('width', '100%');
+                        }
+                    }
+                };
+                adaptRepeatableToParentOrientation();
+                /* Repeatable Panel adaptation to parent layout orientation - END */
 
 				var titleString = '';
                 if (scope.attributes.toolbar.title.bindingHtml.value.indexOf('$dfx_item')===-1) {
