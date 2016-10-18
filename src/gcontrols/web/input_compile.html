@@ -1,7 +1,7 @@
 FRAG-IF{{attributes.binding.repeatable === false}}
 <div ng-form name="inputForm"
     ng-show="attributes.display.value"
-    style="height:88px;ATTR-NONV{{style.value}}"
+    style="ATTR-NONV{{style.value}}"
     ATTR-IF{{class="attributes.classes.value"}}
     ATTR-IF{{ng-class="attributes.dynamicClasses.value"}} >
     <div ng-if="ATTR-EXP{{attributes.selectedType.value!=='number' ? 'true' : 'false'}}ATTR-ENDEXP" layout="row"
@@ -132,7 +132,7 @@ FRAG-ENDIF
 FRAG-IF{{attributes.binding.repeatable === true}}
 <div ng-form name="inputForm"
     ng-show="attributes.display.value"
-    style="height:88px;ATTR-NONV{{style.value}}"
+    style="ATTR-NONV{{style.value}}"
     ATTR-IF{{class="attributes.classes.value"}}
     ATTR-IF{{ng-class="attributes.dynamicClasses.value"}} >
     <div ng-if="ATTR-EXP{{attributes.selectedType.value!=='number' ? 'true' : 'false'}}ATTR-ENDEXP" layout="row"
