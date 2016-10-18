@@ -470,10 +470,10 @@ md-menu-item button.dfx-horizontalmenu-button small {
 }
 
 div[dfx-gc-web-panel] > section > md-content > div {
-    overflow: auto;
+    overflow: overlay;
 }
 div[dfx-gc-web-panel] > div > section > md-content > div > div {
-    overflow: auto;
+    overflow: overlay;
 }
 
 /* Editor */
