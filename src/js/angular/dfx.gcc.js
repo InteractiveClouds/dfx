@@ -173,9 +173,35 @@ dfxGCC.directive('dfxGccWebPanel', ['$timeout', '$compile', function($timeout, $
                 scope.attributes.toolbar.rightMenu.equalButtonSize = { "value": false };
                 scope.attributes.toolbar.rightMenu.initialClick = { "value": false };
                 scope.attributes.toolbar.rightMenu.dynamicPresent = { "value": false };
-                if(scope.attributes.hasOwnProperty('collapsible')){delete scope.attributes.collapsible;}
-                if(scope.attributes.toolbar.leftMenu.hasOwnProperty('iconBarClass')){delete scope.attributes.toolbar.leftMenu.iconBarClass;}
-                if(scope.attributes.toolbar.rightMenu.hasOwnProperty('iconBarClass')){delete scope.attributes.toolbar.rightMenu.iconBarClass;}
+                scope.dfx_rep_panels;
+                var is_rep_title = (scope.attributes.repeat_in.value !=='' && scope.attributes.repeat_title.value) ? true : false, 
+                    is_rep_panel = scope.attributes.repeat_in.value !=='' ? true : false;
+				
+                scope.collapsePanelContent = function(ev, dfxIndex){
+                    var toggle_btn_id = ev.target.id,
+                        toggle_btn = $('#'+toggle_btn_id),
+                        collapse_cont_id = toggle_btn_id.replace('toggling_', '');
+                    if(!is_rep_title && !is_rep_panel){
+                        var collapse_container = $('#'+collapse_cont_id);
+                        if(collapse_container.hasClass('ng-hide')) collapse_container.css('display', 'none').removeClass('ng-hide');
+                        toggle_btn.toggleClass('dfx-expanded');
+                        collapse_container.slideToggle();
+                    }
+                    if(!is_rep_title && is_rep_panel && scope.dfx_rep_panels>0){
+                        toggle_btn.toggleClass('dfx-expanded');
+                        for (var i = 0; i < scope.dfx_rep_panels; i++) {                                
+                            var item_collapse_cont = $('#'+collapse_cont_id+'_'+i);
+                            if(item_collapse_cont.hasClass('ng-hide')) item_collapse_cont.css('display', 'none').removeClass('ng-hide');
+                            toggle_btn.hasClass('dfx-expanded') ? item_collapse_cont.slideDown() : item_collapse_cont.slideUp();
+                        }
+                    }
+                    if(is_rep_title && dfxIndex >=0 ){
+                        var collapse_container = $('#'+collapse_cont_id);
+                        if(collapse_container.hasClass('ng-hide')) collapse_container.css('display', 'none').removeClass('ng-hide');
+                        toggle_btn.toggleClass('dfx-expanded');
+                        collapse_container.slideToggle();
+                    }
+                }
 
                 if (scope.attributes.repeat_in.value != '' && $(element).parent().attr('layout') == 'row') {
                     if (scope.attributes.repeat_title.value) {
@@ -184,187 +210,18 @@ dfxGCC.directive('dfxGccWebPanel', ['$timeout', '$compile', function($timeout, $
                     }
                 }
 
-				scope.changeWidth = function(){
+                scope.changeWidth = function(){
                     if ( !scope.attributes.repeat_title.value ) {
                         basectrl.changeWidth(scope);
                     }
                 };
-				scope.changeWidth();
+                scope.changeWidth();
 
-				var titleString = '';
+                var titleString = '';
                 if (scope.attributes.toolbar.title.bindingHtml.value.indexOf('$dfx_item')===-1) {
-					titleString = '$parent_scope.';
-				}
-            	scope.htmlTitleObject = titleString + scope.attributes.toolbar.title.bindingHtml.value;
-                scope.dfxGetValueFromPath = function(obj, path) {
-                    return new Function('_', 'return _.' + path)(obj);
+                    titleString = '$parent_scope.';
                 }
-                scope.dfxSetValueFromPath = function(obj, path, value) {
-                    return new Function('_', 'val', 'return _.' + path + ' = val')(obj, value);
-                }
-				scope.dfxItems = [];
-                scope.dfxCollapsed = {"value": ''};
-                scope.dfxCollapsible = {"value": ''};
-                scope.collapsed_element;
-                scope.collapsedType = {"value": ''};
-                scope.collapsibleType = {"value": ''};
-                scope.isRepeatablePanel = scope.attributes.repeat_in.value !== '' ? true : false;
-                scope.isRepeatableTitle = scope.attributes.repeat_in.value !== '' && scope.attributes.repeat_title.value ? true : false;
-				var itemCollapsed,
-                    itemCollapsible,
-                    collapsedPath = scope.attributes.toolbar.collapsed.value,
-                    collapsiblePath = scope.attributes.toolbar.collapsible.value;
-
-				if(collapsiblePath!==''){
-                    scope.collapsibleType.value = 'complex';
-                    if(collapsiblePath==='true' || collapsiblePath==='false'){
-                        scope.collapsibleType.value = 'boolean';
-                        if(scope.isRepeatableTitle){
-                            scope.dfxCollapsible.value = [];
-                        }else{
-                            scope.dfxCollapsible.value = collapsiblePath==='true' ? true : false;
-                        }
-                    }
-                    if(collapsiblePath.indexOf('$dfx_item.')>-1) {
-                        scope.collapsibleType.value = 'in_dfx_item';
-                        collapsiblePath = collapsiblePath.replace('$dfx_item.', '');
-                    }else if(collapsiblePath.indexOf('$dfx_item')>-1) {
-                        scope.collapsibleType.value = 'in_dfx_item';
-                        collapsiblePath = collapsiblePath.replace('$dfx_item', '');
-                    }
-                }
-                if(collapsedPath!==''){
-                    scope.collapsedType.value = 'complex';
-                    if(collapsedPath==='true' || collapsedPath==='false'){
-                        scope.collapsedType.value = 'boolean';
-                        if(scope.isRepeatableTitle){
-                            scope.dfxCollapsed.value = [];
-                        }else{
-                            scope.dfxCollapsed.value = collapsedPath==='true' ? true : false;
-                        }
-                    }
-                    if(collapsedPath.indexOf('$dfx_item.')>-1) {
-                        scope.collapsedType.value = 'in_dfx_item';
-                        collapsedPath = collapsedPath.replace('$dfx_item.', '');
-                    }else if(collapsedPath.indexOf('$dfx_item')>-1) {
-                        scope.collapsedType.value = 'in_dfx_item';
-                        collapsedPath = collapsedPath.replace('$dfx_item', '');
-                    }
-                }
-                scope.getCollapsed = function(dfxItem){
-                    scope.dfxGetValueFromPath(dfxItem, collapsedPath);
-                }
-                scope.getCollapsible = function(dfxItem){
-                    scope.dfxGetValueFromPath(dfxItem, collapsiblePath);
-                }
-                scope.getDfxItem = function(dfxItem, dfxIndex){
-                    if(collapsiblePath!=='' && collapsedPath!==''){
-                        scope.getCollapsed(dfxItem);
-                        scope.getCollapsible(dfxItem);
-                    }
-                    scope.dfxItems.push(dfxItem);
-                }
-				scope.finishedNgRepeat = function(){
-                    if(scope.collapsibleType.value === 'boolean'){
-                        isCollapsible = collapsiblePath === 'true' ? true : false;
-                        for (var i = 0; i < scope.dfxItems.length; i++) {
-                            scope.dfxCollapsible.value.push(isCollapsible);
-                        };
-                    }
-                    if(scope.collapsedType.value === 'boolean'){
-                        isCollapsed = collapsedPath === 'true' ? true : false;
-                        for (var i = 0; i < scope.dfxItems.length; i++) {
-                            scope.dfxCollapsed.value.push(isCollapsed);
-                        };
-                    }
-                }
-				if(scope.collapsedType.value === 'complex'){
-                    var namePatern = new RegExp(/^[a-zA-Z_0-9]*/gi),
-                        elementName = namePatern.exec(scope.attributes.toolbar.collapsed.value);
-                    scope.collapsed_element = eval('scope.$parent_scope.' + elementName[0]);
-                    collapsedPath = collapsedPath.replace(/^[a-zA-Z_0-9]*/gi, "");
-                    if(collapsedPath.charAt(0)==='.') collapsedPath = collapsedPath.slice(1);
-                }
-
-				scope.collapsePanelContent = function(dfxItem, dfxIndex){
-                    if(dfxItem){
-                        var tempCollapsed = scope.dfxGetValueFromPath(dfxItem, collapsedPath);
-                        scope.dfxSetValueFromPath(dfxItem, collapsedPath, !tempCollapsed);
-                    }else{
-                        var tempCollapsed = scope.dfxGetValueFromPath(scope.collapsed_element, collapsedPath);
-                        scope.dfxSetValueFromPath(scope.collapsed_element, collapsedPath, !tempCollapsed);
-                    }
-                }
-                scope.collapsePanelBody = function(isCollapsed, index) {
-                    if (!angular.isDefined(attrs.dfxGcDesign) && !angular.isDefined(attrs.dfxGcEdit)) {
-                        if ( scope.attributes.repeat_title.value ) {
-                            basectrl.bindScopeVariable( scope, component.attributes.repeat_in.value );
-                        } else {
-                            basectrl.bindScopeVariable( scope, component.attributes.toolbar.collapsed.value );
-                        }
-                        if ( scope.attributes.toolbar.collapsed.value == 'true' || scope.attributes.toolbar.collapsed.value == 'false' ) {
-                            if ( isCollapsed ) {
-                                scope.attributes.toolbar.collapsed.value = 'false';
-                            } else {
-                                scope.attributes.toolbar.collapsed.value = 'true';
-                            }
-                        } else {
-                            if ( scope.attributes.repeat_title.value ) {
-                                var collapsedEl = scope.attributes.toolbar.collapsed.value.replace("$dfx_item.", "");
-                                if ( isCollapsed ) {
-                                    scope[scope.attributes.repeat_in.value][index][collapsedEl] = false;
-                                } else {
-                                    scope[scope.attributes.repeat_in.value][index][collapsedEl] = true;
-                                }
-                            } else {
-                                if ( isCollapsed ) {
-                                    scope.$parent_scope[scope.attributes.toolbar.collapsed.value] = false;
-                                } else {
-                                    scope.$parent_scope[scope.attributes.toolbar.collapsed.value] = true;
-                                }
-                            }
-                        }
-                    } else {
-                        if ( scope.attributes.toolbar.collapsed.value == 'false' ) {
-                            scope.attributes.toolbar.collapsed.designValue = true;
-                            scope.attributes.toolbar.collapsed.value = 'true';
-                        } else if ( scope.attributes.toolbar.collapsed.value == 'true' ) {
-                            scope.attributes.toolbar.collapsed.designValue = false;
-                            scope.attributes.toolbar.collapsed.value = 'false';
-                        } else {
-                            if ( !scope.attributes.toolbar.collapsed.designValue || scope.attributes.toolbar.collapsed.designValue == false ) {
-                                scope.attributes.toolbar.collapsed.designValue = true;
-                            } else {
-                                scope.attributes.toolbar.collapsed.designValue = false;
-                            }
-                        }
-                    }
-                }
-
-                scope.checkPanelBody = function() {
-                    if ( scope.attributes.toolbar.collapsed.value == 'true' ) {
-                        scope.attributes.toolbar.collapsed.designValue = true;
-                    } else {
-                        scope.attributes.toolbar.collapsed.designValue = false;
-                    }
-                }
-
-                scope.checkCollapses = function() {
-                    if ( !scope.attributes.toolbar.hasOwnProperty('collapsed') ) {
-                        var addCollapsed = { "collapsed": { "value": "false" }};
-                        scope.attributes.toolbar.collapsed = addCollapsed.collapsed;
-                    }
-                    if ( !scope.attributes.toolbar.hasOwnProperty('collapsible') ) {
-                        var addCollapsible = { "collapsible": { "value": "false" }};
-                        scope.attributes.toolbar.collapsible = addCollapsible.collapsible;
-                    }
-                    if ( !scope.attributes.hasOwnProperty('repeat_title') ) {
-                        var addRepeatTitle = { "repeat_title": { "value": false }};
-                        scope.attributes.repeat_title = addRepeatTitle.repeat_title;
-                    }
-                }
-
-                scope.checkCollapses();
+                scope.htmlTitleObject = titleString + scope.attributes.toolbar.title.bindingHtml.value;
             });
         }
     }

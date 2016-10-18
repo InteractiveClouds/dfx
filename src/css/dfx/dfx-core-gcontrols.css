@@ -141,7 +141,7 @@ div.wizard-submit-step.is-wizard-submit-step {
     align-items: center;
     justify-content: center;
 }
-.panel-body-collapser md-icon.collapser-trigger.expanded {
+.panel-body-collapser md-icon.collapser-trigger.dfx-expanded {
     -webkit-transform: rotate(90deg);
     transform: rotate(90deg)
 }
