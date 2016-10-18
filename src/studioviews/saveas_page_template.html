@@ -13,7 +13,7 @@
             <div class="md-dialog-content layout-column">
                 <md-input-container class="md-block flex" style="margin: 0;">
                     <label>Name:</label>
-                    <input id="dfx-page-template-newname" ng-model="template.name" md-autofocus>
+                    <input id="dfx-page-template-newname" ng-model="template.name" md-autofocus ng-keyup="( $event.keyCode == 13 && template.name !=='') ? saveAsTemplate() : ''">
                 </md-input-container>
             </div>
         </md-dialog-content>
