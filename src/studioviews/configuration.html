@@ -278,11 +278,11 @@
                     <div ng-if="app_roles.operation==='create'">
                         <md-input-container class="md-block">
                             <label>Name:</label>
-                            <input ng-model="app_roles.new_app_role.name">
+                            <input ng-model="app_roles.new_app_role.name" md-autofocus required ng-keyup="( $event.keyCode == 13 && app_roles.new_app_role.name !=='') ? app_roles.create() : ''">
                         </md-input-container>
                         <md-input-container class="md-block">
                             <label>Description:</label>
-                            <input ng-model="app_roles.new_app_role.description">
+                            <input ng-model="app_roles.new_app_role.description" ng-keyup="( $event.keyCode == 13 && app_roles.new_app_role.name !=='') ? app_roles.create() : ''">
                         </md-input-container>
                     </div>
 
@@ -293,34 +293,34 @@
                         </md-input-container>
                         <md-input-container class="md-block">
                             <label>Description:</label>
-                            <input ng-model="app_roles.current_app_role.data.description">
+                            <input ng-model="app_roles.current_app_role.data.description" md-autofocus ng-keyup="( $event.keyCode == 13 ) ? app_roles.update() : ''">
                         </md-input-container>
                     </div>
 
                     <div ng-if="app_users.operation==='create'">
                         <md-input-container class="md-block">
                             <label>Login:</label>
-                            <input ng-model="app_users.new_app_user.login">
+                            <input ng-model="app_users.new_app_user.login" md-autofocus ng-keyup="( $event.keyCode == 13 && app_users.new_app_user.login !=='') ? app_users.create() : ''" required>
                         </md-input-container>
                         <md-input-container class="md-block">
                             <label>First Name:</label>
-                            <input ng-model="app_users.new_app_user.firstName">
+                            <input ng-model="app_users.new_app_user.firstName" ng-keyup="( $event.keyCode == 13 && app_users.new_app_user.login !=='' && app_users.new_app_user.pass_matching) ? app_users.create() : ''">
                         </md-input-container>
                         <md-input-container class="md-block">
                             <label>Last Name:</label>
-                            <input ng-model="app_users.new_app_user.lastName">
+                            <input ng-model="app_users.new_app_user.lastName" ng-keyup="( $event.keyCode == 13 && app_users.new_app_user.login !=='' && app_users.new_app_user.pass_matching) ? app_users.create() : ''">
                         </md-input-container>
                         <md-input-container class="md-block">
                             <label>Email:</label>
-                            <input ng-model="app_users.new_app_user.email">
+                            <input ng-model="app_users.new_app_user.email" ng-keyup="( $event.keyCode == 13 && app_users.new_app_user.login !=='' && app_users.new_app_user.pass_matching) ? app_users.create() : ''">
                         </md-input-container>
                         <md-input-container class="md-block">
                             <label>Password:</label>
-                            <input ng-model="app_users.new_app_user.new_pass" type="password">
+                            <input ng-model="app_users.new_app_user.new_pass" type="password" ng-keyup="( $event.keyCode == 13 && app_users.new_app_user.login !=='' && app_users.new_app_user.pass_matching) ? app_users.create() : ''">
                         </md-input-container>
                         <md-input-container class="md-block">
                             <label>Repeat Password:</label>
-                            <input ng-model="app_users.new_app_user.repeat_pass" type="password" ng-change="app_users.showPassMessage(app_users.new_app_user)">
+                            <input ng-model="app_users.new_app_user.repeat_pass" type="password" ng-change="app_users.showPassMessage(app_users.new_app_user)" ng-keyup="( $event.keyCode == 13 && app_users.new_app_user.login !=='' && app_users.new_app_user.pass_matching) ? app_users.create() : ''">
                             <div ng-if="app_users.new_app_user.pass_matching === true && app_users.new_app_user.show_pass_message" style="color: green; margin-top: 35px; font-size: 12px;">password is matching</div>
                             <div ng-if="app_users.new_app_user.pass_matching === false && app_users.new_app_user.show_pass_message" style="color: red; margin-top: 35px; font-size: 12px;">password is not matching</div>
                         </md-input-container>
@@ -333,23 +333,23 @@
                         </md-input-container>
                         <md-input-container class="md-block">
                             <label>First Name:</label>
-                            <input ng-model="app_users.current_app_user.firstName" ng-disabled="app_users.current_app_user.type==='openid'">
+                            <input ng-model="app_users.current_app_user.firstName" ng-disabled="app_users.current_app_user.type==='openid'" ng-keyup="( $event.keyCode == 13 && ((!app_users.current_app_user.pass_matching && !app_users.current_app_user.pass_changed) || app_users.current_app_user.type!='openid')) ? app_users.update() : ''">
                         </md-input-container>
                         <md-input-container class="md-block">
                             <label>Last Name:</label>
-                            <input ng-model="app_users.current_app_user.lastName" ng-disabled="app_users.current_app_user.type==='openid'">
+                            <input ng-model="app_users.current_app_user.lastName" ng-disabled="app_users.current_app_user.type==='openid'" ng-keyup="( $event.keyCode == 13 && ((!app_users.current_app_user.pass_matching && !app_users.current_app_user.pass_changed) || app_users.current_app_user.type!='openid')) ? app_users.update() : ''">
                         </md-input-container>
                         <md-input-container class="md-block">
                             <label>Email:</label>
-                            <input ng-model="app_users.current_app_user.email" ng-disabled="app_users.current_app_user.type==='openid'">
+                            <input ng-model="app_users.current_app_user.email" ng-disabled="app_users.current_app_user.type==='openid'" ng-keyup="( $event.keyCode == 13 && ((!app_users.current_app_user.pass_matching && !app_users.current_app_user.pass_changed) || app_users.current_app_user.type!='openid')) ? app_users.update() : ''">
                         </md-input-container>
                         <md-input-container class="md-block" ng-if="app_users.current_app_user.type!=='openid'">
                             <label>Password:</label>
-                            <input ng-change="app_users.changePass()" ng-model="app_users.current_app_user.new_pass" type="password">
+                            <input ng-change="app_users.changePass()" ng-model="app_users.current_app_user.new_pass" type="password" ng-keyup="( $event.keyCode == 13 && ((!app_users.current_app_user.pass_matching && !app_users.current_app_user.pass_changed) || app_users.current_app_user.type!='openid')) ? app_users.update() : ''">
                         </md-input-container>
                         <md-input-container ng-if="app_users.current_app_user.pass_changed === true && app_users.current_app_user.type!=='openid'" class="md-block">
                             <label>Repeat Password:</label>
-                            <input ng-model="app_users.current_app_user.repeat_pass" type="password" ng-change="app_users.showPassMessage(app_users.current_app_user)">
+                            <input ng-model="app_users.current_app_user.repeat_pass" type="password" ng-change="app_users.showPassMessage(app_users.current_app_user)" ng-keyup="( $event.keyCode == 13 && ((!app_users.current_app_user.pass_matching && !app_users.current_app_user.pass_changed) || app_users.current_app_user.type!='openid')) ? app_users.update() : ''">
                             <div ng-if="app_users.current_app_user.pass_matching === true && app_users.current_app_user.show_pass_message" style="color: green; margin-top: 35px; font-size: 12px;">password is matching</div>
                             <div ng-if="app_users.current_app_user.pass_matching === false && app_users.current_app_user.show_pass_message" style="color: red; margin-top: 35px; font-size: 12px;">password is not matching</div>
                         </md-input-container>
@@ -540,7 +540,7 @@
         </md-content>
     </md-tab>
     <md-tab label="Resources" md-on-select="defineSettings('resources')" ng-click="resourcesClick()">
-        <md-content class="md-padding"  ng-cloak">
+        <md-content class="md-padding"  ng-cloak>
             <div ng-include="resourcesPath"></div>
         </md-content>
     </md-tab>
