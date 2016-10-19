@@ -1307,8 +1307,13 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     };
 
     // Functions implementing UNDO in view editor - START
-    $scope.cacheAttributeOldValue = function (attribute_name, $event, attribute_value) {
-        if ($event && $event.relatedTarget && $event.relatedTarget.textContent == 'Save') return;//called from picker using $.focus() by clicking Save button
+    $scope.cacheAttributeOldValue = function (options) {
+        var attribute_name = options.name,
+            attribute_value = options.value,
+            event = options.event;
+
+        //called from picker using $.focus() by clicking Save button
+        //if (event && event.relatedTarget && event.relatedTarget.textContent == 'Save') { return; }
 
         if (attribute_value) {
             $scope.attribute_temp_old_value = {value: attribute_value};
@@ -1318,14 +1323,18 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     };
 
     $scope.cacheAttributeNewValue = function (attribute_name) {
-        if (! $scope.gc_selected.attributes[attribute_name]) return;
+        if (! $scope.gc_selected.attributes[attribute_name]) { return; }
 
         var attribute_new_value = $scope.gc_selected.attributes[attribute_name].value;
         var attribute_old_value = $scope.attribute_temp_old_value ?  $scope.attribute_temp_old_value.value : '';
 
         if (attribute_new_value !== attribute_old_value) {
             $scope.view_editor_actions_stack = $scope.view_editor_actions_stack || [];
-            $scope.view_editor_actions_stack.unshift({ component_id: $scope.gc_selected.id, attribute_name: attribute_name, attribute_old_value: angular.copy(attribute_old_value) });
+            $scope.view_editor_actions_stack.unshift({
+                component_id: $scope.gc_selected.id,
+                attribute_name: attribute_name,
+                attribute_old_value: angular.copy(attribute_old_value)
+            });
         }
     };
 
@@ -2099,8 +2108,8 @@ dfxViewEditorApp.directive('dfxVeExpressionEditor', [ '$mdDialog', function($mdD
                             $("#"+scope.component_id+"_expression_textarea").val(areaValue.substring(0, cursorPos) + varName + areaValue.substring(cursorPos));
                         }
                         scope.setLabel = function() {
-                            var oldExpression = scope.targetLabelField.val();// needed for UNDO functionality
-                            scope.$parent.cacheAttributeOldValue(null, null, oldExpression);// needed for UNDO functionality
+                            var old_expression = scope.targetLabelField.val();// needed for UNDO functionality
+                            scope.$parent.cacheAttributeOldValue({ 'value': old_expression });// needed for UNDO functionality
 
                             scope.newExpression = $("textarea.expression-textarea").val();
                             scope.targetLabelField.val(scope.newExpression);
