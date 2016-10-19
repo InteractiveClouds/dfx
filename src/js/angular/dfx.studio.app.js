@@ -1241,6 +1241,9 @@ dfxStudioApp.controller("dfx_studio_cloud_controller", [ '$scope', 'dfxPlatformB
             $scope.bluemix.cancel = function() {
                 $mdDialog.cancel();
             };
+            $scope.selectAction = function(){
+                $scope.bluemix.logged_in ? $scope.bluemix.hide() : $scope.bluemix.login();
+            }
         }
     };
 }]);

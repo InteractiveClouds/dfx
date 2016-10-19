@@ -15,11 +15,11 @@
                 <div class="layout-column flex-100">
                     <md-input-container class="md-block flex" style="margin: 0;">
                         <label>Email:</label>
-                        <input ng-model="bluemix.credentials.email" md-autofocus>
+                        <input ng-model="bluemix.credentials.email" md-autofocus ng-keyup="( $event.keyCode == 13 && bluemix.credentials.email !=='' && bluemix.credentials.password !=='') ? selectAction() : ''">
                     </md-input-container>
                     <md-input-container class="md-block flex" style="margin: 0;">
                         <label>Password:</label>
-                        <input ng-model="bluemix.credentials.password" type="password">
+                        <input ng-model="bluemix.credentials.password" type="password" ng-keyup="( $event.keyCode == 13 && bluemix.credentials.email !=='' && bluemix.credentials.password !=='') ? selectAction() : ''">
                     </md-input-container>
                     <div ng-if="bluemix.email_pass_spinner === true" style="text-align: center;"><md-icon style="font-size: 20px;" class="fa fa-spinner fa-pulse"></md-icon></div>
                     <md-input-container ng-if="bluemix.organizations_list" class="layout-row">
