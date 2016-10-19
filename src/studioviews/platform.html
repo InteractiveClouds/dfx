@@ -15,23 +15,23 @@
                         </md-input-container>
                         <md-input-container class="md-block">
                             <label>First Name:</label>
-                            <input ng-model="developers.current_user.firstName" ng-disabled="developers.current_user.type==='openid'">
+                            <input ng-model="developers.current_user.firstName" ng-disabled="developers.current_user.type==='openid'" ng-keyup="( $event.keyCode == 13 && (developers.current_user.pass_matching && developers.current_user.pass_changed || true) && developers.current_user.type!='openid' ) ? developers.updateUser() : ''">
                         </md-input-container>
                         <md-input-container class="md-block">
                             <label>Last Name:</label>
-                            <input ng-model="developers.current_user.lastName" ng-disabled="developers.current_user.type==='openid'">
+                            <input ng-model="developers.current_user.lastName" ng-disabled="developers.current_user.type==='openid'" ng-keyup="( $event.keyCode == 13 && (developers.current_user.pass_matching && developers.current_user.pass_changed || true) && developers.current_user.type!='openid' ) ? developers.updateUser() : ''">
                         </md-input-container>
                         <md-input-container class="md-block">
                             <label>Email:</label>
-                            <input ng-model="developers.current_user.email" ng-disabled="developers.current_user.type==='openid'">
+                            <input ng-model="developers.current_user.email" ng-disabled="developers.current_user.type==='openid'" ng-keyup="( $event.keyCode == 13 && (developers.current_user.pass_matching && developers.current_user.pass_changed || true) && developers.current_user.type!='openid' ) ? developers.updateUser() : ''">
                         </md-input-container>
                         <md-input-container class="md-block" ng-if="developers.current_user.type!=='openid'">
                             <label>Password:</label>
-                            <input ng-change="developers.changePass()" ng-model="developers.current_user.new_pass" type="password">
+                            <input ng-change="developers.changePass()" ng-model="developers.current_user.new_pass" type="password" ng-keyup="( $event.keyCode == 13 && (developers.current_user.pass_matching && developers.current_user.pass_changed || true) && developers.current_user.type!='openid' ) ? developers.updateUser() : ''">
                         </md-input-container>
                         <md-input-container ng-if="developers.current_user.pass_changed === true && developers.current_user.type!=='openid'" class="md-block">
                             <label>Repeat Password:</label>
-                            <input ng-model="developers.current_user.repeat_pass" type="password" ng-change="developers.showPassMessage(developers.current_user)">
+                            <input ng-model="developers.current_user.repeat_pass" type="password" ng-change="developers.showPassMessage(developers.current_user)" ng-keyup="( $event.keyCode == 13 && (developers.current_user.pass_matching && developers.current_user.pass_changed || true) && developers.current_user.type!='openid' ) ? developers.updateUser() : ''">
                             <div ng-if="developers.current_user.pass_matching === true && developers.current_user.show_pass_message" style="color: green; margin-top: 35px; font-size: 12px;">password is matching</div>
                             <div ng-if="developers.current_user.pass_matching === false && developers.current_user.show_pass_message" style="color: red; margin-top: 35px; font-size: 12px;">password is not matching</div>
                         </md-input-container>
@@ -39,27 +39,27 @@
                     <div ng-if="developers.operation==='create'">
                         <md-input-container class="md-block">
                             <label>Login:</label>
-                            <input ng-model="developers.new_user.login">
+                            <input ng-model="developers.new_user.login" md-autocomplite ng-keyup="( $event.keyCode == 13 && developers.new_user.login !=='' && developers.new_user.pass_matching) ? developers.createUser() : ''" required>
                         </md-input-container>
                         <md-input-container class="md-block">
                             <label>First Name:</label>
-                            <input ng-model="developers.new_user.firstName">
+                            <input ng-model="developers.new_user.firstName" ng-keyup="( $event.keyCode == 13 && developers.new_user.login !=='' && developers.new_user.pass_matching) ? developers.createUser() : ''">
                         </md-input-container>
                         <md-input-container class="md-block">
                             <label>Last Name:</label>
-                            <input ng-model="developers.new_user.lastName">
+                            <input ng-model="developers.new_user.lastName" ng-keyup="( $event.keyCode == 13 && developers.new_user.login !=='' && developers.new_user.pass_matching) ? developers.createUser() : ''">
                         </md-input-container>
                         <md-input-container class="md-block">
                             <label>Email:</label>
-                            <input ng-model="developers.new_user.email">
+                            <input ng-model="developers.new_user.email" ng-keyup="( $event.keyCode == 13 && developers.new_user.login !=='' && developers.new_user.pass_matching) ? developers.createUser() : ''">
                         </md-input-container>
                         <md-input-container class="md-block">
                             <label>Password:</label>
-                            <input ng-model="developers.new_user.pass" type="password">
+                            <input ng-model="developers.new_user.pass" type="password" ng-keyup="( $event.keyCode == 13 && developers.new_user.login !=='' && developers.new_user.pass_matching) ? developers.createUser() : ''">
                         </md-input-container>
                         <md-input-container class="md-block">
                             <label>Repeat Password:</label>
-                            <input ng-model="developers.new_user.repeat_pass" type="password" ng-change="developers.showPassMessage(developers.new_user)">
+                            <input ng-model="developers.new_user.repeat_pass" type="password" ng-change="developers.showPassMessage(developers.new_user)" ng-keyup="( $event.keyCode == 13 && developers.new_user.login !=='' && developers.new_user.pass_matching) ? developers.createUser() : ''">
                             <div ng-if="developers.new_user.pass_matching === true && developers.new_user.show_pass_message" style="color: green; margin-top: 35px; font-size: 12px;">password is matching</div>
                             <div ng-if="developers.new_user.pass_matching === false && developers.new_user.show_pass_message" style="color: red; margin-top: 35px; font-size: 12px;">password is not matching</div>
                         </md-input-container>

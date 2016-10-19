@@ -5504,9 +5504,22 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
         $scope.servicesApiSource = 'none';
         var dataSourceIcon = $(".dfx-api-so-sources");
         dataSourceIcon.hide();
-        $('#add-services').fadeIn(150);
+        $('#add-services').fadeIn(150).focus();
         $('#add-services-backdrop').fadeIn(150);
     }
+
+    $(document).keyup(function(e) {
+        if($('#api_so_studioview').length>0){
+            if(e.which === 13 && $('#add-services').length > 0 && $('#api-so-info').length === 0 && document.activeElement.tagName!=='BUTTON' && document.activeElement.tagName!=='MD-OPTION') {
+                $('#add-services-backdrop').click();
+            }
+            if(e.which === 27 && $('#add-services').length > 0 && $('#api-so-info').length === 0 && document.activeElement.tagName!=='BUTTON' && document.activeElement.tagName!=='MD-OPTION') {
+                $('#add-services-backdrop').click();
+            }
+        }
+        e.preventDefault();
+        e.stopPropagation();
+    });
 
     $('body #add-services-backdrop').on('click', function(){
         $('#add-services').fadeOut(150);
@@ -5593,15 +5606,24 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
         });
     }
 
-    $scope.validateServiceUrl = function() {
+    $scope.validateServiceUrl = function(keyCode, serviceModeBtn) {
         $scope.validUrlResult = '';
         $scope.serviceUrlError = '';
         dfxApiServiceObjects.validateSoUrl( $scope, $scope.scopeService.name, $scope.app_name, $scope.scopeService.data.uuid ).then(function( data ) {
             if (( data.data.data !== '' ) && ($scope.currentEditingUrlName !== $scope.scopeService.name)) {
                 $scope.validUrlResult = 'failed';
                 $scope.serviceUrlError = data.data.data;
+            } else if(keyCode, serviceModeBtn) {                    
+                $scope.checkKeyboardEvents(keyCode, serviceModeBtn);
             }
         });
+    }
+
+    $scope.checkKeyboardEvents = function(keyCode, serviceModeBtn){
+        if (keyCode && keyCode == 13) {
+            if(serviceModeBtn && serviceModeBtn=='serviceAdd') $scope.saveApiSoService();
+            if(serviceModeBtn && serviceModeBtn=='serviceEdit') $scope.closeServiceSidenav();
+        }
     }
 
     $scope.saveApiSoService = function() {
@@ -5889,13 +5911,14 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
             appExceptionItem = {
                 "name": "exception_" + ( tableArray.length + 1 ),
                 "regexp": ""
-            };
+            },
+            table_length = tableArray.length;
 
         switch ( tableName ) {
-            case 'parameters': tableArray.push( parameterItem ); break;
-            case 'pre_code': tableArray.push( preCodeItem ); break;
-            case 'post_code': tableArray.push( postCodeItem ); break;
-            case 'appexpr': tableArray.push( appExceptionItem ); break;
+            case 'parameters': tableArray.push( parameterItem ); $timeout(function(){$('#parameter_name_'+table_length).focus()}, 100);  break;
+            case 'pre_code': tableArray.push( preCodeItem );  $timeout(function(){$('#pre_code_name_'+table_length).focus()}, 100); break;
+            case 'post_code': tableArray.push( postCodeItem );  $timeout(function(){$('#post_code_name_'+table_length).focus()}, 100); break;
+            case 'appexpr': tableArray.push( appExceptionItem );  $timeout(function(){$('#appexpr_name_'+table_length).focus()}, 100); break;
         }
     }
 
@@ -6297,6 +6320,9 @@ dfxStudioApp.directive('dfxApiSoSources', ['$mdDialog', '$timeout', 'dfxApiServi
                         scope.closeCatalog = function() {
                             scope.showListSources = false;
                             $mdDialog.hide();
+                        }
+                        scope.checkNodeName = function(ev){
+                            return (ev.target.nodeName !='BUTTON' && ev.target.nodeName !='MD-CHECKBOX') ? true : false;
                         }
                     }
                 })
