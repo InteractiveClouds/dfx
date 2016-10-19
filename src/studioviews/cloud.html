@@ -95,13 +95,13 @@
             <h5 class="md-title" style="padding-left: 10px">Login</h5>
             <div layout="row" class="layout-padding">
                 <md-input-container class="md-block flex-25" style="margin: 0; padding-top: 20px;">
-                    <input id="phoneGapLogin" ng-model="phoneGapLogin" md-autofocus>
+                    <input id="phoneGapLogin" ng-model="phoneGapLogin" ng-keyup="( $event.keyCode == 13 && phoneGapLogin !=='' && phoneGapPassword !=='') ? savePhoneGapData() : ''" required md-autofocus>
                 </md-input-container>
             </div>
             <h5 class="md-title" style="padding-left: 10px">Password</h5>
             <div layout="row" class="layout-padding">
                 <md-input-container class="md-block flex-25" style="margin: 0; padding-top: 20px;">
-                    <input id="phoneGapPassword" type="password" ng-model="phoneGapPassword">
+                    <input id="phoneGapPassword" type="password" ng-model="phoneGapPassword"  ng-keyup="( $event.keyCode == 13 && phoneGapLogin !=='' && phoneGapPassword !=='') ? savePhoneGapData() : ''" required>
                 </md-input-container>
             </div>
             <div layout="row" layout-align ="start">

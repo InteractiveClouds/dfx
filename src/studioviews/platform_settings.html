@@ -4,7 +4,7 @@
             <h5 class="md-title" style="padding-left: 10px">API key</h5>
             <div layout="row" class="layout-padding">
                 <md-input-container class="md-block flex-25" style="margin: 0; padding-top: 20px;">
-                    <input id="googleAPIKey" ng-model="googleAPIKey" md-autofocus>
+                    <input id="googleAPIKey" ng-model="googleAPIKey" md-autofocus ng-keyup="( $event.keyCode == 13 ) ? saveGoogleKey() : ''" >
                 </md-input-container>
             </div>
             <div layout="row" layout-align ="start">
