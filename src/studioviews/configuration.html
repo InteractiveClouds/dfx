@@ -13,7 +13,7 @@
                             <div class="layout-column flex-100">
                                 <md-input-container class="md-block flex" style="margin: 0;">
                                     <label>Name</label>
-                                    <input ng-model="api_sources.new_auth_provider.provider" md-autofocus>
+                                    <input ng-model="api_sources.new_auth_provider.provider" md-autofocus ng-keyup="( $event.keyCode == 13 && (api_sources.new_auth_provider.schema !== '' || (api_sources.new_auth_provider.schema!=='oAuth2' && api_sources.new_auth_provider.ap_oAuth_2.selected_type !== ''))) ? api_sources.saveProvider() : ''">
                                 </md-input-container>
                                 <md-input-container class="layout-row">
                                     <label>API Provider:</label>
@@ -33,7 +33,7 @@
                                 </md-input-container>
                                 <md-input-container class="md-block flex" style="margin: 30px 0 0 0;" ng-if="api_sources.new_auth_provider.selected_data_source === 'StrongLoop'">
                                     <label>Endpoint:</label>
-                                    <input ng-model="api_sources.new_auth_provider.rest.route" style="color: rgba(0,0,0,0.87);">
+                                    <input ng-model="api_sources.new_auth_provider.rest.route" style="color: rgba(0,0,0,0.87);" ng-keyup="( $event.keyCode == 13 && (api_sources.new_auth_provider.schema !== '' || (api_sources.new_auth_provider.schema!=='oAuth2' && api_sources.new_auth_provider.ap_oAuth_2.selected_type !== ''))) ? api_sources.saveProvider() : ''">
                                 </md-input-container>
                             </div>
                         </div>
@@ -46,11 +46,11 @@
                                 <div ng-if="api_sources.new_auth_provider.schema === 'basic' || api_sources.new_auth_provider.schema === 'digest'" style="margin-top: 20px;">
                                     <md-input-container class="md-block flex" style="margin: 0;">
                                         <label>Username:</label>
-                                        <input ng-model="api_sources.new_auth_provider.ap_basic_digest.credentials.username">
+                                        <input ng-model="api_sources.new_auth_provider.ap_basic_digest.credentials.username" ng-keyup="( $event.keyCode == 13 && (api_sources.new_auth_provider.schema !== '' || (api_sources.new_auth_provider.schema!=='oAuth2' && api_sources.new_auth_provider.ap_oAuth_2.selected_type !== ''))) ? api_sources.saveProvider() : ''">
                                     </md-input-container>
                                     <md-input-container class="md-block flex" style="margin: 0;">
                                         <label>Password:</label>
-                                        <input ng-model="api_sources.new_auth_provider.ap_basic_digest.credentials.password">
+                                        <input ng-model="api_sources.new_auth_provider.ap_basic_digest.credentials.password" ng-keyup="( $event.keyCode == 13 && (api_sources.new_auth_provider.schema !== '' || (api_sources.new_auth_provider.schema!=='oAuth2' && api_sources.new_auth_provider.ap_oAuth_2.selected_type !== ''))) ? api_sources.saveProvider() : ''">
                                     </md-input-container>
                                 </div>
                                 <div ng-if="api_sources.new_auth_provider.schema === 'oAuth1'" >
@@ -64,19 +64,19 @@
                                     </md-input-container>
                                     <md-input-container class="md-block flex" style="margin: 0;">
                                         <label>Consumer Key:</label>
-                                        <input ng-model="api_sources.new_auth_provider.ap_oAuth_1.credentials.consumer_key">
+                                        <input ng-model="api_sources.new_auth_provider.ap_oAuth_1.credentials.consumer_key" ng-keyup="( $event.keyCode == 13 && (api_sources.new_auth_provider.schema !== '' || (api_sources.new_auth_provider.schema!=='oAuth2' && api_sources.new_auth_provider.ap_oAuth_2.selected_type !== ''))) ? api_sources.saveProvider() : ''">
                                     </md-input-container>
                                     <md-input-container class="md-block flex" style="margin: 0;">
                                         <label>Consumer Secret:</label>
-                                        <input ng-model="api_sources.new_auth_provider.ap_oAuth_1.credentials.consumer_secret">
+                                        <input ng-model="api_sources.new_auth_provider.ap_oAuth_1.credentials.consumer_secret" ng-keyup="( $event.keyCode == 13 && (api_sources.new_auth_provider.schema !== '' || (api_sources.new_auth_provider.schema!=='oAuth2' && api_sources.new_auth_provider.ap_oAuth_2.selected_type !== ''))) ? api_sources.saveProvider() : ''">
                                     </md-input-container>
                                     <md-input-container class="md-block flex" style="margin: 0;">
                                         <label>Access Token:</label>
-                                        <input ng-model="api_sources.new_auth_provider.ap_oAuth_1.credentials.access_token">
+                                        <input ng-model="api_sources.new_auth_provider.ap_oAuth_1.credentials.access_token" ng-keyup="( $event.keyCode == 13 && (api_sources.new_auth_provider.schema !== '' || (api_sources.new_auth_provider.schema!=='oAuth2' && api_sources.new_auth_provider.ap_oAuth_2.selected_type !== ''))) ? api_sources.saveProvider() : ''">
                                     </md-input-container>
                                     <md-input-container class="md-block flex" style="margin: 0;">
                                         <label>Access Secret:</label>
-                                        <input ng-model="api_sources.new_auth_provider.ap_oAuth_1.credentials.access_secret">
+                                        <input ng-model="api_sources.new_auth_provider.ap_oAuth_1.credentials.access_secret" ng-keyup="( $event.keyCode == 13 && (api_sources.new_auth_provider.schema !== '' || (api_sources.new_auth_provider.schema!=='oAuth2' && api_sources.new_auth_provider.ap_oAuth_2.selected_type !== ''))) ? api_sources.saveProvider() : ''">
                                     </md-input-container>
                                 </div>
                                 <div ng-if="api_sources.new_auth_provider.schema === 'oAuth2'" >
@@ -91,7 +91,7 @@
                                     <div ng-if="api_sources.new_auth_provider.ap_oAuth_2.selected_type !==''">
                                         <md-input-container class="md-block flex" style="margin: 30px 0 0 0;">
                                             <label>Access Token:</label>
-                                            <input ng-model="api_sources.new_auth_provider.ap_oAuth_2.credentials.access_token">
+                                            <input ng-model="api_sources.new_auth_provider.ap_oAuth_2.credentials.access_token" ng-keyup="( $event.keyCode == 13 && (api_sources.new_auth_provider.schema !== '' || (api_sources.new_auth_provider.schema!=='oAuth2' && api_sources.new_auth_provider.ap_oAuth_2.selected_type !== ''))) ? api_sources.saveProvider() : ''">
                                         </md-input-container>
                                         <div>
                                             <h3 style="color: rgba(0,0,0,0.3)">or</h3>
@@ -99,31 +99,31 @@
                                         </div>
                                         <md-input-container class="md-block flex" style="margin: 0;">
                                             <label>Consumer Key:</label>
-                                            <input ng-model="api_sources.new_auth_provider.ap_oAuth_2.credentials.consumer_key">
+                                            <input ng-model="api_sources.new_auth_provider.ap_oAuth_2.credentials.consumer_key" ng-keyup="( $event.keyCode == 13 && (api_sources.new_auth_provider.schema !== '' || (api_sources.new_auth_provider.schema!=='oAuth2' && api_sources.new_auth_provider.ap_oAuth_2.selected_type !== ''))) ? api_sources.saveProvider() : ''">
                                         </md-input-container>
                                         <md-input-container class="md-block flex" style="margin: 0;">
                                             <label>Consumer Secret:</label>
-                                            <input ng-model="api_sources.new_auth_provider.ap_oAuth_2.credentials.consumer_secret">
+                                            <input ng-model="api_sources.new_auth_provider.ap_oAuth_2.credentials.consumer_secret" ng-keyup="( $event.keyCode == 13 && (api_sources.new_auth_provider.schema !== '' || (api_sources.new_auth_provider.schema!=='oAuth2' && api_sources.new_auth_provider.ap_oAuth_2.selected_type !== ''))) ? api_sources.saveProvider() : ''">
                                         </md-input-container>
                                         <md-input-container ng-if="api_sources.new_auth_provider.ap_oAuth_2.selected_type==='google'" class="md-block flex" style="margin: 0;">
                                             <label>Base Provider's URL:</label>
-                                            <input ng-model="api_sources.new_auth_provider.ap_oAuth_2.credentials.authorize_path">
+                                            <input ng-model="api_sources.new_auth_provider.ap_oAuth_2.credentials.authorize_path" ng-keyup="( $event.keyCode == 13 && (api_sources.new_auth_provider.schema !== '' || (api_sources.new_auth_provider.schema!=='oAuth2' && api_sources.new_auth_provider.ap_oAuth_2.selected_type !== ''))) ? api_sources.saveProvider() : ''">
                                         </md-input-container>
                                         <md-input-container class="md-block flex" style="margin: 0;">
                                             <label>Authorize Path:</label>
-                                            <input ng-model="api_sources.new_auth_provider.ap_oAuth_2.credentials.authorize_path">
+                                            <input ng-model="api_sources.new_auth_provider.ap_oAuth_2.credentials.authorize_path"> ng-keyup="( $event.keyCode == 13 && (api_sources.new_auth_provider.schema !== '' || (api_sources.new_auth_provider.schema!=='oAuth2' && api_sources.new_auth_provider.ap_oAuth_2.selected_type !== ''))) ? api_sources.saveProvider() : ''"
                                         </md-input-container>
                                         <md-input-container class="md-block flex" style="margin: 0;">
                                             <label>Access Token Path:</label>
-                                            <input ng-model="api_sources.new_auth_provider.ap_oAuth_2.credentials.access_token_path">
+                                            <input ng-model="api_sources.new_auth_provider.ap_oAuth_2.credentials.access_token_path" ng-keyup="( $event.keyCode == 13 && (api_sources.new_auth_provider.schema !== '' || (api_sources.new_auth_provider.schema!=='oAuth2' && api_sources.new_auth_provider.ap_oAuth_2.selected_type !== ''))) ? api_sources.saveProvider() : ''">
                                         </md-input-container>
                                         <md-input-container class="md-block flex" style="margin: 0;">
                                             <label>Response Type:</label>
-                                            <input ng-model="api_sources.new_auth_provider.ap_oAuth_2.credentials.response_type">
+                                            <input ng-model="api_sources.new_auth_provider.ap_oAuth_2.credentials.response_type" ng-keyup="( $event.keyCode == 13 && (api_sources.new_auth_provider.schema !== '' || (api_sources.new_auth_provider.schema!=='oAuth2' && api_sources.new_auth_provider.ap_oAuth_2.selected_type !== ''))) ? api_sources.saveProvider() : ''">
                                         </md-input-container>
                                         <md-input-container class="md-block flex" style="margin: 0;">
                                             <label>Scope:</label>
-                                            <input ng-model="api_sources.new_auth_provider.ap_oAuth_2.credentials.scope">
+                                            <input ng-model="api_sources.new_auth_provider.ap_oAuth_2.credentials.scope" ng-keyup="( $event.keyCode == 13 && (api_sources.new_auth_provider.schema !== '' || (api_sources.new_auth_provider.schema!=='oAuth2' && api_sources.new_auth_provider.ap_oAuth_2.selected_type !== ''))) ? api_sources.saveProvider() : ''">
                                         </md-input-container>
                                     </div>
                                 </div>
@@ -162,7 +162,7 @@
                                     </md-input-container>
                                     <md-input-container style="margin-top: 30px;" ng-if="api_sources.current_auth_provider.dataSource === 'StrongLoop'"  class="md-block flex" style="margin: 0;">
                                         <label>Endpoint:</label>
-                                        <input ng-model="api_sources.current_auth_provider.route" style="color: rgba(0,0,0,0.87);">
+                                        <input ng-model="api_sources.current_auth_provider.route" style="color: rgba(0,0,0,0.87);" ng-keyup="( $event.keyCode == 13 && (api_sources.current_auth_provider.schema !== '' || (api_sources.current_auth_provider.schema!=='oAuth2' && api_sources.current_auth_provider.ap_oAuth_2.selected_type !== ''))) ? api_sources.saveProvider() : ''">
                                     </md-input-container>
                             </div>
                         </div>
@@ -175,11 +175,11 @@
                                 <div ng-if="api_sources.current_auth_provider.schema === 'basic' || api_sources.current_auth_provider.schema === 'digest'" style="margin-top: 20px;">
                                     <md-input-container class="md-block flex" style="margin: 0;">
                                         <label>Username:</label>
-                                        <input ng-model="api_sources.current_auth_provider.credentials.username">
+                                        <input ng-model="api_sources.current_auth_provider.credentials.username" ng-keyup="( $event.keyCode == 13 && (api_sources.current_auth_provider.schema !== '' || (api_sources.current_auth_provider.schema!=='oAuth2' && api_sources.current_auth_provider.ap_oAuth_2.selected_type !== ''))) ? api_sources.saveProvider() : ''">
                                     </md-input-container>
                                     <md-input-container class="md-block flex" style="margin: 0;">
                                         <label>Password:</label>
-                                        <input ng-model="api_sources.current_auth_provider.credentials.password">
+                                        <input ng-model="api_sources.current_auth_provider.credentials.password" ng-keyup="( $event.keyCode == 13 && (api_sources.current_auth_provider.schema !== '' || (api_sources.current_auth_provider.schema!=='oAuth2' && api_sources.current_auth_provider.ap_oAuth_2.selected_type !== ''))) ? api_sources.saveProvider() : ''">
                                     </md-input-container>
                                 </div>
                                 <div ng-if="api_sources.current_auth_provider.schema === 'oAuth1'" >
@@ -193,19 +193,19 @@
                                     </md-input-container>
                                     <md-input-container class="md-block flex" style="margin: 0;">
                                         <label>Consumer Key:</label>
-                                        <input ng-model="api_sources.current_auth_provider.credentials.consumer_key">
+                                        <input ng-model="api_sources.current_auth_provider.credentials.consumer_key" ng-keyup="( $event.keyCode == 13 && (api_sources.current_auth_provider.schema !== '' || (api_sources.current_auth_provider.schema!=='oAuth2' && api_sources.current_auth_provider.ap_oAuth_2.selected_type !== ''))) ? api_sources.saveProvider() : ''">
                                     </md-input-container>
                                     <md-input-container class="md-block flex" style="margin: 0;">
                                         <label>Consumer Secret:</label>
-                                        <input ng-model="api_sources.current_auth_provider.credentials.consumer_secret">
+                                        <input ng-model="api_sources.current_auth_provider.credentials.consumer_secret" ng-keyup="( $event.keyCode == 13 && (api_sources.current_auth_provider.schema !== '' || (api_sources.current_auth_provider.schema!=='oAuth2' && api_sources.current_auth_provider.ap_oAuth_2.selected_type !== ''))) ? api_sources.saveProvider() : ''">
                                     </md-input-container>
                                     <md-input-container class="md-block flex" style="margin: 0;">
                                         <label>Access Token:</label>
-                                        <input ng-model="api_sources.current_auth_provider.credentials.access_token">
+                                        <input ng-model="api_sources.current_auth_provider.credentials.access_token" ng-keyup="( $event.keyCode == 13 && (api_sources.current_auth_provider.schema !== '' || (api_sources.current_auth_provider.schema!=='oAuth2' && api_sources.current_auth_provider.ap_oAuth_2.selected_type !== ''))) ? api_sources.saveProvider() : ''">
                                     </md-input-container>
                                     <md-input-container class="md-block flex" style="margin: 0;">
                                         <label>Access Secret:</label>
-                                        <input ng-model="api_sources.current_auth_provider.credentials.access_secret">
+                                        <input ng-model="api_sources.current_auth_provider.credentials.access_secret" ng-keyup="( $event.keyCode == 13 && (api_sources.current_auth_provider.schema !== '' || (api_sources.current_auth_provider.schema!=='oAuth2' && api_sources.current_auth_provider.ap_oAuth_2.selected_type !== ''))) ? api_sources.saveProvider() : ''">
                                     </md-input-container>
                                 </div>
                                 <div ng-if="api_sources.current_auth_provider.schema === 'oAuth2'" >
@@ -220,7 +220,7 @@
                                     <div ng-if="api_sources.current_auth_provider.selected_type !==''">
                                         <md-input-container class="md-block flex" style="margin: 30px 0 0 0;">
                                             <label>Access Token:</label>
-                                            <input ng-model="api_sources.current_auth_provider.credentials.access_token">
+                                            <input ng-model="api_sources.current_auth_provider.credentials.access_token" ng-keyup="( $event.keyCode == 13 && (api_sources.current_auth_provider.schema !== '' || (api_sources.current_auth_provider.schema!=='oAuth2' && api_sources.current_auth_provider.ap_oAuth_2.selected_type !== ''))) ? api_sources.saveProvider() : ''">
                                         </md-input-container>
                                         <div>
                                             <h3 style="color: rgba(0,0,0,0.3)">or</h3>
@@ -228,31 +228,31 @@
                                         </div>
                                         <md-input-container class="md-block flex" style="margin: 0;">
                                             <label>Consumer Key:</label>
-                                            <input ng-model="api_sources.current_auth_provider.credentials.consumer_key">
+                                            <input ng-model="api_sources.current_auth_provider.credentials.consumer_key" ng-keyup="( $event.keyCode == 13 && (api_sources.current_auth_provider.schema !== '' || (api_sources.current_auth_provider.schema!=='oAuth2' && api_sources.current_auth_provider.ap_oAuth_2.selected_type !== ''))) ? api_sources.saveProvider() : ''">
                                         </md-input-container>
                                         <md-input-container class="md-block flex" style="margin: 0;">
                                             <label>Consumer Secret:</label>
-                                            <input ng-model="api_sources.current_auth_provider.credentials.consumer_secret">
+                                            <input ng-model="api_sources.current_auth_provider.credentials.consumer_secret" ng-keyup="( $event.keyCode == 13 && (api_sources.current_auth_provider.schema !== '' || (api_sources.current_auth_provider.schema!=='oAuth2' && api_sources.current_auth_provider.ap_oAuth_2.selected_type !== ''))) ? api_sources.saveProvider() : ''">
                                         </md-input-container>
                                         <md-input-container ng-if="api_sources.current_auth_provider.credentials.type === 'google'" class="md-block flex" style="margin: 0;">
                                             <label>Base Provider's URL:</label>
-                                            <input ng-model="api_sources.current_auth_provider.credentials.base_site">
+                                            <input ng-model="api_sources.current_auth_provider.credentials.base_site" ng-keyup="( $event.keyCode == 13 && (api_sources.current_auth_provider.schema !== '' || (api_sources.current_auth_provider.schema!=='oAuth2' && api_sources.current_auth_provider.ap_oAuth_2.selected_type !== ''))) ? api_sources.saveProvider() : ''">
                                         </md-input-container>
                                         <md-input-container class="md-block flex" style="margin: 0;">
                                             <label>Authorize Path:</label>
-                                            <input ng-model="api_sources.current_auth_provider.credentials.authorize_path">
+                                            <input ng-model="api_sources.current_auth_provider.credentials.authorize_path" ng-keyup="( $event.keyCode == 13 && (api_sources.current_auth_provider.schema !== '' || (api_sources.current_auth_provider.schema!=='oAuth2' && api_sources.current_auth_provider.ap_oAuth_2.selected_type !== ''))) ? api_sources.saveProvider() : ''">
                                         </md-input-container>
                                         <md-input-container class="md-block flex" style="margin: 0;">
                                             <label>Access Token Path:</label>
-                                            <input ng-model="api_sources.current_auth_provider.credentials.access_token_path">
+                                            <input ng-model="api_sources.current_auth_provider.credentials.access_token_path" ng-keyup="( $event.keyCode == 13 && (api_sources.current_auth_provider.schema !== '' || (api_sources.current_auth_provider.schema!=='oAuth2' && api_sources.current_auth_provider.ap_oAuth_2.selected_type !== ''))) ? api_sources.saveProvider() : ''">
                                         </md-input-container>
                                         <md-input-container class="md-block flex" style="margin: 0;">
                                             <label>Response Type:</label>
-                                            <input ng-model="api_sources.current_auth_provider.credentials.response_type">
+                                            <input ng-model="api_sources.current_auth_provider.credentials.response_type" ng-keyup="( $event.keyCode == 13 && (api_sources.current_auth_provider.schema !== '' || (api_sources.current_auth_provider.schema!=='oAuth2' && api_sources.current_auth_provider.ap_oAuth_2.selected_type !== ''))) ? api_sources.saveProvider() : ''">
                                         </md-input-container>
                                         <md-input-container class="md-block flex" style="margin: 0;">
                                             <label>Scope:</label>
-                                            <input ng-model="api_sources.current_auth_provider.credentials.scope">
+                                            <input ng-model="api_sources.current_auth_provider.credentials.scope" ng-keyup="( $event.keyCode == 13 && (api_sources.current_auth_provider.schema !== '' || (api_sources.current_auth_provider.schema!=='oAuth2' && api_sources.current_auth_provider.ap_oAuth_2.selected_type !== ''))) ? api_sources.saveProvider() : ''">
                                         </md-input-container>
                                     </div>
                                 </div>
