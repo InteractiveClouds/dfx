@@ -948,6 +948,22 @@ dfxStudioApi.factory('dfxDeployment', [ '$http', '$q', function($http, $q) {
         return deferred.promise;
     }
 
+    //api_build.getZip = function( data ){
+    //    var deferred = $q.defer();
+    //    var app_version = data.application + '_' + data.app_version + '.' + data.build_number;
+    //    var path_to_zip = '/' + data.tenant_id + '/' + data.platform + '/' + app_version + '/' + app_version + '.zip';
+    //    console.log(path_to_zip);
+    //    $http({
+    //        method: 'GET',
+    //        url: '/studio/get_zip_file?path=' + path_to_zip
+    //    }).then(function successCallback( res ) {
+    //        deferred.resolve( res );
+    //    },function failCallback( err ) {
+    //        deferred.reject( err );
+    //    });
+    //    return deferred.promise;
+    //}
+
     return api_build;
 }]);
 
