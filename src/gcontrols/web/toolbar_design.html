@@ -86,9 +86,8 @@
         </div>
     </div>
     <div class="panel-body-collapser" ng-if="attributes.toolbar.collapsible.value !== 'false'">
-        <md-icon ng-click="collapsePanelBody();" style="{{attributes.collapseStyle.style}}" 
-                 class="fa fa-chevron-right collapser-trigger {{attributes.collapseStyle.class}}"
-                 ng-class="attributes.toolbar.collapsed.designValue ? '' : 'expanded' ">
+        <md-icon id="toggling_{{component_id}}_content" ng-click="collapsePanelContent($event)" 
+            style="{{attributes.collapseStyle.style}}" class="fa fa-chevron-right collapser-trigger {{attributes.collapseStyle.class}}" ng-class="attributes.toolbar.collapsed.designValue ? '' : 'dfx-expanded' ">
         </md-icon>
     </div>
 </md-toolbar>
