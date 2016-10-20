@@ -41,7 +41,7 @@
                 </li>
 				<li class="col-md-12">
 					<span class="col-md-4">Icon position:</span>
-                    <md-radio-group class="dfx-ve-property-treeview-radiogroup row-radio" ng-model="attributes.icon.position" ng-change="overrideAttribute('icon')" style="text-transform: capitalize">
+                    <md-radio-group class="dfx-ve-property-treeview-radiogroup row-radio" ng-model="attributes.icon.position" ng-change="overrideAttribute('icon')" ng-focus="cacheAttributeOldValue({'name':'icon.position'})" ng-blur="cacheAttributeNewValue('icon.position')" style="text-transform: capitalize">
                         <md-radio-button class="md-primary" value="left" aria-label="Icon position">Left</md-radio-button>
                         <md-radio-button class="md-primary" value="center" aria-label="Icon position">Center</md-radio-button>
                         <md-radio-button class="md-primary" value="right" aria-label="Icon position">Right</md-radio-button>
@@ -90,7 +90,7 @@
                 <li class="col-md-12">
                     <span class="col-md-4">Icon:</span>
                     <div class="col-md-8" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.waiting.icon.value" ng-change="overrideAttribute('waiting.icon');ifShowIconTypes(attributes.waiting.icon.value, 'waiting')" style="margin-left:-15px;"/>
+                        <input class="col-md-12" type="text" ng-model="attributes.waiting.icon.value" ng-change="overrideAttribute('waiting.icon');ifShowIconTypes(attributes.waiting.icon.value, 'waiting')" ng-focus="cacheAttributeOldValue({'name':'waiting.icon'})" ng-blur="cacheAttributeNewValue('waiting.icon')" style="margin-left:-15px;"/>
                         <md-icon ng-click="showFontIcons($event, attributes.waiting.icon)" dfx-ve-picker-icon class="dfx-ve-picker-icon fa fa-ellipsis-h"></md-icon>
                     </div>
                 </li>
@@ -106,14 +106,14 @@
                 <li class="col-md-12">
                     <span class="col-md-4">Icon Style:</span>
                     <div class="col-md-8" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.waiting.icon.style" ng-change="overrideAttribute('waiting.icon.style')" style="margin-left:-15px;"/>
+                        <input class="col-md-12" type="text" ng-model="attributes.waiting.icon.style" ng-change="overrideAttribute('waiting.icon.style')" ng-focus="cacheAttributeOldValue({'name':'waiting.icon.style'})" ng-blur="cacheAttributeNewValue('waiting.icon.style')" style="margin-left:-15px;"/>
                         <dfx-ve-css-style></dfx-ve-css-style>
                     </div>
                 </li>
                 <li class="col-md-12">
                     <span class="col-md-4">Icon Class:</span>
                     <div class="col-md-8" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.waiting.icon.class" ng-change="overrideAttribute('waiting.icon.class')" style="margin-left:-15px;"/>
+                        <input class="col-md-12" type="text" ng-model="attributes.waiting.icon.class" ng-change="overrideAttribute('waiting.icon.class')" ng-focus="cacheAttributeOldValue({'name':'waiting.icon.class'})" ng-blur="cacheAttributeNewValue('waiting.icon.class')" style="margin-left:-15px;"/>
                         <dfx-ve-menu-expression></dfx-ve-menu-expression>
                     </div>
                 </li>

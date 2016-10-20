@@ -1843,6 +1843,8 @@ dfxViewEditorApp.directive('dfxVeCssStyle', ['$timeout', '$compile', function($t
                 });
             }
             scope.saveStyles = function() {
+                scope.$parent.cacheAttributeOldValue({ 'value': scope.targetElement.val() });// needed for UNDO functionality
+
                 var savedStyles = [];
                 for (var i = 0; i < scope.inputStyle.length; i++) {
                     if (scope.inputStyle[i].value !== '') {
@@ -1853,6 +1855,7 @@ dfxViewEditorApp.directive('dfxVeCssStyle', ['$timeout', '$compile', function($t
                 savedStyles.push(scope.otherStyles);
                 scope.targetElement.val(savedStyles.join(";"));
                 angular.element(scope.targetElement).data('$ngModelController').$setViewValue(scope.targetElement.val());
+                scope.$parent.cacheAttributeNewValue(scope.targetElement.attr('ng-model'));// needed for UNDO functionality
                 scope.closeCssDialog();
             }
             scope.closeCssDialog = function(){
@@ -2128,6 +2131,16 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
             scope.dialogGcType = '';
             scope.actionsMode = {"value": false};
             scope.showMenuEditor = function(ev) {
+                // needed for UNDO functionality
+                scope.$parent.cacheAttributeOldValue({
+                    'value': {
+                        menuItems: scope.attributes.menuItems.value,
+                        menuItemNames: scope.attributes.menuItemNames.value,
+                        menuItemsType: scope.attributes.menuItemsType.value
+                    },
+                    'group': true
+                });
+
                 scope.menu = {};
                 if(scope.attributes.layoutType.value === 'none' ){
                     scope.attributes.menuItems.status = "overridden";
@@ -2838,7 +2851,19 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                                 }, 250);
                             });
                         }
-                        scope.closeDialog = function(){$mdDialog.hide();}
+                        scope.closeDialog = function(){
+                            // needed for UNDO functionality
+                            scope.$parent.cacheAttributeNewValue({
+                                'value': {
+                                    menuItems: scope.menuItems.value,
+                                    menuItemNames: scope.menuItemNames.value,
+                                    menuItemsType: scope.menuItemsType.value
+                                },
+                                'group': true
+                            });
+
+                            $mdDialog.hide();
+                        }
                         scope.closeSamples = function() {
                             $('.dfx-ve-content-dialog').removeClass('active');
                             angular.element($('.dfx-ve-dialog')).remove();
@@ -4789,6 +4814,13 @@ var DfxViewEditorUndo = (function() {
             schema[last_path_segment] = value;
         }
     };
+    var removeAttributesPrefixFromPath = function(path) {
+        if (path && path.indexOf('attributes') == 0) {
+            return path.substring(path.indexOf('.') + 1);
+        } else {
+            return path;
+        }
+    };
 
     api.cacheAttributeOldValue = function (options, scope) {
         var attribute_name = options.name,
@@ -4807,8 +4839,12 @@ var DfxViewEditorUndo = (function() {
         }
     };
     api.cacheAttributeNewValue = function (attribute_name, scope) {
-        //if (! scope.gc_selected.attributes[attribute_name]) { return; }
+        if (attribute_name.group) {
+            
+            return;
+        }
 
+        attribute_name = removeAttributesPrefixFromPath(attribute_name);
         var attribute_new_value = getAttibutesChainValue(attribute_name, scope.gc_selected.attributes);
         var attribute_old_value = scope.hasOwnProperty('dfx_attribute_old_value') ?  scope.dfx_attribute_old_value : '';
 
