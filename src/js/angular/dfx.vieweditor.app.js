@@ -1302,49 +1302,18 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
                 }
             }
         }
-
         setAttibutesChainStatus(attribute_name, $scope.gc_selected.attributes);
     };
 
     // Functions implementing UNDO in view editor - START
     $scope.cacheAttributeOldValue = function (options) {
-        var attribute_name = options.name,
-            attribute_value = options.value,
-            event = options.event;
-
-        //called from picker using $.focus() by clicking Save button
-        //if (event && event.relatedTarget && event.relatedTarget.textContent == 'Save') { return; }
-
-        if (attribute_value) {
-            $scope.attribute_temp_old_value = {value: attribute_value};
-        } else {
-            $scope.attribute_temp_old_value = angular.copy($scope.gc_selected.attributes[attribute_name]);
-        }
+        DfxViewEditorUndo.cacheAttributeOldValue(options, $scope);
     };
-
     $scope.cacheAttributeNewValue = function (attribute_name) {
-        if (! $scope.gc_selected.attributes[attribute_name]) { return; }
-
-        var attribute_new_value = $scope.gc_selected.attributes[attribute_name].value;
-        var attribute_old_value = $scope.attribute_temp_old_value ?  $scope.attribute_temp_old_value.value : '';
-
-        if (attribute_new_value !== attribute_old_value) {
-            $scope.view_editor_actions_stack = $scope.view_editor_actions_stack || [];
-            $scope.view_editor_actions_stack.unshift({
-                component_id: $scope.gc_selected.id,
-                attribute_name: attribute_name,
-                attribute_old_value: angular.copy(attribute_old_value)
-            });
-        }
+        DfxViewEditorUndo.cacheAttributeNewValue(attribute_name, $scope);
     };
-
     $scope.viewEditorUndo = function(event) {
-        $(event.srcElement).animateCss('pulse');
-        if ($scope.view_editor_actions_stack && $scope.view_editor_actions_stack.length > 0) {
-            var action_for_undo = $scope.view_editor_actions_stack.shift();
-            var gc_for_undo = $scope.gc_instances[ action_for_undo.component_id ];
-            gc_for_undo.attributes[ action_for_undo.attribute_name ].value = action_for_undo.attribute_old_value;
-        }
+        DfxViewEditorUndo.viewEditorUndo(event, $scope);
     };
     // Functions implementing UNDO in view editor - END
 
@@ -4772,3 +4741,91 @@ var helpDialogScript = function (options) {
         $('#dfx_visual_editor_help_close').click();
     }
 };
+
+var DfxViewEditorUndo = (function() {
+    var api = {};
+
+    var getAttibutesChainValue = function(path, obj) {
+        var schema = obj,
+            pList = path.split('.');
+
+        for (var i = 0; i < pList.length; i++) {
+            var elem = pList[i];
+            if (!schema[elem] && schema[elem] !== '' && schema[elem] !== false) {
+                schema[elem] = {};
+            }
+            schema = schema[elem];
+        }
+        if (schema !== null && typeof schema === 'object' && schema.hasOwnProperty('value')) {
+            return schema.value;
+        } else {
+            return schema;
+        }
+    };
+    var setAttibutesChainValue = function(path, obj, value) {
+        var schema = obj,
+            pList = path.split('.'),
+            last_path_segment = '';
+
+        if (pList.length > 1) {
+            for (var i = 0; i < pList.length-1; i++) {
+                var elem = pList[i];
+                if (!schema[elem] && schema[elem] !== '' && schema[elem] !== false) {
+                    schema[elem] = {};
+                }
+                schema = schema[elem];
+            }
+            last_path_segment = pList[pList.length-1];
+        } else {
+            //schema = schema[path];
+            last_path_segment = path;
+        }
+        if (typeof schema[last_path_segment] === 'object' && schema[last_path_segment].hasOwnProperty('value')) {
+            schema[last_path_segment].value = value;
+        } else {
+            schema[last_path_segment] = value;
+        }
+    };
+
+    api.cacheAttributeOldValue = function (options, scope) {
+        var attribute_name = options.name,
+            attribute_value = options.value,
+            event = options.event;
+
+        //called from picker using $.focus() by clicking Save button
+        //if (event && event.relatedTarget && event.relatedTarget.textContent == 'Save') { return; }
+        if (attribute_value) {
+            scope.attribute_temp_old_value = {value: attribute_value};
+        } else {
+            scope.attribute_temp_old_value = angular.copy( getAttibutesChainValue(attribute_name, scope.gc_selected.attributes) );
+        }
+    };
+    api.cacheAttributeNewValue = function (attribute_name, scope) {
+        //if (! scope.gc_selected.attributes[attribute_name]) { return; }
+
+        var attribute_new_value = getAttibutesChainValue(attribute_name, scope.gc_selected.attributes);
+        var attribute_old_value = scope.hasOwnProperty('attribute_temp_old_value') ?  scope.attribute_temp_old_value : '';
+
+        if (attribute_new_value !== attribute_old_value) {
+            scope.view_editor_actions_stack = scope.view_editor_actions_stack || [];
+            scope.view_editor_actions_stack.unshift({
+                component_id: scope.gc_selected.id,
+                attribute_name: attribute_name,
+                attribute_old_value: angular.copy(attribute_old_value)
+            });
+        }
+    };
+    api.viewEditorUndo = function(event, scope) {
+        $(event.srcElement).animateCss('pulse');
+
+        if (scope.view_editor_actions_stack && scope.view_editor_actions_stack.length > 0) {
+            var action_for_undo = scope.view_editor_actions_stack.shift();
+            var gc_for_undo = scope.gc_instances[ action_for_undo.component_id ];
+            //gc_for_undo.attributes[ action_for_undo.attribute_name ].value = action_for_undo.attribute_old_value;
+
+            setAttibutesChainValue(action_for_undo.attribute_name, gc_for_undo.attributes, action_for_undo.attribute_old_value);
+        }
+    };
+
+    return api;
+}());

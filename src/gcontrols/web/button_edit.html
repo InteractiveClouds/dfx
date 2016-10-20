@@ -76,14 +76,14 @@
                 <li class="col-md-12" dfx-gc-property="waiting">
                     <span class="col-md-4">Binding:</span>
                     <div class="col-md-8" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.waiting.value" ng-change="overrideAttribute('waiting')" style="margin-left:-15px;"/>
+                        <input class="col-md-12" type="text" ng-model="attributes.waiting.value" ng-change="overrideAttribute('waiting')" ng-focus="cacheAttributeOldValue({'name':'waiting','event':$event})" ng-blur="cacheAttributeNewValue('waiting')" style="margin-left:-15px;"/>
                         <dfx-ve-expression-editor></dfx-ve-expression-editor>
                     </div>
                 </li>
                 <li class="col-md-12">
                     <span class="col-md-4">Auto-disabled:</span>
                     <div class="col-md-8" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.waiting.autoDisabled" ng-change="overrideAttribute('waiting')" style="margin-left:-15px;"/>
+                        <input class="col-md-12" type="text" ng-model="attributes.waiting.autoDisabled" ng-change="overrideAttribute('waiting')" ng-focus="cacheAttributeOldValue({'name':'waiting.autoDisabled','event':$event})" ng-blur="cacheAttributeNewValue('waiting.autoDisabled')" style="margin-left:-15px;"/>
                         <dfx-ve-expression-editor></dfx-ve-expression-editor>
                     </div>
                 </li>
