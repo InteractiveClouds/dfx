@@ -320,10 +320,17 @@ dfxGCC.directive('dfxGccWebCarousel', ['$http', '$sce', '$mdDialog', '$mdToast',
                 if (!scope.attributes.hasOwnProperty('optionsType')){scope.attributes.optionsType = {"value": "static"};}
                 scope.attributes.optionsType.status = 'overridden';
                 scope.attributes.optionItemNames.status = 'overridden';
-
+                var source_name = scope.attributes.optionItemNames.value.source,
+                    src_name = scope.attributes.optionItemNames.value.src,
+                    title_name = scope.attributes.optionItemNames.value.title,
+                    description_name = scope.attributes.optionItemNames.value.description,
+                    onclick_name = scope.attributes.optionItemNames.value.onclick;
                 scope.setCarouselDataSource = function() {
                     scope.carouselDataName = { "value": "" };
                     scope.carouselDataName.value = scope.attributes.optionsType.value === 'dynamic' ? scope.attributes.optionItemNames.value.source : 'attributes.static.value';
+                }
+                scope.compileSlide = function( slide ){
+                    $compile(slide)(scope); 
                 }
                 scope.compileSlides = function(){
                     $timeout(function(){
@@ -331,29 +338,50 @@ dfxGCC.directive('dfxGccWebCarousel', ['$http', '$sce', '$mdDialog', '$mdToast',
                         if ( scope.attributes.optionsType.value === 'dynamic' ) {
                             var slidesCount = scope.$parent_scope[scope.attributes.optionItemNames.value.source].length;
                             for ( var i = 0; i < slidesCount; i++ ) {
-                                $(screenSlides).eq(i+1).find('img').attr('ng-src', '{{\''+scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.src]+'\'}}');
-                                $(screenSlides).eq(i+1).find('.dfx-carousel-item-title').html(scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.title]);
-                                $(screenSlides).eq(i+1).find('.dfx-carousel-item-description').html(scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.description]);
-                                $(screenSlides).eq(i+1).find('img').attr('ng-click', scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.onclick]);
+                                $(screenSlides).eq(i+1).find('img').attr('ng-src', '{{\''+scope.$parent_scope[source_name][i][src_name]+'\'}}');                                    
+                                $(screenSlides).eq(i+1).find('.dfx-carousel-item-title').html(scope.$parent_scope[source_name][i][title_name]);
+                                $(screenSlides).eq(i+1).find('.dfx-carousel-item-description').html(scope.$parent_scope[source_name][i][description_name]);
+                                $(screenSlides).eq(i+1).attr('ng-click', scope.$parent_scope[source_name][i][onclick_name]);
+                                if(i!==0 || i!==slidesCount-1){
+                                    scope.compileSlide($(screenSlides).eq(i+1));
+                                }
                                 if(i===0){
-                                    $(screenSlides).eq(slidesCount+1).find('img').attr('ng-src', '{{\''+scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.src]+'\'}}');
-                                    $(screenSlides).eq(slidesCount+1).find('.dfx-carousel-item-title').html(scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.title]);
-                                    $(screenSlides).eq(slidesCount+1).find('.dfx-carousel-item-description').html(scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.description]);
+                                    $(screenSlides).eq(slidesCount+1).find('img').attr('ng-src', '{{\''+scope.$parent_scope[source_name][i][src_name]+'\'}}');
+                                    $(screenSlides).eq(slidesCount+1).find('.dfx-carousel-item-title').html(scope.$parent_scope[source_name][i][title_name]);
+                                    $(screenSlides).eq(slidesCount+1).find('.dfx-carousel-item-description').html(scope.$parent_scope[source_name][i][description_name]);
+                                    scope.compileSlide($(screenSlides).eq(slidesCount+1));
                                 }
                                 if(i===slidesCount-1){
-                                    $(screenSlides).eq(0).find('img').attr('ng-src', '{{\''+scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.src]+'\'}}');
-                                    $(screenSlides).eq(0).find('.dfx-carousel-item-title').html(scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.title]);
-                                    $(screenSlides).eq(0).find('.dfx-carousel-item-description').html(scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.description]);
+                                    $(screenSlides).eq(0).find('img').attr('ng-src', '{{\''+scope.$parent_scope[source_name][i][src_name]+'\'}}');
+                                    $(screenSlides).eq(0).find('.dfx-carousel-item-title').html(scope.$parent_scope[source_name][i][title_name]);
+                                    $(screenSlides).eq(0).find('.dfx-carousel-item-description').html(scope.$parent_scope[source_name][i][description_name]);
+                                    scope.compileSlide($(screenSlides).eq(0));
                                 }
                             }
                         } else {
-                            for ( var i = 0; i < scope.attributes.static.value.length; i++ ) {
-                                $(screenSlides).eq(i+1).find('img').attr('ng-click', '$eval(attributes.static.value['+[i]+'].onclick)');
+                            var slidesCount = scope.attributes.static.value.length;
+                            for ( var i = 0; i < slidesCount; i++ ) {
+                                $(screenSlides).eq(i+1).find('img').attr('ng-src', '{{'+scope.attributes.static.value[i].src+'}}');
+                                $(screenSlides).eq(i+1).attr('ng-click', scope.attributes.static.value[i].onclick);
+                                $(screenSlides).eq(i+1).find('.dfx-carousel-item-title').html(scope.attributes.static.value[i].title);
+                                $(screenSlides).eq(i+1).find('.dfx-carousel-item-description').html(scope.attributes.static.value[i].description);
+                                if(i!==0 || i!==slidesCount-1){
+                                    scope.compileSlide($(screenSlides).eq(i+1));
+                                }
+                                if(i===0){
+                                    $(screenSlides).eq(slidesCount+1).find('img').attr('ng-src', '{{'+scope.attributes.static.value[i].src+'}}');
+                                    $(screenSlides).eq(slidesCount+1).find('.dfx-carousel-item-title').html(scope.attributes.static.value[i].title);
+                                    $(screenSlides).eq(slidesCount+1).find('.dfx-carousel-item-description').html(scope.attributes.static.value[i].description);
+                                    scope.compileSlide($(screenSlides).eq(slidesCount+1));
+                                }
+                                if(i===slidesCount-1){
+                                    $(screenSlides).eq(0).find('img').attr('ng-src', '{{'+scope.attributes.static.value[i].src+'}}');
+                                    $(screenSlides).eq(0).find('.dfx-carousel-item-title').html(scope.attributes.static.value[i].title);
+                                    $(screenSlides).eq(0).find('.dfx-carousel-item-description').html(scope.attributes.static.value[i].description);
+                                    scope.compileSlide($(screenSlides).eq(0));
+                                }
                             }
                         }
-                        $compile($("#" + component.id + "_dfx_gc_web_carousel .dfx-carousel-item-image-container").contents())(scope);
-                        $compile($("#" + component.id + "_dfx_gc_web_carousel .dfx-carousel-item-title").contents())(scope);
-                        $compile($("#" + component.id + "_dfx_gc_web_carousel .dfx-carousel-item-description").contents())(scope);
                     }, 0);
                 }
                 scope.simpleCarousel = function() {
@@ -365,11 +393,13 @@ dfxGCC.directive('dfxGccWebCarousel', ['$http', '$sce', '$mdDialog', '$mdToast',
                             .replace('<<carouselMaxWidth>>', scope.attributes.maxWidth.value)
                             .replace('<<carouselMaxHeight>>', scope.attributes.maxHeight.value);
                     $timeout(function(){
-                        $("#" + component.id + "_dfx_gc_web_carousel").empty().html(parsedSimpleCarousel);
-                        $timeout(function(){
+                        $("#" + component.id + "_dfx_gc_web_carousel").empty().html(parsedSimpleCarousel).promise().done(function(){
                             $compile($("#" + component.id + "_dfx_gc_web_carousel").contents())(scope);
-                            scope.compileSlides();
-                        }, 0);
+                        }).done(function(){
+                            $timeout(function(){
+                                scope.compileSlides();
+                            }, 0);
+                        });
                     }, 0);
                 }
                 scope.autoCarousel = function() {
@@ -383,42 +413,24 @@ dfxGCC.directive('dfxGccWebCarousel', ['$http', '$sce', '$mdDialog', '$mdToast',
                             .replace('<<carouselMaxWidth>>', scope.attributes.maxWidth.value)
                             .replace('<<carouselMaxHeight>>', scope.attributes.maxHeight.value);
                     $timeout(function(){
-                        $("#" + component.id + "_dfx_gc_web_carousel").empty().html(parsedAutoCarousel);
-                        $timeout(function(){
+                        $("#" + component.id + "_dfx_gc_web_carousel").empty().html(parsedAutoCarousel).promise().done(function(){
                             $compile($("#" + component.id + "_dfx_gc_web_carousel").contents())(scope);
-                            scope.compileSlides();
-                        }, 0);
+                        }).done(function(){
+                            $timeout(function(){
+                                scope.compileSlides();
+                            }, 0);
+                        });
                     }, 0);
-                }
-                scope.parseSlideSrc = function() {
-                    // for ( var i = 0; i < scope.attributes.static.value.length; i++ ) {
-                    //     var testSrc = scope.attributes.static.value[i].src;
-                    //     if (testSrc.indexOf("'") == -1) {
-                    //         scope.attributes.static.value[i].parsedSrc = scope.$gcscope[scope.attributes.static.value[i].src];
-                    //     } else if (testSrc.indexOf("'") == 0 && testSrc.lastIndexOf("'") == (testSrc.length - 1) && testSrc.length > 2) {
-                    //         var srcWithoutQuotes = testSrc.replace(/'/g, '');
-                    //         scope.attributes.static.value[i].parsedSrc = srcWithoutQuotes;
-                    //     } else {
-                    //         scope.attributes.static.value[i].parsedSrc = scope.attributes.static.value[i].src;
-                    //     }
-                    // }
                 }
                 scope.rebuildCarousel = function() {
-                    if ( scope.attributes.optionsType.value === 'static' && scope.attributes.static.value.length > 0 ) {
-                        scope.parseSlideSrc();
-                    }
-                    $timeout(function(){
-                        scope.attributes.autoSlide.value === 'true' ? scope.autoCarousel() : scope.simpleCarousel();
-                    }, 0);
+                    scope.attributes.autoSlide.value === 'true' ? scope.autoCarousel() : scope.simpleCarousel();
                 }
-
                 if ( scope.attributes.optionsType.value === 'dynamic' ) {
                     scope.$watch('$parent_scope[attributes.optionItemNames.value.source]', function(newValue, oldValue) {
                         if ( newValue ) {
                             scope.rebuildCarousel();
                         }
                     }, true);
-                    // basectrl.bindScopeVariable(scope, component.attributes.dynamic.value);
                 } else {
                     scope.$watch('attributes.static.value', function(newValue, oldValue) {
                         if ( newValue ) {
