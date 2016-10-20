@@ -3246,10 +3246,16 @@ dfxGCC.directive('dfxGccWebList', ['$timeout', '$compile', function($timeout, $c
                 scope.itemSelected = function(it){
                     return scope.selected_items.indexOf(it) > -1;
                 }
+                Array.prototype.max_value = function() {
+                    return Math.max.apply(null, this);
+                };
+                Array.prototype.min_value = function() {
+                    return Math.min.apply(null, this);
+                };
                 scope.toggleItem = function(e, it, curr_ind){
                     var it_is = scope.selected_items.indexOf(it),
-                        min_ind = Math.min(...scope.selected_indexes),
-                        max_ind = Math.max(...scope.selected_indexes);
+                        min_ind = scope.selected_indexes.min_value(),
+                        max_ind = scope.selected_indexes.max_value();
                     if(e.shiftKey && scope.selected_items.length>0) {
                         scope.selected_items = [];
                         scope.selected_indexes = [];
