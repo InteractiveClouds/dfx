@@ -3620,6 +3620,7 @@ dfxStudioApp.controller("dfx_studio_deployment_controller", [ '$scope', '$mdDial
             var max = 0;
             for(var i = 0; i < $scope.builds[platform].length; i++){
                 $scope.builds[platform][i].logs = [];
+                $scope.builds[platform][i].tenant_id = $scope.$parent.$parent.tenant_id;
                 if(parseInt($scope.builds[platform][i].build_number) > max){
                     max = parseInt($scope.builds[platform][i].build_number);
                 }
@@ -3670,6 +3671,10 @@ dfxStudioApp.controller("dfx_studio_deployment_controller", [ '$scope', '$mdDial
             $scope.doCreateNew(build, platform);
         });
     };
+
+    $scope.downloadZip = function( ) {
+        dfxMessaging.showMessage("Zip file was successfully copied");
+    }
 
     $scope.doCreateNew = function(new_build, platform){
         var isBuildSaved = false;
