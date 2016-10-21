@@ -42,6 +42,7 @@
                                 <span ng-if="build.waitingMessage"><md-icon class="fa fa-spinner fa-pulse" style="font-size: 24px; color:#300000;"></md-icon></span>
                                 <span><md-button ng-click="confirmDelete($event, build, 'web', $index)" style="margin: 0; padding: 0; min-width: 20px"><md-tooltip>Delete this build</md-tooltip><md-icon class="fa fa-lg fa-trash-o" style="font-size:20px; color:#F50057;"></md-icon></md-button></span>
                                 <span ng-if="build.deployed === true"><a target="_blank" ng-href={{build.link}} style="margin: 0; padding: 0; min-width: 20px"><md-tooltip>Run the application</md-tooltip><md-icon class="fa fa-lg fa-play" style="font-size:20px; color:#158194;"></md-icon></a></span>
+                                <span ng-if="build.status==='success'"><a href="/studio/build/download?path=/{{build.tenant_id + '/' + build.platform + '/' + build.application + '_' + build.app_version + '.' + build.build_number + '/' + build.application + '_' + build.app_version + '.' + build.build_number + '.zip'}}" ng-click="getBuildFile()" style="margin: 0; padding: 0; min-width: 23px"><md-tooltip>Download a zip</md-tooltip><md-icon class="fa fa-download" style="font-size:20px; color:#158194;"></md-icon></a></span>
                             </td>
                         </tr>
                         <tr ng-show="build.displayLog === true">
@@ -102,6 +103,7 @@
                                 <span ng-if="build.waitingMessage"><md-icon class="fa fa-spinner fa-pulse" style="font-size: 24px; color:#300000;"></md-icon></span>
                                 <span><md-button ng-click="confirmDelete($event, build, 'mobile', $index)" style="margin: 0; padding: 0; min-width: 20px"><md-tooltip>Delete this build</md-tooltip><md-icon class="fa fa-lg fa-trash-o" style="font-size:20px; color:#F50057;"></md-icon></md-button></span>
                                 <span ng-if="build.deployed === true"><a ng-click="getDeployedQRCode(build)" style="margin: 0; padding: 0; min-width: 20px"><md-tooltip>Run the application</md-tooltip><md-icon class="fa fa-lg fa-qrcode" style="font-size:20px; color:#158194;"></md-icon></a></span>
+                                <span ng-if="build.status==='success'"><a href="/studio/build/download?path=/{{build.tenant_id + '/' + build.platform + '/' + build.application + '_' + build.app_version + '.' + build.build_number + '/' + build.application + '_' + build.app_version + '.' + build.build_number + '.zip'}}" ng-click="getBuildFile()" style="margin: 0; padding: 0; min-width: 23px"><md-tooltip>Download a zip</md-tooltip><md-icon class="fa fa-download" style="font-size:20px; color:#158194;"></md-icon></a></span>
                             </td>
                         </tr>
                         <tr ng-show="build.displayLog === true">
