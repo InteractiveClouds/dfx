@@ -1,7 +1,7 @@
 <div class="layout-row layout-align-center-center" flex="100">
     <div style="height:100%;{{attributes.style.value}}" ng-class="[attributes.classes.value, attributes.whiteframe.value]" flex="100" layout="column">
         <dfx-gc-toolbar-design></dfx-gc-toolbar-design>
-        <md-content flex="100" style="{{attributes.bodyStyle.value}}" ng-hide="attributes.toolbar.collapsed.designValue" layout="column">
+        <md-content id="{{component_id}}_content" flex="100" style="{{attributes.bodyStyle.value}}" ng-hide="attributes.toolbar.collapsed.designValue" layout="column">
             <md-tabs md-no-ink-bar="{{attributes.inkBar.value==='disabled' ? 'true': 'false'}}" md-center-tabs="{{attributes.centerSteps.value===true ? 'true': 'false'}}"
                      md-dynamic-height md-border-bottom md-selected="attributes.stepIndex.value" md-align-tabs="{{attributes.stepAlign.value}}" md-stretch-tabs="{{attributes.stretching.value}}"
                      flex="100" layout="column" dfx-gc-wizard-design>

@@ -72,8 +72,12 @@
             </div>
         </div>
         <div class="panel-body-collapser" ng-show="$eval(attributes.toolbar.collapsible.value)">
-            <md-icon ng-if="attributes.repeat_title.value" id="toggling_{{component_id}}_content_{{$index}}" ng-click="collapsePanelContent($event, $index)" style="{{attributes.collapseStyle.style}}" class="fa fa-chevron-right collapser-trigger {{attributes.collapseStyle.class}}" ng-class="[$eval(attributes.toolbar.collapsed.value) ? '' : 'dfx-expanded', (attributes.collapseStyle.dynamicClass !=='' ? $eval(attributes.collapseStyle.dynamicClass) : '')]"></md-icon>
-            <md-icon ng-if="!attributes.repeat_title.value" id="toggling_{{component_id}}_content" ng-click="collapsePanelContent($event, $index)" style="{{attributes.collapseStyle.style}}" class="fa fa-chevron-right collapser-trigger {{attributes.collapseStyle.class}}" ng-class="[$eval(attributes.toolbar.collapsed.value) ? '' : 'dfx-expanded', (attributes.collapseStyle.dynamicClass !=='' ? $eval(attributes.collapseStyle.dynamicClass) : '')]"></md-icon>
+            <div ng-if="attributes.repeat_title.value">
+                <md-icon id="toggling_{{component_id}}_content_{{$index}}" ng-click="collapsePanelContent($event, $index)" style="{{attributes.collapseStyle.style}}" class="fa fa-chevron-right collapser-trigger {{attributes.collapseStyle.class}} {{$eval(attributes.toolbar.collapsed.value) ? '' : 'dfx-expanded'}}" ng-class="[(attributes.collapseStyle.dynamicClass !=='' ? $eval(attributes.collapseStyle.dynamicClass) : '')]"></md-icon>
+            </div>
+            <div ng-if="!attributes.repeat_title.value">
+                <md-icon id="toggling_{{component_id}}_content" ng-click="collapsePanelContent($event, $index)" style="{{attributes.collapseStyle.style}}" class="fa fa-chevron-right collapser-trigger {{attributes.collapseStyle.class}} {{$eval(attributes.toolbar.collapsed.value) ? '' : 'dfx-expanded'}}" ng-class="[(attributes.collapseStyle.dynamicClass !=='' ? $eval(attributes.collapseStyle.dynamicClass) : '')]"></md-icon>
+            </div>
         </div>
     </md-toolbar>
 </div>

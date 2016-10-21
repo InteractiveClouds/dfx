@@ -320,10 +320,17 @@ dfxGCC.directive('dfxGccWebCarousel', ['$http', '$sce', '$mdDialog', '$mdToast',
                 if (!scope.attributes.hasOwnProperty('optionsType')){scope.attributes.optionsType = {"value": "static"};}
                 scope.attributes.optionsType.status = 'overridden';
                 scope.attributes.optionItemNames.status = 'overridden';
-
+                var source_name = scope.attributes.optionItemNames.value.source,
+                    src_name = scope.attributes.optionItemNames.value.src,
+                    title_name = scope.attributes.optionItemNames.value.title,
+                    description_name = scope.attributes.optionItemNames.value.description,
+                    onclick_name = scope.attributes.optionItemNames.value.onclick;
                 scope.setCarouselDataSource = function() {
                     scope.carouselDataName = { "value": "" };
                     scope.carouselDataName.value = scope.attributes.optionsType.value === 'dynamic' ? scope.attributes.optionItemNames.value.source : 'attributes.static.value';
+                }
+                scope.compileSlide = function( slide ){
+                    $compile(slide)(scope); 
                 }
                 scope.compileSlides = function(){
                     $timeout(function(){
@@ -331,29 +338,50 @@ dfxGCC.directive('dfxGccWebCarousel', ['$http', '$sce', '$mdDialog', '$mdToast',
                         if ( scope.attributes.optionsType.value === 'dynamic' ) {
                             var slidesCount = scope.$parent_scope[scope.attributes.optionItemNames.value.source].length;
                             for ( var i = 0; i < slidesCount; i++ ) {
-                                $(screenSlides).eq(i+1).find('img').attr('ng-src', '{{\''+scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.src]+'\'}}');
-                                $(screenSlides).eq(i+1).find('.dfx-carousel-item-title').html(scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.title]);
-                                $(screenSlides).eq(i+1).find('.dfx-carousel-item-description').html(scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.description]);
-                                $(screenSlides).eq(i+1).find('img').attr('ng-click', scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.onclick]);
+                                $(screenSlides).eq(i+1).find('img').attr('ng-src', '{{\''+scope.$parent_scope[source_name][i][src_name]+'\'}}');                                    
+                                $(screenSlides).eq(i+1).find('.dfx-carousel-item-title').html(scope.$parent_scope[source_name][i][title_name]);
+                                $(screenSlides).eq(i+1).find('.dfx-carousel-item-description').html(scope.$parent_scope[source_name][i][description_name]);
+                                $(screenSlides).eq(i+1).attr('ng-click', scope.$parent_scope[source_name][i][onclick_name]);
+                                if(i!==0 || i!==slidesCount-1){
+                                    scope.compileSlide($(screenSlides).eq(i+1));
+                                }
                                 if(i===0){
-                                    $(screenSlides).eq(slidesCount+1).find('img').attr('ng-src', '{{\''+scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.src]+'\'}}');
-                                    $(screenSlides).eq(slidesCount+1).find('.dfx-carousel-item-title').html(scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.title]);
-                                    $(screenSlides).eq(slidesCount+1).find('.dfx-carousel-item-description').html(scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.description]);
+                                    $(screenSlides).eq(slidesCount+1).find('img').attr('ng-src', '{{\''+scope.$parent_scope[source_name][i][src_name]+'\'}}');
+                                    $(screenSlides).eq(slidesCount+1).find('.dfx-carousel-item-title').html(scope.$parent_scope[source_name][i][title_name]);
+                                    $(screenSlides).eq(slidesCount+1).find('.dfx-carousel-item-description').html(scope.$parent_scope[source_name][i][description_name]);
+                                    scope.compileSlide($(screenSlides).eq(slidesCount+1));
                                 }
                                 if(i===slidesCount-1){
-                                    $(screenSlides).eq(0).find('img').attr('ng-src', '{{\''+scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.src]+'\'}}');
-                                    $(screenSlides).eq(0).find('.dfx-carousel-item-title').html(scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.title]);
-                                    $(screenSlides).eq(0).find('.dfx-carousel-item-description').html(scope.$parent_scope[scope.attributes.optionItemNames.value.source][i][scope.attributes.optionItemNames.value.description]);
+                                    $(screenSlides).eq(0).find('img').attr('ng-src', '{{\''+scope.$parent_scope[source_name][i][src_name]+'\'}}');
+                                    $(screenSlides).eq(0).find('.dfx-carousel-item-title').html(scope.$parent_scope[source_name][i][title_name]);
+                                    $(screenSlides).eq(0).find('.dfx-carousel-item-description').html(scope.$parent_scope[source_name][i][description_name]);
+                                    scope.compileSlide($(screenSlides).eq(0));
                                 }
                             }
                         } else {
-                            for ( var i = 0; i < scope.attributes.static.value.length; i++ ) {
-                                $(screenSlides).eq(i+1).find('img').attr('ng-click', '$eval(attributes.static.value['+[i]+'].onclick)');
+                            var slidesCount = scope.attributes.static.value.length;
+                            for ( var i = 0; i < slidesCount; i++ ) {
+                                $(screenSlides).eq(i+1).find('img').attr('ng-src', '{{'+scope.attributes.static.value[i].src+'}}');
+                                $(screenSlides).eq(i+1).attr('ng-click', scope.attributes.static.value[i].onclick);
+                                $(screenSlides).eq(i+1).find('.dfx-carousel-item-title').html(scope.attributes.static.value[i].title);
+                                $(screenSlides).eq(i+1).find('.dfx-carousel-item-description').html(scope.attributes.static.value[i].description);
+                                if(i!==0 || i!==slidesCount-1){
+                                    scope.compileSlide($(screenSlides).eq(i+1));
+                                }
+                                if(i===0){
+                                    $(screenSlides).eq(slidesCount+1).find('img').attr('ng-src', '{{'+scope.attributes.static.value[i].src+'}}');
+                                    $(screenSlides).eq(slidesCount+1).find('.dfx-carousel-item-title').html(scope.attributes.static.value[i].title);
+                                    $(screenSlides).eq(slidesCount+1).find('.dfx-carousel-item-description').html(scope.attributes.static.value[i].description);
+                                    scope.compileSlide($(screenSlides).eq(slidesCount+1));
+                                }
+                                if(i===slidesCount-1){
+                                    $(screenSlides).eq(0).find('img').attr('ng-src', '{{'+scope.attributes.static.value[i].src+'}}');
+                                    $(screenSlides).eq(0).find('.dfx-carousel-item-title').html(scope.attributes.static.value[i].title);
+                                    $(screenSlides).eq(0).find('.dfx-carousel-item-description').html(scope.attributes.static.value[i].description);
+                                    scope.compileSlide($(screenSlides).eq(0));
+                                }
                             }
                         }
-                        $compile($("#" + component.id + "_dfx_gc_web_carousel .dfx-carousel-item-image-container").contents())(scope);
-                        $compile($("#" + component.id + "_dfx_gc_web_carousel .dfx-carousel-item-title").contents())(scope);
-                        $compile($("#" + component.id + "_dfx_gc_web_carousel .dfx-carousel-item-description").contents())(scope);
                     }, 0);
                 }
                 scope.simpleCarousel = function() {
@@ -365,11 +393,13 @@ dfxGCC.directive('dfxGccWebCarousel', ['$http', '$sce', '$mdDialog', '$mdToast',
                             .replace('<<carouselMaxWidth>>', scope.attributes.maxWidth.value)
                             .replace('<<carouselMaxHeight>>', scope.attributes.maxHeight.value);
                     $timeout(function(){
-                        $("#" + component.id + "_dfx_gc_web_carousel").empty().html(parsedSimpleCarousel);
-                        $timeout(function(){
+                        $("#" + component.id + "_dfx_gc_web_carousel").empty().html(parsedSimpleCarousel).promise().done(function(){
                             $compile($("#" + component.id + "_dfx_gc_web_carousel").contents())(scope);
-                            scope.compileSlides();
-                        }, 0);
+                        }).done(function(){
+                            $timeout(function(){
+                                scope.compileSlides();
+                            }, 0);
+                        });
                     }, 0);
                 }
                 scope.autoCarousel = function() {
@@ -383,42 +413,24 @@ dfxGCC.directive('dfxGccWebCarousel', ['$http', '$sce', '$mdDialog', '$mdToast',
                             .replace('<<carouselMaxWidth>>', scope.attributes.maxWidth.value)
                             .replace('<<carouselMaxHeight>>', scope.attributes.maxHeight.value);
                     $timeout(function(){
-                        $("#" + component.id + "_dfx_gc_web_carousel").empty().html(parsedAutoCarousel);
-                        $timeout(function(){
+                        $("#" + component.id + "_dfx_gc_web_carousel").empty().html(parsedAutoCarousel).promise().done(function(){
                             $compile($("#" + component.id + "_dfx_gc_web_carousel").contents())(scope);
-                            scope.compileSlides();
-                        }, 0);
+                        }).done(function(){
+                            $timeout(function(){
+                                scope.compileSlides();
+                            }, 0);
+                        });
                     }, 0);
-                }
-                scope.parseSlideSrc = function() {
-                    // for ( var i = 0; i < scope.attributes.static.value.length; i++ ) {
-                    //     var testSrc = scope.attributes.static.value[i].src;
-                    //     if (testSrc.indexOf("'") == -1) {
-                    //         scope.attributes.static.value[i].parsedSrc = scope.$gcscope[scope.attributes.static.value[i].src];
-                    //     } else if (testSrc.indexOf("'") == 0 && testSrc.lastIndexOf("'") == (testSrc.length - 1) && testSrc.length > 2) {
-                    //         var srcWithoutQuotes = testSrc.replace(/'/g, '');
-                    //         scope.attributes.static.value[i].parsedSrc = srcWithoutQuotes;
-                    //     } else {
-                    //         scope.attributes.static.value[i].parsedSrc = scope.attributes.static.value[i].src;
-                    //     }
-                    // }
                 }
                 scope.rebuildCarousel = function() {
-                    if ( scope.attributes.optionsType.value === 'static' && scope.attributes.static.value.length > 0 ) {
-                        scope.parseSlideSrc();
-                    }
-                    $timeout(function(){
-                        scope.attributes.autoSlide.value === 'true' ? scope.autoCarousel() : scope.simpleCarousel();
-                    }, 0);
+                    scope.attributes.autoSlide.value === 'true' ? scope.autoCarousel() : scope.simpleCarousel();
                 }
-
                 if ( scope.attributes.optionsType.value === 'dynamic' ) {
                     scope.$watch('$parent_scope[attributes.optionItemNames.value.source]', function(newValue, oldValue) {
                         if ( newValue ) {
                             scope.rebuildCarousel();
                         }
                     }, true);
-                    // basectrl.bindScopeVariable(scope, component.attributes.dynamic.value);
                 } else {
                     scope.$watch('attributes.static.value', function(newValue, oldValue) {
                         if ( newValue ) {
@@ -4301,8 +4313,8 @@ dfxGCC.directive('dfxGccWebTabs', ['$timeout', '$compile', function($timeout, $c
                 scope.setTabWidth = function() {
                     $timeout(function () {
                         try{
-                            var paginationWrapper = '#' + scope.component_id + '> div.flex > md-content > md-tabs > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper';
-                            var inkBar = '#' + scope.component_id + '> div.flex > md-content > md-tabs > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper > md-ink-bar';
+                            var paginationWrapper = '#' + scope.component_id + '> div.flex > md-content > div > md-tabs > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper';
+                            var inkBar = '#' + scope.component_id + '> div.flex > md-content > div > md-tabs > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper > md-ink-bar';
                             $(paginationWrapper).css('width', '100%');
                             var temp = $($(paginationWrapper).children()[0]).css('width');
                             var stepWidth = parseInt(temp.substring(0, temp.length - 2));
@@ -4328,65 +4340,20 @@ dfxGCC.directive('dfxGccWebTabs', ['$timeout', '$compile', function($timeout, $c
 
                 basectrl.changeWidth(scope);
 
-                scope.collapsePanelBody = function(isCollapsed, index) {
-                    if ( scope.attributes.repeat_title.value ) {
-                        basectrl.bindScopeVariable( scope, component.attributes.repeat_in.value );
-                    } else {
-                        basectrl.bindScopeVariable( scope, component.attributes.toolbar.collapsed.value );
-                    }
-                    if ( scope.attributes.toolbar.collapsed.value == 'true' || scope.attributes.toolbar.collapsed.value == 'false' ) {
-                        if ( isCollapsed ) {
-                            scope.attributes.toolbar.collapsed.value = 'false';
-                        } else {
-                            scope.attributes.toolbar.collapsed.value = 'true';
-                        }
-                    } else {
-                        if ( scope.attributes.repeat_title.value ) {
-                            var collapsedEl = scope.attributes.toolbar.collapsed.value.replace("$dfx_item.", "");
-                            if ( isCollapsed ) {
-                                scope[scope.attributes.repeat_in.value][index][collapsedEl] = false;
-                            } else {
-                                scope[scope.attributes.repeat_in.value][index][collapsedEl] = true;
-                            }
-                        } else {
-                            if ( isCollapsed ) {
-                                scope.$parent_scope[scope.attributes.toolbar.collapsed.value] = false;
-                            } else {
-                                scope.$parent_scope[scope.attributes.toolbar.collapsed.value] = true;
-                            }
-                        }
-                    }
+                scope.collapsePanelContent = function(ev, dfxIndex){
+                    var toggle_btn_id = ev.target.id,
+                        toggle_btn = $('#'+toggle_btn_id),
+                        collapse_cont_id = toggle_btn_id.replace('toggling_', '');
+                    var collapse_container = $('#'+collapse_cont_id);
+                    if(collapse_container.hasClass('ng-hide')) collapse_container.css('display', 'none').removeClass('ng-hide');
+                    toggle_btn.toggleClass('dfx-expanded');
+                    collapse_container.slideToggle();
                 }
-
-                scope.checkPanelBody = function() {
-                    if ( scope.attributes.toolbar.collapsed.value == 'true' ) {
-                        scope.attributes.toolbar.collapsed.designValue = true;
-                    } else {
-                        scope.attributes.toolbar.collapsed.designValue = false;
-                    }
-                }
-
-                scope.checkCollapses = function() {
-                    if ( !scope.attributes.toolbar.hasOwnProperty('collapsed') ) {
-                        var addCollapsed = { "collapsed": { "value": "false" }};
-                        scope.attributes.toolbar.collapsed = addCollapsed.collapsed;
-                    }
-                    if ( !scope.attributes.toolbar.hasOwnProperty('collapsible') ) {
-                        var addCollapsible = { "collapsible": { "value": "false" }};
-                        scope.attributes.toolbar.collapsible = addCollapsible.collapsible;
-                    }
-                    if ( !scope.attributes.hasOwnProperty('repeat_title') ) {
-                        var addRepeatTitle = { "repeat_title": { "value": false }};
-                        scope.attributes.repeat_title = addRepeatTitle.repeat_title;
-                    }
-                }
-
-                scope.checkCollapses();
 
                 var flexTabInRunTime = function() {
                     if (!scope.attributes.autoHeight || scope.attributes.autoHeight.value != true) {
                         $timeout(function () {
-                            var $md_tab_content_wrapper = $('#' + scope.component_id + ' > div > md-content > md-tabs > md-tabs-content-wrapper');
+                            var $md_tab_content_wrapper = $('#' + scope.component_id + ' > div > md-content > div > md-tabs > md-tabs-content-wrapper');
                             $md_tab_content_wrapper.attr('flex', '100');
                             $md_tab_content_wrapper.addClass('flex-100');
                             $md_tab_content_wrapper.attr('layout', 'column');
@@ -4564,6 +4531,16 @@ dfxGCC.directive('dfxGccWebWizard', ['$mdDialog', '$timeout', '$compile', functi
                     },0);
                 };
 
+                scope.collapsePanelContent = function(ev, dfxIndex){
+                    var toggle_btn_id = ev.target.id,
+                        toggle_btn = $('#'+toggle_btn_id),
+                        collapse_cont_id = toggle_btn_id.replace('toggling_', '');
+                    var collapse_container = $('#'+collapse_cont_id);
+                    if(collapse_container.hasClass('ng-hide')) collapse_container.css('display', 'none').removeClass('ng-hide');
+                    toggle_btn.toggleClass('dfx-expanded');
+                    collapse_container.slideToggle();
+                }
+
                 basectrl.changeWidth(scope);
 
                 if (!scope.attributes.autoHeight || scope.attributes.autoHeight.value != true) {
@@ -4582,7 +4559,7 @@ dfxGCC.directive('dfxGccWebWizard', ['$mdDialog', '$timeout', '$compile', functi
                         $md_tabs_template.css('height', '100%');
                         $md_tabs_template.addClass('layout-column');
                     }, 0);
-                }
+                }                
             });
         }
     }
