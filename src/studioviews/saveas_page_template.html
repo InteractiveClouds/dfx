@@ -1,5 +1,5 @@
 <md-dialog aria-label="saveas-template" ng-cloak>
-    <form>
+    <form ng-submit="saveAsTemplate()">
         <md-toolbar>
             <div class="md-toolbar-tools layout-padding">
                 <h5>Save Template As</h5>
@@ -13,18 +13,14 @@
             <div class="md-dialog-content layout-column">
                 <md-input-container class="md-block flex" style="margin: 0;">
                     <label>Name:</label>
-                    <input id="dfx-page-template-newname" ng-model="template.name" md-autofocus ng-keyup="( $event.keyCode == 13 && template.name !=='') ? saveAsTemplate() : ''">
+                    <input id="dfx-page-template-newname" ng-model="template.name" md-autofocus>
                 </md-input-container>
             </div>
         </md-dialog-content>
         <md-dialog-actions layout="row">
             <span flex></span>
-            <md-button class="md-primary" ng-click="saveAsTemplate()">
-                OK
-            </md-button>
-            <md-button class="md-primary" ng-click="closeDialog()">
-                Cancel
-            </md-button>
+            <md-button class="md-primary" type="submit">OK</md-button>
+            <md-button class="md-primary" ng-click="closeDialog()">Cancel</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog>

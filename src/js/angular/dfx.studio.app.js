@@ -1219,21 +1219,23 @@ dfxStudioApp.controller("dfx_studio_cloud_controller", [ '$scope', 'dfxPlatformB
 
         function DialogController($scope, $mdDialog) {
             $scope.bluemix.login = function(){
-                $scope.bluemix.email_pass_spinner = true;
-                var data = {
-                    email : $scope.bluemix.credentials.email,
-                    pass  : $scope.bluemix.credentials.password
-                };
-                dfxPlatformBluemix.bluemixLogin(data).then(function(res){
-                    $scope.bluemix.logged_in = true ;
-                    $scope.bluemix.email_pass_spinner = false;
-                    dfxMessaging.showMessage('You have logged in successfully.Choose organization and space in order to finish authentication.') ;
-                    $scope.bluemix.getOrgsList();
-                }, function(){
-                    $scope.bluemix.logged_in = false ;
-                    $scope.bluemix.email_pass_spinner = false;
-                    dfxMessaging.showWarning('The email address or password you entered is not valid.') ;
-                });
+                if(!$scope.bluemix.logged_in){
+                    $scope.bluemix.email_pass_spinner = true;
+                    var data = {
+                        email : $scope.bluemix.credentials.email,
+                        pass  : $scope.bluemix.credentials.password
+                    };
+                    dfxPlatformBluemix.bluemixLogin(data).then(function(res){
+                        $scope.bluemix.logged_in = true ;
+                        $scope.bluemix.email_pass_spinner = false;
+                        dfxMessaging.showMessage('You have logged in successfully.Choose organization and space in order to finish authentication.') ;
+                        $scope.bluemix.getOrgsList();
+                    }, function(){
+                        $scope.bluemix.logged_in = false ;
+                        $scope.bluemix.email_pass_spinner = false;
+                        dfxMessaging.showWarning('The email address or password you entered is not valid.') ;
+                    });
+                }
             };
             $scope.bluemix.hide = function() {
                 $mdDialog.hide();
@@ -5504,7 +5506,7 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
         $scope.servicesApiSource = 'none';
         var dataSourceIcon = $(".dfx-api-so-sources");
         dataSourceIcon.hide();
-        $('#add-services').fadeIn(150);
+        $('#add-services').fadeIn(150).focus();
         $('#add-services-backdrop').fadeIn(150);
     }
 
@@ -5593,15 +5595,24 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
         });
     }
 
-    $scope.validateServiceUrl = function() {
+    $scope.validateServiceUrl = function(serviceModeBtn) {
         $scope.validUrlResult = '';
         $scope.serviceUrlError = '';
         dfxApiServiceObjects.validateSoUrl( $scope, $scope.scopeService.name, $scope.app_name, $scope.scopeService.data.uuid ).then(function( data ) {
             if (( data.data.data !== '' ) && ($scope.currentEditingUrlName !== $scope.scopeService.name)) {
                 $scope.validUrlResult = 'failed';
                 $scope.serviceUrlError = data.data.data;
+            } else if(serviceModeBtn) {                    
+                $scope.checkKeyboardEvents(serviceModeBtn);
             }
         });
+    }
+
+    $scope.checkKeyboardEvents = function(serviceModeBtn){
+        if (serviceModeBtn) {
+            if(serviceModeBtn=='serviceAdd') $scope.saveApiSoService();
+            if(serviceModeBtn=='serviceEdit') $scope.closeServiceSidenav();
+        }
     }
 
     $scope.saveApiSoService = function() {
@@ -5889,13 +5900,14 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
             appExceptionItem = {
                 "name": "exception_" + ( tableArray.length + 1 ),
                 "regexp": ""
-            };
+            },
+            table_length = tableArray.length;
 
         switch ( tableName ) {
-            case 'parameters': tableArray.push( parameterItem ); break;
-            case 'pre_code': tableArray.push( preCodeItem ); break;
-            case 'post_code': tableArray.push( postCodeItem ); break;
-            case 'appexpr': tableArray.push( appExceptionItem ); break;
+            case 'parameters': tableArray.push( parameterItem ); $timeout(function(){$('#parameter_name_'+table_length).focus()}, 100);  break;
+            case 'pre_code': tableArray.push( preCodeItem );  $timeout(function(){$('#pre_code_name_'+table_length).focus()}, 100); break;
+            case 'post_code': tableArray.push( postCodeItem );  $timeout(function(){$('#post_code_name_'+table_length).focus()}, 100); break;
+            case 'appexpr': tableArray.push( appExceptionItem );  $timeout(function(){$('#appexpr_name_'+table_length).focus()}, 100); break;
         }
     }
 
@@ -6297,6 +6309,9 @@ dfxStudioApp.directive('dfxApiSoSources', ['$mdDialog', '$timeout', 'dfxApiServi
                         scope.closeCatalog = function() {
                             scope.showListSources = false;
                             $mdDialog.hide();
+                        }
+                        scope.checkNodeName = function(ev){
+                            return (ev.target.nodeName !='BUTTON' && ev.target.nodeName !='MD-CHECKBOX') ? true : false;
                         }
                     }
                 })

@@ -6,24 +6,22 @@
 
 <md-sidenav md-component-id="side_nav_api_category" class="md-sidenav-left" style="width: 450px; max-width: 450px;" ng-cloak>
     <md-content style="padding-top: 20px;">
-    <form >
-        
+    <form ng-submit="categoryMode === 'addCategory' ? createCategory() : editCategory(toEdit)">
         <div class="md-dialog-content layout-column layout-padding">
             <div class="layout-column flex-100">
                 <md-input-container class="md-block flex" style="margin: 0;">
                     <label>Category Name</label>
-                    <input ng-model="scopeCategory.name" ng-disabled="categoryMode === 'editCategory'" md-autofocus ng-keyup="($event.keyCode == 13 && scopeCategory.name !=='') ? createCategory() : ''">
+                    <input ng-model="scopeCategory.name" ng-disabled="categoryMode === 'editCategory'" md-autofocus="categoryMode === 'addCategory'">
                 </md-input-container>
             </div>
             <div ng-if="categoryMode === 'editCategory'" class="layout-column flex-100">
                 <md-input-container class="md-block flex" style="margin: 0;">
                     <label>New Category Name</label>
-                    <input ng-model="toEdit.name" md-autofocus ng-keyup="($event.keyCode == 13 && toEdit.name !=='') ? editCategory(toEdit) : ''">
+                    <input ng-model="toEdit.name" md-autofocus="categoryMode === 'editCategory'">
                 </md-input-container>
             </div>
             <div style="display:flex; justify-content: flex-end;">
-                <md-button ng-if="categoryMode === 'addCategory'" class="md-primary" ng-click="createCategory()">Save</md-button>
-                <md-button ng-if="categoryMode === 'editCategory'" class="md-primary" ng-click="editCategory( toEdit )">Save</md-button>
+                <md-button class="md-primary" type="submit">Save</md-button>
                 <md-button class="md-primary" ng-click="closeSidenav()">Cancel</md-button>
             </div>
         </div>
