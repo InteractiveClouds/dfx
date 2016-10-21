@@ -3672,7 +3672,7 @@ dfxStudioApp.controller("dfx_studio_deployment_controller", [ '$scope', '$mdDial
         });
     };
 
-    $scope.downloadZip = function( ) {
+    $scope.getBuildFile = function( ) {
         dfxMessaging.showMessage("Zip file was successfully copied");
     }
 
