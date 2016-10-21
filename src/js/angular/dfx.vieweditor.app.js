@@ -2137,8 +2137,7 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                         menuItems: scope.attributes.menuItems.value,
                         menuItemNames: scope.attributes.menuItemNames.value,
                         menuItemsType: scope.attributes.menuItemsType.value
-                    },
-                    'group': true
+                    }
                 });
 
                 scope.menu = {};
@@ -4791,7 +4790,7 @@ var DfxViewEditorUndo = (function() {
             return schema;
         }
     };
-    var setAttibutesChainValue = function(path, obj, value) {
+    var setAttributesChainValue = function(path, obj, value) {
         var schema = obj,
             pList = path.split('.'),
             last_path_segment = '';
@@ -4821,8 +4820,30 @@ var DfxViewEditorUndo = (function() {
             return path;
         }
     };
+    var cleanDefaultValues = function(attribute, old_attribute_value) {
+        if (!old_attribute_value || (Array.isArray(old_attribute_value) && old_attribute_value.length == 0)) {
+            delete attribute.status;
+        }
+    };
+    var setAttributesGroup = function(gc_attributes, old_attributes_group) {
+        var attributes_names = Object.keys(old_attributes_group);
 
-    api.cacheAttributeOldValue = function (options, scope) {
+        for (var i = 0; i < attributes_names.length; i++) {
+            var attrbute_name = attributes_names[i];
+            var old_attribute_value = old_attributes_group[attrbute_name];
+
+            if (typeof gc_attributes[attrbute_name] === 'object' && gc_attributes[attrbute_name].hasOwnProperty('value')) {
+                cleanDefaultValues(gc_attributes[attrbute_name], old_attribute_value);
+
+                gc_attributes[attrbute_name].value = angular.copy(old_attribute_value);
+            } else {
+                //TODO: no such cases right now, if happens, need to adjust and call cleanDefaultValues()
+                gc_attributes[attrbute_name] = angular.copy(old_attribute_value);
+            }
+        }
+    };
+
+    api.cacheAttributeOldValue = function(options, scope) {
         var attribute_name = options.name,
             attribute_value = options.value;
 
@@ -4833,19 +4854,26 @@ var DfxViewEditorUndo = (function() {
         };
 
         if (attribute_value || attribute_value == '') {
-            scope.dfx_attribute_old_value = attribute_value;
+            scope.dfx_attribute_old_value = angular.copy( attribute_value );
         } else {
             scope.dfx_attribute_old_value = angular.copy( getAttibutesChainValue(attribute_name, scope.gc_selected.attributes) );
         }
     };
-    api.cacheAttributeNewValue = function (attribute_name, scope) {
-        if (attribute_name.group) {
-            
-            return;
+    api.cacheAttributeNewValue = function(options, scope) {
+        var attribute_name,
+            attribute_new_value;
+
+        if (options.group) {
+            attribute_name = 'undo_group_' + scope.gc_selected.id;
+            attribute_new_value = options.value;
+
+            //2) in viewEditorUndo, if starts with 'undo_group_', then take one by one and assign
+            //4) verify in different tabs in different cards
+        } else {
+            attribute_name = removeAttributesPrefixFromPath(options);
+            attribute_new_value = getAttibutesChainValue(attribute_name, scope.gc_selected.attributes);
         }
 
-        attribute_name = removeAttributesPrefixFromPath(attribute_name);
-        var attribute_new_value = getAttibutesChainValue(attribute_name, scope.gc_selected.attributes);
         var attribute_old_value = scope.hasOwnProperty('dfx_attribute_old_value') ?  scope.dfx_attribute_old_value : '';
 
         if (attribute_new_value !== attribute_old_value) {
@@ -4864,7 +4892,11 @@ var DfxViewEditorUndo = (function() {
             var action_for_undo = scope.dfx_view_editor_actions_stack.shift();
             var gc_for_undo = scope.gc_instances[ action_for_undo.component_id ];
 
-            setAttibutesChainValue(action_for_undo.attribute_name, gc_for_undo.attributes, action_for_undo.attribute_old_value);
+            if (action_for_undo.attribute_name.indexOf('undo_group_') == 0) {
+                setAttributesGroup(gc_for_undo.attributes, action_for_undo.attribute_old_value);
+            } else {
+                setAttributesChainValue(action_for_undo.attribute_name, gc_for_undo.attributes, action_for_undo.attribute_old_value);
+            }
         }
     };
 
