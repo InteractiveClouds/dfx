@@ -1,15 +1,17 @@
 <md-tabs md-dynamic-height md-stretch-tabs="never" md-border-bottom>
     <md-tab label="Google Maps">
         <md-content style="padding-top: 20px;">
-            <h5 class="md-title" style="padding-left: 10px">API key</h5>
-            <div layout="row" class="layout-padding">
-                <md-input-container class="md-block flex-25" style="margin: 0; padding-top: 20px;">
-                    <input id="googleAPIKey" ng-model="googleAPIKey" md-autofocus ng-keyup="( $event.keyCode == 13 ) ? saveGoogleKey() : ''" >
-                </md-input-container>
-            </div>
-            <div layout="row" layout-align ="start">
-                <button ng-click="saveGoogleKey()" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-floppy-o" style="color: #757575"></span><span style="padding-left:5px">Save</span></button>
-            </div>
+            <form ng-submit="saveGoogleKey()">
+                <h5 class="md-title" style="padding-left: 10px">API key</h5>
+                <div layout="row" class="layout-padding">
+                    <md-input-container class="md-block flex-25" style="margin: 0; padding-top: 20px;">
+                        <input id="googleAPIKey" ng-model="googleAPIKey" md-autofocus>
+                    </md-input-container>
+                </div>
+                <div layout="row" layout-align ="start">
+                    <button type="submit" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-floppy-o" style="color: #757575"></span><span style="padding-left:5px">Save</span></button>
+                </div>
+            </form>
         </md-content>
     </md-tab>
 </md-tabs>

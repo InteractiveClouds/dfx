@@ -1,5 +1,5 @@
 <md-dialog aria-label="create_resource" style="width: 400px;" ng-cloak>
-    <form>
+    <form ng-submit="bluemix.login()">
         <md-toolbar>
             <div class="md-toolbar-tools">
                 <img src="/images/bluemix_Logo.png" style="width: 32px; margin-right: 5px;"/>
@@ -15,11 +15,11 @@
                 <div class="layout-column flex-100">
                     <md-input-container class="md-block flex" style="margin: 0;">
                         <label>Email:</label>
-                        <input ng-model="bluemix.credentials.email" md-autofocus ng-keyup="( $event.keyCode == 13 && bluemix.credentials.email !=='' && bluemix.credentials.password !=='') ? selectAction() : ''">
+                        <input ng-model="bluemix.credentials.email" md-autofocus>
                     </md-input-container>
                     <md-input-container class="md-block flex" style="margin: 0;">
                         <label>Password:</label>
-                        <input ng-model="bluemix.credentials.password" type="password" ng-keyup="( $event.keyCode == 13 && bluemix.credentials.email !=='' && bluemix.credentials.password !=='') ? selectAction() : ''">
+                        <input ng-model="bluemix.credentials.password" type="password">
                     </md-input-container>
                     <div ng-if="bluemix.email_pass_spinner === true" style="text-align: center;"><md-icon style="font-size: 20px;" class="fa fa-spinner fa-pulse"></md-icon></div>
                     <md-input-container ng-if="bluemix.organizations_list" class="layout-row">
@@ -45,15 +45,9 @@
         </md-dialog-content>
         <md-dialog-actions layout="row">
             <span flex></span>
-            <md-button ng-if="bluemix.logged_in === false" class="md-primary" ng-click="bluemix.login()">
-                Login
-            </md-button>
-            <md-button ng-if="bluemix.logged_in === true" class="md-primary" ng-click="bluemix.hide()">
-                Close
-            </md-button>
-            <md-button ng-if="bluemix.logged_in === false" class="md-primary" ng-click="bluemix.cancel()">
-                Cancel
-            </md-button>
+            <md-button ng-if="bluemix.logged_in === false" class="md-primary" type="submit">Login</md-button>
+            <md-button ng-if="bluemix.logged_in === true" class="md-primary" ng-click="bluemix.hide()">Close</md-button>
+            <md-button ng-if="bluemix.logged_in === false" class="md-primary" ng-click="bluemix.cancel()">Cancel</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog>

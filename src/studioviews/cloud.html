@@ -92,21 +92,23 @@
     </md-tab>
     <md-tab label="PhoneGap">
         <md-content style="padding-top: 20px;">
-            <h5 class="md-title" style="padding-left: 10px">Login</h5>
-            <div layout="row" class="layout-padding">
-                <md-input-container class="md-block flex-25" style="margin: 0; padding-top: 20px;">
-                    <input id="phoneGapLogin" ng-model="phoneGapLogin" ng-keyup="( $event.keyCode == 13 && phoneGapLogin !=='' && phoneGapPassword !=='') ? savePhoneGapData() : ''" required md-autofocus>
-                </md-input-container>
-            </div>
-            <h5 class="md-title" style="padding-left: 10px">Password</h5>
-            <div layout="row" class="layout-padding">
-                <md-input-container class="md-block flex-25" style="margin: 0; padding-top: 20px;">
-                    <input id="phoneGapPassword" type="password" ng-model="phoneGapPassword"  ng-keyup="( $event.keyCode == 13 && phoneGapLogin !=='' && phoneGapPassword !=='') ? savePhoneGapData() : ''" required>
-                </md-input-container>
-            </div>
-            <div layout="row" layout-align ="start">
-                <button ng-click="savePhoneGapData()" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-floppy-o" style="color: #757575"></span><span style="padding-left:5px">Save</span></button>
-            </div>
+            <form ng-submit="savePhoneGapData()">
+                <h5 class="md-title" style="padding-left: 10px">Login</h5>
+                <div layout="row" class="layout-padding">
+                    <md-input-container class="md-block flex-25" style="margin: 0; padding-top: 20px;">
+                        <input id="phoneGapLogin" ng-model="phoneGapLogin" required md-autofocus>
+                    </md-input-container>
+                </div>
+                <h5 class="md-title" style="padding-left: 10px">Password</h5>
+                <div layout="row" class="layout-padding">
+                    <md-input-container class="md-block flex-25" style="margin: 0; padding-top: 20px;">
+                        <input id="phoneGapPassword" type="password" ng-model="phoneGapPassword" required>
+                    </md-input-container>
+                </div>
+                <div layout="row" layout-align ="start">
+                    <button type="submit" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-floppy-o" style="color: #757575"></span><span style="padding-left:5px">Save</span></button>
+                </div>
+            </form>
         </md-content>
     </md-tab>
 </md-tabs>

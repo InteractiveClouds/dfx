@@ -1,5 +1,5 @@
 <md-dialog aria-label="copy-component" ng-cloak>
-    <form>
+    <form ng-submit="copyComponent()">
         <md-toolbar>
             <div class="md-toolbar-tools layout-padding">
                 <h5>Copy 
@@ -18,7 +18,7 @@
             <div class="md-dialog-content layout-column">
                 <md-input-container class="md-block flex" style="margin: 0;">
                     <label>Name:</label>
-                    <input id="to-copy-name" ng-model="toCopy.name" md-autofocus ng-keyup="($event.keyCode == 13 && toCopy.name !=='' && prefix.value !=='') ? copyComponent() : ''">
+                    <input id="to-copy-name" ng-model="toCopy.name" md-autofocus>
                 </md-input-container>
                 <md-input-container class="input-select-aligned margin-select">
                     <label>Application:</label>
@@ -34,18 +34,14 @@
                 </md-input-container>
                 <md-input-container ng-show="targetComponent.type === 'apiso'" ng-if="targetComponent.type === 'apiso'" class="md-block flex" style="margin: 24px 0 0 0;">
                     <label>API Route Prefix:</label>
-                    <input ng-model="prefix.value" ng-keyup="($event.keyCode == 13 && toCopy.name !=='' && prefix.value !=='') ? copyComponent() : ''">
+                    <input ng-model="prefix.value">
                 </md-input-container>
             </div>
         </md-dialog-content>
         <md-dialog-actions layout="row">
             <span flex></span>
-            <md-button class="md-primary" ng-click="copyComponent()">
-                OK
-            </md-button>
-            <md-button class="md-primary" ng-click="closeDialog()">
-                Cancel
-            </md-button>
+            <md-button class="md-primary" type="submit">OK</md-button>
+            <md-button class="md-primary" ng-click="closeDialog()">Cancel</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog>
