@@ -1306,6 +1306,9 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     };
 
     // Functions implementing UNDO in view editor - START
+    $scope.setCalledFromPicker = function (options) {
+        DfxViewEditorUndo.setCalledFromPicker($scope);
+    };
     $scope.cacheAttributeOldValue = function (options) {
         DfxViewEditorUndo.cacheAttributeOldValue(options, $scope);
     };
@@ -1692,7 +1695,7 @@ dfxViewEditorApp.directive('dfxVePickerIcon', ['$q', '$http', '$mdDialog', '$tim
 
                 scope.iconObj.value = "'"+icon+"'";
                 scope.iconObj.type = type;
-                scope.$parent.dfx_undo_called_from_picker = true;// needed for UNDO functionality
+                scope.$parent.setCalledFromPicker();// needed for UNDO functionality
                 $(scope.targetLabelField).focus().blur();
                 scope.closeVeIconsDialog();
             }
@@ -1988,7 +1991,9 @@ dfxViewEditorApp.directive('dfxVePickerImage', (function($mdDialog, $timeout, $c
                         templateUrl: '/gcontrols/web/picker_images_form.html',
                         controller: function(){
                             scope.setImage = function(src) {
+                                scope.$parent.cacheAttributeOldValue({ 'value': scope.attributes[attrs.dfxPickerProperty].value });// needed for UNDO functionality
                                 scope.attributes[attrs.dfxPickerProperty].value = "'"+src+"'";
+                                scope.$parent.cacheAttributeNewValue(attrs.dfxPickerProperty);// needed for UNDO functionality
                                 $mdDialog.hide();
                             }
                             scope.closeDialog = function(){
@@ -2083,13 +2088,13 @@ dfxViewEditorApp.directive('dfxVeExpressionEditor', [ '$mdDialog', function($mdD
                         }
                         scope.setLabel = function() {
                             var old_expression = scope.targetLabelField.val();// needed for UNDO functionality
-                            scope.$parent.cacheAttributeOldValue({ 'value': old_expression });// needed for UNDO functionality
+                            scope.$parent.cacheAttributeOldValue({ 'value': old_expression, 'called_from_picker': true });// needed for UNDO functionality
 
                             scope.newExpression = $("textarea.expression-textarea").val();
                             scope.targetLabelField.val(scope.newExpression);
                             angular.element(scope.targetLabelField).data('$ngModelController').$setViewValue(scope.newExpression);
 
-                            scope.$parent.dfx_undo_called_from_picker = true;// needed for UNDO functionality
+                            scope.$parent.setCalledFromPicker();// needed for UNDO functionality
                             $(scope.targetLabelField).focus().blur();
                             $mdDialog.hide();
                         }
@@ -4843,6 +4848,9 @@ var DfxViewEditorUndo = (function() {
         }
     };
 
+    api.setCalledFromPicker = function(scope) {
+        scope.dfx_undo_called_from_picker = true;
+    };
     api.cacheAttributeOldValue = function(options, scope) {
         var attribute_name = options.name,
             attribute_value = options.value;
@@ -4866,9 +4874,6 @@ var DfxViewEditorUndo = (function() {
         if (options.group) {
             attribute_name = 'undo_group_' + scope.gc_selected.id;
             attribute_new_value = options.value;
-
-            //2) in viewEditorUndo, if starts with 'undo_group_', then take one by one and assign
-            //4) verify in different tabs in different cards
         } else {
             attribute_name = removeAttributesPrefixFromPath(options);
             attribute_new_value = getAttibutesChainValue(attribute_name, scope.gc_selected.attributes);
