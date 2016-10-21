@@ -4141,3 +4141,15 @@ button.dfx-core-gc-rating-button {
 	line-height:38px;
 	text-align:right;
 }
+
+.dfx-core-mobile-footer {
+	background:#434a54;
+	height:30px;
+	font-family:HelveticaNeue;
+	font-style:italic;
+	font-size:12px;
+	color:#d6d6d6;
+	letter-spacing:1px;
+	line-height:28px;
+	text-align:right;
+}

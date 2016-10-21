@@ -1,0 +1,26 @@
+<div layout="column" flex>
+  <div layout="row" layout-align="start center" flex="100" style="height:50px; background:#00bae7">
+    <div style="margin-left:30px"><img src="/img/dfx_login_logo_white.png" style="width:30px;height:30px" /></div>
+    <div flex style="margin-left:30px;height:50px" layout="row" layout-align="end center">
+    <div style="line-height:55px;margin-right:37px">
+      <!--a href="login.html" style="margin-left:20px;color:#fff;font-size:14px;font-face:helveticaNeue;">Logout</a-->
+      <md-menu md-offset="35 50" md-position-mode="target-right target">
+	  	<ng-md-icon ng-click="$mdOpenMenu($event)" icon="menu" size="36" style="color:#fff"></ng-md-icon>
+      	<md-menu-content width="3">
+        	<md-menu-item>
+        		<md-button ng-click="routeToPage('Home', $event)">Home</md-button>
+        	</md-menu-item>
+          	<md-menu-item>
+        		<md-button ng-click="routeToPage('Page1', $event)">Page 1</md-button>
+        	</md-menu-item>
+          	<md-menu-item>
+        		<md-button ng-click="routeToPage('Page2', $event)">Page 2</md-button>
+        	</md-menu-item>
+	        <md-menu-item>
+        		<md-button ng-click="routeToPage('Page3', $event)">Page 3</md-button>
+        	</md-menu-item>
+        </md-menu-content>
+      </md-menu>
+    </div>
+  </div>
+</div>
