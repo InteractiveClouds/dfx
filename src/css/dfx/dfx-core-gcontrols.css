@@ -725,6 +725,11 @@ button[disabled="disabled"].dfx-core-gc-json-button ng-md-icon {
 .dfx-gc-web-carousel .jk-carousel {
     max-width: 100%;
 }
+.dfx-gc-web-carousel md-radio-group.radio-buttons-container md-radio-button {
+    width: 20px;
+    margin-right: 10px;   
+    margin-left: 10px;
+}
 
 /* GC List */
 md-list .md-subheader.dfx-core-gc-list-subheader {

@@ -8,46 +8,50 @@
     </md-tab>
     <md-tab label="Collaboration">
         <md-content class="md-padding">
-            <h5 class="md-title" style="padding-left: 10px">Slack Properties</h5>
-            <div layout="row" class="layout-padding">
-                <md-input-container class="md-block flex-50">
-                    <label>Channel</label>
-                    <input ng-model="devops.channel" ng-keyup="( $event.keyCode == 13 && devops.channel !=='') ? saveCollaboration() : ''">
-                </md-input-container>
-            </div>
-            <div layout="row" layout-align ="start">
-                <button ng-click="saveCollaboration()" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-floppy-o" style="color: #757575"></span><span style="padding-left:5px">Save</span></button>
-            </div>
+            <form ng-submit="saveCollaboration()">
+                <h5 class="md-title" style="padding-left: 10px">Slack Properties</h5>
+                <div layout="row" class="layout-padding">
+                    <md-input-container class="md-block flex-50">
+                        <label>Channel</label>
+                        <input ng-model="devops.channel">
+                    </md-input-container>
+                </div>
+                <div layout="row" layout-align ="start">
+                    <button type="submit" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-floppy-o" style="color: #757575"></span><span style="padding-left:5px">Save</span></button>
+                </div>
+            </form>
         </md-content>
     </md-tab>
     <md-tab label="Github">
         <md-content class="md-padding">
-            <h5 class="md-title" style="padding-left: 10px">Github Repository</h5>
-            <div layout="row" class="layout-padding">
-                <md-input-container class="md-block flex">
-                    <label>Access token:</label>
-                    <input ng-model="devops.access_token" ng-required="true" placeholder="Github personal access token"  ng-keyup="( $event.keyCode == 13 && devops.access_token !=='' && devops.repository !=='' && devops.github_username !=='') ? saveGithub() : ''">
-                </md-input-container>
-            </div>
-            <div layout="row" class="layout-padding">
-                <md-input-container class="md-block flex-50">
-                    <label>Name:</label>
-                    <input ng-model="devops.repository" ng-required="true" placeholder="Repository name"  ng-keyup="( $event.keyCode == 13 && devops.access_token !=='' && devops.repository !=='' && devops.github_username !=='') ? saveGithub() : ''">
-                </md-input-container>
-                <md-input-container class="md-block flex-50">
-                    <label>Owner's name:</label>
-                    <input ng-model="devops.github_username" ng-required="true" placeholder="Repository owner name"  ng-keyup="( $event.keyCode == 13 && devops.access_token !=='' && devops.repository !=='' && devops.github_username !=='') ? saveGithub() : ''">
-                </md-input-container>
-            </div>
+            <form ng-submit="saveGithub()">
+                <h5 class="md-title" style="padding-left: 10px">Github Repository</h5>
+                <div layout="row" class="layout-padding">
+                    <md-input-container class="md-block flex">
+                        <label>Access token:</label>
+                        <input ng-model="devops.access_token" ng-required="true" placeholder="Github personal access token"  ng-keyup="( $event.keyCode == 13 && devops.access_token !=='' && devops.repository !=='' && devops.github_username !=='') ? saveGithub() : ''">
+                    </md-input-container>
+                </div>
+                <div layout="row" class="layout-padding">
+                    <md-input-container class="md-block flex-50">
+                        <label>Name:</label>
+                        <input ng-model="devops.repository" ng-required="true" placeholder="Repository name">
+                    </md-input-container>
+                    <md-input-container class="md-block flex-50">
+                        <label>Owner's name:</label>
+                        <input ng-model="devops.github_username" ng-required="true" placeholder="Repository owner name">
+                    </md-input-container>
+                </div>
                 <div layout="row" layout-align="space-between center">
                     <div>
-                        <button ng-click="saveGithub()" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-floppy-o" style="color: #757575"></span><span style="padding-left:5px">Save</span></button>
+                        <button type="submit" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-floppy-o" style="color: #757575"></span><span style="padding-left:5px">Save</span></button>
                         <button ng-click="" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-cloud-download" style="color: #757575"></span><span style="padding-left:5px">Git Pull</span></button>
                         <button ng-click="" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-cloud-upload" style="color: #757575"></span><span style="padding-left:5px">Git Push</span></button>
                         <button ng-click="" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-info" style="color: #757575"></span><span style="padding-left:5px">Git Status</span></button>
                     </div>
                     <button ng-click="" class="md-raised md-warn md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-trash-o" style="color: #ffffff"></span><span style="padding-left:5px">Empty Remote Repository</span></button>
                 </div>
+            </form>
         </md-content>
     </md-tab>
 </md-tabs>
