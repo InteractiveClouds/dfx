@@ -142,12 +142,13 @@ dfxGCC.directive('dfxGccWebBase', ['$rootScope', '$http', '$compile', '$injector
             };
 
             this.changeWidth = function(scope) {
+                var component = angular.element(document.querySelectorAll('[id="' + scope.component_id + '"]'));//for repeatable panels
                 var parent_column_orientation = $('#' + scope.component_id).parent().attr('layout');
                 if (parent_column_orientation == 'column') {
-                    $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+                    component.css('width', scope.attributes.flex.value + '%');
                 } else {
-                    $('#' + scope.component_id).removeClass('flex-100');
-                    $('#' + scope.component_id).addClass('flex' + '-' + scope.attributes.flex.value);
+                    component.removeClass('flex-100');
+                    component.addClass('flex' + '-' + scope.attributes.flex.value);
                 }
             };
         }
@@ -174,9 +175,9 @@ dfxGCC.directive('dfxGccWebPanel', ['$timeout', '$compile', function($timeout, $
                 scope.attributes.toolbar.rightMenu.initialClick = { "value": false };
                 scope.attributes.toolbar.rightMenu.dynamicPresent = { "value": false };
                 scope.dfx_rep_panels;
-                var is_rep_title = (scope.attributes.repeat_in.value !=='' && scope.attributes.repeat_title.value) ? true : false, 
+                var is_rep_title = (scope.attributes.repeat_in.value !=='' && scope.attributes.repeat_title.value) ? true : false,
                     is_rep_panel = scope.attributes.repeat_in.value !=='' ? true : false;
-				
+
                 scope.collapsePanelContent = function(ev, dfxIndex){
                     var toggle_btn_id = ev.target.id,
                         toggle_btn = $('#'+toggle_btn_id),
@@ -189,7 +190,7 @@ dfxGCC.directive('dfxGccWebPanel', ['$timeout', '$compile', function($timeout, $
                     }
                     if(!is_rep_title && is_rep_panel && scope.dfx_rep_panels>0){
                         toggle_btn.toggleClass('dfx-expanded');
-                        for (var i = 0; i < scope.dfx_rep_panels; i++) {                                
+                        for (var i = 0; i < scope.dfx_rep_panels; i++) {
                             var item_collapse_cont = $('#'+collapse_cont_id+'_'+i);
                             if(item_collapse_cont.hasClass('ng-hide')) item_collapse_cont.css('display', 'none').removeClass('ng-hide');
                             toggle_btn.hasClass('dfx-expanded') ? item_collapse_cont.slideDown() : item_collapse_cont.slideUp();
@@ -330,7 +331,7 @@ dfxGCC.directive('dfxGccWebCarousel', ['$http', '$sce', '$mdDialog', '$mdToast',
                     scope.carouselDataName.value = scope.attributes.optionsType.value === 'dynamic' ? scope.attributes.optionItemNames.value.source : 'attributes.static.value';
                 }
                 scope.compileSlide = function( slide ){
-                    $compile(slide)(scope); 
+                    $compile(slide)(scope);
                 }
                 scope.compileSlides = function(){
                     $timeout(function(){
@@ -338,7 +339,7 @@ dfxGCC.directive('dfxGccWebCarousel', ['$http', '$sce', '$mdDialog', '$mdToast',
                         if ( scope.attributes.optionsType.value === 'dynamic' ) {
                             var slidesCount = scope.$parent_scope[scope.attributes.optionItemNames.value.source].length;
                             for ( var i = 0; i < slidesCount; i++ ) {
-                                $(screenSlides).eq(i+1).find('img').attr('ng-src', '{{\''+scope.$parent_scope[source_name][i][src_name]+'\'}}');                                    
+                                $(screenSlides).eq(i+1).find('img').attr('ng-src', '{{\''+scope.$parent_scope[source_name][i][src_name]+'\'}}');
                                 $(screenSlides).eq(i+1).find('.dfx-carousel-item-title').html(scope.$parent_scope[source_name][i][title_name]);
                                 $(screenSlides).eq(i+1).find('.dfx-carousel-item-description').html(scope.$parent_scope[source_name][i][description_name]);
                                 $(screenSlides).eq(i+1).attr('ng-click', scope.$parent_scope[source_name][i][onclick_name]);
