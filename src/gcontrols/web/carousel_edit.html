@@ -19,14 +19,14 @@
                 <li class="col-md-12">
                     <span class="col-md-4" style="margin-top: 3px">Auto Slide:</span>
                     <md-input-container class="col-md-8" style="padding: 0 0 10px">
-                        <md-select aria-label="Auto Slide:" ng-model="attributes.autoSlide.value" ng-change="overrideAttribute('autoSlide');rebuildCarousel();" ng-focus="cacheAttributeOldValue({'name':'autoSlide'})" ng-blur="cacheAttributeNewValue('autoSlide')">
+                        <md-select aria-label="Auto Slide:" ng-model="attributes.autoSlide.value" ng-change="overrideAttribute('autoSlide');rebuildCarousel();cacheAttributeOldValue({'value':{{attributes.autoSlide.value}}});cacheAttributeNewValue('autoSlide');">
                             <md-option ng-repeat="auto in ['true', 'false']" value="{{auto}}">{{auto}}</md-option>
                         </md-select>
                     </md-input-container>
                 </li>
                 <li class="col-md-12" ng-if="attributes.autoSlide.value === 'true'">
                     <span class="col-md-4">Slide Interval:</span>
-                    <input class="col-md-8" type="text" ng-model="attributes.slideInterval.value" ng-change="overrideAttribute('slideInterval');rebuildCarousel();" ng-model-options="{ updateOn: 'blur'}" ng-focus="cacheAttributeOldValue({'name':'slideInterval'})" ng-blur="cacheAttributeNewValue('slideInterval')"/>
+                    <input class="col-md-8" type="text" ng-model="attributes.slideInterval.value" ng-change="overrideAttribute('slideInterval');rebuildCarousel();cacheAttributeNewValue('slideInterval');" ng-model-options="{ updateOn: 'blur'}" ng-focus="cacheAttributeOldValue({'name':'slideInterval'})"/>
                 </li>
                 <li class="col-md-12">
                     <span class="col-md-4">Display:</span>
