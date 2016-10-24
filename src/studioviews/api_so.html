@@ -211,7 +211,7 @@
 									</td>
 									<td>
 										<md-button ng-click="deleteRow( scopeService.data.parameters, $index )" class="md-icon-button" aria-label="icon-button">
-										  <md-icon class="fa fa-trash" style="font-size:18px;width:18px;height:18px;"></md-icon>
+										  <md-icon class="fa fa-trash dfx-studio-flex-icon" style="font-size:18px;width:18px;height:18px;"></md-icon>
 										</md-button>								
 									</td>
 								</tr>
@@ -230,9 +230,9 @@
 			        <md-menu-bar>
 								<md-menu>
 									<button ng-click="$mdOpenMenu();">
-										<md-icon class="fa fa-bars" style="font-size:18px;width:auto;height:18px"></md-icon>
+										<md-icon class="fa fa-bars dfx-studio-flex-icon" style="font-size:18px;width:auto;height:18px"></md-icon>
 										<span style="margin:0 5px;">Actions</span>
-										<md-icon class="fa fa-caret-down" style="font-size:18px;width:auto;height:18px"></md-icon>
+										<md-icon class="fa fa-caret-down dfx-studio-flex-icon" style="font-size:18px;width:auto;height:18px"></md-icon>
 									</button>
 									<md-menu-content>
 										<md-menu-item><md-button ng-click="setCodemirrorValue(executeDataQuery)" style="line-height:32px;">Execute service with parameters</md-button></md-menu-item>
@@ -259,14 +259,14 @@
 								</md-menu>
 								<!--<md-menu>-->
 									<!--<button ng-click="saveActions()">-->
-										<!--<md-icon class="fa fa-floppy-o" style="font-size:18px;width:auto;height:18px"></md-icon>-->
+										<!--<md-icon class="fa fa-floppy-o dfx-studio-flex-icon" style="font-size:18px;width:auto;height:18px"></md-icon>-->
 										<!--<span style="margin:0 5px;">Save</span>-->
 									<!--</button>-->
 									<!--<md-menu-content style="display:none !important"></md-menu-content>-->
 								<!--</md-menu>-->
 								<!--<md-menu>-->
 									<!--<button ng-click="closeActionsEditor()">-->
-										<!--<md-icon class="fa fa-sign-out" style="font-size:18px;width:auto;height:18px"></md-icon>-->
+										<!--<md-icon class="fa fa-sign-out dfx-studio-flex-icon" style="font-size:18px;width:auto;height:18px"></md-icon>-->
 										<!--<span style="margin:0 5px;">Close</span>-->
 									<!--</button>-->
 									<!--<md-menu-content style="display:none !important"></md-menu-content>-->
@@ -296,20 +296,20 @@
 										</td>
 										<td>
 											<md-button ng-click="codeEditor( $index, scopeService.data.precode, 'precode' )" class="md-icon-button" aria-label="icon-button">
-											  <md-icon class="fa fa-edit" style="font-size:18px;width:18px;height:18px;"></md-icon>
+											  <md-icon class="fa fa-edit dfx-studio-flex-icon" style="font-size:18px;width:18px;height:18px;"></md-icon>
 											</md-button>
 										</td>
 										<td>
 											<md-button ng-click="moveUp( $index, preCode, scopeService.data.precode )" class="md-icon-button" style="margin:0;" aria-label="icon-button">
-											  <md-icon class="fa fa-arrow-up" style="font-size:18px;width:18px;height:18px;"></md-icon>
+											  <md-icon class="fa fa-arrow-up dfx-studio-flex-icon" style="font-size:18px;width:18px;height:18px;"></md-icon>
 											</md-button>
 											<md-button ng-click="moveDown( $index, preCode, scopeService.data.precode )" class="md-icon-button" style="margin:0;" aria-label="icon-button">
-											  <md-icon class="fa fa-arrow-down" style="font-size:18px;width:18px;height:18px;"></md-icon>
+											  <md-icon class="fa fa-arrow-down dfx-studio-flex-icon" style="font-size:18px;width:18px;height:18px;"></md-icon>
 											</md-button>
 										</td>
 										<td>
 											<md-button ng-click="deleteRow( scopeService.data.precode, $index )" class="md-icon-button" aria-label="icon-button">
-											  <md-icon class="fa fa-trash" style="font-size:18px;width:18px;height:18px;"></md-icon>
+											  <md-icon class="fa fa-trash dfx-studio-flex-icon" style="font-size:18px;width:18px;height:18px;"></md-icon>
 											</md-button>
 										</td>
 									</tr>
@@ -338,20 +338,20 @@
 										</td>
 										<td>
 											<md-button ng-click="codeEditor( $index, scopeService.data.postcode, 'postcode' )" class="md-icon-button" aria-label="icon-button">
-											  <md-icon class="fa fa-edit" style="font-size:18px;width:18px;height:18px;"></md-icon>
+											  <md-icon class="fa fa-edit dfx-studio-flex-icon" style="font-size:18px;width:18px;height:18px;"></md-icon>
 											</md-button>
 										</td>
 										<td>
 											<md-button ng-click="moveUp( $index, postCode, scopeService.data.postcode )" class="md-icon-button" style="margin:0;" aria-label="icon-button">
-											  <md-icon class="fa fa-arrow-up" style="font-size:18px;width:18px;height:18px;"></md-icon>
+											  <md-icon class="fa fa-arrow-up dfx-studio-flex-icon" style="font-size:18px;width:18px;height:18px;"></md-icon>
 											</md-button>
 											<md-button ng-click="moveDown( $index, postCode, scopeService.data.postcode )" class="md-icon-button" style="margin:0;" aria-label="icon-button">
-											  <md-icon class="fa fa-arrow-down" style="font-size:18px;width:18px;height:18px;"></md-icon>
+											  <md-icon class="fa fa-arrow-down dfx-studio-flex-icon" style="font-size:18px;width:18px;height:18px;"></md-icon>
 											</md-button>
 										</td>
 										<td>
 											<md-button ng-click="deleteRow( scopeService.data.postcode, $index )" class="md-icon-button" aria-label="icon-button">
-											  <md-icon class="fa fa-trash" style="font-size:18px;width:18px;height:18px;"></md-icon>
+											  <md-icon class="fa fa-trash dfx-studio-flex-icon" style="font-size:18px;width:18px;height:18px;"></md-icon>
 											</md-button>
 										</td>
 									</tr>
@@ -385,7 +385,7 @@
 										</td>						
 										<td>
 											<md-button ng-click="deleteRow( scopeService.data.appexpr, $index )" class="md-icon-button" aria-label="icon-button">
-											  <md-icon class="fa fa-trash" style="font-size:18px;width:18px;height:18px;"></md-icon>
+											  <md-icon class="fa fa-trash dfx-studio-flex-icon" style="font-size:18px;width:18px;height:18px;"></md-icon>
 											</md-button>
 										</td>
 									</tr>
