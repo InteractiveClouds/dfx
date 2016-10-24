@@ -130,7 +130,10 @@ DfxVisualBuilder.init = function () {
             highlightSelectionMatches: {showToken: /\w/},
             styleActiveLine: true,
             viewportMargin : Infinity,
-            extraKeys: {"Alt-F": "findPersistent", "Ctrl-Space": "autocomplete"},
+            extraKeys: {
+				"Alt-F": "findPersistent",
+				"Ctrl-Space": "autocomplete"
+			},
             foldGutter: true,
             gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
         });
@@ -153,7 +156,10 @@ DfxVisualBuilder.init = function () {
             highlightSelectionMatches: {showToken: /\w/},
             styleActiveLine: true,
             viewportMargin : Infinity,
-            extraKeys: {"Alt-F": "findPersistent", "Ctrl-Space": "autocomplete"},
+            extraKeys: {
+				"Alt-F": "findPersistent",
+				"Ctrl-Space": "autocomplete"
+			},
             foldGutter: true,
             gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
         });
@@ -176,7 +182,10 @@ DfxVisualBuilder.init = function () {
             highlightSelectionMatches: {showToken: /\w/},
             styleActiveLine: true,
             viewportMargin : Infinity,
-            extraKeys: {"Alt-F": "findPersistent", "Ctrl-Space": "autocomplete"},
+            extraKeys: {
+				"Alt-F": "findPersistent",
+				"Ctrl-Space": "autocomplete"
+			},
             foldGutter: true,
             gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
         });
