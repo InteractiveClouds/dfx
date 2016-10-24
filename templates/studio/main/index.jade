@@ -48,27 +48,27 @@ html
                                 md-menu(style="padding: 1px;")
                                     button.dfx-studio-toolbar-button.dfx-studio-toolbar-button-help.md-button(aria-label="help", ng-click="$mdOpenMenu();" style="padding:0")
                                         md-tooltip(md-direction="bottom") Help
-                                        md-icon.fa.fa-support(title="Help" style="text-align: center; padding-top: 4px;color:#4BCDFF;")
+                                        md-icon.fa.fa-support(title="Help" style="text-align: center; color:#4BCDFF;")
                                     md-menu-content(width="4")
                                         md-menu-item
                                             md-button(ng-click="loadStudioView('/stackoverflow')" style="line-height:32px;")
-                                                md-icon.fa.fa-stack-overflow.md-altTheme-theme.material-icons(style="height:18px;margin:7px 16px 0 0;text-align:center;")
+                                                md-icon.fa.fa-stack-overflow.md-altTheme-theme.material-icons
                                                 span Stack Overflow
                                         md-menu-item
                                             md-button(ng-click="redirectDocumentation()" style="line-height:32px;")
-                                                md-icon.fa.fa-file-text-o.md-altTheme-theme.material-icons(style="height:18px;margin:7px 16px 0 0;text-align:center;")
+                                                md-icon.fa.fa-file-text-o.md-altTheme-theme.material-icons
                                                 span Documentation
                                         md-menu-item
                                             md-button(ng-click="loadStudioView('/samples');" style="line-height:32px;" aria-label="iconbar-button")
-                                                md-icon.fa.fa-desktop.md-altTheme-theme.material-icons(style="height:18px;margin:9px 16px 0 0;text-align:center;")
+                                                md-icon.fa.fa-desktop.md-altTheme-theme.material-icons
                                                 span Play with samples
                                         md-menu-item
                                             md-button(ng-click="loadStudioView('/support');refreshSupportForm()" style="line-height:32px;")
-                                                md-icon.fa.fa-support.md-altTheme-theme.material-icons(style="height:18px;margin:7px 16px 0 0;text-align:center;")
+                                                md-icon.fa.fa-support.md-altTheme-theme.material-icons
                                                 span Get Support
                                         md-menu-item
                                             md-button(ng-click="loadStudioView('/contactus');refreshSupportForm()" style="line-height:32px;")
-                                                md-icon.fa.fa-envelope-o.md-altTheme-theme.material-icons(style="height:18px;margin:7px 16px 0 0;text-align:center;")
+                                                md-icon.fa.fa-envelope-o.md-altTheme-theme.material-icons
                                                 span Contact us
                         div.pull-right(style="color: #fff;font-size: 13px;line-height:25px;display: inline-block;margin-top:2px;margin-right:20px;padding-left:5px; padding-right:5px; background:#2196F3;border-radius:3px")
                             i.fa.fa-user
@@ -95,19 +95,19 @@ html
                                                 md-menu-content(width="4")
                                                     md-menu-item
                                                         md-button(ng-click="loadStudioView('/stackoverflow')" style="line-height:32px;")
-                                                            md-icon.fa.fa-stack-overflow.md-altTheme-theme.material-icons(style="height:18px;margin:7px 16px 0 0;text-align:center;")
+                                                            md-icon.fa.fa-stack-overflow.md-altTheme-theme.material-icons
                                                             span Stack Overflow
                                                     md-menu-item
                                                         md-button(ng-click="redirectDocumentation()" style="line-height:32px;")
-                                                            md-icon.fa.fa-file-text-o.md-altTheme-theme.material-icons(style="height:18px;margin:7px 16px 0 0;text-align:center;")
+                                                            md-icon.fa.fa-file-text-o.md-altTheme-theme.material-icons
                                                             span Documentation
                                                     md-menu-item
                                                         md-button(ng-click="loadStudioView('/samples')" style="line-height:32px;" aria-label="iconbar-button")
-                                                            md-icon.fa.fa-desktop.md-altTheme-theme.material-icons(style="height:18px;margin:9px 16px 0 0;text-align:center;")
+                                                            md-icon.fa.fa-desktop.md-altTheme-theme.material-icons
                                                             span Install samples
                                                     md-menu-item
                                                         md-button(ng-click="loadStudioView('/support');refreshSupportForm()" style="line-height:32px;")
-                                                            md-icon.fa.fa-envelope-o.md-altTheme-theme.material-icons(style="height:18px;margin:7px 16px 0 0;text-align:center;")
+                                                            md-icon.fa.fa-envelope-o.md-altTheme-theme.material-icons
                                                             span Support
                                     div(style="padding-right:30px")
                                         md-button.dfx-studio-toolbar-button.dfx-studio-toolbar-button-help.md-raised(aria-label="Sign Out", ng-click="signOut()")

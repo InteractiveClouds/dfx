@@ -525,9 +525,9 @@
 													<td width="20%">{{serviceItem.data.settings.typerequest.slice(5)}}</td>
 													<td width="25%">{{serviceItem.data.settings.authentication === 'none' ? 'public/rest' : serviceItem.data.settings.authentication}}</td>
 													<td>
-		                        <md-button ng-click="editService( serviceItem, $index )" style="margin:0;padding:0;min-width:20px" aria-label="edit-service"><md-icon class="fa fa-edit" style="font-size:20px; padding-top: 5px;"></md-icon></md-button>
-	                            <md-button ng-click="showCurl( serviceItem )" style="margin:0;padding:0;min-width:20px" aria-label="show-curl"><md-icon class="fa fa-info" style="font-size:20px; padding-top: 5px;"></md-icon></md-button>
-	                            <md-button style="margin: 0; padding: 0; min-width: 20px" ng-click="confirmDelete( $event, $index )" aria-label="delete-service"><md-icon class="fa fa-trash" style="font-size:20px; padding-top: 3px;"></md-icon></md-button>
+		                        						<md-button class="dfx-studio-table-button" ng-click="editService( serviceItem, $index )" aria-label="edit-service"><md-icon class="fa fa-edit"></md-icon></md-button>
+	                            						<md-button class="dfx-studio-table-button" ng-click="showCurl( serviceItem )" aria-label="show-curl"><md-icon class="fa fa-info"></md-icon></md-button>
+	                            						<md-button class="dfx-studio-table-button" ng-click="confirmDelete( $event, $index )" aria-label="delete-service"><md-icon class="fa fa-trash"></md-icon></md-button>
 													</td>
 												</tr>
 											</tbody>
