@@ -20,6 +20,10 @@ dfxViewEditorApp.controller("dfx_main_controller", [ '$scope', '$rootScope', '$q
     $scope.helpForm = false;
     $scope.scopeOptionsVarNameInput = false;
 
+	$scope.$on('keypress:83', function(onEvent, keypressEvent) {
+    	alert('here');
+    });
+
     $scope.getGCDefaultAttributes = function( type ) {
         var deferred = $q.defer();
         if ($scope.gc_types[type] != null) {
@@ -359,6 +363,8 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
         $('#dfx_script_editor').css('display', 'block');
         $('.dfx-ve-toolbar-button').removeClass('dfx-ve-toolbar-button-selected');
         $('.dfx-ve-toolbar-button-script').addClass('dfx-ve-toolbar-button-selected');
+		var editor = $('#dfx_script_editor')[0].CodeMirror;
+		editor.focus();
     };
     $scope.showStyle = function() {
         $scope.design_visible = false;
@@ -370,6 +376,8 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
         $('#dfx_styles_editor').css('display', 'block');
         $('.dfx-ve-toolbar-button').removeClass('dfx-ve-toolbar-button-selected');
         $('.dfx-ve-toolbar-button-styles').addClass('dfx-ve-toolbar-button-selected');
+		var editor = $('#dfx_styles_editor')[0].CodeMirror;
+		editor.focus();
     };
     $scope.showSource = function() {
         var editor = $('#dfx_src_editor')[0].CodeMirror;
@@ -386,6 +394,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
             editor.setValue(JSON.stringify(widget_definition, null, '\t'));
             editor.scrollTo(0, 0);
             editor.refresh();
+			editor.focus();
         }
 
         $scope.design_visible = false;
@@ -702,7 +711,9 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
 
 
     $scope.saveView = function(event) {
-        $(event.srcElement).animateCss('pulse');
+		if (event!=null) {
+        	$(event.srcElement).animateCss('pulse');
+		}
         /*DfxStudio.updateWidgetSource({
             widgetName:'#{widget.name}',
             category:'#{widget.category}',
@@ -4763,3 +4774,19 @@ var helpDialogScript = function (options) {
         $('#dfx_visual_editor_help_close').click();
     }
 };
+
+dfxViewEditorApp.directive('dfxVeCtrlS', [ '$document', function ($document) {
+	return {
+      restrict: 'A',
+      link: function(scope) {
+        $document.bind('keydown', function(e) {
+			if ((e.which == '115' || e.which == '83' ) && (e.ctrlKey || e.metaKey)) {
+				e.preventDefault();
+				scope.saveView();
+				return false;
+		    }
+		    return true;
+        });
+      }
+    };
+}]);
