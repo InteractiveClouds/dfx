@@ -14,19 +14,19 @@
                 </li>
                 <li class="col-md-12">
                     <span class="col-md-5">Name:</span>
-                    <input class="col-md-7" type="text" ng-model="attributes.name.value" ng-change="overrideAttribute('name')" />
+                    <input class="col-md-7" type="text" ng-model="attributes.name.value" ng-change="overrideAttribute('name')" ng-focus="cacheAttributeOldValue({'name':'name'})" ng-blur="cacheAttributeNewValue('name')"/>
                 </li>
                 <li class="col-md-12">
                     <span class="col-md-5">Label:</span>
                     <div class="col-md-7" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.label.value" style="margin-left:-15px;" ng-change="overrideAttribute('label')"/>
+                        <input class="col-md-12" type="text" ng-model="attributes.label.value" style="margin-left:-15px;" ng-change="overrideAttribute('label')" ng-focus="cacheAttributeOldValue({'name':'label'})" ng-blur="cacheAttributeNewValue('label')"/>
                         <dfx-ve-expression-editor></dfx-ve-expression-editor>
                     </div>
                 </li>
                 <li class="col-md-12">
                     <span class="col-md-5">Direction:</span>
                     <md-input-container class="col-md-7" style="padding: 0 0 10px">
-                        <md-select aria-label="fabDirection" class="md-block" ng-model="attributes.fabDirection.value" ng-change="overrideAttribute('fabDirection')">
+                        <md-select aria-label="fabDirection" class="md-block" ng-model="attributes.fabDirection.value" ng-change="overrideAttribute('fabDirection');cacheAttributeOldValue({'value':{{attributes.fabDirection.value}}});cacheAttributeNewValue('fabDirection');">
                             <md-option ng-repeat="fabDirection in [{display:'Up', value:'up'}, {display:'Right', value:'right'}, {display:'Down', value:'down'}, {display:'Left', value:'left'}]" ng-value="fabDirection.value">{{fabDirection.display}}</md-option>
                         </md-select>
                     </md-input-container>
@@ -34,7 +34,7 @@
                 <li class="col-md-12">
                     <span class="col-md-5">Animation Mode:</span>
                     <md-input-container class="col-md-7" style="padding: 0 0 10px">
-                        <md-select aria-label="animation" ng-model="attributes.animation.value" ng-change="overrideAttribute('animation')">
+                        <md-select aria-label="animation" ng-model="attributes.animation.value" ng-change="overrideAttribute('animation');cacheAttributeOldValue({'value':{{attributes.animation.value}}});cacheAttributeNewValue('animation');">
                             <md-option ng-repeat="animation in [{display:'Fling', value:'md-fling'}, {display:'Scale', value:'md-scale'}]" ng-value="animation.value">{{animation.display}}</md-option>
                         </md-select>
                     </md-input-container>
@@ -42,14 +42,14 @@
                 <li class="col-md-12">
                     <span class="col-md-5">Menu Icon:</span>
                     <div class="col-md-7" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.icon.value" ng-change="overrideAttribute('icon');ifShowIconTypes(attributes.icon.value)" style="margin-left:-15px;"/>
+                        <input class="col-md-12" type="text" ng-model="attributes.icon.value" ng-change="overrideAttribute('icon');ifShowIconTypes(attributes.icon.value)" ng-focus="cacheAttributeOldValue({'name':'icon'})" ng-blur="cacheAttributeNewValue('icon')" style="margin-left:-15px;"/>
                         <md-icon ng-click="showFontIcons($event, attributes.icon)" dfx-ve-picker-icon dfx-picker-property="icon" class="dfx-ve-picker-icon fa fa-ellipsis-h"></md-icon>
                     </div>
                 </li>
                 <li class="col-md-12" ng-show="showIconTypes">
                     <span class="col-md-5">Menu Icon Type:</span>
                     <div class="col-md-7" layout="row" style="padding: 0 0 8px 0">
-                        <md-radio-group ng-model="attributes.icon.type">
+                        <md-radio-group ng-model="attributes.icon.type" ng-focus="cacheAttributeOldValue({'name':'icon.type'})" ng-blur="cacheAttributeNewValue('icon.type')">
                             <md-radio-button value="fa-icon" ngChange="overrideAttribute('icon.type')" style="margin: 0;" class="md-primary">Font Awesome Icon</md-radio-button>
                             <md-radio-button value="svg-icon" ngChange="overrideAttribute('icon.type')" style="margin: 0;" class="md-primary">SVG Icon</md-radio-button>
                         </md-radio-group>
@@ -62,14 +62,14 @@
                 <li class="col-md-12">
                     <span class="col-md-5">Display:</span>
                     <div class="col-md-7" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.display.value" style="margin-left:-15px;" ng-change="overrideAttribute('display')"/>
+                        <input class="col-md-12" type="text" ng-model="attributes.display.value" ng-focus="cacheAttributeOldValue({'name':'display'})" ng-blur="cacheAttributeNewValue('display')" style="margin-left:-15px;" ng-change="overrideAttribute('display')"/>
                         <dfx-ve-expression-editor></dfx-ve-expression-editor>
                     </div>
                 </li>
                 <li class="col-md-12">
                     <span class="col-md-5">Disabled:</span>
                     <div class="col-md-7" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.disabled.value" style="margin-left:-15px;" ng-change="overrideAttribute('disabled')"/>
+                        <input class="col-md-12" type="text" ng-model="attributes.disabled.value" ng-focus="cacheAttributeOldValue({'name':'disabled'})" ng-blur="cacheAttributeNewValue('disabled')" style="margin-left:-15px;" ng-change="overrideAttribute('disabled')"/>
                         <dfx-ve-expression-editor></dfx-ve-expression-editor>
                     </div>
                 </li>
@@ -82,54 +82,54 @@
                 <li class="col-md-12">
                     <input class="dfx-ve-property-treeview-button" type="checkbox" checked aria-label="container-styles" id="container-styles" />
                     <label for="container-styles" class="dfx-ve-property-title-level-1"><span>Container Styling</span></label>
-                    <ul class="dfx-ve-property-treeview-content">                    
+                    <ul class="dfx-ve-property-treeview-content">
                         <li class="col-md-12">
                             <span class="col-md-5">Style:</span>
                             <div class="col-md-7" layout="row">
-                                <input class="col-md-12" type="text" ng-model="attributes.style.value" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('style')"/>
+                                <input class="col-md-12" type="text" ng-model="attributes.style.value" ng-focus="cacheAttributeOldValue({'name':'style'})" ng-blur="cacheAttributeNewValue('style')" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('style')"/>
                                 <dfx-ve-css-style></dfx-ve-css-style>
                             </div>
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-5">Class:</span>
-                            <input class="col-md-7" type="text" ng-model="attributes.classes.value" style="padding-left: 6px" ng-change="overrideAttribute('classes')"/>
+                            <input class="col-md-7" type="text" ng-model="attributes.classes.value" ng-focus="cacheAttributeOldValue({'name':'classes'})" ng-blur="cacheAttributeNewValue('classes')" style="padding-left: 6px" ng-change="overrideAttribute('classes')"/>
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-5">Dynamic Class:</span>
-                            <input class="col-md-7" type="text" ng-model="attributes.dynamicClasses.value" style="padding-left: 6px" ng-change="overrideAttribute('dynamicClasses')"/>
+                            <input class="col-md-7" type="text" ng-model="attributes.dynamicClasses.value" ng-focus="cacheAttributeOldValue({'name':'dynamicClasses'})" ng-blur="cacheAttributeNewValue('dynamicClasses')" style="padding-left: 6px" ng-change="overrideAttribute('dynamicClasses')"/>
                         </li>
                     </ul>
                 </li>
                 <li class="col-md-12">
                     <input class="dfx-ve-property-treeview-button" type="checkbox" checked aria-label="menu-styles" id="menu-styles" />
                     <label for="menu-styles" class="dfx-ve-property-title-level-1"><span>Menu Styling</span></label>
-                    <ul class="dfx-ve-property-treeview-content">                    
+                    <ul class="dfx-ve-property-treeview-content">
                         <li class="col-md-12">
                             <span class="col-md-5">Style:</span>
                             <div class="col-md-7" layout="row">
-                                <input class="col-md-12" type="text" ng-model="attributes.triggerButton.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('triggerButton.style')"/>
+                                <input class="col-md-12" type="text" ng-model="attributes.triggerButton.style" ng-focus="cacheAttributeOldValue({'name':'triggerButton.style'})" ng-blur="cacheAttributeNewValue('triggerButton.style')" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('triggerButton.style')"/>
                                 <dfx-ve-css-style></dfx-ve-css-style>
                             </div>
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-5">Class:</span>
-                            <input class="col-md-7" type="text" ng-model="attributes.triggerButton.class" style="padding-left: 6px" ng-change="overrideAttribute('triggerButton.class')"/>
+                            <input class="col-md-7" type="text" ng-model="attributes.triggerButton.class" ng-focus="cacheAttributeOldValue({'name':'triggerButton.class'})" ng-blur="cacheAttributeNewValue('triggerButton.class')" style="padding-left: 6px" ng-change="overrideAttribute('triggerButton.class')"/>
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-5">Icon Size:</span>
-                            <input class="col-md-7" type="number" ng-model="attributes.icon.size" ng-change="overrideAttribute('icon.size')" />
+                            <input class="col-md-7" type="number" ng-model="attributes.icon.size" ng-change="overrideAttribute('icon.size')" ng-focus="cacheAttributeOldValue({'name':'icon.size'})" ng-blur="cacheAttributeNewValue('icon.size')"/>
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-5">Icon Style:</span>
                             <div class="col-md-7" layout="row">
-                                <input class="col-md-12" type="text" ng-model="attributes.icon.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('icon.style')"/>
+                                <input class="col-md-12" type="text" ng-model="attributes.icon.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('icon.style')" ng-focus="cacheAttributeOldValue({'name':'icon.style'})" ng-blur="cacheAttributeNewValue('icon.style')"/>
                                 <dfx-ve-css-style></dfx-ve-css-style>
                             </div>
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-5">Tooltip Direction:</span>
                             <md-input-container class="col-md-7" style="padding: 0 0 10px">
-                                <md-select aria-label="tooltipDirection" class="md-block" ng-model="attributes.triggerButton.tooltip.direction" ng-change="overrideAttribute('triggerButton.tooltip.direction')" style="text-transform: capitalize;">
+                                <md-select aria-label="tooltipDirection" class="md-block" ng-model="attributes.triggerButton.tooltip.direction" ng-change="overrideAttribute('triggerButton.tooltip.direction');cacheAttributeOldValue({'value':{{attributes.triggerButton.tooltip.direction}}});cacheAttributeNewValue('triggerButton.tooltip.direction');" style="text-transform: capitalize;">
                                     <md-option ng-repeat="tooltipDirection in ['top', 'right', 'bottom', 'left']" ng-value="tooltipDirection" style="text-transform: capitalize;">{{tooltipDirection}}</md-option>
                                 </md-select>
                             </md-input-container>
@@ -137,46 +137,46 @@
                         <li class="col-md-12">
                             <span class="col-md-5">Tooltip Style:</span>
                             <div class="col-md-7" layout="row">
-                                <input class="col-md-12" type="text" ng-model="attributes.triggerButton.tooltip.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('triggerButton.tooltip.style')"/>
+                                <input class="col-md-12" type="text" ng-model="attributes.triggerButton.tooltip.style" ng-focus="cacheAttributeOldValue({'name':'triggerButton.tooltip.style'})" ng-blur="cacheAttributeNewValue('triggerButton.tooltip.style')" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('triggerButton.tooltip.style')"/>
                                 <dfx-ve-css-style></dfx-ve-css-style>
                             </div>
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-5">Tooltip Class:</span>
-                            <input class="col-md-7" type="text" ng-model="attributes.triggerButton.tooltip.classes" style="padding-left: 6px" ng-change="overrideAttribute('triggerButton.tooltip.classes')"/>
+                            <input class="col-md-7" type="text" ng-model="attributes.triggerButton.tooltip.classes" ng-focus="cacheAttributeOldValue({'name':'triggerButton.tooltip.classes'})" ng-blur="cacheAttributeNewValue('triggerButton.tooltip.classes')" style="padding-left: 6px" ng-change="overrideAttribute('triggerButton.tooltip.classes')"/>
                         </li>
                     </ul>
                 </li>
                 <li class="col-md-12">
                     <input class="dfx-ve-property-treeview-button" type="checkbox" checked aria-label="item-styles" id="item-styles" />
                     <label for="item-styles" class="dfx-ve-property-title-level-1"><span>Item Styling</span></label>
-                    <ul class="dfx-ve-property-treeview-content">                    
+                    <ul class="dfx-ve-property-treeview-content">
                         <li class="col-md-12">
                             <span class="col-md-5">Style:</span>
                             <div class="col-md-7" layout="row">
-                                <input class="col-md-12" type="text" ng-model="attributes.actionButton.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('actionButton.style')"/>
+                                <input class="col-md-12" type="text" ng-model="attributes.actionButton.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('actionButton.style')" ng-focus="cacheAttributeOldValue({'name':'actionButton.style'})" ng-blur="cacheAttributeNewValue('actionButton.style')"/>
                                 <dfx-ve-css-style></dfx-ve-css-style>
                             </div>
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-5">Class:</span>
-                            <input class="col-md-7" type="text" ng-model="attributes.actionButton.class" style="padding-left: 6px" ng-change="overrideAttribute('actionButton.class')"/>
+                            <input class="col-md-7" type="text" ng-model="attributes.actionButton.class" ng-focus="cacheAttributeOldValue({'name':'actionButton.class'})" ng-blur="cacheAttributeNewValue('actionButton.class')" style="padding-left: 6px" ng-change="overrideAttribute('actionButton.class')"/>
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-5">Icon Size:</span>
-                            <input class="col-md-7" type="number" ng-model="attributes.actionButton.icon.size" ng-change="overrideAttribute('actionButton.icon.size')" />
+                            <input class="col-md-7" type="number" ng-model="attributes.actionButton.icon.size" ng-change="overrideAttribute('actionButton.icon.size')" ng-focus="cacheAttributeOldValue({'name':'actionButton.icon.size'})" ng-blur="cacheAttributeNewValue('actionButton.icon.size')"/>
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-5">Icon Style:</span>
                             <div class="col-md-7" layout="row">
-                                <input class="col-md-12" type="text" ng-model="attributes.actionButton.icon.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('actionButton.icon.style')"/>
+                                <input class="col-md-12" type="text" ng-model="attributes.actionButton.icon.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('actionButton.icon.style')" ng-focus="cacheAttributeOldValue({'name':'actionButton.icon.style'})" ng-blur="cacheAttributeNewValue('actionButton.icon.style')"/>
                                 <dfx-ve-css-style></dfx-ve-css-style>
                             </div>
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-5">Tooltip Direction:</span>
                             <md-input-container class="col-md-7" style="padding: 0 0 10px">
-                                <md-select aria-label="tooltipDirection" class="md-block" ng-model="attributes.actionButton.tooltip.direction" ng-change="overrideAttribute('actionButton.tooltip.direction')" style="text-transform: capitalize;">
+                                <md-select aria-label="tooltipDirection" class="md-block" ng-model="attributes.actionButton.tooltip.direction" ng-change="overrideAttribute('actionButton.tooltip.direction');cacheAttributeOldValue({'value':{{attributes.actionButton.tooltip.direction}}});cacheAttributeNewValue('actionButton.tooltip.direction');" style="text-transform: capitalize;">
                                     <md-option ng-repeat="tooltipDirection in ['top', 'right', 'bottom', 'left']" ng-value="tooltipDirection" style="text-transform: capitalize;">{{tooltipDirection}}</md-option>
                                 </md-select>
                             </md-input-container>
@@ -184,13 +184,13 @@
                         <li class="col-md-12">
                             <span class="col-md-5">Tooltip Style:</span>
                             <div class="col-md-7" layout="row">
-                                <input class="col-md-12" type="text" ng-model="attributes.actionButton.tooltip.style" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('actionButton.tooltip.style')"/>
+                                <input class="col-md-12" type="text" ng-model="attributes.actionButton.tooltip.style" ng-focus="cacheAttributeOldValue({'name':'actionButton.tooltip.style'})" ng-blur="cacheAttributeNewValue('actionButton.tooltip.style')" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('actionButton.tooltip.style')"/>
                                 <dfx-ve-css-style></dfx-ve-css-style>
                             </div>
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-5">Tooltip Class:</span>
-                            <input class="col-md-7" type="text" ng-model="attributes.actionButton.tooltip.classes" style="padding-left: 6px" ng-change="overrideAttribute('actionButton.tooltip.classes')"/>
+                            <input class="col-md-7" type="text" ng-model="attributes.actionButton.tooltip.classes" ng-focus="cacheAttributeOldValue({'name':'actionButton.tooltip.classes'})" ng-blur="cacheAttributeNewValue('actionButton.tooltip.classes')" style="padding-left: 6px" ng-change="overrideAttribute('actionButton.tooltip.classes')"/>
                         </li>
                     </ul>
                 </li>
@@ -204,55 +204,55 @@
             <ul class="dfx-ve-property-treeview-content">
                 <li class="col-md-12">
                     <span class="col-md-5">On Click:</span>
-                    <div class="col-md-7" layout="row"><input type="text" ng-model="attributes.onclick.value" ng-change="overrideAttribute('onclick')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                    <div class="col-md-7" layout="row"><input type="text" ng-model="attributes.onclick.value" ng-change="overrideAttribute('onclick')" ng-focus="cacheAttributeOldValue({'name':'onclick'})" ng-blur="cacheAttributeNewValue('onclick')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
                 </li>
                 <li class="col-md-12">
                     <span class="col-md-5">On Double Click:</span>
-                    <div class="col-md-7" layout="row"><input type="text" ng-model="attributes.ondblclick.value" ng-change="overrideAttribute('ondblclick')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                    <div class="col-md-7" layout="row"><input type="text" ng-model="attributes.ondblclick.value" ng-change="overrideAttribute('ondblclick')" ng-focus="cacheAttributeOldValue({'name':'ondblclick'})" ng-blur="cacheAttributeNewValue('ondblclick')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
                 </li>
                 <li class="col-md-12">
                     <span class="col-md-5">On Focus:</span>
-                    <div class="col-md-7" layout="row"><input type="text" ng-model="attributes.onfocus.value" ng-change="overrideAttribute('onfocus')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                    <div class="col-md-7" layout="row"><input type="text" ng-model="attributes.onfocus.value" ng-change="overrideAttribute('onfocus')" ng-focus="cacheAttributeOldValue({'name':'onfocus'})" ng-blur="cacheAttributeNewValue('onfocus')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
                 </li>
                 <li class="col-md-12">
                     <span class="col-md-5">On Blur:</span>
-                    <div class="col-md-7" layout="row"><input type="text" ng-model="attributes.onblur.value" ng-change="overrideAttribute('onblur')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                    <div class="col-md-7" layout="row"><input type="text" ng-model="attributes.onblur.value" ng-change="overrideAttribute('onblur')" ng-focus="cacheAttributeOldValue({'name':'onblur'})" ng-blur="cacheAttributeNewValue('onblur')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
                 </li>
                 <li class="col-md-12">
                     <span class="col-md-5">On Key Press:</span>
-                    <div class="col-md-7" layout="row"><input type="text" ng-model="attributes.onkeypress.value" ng-change="overrideAttribute('onkeypress')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                    <div class="col-md-7" layout="row"><input type="text" ng-model="attributes.onkeypress.value" ng-change="overrideAttribute('onkeypress')" ng-focus="cacheAttributeOldValue({'name':'onkeypress'})" ng-blur="cacheAttributeNewValue('onkeypress')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
                 </li>
                 <li class="col-md-12">
                     <span class="col-md-5">On Key Down:</span>
-                    <div class="col-md-7" layout="row"><input type="text" ng-model="attributes.onkeydown.value" ng-change="overrideAttribute('onkeydown')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                    <div class="col-md-7" layout="row"><input type="text" ng-model="attributes.onkeydown.value" ng-change="overrideAttribute('onkeydown')" ng-focus="cacheAttributeOldValue({'name':'onkeydown'})" ng-blur="cacheAttributeNewValue('onkeydown')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
                 </li>
                 <li class="col-md-12">
                     <span class="col-md-5">On Key Up:</span>
-                    <div class="col-md-7" layout="row"><input type="text" ng-model="attributes.onkeyup.value" ng-change="overrideAttribute('onkeyup')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                    <div class="col-md-7" layout="row"><input type="text" ng-model="attributes.onkeyup.value" ng-change="overrideAttribute('onkeyup')" ng-focus="cacheAttributeOldValue({'name':'onkeyup'})" ng-blur="cacheAttributeNewValue('onkeyup')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
                 </li>
                 <li class="col-md-12">
                     <span class="col-md-5">On Mouse Over:</span>
-                    <div class="col-md-7" layout="row"><input type="text" ng-model="attributes.onmouseover.value" ng-change="overrideAttribute('onmouseover')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                    <div class="col-md-7" layout="row"><input type="text" ng-model="attributes.onmouseover.value" ng-change="overrideAttribute('onmouseover')" ng-focus="cacheAttributeOldValue({'name':'onmouseover'})" ng-blur="cacheAttributeNewValue('onmouseover')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
                 </li>
                 <li class="col-md-12">
                     <span class="col-md-5">On Mouse Enter:</span>
-                    <div class="col-md-7" layout="row"><input type="text" ng-model="attributes.onmouseenter.value" ng-change="overrideAttribute('onmouseenter')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                    <div class="col-md-7" layout="row"><input type="text" ng-model="attributes.onmouseenter.value" ng-change="overrideAttribute('onmouseenter')" ng-focus="cacheAttributeOldValue({'name':'onmouseenter'})" ng-blur="cacheAttributeNewValue('onmouseenter')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
                 </li>
                 <li class="col-md-12">
                     <span class="col-md-5">On Mouse Move:</span>
-                    <div class="col-md-7" layout="row"><input type="text" ng-model="attributes.onmousemove.value" ng-change="overrideAttribute('onmousemove')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                    <div class="col-md-7" layout="row"><input type="text" ng-model="attributes.onmousemove.value" ng-change="overrideAttribute('onmousemove')" ng-focus="cacheAttributeOldValue({'name':'onmousemove'})" ng-blur="cacheAttributeNewValue('onmousemove')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
                 </li>
                 <li class="col-md-12">
                     <span class="col-md-5">On Mouse Leave:</span>
-                    <div class="col-md-7" layout="row"><input type="text" ng-model="attributes.onmouseleave.value" ng-change="overrideAttribute('onmouseleave')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                    <div class="col-md-7" layout="row"><input type="text" ng-model="attributes.onmouseleave.value" ng-change="overrideAttribute('onmouseleave')" ng-focus="cacheAttributeOldValue({'name':'onmouseleave'})" ng-blur="cacheAttributeNewValue('onmouseleave')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
                 </li>
                 <li class="col-md-12">
                     <span class="col-md-5">On Mouse Down:</span>
-                    <div class="col-md-7" layout="row"><input type="text" ng-model="attributes.onmousedown.value" ng-change="overrideAttribute('onmousedown')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                    <div class="col-md-7" layout="row"><input type="text" ng-model="attributes.onmousedown.value" ng-change="overrideAttribute('onmousedown')" ng-focus="cacheAttributeOldValue({'name':'onmousedown'})" ng-blur="cacheAttributeNewValue('onmousedown')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
                 </li>
                 <li class="col-md-12">
                     <span class="col-md-5">On Mouse Up:</span>
-                    <div class="col-md-7" layout="row"><input type="text" ng-model="attributes.onmouseup.value" ng-change="overrideAttribute('onmouseup')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                    <div class="col-md-7" layout="row"><input type="text" ng-model="attributes.onmouseup.value" ng-change="overrideAttribute('onmouseup')" ng-focus="cacheAttributeOldValue({'name':'onmouseup'})" ng-blur="cacheAttributeNewValue('onmouseup')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
                 </li>
             </ul>
         </li>

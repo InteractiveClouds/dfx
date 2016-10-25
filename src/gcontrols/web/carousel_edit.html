@@ -64,12 +64,12 @@
                 </li>
                 <li class="col-md-12">
                     <span class="col-md-4">Max Width:</span>
-                    <input class="col-md-2" type="text" ng-model="attributes.maxWidth.value" ng-change="overrideAttribute('maxWidth');rebuildCarousel();" ng-model-options="{ updateOn: 'blur'}" ng-focus="cacheAttributeOldValue({'name':'maxWidth'})" ng-blur="cacheAttributeNewValue('maxWidth')"/>
+                    <input class="col-md-2" type="text" ng-model="attributes.maxWidth.value" ng-change="overrideAttribute('maxWidth');rebuildCarousel();cacheAttributeNewValue('maxWidth');" ng-model-options="{ updateOn: 'blur'}" ng-focus="cacheAttributeOldValue({'name':'maxWidth'})"/>
                     <span class="col-md-2">px</span>
                 </li>
                 <li class="col-md-12">
                     <span class="col-md-4">Max Height:</span>
-                    <input class="col-md-2" type="text" ng-model="attributes.maxHeight.value" ng-change="overrideAttribute('maxHeight');rebuildCarousel()" ng-model-options="{ updateOn: 'blur'}" ng-focus="cacheAttributeOldValue({'name':'maxHeight'})" ng-blur="cacheAttributeNewValue('maxHeight')"/>
+                    <input class="col-md-2" type="text" ng-model="attributes.maxHeight.value" ng-change="overrideAttribute('maxHeight');rebuildCarousel();cacheAttributeNewValue('maxHeight');" ng-model-options="{ updateOn: 'blur'}" ng-focus="cacheAttributeOldValue({'name':'maxHeight'})"/>
                     <span class="col-md-2">px</span>
                 </li>
                 <li class="col-md-12">
