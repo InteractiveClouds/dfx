@@ -100,8 +100,8 @@
                                 <td>{{role.name}}</td>
                                 <td>{{role.description}}</td>
                                 <td>
-                                    <md-button ng-click="edit(role.name)" style="margin: 0; padding: 0; min-width: 20px"><md-icon class="fa fa-edit" style="font-size:20px; padding-top: 5px;"></md-icon></md-button>
-                                    <md-button style="margin: 0; padding: 0; min-width: 20px" ng-click="confirmDelete($event, role)" ng-disabled="role.unremovable"><md-icon class="fa fa-trash" style="font-size:20px; padding-top: 3px;"></md-icon></md-button>
+                                    <md-button ng-click="edit(role.name)" class="dfx-studio-table-button"><md-icon class="fa fa-edit"></md-icon></md-button>
+                                    <md-button class="dfx-studio-table-button" ng-click="confirmDelete($event, role)" ng-disabled="role.unremovable"><md-icon class="fa fa-trash"></md-icon></md-button>
                                 </td>
                             </tr>
                             </tbody>
@@ -138,8 +138,8 @@
                                 <td>{{user.name.first}}</td>
                                 <td>{{user.name.last}}</td>
                                 <td>
-                                    <md-button ng-click="edit(user.credentials.login)" style="margin: 0; padding: 0; min-width: 20px"><md-icon class="fa fa-edit" style="font-size:20px; padding-top: 5px;"></md-icon></md-button>
-                                    <md-button ng-click="confirmDelete($event, user.credentials.login)" style="margin: 0; padding: 0; min-width: 20px"><md-icon class="fa fa-trash" style="font-size:20px; padding-top: 3px;"></md-icon></md-button>
+                                    <md-button ng-click="edit(user.credentials.login)" class="dfx-studio-table-button"><md-icon class="fa fa-edit"></md-icon></md-button>
+                                    <md-button ng-click="confirmDelete($event, user.credentials.login)" class="dfx-studio-table-button"><md-icon class="fa fa-trash"></md-icon></md-button>
                                 </td>
                             </tr>
                             </tbody>
