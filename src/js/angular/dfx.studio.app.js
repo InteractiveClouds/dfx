@@ -433,7 +433,7 @@ dfxStudioApp.controller("dfx_studio_controller", [ '$scope', '$rootScope', '$mdD
                             "src_script": data.src_script
                         }
                         dfxViews.rename( $scope, to_rename ).then( function(data) {
-                            dfxMessaging.showMessage('The view has been successfully renamed');
+                            dfxMessaging.showMessage('View has been successfully renamed');
                             $scope.getAll();
                             $mdDialog.hide();
                             if ( $location.$$path === ('/view/update/' + to_rename.application + '/' + to_rename.oldname) ) {
@@ -543,9 +543,9 @@ dfxStudioApp.controller("dfx_studio_controller", [ '$scope', '$rootScope', '$mdD
                             dfxMessaging.showWarning( data.data.data.message );
                         } else {
                             switch ( $scope.targetComponent.type ) {
-                                case 'page': dfxMessaging.showMessage( 'The page ' + $scope.toCopy.name + ' has been successfully copied' ); break;
-                                case 'view': dfxMessaging.showMessage( 'The view ' + $scope.toCopy.name + ' has been successfully copied' ); break;
-                                case 'apiso': dfxMessaging.showMessage( 'The API service object ' + $scope.toCopy.name + ' has been successfully copied' ); break;
+                                case 'page': dfxMessaging.showMessage( 'Page ' + $scope.toCopy.name + ' has been successfully copied' ); break;
+                                case 'view': dfxMessaging.showMessage( 'View ' + $scope.toCopy.name + ' has been successfully copied' ); break;
+                                case 'apiso': dfxMessaging.showMessage( 'API service object ' + $scope.toCopy.name + ' has been successfully copied' ); break;
                             }
                             $scope.getAll();
                             if (callback != null) {
@@ -560,7 +560,7 @@ dfxStudioApp.controller("dfx_studio_controller", [ '$scope', '$rootScope', '$mdD
                         case 'view': dfxMessaging.showWarning( 'Not valid view name' ); break;
                         case 'apiso':
                             if ( nameRes ) {
-                                dfxMessaging.showWarning( 'Not valid API service object Name' );
+                                dfxMessaging.showWarning( 'Not valid API service object name' );
                                 break;
                             } else if ( prefixRes || $scope.prefix.value === '' ) {
                                 dfxMessaging.showWarning( 'Not valid API route prefix' );
@@ -634,7 +634,7 @@ dfxStudioApp.controller("dfx_studio_controller", [ '$scope', '$rootScope', '$mdD
                 switch ( $scope.targetComponent.type ) {
                     case 'page':
                         dfxPages.update( $scope, $scope.toMove ).then(function( data ) {
-                            data.result === 'success' ? dfxMessaging.showMessage('The page has been successfully moved') : dfxMessaging.showWarning('There was an error during moving Page');
+                            data.result === 'success' ? dfxMessaging.showMessage('Page has been successfully moved') : dfxMessaging.showWarning('There was an error during moving page');
                             $scope.getAll();
                             $mdDialog.hide();
                             if ( $location.path() === '/page/update/' + $scope.targetComponent.application + '/' + $scope.targetComponent.name ) {
@@ -644,7 +644,7 @@ dfxStudioApp.controller("dfx_studio_controller", [ '$scope', '$rootScope', '$mdD
                         break;
                     case 'view':
                         dfxViews.update( $scope, $scope.toMove ).then(function( data ) {
-                            data.result === 'success' ? dfxMessaging.showMessage('The view has been successfully moved') : dfxMessaging.showWarning('There was an error during moving View');
+                            data.result === 'success' ? dfxMessaging.showMessage('View has been successfully moved') : dfxMessaging.showWarning('There was an error during moving view');
                             $scope.getAll();
                             $mdDialog.hide();
                             if ( $location.path() === '/view/update/' + $scope.targetComponent.application + '/' + $scope.targetComponent.name ) {
@@ -663,7 +663,7 @@ dfxStudioApp.controller("dfx_studio_controller", [ '$scope', '$rootScope', '$mdD
                         }
                         $scope.toMove.apiRoutes = movedRoutes ;
                         dfxApiServiceObjects.updateSo( $scope, $scope.toMove ).then(function( data ) {
-                            data.data.result === 'success' ? dfxMessaging.showMessage('The API Service Object has been successfully moved') : dfxMessaging.showWarning('There was an error during moving API Service Object');
+                            data.data.result === 'success' ? dfxMessaging.showMessage('API service object has been successfully moved') : dfxMessaging.showWarning('There was an error during moving API service object');
                             $scope.getAll();
                             $mdDialog.hide();
                             if ( $location.path() === '/api_so/update/' + $scope.targetComponent.application + '/' + $scope.targetComponent.name ) {
@@ -1037,7 +1037,7 @@ dfxStudioApp.controller("dfx_studio_cloud_controller", [ '$scope', 'dfxPlatformB
             dfxPlatformBluemix.saveImage($scope.bluemix.new_image.name, $scope.bluemix.new_image.version, result).then(function(){
                 $scope.bluemix.disabled_button = false ;
                 $scope.bluemix.show_sidenav_content = true;
-                dfxMessaging.showMessage('Started creating Bluemix Image');
+                dfxMessaging.showMessage('Started creating Bluemix image');
                 $scope.bluemix.images.push({
                     clearImageName:     $scope.bluemix.new_image.name,
                     version:            $scope.bluemix.new_image.version,
@@ -1706,19 +1706,19 @@ dfxStudioApp.controller("dfx_studio_home_controller", [ '$scope', 'dfxStats', '$
         $mdDialog.show(confirm).then(function() {
             if ($scope.entity=='views') {
                 dfxViews.delete( $scope, $scope.$parent.targetComponent ).then( function(data) {
-                    dfxMessaging.showMessage( 'The view has been successfully deleted' );
+                    dfxMessaging.showMessage( 'View has been successfully deleted' );
                     $scope.getAll();
                     $route.reload();
                 });
             } else if ($scope.entity=='pages') {
                 dfxPages.delete( $scope, $scope.$parent.targetComponent ).then( function(data) {
-                    dfxMessaging.showMessage( 'The page has been successfully deleted' );
+                    dfxMessaging.showMessage( 'Page has been successfully deleted' );
                     $scope.getAll();
                     $route.reload();
                 });
             } else {
                 dfxApiServiceObjects.deleteSo( $scope, $scope.$parent.targetComponent ).then( function(data) {
-                    dfxMessaging.showMessage( 'The API Service Object has been successfully deleted' );
+                    dfxMessaging.showMessage( 'API service object has been successfully deleted' );
                     $scope.getAll();
                     $route.reload();
                 });
@@ -2266,9 +2266,9 @@ dfxStudioApp.controller("dfx_studio_general_settings_controller", [ '$scope','df
     $scope.saveGeneral = function(){
         dfxApplications.saveGeneral($scope.general.title, $scope.app_name, $scope.selected_logo_image).then(function(){
             $scope.initApps();
-            dfxMessaging.showMessage("General application settings has been successfully saved");
+            dfxMessaging.showMessage("General application settings has been successfully updated");
         }, function(){
-            dfxMessaging.showWarning("Can\'t save.");
+            dfxMessaging.showWarning("Can\'t save general application settings");
         });
     };
 
@@ -2572,7 +2572,7 @@ dfxStudioApp.controller("dfx_studio_api_sources_controller", [ '$scope','dfxAuth
                     break;
                 }
             }
-            dfxMessaging.showMessage('Api source data has been successfully deleted');
+            dfxMessaging.showMessage('API source data has been successfully deleted');
         });
     };
 
@@ -3953,7 +3953,7 @@ dfxStudioApp.controller("dfx_studio_view_controller", [ '$scope', '$routeParams'
             .ok('OK');
         $mdDialog.show(confirm).then(function() {
             dfxViews.delete( $scope, $scope.view ).then( function(data) {
-                dfxMessaging.showMessage( 'The view has been successfully deleted' );
+                dfxMessaging.showMessage( 'View has been successfully deleted' );
                 $scope.getAll();
                 $location.path('/home');
             });
@@ -4025,7 +4025,7 @@ dfxStudioApp.controller("dfx_studio_view_create_controller", [ '$scope', '$route
     $scope.save = function() {
         if ( /^[-a-zA-Z0-9_]+$/.test( $scope.view.name ) ) {
             dfxViews.create( $scope, $scope.view ).then( function(data) {
-                dfxMessaging.showMessage('The view has been successfully created');
+                dfxMessaging.showMessage('View has been successfully created');
                 $scope.getAll();
                 $location.path('/view/update/'+ $scope.view.application + '/' + $scope.view.platform + '/' + $scope.view.name);
             }, function( data ) {
@@ -4212,7 +4212,7 @@ dfxStudioApp.controller("dfx_studio_page_controller", [ '$scope', '$routeParams'
             .ok('OK');
         $mdDialog.show(confirm).then(function() {
             dfxPages.delete( $scope, $scope.page ).then( function(data) {
-                dfxMessaging.showMessage( 'The page has been successfully deleted' );
+                dfxMessaging.showMessage( 'Page has been successfully deleted' );
                 $scope.getAll();
                 $location.path('/home');
             });
@@ -4287,7 +4287,7 @@ dfxStudioApp.controller("dfx_studio_page_create_controller", [ '$scope', '$route
                 case 'Mobile' : $scope.page.platform = 'mobile'; break;
             }
             dfxPages.create( $scope, $scope.page ).then( function(data) {
-                dfxMessaging.showMessage('The page has been successfully created');
+                dfxMessaging.showMessage('Page has been successfully created');
                 $scope.getAll();
                 $location.path('/page/update/'+ $scope.page.application + '/' + $scope.page.platform + '/' + $scope.page.name);
             }, function( data ) {
@@ -5202,7 +5202,7 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
 
                     if ( !equalApi ) {
                         var confirm = $mdDialog.confirm()
-                            .title('Are you sure to exit the API Service Object Editor?')
+                            .title('Are you sure to exit the API service object editor?')
                             .textContent('All changes will be lost.')
                             .ariaLabel('leave API SO')
                             .targetEvent(null)
@@ -5226,7 +5226,7 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
         } else if ( !unsaved && $scope.serviceMode === 'serviceAdd' ) {
             if ( $location.path() !== ('/api_so/update/' + $scope.app_name + '/' + $scope.api_so.name) ) {
                 var confirm = $mdDialog.confirm()
-                    .title('Are you sure to exit the API Service Object Editor?')
+                    .title('Are you sure to exit the API service object editor?')
                     .textContent('All changes will be lost.')
                     .ariaLabel('leave API SO')
                     .targetEvent(null)
@@ -5318,7 +5318,7 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
         $scope.api_so.application = $scope.app_name;
         $scope.renderRoutesFilters();
         if ( $scope.notRenderedFilters ) {
-            dfxMessaging.showWarning("API Route " + $scope.notRenderedFilterName + " filters name can't be empty");
+            dfxMessaging.showWarning("API route " + $scope.notRenderedFilterName + " filters name can't be empty");
         } else {
             $scope.validateServiceUrls().then(function () {
                 $scope.urlErrors.sort(function (a, b) {
@@ -5337,7 +5337,7 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
                     if ($scope.api_so.name) {
                         dfxApiServiceObjects.createSo($scope, $scope.api_so).then(function (data) {
                             if (data.status && data.status === 200 && data.data.data === 'API Route created!') {
-                                dfxMessaging.showMessage('The API Service Object has been successfully created');
+                                dfxMessaging.showMessage('API service object has been successfully created');
                                 $scope.getAll();
                                 $location.path('/api_so/update/' + $scope.api_so.application + '/' + $scope.api_so.name);
                             } else {
@@ -5350,7 +5350,7 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
                         $scope.selected_tab = 0;
                         $scope.serviceNameError = "Service name can't be empty";
                         $scope.validNameResult = 'failed';
-                        dfxMessaging.showWarning('There was an error trying to create the new API Service Object');
+                        dfxMessaging.showWarning('There was an error trying to create the new API service object');
                     }
                 }
             });
@@ -5371,7 +5371,7 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
         $scope.api_so.application = $scope.app_name;
         $scope.renderRoutesFilters();
         if ( $scope.notRenderedFilters ) {
-            dfxMessaging.showWarning("API Route " + $scope.notRenderedFilterName + " filters name can't be empty");
+            dfxMessaging.showWarning("API route " + $scope.notRenderedFilterName + " filters name can't be empty");
         } else {
             $scope.validateServiceUrls().then(function() {
                 $scope.urlErrors.sort(function(a,b) {
@@ -5385,7 +5385,7 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
                 } else {
                     dfxApiServiceObjects.updateSo( $scope, $scope.api_so ).then(function( data ) {
                         if ( data.status && data.status === 200 ) {
-                            dfxMessaging.showMessage('The API Service Object has been successfully updated');
+                            dfxMessaging.showMessage('API service object has been successfully updated');
                             dfxApiServiceObjects.getOne( $scope, $scope.app_name, $scope.api_so_name ).then(function( data ) {
                                 if ( data.data.apiRoutes ) {
                                     $scope.api_so.apiRoutes = data.data.apiRoutes;
@@ -5393,7 +5393,7 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
                                 }
                             });
                         } else {
-                            dfxMessaging.showWarning('There was an error trying to update the API Service Object');
+                            dfxMessaging.showWarning('There was an error trying to update API service object');
                         }
                     });
                 }
@@ -5434,9 +5434,9 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
 
     $scope.confirmApiSoDelete = function( ev ) {
         var confirm = $mdDialog.confirm()
-            .title('Are you sure you want to remove this API Service Object?')
-            .textContent('This API Service Object will be removed from repository.')
-            .ariaLabel('remove API Service Object')
+            .title('Are you sure you want to remove this API service object?')
+            .textContent('This API service object will be removed from repository.')
+            .ariaLabel('remove API service object')
             .targetEvent(ev)
             .cancel('Cancel')
             .ok('OK');
@@ -5760,7 +5760,7 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
     $scope.confirmDelete = function( ev, index ) {
         var confirm = $mdDialog.confirm()
             .title('Are you sure you want to remove this service?')
-            .textContent('Service will be removed from API Service Object.')
+            .textContent('Service will be removed from API service object.')
             .ariaLabel('remove service')
             .targetEvent(ev)
             .cancel('Cancel')
@@ -6246,7 +6246,7 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
 
     $scope.leaveApiSoEditor = function( ev, index ) {
         var confirm = $mdDialog.confirm()
-            .title('Are you sure to exit the API Service Object Editor?')
+            .title('Are you sure to exit the API service object editor?')
             .textContent('All changes will be lost.')
             .ariaLabel('leave API SO Editor')
             .targetEvent(ev)
