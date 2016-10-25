@@ -2946,6 +2946,7 @@ dfxGCC.directive('dfxGccWebSlider', ['$timeout', '$mdDialog', '$q', '$http', '$m
             var component = scope.getComponent(element);
             scope.$gcscope = scope;
             basectrl.init(scope, element, component, attrs, 'slider').then(function(){
+                scope.dfx_is_number = angular.isNumber;
                 if(!scope.attributes.hasOwnProperty('isBindingPresent')){scope.attributes.isBindingPresent = { "value": "" };}
                 if(!scope.attributes.hasOwnProperty('dynamicPresent')){scope.attributes.dynamicPresent = { "value": false };}
                 if(!scope.attributes.hasOwnProperty('counterCheck')){scope.attributes.counterCheck = { "value": "" };}
@@ -3012,6 +3013,9 @@ dfxGCC.directive('dfxGccWebSlider', ['$timeout', '$mdDialog', '$q', '$http', '$m
                     component.css('width', scope.attributes.flex.value + '%');
                 };
                 scope.changeWidth();
+                for (var i = 0; i < scope.attributes.slidersArray.value.length; i++) {
+                    if(scope.attributes.slidersArray.value[i].hasOwnProperty('temp_value')) delete scope.attributes.slidersArray.value[i].temp_value;
+                };
             });
         }
     }
@@ -4480,6 +4484,22 @@ dfxGCC.directive('dfxComplexValue', ['$timeout', '$compile', '$parse', function 
                     $compile(element)(scope);
                 }
             }, 10);
+        }
+    };
+}]);
+
+/* Directive for Dynamic item values */
+dfxGCC.directive('dfxItemComplexValue', ['$timeout', '$compile', '$parse', function ($timeout, $compile, $parse) {
+    return {
+        restrict: 'A',
+        terminal: true,
+        priority: 100000,
+        link: function (scope, elem) {
+            var item_value = $parse(elem.attr('dfx-item-complex-value'))(scope);
+            if(/^[a-zA-Z_][a-zA-Z0-9_]+$/.test(item_value)) item_value = '$parent_scope.'+item_value;
+            elem.removeAttr('dfx-item-complex-value');
+            elem.attr('ng-model', item_value);
+            $compile(elem)(scope);
         }
     };
 }]);

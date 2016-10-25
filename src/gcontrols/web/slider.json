@@ -10,7 +10,7 @@
   "label":           { "value": "'Slider'" },
   "minValue":        { "value": 0 },
   "maxValue":        { "value": 5 },
-  "discrete":        { "value": "" },
+  "discrete":        { "value": false },
   "inputVisible":    { "value": "" },
   "optionsType":     { "value": "static" },
   "slidersArray":    { "value": [{"label":"'parameter 1: '", "value": 3}] },
