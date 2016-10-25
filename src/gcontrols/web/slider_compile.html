@@ -23,8 +23,7 @@
                     ATTR-IF{{min="attributes.minValue.value"}}
                     ATTR-IF{{max="attributes.maxValue.value"}}
                     ATTR-IF{{step="attributes.step.value"}}
-                    aria-label="{{attributes.name.value}},{{attributes.discrete.value}}"
-                    id="{{attributes.name.value}}-slider"
+                    aria-label="ATTR-NONV{{name.value}}, {{ ATTR-STATIC{{discrete.value}} }}"
                     style="margin-top: -11px; margin-bottom: 4px;"
                     ATTR-IF{{ng-class="attributes.buttonClass.value"}}
                     ATTR-IF{{ng-click="attributes.onclick.value"}}
@@ -40,13 +39,12 @@
                     ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}
                     ATTR-IF{{ng-disabled="attributes.disabled.value"}}>
                 </md-slider>
-                <md-slider flex ng-if="!attributes.discrete.value"
+                <md-slider flex ng-if="ATTR-EXP{{attributes.discrete.value ? 'false' : 'true'}}ATTR-ENDEXP"
                     class="md-altTheme-theme md-primary flex"
                     ng-model="ATTR-NONV{{binding.value}}[$index]"
                     ATTR-IF{{min="attributes.minValue.value"}}
                     ATTR-IF{{max="attributes.maxValue.value"}}
-                    aria-label="attributes.name.value}},{{attributes.discrete.value}}"
-                    id="{{attributes.name.value}}-slider"
+                    aria-label="ATTR-NONV{{name.value}}, {{ ATTR-STATIC{{discrete.value}} }}"
                     style="margin-top: -11px;margin-bottom: 4px;"
                     ATTR-IF{{ng-class="attributes.buttonClass.value"}}
                     ATTR-IF{{ng-click="attributes.onclick.value"}}
@@ -103,8 +101,7 @@
                     ATTR-IF{{min="attributes.minValue.value"}}
                     ATTR-IF{{max="attributes.maxValue.value"}}
                     ATTR-IF{{step="attributes.step.value"}}
-                    aria-label="{{attributes.name.value}},{{attributes.discrete.value}}"
-                    id="{{attributes.name.value}}-slider"
+                    aria-label="ATTR-NONV{{name.value}}, {{ ATTR-STATIC{{discrete.value}} }}"
                     style="margin-top: -11px; margin-bottom: 4px;"
                     ATTR-IF{{ng-class="attributes.buttonClass.value"}}
                     ATTR-IF{{ng-click="attributes.onclick.value"}}
@@ -120,13 +117,12 @@
                     ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}
                     ATTR-IF{{ng-disabled="attributes.disabled.value"}}>
                 </md-slider>
-                <md-slider flex ng-if="!attributes.discrete.value"
+                <md-slider flex ng-if="ATTR-EXP{{attributes.discrete.value ? 'false' : 'true'}}ATTR-ENDEXP"
                     class="md-altTheme-theme md-primary flex"
                     ng-model="ATTR-NONV{{binding.value}}[$index]"
                     ATTR-IF{{min="attributes.minValue.value"}}
                     ATTR-IF{{max="attributes.maxValue.value"}}
-                    aria-label="{{attributes.name.value}},{{attributes.discrete.value}}"
-                    id="{{attributes.name.value}}-slider"
+                    aria-label="ATTR-NONV{{name.value}}, {{ ATTR-STATIC{{discrete.value}} }}"
                     style="margin-top: -11px;margin-bottom: 4px;"
                     ATTR-IF{{ng-class="attributes.buttonClass.value"}}
                     ATTR-IF{{ng-click="attributes.onclick.value"}}
@@ -190,12 +186,11 @@
                 <div flex="none" ng-if="ATTR-EXP{{attributes.direction.value === 'row' ? 'true' : 'false'}}ATTR-ENDEXP" style="margin:-11px 5px 0 0; padding-left: 5px"><span>{{ item.ATTR-NONV{{bindingLabel.value}} }}</span></div>
                 <md-slider flex ng-if="attributes.discrete.value" md-discrete
                     class="md-altTheme-theme md-primary flex"
-                    ng-model="item[attributes.displayValue.value]"
+                    ng-model="item.ATTR-NONV{{displayValue.value}}"
                     ATTR-IF{{min="attributes.minValue.value"}}
                     ATTR-IF{{max="attributes.maxValue.value"}}
                     ATTR-IF{{step="attributes.step.value"}}
-                    aria-label="{{attributes.name.value}},{{attributes.discrete.value}}"
-                    id="{{attributes.name.value}}-slider"
+                    aria-label="ATTR-NONV{{name.value}}, {{ ATTR-STATIC{{discrete.value}} }}"
                     style="margin-top: -11px; margin-bottom: 4px;"
                     ATTR-IF{{ng-class="attributes.buttonClass.value"}}
                     ATTR-IF{{ng-click="attributes.onclick.value"}}
@@ -211,13 +206,12 @@
                     ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}
                     ATTR-IF{{ng-disabled="attributes.disabled.value"}}>
                 </md-slider>
-                <md-slider flex ng-if="!attributes.discrete.value"
+                <md-slider flex ng-if="ATTR-EXP{{attributes.discrete.value ? 'false' : 'true'}}ATTR-ENDEXP"
                     class="md-altTheme-theme md-primary flex"
-                    ng-model="item[attributes.displayValue.value]"
+                    ng-model="item.ATTR-NONV{{displayValue.value}}"
                     ATTR-IF{{min="attributes.minValue.value"}}
                     ATTR-IF{{max="attributes.maxValue.value"}}
-                    aria-label="attributes.name.value}},{{attributes.discrete.value}}"
-                    id="{{attributes.name.value}}-slider"
+                    aria-label="ATTR-NONV{{name.value}}, {{ ATTR-STATIC{{discrete.value}} }}"
                     style="margin-top: -11px; margin-bottom: 4px;"
                     ATTR-IF{{ng-class="attributes.buttonClass.value"}}
                     ATTR-IF{{ng-click="attributes.onclick.value"}}
@@ -235,7 +229,7 @@
                 </md-slider>
                 <div flex="none" layout layout-align="center center" ATTR-IF{{ng-show="attributes.inputVisible.value"}}>
                     <input ATTR-IF{{ng-disabled="attributes.disabled.value"}} type="number" style="text-align: center; width:55px; margin:-13px 10px 0 5px"
-                        ng-model="item[attributes.displayValue.value]"
+                        ng-model="item.ATTR-NONV{{displayValue.value}}"
                         ATTR-IF{{ng-change="attributes.onchange.value"}}
                         ATTR-IF{{ng-focus="attributes.onfocus.value"}}
                         ATTR-IF{{ng-blur="attributes.onblur.value"}}
@@ -259,7 +253,7 @@
     FRAG-ENDIF
     FRAG-IF{{attributes.optionsType.value==='static'}}
     <div layout="row">
-        <div ng-if="attributes.direction.value === 'column'" layout="column" style="margin-right: 5px">
+        <div ng-if="ATTR-EXP{{attributes.direction.value === 'column' ? 'true' : 'false'}}ATTR-ENDEXP" layout="column" style="margin-right: 5px">
             <div ng-repeat="item in ATTR-STATIC{{slidersArray.value}} track by $index" layout layout-align="start center"
                  style="padding-left: 5px;margin-bottom: 3px;"
                  ng-style="{'margin-top' : $index === 0? '3px' : '18px'}" ng-bind="$eval(item.label)"></div>
@@ -273,8 +267,7 @@
                     ATTR-IF{{min="attributes.minValue.value"}}
                     ATTR-IF{{max="attributes.maxValue.value"}}
                     ATTR-IF{{step="attributes.step.value"}}
-                    aria-label="{{attributes.name.value}},{{attributes.discrete.value}}"
-                    id="{{attributes.name.value}}-slider"
+                    aria-label="ATTR-NONV{{name.value}}, {{ ATTR-STATIC{{discrete.value}} }}"
                     style="margin-top: -11px; margin-bottom: 4px;"
                     ATTR-IF{{ng-class="attributes.buttonClass.value"}}
                     ATTR-IF{{ng-click="attributes.onclick.value"}}
@@ -290,13 +283,12 @@
                     ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}
                     ATTR-IF{{ng-disabled="attributes.disabled.value"}}>
                 </md-slider>
-                <md-slider flex ng-if="!attributes.discrete.value"
+                <md-slider flex ng-if="ATTR-EXP{{attributes.discrete.value ? 'false' : 'true'}}ATTR-ENDEXP"
                     class="md-altTheme-theme md-primary flex"
                     ng-model="item.value"
                     ATTR-IF{{min="attributes.minValue.value"}}
                     ATTR-IF{{max="attributes.maxValue.value"}}
-                    aria-label="{{attributes.name.value}},{{attributes.discrete.value}}"
-                    id="{{attributes.name.value}}-slider"
+                    aria-label="ATTR-NONV{{name.value}}, {{ ATTR-STATIC{{discrete.value}} }}"
                     style="margin-top: -11px; margin-bottom: 4px;"
                     ATTR-IF{{ng-class="attributes.buttonClass.value"}}
                     ATTR-IF{{ng-click="attributes.onclick.value"}}
