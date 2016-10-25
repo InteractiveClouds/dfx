@@ -12,7 +12,7 @@
                 <div layout="row" layout-padding layout-wrap layout-align="start start">
                     <md-card ng-repeat="sample in samples" style="width:315px;height:460px;padding:0;">
                         <div style="width:100%;height:237px;background:#000" layout="row" layout-align="center center">
-                            <img ng-src="{{sample.content.thumbnail}}" style="width:315px;height:237px"/>
+                            <img ng-src="{{sample.content.thumbnail || '/images/sampleapps/samples_default.png'}}" style="width:315px;height:237px"/>
                         </div>
                         <md-card-title style="height: 100px;max-height: 100px;">
                             <md-card-title-text style="color: #2196F3">

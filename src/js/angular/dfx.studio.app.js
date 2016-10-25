@@ -1828,6 +1828,11 @@ dfxStudioApp.controller("dfx_studio_samples_controller", [ '$scope', '$http', '$
                 'content': JSON.parse(atob(file_contents.data.content)),
                 'category': cat_name
             };
+            if (new_item.content.thumbnail) {
+                dfxSamples.isPathExists(new_item.content.thumbnail).then(function(exists){
+                    if (!exists.data) delete new_item.content.thumbnail;
+                })
+            }
             collection.push(new_item);
         });
     };
