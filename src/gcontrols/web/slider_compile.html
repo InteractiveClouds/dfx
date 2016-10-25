@@ -268,7 +268,7 @@
                  ng-style="{'margin-top' : $index === 0? '3px' : '18px'}" ng-bind="$eval(item.label)"></div>
         </div>
         <div ATTR-IF{{layout="attributes.direction.value"}} flex style="padding-top: 1px">
-            <div flex layout layout-align="start center" ng-repeat="item in ATTR-STATIC{{slidersArray.value}} track by $index" aria-label="{{sliderModel}}">
+            <div flex layout layout-align="start center" ng-repeat="item in ATTR-STATIC{{slidersArray.value}} track by $index">
                 <div flex="none" ng-if="ATTR-EXP{{attributes.direction.value === 'row' ? 'true' : 'false'}}ATTR-ENDEXP" style="margin:-11px 5px 0 0; padding-left: 5px" ng-bind="$eval(item.label)"></div>
                 <div flex ng-if="ATTR-NONV{{discrete.value}}">
                     <md-slider flex md-discrete ng-if="dfx_is_number(item.value)" class="md-altTheme-theme md-primary flex"
