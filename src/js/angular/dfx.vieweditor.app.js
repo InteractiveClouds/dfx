@@ -2216,6 +2216,10 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                         }
                     }
                 } else {
+                    if (scope.attributes.menuItemsType.value == 'dynamic') {
+                        scope.attributes.menuItemNames.status = "overridden";
+                    }
+
                     scope.menuItems = scope.attributes.menuItems;
                     scope.gc_selected.type === 'iconbar' ? scope.statable.value = true : scope.statable.value = false;
                     scope.menuItemNames.value = scope.attributes.menuItemNames.value;
@@ -3068,6 +3072,10 @@ dfxViewEditorApp.directive('dfxVeTreeEditor', [ '$mdDialog', '$mdToast', '$http'
                         }, 0);
                     },
                     controller: function(){
+                        if (scope.attributes.treeItemsType.value == 'static') {
+                            scope.attributes.static.status = "overridden";
+                        }
+
                         scope.selectTreeItem = function(ev, treeItem) {
                             scope.tree = treeItem;
                             scope.selectedTreeItem = ev.target,
