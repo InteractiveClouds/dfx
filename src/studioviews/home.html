@@ -14,17 +14,17 @@
         </md-button>
     </div>
 	<div layout="row" layout-align="start start" style="flex-wrap:wrap;">
-		<div ng-repeat="app in platform_stats.apps">
+		<div ng-repeat="app in platform_stats.apps" class="dfx-studio-app-card">
 			<md-card>
-		        <md-card-title style="background:#4BCDFF">
+		        <md-card-title>
 		          <md-card-title-text>
 		            <div class="md-headline">
-		            	<span ng-click="navigateToApp(app.name)" ng-style="app.name !=='Shared Catalog'? {cursor: 'pointer'}:{cursor:'default'}">{{app.name}}</span>
-		            	<a class="pull-right" style="font-size:18px;color:#0F518E" ng-click="loadActivity('{{app.name}}')">
+		            	<span class="dfx-studio-app-name" ng-click="navigateToApp(app.name)" ng-style="app.name !=='Shared Catalog'? {cursor: 'pointer'}:{cursor:'default'}">{{app.name}}</span>
+		            	<a class="pull-right" ng-click="loadActivity('{{app.name}}')">
 		            		<span class="fa fa-slack"></span>
 		            	</a>
 		            </div>
-		            <div class="md-subhead" style="max-width:240px;width:240px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;">{{app.title}}</div>
+		            <div class="md-subhead">{{app.title}}</div>
 		          </md-card-title-text>
 		        </md-card-title>
 		        <md-card-content layout="row" layout-align="space-between">

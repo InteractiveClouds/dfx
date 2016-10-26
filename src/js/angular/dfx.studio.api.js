@@ -2240,6 +2240,20 @@ dfxStudioApi.factory('dfxSamples', [ '$http', '$q', function($http, $q) {
         return deferred.promise;
     };
 
+    api_samples.isPathExists = function( path ) {
+        var deferred = $q.defer();
+
+        $http({
+            method: 'GET',
+            url: 'samples/isPathExists',
+            params: {'path': path}
+        }).then(function successCallback(response) {
+            deferred.resolve( response.data );
+        });
+
+        return deferred.promise;
+    };
+
     return api_samples;
 }]);
 
