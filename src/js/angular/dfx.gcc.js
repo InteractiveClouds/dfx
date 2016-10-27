@@ -2955,8 +2955,6 @@ dfxGCC.directive('dfxGccWebSlider', ['$timeout', '$mdDialog', '$q', '$http', '$m
                 scope.attributes.binding.status = "overridden";
                 scope.attributes.isBindingPresent.status = "overridden";
                 scope.attributes.flex.status = "overridden";
-                scope.attributes.buttonClass.value = scope.attributes.buttonClass.value.replace("md-primary", "");
-
                 if(scope.attributes.isBindingPresent.value){
                     if(scope.$gcscope[scope.attributes.binding.value] instanceof Array){
                         for(var i = 0; i < scope.$gcscope[scope.attributes.binding.value].length; i++){
