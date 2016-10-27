@@ -51,7 +51,7 @@
                 <li class="col-md-12" dfx-gc-property="position">
                     <span class="col-md-6">Icon position:</span>
                     <md-input-container class="col-md-6" style="padding: 0 0 4px 0">
-                        <md-select aria-label="icon-position " ng-model="attributes.position.value" ng-change="overrideAttribute('position');cacheAttributeOldValue({'value':{{attributes.position.value}}});cacheAttributeNewValue('position');">
+                        <md-select aria-label="icon-position " ng-model="attributes.position.value" ng-change="overrideAttribute('position');cacheAttributeOldValue({'value':'{{attributes.position.value}}'});cacheAttributeNewValue('position');">
                             <md-option ng-repeat="iconPosition in ['left', 'right']" value="{{iconPosition}}">{{iconPosition}}</md-option>
                         </md-select>
                     </md-input-container>
@@ -59,7 +59,7 @@
                 <li class="col-md-12">
                     <span class="col-md-6" style="margin-top: 5px">Type:</span>
                     <md-input-container class="col-md-6" style="padding: 0 0 10px">
-                        <md-select aria-label="Input type:" ng-model="attributes.selectedType.value" ng-change="overrideAttribute('selectedType');cacheAttributeOldValue({'value':{{attributes.selectedType.value}}});cacheAttributeNewValue('selectedType');">
+                        <md-select aria-label="Input type:" ng-model="attributes.selectedType.value" ng-change="overrideAttribute('selectedType');cacheAttributeOldValue({'value':'{{attributes.selectedType.value}}'});cacheAttributeNewValue('selectedType');">
                             <md-option ng-repeat="inputType in ['text', 'number', 'password', 'email']" value="{{inputType}}">{{inputType}}</md-option>
                         </md-select>
                     </md-input-container>
@@ -89,7 +89,7 @@
                 <li class="col-md-12">
                     <span class="col-md-6" style="margin-top: 5px">Required:</span>
                     <md-input-container class="col-md-6" style="padding: 0 0 10px">
-                        <md-select aria-label="isRequire" ng-model="attributes.required.value" ng-change="overrideAttribute('required');cacheAttributeOldValue({'value':{{attributes.required.value}}});cacheAttributeNewValue('required');">
+                        <md-select aria-label="isRequire" ng-model="attributes.required.value" ng-change="overrideAttribute('required');cacheAttributeOldValue({'value':'{{attributes.required.value}}'});cacheAttributeNewValue('required');">
                             <md-option ng-repeat="isRequire in [true, false]" value="{{isRequire}}">{{isRequire}}</md-option>
                         </md-select>
                     </md-input-container>

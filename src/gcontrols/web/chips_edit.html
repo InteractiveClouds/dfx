@@ -26,7 +26,7 @@
                 <li ng-if="attributes.selectedType.value==='standard'" class="col-md-12">
                     <span class="col-md-4" style="margin-top: 5px">Input:</span>
                     <md-input-container class="col-md-8" style="padding: 0 0 10px">
-                        <md-select aria-label="Chips type:" ng-model="attributes.selectedInput.value" ng-change="overrideAttribute('selectedInput');cacheAttributeOldValue({'value':{{attributes.selectedInput.value}}});cacheAttributeNewValue('selectedInput');">
+                        <md-select aria-label="Chips type:" ng-model="attributes.selectedInput.value" ng-change="overrideAttribute('selectedInput');cacheAttributeOldValue({'value':'{{attributes.selectedInput.value}}'});cacheAttributeNewValue('selectedInput');">
                             <md-option ng-repeat="inputType in attributes.inputTypes" value="{{inputType}}">{{inputType}}</md-option>
                         </md-select>
                     </md-input-container>

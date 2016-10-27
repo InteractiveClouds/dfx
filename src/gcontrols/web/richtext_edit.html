@@ -20,7 +20,7 @@
                     <span class="col-md-4">Whiteframe:</span>
                     <md-input-container class="col-md-8" style="padding: 0 0 10px">
                         <md-select aria-label="Whiteframe:" ng-model="attributes.whiteframe.value"
-                            ng-change="overrideAttribute('whiteframe');cacheAttributeOldValue({'value':{{attributes.whiteframe.value}}});cacheAttributeNewValue('whiteframe');"">
+                            ng-change="overrideAttribute('whiteframe');cacheAttributeOldValue({'value':'{{attributes.whiteframe.value}}'});cacheAttributeNewValue('whiteframe');"">
                             <md-option value="">None</md-option>
                             <md-option value="md-whiteframe-1dp">1dp</md-option>
                             <md-option value="md-whiteframe-3dp">3dp</md-option>

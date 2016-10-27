@@ -42,7 +42,7 @@
                 <li class="col-md-12">
                     <span class="col-md-4" style="margin-top: 3px">Direction:</span>
                     <md-input-container class="col-md-8" style="padding: 0 0 10px">
-                        <md-select aria-label="Input type:" ng-model="attributes.direction.value" ng-change="overrideAttribute('direction');cacheAttributeOldValue({'value':{{attributes.direction.value}}});cacheAttributeNewValue('direction');">
+                        <md-select aria-label="Input type:" ng-model="attributes.direction.value" ng-change="overrideAttribute('direction');cacheAttributeOldValue({'value':'{{attributes.direction.value}}'});cacheAttributeNewValue('direction');">
                             <md-option ng-repeat="direction in ['row', 'column']" value="{{direction}}">{{direction}}</md-option>
                         </md-select>
                     </md-input-container>
@@ -58,7 +58,7 @@
                 <li class="col-md-12" dfx-gc-property="discrete">
                     <span class="col-md-4">Discrete:</span>
                     <md-input-container class="col-md-8" style="padding: 0 0 4px 0">
-                        <md-select aria-label="slider-discrete " ng-model="attributes.discrete.value" ng-change="overrideAttribute('discrete');cacheAttributeOldValue({'value':{{attributes.discrete.value}}});cacheAttributeNewValue('discrete');">
+                        <md-select aria-label="slider-discrete " ng-model="attributes.discrete.value" ng-change="overrideAttribute('discrete');cacheAttributeOldValue({'value':'{{attributes.discrete.value}}'});cacheAttributeNewValue('discrete');">
                             <md-option ng-repeat="discreteOption in [true, false]" value="{{discreteOption}}">{{discreteOption}}</md-option>
                         </md-select>
                     </md-input-container>
@@ -66,7 +66,7 @@
                 <li class="col-md-12" dfx-gc-property="inputVisible">
                     <span class="col-md-4">Input Visible:</span>
                     <md-input-container class="col-md-8" style="padding: 0 0 4px 0">
-                        <md-select aria-label="input-visible " ng-model="attributes.inputVisible.value" ng-change="overrideAttribute('inputVisible');cacheAttributeOldValue({'value':{{attributes.inputVisible.value}}});cacheAttributeNewValue('inputVisible');">
+                        <md-select aria-label="input-visible " ng-model="attributes.inputVisible.value" ng-change="overrideAttribute('inputVisible');cacheAttributeOldValue({'value':'{{attributes.inputVisible.value}}'});cacheAttributeNewValue('inputVisible');">
                             <md-option ng-repeat="isVisible in [true, false]" value="{{isVisible}}">{{isVisible}}</md-option>
                         </md-select>
                     </md-input-container>

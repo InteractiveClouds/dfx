@@ -33,7 +33,7 @@
                 <li class="col-md-12">
                     <span class="col-md-4" style="margin-top: 5px">Type:</span>
                     <md-input-container class="col-md-8" style="padding: 0 0 10px">
-                        <md-select aria-label="Datepicker type:" ng-model="attributes.selectedType.value" ng-change="overrideAttribute('selectedType');setAlignment(attributes.alignment.value);cacheAttributeOldValue({'value':{{attributes.alignment.value}}});cacheAttributeNewValue('alignment');">
+                        <md-select aria-label="Datepicker type:" ng-model="attributes.selectedType.value" ng-change="overrideAttribute('selectedType');setAlignment(attributes.alignment.value);cacheAttributeOldValue({'value':'{{attributes.selectedType.value}}'});cacheAttributeNewValue('selectedType');">
                             <md-option ng-repeat="dpType in attributes.dpTypes" value="{{dpType}}">{{dpType}}</md-option>
                         </md-select>
                     </md-input-container>

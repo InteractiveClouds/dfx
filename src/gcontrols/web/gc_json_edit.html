@@ -48,7 +48,7 @@
                 <li class="col-md-12">
                     <span class="col-md-4">Type:</span>
                     <md-input-container class="col-md-8" style="padding: 0 0 10px">
-                        <md-select aria-label="Type:" ng-model="attributes.type.value" ng-change="overrideAttribute('type');buildJsonEditor();cacheAttributeOldValue({'value':{{attributes.type.value}}});cacheAttributeNewValue('type');" style="text-transform: capitalize">
+                        <md-select aria-label="Type:" ng-model="attributes.type.value" ng-change="overrideAttribute('type');buildJsonEditor();cacheAttributeOldValue({'value':'{{attributes.type.value}}'});cacheAttributeNewValue('type');" style="text-transform: capitalize">
                             <md-option ng-repeat="type in ['input', 'panel']" value="{{type}}" style="text-transform: capitalize">{{type}}</md-option>
                         </md-select>
                     </md-input-container>
@@ -56,7 +56,7 @@
                 <li class="col-md-12">
                     <span class="col-md-4">Mode:</span>
                     <md-input-container class="col-md-8" style="padding: 0 0 10px">
-                        <md-select aria-label="Mode:" ng-model="attributes.mode.value" ng-change="overrideAttribute('mode');dfxJeSetMode(attributes.mode.value);cacheAttributeOldValue({'value':{{attributes.mode.value}}});cacheAttributeNewValue('mode');" style="text-transform: capitalize">
+                        <md-select aria-label="Mode:" ng-model="attributes.mode.value" ng-change="overrideAttribute('mode');dfxJeSetMode(attributes.mode.value);cacheAttributeOldValue({'value':'{{attributes.mode.value}}'});cacheAttributeNewValue('mode');" style="text-transform: capitalize">
                             <md-option ng-repeat="mode in ['tree', 'form', 'code', 'text', 'view']" value="{{mode}}" style="text-transform: capitalize">{{mode}}</md-option>
                         </md-select>
                     </md-input-container>
@@ -70,7 +70,7 @@
                 <li class="col-md-12" dfx-gc-property="whiteframe">
                     <span class="col-md-4">Whiteframe:</span>
                     <md-input-container class="col-md-8" style="padding: 0 0 10px">
-                        <md-select aria-label="Whiteframe:" ng-model="attributes.whiteframe.value" ng-change="overrideAttribute('whiteframe');cacheAttributeOldValue({'value':{{attributes.whiteframe.value}}});cacheAttributeNewValue('whiteframe');"">
+                        <md-select aria-label="Whiteframe:" ng-model="attributes.whiteframe.value" ng-change="overrideAttribute('whiteframe');cacheAttributeOldValue({'value':'{{attributes.whiteframe.value}}'});cacheAttributeNewValue('whiteframe');"">
                             <md-option value="">None</md-option>
                             <md-option value="md-whiteframe-1dp">1dp</md-option>
                             <md-option value="md-whiteframe-3dp">3dp</md-option>

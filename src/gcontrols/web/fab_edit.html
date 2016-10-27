@@ -26,7 +26,7 @@
                 <li class="col-md-12">
                     <span class="col-md-5">Direction:</span>
                     <md-input-container class="col-md-7" style="padding: 0 0 10px">
-                        <md-select aria-label="fabDirection" class="md-block" ng-model="attributes.fabDirection.value" ng-change="overrideAttribute('fabDirection');cacheAttributeOldValue({'value':{{attributes.fabDirection.value}}});cacheAttributeNewValue('fabDirection');">
+                        <md-select aria-label="fabDirection" class="md-block" ng-model="attributes.fabDirection.value" ng-change="overrideAttribute('fabDirection');cacheAttributeOldValue({'value':'{{attributes.fabDirection.value}}'});cacheAttributeNewValue('fabDirection');">
                             <md-option ng-repeat="fabDirection in [{display:'Up', value:'up'}, {display:'Right', value:'right'}, {display:'Down', value:'down'}, {display:'Left', value:'left'}]" ng-value="fabDirection.value">{{fabDirection.display}}</md-option>
                         </md-select>
                     </md-input-container>
@@ -34,7 +34,7 @@
                 <li class="col-md-12">
                     <span class="col-md-5">Animation Mode:</span>
                     <md-input-container class="col-md-7" style="padding: 0 0 10px">
-                        <md-select aria-label="animation" ng-model="attributes.animation.value" ng-change="overrideAttribute('animation');cacheAttributeOldValue({'value':{{attributes.animation.value}}});cacheAttributeNewValue('animation');">
+                        <md-select aria-label="animation" ng-model="attributes.animation.value" ng-change="overrideAttribute('animation');cacheAttributeOldValue({'value':'{{attributes.animation.value}}'});cacheAttributeNewValue('animation');">
                             <md-option ng-repeat="animation in [{display:'Fling', value:'md-fling'}, {display:'Scale', value:'md-scale'}]" ng-value="animation.value">{{animation.display}}</md-option>
                         </md-select>
                     </md-input-container>
@@ -129,7 +129,7 @@
                         <li class="col-md-12">
                             <span class="col-md-5">Tooltip Direction:</span>
                             <md-input-container class="col-md-7" style="padding: 0 0 10px">
-                                <md-select aria-label="tooltipDirection" class="md-block" ng-model="attributes.triggerButton.tooltip.direction" ng-change="overrideAttribute('triggerButton.tooltip.direction');cacheAttributeOldValue({'value':{{attributes.triggerButton.tooltip.direction}}});cacheAttributeNewValue('triggerButton.tooltip.direction');" style="text-transform: capitalize;">
+                                <md-select aria-label="tooltipDirection" class="md-block" ng-model="attributes.triggerButton.tooltip.direction" ng-change="overrideAttribute('triggerButton.tooltip.direction');cacheAttributeOldValue({'value':'{{attributes.triggerButton.tooltip.direction}}'});cacheAttributeNewValue('triggerButton.tooltip.direction');" style="text-transform: capitalize;">
                                     <md-option ng-repeat="tooltipDirection in ['top', 'right', 'bottom', 'left']" ng-value="tooltipDirection" style="text-transform: capitalize;">{{tooltipDirection}}</md-option>
                                 </md-select>
                             </md-input-container>
@@ -176,7 +176,7 @@
                         <li class="col-md-12">
                             <span class="col-md-5">Tooltip Direction:</span>
                             <md-input-container class="col-md-7" style="padding: 0 0 10px">
-                                <md-select aria-label="tooltipDirection" class="md-block" ng-model="attributes.actionButton.tooltip.direction" ng-change="overrideAttribute('actionButton.tooltip.direction');cacheAttributeOldValue({'value':{{attributes.actionButton.tooltip.direction}}});cacheAttributeNewValue('actionButton.tooltip.direction');" style="text-transform: capitalize;">
+                                <md-select aria-label="tooltipDirection" class="md-block" ng-model="attributes.actionButton.tooltip.direction" ng-change="overrideAttribute('actionButton.tooltip.direction');cacheAttributeOldValue({'value':'{{attributes.actionButton.tooltip.direction}}'});cacheAttributeNewValue('actionButton.tooltip.direction');" style="text-transform: capitalize;">
                                     <md-option ng-repeat="tooltipDirection in ['top', 'right', 'bottom', 'left']" ng-value="tooltipDirection" style="text-transform: capitalize;">{{tooltipDirection}}</md-option>
                                 </md-select>
                             </md-input-container>

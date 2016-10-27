@@ -33,7 +33,7 @@
                 <li class="col-md-12">
                     <span class="col-md-4" style="margin-top: 5px">Type:</span>
                     <md-input-container class="col-md-8" style="padding: 0 0 10px">
-                        <md-select aria-label="Input type:" ng-model="attributes.selectedType.value" ng-change="overrideAttribute('selectedType');cacheAttributeOldValue({'value':{{attributes.selectedType.value}}});cacheAttributeNewValue('selectedType');">
+                        <md-select aria-label="Input type:" ng-model="attributes.selectedType.value" ng-change="overrideAttribute('selectedType');cacheAttributeOldValue({'value':'{{attributes.selectedType.value}}'});cacheAttributeNewValue('selectedType');">
                             <md-option ng-repeat="inputType in ['determinate', 'indeterminate']" value="{{inputType}}">{{inputType}}</md-option>
                         </md-select>
                     </md-input-container>

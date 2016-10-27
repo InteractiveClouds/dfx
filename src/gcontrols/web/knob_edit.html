@@ -41,7 +41,7 @@
 				<li class="col-md-12">
 					<span class="col-md-4" style="margin-top: 5px">Label Position:</span>
 					<md-input-container class="col-md-8" style="padding: 0 0 10px">
-						<md-select aria-label="Label Position:" ng-model="attributes.labelPosition.value" ng-change="overrideAttribute('labelPosition');cacheAttributeOldValue({'value':{{attributes.labelPosition.value}}});cacheAttributeNewValue('labelPosition');">
+						<md-select aria-label="Label Position:" ng-model="attributes.labelPosition.value" ng-change="overrideAttribute('labelPosition');cacheAttributeOldValue({'value':'{{attributes.labelPosition.value}}'});cacheAttributeNewValue('labelPosition');">
 							<md-option ng-repeat="labelPos in ['left','center','right']" value="{{labelPos}}">{{labelPos}}</md-option>
 						</md-select>
 					</md-input-container>
@@ -196,7 +196,7 @@
 						<li class="col-md-12">
 							<span class="col-md-4">Type:</span>
 							<md-input-container class="col-md-8" style="padding: 0 0 10px">
-								<md-select aria-label="Type" ng-model="attributes.options.value.skin.type" ng-change="overrideAttribute('options');cacheAttributeOldValue({'value':{{attributes.options.value.skin.type}}});cacheAttributeNewValue('options.value.skin.type');">
+								<md-select aria-label="Type" ng-model="attributes.options.value.skin.type" ng-change="overrideAttribute('options');cacheAttributeOldValue({'value':'{{attributes.options.value.skin.type}}'});cacheAttributeNewValue('options.value.skin.type');">
 									<md-option ng-repeat="skin in ['simple', 'tron']" value="{{skin}}">{{skin}}</md-option>
 								</md-select>
 							</md-input-container>
@@ -232,7 +232,7 @@
 						<li class="col-md-12">
 							<span class="col-md-4">Ease:</span>
 							<md-input-container class="col-md-8" style="padding: 0 0 10px">
-								<md-select aria-label="Ease" ng-model="attributes.options.value.animate.ease" ng-change="overrideAttribute('options');cacheAttributeOldValue({'value':{{attributes.options.value.animate.ease}}});cacheAttributeNewValue('options.value.animate.ease');">
+								<md-select aria-label="Ease" ng-model="attributes.options.value.animate.ease" ng-change="overrideAttribute('options');cacheAttributeOldValue({'value':'{{attributes.options.value.animate.ease}}'});cacheAttributeNewValue('options.value.animate.ease');">
 									<md-option ng-repeat="labelPos in ['linear', 'bounce', 'sin', 'cubic', 'quad', 'exp', 'circle']" value="{{labelPos}}">{{labelPos}}</md-option>
 								</md-select>
 							</md-input-container>
@@ -274,7 +274,7 @@
 						<li class="col-md-12">
 							<span class="col-md-4">Type:</span>
 							<md-input-container class="col-md-8" style="padding: 0 0 10px">
-								<md-select aria-label="Ease" ng-model="attributes.options.value.scale.type" ng-change="overrideAttribute('options');cacheAttributeOldValue({'value':{{attributes.options.value.scale.type}}});cacheAttributeNewValue('options.value.scale.type');">
+								<md-select aria-label="Ease" ng-model="attributes.options.value.scale.type" ng-change="overrideAttribute('options');cacheAttributeOldValue({'value':'{{attributes.options.value.scale.type}}'});cacheAttributeNewValue('options.value.scale.type');">
 									<md-option ng-repeat="scale in ['dots', 'lines']" value="{{scale}}">{{scale}}</md-option>
 								</md-select>
 							</md-input-container>
