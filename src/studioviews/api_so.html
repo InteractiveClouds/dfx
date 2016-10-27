@@ -1,537 +1,545 @@
-<div layout="row" layout-align="space-between center" style="background:#DCDCDC">
-	<h4 ng-if="serviceMode === 'serviceAdd'" style="padding-left:10px">
-		Create a new API Service Object
-	</h4>
-	<h4 ng-if="serviceMode === 'serviceEdit'" style="padding-left:10px">
-		Update an API Service Object
-	</h4>
-	<div layout="row">
-		<md-button ng-if="serviceMode === 'serviceAdd'" ng-click="saveApiSo()" class="md-primary" ng-disabled="validNameResult === 'failed' || validUrlResult === 'failed'">Save</md-button>
-		<md-button ng-if="serviceMode === 'serviceEdit'" ng-click="updateApiSo()" class="md-primary" ng-disabled="validNameResult === 'failed' || validUrlResult === 'failed'">Save</md-button>
-		<md-button ng-click="leaveApiSoEditor()" class="md-primary">Cancel</md-button>
-	</div>	
-</div>
-
-<!-- sidenav for curl -->
-<md-sidenav md-component-id="side_nav_curl" style="width:680px;max-width:680px;padding:0px;" class="md-sidenav-right">
-    <div layout="row" layout-align="space-between center" style="background:#DCDCDC">
-        <h4 style="padding-left:10px;margin:15px 0 14px;">
-            External Access to <span ng-bind="curlItemMessage"></span>
-        </h4>
-    </div>
-    <h3 style="margin: 10px 0 0 10px;" >CURL command</h3>
-    <md-input-container class="md-block">
-        <textarea id="curl_content" style="height:100px;min-height:100px;padding:10px;" md-select-on-focus aria-label="curl_content">{{curlItemContent}}</textarea>
-    </md-input-container>
-    <div style="display:flex; justify-content: flex-end; margin-top: -30px;">
-        <span id='curl_content_span' style="color: white; margin: 15px 420px 15px 15px; background: #2AB52A; padding: 2px 5px; border-radius: 3px; display:none;" class='md-flex'>Copied!</span>
-        <md-button class="md-raised md-primary" ng-click="copyToClipboard('curl_content')">Copy to clipboard</md-button>
-    </div>
-    <h3 style="margin: 10px 0 0 10px;border-top: 2px #E0E0E0 solid; padding-top: 10px" >CURL command with parameters and body</h3>
-    <md-input-container class="md-block">
-        <textarea id="curl_content_with_parameters" style="min-height:120px;height: 120px; padding: 10px;" md-select-on-focus aria-label="curl_content_with_parameters">{{curlItemContentWithParameters}}</textarea>
-    </md-input-container>
-    <div style="display:flex; justify-content: flex-end; margin-top: -30px;">
-        <span id='curl_content_with_parameters_span' style="color: white; margin: 15px 420px 15px 15px; background: #2AB52A; padding: 2px 5px; border-radius: 3px; display:none;" class='md-flex'>Copied!</span>
-        <md-button class="md-raised md-primary" ng-click="copyToClipboard('curl_content_with_parameters')">Copy to clipboard</md-button>
-    </div>
-    <h3 style="margin: 10px 0 0 10px;border-top: 2px #E0E0E0 solid; padding-top: 10px" >Postman properties</h3>
-    <md-input-container class="md-block">
-        <table class="datatable" style="width:100%;">
-            <tbody>
-            <tr class="ng-scope" role="button" tabindex="0">
-                <td width="40%" class="ng-binding">Method</td>
-                <td width="60%" class="ng-binding"><b>POST</b></td>
-            </tr>
-            <tr class="ng-scope" role="button" tabindex="0">
-                <td width="40%" class="ng-binding">URL</td>
-                <td width="60%" class="ng-binding">{{postmanUrl}}</td>
-            </tr>
-            <tr class="ng-scope" role="button" tabindex="0">
-                <td width="40%" class="ng-binding">Username</td>
-                <td width="60%" class="ng-binding">{{postmanUsername}}</td>
-            </tr>
-            <tr class="ng-scope" role="button" tabindex="0">
-                <td width="40%" class="ng-binding">Password</td>
-                <td width="60%" class="ng-binding">{{postmanPassword}}</td>
-            </tr>
-            </tbody>
-        </table>
-    </md-input-container>
-    <h4 style="margin: 10px 0 0 10px;" ng-if="parameters.length > 0">Parameters</h4>
-    <table class="datatable" style="width:100%;">
-        <tbody>
-        <tr class="ng-scope" role="button" tabindex="0" ng-repeat="param in parameters">
-            <td width="40%" class="ng-binding">{{param.name}}</td>
-            <td width="60%" class="ng-binding">{{param.value}}</td>
-        </tr>
-        </tbody>
-    </table>
-    <h4 style="margin: 10px 0 0 10px;" ng-if="body.length > 0">Body</h4>
-    <table class="datatable" style="width:100%;">
-        <tbody>
-        <tr class="ng-scope" role="button" tabindex="0">
-            <td width="40%" class="ng-binding">body</td>
-            <td width="60%" class="ng-binding">{{body}}</td>
-        </tr>
-        </tbody>
-    </table>
-    <div style="display:flex; justify-content: flex-end;">
-        <md-button class="md-primary" ng-click="closeCurlSideNav()">Close</md-button>
-    </div>
-</md-sidenav>
-<!-- sidenav for curl end -->
-
-<!-- sidenav side_nav_add_service start -->
-<md-sidenav md-component-id="side_nav_add_service" style="width:880px;max-width:880px;padding:0px;" class="md-sidenav-left">
+<div id="api_so_studioview">
 	<div layout="row" layout-align="space-between center" style="background:#DCDCDC">
-		<h4 style="padding-left:10px;margin:15px 0 14px;">
-			Edit service <span ng-bind="scopeService.name"></span> for <span ng-bind="api_so.name"></span>
+		<h4 ng-if="serviceMode === 'serviceAdd'" style="padding-left:10px">
+			Create a new API Service Object
 		</h4>
+		<h4 ng-if="serviceMode === 'serviceEdit'" style="padding-left:10px">
+			Update an API Service Object
+		</h4>
+		<div layout="row">
+			<md-button ng-if="serviceMode === 'serviceAdd'" ng-click="saveApiSo()" class="md-primary" ng-disabled="validNameResult === 'failed' || validUrlResult === 'failed'">Save</md-button>
+			<md-button ng-if="serviceMode === 'serviceEdit'" ng-click="updateApiSo()" class="md-primary" ng-disabled="validNameResult === 'failed' || validUrlResult === 'failed'">Save</md-button>
+			<md-button ng-click="leaveApiSoEditor()" class="md-primary">Cancel</md-button>
+		</div>	
 	</div>
-	<md-tabs md-selected="selected_service_tab" md-dynamic-height md-center-tabs md-stretch-tabs="always" md-border-bottom>
-		<md-tab label="Settings" md-on-select="closeActionsEditor()">
-			<md-content class="md-padding sidenav-service">
-				<md-input-container class="input-select-aligned" ng-class="validUrlResult === 'failed' || existUrl === true ? 'md-input-invalid' : ''" style="width:100%">
-				  <label>API Route URL:</label>
-				  <input type="text" ng-model="scopeService.name" ng-blur="validateServiceUrl()" aria-label="scopeService.name">
-				  <div class="md-errors-spacer" style="float:left;">
-						<span ng-if="validUrlResult === 'failed'" style="color:#DD2C00; margin-top: 35px; font-size: 12px;">{{serviceUrlError}}</span>
-						<span ng-if="existUrl === true" style="color:#DD2C00; margin-top: 35px; font-size: 12px;">{{invalidNameUrl}}</span>
-	  			</div>
-				</md-input-container>
-				<div layout="row" layout-align="start center">
-					<md-input-container class="input-select-aligned margin-select" style="width:25%;margin-right:14px;">
-					  <label>API Source:</label>
-					  <md-select ng-model="scopeService.data.settings.authentication" aria-label="scopeService.data.settings.authentication" ng-disabled="api_sources.length === 0">
-					    <md-option ng-value="source.provider" ng-repeat="source in api_sources track by $index" ng-click="chooseDataSource( source )">
-					    	{{ source.provider === 'none' ? 'public/rest' : source.provider }}
-					    </md-option>
-					  </md-select>
-					  <div class="api-source-info" style="position:absolute;top:40px;right:-10px;z-index:0;width:12px;height:12px;">
-					  	<a ng-if="dataSource !== 'REST'" ng-hide="scopeService.data.settings.authentication ==='none'" ng-click="showApiSourceInfo( $event )" dfx-api-so-sources class="dfx-api-so-sources" style="display:block;cursor:pointer;"><i class="fa fa-info-circle" style="float:left;"></i></a>
-					  </div>
-					</md-input-container>
-				</div>
-				<div layout="row" layout-align="start center">
-					<md-input-container class="input-select-aligned margin-select" style="width:15%;margin-right:14px;">
-					  <label>Request type:</label>
-					  <md-select ng-model="scopeService.data.settings.typerequest" aria-label="scopeService.data.settings.typerequest">
-					    <md-option ng-value="opt.value" ng-repeat="opt in [{'value':'HTTP_GET'}, {'value':'HTTP_POST'}, {'value':'HTTP_PUT'}, {'value':'HTTP_DELETE'}, {'value':'HTTP_HEAD'}] track by $index">
-					    	{{ opt.value.slice(5) }}
-					    </md-option>
-                          <!--<md-option ng-value="HTTP_GET">GET</md-option>
-                          <md-option ng-value="HTTP_POST">POST</md-option>
-                          <md-option ng-value="HTTP_PUT">PUT</md-option>
-                          <md-option ng-value="HTTP_DELETE">DELETE</md-option>-->
-					  </md-select>
-					</md-input-container>
-					<md-input-container class="input-select-aligned" style="width:83%">
-					  <label>Request URL:</label>
-					  <input type="text" ng-model="scopeService.data.settings.url" aria-label="scopeService.data.settings.url">
-					</md-input-container>					
-				</div>
-				<div layout="row" layout-align="start center">
-					<md-checkbox ng-model="scopeService.data.settings.urlrandom" ng-true-value='"1"' ng-false-value='"0"' class="md-primary" aria-label="random-url">Add a random number URL parameter</md-checkbox>
-				</div>
-				<md-input-container ng-show="scopeService.data.settings.typerequest === 'HTTP_POST' || scopeService.data.settings.typerequest === 'HTTP_PUT'" style="width:100%">
-				  <label>Request Body:</label>
-				  <textarea ng-model="scopeService.data.settings.postrequestbody" class="textarea-gray" style="min-height:100px;padding:0 8px;" aria-label="scopeService.data.settings.postrequestbody"></textarea>
-				</md-input-container>
-                <md-input-container class="input-select-aligned margin-select" style="width:25%;margin-right:14px;">
-                    <label>Cache response:</label>
-                    <md-select ng-model="scopeService.data.settings.cache">
-                        <md-option value="none">none</md-option>
-                        <md-option value="user">per user</md-option>
-                        <md-option value="tenant">per tenant</md-option>
-                    </md-select>
-                </md-input-container>
-                <md-input-container class="input-select-aligned" style="width:25%;margin-right:14px;" ng-if="scopeService.data.settings.cache != 'none'">
-                    <label>Expiration time (seconds):</label>
-                    <input name="cacheTimeExpiry" ng-model="scopeService.data.settings.cacheTimeExpiry" placeholder="3600" required="" ng-pattern="/^0|[1-9]\d*$/">
-                    <div ng-messages="scopeService.data.settings.cacheTimeExpiry.$error" role="alert" multiple="">
-                        <div ng-message="pattern" ng-hide="scopeService.data.settings.cacheTimeExpiry" class="my-message">Value must be numeric</div>
-                    </div>
-                </md-input-container>
 
-                <md-input-container ng-if="scopeService.data.settings.cache == 'user'">
-                    <md-button class="md-raised md-warn" ng-click="clearCache('user')">clear</md-button>
-                </md-input-container>
-                <md-input-container ng-if="scopeService.data.settings.cache == 'tenant'">
-                    <md-button class="md-raised md-warn" ng-click="clearCache('tenant')">clear</md-button>
-                </md-input-container>
-			</md-content>
-		</md-tab>
-		<md-tab label="Parameters" md-on-select="closeActionsEditor()">
-			<md-content class="md-padding sidenav-service">
-				<h4>Parameters for: {{scopeService.data.settings.url}}</h4>
-				<table ng-if="scopeService.data.parameters.length > 0" class="sidenavtable" style="width:100%;">
-					<thead>
-						<tr>
-							<th>Name</th>
-							<th>Alias</th>
-							<th width="100px">Action</th>
-							<th>Value</th>
-							<th width="100px">Type</th>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr ng-repeat="parameter in scopeService.data.parameters track by $index">
-							<td>
-								<md-input-container>
-								  <input type="text" ng-model="parameter.name" aria-label="parameter.name">
-								</md-input-container>
-							</td>
-							<td>
-								<md-input-container>
-								  <input type="text" ng-model="parameter.alias" aria-label="parameter.alias">
-								</md-input-container>
-							</td>
-							<td>
-								<md-input-container>
-								  <md-select ng-model="parameter.operation" aria-label="parameter.operation">
-								    <md-option ng-value="operation.value" ng-repeat="operation in [{'value':'eq'}]">equal</md-option>
-								  </md-select>
-								</md-input-container>
-							</td>
-							<td>
-								<md-input-container>
-								  <input type="text" ng-model="parameter.value" aria-label="parameter.value">
-								</md-input-container>
-							</td>
-							<td>
-								<md-input-container>
-								  <md-select ng-model="parameter.type" aria-label="parameter.type">
-								    <md-option ng-value="type.value" ng-repeat="type in [{'value':'header'},{'value':'request'},{'value':'url'}]">{{ type.value }}</md-option>
-								  </md-select>
-								</md-input-container>
-							</td>
-							<td>
-								<md-button ng-click="deleteRow( scopeService.data.parameters, $index )" class="md-icon-button" aria-label="icon-button">
-								  <md-icon class="fa fa-trash" style="font-size:18px;width:18px;height:18px;"></md-icon>
-								</md-button>								
-							</td>
-						</tr>
-					</tbody>
-				</table>	
-				<md-button ng-click="addRow( scopeService.data.parameters, 'parameters' )" class="md-raised">
-					<md-icon class="fa fa-plus" style="width:14px;height:14px;"></md-icon>
-					Parameter
-				</md-button>
-			</md-content>
-		</md-tab>
-		<md-tab label="Filters">
-			<md-content class="md-padding sidenav-service">
-                <p class="md-title" style="margin-left:2px;">{{editFilterTitle}}</p>
-				<div id="dfx_filter_src_query_editor_panel" ng-show="editorOpened">
-	        <md-menu-bar>
-						<md-menu>
-							<button ng-click="$mdOpenMenu();">
-								<md-icon class="fa fa-bars" style="font-size:18px;width:auto;height:18px"></md-icon>
-								<span style="margin:0 5px;">Actions</span>
-								<md-icon class="fa fa-caret-down" style="font-size:18px;width:auto;height:18px"></md-icon>
-							</button>
-							<md-menu-content>
-								<md-menu-item><md-button ng-click="setCodemirrorValue(executeDataQuery)" style="line-height:32px;">Execute service with parameters</md-button></md-menu-item>
-								<md-menu-item><md-button ng-click="setCodemirrorValue(executeDataQueryParams)" style="line-height:32px;">Execute service with parameters and body</md-button></md-menu-item>
-								<md-menu-item ng-show="editFilterParameters">
-                                    <md-menu>
-                                      <md-button ng-click="$mdOpenMenu()" style="line-height:32px;">Parameters</md-button>
-                                      <md-menu-content>
-                                        <md-menu-item><md-button ng-click="setCodemirrorValue(getParameter)" style="line-height:32px;">Get Parameter Value</md-button></md-menu-item>
-                                        <md-menu-item><md-button ng-click="setCodemirrorValue(editParameter)" style="line-height:32px;">Set Parameter Value</md-button></md-menu-item>
-                                        <md-menu-item><md-button ng-click="setCodemirrorValue(addParameter)" style="line-height:32px;">Add a new Parameter</md-button></md-menu-item>
-                                    </md-menu-content>
-                                    </md-menu>
-                                </md-menu-item>
-                                <md-menu-item ng-show="editFilterParameters">
-                                    <md-menu>
-                                        <md-button ng-click="$mdOpenMenu()" style="line-height:32px;">Body</md-button>
-                                        <md-menu-content>
-                                            <md-menu-item><md-button ng-click="setCodemirrorValue(setBody)" style="line-height:32px;">Set Body</md-button></md-menu-item>
-                                        </md-menu-content>
-                                    </md-menu>
-                              </md-menu-item>
-							</md-menu-content>
-						</md-menu>
-						<!--<md-menu>-->
-							<!--<button ng-click="saveActions()">-->
-								<!--<md-icon class="fa fa-floppy-o" style="font-size:18px;width:auto;height:18px"></md-icon>-->
-								<!--<span style="margin:0 5px;">Save</span>-->
-							<!--</button>-->
-							<!--<md-menu-content style="display:none !important"></md-menu-content>-->
-						<!--</md-menu>-->
-						<!--<md-menu>-->
-							<!--<button ng-click="closeActionsEditor()">-->
-								<!--<md-icon class="fa fa-sign-out" style="font-size:18px;width:auto;height:18px"></md-icon>-->
-								<!--<span style="margin:0 5px;">Close</span>-->
-							<!--</button>-->
-							<!--<md-menu-content style="display:none !important"></md-menu-content>-->
-						<!--</md-menu>-->
-					</md-menu-bar>
-					<div style="border:1px solid #dddddd;">
-	        	<textarea id="dfx_filter_src_query_editor" style="display:none;"></textarea>						
-					</div>
-	      </div>
-	      <div ng-hide="editorOpened">	      	
-					<h4>Pre code execution</h4>
-					<table ng-if="scopeService.data.precode.length > 0" class="sidenavtable" style="width:100%;">
-						<thead>
-							<tr>
-								<th width="50%">Name Pre Code</th>
-								<th>Code execution</th>
-								<th>Order</th>
-								<th></th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr ng-repeat="preCode in scopeService.data.precode track by $index">
-								<td>
-									<md-input-container style="width:100%;">
-									  <input type="text" ng-model="preCode.name" aria-label="preCode.name">
-									</md-input-container>
-								</td>
-								<td>
-									<md-button ng-click="codeEditor( $index, scopeService.data.precode, 'precode' )" class="md-icon-button" aria-label="icon-button">
-									  <md-icon class="fa fa-edit" style="font-size:18px;width:18px;height:18px;"></md-icon>
-									</md-button>
-								</td>
-								<td>
-									<md-button ng-click="moveUp( $index, preCode, scopeService.data.precode )" class="md-icon-button" style="margin:0;" aria-label="icon-button">
-									  <md-icon class="fa fa-arrow-up" style="font-size:18px;width:18px;height:18px;"></md-icon>
-									</md-button>
-									<md-button ng-click="moveDown( $index, preCode, scopeService.data.precode )" class="md-icon-button" style="margin:0;" aria-label="icon-button">
-									  <md-icon class="fa fa-arrow-down" style="font-size:18px;width:18px;height:18px;"></md-icon>
-									</md-button>
-								</td>
-								<td>
-									<md-button ng-click="deleteRow( scopeService.data.precode, $index )" class="md-icon-button" aria-label="icon-button">
-									  <md-icon class="fa fa-trash" style="font-size:18px;width:18px;height:18px;"></md-icon>
-									</md-button>
-								</td>
-							</tr>
-						</tbody>
-					</table>	
-					<md-button ng-click="addRow( scopeService.data.precode, 'pre_code' )" class="md-raised">
-						<md-icon class="fa fa-plus" style="width:14px;height:14px;"></md-icon>
-						Pre code execution
-					</md-button>
-					<h4>Post code execution</h4>
-					<table ng-if="scopeService.data.postcode.length > 0" class="sidenavtable" style="width:100%;">
-						<thead>
-							<tr>
-								<th width="50%">Name Post Code</th>
-								<th>Code execution</th>
-								<th>Order</th>
-								<th></th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr ng-repeat="postCode in scopeService.data.postcode track by $index">
-								<td>
-									<md-input-container style="width:100%;">
-									  <input type="text" ng-model="postCode.name" aria-label="postCode.name">
-									</md-input-container>
-								</td>
-								<td>
-									<md-button ng-click="codeEditor( $index, scopeService.data.postcode, 'postcode' )" class="md-icon-button" aria-label="icon-button">
-									  <md-icon class="fa fa-edit" style="font-size:18px;width:18px;height:18px;"></md-icon>
-									</md-button>
-								</td>
-								<td>
-									<md-button ng-click="moveUp( $index, postCode, scopeService.data.postcode )" class="md-icon-button" style="margin:0;" aria-label="icon-button">
-									  <md-icon class="fa fa-arrow-up" style="font-size:18px;width:18px;height:18px;"></md-icon>
-									</md-button>
-									<md-button ng-click="moveDown( $index, postCode, scopeService.data.postcode )" class="md-icon-button" style="margin:0;" aria-label="icon-button">
-									  <md-icon class="fa fa-arrow-down" style="font-size:18px;width:18px;height:18px;"></md-icon>
-									</md-button>
-								</td>
-								<td>
-									<md-button ng-click="deleteRow( scopeService.data.postcode, $index )" class="md-icon-button" aria-label="icon-button">
-									  <md-icon class="fa fa-trash" style="font-size:18px;width:18px;height:18px;"></md-icon>
-									</md-button>
-								</td>
-							</tr>
-						</tbody>
-					</table>	
-					<md-button ng-click="addRow( scopeService.data.postcode, 'post_code' )" class="md-raised">
-						<md-icon class="fa fa-plus" style="width:14px;height:14px;"></md-icon>
-						Post code execution
-					</md-button>
-					<h4>Application Exceptions</h4>					
-					<h5>Enter a regular expression to identify an application exception (evaluated an runtime only)</h5>
-					<table ng-if="scopeService.data.appexpr.length > 0" class="sidenavtable" style="width:100%;">
-						<thead>
-							<tr>
-								<th width="45%">Name Error</th>
-								<th width="45%">RegExp Error</th>
-								<th></th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr ng-repeat="appException in scopeService.data.appexpr track by $index">
-								<td>
-									<md-input-container style="width:100%;">
-									  <input type="text" ng-model="appException.name" aria-label="appException.name">
-									</md-input-container>
-								</td>
-								<td>
-									<md-input-container style="width:100%;">
-									  <input type="text" ng-model="appException.regexp" aria-label="appException.regexp">
-									</md-input-container>
-								</td>						
-								<td>
-									<md-button ng-click="deleteRow( scopeService.data.appexpr, $index )" class="md-icon-button" aria-label="icon-button">
-									  <md-icon class="fa fa-trash" style="font-size:18px;width:18px;height:18px;"></md-icon>
-									</md-button>
-								</td>
-							</tr>
-						</tbody>
-					</table>	
-					<md-button ng-click="addRow( scopeService.data.appexpr, 'appexpr' )" class="md-raised">
-						<md-icon class="fa fa-plus" style="width:14px;height:14px;"></md-icon>
-						Application Exception
-					</md-button>
-	      </div>				
-			</md-content>
-		</md-tab>
-		<md-tab label="Test" md-on-select="closeActionsEditor()">
-			<md-content class="md-padding sidenav-service">
-				<md-button ng-click="execute( $event )" class="md-raised">
-					<md-icon class="fa fa-play" style="width:14px;height:14px;"></md-icon>
-					Execute
-				</md-button>
-				<md-button ng-click="viewResult()" ng-show="isExecuted" class="md-raised">View Result</md-button>
-				<md-button ng-click="viewMetaData()" ng-show="isExecuted" class="md-raised">View MetaData</md-button>
-				<md-button ng-click="viewRequest()" ng-show="isExecuted" class="md-raised">View Request</md-button>
-				<div id="showResults" style="padding-top:16px;opacity:0;">
-                    <!-- <p ng-show="showFullResult" style="color:red">The response was cut by {{numberOfCutedChars}} characters click <b><a ng-click="showFullResultAction()" style="cursor:pointer;">here</a></b> to see full response</p> -->
-						<div style="border:1px solid #dddddd;">
-		        	<!-- <textarea id="executedResult" style="white-space:pre;width:100%;border:none;outline:none!important;"></textarea> -->
-		        	<div id="executedResult" style="white-space:pre;width:100%;border:none;outline:none!important;"></div>						
-						</div>
-				</div>
-			</md-content>
-		</md-tab>
-	</md-tabs>	
-  <div style="display:flex; justify-content: flex-end;">
-	  <md-button ng-if="serviceModeBtn === 'serviceAdd'" class="md-primary" ng-click="saveApiSoService()" ng-disabled="validUrlResult === 'failed' || existUrl === true">Add Service</md-button>
-      <md-button ng-if="editorOpened" class="md-primary" ng-click="closeActionsEditor()">Back</md-button>
-      <md-button ng-if="editorOpened" class="md-primary" ng-click="saveActions()">Save</md-button>
-      <md-button ng-if="serviceModeBtn === 'serviceAdd'" class="md-primary" ng-click="closeServiceSidenav()">Cancel</md-button>
-	  <md-button ng-if="serviceModeBtn === 'serviceEdit' && !editorOpened" class="md-primary" ng-click="closeServiceSidenav()">Close</md-button>
-	</div>
-</md-sidenav>
-<!-- sidenav side_nav_add_service end -->
+	<!-- sidenav for curl -->
+	<md-sidenav md-component-id="side_nav_curl" style="width:680px;max-width:680px;padding:0px;" class="md-sidenav-right">
+	    <div layout="row" layout-align="space-between center" style="background:#DCDCDC">
+	        <h4 style="padding-left:10px;margin:15px 0 14px;">
+	            External Access to <span ng-bind="curlItemMessage"></span>
+	        </h4>
+	    </div>
+	    <h3 style="margin: 10px 0 0 10px;" >CURL command</h3>
+	    <md-input-container class="md-block">
+	        <textarea id="curl_content" style="height:100px;min-height:100px;padding:10px;" md-select-on-focus aria-label="curl_content">{{curlItemContent}}</textarea>
+	    </md-input-container>
+	    <div style="display:flex; justify-content: flex-end; margin-top: -30px;">
+	        <span id='curl_content_span' style="color: white; margin: 15px 420px 15px 15px; background: #2AB52A; padding: 2px 5px; border-radius: 3px; display:none;" class='md-flex'>Copied!</span>
+	        <md-button class="md-raised md-primary" ng-click="copyToClipboard('curl_content')">Copy to clipboard</md-button>
+	    </div>
+	    <h3 style="margin: 10px 0 0 10px;border-top: 2px #E0E0E0 solid; padding-top: 10px" >CURL command with parameters and body</h3>
+	    <md-input-container class="md-block">
+	        <textarea id="curl_content_with_parameters" style="min-height:120px;height: 120px; padding: 10px;" md-select-on-focus aria-label="curl_content_with_parameters">{{curlItemContentWithParameters}}</textarea>
+	    </md-input-container>
+	    <div style="display:flex; justify-content: flex-end; margin-top: -30px;">
+	        <span id='curl_content_with_parameters_span' style="color: white; margin: 15px 420px 15px 15px; background: #2AB52A; padding: 2px 5px; border-radius: 3px; display:none;" class='md-flex'>Copied!</span>
+	        <md-button class="md-raised md-primary" ng-click="copyToClipboard('curl_content_with_parameters')">Copy to clipboard</md-button>
+	    </div>
+	    <h3 style="margin: 10px 0 0 10px;border-top: 2px #E0E0E0 solid; padding-top: 10px" >Postman properties</h3>
+	    <md-input-container class="md-block">
+	        <table class="datatable" style="width:100%;">
+	            <tbody>
+	            <tr class="ng-scope" role="button" tabindex="0">
+	                <td width="40%" class="ng-binding">Method</td>
+	                <td width="60%" class="ng-binding"><b>POST</b></td>
+	            </tr>
+	            <tr class="ng-scope" role="button" tabindex="0">
+	                <td width="40%" class="ng-binding">URL</td>
+	                <td width="60%" class="ng-binding">{{postmanUrl}}</td>
+	            </tr>
+	            <tr class="ng-scope" role="button" tabindex="0">
+	                <td width="40%" class="ng-binding">Username</td>
+	                <td width="60%" class="ng-binding">{{postmanUsername}}</td>
+	            </tr>
+	            <tr class="ng-scope" role="button" tabindex="0">
+	                <td width="40%" class="ng-binding">Password</td>
+	                <td width="60%" class="ng-binding">{{postmanPassword}}</td>
+	            </tr>
+	            </tbody>
+	        </table>
+	    </md-input-container>
+	    <h4 style="margin: 10px 0 0 10px;" ng-if="parameters.length > 0">Parameters</h4>
+	    <table class="datatable" style="width:100%;">
+	        <tbody>
+	        <tr class="ng-scope" role="button" tabindex="0" ng-repeat="param in parameters">
+	            <td width="40%" class="ng-binding">{{param.name}}</td>
+	            <td width="60%" class="ng-binding">{{param.value}}</td>
+	        </tr>
+	        </tbody>
+	    </table>
+	    <h4 style="margin: 10px 0 0 10px;" ng-if="body.length > 0">Body</h4>
+	    <table class="datatable" style="width:100%;">
+	        <tbody>
+	        <tr class="ng-scope" role="button" tabindex="0">
+	            <td width="40%" class="ng-binding">body</td>
+	            <td width="60%" class="ng-binding">{{body}}</td>
+	        </tr>
+	        </tbody>
+	    </table>
+	    <div style="display:flex; justify-content: flex-end;">
+	        <md-button class="md-primary" ng-click="closeCurlSideNav()">Close</md-button>
+	    </div>
+	</md-sidenav>
+	<!-- sidenav for curl end -->
 
-<!-- add services popup start -->
-<div id="add-services">
-	<md-toolbar>
-    <div class="md-toolbar-tools">
-      <h5>Select an API Source</h5>
-	  </div>
-	</md-toolbar>
-	<div layout="row" layout-align="start center" style="padding:0px 8px;">
-		<md-input-container class="input-select-aligned margin-select" style="width:180px;margin-right:14px;">
-		  <label>API Source:</label>
-		  <md-select ng-model="servicesApiSource" aria-label="servicesApiSource">
-		    <md-option ng-if="source.dataSource !=='REST'" ng-value="source.provider" ng-repeat="source in api_sources track by $index" ng-click="chooseDataSource( source )">
-		    	{{ source.provider === 'none' ? 'public/rest' : source.provider }}
-		    </md-option>
-		  </md-select>
-		  <div class="api-source-info" style="position:absolute;top:40px;right:-10px;z-index:0;width:12px;height:12px;">
-		  	<a ng-if="dataSource !== 'REST'" ng-click="showApiSourceInfo( $event )" dfx-api-so-sources class="dfx-api-so-sources" style="display:block;cursor:pointer;"><i class="fa fa-info-circle" style="float:left;"></i></a>
-		  </div>
-		</md-input-container>
-	</div>
-	<div layout="row" layout-align="end center">
-    <md-button class="md-primary" ng-click="closeSources()">Close</md-button>
-	</div>
-</div>
-<div id="add-services-backdrop"></div>
-<!-- add services popup end -->
-
-<!-- main tabs start -->
-<div layout="row">
-	<md-card class="md-altTheme-theme" style="width:100%;overflow:hidden;">
-		<md-card-content style="padding:0;">
-			<md-tabs md-selected="selected_tab" md-dynamic-height md-center-tabs md-stretch-tabs="always" md-border-bottom>	
-				<md-tab label="Service Object Properties">
-					<md-content class="md-padding">
-						<div>
-							<md-input-container class="input-select-aligned" ng-class="validNameResult === 'failed' ? 'md-input-invalid' : ''" style="width:30%;margin-right:14px;">
-							  <label>API Service Name</label>
-				  			<input type="text" ng-model="api_so.name" ng-disabled="serviceMode === 'serviceEdit'" ng-blur="validateServiceName( api_so.name )" aria-label="api_so.name" ng-keyup="($event.keyCode == 13 && api_so.name !=='' && serviceMode === 'serviceAdd') ? saveApiSo() : ''">			  
-				  			<div class="md-errors-spacer" style="float:left;">
-									<span style="color:#DD2C00; margin-top: 35px; font-size: 12px;">{{serviceNameError}}</span>
-				  			</div>			
+	<!-- sidenav side_nav_add_service start -->
+	<md-sidenav md-component-id="side_nav_add_service" style="width:880px;max-width:880px;padding:0px;" class="md-sidenav-left">
+		<div layout="row" layout-align="space-between center" style="background:#DCDCDC">
+			<h4 style="padding-left:10px;margin:15px 0 14px;">
+				Edit service <span ng-bind="scopeService.name"></span> for <span ng-bind="api_so.name"></span>
+			</h4>
+		</div>
+		<form ng-submit="validateServiceUrl(serviceModeBtn)">
+			<md-tabs md-selected="selected_service_tab" md-dynamic-height md-center-tabs md-stretch-tabs="always" md-border-bottom>
+				<md-tab label="Settings" md-on-select="closeActionsEditor()">
+					<md-content class="md-padding sidenav-service">
+						<md-input-container class="input-select-aligned" ng-class="validUrlResult === 'failed' || existUrl === true ? 'md-input-invalid' : ''" style="width:100%">
+						  <label>API Route URL:</label>
+						  <input type="text" ng-model="scopeService.name" md-autofocus ng-blur="validateServiceUrl()" aria-label="scopeService.name">
+						  <div class="md-errors-spacer" style="float:left;">
+								<span ng-if="validUrlResult === 'failed'" style="color:#DD2C00; margin-top: 35px; font-size: 12px;">{{serviceUrlError}}</span>
+								<span ng-if="existUrl === true" style="color:#DD2C00; margin-top: 35px; font-size: 12px;">{{invalidNameUrl}}</span>
+			  			</div>
+						</md-input-container>
+						<div layout="row" layout-align="start center">
+							<md-input-container class="input-select-aligned margin-select" style="width:25%;margin-right:14px;">
+							  <label>API Source:</label>
+							  <md-select ng-model="scopeService.data.settings.authentication" aria-label="scopeService.data.settings.authentication" ng-disabled="api_sources.length === 0">
+							    <md-option ng-value="source.provider" ng-repeat="source in api_sources track by $index" ng-click="chooseDataSource( source )">
+							    	{{ source.provider === 'none' ? 'public/rest' : source.provider }}
+							    </md-option>
+							  </md-select>
+							  <div class="api-source-info" style="position:absolute;top:40px;right:-10px;z-index:0;width:12px;height:12px;">
+							  	<a ng-if="dataSource !== 'REST'" ng-hide="scopeService.data.settings.authentication ==='none'" ng-click="showApiSourceInfo( $event )" dfx-api-so-sources class="dfx-api-so-sources" style="display:block;cursor:pointer;"><i class="fa fa-info-circle" style="float:left;"></i></a>
+							  </div>
 							</md-input-container>
-							<md-input-container class="input-select-aligned" style="width:68%">
-							  <label>Description</label>
-							  <input ng-if="serviceMode === 'serviceAdd'" type="text" ng-model="api_so.description" aria-label="api_so.description" ng-keyup="($event.keyCode == 13 && api_so.name !=='') ? saveApiSo() : ''">
-							  <input ng-if="serviceMode === 'serviceEdit'" type="text" ng-model="api_so.description" aria-label="api_so.description" ng-keyup="($event.keyCode == 13 && api_so.name !=='') ? updateApiSo() : ''">
-							</md-input-container>							
 						</div>
-						<div>							
-							<md-input-container class="input-select-aligned margin-select" style="width:30%">
-							  <label>Category</label>
-							  <md-select ng-model="api_so.category" aria-label="api_so.category">
-							    <md-option ng-value="category.name" ng-repeat="category in apiSoCategories track by $index">{{ category.name }}</md-option>
+						<div layout="row" layout-align="start center">
+							<md-input-container class="input-select-aligned margin-select" style="width:15%;margin-right:14px;">
+							  <label>Request type:</label>
+							  <md-select ng-model="scopeService.data.settings.typerequest" aria-label="scopeService.data.settings.typerequest">
+							    <md-option ng-value="opt.value" ng-repeat="opt in [{'value':'HTTP_GET'}, {'value':'HTTP_POST'}, {'value':'HTTP_PUT'}, {'value':'HTTP_DELETE'}, {'value':'HTTP_HEAD'}] track by $index">
+							    	{{ opt.value.slice(5) }}
+							    </md-option>
+		                          <!--<md-option ng-value="HTTP_GET">GET</md-option>
+		                          <md-option ng-value="HTTP_POST">POST</md-option>
+		                          <md-option ng-value="HTTP_PUT">PUT</md-option>
+		                          <md-option ng-value="HTTP_DELETE">DELETE</md-option>-->
 							  </md-select>
 							</md-input-container>
-						</div>							
-					</md-content>
-					<div ng-if="serviceMode === 'serviceEdit'" layout="row" layout-align ="end center">
-				    <button ng-click="confirmApiSoDelete($event)" class="md-raised md-warn md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-trash-o" style="color: #ffffff"></span><span style="padding-left:5px">Delete the API Service Object</span></button>
-					</div>
-				</md-tab>
-				<md-tab label="Services">
-					<md-content class="md-padding" layout="column">
-						<div layout="row" layout-align="end center">							
-							<md-button class="md-raised" ng-click="addService()">
-								<md-icon class="fa fa-plus" style="width:14px;height:14px;"></md-icon>
-								Service
-							</md-button>
-							<md-button class="md-raised" ng-click="addServices()">
-								<md-icon class="fa fa-plus" style="width:14px;height:14px;"></md-icon>
-								Services
-							</md-button>
+							<md-input-container class="input-select-aligned" style="width:83%">
+							  <label>Request URL:</label>
+							  <input type="text" ng-model="scopeService.data.settings.url" aria-label="scopeService.data.settings.url">
+							</md-input-container>					
 						</div>
-						<md-card style="flex-grow:3;overflow:hidden;">
-							<md-card-content style="padding:0;">
-								<table class="datatable" style="width:100%;">
-									<thead>
-										<tr style="border-bottom:1px solid #C7C7C7;">
-											<th width="30%">API Route URL</th>
-											<th width="20%">Request type</th>
-											<th width="25%">API Source</th>
-											<th>Actions</th>
-										</tr>
-									</thead>
-								</table>
-								<div id="scope-source-table" style="padding:0;overflow-y:auto;">
-									<table class="datatable" style="width:100%;">
-										<tbody>
-											<tr ng-repeat="serviceItem in api_so.apiRoutes track by $index" ng-click="" style="cursor:pointer;">
-												<td width="30%">{{serviceItem.name}}</td>
-												<td width="20%">{{serviceItem.data.settings.typerequest.slice(5)}}</td>
-												<td width="25%">{{serviceItem.data.settings.authentication === 'none' ? 'public/rest' : serviceItem.data.settings.authentication}}</td>
-												<td>
-	                        <md-button ng-click="editService( serviceItem, $index )" style="margin:0;padding:0;min-width:20px" aria-label="edit-service"><md-icon class="fa fa-edit" style="font-size:20px; padding-top: 5px;"></md-icon></md-button>
-                            <md-button ng-click="showCurl( serviceItem )" style="margin:0;padding:0;min-width:20px" aria-label="show-curl"><md-icon class="fa fa-info" style="font-size:20px; padding-top: 5px;"></md-icon></md-button>
-                            <md-button style="margin: 0; padding: 0; min-width: 20px" ng-click="confirmDelete( $event, $index )" aria-label="delete-service"><md-icon class="fa fa-trash" style="font-size:20px; padding-top: 3px;"></md-icon></md-button>
-												</td>
-											</tr>
-										</tbody>
-									</table>						
-								</div>
-							</md-card-content>
-						</md-card>
+						<div layout="row" layout-align="start center">
+							<md-checkbox ng-model="scopeService.data.settings.urlrandom" ng-true-value='"1"' ng-false-value='"0"' class="md-primary" aria-label="random-url">Add a random number URL parameter</md-checkbox>
+						</div>
+						<md-input-container ng-show="scopeService.data.settings.typerequest === 'HTTP_POST' || scopeService.data.settings.typerequest === 'HTTP_PUT'" style="width:100%">
+						  <label>Request Body:</label>
+						  <textarea ng-model="scopeService.data.settings.postrequestbody" class="textarea-gray" style="min-height:100px;padding:0 8px;" aria-label="scopeService.data.settings.postrequestbody"></textarea>
+						</md-input-container>
+		                <md-input-container class="input-select-aligned margin-select" style="width:25%;margin-right:14px;">
+		                    <label>Cache response:</label>
+		                    <md-select ng-model="scopeService.data.settings.cache">
+		                        <md-option value="none">none</md-option>
+		                        <md-option value="user">per user</md-option>
+		                        <md-option value="tenant">per tenant</md-option>
+		                    </md-select>
+		                </md-input-container>
+		                <md-input-container class="input-select-aligned" style="width:25%;margin-right:14px;" ng-if="scopeService.data.settings.cache != 'none'">
+		                    <label>Expiration time (seconds):</label>
+		                    <input name="cacheTimeExpiry" type="number" ng-model="scopeService.data.settings.cacheTimeExpiry" placeholder="3600" required="" ng-pattern="/^0|[1-9]\d*$/">
+		                    <div ng-messages="scopeService.data.settings.cacheTimeExpiry.$error" role="alert" multiple="">
+		                        <div ng-message="pattern" ng-hide="scopeService.data.settings.cacheTimeExpiry" class="my-message">Value must be numeric</div>
+		                    </div>
+		                </md-input-container>
+
+		                <md-input-container ng-if="scopeService.data.settings.cache == 'user'">
+		                    <md-button class="md-raised md-warn" ng-click="clearCache('user')">clear</md-button>
+		                </md-input-container>
+		                <md-input-container ng-if="scopeService.data.settings.cache == 'tenant'">
+		                    <md-button class="md-raised md-warn" ng-click="clearCache('tenant')">clear</md-button>
+		                </md-input-container>
 					</md-content>
 				</md-tab>
-			</md-tabs>			
-		</md-card-content>
-	</md-card>
-</div>
+				<md-tab label="Parameters" md-on-select="closeActionsEditor()">
+					<md-content class="md-padding sidenav-service">
+						<h4>Parameters for: {{scopeService.data.settings.url}}</h4>
+						<table ng-if="scopeService.data.parameters.length > 0" class="sidenavtable" style="width:100%;">
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>Alias</th>
+									<th width="100px">Action</th>
+									<th>Value</th>
+									<th width="100px">Type</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="parameter in scopeService.data.parameters track by $index">
+									<td>
+										<md-input-container>
+										  <input type="text" id="parameter_name_{{$index}}" ng-model="parameter.name" aria-label="parameter.name">
+										</md-input-container>
+									</td>
+									<td>
+										<md-input-container>
+										  <input type="text" ng-model="parameter.alias" aria-label="parameter.alias">
+										</md-input-container>
+									</td>
+									<td>
+										<md-input-container>
+										  <md-select ng-model="parameter.operation" aria-label="parameter.operation">
+										    <md-option ng-value="operation.value" ng-repeat="operation in [{'value':'eq'}]">equal</md-option>
+										  </md-select>
+										</md-input-container>
+									</td>
+									<td>
+										<md-input-container>
+										  <input type="text" ng-model="parameter.value" aria-label="parameter.value">
+										</md-input-container>
+									</td>
+									<td>
+										<md-input-container>
+										  <md-select ng-model="parameter.type" aria-label="parameter.type">
+										    <md-option ng-value="type.value" ng-repeat="type in [{'value':'header'},{'value':'request'},{'value':'url'}]">{{ type.value }}</md-option>
+										  </md-select>
+										</md-input-container>
+									</td>
+									<td>
+										<md-button ng-click="deleteRow( scopeService.data.parameters, $index )" class="md-icon-button" aria-label="icon-button">
+										  <md-icon class="fa fa-trash dfx-studio-flex-icon" style="font-size:18px;width:18px;height:18px;"></md-icon>
+										</md-button>								
+									</td>
+								</tr>
+							</tbody>
+						</table>	
+						<md-button ng-click="addRow( scopeService.data.parameters, 'parameters' )" class="md-raised">
+							<md-icon class="fa fa-plus" style="width:14px;height:14px;"></md-icon>
+							Parameter
+						</md-button>
+					</md-content>
+				</md-tab>
+				<md-tab label="Filters">
+					<md-content class="md-padding sidenav-service">
+		                <p class="md-title" style="margin-left:2px;">{{editFilterTitle}}</p>
+						<div id="dfx_filter_src_query_editor_panel" ng-show="editorOpened">
+			        <md-menu-bar>
+								<md-menu>
+									<button ng-click="$mdOpenMenu();">
+										<md-icon class="fa fa-bars dfx-studio-flex-icon" style="font-size:18px;width:auto;height:18px"></md-icon>
+										<span style="margin:0 5px;">Actions</span>
+										<md-icon class="fa fa-caret-down dfx-studio-flex-icon" style="font-size:18px;width:auto;height:18px"></md-icon>
+									</button>
+									<md-menu-content>
+										<md-menu-item><md-button ng-click="setCodemirrorValue(executeDataQuery)" style="line-height:32px;">Execute service with parameters</md-button></md-menu-item>
+										<md-menu-item><md-button ng-click="setCodemirrorValue(executeDataQueryParams)" style="line-height:32px;">Execute service with parameters and body</md-button></md-menu-item>
+										<md-menu-item ng-show="editFilterParameters">
+		                                    <md-menu>
+		                                      <md-button ng-click="$mdOpenMenu()" style="line-height:32px;">Parameters</md-button>
+		                                      <md-menu-content>
+		                                        <md-menu-item><md-button ng-click="setCodemirrorValue(getParameter)" style="line-height:32px;">Get Parameter Value</md-button></md-menu-item>
+		                                        <md-menu-item><md-button ng-click="setCodemirrorValue(editParameter)" style="line-height:32px;">Set Parameter Value</md-button></md-menu-item>
+		                                        <md-menu-item><md-button ng-click="setCodemirrorValue(addParameter)" style="line-height:32px;">Add a new Parameter</md-button></md-menu-item>
+		                                    </md-menu-content>
+		                                    </md-menu>
+		                                </md-menu-item>
+		                                <md-menu-item ng-show="editFilterParameters">
+		                                    <md-menu>
+		                                        <md-button ng-click="$mdOpenMenu()" style="line-height:32px;">Body</md-button>
+		                                        <md-menu-content>
+		                                            <md-menu-item><md-button ng-click="setCodemirrorValue(setBody)" style="line-height:32px;">Set Body</md-button></md-menu-item>
+		                                        </md-menu-content>
+		                                    </md-menu>
+		                              </md-menu-item>
+									</md-menu-content>
+								</md-menu>
+								<!--<md-menu>-->
+									<!--<button ng-click="saveActions()">-->
+										<!--<md-icon class="fa fa-floppy-o dfx-studio-flex-icon" style="font-size:18px;width:auto;height:18px"></md-icon>-->
+										<!--<span style="margin:0 5px;">Save</span>-->
+									<!--</button>-->
+									<!--<md-menu-content style="display:none !important"></md-menu-content>-->
+								<!--</md-menu>-->
+								<!--<md-menu>-->
+									<!--<button ng-click="closeActionsEditor()">-->
+										<!--<md-icon class="fa fa-sign-out dfx-studio-flex-icon" style="font-size:18px;width:auto;height:18px"></md-icon>-->
+										<!--<span style="margin:0 5px;">Close</span>-->
+									<!--</button>-->
+									<!--<md-menu-content style="display:none !important"></md-menu-content>-->
+								<!--</md-menu>-->
+							</md-menu-bar>
+							<div style="border:1px solid #dddddd;">
+			        	<textarea id="dfx_filter_src_query_editor" style="display:none;"></textarea>						
+							</div>
+			      </div>
+			      <div ng-hide="editorOpened">	      	
+							<h4>Pre code execution</h4>
+							<table ng-if="scopeService.data.precode.length > 0" class="sidenavtable" style="width:100%;">
+								<thead>
+									<tr>
+										<th width="50%">Name Pre Code</th>
+										<th>Code execution</th>
+										<th>Order</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="preCode in scopeService.data.precode track by $index">
+										<td>
+											<md-input-container style="width:100%;">
+											  <input type="text" id="pre_code_name_{{$index}}" ng-model="preCode.name" aria-label="preCode.name">
+											</md-input-container>
+										</td>
+										<td>
+											<md-button ng-click="codeEditor( $index, scopeService.data.precode, 'precode' )" class="md-icon-button" aria-label="icon-button">
+											  <md-icon class="fa fa-edit dfx-studio-flex-icon" style="font-size:18px;width:18px;height:18px;"></md-icon>
+											</md-button>
+										</td>
+										<td>
+											<md-button ng-click="moveUp( $index, preCode, scopeService.data.precode )" class="md-icon-button" style="margin:0;" aria-label="icon-button">
+											  <md-icon class="fa fa-arrow-up dfx-studio-flex-icon" style="font-size:18px;width:18px;height:18px;"></md-icon>
+											</md-button>
+											<md-button ng-click="moveDown( $index, preCode, scopeService.data.precode )" class="md-icon-button" style="margin:0;" aria-label="icon-button">
+											  <md-icon class="fa fa-arrow-down dfx-studio-flex-icon" style="font-size:18px;width:18px;height:18px;"></md-icon>
+											</md-button>
+										</td>
+										<td>
+											<md-button ng-click="deleteRow( scopeService.data.precode, $index )" class="md-icon-button" aria-label="icon-button">
+											  <md-icon class="fa fa-trash dfx-studio-flex-icon" style="font-size:18px;width:18px;height:18px;"></md-icon>
+											</md-button>
+										</td>
+									</tr>
+								</tbody>
+							</table>	
+							<md-button ng-click="addRow( scopeService.data.precode, 'pre_code' )" class="md-raised">
+								<md-icon class="fa fa-plus" style="width:14px;height:14px;"></md-icon>
+								Pre code execution
+							</md-button>
+							<h4>Post code execution</h4>
+							<table ng-if="scopeService.data.postcode.length > 0" class="sidenavtable" style="width:100%;">
+								<thead>
+									<tr>
+										<th width="50%">Name Post Code</th>
+										<th>Code execution</th>
+										<th>Order</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="postCode in scopeService.data.postcode track by $index">
+										<td>
+											<md-input-container style="width:100%;">
+											  <input type="text" id="post_code_name_{{$index}}" ng-model="postCode.name" aria-label="postCode.name">
+											</md-input-container>
+										</td>
+										<td>
+											<md-button ng-click="codeEditor( $index, scopeService.data.postcode, 'postcode' )" class="md-icon-button" aria-label="icon-button">
+											  <md-icon class="fa fa-edit dfx-studio-flex-icon" style="font-size:18px;width:18px;height:18px;"></md-icon>
+											</md-button>
+										</td>
+										<td>
+											<md-button ng-click="moveUp( $index, postCode, scopeService.data.postcode )" class="md-icon-button" style="margin:0;" aria-label="icon-button">
+											  <md-icon class="fa fa-arrow-up dfx-studio-flex-icon" style="font-size:18px;width:18px;height:18px;"></md-icon>
+											</md-button>
+											<md-button ng-click="moveDown( $index, postCode, scopeService.data.postcode )" class="md-icon-button" style="margin:0;" aria-label="icon-button">
+											  <md-icon class="fa fa-arrow-down dfx-studio-flex-icon" style="font-size:18px;width:18px;height:18px;"></md-icon>
+											</md-button>
+										</td>
+										<td>
+											<md-button ng-click="deleteRow( scopeService.data.postcode, $index )" class="md-icon-button" aria-label="icon-button">
+											  <md-icon class="fa fa-trash dfx-studio-flex-icon" style="font-size:18px;width:18px;height:18px;"></md-icon>
+											</md-button>
+										</td>
+									</tr>
+								</tbody>
+							</table>	
+							<md-button ng-click="addRow( scopeService.data.postcode, 'post_code' )" class="md-raised">
+								<md-icon class="fa fa-plus" style="width:14px;height:14px;"></md-icon>
+								Post code execution
+							</md-button>
+							<h4>Application Exceptions</h4>					
+							<h5>Enter a regular expression to identify an application exception (evaluated an runtime only)</h5>
+							<table ng-if="scopeService.data.appexpr.length > 0" class="sidenavtable" style="width:100%;">
+								<thead>
+									<tr>
+										<th width="45%">Name Error</th>
+										<th width="45%">RegExp Error</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="appException in scopeService.data.appexpr track by $index">
+										<td>
+											<md-input-container style="width:100%;">
+											  <input type="text" id="appexpr_name_{{$index}}" ng-model="appException.name" aria-label="appException.name">
+											</md-input-container>
+										</td>
+										<td>
+											<md-input-container style="width:100%;">
+											  <input type="text" ng-model="appException.regexp" aria-label="appException.regexp">
+											</md-input-container>
+										</td>						
+										<td>
+											<md-button ng-click="deleteRow( scopeService.data.appexpr, $index )" class="md-icon-button" aria-label="icon-button">
+											  <md-icon class="fa fa-trash dfx-studio-flex-icon" style="font-size:18px;width:18px;height:18px;"></md-icon>
+											</md-button>
+										</td>
+									</tr>
+								</tbody>
+							</table>	
+							<md-button ng-click="addRow( scopeService.data.appexpr, 'appexpr' )" class="md-raised">
+								<md-icon class="fa fa-plus" style="width:14px;height:14px;"></md-icon>
+								Application Exception
+							</md-button>
+			      </div>				
+					</md-content>
+				</md-tab>
+				<md-tab label="Test" md-on-select="closeActionsEditor()">
+					<md-content class="md-padding sidenav-service">
+						<md-button ng-click="execute( $event )" class="md-raised">
+							<md-icon class="fa fa-play" style="width:14px;height:14px;"></md-icon>
+							Execute
+						</md-button>
+						<md-button ng-click="viewResult()" ng-show="isExecuted" class="md-raised">View Result</md-button>
+						<md-button ng-click="viewMetaData()" ng-show="isExecuted" class="md-raised">View MetaData</md-button>
+						<md-button ng-click="viewRequest()" ng-show="isExecuted" class="md-raised">View Request</md-button>
+						<div id="showResults" style="padding-top:16px;opacity:0;">
+		                    <!-- <p ng-show="showFullResult" style="color:red">The response was cut by {{numberOfCutedChars}} characters click <b><a ng-click="showFullResultAction()" style="cursor:pointer;">here</a></b> to see full response</p> -->
+								<div style="border:1px solid #dddddd;">
+				        	<!-- <textarea id="executedResult" style="white-space:pre;width:100%;border:none;outline:none!important;"></textarea> -->
+				        	<div id="executedResult" style="white-space:pre;width:100%;border:none;outline:none!important;"></div>						
+								</div>
+						</div>
+					</md-content>
+				</md-tab>
+			</md-tabs>	
+			<md-button type="submit" style="display: none !important;"></md-button>
+		</form>
+	  <div style="display:flex; justify-content: flex-end;">
+		  <md-button ng-if="serviceModeBtn === 'serviceAdd'" class="md-primary" ng-click="saveApiSoService()" ng-disabled="validUrlResult === 'failed' || existUrl === true">Add Service</md-button>
+	      <md-button ng-if="editorOpened" class="md-primary" ng-click="closeActionsEditor()">Back</md-button>
+	      <md-button ng-if="editorOpened" class="md-primary" ng-click="saveActions()">Save</md-button>
+	      <md-button ng-if="serviceModeBtn === 'serviceAdd'" class="md-primary" ng-click="closeServiceSidenav()">Cancel</md-button>
+		  <md-button ng-if="serviceModeBtn === 'serviceEdit' && !editorOpened" class="md-primary" ng-click="closeServiceSidenav()">Close</md-button>
+		</div>
+	</md-sidenav>
+	<!-- sidenav side_nav_add_service end -->
+
+	<!-- add services popup start -->
+	<div id="add-services" tabindex="1" style="outline: none" ng-keyup="( $event.keyCode == 27 ) ? closeSources() : ''">
+		<md-toolbar>
+	    <div class="md-toolbar-tools">
+	      <h5>Select an API Source</h5>
+		  </div>
+		</md-toolbar>
+		<div layout="row" layout-align="start center" style="padding:0px 8px;">
+			<md-input-container class="input-select-aligned margin-select" style="width:180px;margin-right:14px;">
+			  <label>API Source:</label>
+			  <md-select ng-model="servicesApiSource" aria-label="servicesApiSource">
+			    <md-option ng-if="source.dataSource !=='REST'" ng-value="source.provider" ng-repeat="source in api_sources track by $index" ng-click="chooseDataSource( source )">
+			    	{{ source.provider === 'none' ? 'public/rest' : source.provider }}
+			    </md-option>
+			  </md-select>
+			  <div class="api-source-info" style="position:absolute;top:40px;right:-10px;z-index:0;width:12px;height:12px;">
+			  	<a ng-if="dataSource !== 'REST'" ng-click="showApiSourceInfo( $event )" dfx-api-so-sources class="dfx-api-so-sources" style="display:block;cursor:pointer;"><i class="fa fa-info-circle" style="float:left;"></i></a>
+			  </div>
+			</md-input-container>
+		</div>
+		<div layout="row" layout-align="end center">
+	    <md-button class="md-primary" ng-click="closeSources()">Close</md-button>
+		</div>
+	</div>
+	<div id="add-services-backdrop"></div>
+	<!-- add services popup end -->
+
+	<!-- main tabs start -->
+	<div layout="row">
+		<md-card class="md-altTheme-theme" style="width:100%;overflow:hidden;">
+			<md-card-content style="padding:0;">
+				<md-tabs md-selected="selected_tab" md-dynamic-height md-center-tabs md-stretch-tabs="always" md-border-bottom>	
+					<md-tab label="Service Object Properties">
+						<md-content class="md-padding">
+							<form ng-submit="serviceMode === 'serviceAdd' ? saveApiSo() : updateApiSo()">
+								<div>
+									<md-input-container class="input-select-aligned" ng-class="validNameResult === 'failed' ? 'md-input-invalid' : ''" style="width:30%;margin-right:14px;">
+									  <label>API Service Name</label>
+						  			<input type="text" ng-model="api_so.name" ng-disabled="serviceMode === 'serviceEdit'" ng-blur="validateServiceName( api_so.name )" aria-label="api_so.name">			  
+						  			<div class="md-errors-spacer" style="float:left;">
+										<span style="color:#DD2C00; margin-top: 35px; font-size: 12px;">{{serviceNameError}}</span>
+						  			</div>			
+									</md-input-container>
+									<md-input-container class="input-select-aligned" style="width:68%">
+									  <label>Description</label>
+									  <input ng-if="serviceMode === 'serviceAdd'" type="text" ng-model="api_so.description" aria-label="api_so.description">
+									  <input ng-if="serviceMode === 'serviceEdit'" type="text" ng-model="api_so.description" aria-label="api_so.description">
+									</md-input-container>							
+								</div>
+								<div>							
+									<md-input-container class="input-select-aligned margin-select" style="width:30%">
+									  <label>Category</label>
+									  <md-select ng-model="api_so.category" aria-label="api_so.category">
+									    <md-option ng-value="category.name" ng-repeat="category in apiSoCategories track by $index">{{ category.name }}</md-option>
+									  </md-select>
+									</md-input-container>
+								</div>
+								<md-button type="submit" ng-disabled="api_so.name ===''" style="display: none !important;"></md-button>
+							</form>						
+						</md-content>
+						<div ng-if="serviceMode === 'serviceEdit'" layout="row" layout-align ="end center">
+					    <button ng-click="confirmApiSoDelete($event)" class="md-raised md-warn md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-trash-o" style="color: #ffffff"></span><span style="padding-left:5px">Delete the API Service Object</span></button>
+						</div>
+					</md-tab>
+					<md-tab label="Services">
+						<md-content class="md-padding" layout="column">
+							<div layout="row" layout-align="end center">							
+								<md-button class="md-raised" ng-click="addService()">
+									<md-icon class="fa fa-plus" style="width:14px;height:14px;"></md-icon>
+									Service
+								</md-button>
+								<md-button class="md-raised" ng-click="addServices()">
+									<md-icon class="fa fa-plus" style="width:14px;height:14px;"></md-icon>
+									Services
+								</md-button>
+							</div>
+							<md-card style="flex-grow:3;overflow:hidden;">
+								<md-card-content style="padding:0;">
+									<table class="datatable" style="width:100%;">
+										<thead>
+											<tr style="border-bottom:1px solid #C7C7C7;">
+												<th width="30%">API Route URL</th>
+												<th width="20%">Request type</th>
+												<th width="25%">API Source</th>
+												<th>Actions</th>
+											</tr>
+										</thead>
+									</table>
+									<div id="scope-source-table" style="padding:0;overflow-y:auto;">
+										<table class="datatable" style="width:100%;">
+											<tbody>
+												<tr ng-repeat="serviceItem in api_so.apiRoutes track by $index" ng-click="" style="cursor:pointer;">
+													<td width="30%">{{serviceItem.name}}</td>
+													<td width="20%">{{serviceItem.data.settings.typerequest.slice(5)}}</td>
+													<td width="25%">{{serviceItem.data.settings.authentication === 'none' ? 'public/rest' : serviceItem.data.settings.authentication}}</td>
+													<td>
+		                        						<md-button class="dfx-studio-table-button" ng-click="editService( serviceItem, $index )" aria-label="edit-service"><md-icon class="fa fa-edit"></md-icon></md-button>
+	                            						<md-button class="dfx-studio-table-button" ng-click="showCurl( serviceItem )" aria-label="show-curl"><md-icon class="fa fa-info"></md-icon></md-button>
+	                            						<md-button class="dfx-studio-table-button" ng-click="confirmDelete( $event, $index )" aria-label="delete-service"><md-icon class="fa fa-trash"></md-icon></md-button>
+													</td>
+												</tr>
+											</tbody>
+										</table>						
+									</div>
+								</md-card-content>
+							</md-card>
+						</md-content>
+					</md-tab>
+				</md-tabs>			
+			</md-card-content>
+		</md-card>
+	</div>
 <!-- main tabs end -->
+</div>

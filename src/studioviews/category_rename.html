@@ -1,11 +1,11 @@
 <md-dialog aria-label="category-rename" ng-cloak>
-    <form>
+    <form ng-submit="renameCategory(newName.value)">
         <md-toolbar>
             <div class="md-toolbar-tools">
                 <h5>New Category Name:</h5>
                 <span flex></span>
                 <md-button class="md-icon-button" ng-click="closeDialog()">
-                    <md-icon class="fa fa-lg fa-times" aria-label="Close dialog"></md-icon>
+                    <md-icon class="fa fa-lg fa-times dfx-studio-flex-icon" aria-label="Close dialog"></md-icon>
                 </md-button>
             </div>
         </md-toolbar>
@@ -13,18 +13,14 @@
             <div class="md-dialog-content layout-row layout-padding" style="padding-bottom:0;">
                 <md-input-container class="md-block flex" style="margin: 0;">
                     <label>New Category Name</label>
-                    <input id="new-category-name" ng-model="newName.value" md-autofocus ng-keyup="($event.keyCode == 13 && newName.value !=='') ? renameCategory(newName.value) : ''">
+                    <input id="new-category-name" ng-model="newName.value" md-autofocus>
                 </md-input-container>
             </div>
         </md-dialog-content>
         <md-dialog-actions layout="row">
             <span flex></span>
-            <md-button class="md-primary" ng-click="renameCategory(newName.value)">
-                OK
-            </md-button>
-            <md-button class="md-primary" ng-click="closeDialog()">
-                Cancel
-            </md-button>
+            <md-button class="md-primary" type="submit">OK</md-button>
+            <md-button class="md-primary" ng-click="closeDialog()">Cancel</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog>

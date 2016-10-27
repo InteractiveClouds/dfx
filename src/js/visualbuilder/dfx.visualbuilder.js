@@ -130,7 +130,10 @@ DfxVisualBuilder.init = function () {
             highlightSelectionMatches: {showToken: /\w/},
             styleActiveLine: true,
             viewportMargin : Infinity,
-            extraKeys: {"Alt-F": "findPersistent", "Ctrl-Space": "autocomplete"},
+            extraKeys: {
+				"Alt-F": "findPersistent",
+				"Ctrl-Space": "autocomplete"
+			},
             foldGutter: true,
             gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
         });
@@ -153,7 +156,10 @@ DfxVisualBuilder.init = function () {
             highlightSelectionMatches: {showToken: /\w/},
             styleActiveLine: true,
             viewportMargin : Infinity,
-            extraKeys: {"Alt-F": "findPersistent", "Ctrl-Space": "autocomplete"},
+            extraKeys: {
+				"Alt-F": "findPersistent",
+				"Ctrl-Space": "autocomplete"
+			},
             foldGutter: true,
             gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
         });
@@ -176,7 +182,10 @@ DfxVisualBuilder.init = function () {
             highlightSelectionMatches: {showToken: /\w/},
             styleActiveLine: true,
             viewportMargin : Infinity,
-            extraKeys: {"Alt-F": "findPersistent", "Ctrl-Space": "autocomplete"},
+            extraKeys: {
+				"Alt-F": "findPersistent",
+				"Ctrl-Space": "autocomplete"
+			},
             foldGutter: true,
             gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
         });
@@ -1342,9 +1351,6 @@ DfxVisualBuilder.removeNotOverriddenAttributes = function (updated_attributes, g
     var removeOverriddenWithDefaultValues = function (attr_full_path, attr_updated_value, updated_attributes, attr_short_path, template) {
         var attr_default_value = getDeepValue(template, attr_full_path);
 
-        //console.log('====== ' + gc_type);
-        //console.log(attr_full_path, attr_updated_value, attr_default_value);
-
         if (attr_updated_value !== null && typeof attr_updated_value === 'object') {
             if ((!attr_default_value || attr_updated_value.value == attr_default_value.value)
                 && !hasNestedAttributes(attr_updated_value) && !isAttributeMandatory(attr_short_path))
@@ -1358,7 +1364,17 @@ DfxVisualBuilder.removeNotOverriddenAttributes = function (updated_attributes, g
         }
     };
 
-    var removeNotOverridden = function (updated_attributes, attr_full_path, template) {
+    var removeOverriddenDefaultArraysOrObjects = function (attr_updated_value, updated_attributes_parent, attribute_name,
+        attr_full_path, template)
+    {
+        var attr_default_value = getDeepValue(template, attr_full_path);
+
+        if (angular.equals(attr_updated_value, attr_default_value)) {
+            delete updated_attributes_parent[attribute_name];
+        }
+    };
+
+    var removeNotOverridden = function (updated_attributes, attr_full_path, template, updated_attributes_parent) {
         for (var attribute in updated_attributes) {
             if (updated_attributes.hasOwnProperty(attribute)) {
                 if (attribute != 'value' && attribute != 'status' && !Array.isArray(updated_attributes[attribute])) {
@@ -1368,9 +1384,19 @@ DfxVisualBuilder.removeNotOverriddenAttributes = function (updated_attributes, g
                         if (updated_attributes[attribute] && updated_attributes[attribute].status != 'overridden' && !isAttributeMandatory(attribute)) {
                             delete updated_attributes[attribute];
                         }
-                        removeNotOverridden(updated_attributes[attribute], attr_path, template);
+                        removeNotOverridden(updated_attributes[attribute], attr_path, template, updated_attributes);
                     }
                     removeOverriddenWithDefaultValues(attr_path, updated_attributes[attribute], updated_attributes, attribute, template);
+                }
+                else if ( (attribute == 'value' && Array.isArray(updated_attributes[attribute]))
+                    || (attribute == 'value' && angular.isObject(updated_attributes[attribute]) && !angular.isString(updated_attributes[attribute])) )
+                {
+                    var attr_path = attr_full_path ? attr_full_path + '.' + attribute : attribute;
+                    var path_without_value = attr_full_path;
+                    var attribute_name = path_without_value.substring(path_without_value.lastIndexOf('.') + 1);
+
+                    removeOverriddenDefaultArraysOrObjects(updated_attributes[attribute], updated_attributes_parent, attribute_name,
+                        attr_path, template);
                 }
             }
         }

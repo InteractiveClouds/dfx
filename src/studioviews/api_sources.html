@@ -1,5 +1,5 @@
-<md-dialog aria-label="api-so-info" ng-cloak>
-    <form>
+<md-dialog id="api-so-info" aria-label="api-so-info" ng-cloak tabindex="1">
+    <form ng-submit="pushServices()">
         <md-toolbar>
             <div class="md-toolbar-tools">
                 <h5>Select 
@@ -111,9 +111,9 @@
             </md-card>
         </md-dialog-content>
         <md-dialog-actions layout="row">
-            <md-button ng-if="serviceModeBtn !== 'addServices'" class="md-primary" ng-click="closeCatalog()" style="margin: 0 8px;">Cancel</md-button>
-            <md-button ng-if="serviceModeBtn === 'addServices'" class="md-primary" ng-click="pushServices()" style="margin: 0 8px;">Add Services</md-button>
-            <md-button ng-if="serviceModeBtn === 'addServices'" class="md-primary" ng-click="closeCatalog()" style="margin: 0 8px;">Cancel</md-button>
+            <md-button ng-if="serviceModeBtn !== 'addServices'" class="md-primary" ng-click="closeCatalog($event)" style="margin: 0 8px;">Cancel</md-button>
+            <md-button ng-if="serviceModeBtn === 'addServices'" class="md-primary" type="submit" style="margin: 0 8px;">Add Services</md-button>
+            <md-button ng-if="serviceModeBtn === 'addServices'" class="md-primary" ng-click="closeCatalog($event)" style="margin: 0 8px;">Cancel</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog>

@@ -16,7 +16,7 @@
             $.support.cors = true;
             $.mobile.allowCrossDomainPages = true;
         } catch (e) {
-            alert('cratch failed');
+            alert('Cross domain error');
         }
     });
     </script>
@@ -26,10 +26,10 @@
     </script>
 </head>
 <body ng-controller="dfx_login_controller" dfx-app="##appName" style="">
-<div layout="column" layou-align="center center" style="height:100%;background:#00bae7">
-    <img src="/img/dfx_login_logo_white" style="width:64px;height:64px" />
+<div layout="column" layout-align="center center" style="height:100%;background:#00bae7">
+    <img src="img/dfx_login_logo_white.png" style="width:64px;height:64px" />
 	<div style="width:300px;font-family:HelveticaNeue;font-size:20px;color:#ffffff;letter-spacing:0.31px;line-height:23px;text-align:center;">The new face of cloud development</div>
-	<div>
+	<div style="width:300px;">
 		<form id="loginForm" name="loginForm" action="#">
 			<div layout="column">
 				<md-input-container style="width:204px"><label>User ID</label><input id="username" type="text"></md-input-container>
