@@ -5,6 +5,7 @@
     "source":          { "value": "" },
     "bindingLabel":    { "value": "" },
     "displayValue":    { "value": "" },
+    "buttonClass":     { "value": "" },
     "step":            { "value": 1 },
     "label":           { "value": "'Slider'" },
     "minValue":        { "value": 0 },
