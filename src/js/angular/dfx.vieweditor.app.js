@@ -2216,6 +2216,10 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                         }
                     }
                 } else {
+                    if (scope.attributes.menuItemsType.value == 'dynamic') {
+                        scope.attributes.menuItemNames.status = "overridden";
+                    }
+
                     scope.menuItems = scope.attributes.menuItems;
                     scope.gc_selected.type === 'iconbar' ? scope.statable.value = true : scope.statable.value = false;
                     scope.menuItemNames.value = scope.attributes.menuItemNames.value;
@@ -2274,6 +2278,14 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                     controller: function(){
                         scope.menuEditorItem = {};
                         scope.setMenuItemsType = function( type ){
+                            if (type == 'static') {
+                                scope.attributes.menuItems.status = "overridden";
+                                scope.attributes.menuItemNames.status = "";
+                            } else if (type == 'dynamic') {
+                                scope.attributes.menuItems.status = "";
+                                scope.attributes.menuItemNames.status = "overridden";
+                            }
+
                             if(scope.toolbarSide === 'left'){
                                 scope.attributes.toolbar.leftMenu.menuItemsType.value = type;
                                 scope.$parent.overrideAttribute('toolbar.leftMenu.menuItemsType');
@@ -3068,6 +3080,10 @@ dfxViewEditorApp.directive('dfxVeTreeEditor', [ '$mdDialog', '$mdToast', '$http'
                         }, 0);
                     },
                     controller: function(){
+                        if (scope.attributes.treeItemsType.value == 'static') {
+                            scope.attributes.static.status = "overridden";
+                        }
+
                         scope.selectTreeItem = function(ev, treeItem) {
                             scope.tree = treeItem;
                             scope.selectedTreeItem = ev.target,
@@ -3947,7 +3963,6 @@ dfxViewEditorApp.directive('dfxVeListEditor', ['$mdDialog', '$timeout', '$http',
                     templateUrl: '/gcontrols/web/list_options_editor.html',
                     onComplete: function(){
                         scope.activeOption(itemIndex);
-                        scope.attributes.optionItemNames.status = 'overridden';
                         $('#dfx-ve-menu-editor-dialog').keyup(function(e) {
                             if(e.which === 13 && $('#dfx-ve-expression-menu-dialog').length === 0 && $('#dfx-ve-html-menu-editor').length === 0) {
                                 if(document.activeElement.tagName!=='BUTTON')  scope.closeDialog();
@@ -3961,7 +3976,17 @@ dfxViewEditorApp.directive('dfxVeListEditor', ['$mdDialog', '$timeout', '$http',
                         itemIndex = 0;scope.currentItem = {};
                     }
                 });
-            }
+            };
+            scope.setOptionsType = function( type ){
+                if (type == 'static') {
+                    scope.attributes.static.status = "overridden";
+                    scope.attributes.optionItemNames.status = "";
+                } else if (type == 'dynamic') {
+                    scope.attributes.static.status = "";
+                    scope.attributes.optionItemNames.status = 'overridden';
+                }
+                scope.attributes.optionsType.status = "overridden";
+            };
             scope.closeDialog = function(){$mdDialog.hide();}
             scope.activeOption = function(index) {
                 itemIndex = index;
