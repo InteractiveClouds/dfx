@@ -1334,40 +1334,21 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
                 }
             }
         }
-
         setAttibutesChainStatus(attribute_name, $scope.gc_selected.attributes);
     };
 
     // Functions implementing UNDO in view editor - START
-    $scope.cacheAttributeOldValue = function (attribute_name, $event, attribute_value) {
-        if ($event && $event.relatedTarget && $event.relatedTarget.textContent == 'Save') return;//called from picker using $.focus() by clicking Save button
-
-        if (attribute_value) {
-            $scope.attribute_temp_old_value = {value: attribute_value};
-        } else {
-            $scope.attribute_temp_old_value = angular.copy($scope.gc_selected.attributes[attribute_name]);
-        }
+    $scope.setCalledFromPicker = function (options) {
+        DfxViewEditorUndo.setCalledFromPicker($scope);
     };
-
+    $scope.cacheAttributeOldValue = function (options) {
+        DfxViewEditorUndo.cacheAttributeOldValue(options, $scope);
+    };
     $scope.cacheAttributeNewValue = function (attribute_name) {
-        if (! $scope.gc_selected.attributes[attribute_name]) return;
-
-        var attribute_new_value = $scope.gc_selected.attributes[attribute_name].value;
-        var attribute_old_value = $scope.attribute_temp_old_value ?  $scope.attribute_temp_old_value.value : '';
-
-        if (attribute_new_value !== attribute_old_value) {
-            $scope.view_editor_actions_stack = $scope.view_editor_actions_stack || [];
-            $scope.view_editor_actions_stack.unshift({ component_id: $scope.gc_selected.id, attribute_name: attribute_name, attribute_old_value: angular.copy(attribute_old_value) });
-        }
+        DfxViewEditorUndo.cacheAttributeNewValue(attribute_name, $scope);
     };
-
     $scope.viewEditorUndo = function(event) {
-        $(event.srcElement).animateCss('pulse');
-        if ($scope.view_editor_actions_stack && $scope.view_editor_actions_stack.length > 0) {
-            var action_for_undo = $scope.view_editor_actions_stack.shift();
-            var gc_for_undo = $scope.gc_instances[ action_for_undo.component_id ];
-            gc_for_undo.attributes[ action_for_undo.attribute_name ].value = action_for_undo.attribute_old_value;
-        }
+        DfxViewEditorUndo.viewEditorUndo(event, $scope);
     };
     // Functions implementing UNDO in view editor - END
 
@@ -1683,7 +1664,8 @@ dfxViewEditorApp.directive('dfxVePickerIcon', ['$q', '$http', '$mdDialog', '$tim
         replace: true,
         link: function(scope, element, attrs) {
             scope.showFontIcons = function(ev, iconObj) {
-                //scope.$parent.cacheAttributeOldValue(attrs.dfxPickerProperty);// needed for UNDO functionality
+                scope.targetLabel = ev.target;// needed for UNDO functionality
+                scope.targetLabelField = $(scope.targetLabel).parent().children('input');// needed for UNDO functionality
 
                 scope.iconObj = iconObj;
                 scope.faIcons = [];
@@ -1741,12 +1723,13 @@ dfxViewEditorApp.directive('dfxVePickerIcon', ['$q', '$http', '$mdDialog', '$tim
                 $(".dfx-ve-content-categories span").removeClass('active');
             }
             scope.setDfxIcon = function(icon, type) {
+                scope.$parent.cacheAttributeOldValue({ 'value': scope.iconObj.value });// needed for UNDO functionality
+
                 scope.iconObj.value = "'"+icon+"'";
                 scope.iconObj.type = type;
-                $(element).siblings('input').focus().blur();
+                scope.$parent.setCalledFromPicker();// needed for UNDO functionality
+                $(scope.targetLabelField).focus().blur();
                 scope.closeVeIconsDialog();
-
-                //scope.$parent.cacheAttributeNewValue(attrs.dfxPickerProperty);// needed for UNDO functionality
             }
             scope.closeVeIconsDialog = function(){
                 $('.dfx-ve-content-dialog').removeClass('active');
@@ -1895,6 +1878,8 @@ dfxViewEditorApp.directive('dfxVeCssStyle', ['$timeout', '$compile', function($t
                 });
             }
             scope.saveStyles = function() {
+                scope.$parent.cacheAttributeOldValue({ 'value': scope.targetElement.val() });// needed for UNDO functionality
+
                 var savedStyles = [];
                 for (var i = 0; i < scope.inputStyle.length; i++) {
                     if (scope.inputStyle[i].value !== '') {
@@ -1905,6 +1890,7 @@ dfxViewEditorApp.directive('dfxVeCssStyle', ['$timeout', '$compile', function($t
                 savedStyles.push(scope.otherStyles);
                 scope.targetElement.val(savedStyles.join(";"));
                 angular.element(scope.targetElement).data('$ngModelController').$setViewValue(scope.targetElement.val());
+                scope.$parent.cacheAttributeNewValue(scope.targetElement.attr('ng-model'));// needed for UNDO functionality
                 scope.closeCssDialog();
             }
             scope.closeCssDialog = function(){
@@ -2037,7 +2023,9 @@ dfxViewEditorApp.directive('dfxVePickerImage', (function($mdDialog, $timeout, $c
                         templateUrl: '/gcontrols/web/picker_images_form.html',
                         controller: function(){
                             scope.setImage = function(src) {
+                                scope.$parent.cacheAttributeOldValue({ 'value': scope.attributes[attrs.dfxPickerProperty].value });// needed for UNDO functionality
                                 scope.attributes[attrs.dfxPickerProperty].value = "'"+src+"'";
+                                scope.$parent.cacheAttributeNewValue(attrs.dfxPickerProperty);// needed for UNDO functionality
                                 $mdDialog.hide();
                             }
                             scope.closeDialog = function(){
@@ -2131,12 +2119,14 @@ dfxViewEditorApp.directive('dfxVeExpressionEditor', [ '$mdDialog', function($mdD
                             $("#"+scope.component_id+"_expression_textarea").val(areaValue.substring(0, cursorPos) + varName + areaValue.substring(cursorPos));
                         }
                         scope.setLabel = function() {
-                            var oldExpression = scope.targetLabelField.val();// needed for UNDO functionality
-                            scope.$parent.cacheAttributeOldValue(null, null, oldExpression);// needed for UNDO functionality
+                            var old_expression = scope.targetLabelField.val();// needed for UNDO functionality
+                            scope.$parent.cacheAttributeOldValue({ 'value': old_expression, 'called_from_picker': true });// needed for UNDO functionality
 
                             scope.newExpression = $("textarea.expression-textarea").val();
                             scope.targetLabelField.val(scope.newExpression);
                             angular.element(scope.targetLabelField).data('$ngModelController').$setViewValue(scope.newExpression);
+
+                            scope.$parent.setCalledFromPicker();// needed for UNDO functionality
                             $(scope.targetLabelField).focus().blur();
                             $mdDialog.hide();
                         }
@@ -2178,6 +2168,15 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
             scope.dialogGcType = '';
             scope.actionsMode = {"value": false};
             scope.showMenuEditor = function(ev) {
+                // needed for UNDO functionality
+                scope.$parent.cacheAttributeOldValue({
+                    'value': {
+                        menuItems: scope.attributes.menuItems.value,
+                        menuItemNames: scope.attributes.menuItemNames.value,
+                        menuItemsType: scope.attributes.menuItemsType.value
+                    }
+                });
+
                 scope.menu = {};
                 if(scope.attributes.layoutType.value === 'none' ){
                     scope.attributes.menuItems.status = "overridden";
@@ -2900,7 +2899,19 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                                 }, 250);
                             });
                         }
-                        scope.closeDialog = function(){$mdDialog.hide();}
+                        scope.closeDialog = function(){
+                            // needed for UNDO functionality
+                            scope.$parent.cacheAttributeNewValue({
+                                'value': {
+                                    menuItems: scope.menuItems.value,
+                                    menuItemNames: scope.menuItemNames.value,
+                                    menuItemsType: scope.menuItemsType.value
+                                },
+                                'group': true
+                            });
+
+                            $mdDialog.hide();
+                        }
                         scope.closeSamples = function() {
                             $('.dfx-ve-content-dialog').removeClass('active');
                             angular.element($('.dfx-ve-dialog')).remove();
@@ -4820,6 +4831,139 @@ var helpDialogScript = function (options) {
         $('#dfx_visual_editor_help_close').click();
     }
 };
+
+var DfxViewEditorUndo = (function() {
+    var api = {};
+
+    var getAttibutesChainValue = function(path, obj) {
+        var schema = obj,
+            pList = path.split('.');
+
+        for (var i = 0; i < pList.length; i++) {
+            var elem = pList[i];
+            if (!schema[elem] && schema[elem] !== '' && schema[elem] !== false) {
+                schema[elem] = {};
+            }
+            schema = schema[elem];
+        }
+        if (schema !== null && typeof schema === 'object' && schema.hasOwnProperty('value')) {
+            return schema.value;
+        } else {
+            return schema;
+        }
+    };
+    var setAttributesChainValue = function(path, obj, value) {
+        var schema = obj,
+            pList = path.split('.'),
+            last_path_segment = '';
+
+        if (pList.length > 1) {
+            for (var i = 0; i < pList.length-1; i++) {
+                var elem = pList[i];
+                if (!schema[elem] && schema[elem] !== '' && schema[elem] !== false) {
+                    schema[elem] = {};
+                }
+                schema = schema[elem];
+            }
+            last_path_segment = pList[pList.length-1];
+        } else {
+            last_path_segment = path;
+        }
+        if (typeof schema[last_path_segment] === 'object' && schema[last_path_segment].hasOwnProperty('value')) {
+            schema[last_path_segment].value = value;
+        } else {
+            schema[last_path_segment] = value;
+        }
+    };
+    var removeAttributesPrefixFromPath = function(path) {
+        if (path && path.indexOf('attributes') == 0) {
+            return path.substring(path.indexOf('.') + 1);
+        } else {
+            return path;
+        }
+    };
+    var cleanDefaultValues = function(attribute, old_attribute_value) {
+        if (!old_attribute_value || (Array.isArray(old_attribute_value) && old_attribute_value.length == 0)) {
+            delete attribute.status;
+        }
+    };
+    var setAttributesGroup = function(gc_attributes, old_attributes_group) {
+        var attributes_names = Object.keys(old_attributes_group);
+
+        for (var i = 0; i < attributes_names.length; i++) {
+            var attrbute_name = attributes_names[i];
+            var old_attribute_value = old_attributes_group[attrbute_name];
+
+            if (typeof gc_attributes[attrbute_name] === 'object' && gc_attributes[attrbute_name].hasOwnProperty('value')) {
+                cleanDefaultValues(gc_attributes[attrbute_name], old_attribute_value);
+
+                gc_attributes[attrbute_name].value = angular.copy(old_attribute_value);
+            } else {
+                //TODO: no such cases right now, if happens, need to adjust and call cleanDefaultValues()
+                gc_attributes[attrbute_name] = angular.copy(old_attribute_value);
+            }
+        }
+    };
+
+    api.setCalledFromPicker = function(scope) {
+        scope.dfx_undo_called_from_picker = true;
+    };
+    api.cacheAttributeOldValue = function(options, scope) {
+        var attribute_name = options.name,
+            attribute_value = options.value;
+
+        // Called from picker using $.focus() and must be ignored
+        if (scope.dfx_undo_called_from_picker) {
+            scope.dfx_undo_called_from_picker = false;
+            return;
+        };
+
+        if (attribute_value || attribute_value == '') {
+            scope.dfx_attribute_old_value = angular.copy( attribute_value );
+        } else {
+            scope.dfx_attribute_old_value = angular.copy( getAttibutesChainValue(attribute_name, scope.gc_selected.attributes) );
+        }
+    };
+    api.cacheAttributeNewValue = function(options, scope) {
+        var attribute_name,
+            attribute_new_value;
+
+        if (options.group) {
+            attribute_name = 'undo_group_' + scope.gc_selected.id;
+            attribute_new_value = options.value;
+        } else {
+            attribute_name = removeAttributesPrefixFromPath(options);
+            attribute_new_value = getAttibutesChainValue(attribute_name, scope.gc_selected.attributes);
+        }
+
+        var attribute_old_value = scope.hasOwnProperty('dfx_attribute_old_value') ?  scope.dfx_attribute_old_value : '';
+
+        if (attribute_new_value !== attribute_old_value) {
+            scope.dfx_view_editor_actions_stack = scope.dfx_view_editor_actions_stack || [];
+            scope.dfx_view_editor_actions_stack.unshift({
+                component_id: scope.gc_selected.id,
+                attribute_name: attribute_name,
+                attribute_old_value: angular.copy(attribute_old_value)
+            });
+        }
+    };
+    api.viewEditorUndo = function(event, scope) {
+        $(event.srcElement).animateCss('pulse');
+
+        if (scope.dfx_view_editor_actions_stack && scope.dfx_view_editor_actions_stack.length > 0) {
+            var action_for_undo = scope.dfx_view_editor_actions_stack.shift();
+            var gc_for_undo = scope.gc_instances[ action_for_undo.component_id ];
+
+            if (action_for_undo.attribute_name.indexOf('undo_group_') == 0) {
+                setAttributesGroup(gc_for_undo.attributes, action_for_undo.attribute_old_value);
+            } else {
+                setAttributesChainValue(action_for_undo.attribute_name, gc_for_undo.attributes, action_for_undo.attribute_old_value);
+            }
+        }
+    };
+
+    return api;
+}());
 
 dfxViewEditorApp.directive('dfxVeCtrlS', [ '$document', function ($document) {
 	return {
