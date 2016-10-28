@@ -944,6 +944,27 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
 			}
         });
     }
+    $scope.exportView = function(event) {
+        console.log('exportView');
+        var view_source_editor = ($('#dfx_src_editor.CodeMirror')[0].CodeMirror).getValue(),
+            view_script_editor = ($('#dfx_script_editor.CodeMirror')[0].CodeMirror).getValue(),
+            view_style_editor  = ($('#dfx_styles_editor.CodeMirror')[0].CodeMirror).getValue(),
+            view_config = { "input": [], "output": [], "context":[] },
+            view_html = '<link rel="stylesheet" type="text/css" href="/'+$scope.view_name+'.css" />'+
+                        '<div ng-controller="'+$scope.view_name+'Controller">'+
+                            '<div id="1" ng-controller="dfx_view_controller" dfx-view="'+$scope.view_name+'" '+
+                            'dfx-view-card="'+$scope.view_card_selected+'"></div>'+
+                        '</div>';
+        view_parsed_source = JSON.parse(view_source_editor);
+        view_parsed_source.config = view_config;
+        view_string_source = JSON.stringify(view_parsed_source, null, '\t')
+        // console.log('VIEW CONFIG:', view_config);
+        // console.log('VIEW HTML:', view_html);
+        // console.log('SOURCE:', view_string_source);
+        // console.log('SCRIPTS:', view_script_editor);
+        // console.log('STYLES:', view_style_editor);
+        // console.log('COMPILED TEMPLATE: ', window.localStorage.getItem('DFX_view_compiled_'+$scope.view_name+'_'+$scope.view_card_selected));
+    }
 
     var platform = $('#dfx_visual_editor').attr('platform');
     $('.dfx_visual_editor_gc_cat_item').empty();
