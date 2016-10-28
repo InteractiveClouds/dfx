@@ -1,15 +1,14 @@
-<div class="{{attributes.classes.value}}" style="{{attributes.style.value}}">
-    <div class="gc-checkbox-label-design">{{attributes.label.value | checkExpression}}</div>
+<div class="dfx-core-gc-switch {{attributes.classes.value}}" style="{{attributes.style.value}}">
+    <div><span style="{{attributes.labelStyle.style}}" class="dfx-core-gc-switch-label {{attributes.labelStyle.class}}">{{attributes.label.value | checkExpression}}</span></div>
     <div layout="{{attributes.direction.value}}">
-        <div layout="row" ng-repeat="item in attributes.staticArray.value track by $index" ng-style="{'margin-top' : $index > 0 && attributes.direction.value ==='column' ? '11px' : '0', 'margin-right':'15px'}">
-            <md-switch aria-label="{{attributes.name.value}} switch" ng-model="item.isChecked" style="margin: 0 0 0 5px" class="md-primary" ng-class="attributes.buttonClass.value"></md-switch>
-            <div style="padding-top: 3px;">
-                <div style="display: inline-block">{{ item.label | checkExpression }} </div>
-                <div style="display: inline-block" ng-if="$eval(attributes.displayValue.value)">
-                    <div ng-if="item.isChecked">{{item.checked}}</div>
-                    <div ng-if="!item.isChecked">{{item.unchecked}}</div>
-                </div>
-            </div>
+        <div layout="row" ng-repeat="item in attributes.staticArray.value track by $index" ng-style="{'margin-top' : $index > 0 && attributes.direction.value ==='column' ? '11px' : '0', 'margin-right':'15px', 'align-items': 'center'}">
+            <md-switch ng-model="item.isChecked" class="dfx-core-gc-switch-button md-primary"  ng-class="attributes.itemStyle.item.class"  style="{{attributes.itemStyle.item.style}}" aria-label="{{attributes.name.value}} switch">
+                <span class="{{attributes.itemStyle.label.class}}" style="{{attributes.itemStyle.label.style}}">{{ item.label | checkExpression }} </span>
+                <span ng-if="attributes.displayValue.value" style="{{attributes.itemStyle.val.style}}" class="{{attributes.itemStyle.val.class}}">
+                    <span ng-if="item.isChecked">{{item.checked | checkExpression}}</span>
+                    <span ng-if="!item.isChecked">{{item.unchecked | checkExpression}}</span>
+                </span>
+            </md-switch>
         </div>
     </div>
 </div>

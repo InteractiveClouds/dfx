@@ -1,12 +1,12 @@
 {
   "template": 			{ "value": "default" },
-	"name": 					{ "value": "btnButton1" },
-	"label": 					{ "value": "'Button'" },
-	"icon": 					{ "value": "", "type": "svg-icon", "size": 21, "position": "left", "style": "", "class": "" },
+  "name": 					{ "value": "btnButton1" },
+  "label": 					{ "value": "'Button'" },
+  "icon": 					{ "value": "", "type": "svg-icon", "size": 21, "position": "left", "style": "", "class": "" },
   "waiting":        { "value": "", "autoDisabled": false, "icon": { "value": "'fa-spinner'", "type": "fa-icon", "style": "", "class": "fa-pulse" }},
-	"display": 				{ "value": "true" },
-	"disabled": 			{ "value": "false" },
-	"menuItems": 			{ "value": [] },
+  "display": 				{ "value": "true" },
+  "disabled": 			{ "value": "false" },
+  "menuItems": 			{ "value": [] },
   "menuItemsType":  { "value": "static" },
   "menuItemNames": {
     "value": {
@@ -28,8 +28,9 @@
   "dynamic":        { "value": "" },
   "classes":        { "value": "" },
   "dynamicClasses": { "value": "" },
-  "flex":           { "value": 30 },
-	"style": 					{ "value": "" },
+  "notFlex":        { "value": true },
+  "flex":           { "value": 15 },
+  "style": 					{ "value": "" },
   "singleMenu":     { "button": { "style": "", "class": "" }, "icon": { "size": 16, "style": "", "class": "" } },
   "onclick": 				{ "value": "" },
   "ondblclick": 		{ "value": "" },
@@ -40,6 +41,5 @@
   "onmouseenter": 	{ "value": "" },
   "onmousemove": 		{ "value": "" },
   "onmouseleave": 	{ "value": "" },
-  "onmouseup": 			{ "value": "" },
-  "onmousedown": 			{ "value": "" }
+  "onmouseup": 			{ "value": "" }
 }

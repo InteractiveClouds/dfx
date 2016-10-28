@@ -1,0 +1,61 @@
+<div ng-show="attributes.display.value"
+    class="ATTR-NONV{{classes.value}} dfx-core-gc-treeview"
+    ATTR-IF{{style="attributes.style.value"}}
+    ATTR-IF{{ng-class="attributes.dynamicClasses.value"}}>
+    FRAG-IF{{attributes.treeItemsType.value ==='dynamic'}}
+    <div>
+        <script type="text/ng-template" id="{{component_id}}_dynamic_tree_view">
+            <md-icon ng-if="$dfx_item.expanded && $dfx_item.ATTR-NONV{{repeatable_property.value}}.length > 0 && attributes.isOpened.type === 'fa-icon'" ng-click="toggleNode($event, $dfx_item)" style="color: {{attributes.color.value}};" class="fa node-trigger {{ attributes.isOpened.value || 'fa-minus' }}"></md-icon>
+            <md-icon ng-if="!$dfx_item.expanded && $dfx_item.ATTR-NONV{{repeatable_property.value}}.length > 0 && attributes.isClosed.type === 'fa-icon'" ng-click="toggleNode($event, $dfx_item)" style="color: {{attributes.color.value}};" class="fa node-trigger {{ attributes.isClosed.value  || 'fa-plus' }}"></md-icon>
+            <ng-md-icon ng-if="$dfx_item.expanded && $dfx_item.ATTR-NONV{{repeatable_property.value}}.length > 0 && attributes.isOpened.type ==='svg-icon'" ng-click="toggleNode($event, $dfx_item)" style="color: {{attributes.color.value}}" class="node-trigger" icon="{{ attributes.isOpened.value || 'expand_more' }}" size="16"></ng-md-icon>
+            <ng-md-icon ng-if="!$dfx_item.expanded && $dfx_item.ATTR-NONV{{repeatable_property.value}}.length > 0 && attributes.isClosed.type ==='svg-icon'" ng-click="toggleNode($event, $dfx_item)" style="color: {{attributes.color.value}}" class="node-trigger" icon="{{ attributes.isClosed.value  || 'chevron_right'}}" size="16"></ng-md-icon>
+            <md-checkbox ng-if="attributes.selected.value" ng-checked="isSelectedItem($dfx_item)" ng-click="toggleSelectedItem($dfx_item, nodeIndexes, 'dynamic')" class="dfx-core-gc-treeview-checkbox md-altTheme-theme md-primary" aria-label="Tree Item checkbox"></md-checkbox>
+            <a href="#" ATTR-IF{{ng-click="attributes.onclick.value"}}
+               ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
+               ATTR-IF{{ng-keypress="attributes.onkeypress.value"}}
+               ATTR-IF{{ng-keydown="attributes.onkeydown.value"}}
+               ATTR-IF{{ng-keyup="attributes.onkeyup.value"}}
+               ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}}
+               ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}}
+               ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}}
+               ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
+               ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
+               ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}>{{ $dfx_item.ATTR-NONV{{label.value}} }}</a>
+            <ul ng-if="$dfx_item[ attributes['repeatable_property']['value'] ].length > 0" ng-show="$dfx_item['expanded']">
+                <li ng-repeat="$dfx_item in $dfx_item[ attributes['repeatable_property']['value'] ] track by $index" ng-init="nodeIndexes = nodeIndexes +','+ $index" class="tree-view-item" ng-include="'{{component_id}}_dynamic_tree_view'"></li>
+            </ul>
+        </script>
+        <ul><li ng-repeat="$dfx_item in ATTR-EXP{{attributes.dynamic.value ? attributes.dynamic.value : ''}}ATTR-ENDEXP track by $index" ng-init="nodeIndexes = $index" class="tree-view-item" ng-include="'{{component_id}}_dynamic_tree_view'"></li></ul>
+    </div>
+    FRAG-ENDIF
+    FRAG-IF{{attributes.treeItemsType.value ==='static'}}
+    <div>
+        <script type="text/ng-template" id="{{component_id}}_static_tree_view">
+            <md-icon ng-if="$dfx_item.expanded && $dfx_item.children.length > 0 && attributes.isOpened.type === 'fa-icon'" ng-click="toggleNode($event, $dfx_item)" style="color: {{attributes.color.value}};" class="fa node-trigger {{ attributes.isOpened.value || 'fa-minus' }}"></md-icon>
+            <md-icon ng-if="!$dfx_item.expanded && $dfx_item.children.length > 0 && attributes.isClosed.type === 'fa-icon'" ng-click="toggleNode($event, $dfx_item)" style="color: {{attributes.color.value}};" class="fa node-trigger {{ attributes.isClosed.value  || 'fa-plus' }}"></md-icon>
+            <ng-md-icon ng-if="$dfx_item.expanded && $dfx_item.children.length > 0 && attributes.isOpened.type ==='svg-icon'" ng-click="toggleNode($event, $dfx_item)" style="color: {{attributes.color.value}}" class="node-trigger"
+              icon="{{ attributes.isOpened.value || 'expand_more' }}" size="16"></ng-md-icon>
+            <ng-md-icon ng-if="!$dfx_item.expanded && $dfx_item.children.length > 0 && attributes.isClosed.type ==='svg-icon'" ng-click="toggleNode($event, $dfx_item)" style="color: {{attributes.color.value}}" class="node-trigger"
+              icon="{{ attributes.isClosed.value  || 'chevron_right'}}" size="16"></ng-md-icon>
+            <md-checkbox ng-if="attributes.selected.value" ng-checked="isSelectedItem($dfx_item)" ng-click="toggleSelectedItem($dfx_item, nodeIndexes, 'static')" class="dfx-core-gc-treeview-checkbox md-altTheme-theme md-primary" aria-label="Tree Item checkbox"></md-checkbox>
+            <a href="#" ATTR-IF{{ng-click="attributes.onclick.value"}}
+               ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
+               ATTR-IF{{ng-keypress="attributes.onkeypress.value"}}
+               ATTR-IF{{ng-keydown="attributes.onkeydown.value"}}
+               ATTR-IF{{ng-keyup="attributes.onkeyup.value"}}
+               ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}}
+               ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}}
+               ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}}
+               ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
+               ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
+               ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}>{{ $eval($dfx_item.name) }}</a>
+            <ul ng-if="$dfx_item.children.length > 0" ng-show="$dfx_item.expanded">
+                <li ng-repeat="$dfx_item in $dfx_item.children track by $index" ng-init="nodeIndexes = nodeIndexes +','+ $index" class="tree-view-item" ng-class ng-include="'{{component_id}}_static_tree_view'"></li>
+            </ul>
+        </script>
+        <ul>
+          <li ng-repeat="$dfx_item in ATTR-STATIC{{static.value}} track by $index" ng-init="nodeIndexes = $index;" class="tree-view-item" ng-include="'{{component_id}}_static_tree_view'"></li>
+        </ul>
+    </div>
+    FRAG-ENDIF
+</div>

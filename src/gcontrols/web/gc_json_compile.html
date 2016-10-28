@@ -1,0 +1,64 @@
+FRAG-IF{{attributes.type.value==='input'}}
+<div ng-show="attributes.display.value"
+	class="dfx-core-gc-json-input-type ATTR-NONV{{whiteframe.value}} ATTR-NONV{{classes.value}} dfx-gc-web-json"
+	ATTR-IF{{ng-class="attributes.dynamicClasses.value"}}
+	ATTR-IF{{style="attributes.style.value"}}>
+	<md-input-container ng-form="inputJsonEditor" class="flex" ng-class="!inputJsonEditor.editorInput.$valid ? 'md-input-invalid' : ''">
+		<label ATTR-IF{{ng-bind="attributes.label.value"}}></label>
+	  <input id="{{component_id}}_scopeInput" class="dfx-core-gc-json-input" name="editorInput"
+			ng-model="stringModel.value"
+			ng-change="inputToJson(); ATTR-NONV{{onchange.value}}"
+			ATTR-IF{{ng-disabled="attributes.disabled.value"}}
+			ng-class="!inputJsonEditor.editorInput.$valid ? 'ng-invalid' : 'ng-valid'"
+			ATTR-IF{{ng-modechange="attributes.onmodechange.value"}}
+			ATTR-IF{{ng-error="attributes.onerror.value"}}
+			ATTR-IF{{ng-click="attributes.onclick.value"}}
+			ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
+			ATTR-IF{{ng-change="attributes.onchange.value"}}
+			ATTR-IF{{ng-focus="attributes.onfocus.value"}}
+			ATTR-IF{{ng-blur="attributes.onblur.value"}}
+			ATTR-IF{{ng-keypress="attributes.onkeypress.value"}}
+			ATTR-IF{{ng-keydown="attributes.onkeydown.value"}}
+			ATTR-IF{{ng-keyup="attributes.onkeyup.value"}}
+			ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}}
+			ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}}
+			ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}}
+			ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
+			ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
+			ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}/>
+	  <div ng-if="!inputJsonEditor.editorInput.$valid" ng-messages="inputJsonEditor.editorInput.$error">
+      <span style="font-size:12px;">Json string is invalid.</span>
+  	</div>
+	</md-input-container>
+	<md-button ng-click="showJsonDialog($event);viewDialog.mode=true" class="dfx-core-gc-json-button flex dfx-core-gc-json-button-preview">
+		<ng-md-icon icon="remove_red_eye" size="21"><ng-md-icon></md-button>
+	<md-button ng-click="showJsonDialog($event);viewDialog.mode=false" class="dfx-core-gc-json-button flex dfx-core-gc-json-button-edit"
+		ATTR-IF{{ng-disabled="attributes.disabled.value"}}>
+		<ng-md-icon icon="edit" size="21"></ng-md-icon>
+	</md-button>
+</div>
+FRAG-ENDIF
+FRAG-IF{{attributes.type.value==='panel'}}
+<div ng-show="attributes.display.value"
+	id="{{component_id}}_dfx_gc_web_json_panel"
+	class="dfx-core-gc-json-panel-type ATTR-NONV{{whiteframe.value}} ATTR-NONV{{classes.value}} dfx-gc-web-json"
+	ATTR-IF{{ng-class="attributes.dynamicClasses.value"}}
+	ATTR-IF{{style="attributes.style.value"}}
+	ATTR-IF{{ng-modechange="attributes.onmodechange.value"}}
+	ATTR-IF{{ng-error="attributes.onerror.value"}}
+	ATTR-IF{{ng-click="attributes.onclick.value"}}
+	ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
+	ATTR-IF{{ng-change="attributes.onchange.value"}}
+	ATTR-IF{{ng-focus="attributes.onfocus.value"}}
+	ATTR-IF{{ng-blur="attributes.onblur.value"}}
+	ATTR-IF{{ng-keypress="attributes.onkeypress.value"}}
+	ATTR-IF{{ng-keydown="attributes.onkeydown.value"}}
+	ATTR-IF{{ng-keyup="attributes.onkeyup.value"}}
+	ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}}
+	ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}}
+	ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}}
+	ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
+	ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
+	ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}>
+</div>
+FRAG-ENDIF

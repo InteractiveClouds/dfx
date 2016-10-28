@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="content-type" content="text/HTML;charset=UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Login to ##appName</title>
+    <title>Login to Demo</title>
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,700', rel='stylesheet'">
     <link rel="stylesheet" type="text/css" href="css/web/runtime_web/dfx.min.css" media="screen">
     <link rel="stylesheet" type="text/css" href="css/web/app.css" media="screen">
@@ -16,19 +16,17 @@
         DreamFace.successfulLoginRedirectUrl = 'index.html';
     </script>
 </head>
-<body ng-controller="dfx_login_controller" dfx-app="##appName" style="">
+<body ng-controller="dfx_login_controller" dfx-app="Demo" style="">
 <div layout="column" style="height:100%">
-    <div style="height:55px;background:#E6E6E6"></div>
+    <div style="height:80px;background:#00bae7" layout="row" layout-align="start center">
+      <div style="display:inline-block;margin-left:20px">
+        <img src="img/dfx_login_logo_white.png" style="width:45px;height:45px;" />
+      </div>
+      <div style="display:inline-block;margin-left:20px;font-family:HelveticaNeue;font-size:20px;color:#ffffff;letter-spacing:0.31px;line-height:23px;text-align:left;">The new face of cloud development</div>
+  	</div>
     <div flex layout="column" layout-align="center center">
         <md-whiteframe flex="45" layout layout-align="center center" style="width:477px" class="md-whiteframe-0dp">
-            <md-card style="width:477px">
-                <md-toolbar style="background:#62bfab; height:50px">
-                    <div layout="row" layout-align="center center"></div>
-                    <div layout="column" layout-align="center center" style="font-size:18px;color:#fff;font-face:HelveticaNeue">
-                        <div style="margin-top:10px" class="md-subhead">##appName</div>
-                        <div class="md-subhead"></div>
-                    </div>
-                </md-toolbar>
+            <md-card style="width:477px;box-shadow:none">
                 <md-card-content>
                     <form id="loginForm" name="loginForm" action="#">
                         <div layout="column">
@@ -36,17 +34,14 @@
                             <md-input-container flex><label>Password</label><input id="password" type="password" name="password"></md-input-container>
                         </div>
                         <div layout="row">
-                            <md-button style="color:#fff;background:#62bfab" type="submit" onclick="$(this).closest('form').submit()" class="md-raised">Log in</md-button>
+                            <md-button style="color:#fff;background:#00bae7;" type="submit" onclick="$(this).closest('form').submit()" class="md-raised">Log in</md-button>
                         </div>
                     </form>
-                    <md-divider style="margin-top:20px">
-                        <div layout="column" layout-align="center center" style="height:40px"><span class="md-caption">Powered By DreamFace</span></div>
-                    </md-divider>
                 </md-card-content>
             </md-card>
         </md-whiteframe>
     </div>
-    <div layout="row" layout-align="end center" style="padding-right:37px;height:55px;background:#e6e6e6;color:#586474;font-size:10px;font-face:HelveticaNeue">Copyright (c) Interactive Clouds. All rights reserved.</div>
+    <div layout="row" layout-align="end center" style="padding-right:37px;background:#434a54;height:60px;font-family:HelveticaNeue;font-style:italic;font-size:14px;color:#d6d6d6;letter-spacing:0px;line-height:38px;">Created by DreamFace</div>
 </div>
 <script src="js/web/login.js"></script>
 </body>

@@ -6,24 +6,22 @@
 
 <md-sidenav md-component-id="side_nav_api_category" class="md-sidenav-left" style="width: 450px; max-width: 450px;" ng-cloak>
     <md-content style="padding-top: 20px;">
-    <form >
-        
+    <form ng-submit="categoryMode === 'addCategory' ? createCategory() : editCategory(toEdit)">
         <div class="md-dialog-content layout-column layout-padding">
             <div class="layout-column flex-100">
                 <md-input-container class="md-block flex" style="margin: 0;">
                     <label>Category Name</label>
-                    <input ng-model="scopeCategory.name" ng-disabled="categoryMode === 'editCategory'" md-autofocus>
+                    <input ng-model="scopeCategory.name" ng-disabled="categoryMode === 'editCategory'" md-autofocus="categoryMode === 'addCategory'">
                 </md-input-container>
             </div>
             <div ng-if="categoryMode === 'editCategory'" class="layout-column flex-100">
                 <md-input-container class="md-block flex" style="margin: 0;">
                     <label>New Category Name</label>
-                    <input ng-model="toEdit.name" md-autofocus>
+                    <input ng-model="toEdit.name" md-autofocus="categoryMode === 'editCategory'">
                 </md-input-container>
             </div>
             <div style="display:flex; justify-content: flex-end;">
-                <md-button ng-if="categoryMode === 'addCategory'" class="md-primary" ng-click="createCategory()">Save</md-button>
-                <md-button ng-if="categoryMode === 'editCategory'" class="md-primary" ng-click="editCategory( toEdit )">Save</md-button>
+                <md-button class="md-primary" type="submit">Save</md-button>
                 <md-button class="md-primary" ng-click="closeSidenav()">Cancel</md-button>
             </div>
         </div>
@@ -55,8 +53,8 @@
                             <tr ng-repeat="app_category in app_categories track by $index" ng-click="" style="cursor:pointer;">
                                 <td width="50%">{{app_category.name}}</td>
                                 <td>
-                                    <md-button ng-click="editCategoryBtn( app_category )" ng-disabled="app_category.name ==='Default'" style="margin: 0; padding: 0; min-width: 20px"><md-icon class="fa fa-edit" style="font-size:20px; padding-top: 5px;"></md-icon></md-button>
-                                    <md-button style="margin: 0; padding: 0; min-width: 20px" ng-click="confirmDelete( $event, app_category.name )" ng-disabled="app_category.name ==='Default'"><md-icon class="fa fa-trash" style="font-size:20px; padding-top: 3px;"></md-icon></md-button>
+                                    <md-button ng-click="editCategoryBtn( app_category )" ng-disabled="app_category.name ==='Default'" class="dfx-studio-table-button"><md-icon class="fa fa-edit"></md-icon></md-button>
+                                    <md-button class="dfx-studio-table-button" ng-click="confirmDelete( $event, app_category.name )" ng-disabled="app_category.name ==='Default'"><md-icon class="fa fa-trash"></md-icon></md-button>
                                 </td>
                             </tr>
                         </tbody>

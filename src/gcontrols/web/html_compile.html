@@ -1,0 +1,42 @@
+FRAG-IF{{attributes.binding.value}}
+<div
+	dfx-aria-label="aria-label,name"
+	ng-show="attributes.display.value"
+	ng-bind-html="gcSnippetTrustAsHtml(ATTR-NONV{{binding.value}})"
+	class="ATTR-NONV{{classes.value}} md-block md-altTheme-theme glyph"
+	ATTR-IF{{ng-class="attributes.dynamicClasses.value"}}
+	ATTR-IF{{style="attributes.style.value"}}
+	ATTR-IF{{ng-click="attributes.onclick.value"}}
+  ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
+  ATTR-IF{{ng-keypress="attributes.onkeypress.value"}}
+  ATTR-IF{{ng-keydown="attributes.onkeydown.value"}}
+  ATTR-IF{{ng-keyup="attributes.onkeyup.value"}}
+  ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}}
+  ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}}
+  ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}}
+  ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
+  ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}
+	ATTR-IF{{ng-disabled="attributes.disabled.value"}}>
+</div>
+FRAG-ENDIF
+FRAG-IF{{!attributes.binding.value}}
+<div
+	dfx-aria-label="aria-label,name"
+	ng-show="attributes.display.value"
+	ng-bind-html="gcSnippetTrustAsHtml(ATTR-STATIC{{content.value}})"
+  class="ATTR-NONV{{classes.value}} md-block md-altTheme-theme glyph"
+  ATTR-IF{{ng-class="attributes.dynamicClasses.value"}}
+  ATTR-IF{{style="attributes.style.value"}}
+  ATTR-IF{{ng-click="attributes.onclick.value"}}
+  ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
+  ATTR-IF{{ng-keypress="attributes.onkeypress.value"}}
+  ATTR-IF{{ng-keydown="attributes.onkeydown.value"}}
+  ATTR-IF{{ng-keyup="attributes.onkeyup.value"}}
+  ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}}
+  ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}}
+  ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}}
+  ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
+  ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}
+  ATTR-IF{{ng-disabled="attributes.disabled.value"}}>
+</div>
+FRAG-ENDIF

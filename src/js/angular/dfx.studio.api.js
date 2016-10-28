@@ -2141,7 +2141,7 @@ dfxStudioApi.factory('dfxApiServiceObjects', [ '$http', '$q', function($http, $q
 
         $http({
             method: 'POST',
-            url: '/studio/query/category/createCategory',
+            url: '/studio/query/createCategory',
             data: { name: category_name, ownerId: "", application: app_name }
         }).then(function successCallback(response) {
             deferred.resolve( response );
@@ -2332,5 +2332,42 @@ dfxStudioApi.factory('dfxSamples', [ '$http', '$q', function($http, $q) {
         return deferred.promise;
     };
 
+    api_samples.isPathExists = function( path ) {
+        var deferred = $q.defer();
+
+        $http({
+            method: 'GET',
+            url: 'samples/isPathExists',
+            params: {'path': path}
+        }).then(function successCallback(response) {
+            deferred.resolve( response.data );
+        });
+
+        return deferred.promise;
+    };
+
     return api_samples;
+}]);
+
+dfxStudioApi.factory('dfxRendering', [ '$http', '$q', function($http, $q) {
+
+    var api_rendering = {};
+
+    api_rendering.render = function( scope, view_definition ) {
+        var deferred = $q.defer();
+
+        $http({
+            method: 'POST',
+            url: '/studio/view/render',
+			data: {
+				view_source: JSON.parse(view_definition)
+			}
+        }).then(function successCallback(response) {
+            deferred.resolve( response.data );
+        });
+
+        return deferred.promise;
+    };
+
+    return api_rendering;
 }]);

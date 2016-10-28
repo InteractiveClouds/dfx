@@ -1,0 +1,28 @@
+<div flex="100" layout="row" layout-align="center center" ng-show="attributes.display.value" ATTR-IF{{ng-class="attributes.dynamicClasses.value"}}>
+    <div style="height:100%; ATTR-NONV{{style.value}}" class="ATTR-NONV{{classes.value}} ATTR-NONV{{whiteframe.value}}" flex="100" layout="column"
+	ATTR-IF{{ng-focus="attributes.onfocus.value"}}
+    ATTR-IF{{ng-blur="attributes.onblur.value"}}
+    ATTR-IF{{ng-click="attributes.onclick.value"}}
+	ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
+	ATTR-IF{{ng-keypress="attributes.onkeypress.value"}}
+	ATTR-IF{{ng-keydown="attributes.onkeydown.value"}}
+	ATTR-IF{{ng-keyup="attributes.onkeyup.value"}}
+	ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}}
+	ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}}
+	ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}}
+	ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
+	ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}>
+        <div ng-show="attributes.toolbar.visible.value"><div dfx-gcc-web-toolbar></div></div>
+        <md-content flex="100" style="{{attributes.bodyStyle.value}}" ng-hide="$eval(ATTR-STATIC{{toolbar.collapsed.value}})" layout="column">
+            <form name="form_{{component_id}}" id="form_{{component_id}}" ng-submit="attributes.formSubmit.value" role="form" layout="column" flex="100">
+                <md-tabs md-no-ink-bar="ATTR-EXP{{(attributes.inkBar.value==='disabled') ? 'true': 'false'}}ATTR-ENDEXP" md-center-tabs="attributes.centerSteps.value"
+                         md-dynamic-height md-border-bottom
+                         md-selected="attributes.stepIndex.value"
+                         md-align-tabs="attributes.stepAlign.value"
+                         md-stretch-tabs="attributes.stretching.value"
+                         flex="100" layout="column">
+					WIZARD-RENDERING
+            </form>
+        </md-content>
+    </div>
+</div>

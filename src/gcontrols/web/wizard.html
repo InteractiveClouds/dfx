@@ -17,7 +17,10 @@
         <md-content flex="100" style="{{attributes.bodyStyle.value}}" ng-hide="$eval(attributes.toolbar.collapsed.value)" layout="column">
             <form name="form_{{component_id}}" id="form_{{component_id}}" ng-submit="$eval(attributes.formSubmit.value)" role="form" layout="column" flex="100">
                 <md-tabs md-no-ink-bar="{{attributes.inkBar.value==='disabled' ? 'true': 'false'}}" md-center-tabs="{{attributes.centerSteps.value}}"
-                         md-dynamic-height md-border-bottom md-selected="attributes.stepIndex.value" md-align-tabs="{{attributes.stepAlign.value}}" md-stretch-tabs="{{attributes.stretching.value}}"
+                         md-dynamic-height md-border-bottom
+                         md-selected="attributes.stepIndex.value"
+                         md-align-tabs="{{attributes.stepAlign.value}}"
+                         md-stretch-tabs="{{attributes.stretching.value}}"
                          flex="100" layout="column">
                     <md-tab ng-repeat="step in attributes.steps.value track by $index" label="{{$eval(step.label)}}" ng-disabled="$eval(step.disabled.value) || step.validDisabled.value"> <!--md-on-select="$eval(attributes.onSelect.value)" md-on-deselect="$eval(attributes.onDeselect.value)"-->
                         <div ng-form name="stepForm{{$index}}" id="form_{{component_id}}_step_{{$index}}" layout="column" flex="100">
@@ -34,17 +37,17 @@
                                     </div>
                                 </div>
                             </md-content>
-                            <div ng-if="!step.isLast.value" layout="row" layout-align="end-center" >
+                            <div ng-if="!step.isLast.value" layout="row" layout-align="end-center" class="dfx-core-gc-wizard-navbuttons">
                                 <button ng-click="decrIndex(); $eval(attributes.onPrevious.value); $eval(attributes.previousButton.onclick.value); prevent($event);"
                                         style="{{attributes.previousButton.style.value}}"
-                                        class="md-altTheme-theme glyph md-raised md-primary md-button"
+                                        class="dfx-core-gc-wizard-prev md-altTheme-theme glyph md-raised md-primary md-button"
                                         ng-class="[attributes.previousButton.classes.value, $eval(attributes.previousButton.dynamicClasses.value)]"
                                         ng-disabled="$index===0">
                                     {{$eval(attributes.previousButton.label.value)}}
                                 </button>
                                 <button ng-click="incrIndex(); $eval(attributes.onNext.value); $eval(attributes.nextButton.onclick.value); prevent($event);"
                                         style="{{attributes.nextButton.style.value}}"
-                                        class="md-altTheme-theme glyph md-raised md-primary md-button"
+                                        class="dfx-core-gc-wizard-next md-altTheme-theme glyph md-raised md-primary md-button"
                                         ng-class="[attributes.nextButton.classes.value, $eval(attributes.nextButton.dynamicClasses.value)]"
                                         ng-disabled="stepForm{{$index}}.$invalid">
                                     {{$eval(attributes.nextButton.label.value)}}
@@ -54,17 +57,17 @@
                     </md-tab>
                 </md-tabs>
                 <div ng-if="attributes.steps.value[attributes.stepIndex.value].isLast.value" layout="row" layout-align="end-center">
-                    <div class="wizard-submit-step" ng-class="attributes.steps.value[attributes.stepIndex.value].isLast.value ? 'is-wizard-submit-step' : ''">
+                    <div class="wizard-submit-step dfx-core-gc-wizard-navbuttons" ng-class="attributes.steps.value[attributes.stepIndex.value].isLast.value ? 'is-wizard-submit-step' : ''">
                         <button ng-click="decrIndex(); $eval(attributes.onPrevious.value); $eval(attributes.previousButton.onclick.value); prevent($event);"
                                 style="{{attributes.previousButton.style.value}}"
-                                class="md-altTheme-theme glyph md-raised md-primary md-button"
+                                class="dfx-core-gc-wizard-prev md-altTheme-theme glyph md-raised md-primary md-button"
                                 ng-class="[attributes.previousButton.classes.value, $eval(attributes.previousButton.dynamicClasses.value)]"
                                 ng-disabled="attributes.steps.value.length===1">
                             {{$eval(attributes.previousButton.label.value)}}
                         </button>
                         <input type="submit" style="{{attributes.submitButton.style.value}}"
                                ng-click="$eval(attributes.submitButton.onclick.value)"
-                               class="md-button md-altTheme-theme glyph md-raised dfx-core-gc-wizard-submit"
+                               class="dfx-core-gc-wizard-submit md-button md-altTheme-theme glyph md-raised"
                                ng-class="[attributes.submitButton.classes.value, $eval(attributes.submitButton.dynamicClasses.value)]"
                                ng-disabled="form_{{component_id}}.$invalid"
                                value="{{$eval(attributes.submitButton.label.value)}}">

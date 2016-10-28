@@ -6,7 +6,7 @@
 			</div>
 		</md-toolbar>
 		<md-dialog-content id="{{component_id}}_md_dialog" layout="column" style="max-width:880px;max-height:810px;width:880px;height:400px;margin:0px;">
-			<md-radio-group ng-model="attributes.optionsType.value" ng-change="overrideAttribute('optionsType')" class="dfx-ve-options-editor-radio-group">
+			<md-radio-group ng-model="attributes.optionsType.value" ng-change="setOptionsType(attributes.optionsType.value)" class="dfx-ve-options-editor-radio-group">
 			  <md-radio-button class="dfx-ve-options-editor-radio-button md-primary" value="static" aria-label="Static options">Static options</md-radio-button>
 			  <md-radio-button class="dfx-ve-options-editor-radio-button md-primary" value="dynamic" aria-label="Dynamic options">Dynamic options</md-radio-button>
 			</md-radio-group>
@@ -43,22 +43,20 @@
 								<li class="col-md-12">
 									<span class="col-md-4">Value:</span>
 									<div class="col-md-8" layout="row">
-										<input class="col-md-12" type="text" ng-model="attributes.currentItem.value" style="margin-left:-15px;"/>
-										<dfx-ve-menu-expression></dfx-ve-menu-expression>
+										<input class="col-md-12" type="text" ng-model="currentItem.value" style="margin-left:-15px;"/><dfx-ve-menu-expression></dfx-ve-menu-expression>
 									</div>
 								</li>
 								<li class="col-md-12">
 									<span class="col-md-4">Label:</span>
 									<div class="col-md-8" layout="row">
-										<input class="col-md-12" type="text" ng-model="attributes.currentItem.display" style="margin-left:-15px;"/>
-										<dfx-ve-menu-expression></dfx-ve-menu-expression>
+										<input class="col-md-12" type="text" ng-model="currentItem.display" style="margin-left:-15px;"/><dfx-ve-menu-expression></dfx-ve-menu-expression>
 									</div>
 								</li>
 							</ul>
 						</div>
 					</md-content>
 				</section>
-			</div>		
+			</div>
 			<div ng-show="attributes.optionsType.value === 'dynamic'" style="padding:8px;">
 				<section id="{{component_id}}_dynamic_properties" class="md-whiteframe-1dp" style="border-radius:4px;overflow:hidden;">
 					<md-toolbar style="min-height:36px;background:rgba(128,128,128,0.46);">
@@ -72,22 +70,19 @@
 								<li class="col-md-12">
 									<span class="col-md-4">Source:</span>
 									<div class="col-md-8" layout="row">
-										<input class="col-md-12" type="text" ng-model="attributes.source.value" style="margin-left:-15px;" ng-change="overrideAttribute('source')" style="margin-left:-15px;"/>
-										<dfx-ve-menu-expression></dfx-ve-menu-expression>
+										<input class="col-md-12" type="text" ng-model="attributes.source.value" style="margin-left:-15px;" ng-change="overrideAttribute('source')" style="margin-left:-15px;"/><dfx-ve-menu-expression></dfx-ve-menu-expression>
 									</div>
 								</li>
 								<li class="col-md-12">
 									<span class="col-md-4" style="padding-left:16px;">Value:</span>
 									<div class="col-md-8" layout="row">
-										<input class="col-md-12" type="text" ng-model="attributes.bindingProperty.value" ng-change="overrideAttribute('bindingProperty')" style="margin-left:-15px;"/>
-										<dfx-ve-menu-expression></dfx-ve-menu-expression>
+										<input class="col-md-12" type="text" ng-model="attributes.bindingProperty.value" ng-change="overrideAttribute('bindingProperty')" style="margin-left:-15px;"/><dfx-ve-menu-expression></dfx-ve-menu-expression>
 									</div>
 								</li>
 								<li class="col-md-12">
 									<span class="col-md-4" style="padding-left:16px;">Label:</span>
 									<div class="col-md-8" layout="row">
-										<input class="col-md-12" type="text" ng-model="attributes.propToDisplay.value" ng-change="overrideAttribute('propToDisplay')" style="margin-left:-15px;"/>
-										<dfx-ve-menu-expression></dfx-ve-menu-expression>
+										<input class="col-md-12" type="text" ng-model="attributes.propToDisplay.value" ng-change="overrideAttribute('propToDisplay')" style="margin-left:-15px;"/><dfx-ve-menu-expression></dfx-ve-menu-expression>
 									</div>
 								</li>
 							</ul>
@@ -95,11 +90,11 @@
 					</md-content>
 				</section>
 			</div>
-			<div class="second-dialog-box"></div>	
+			<div class="second-dialog-box"></div>
 		</md-dialog-content>
-		<div class="md-actions"> 
-            <md-button ng-show="attributes.optionsType.value === 'dynamic'" ng-click="showSamples()" id="samples-btn" class="md-primary" md-autofocus="attributes.optionsType.value === 'dynamic'">Samples</md-button> 
-			<md-button ng-click="closeDialog()" class="md-primary">Close</md-button> 
-		</div> 
+		<div class="md-actions">
+            <md-button ng-show="attributes.optionsType.value === 'dynamic'" ng-click="showSamples()" id="samples-btn" class="md-primary" md-autofocus="attributes.optionsType.value === 'dynamic'">Samples</md-button>
+			<md-button ng-click="closeDialog()" class="md-primary">Close</md-button>
+		</div>
 	</form>
 </md-dialog>

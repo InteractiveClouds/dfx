@@ -31,24 +31,24 @@
                 <div style="padding:0;overflow-y:auto;">
                     <table class="datatable" style="width:100%;">
                         <tbody>
-                            <tr ng-repeat="item in table_data " ng-click="" style="cursor:pointer;">
+                            <tr ng-repeat="item in table_data " ng-if="item.platform !== 'tablet'" ng-click="" style="cursor:pointer;">
                                 <td width="15%">{{item.name}}</td>
                                 <td width="15%">{{appname}}</td>
                                 <td width="15%" ng-if="entity !== 'apiServices'" style="text-transform:capitalize;">{{item.platform === 'web' ? 'Desktop' : item.platform}}</td>
                                 <td width="15%">{{item.category }}</td>
                                 <td width="25%">{{entity === 'pages' ? item.title : item.description}}</td>
                                 <td style="text-align:center">
-                                    <md-button ng-click="edit(item)" style="margin: 0; padding: 0; min-width: 20px" aria-label="edit-element" title="Edit component">
-                                        <md-icon class="fa fa-edit" style="font-size:20px; padding-top: 5px;"></md-icon>
+                                    <md-button ng-click="edit(item)" class="dfx-studio-table-button" aria-label="edit-element" title="Edit component">
+                                        <md-icon class="fa fa-edit"></md-icon>
                                     </md-button>
-                                    <md-button ng-if="entity === 'views'" ng-click="infoEntity(item)" style="margin: 0; padding: 0; min-width: 20px" aria-label="copy-element" title="Information">
-                                        <md-icon class="fa fa-info" style="font-size:20px; padding-top: 5px;"></md-icon>
+                                    <md-button ng-if="entity === 'views'" ng-click="infoEntity(item)" class="dfx-studio-table-button" aria-label="copy-element" title="Information">
+                                        <md-icon class="fa fa-info"></md-icon>
                                     </md-button>
-                                    <md-button ng-click="copyEntity(item)" style="margin: 0; padding: 0; min-width: 20px" aria-label="copy-element" title="Copy component">
-                                        <md-icon class="fa fa-copy" style="font-size:20px; padding-top: 5px;"></md-icon>
+                                    <md-button ng-click="copyEntity(item)" class="dfx-studio-table-button" aria-label="copy-element" title="Copy component">
+                                        <md-icon class="fa fa-copy"></md-icon>
                                     </md-button>
-                                    <md-button ng-click="removeEntity(item, $event)" style="margin: 0; padding: 0; min-width: 20px" aria-label="remove-element" title="Remove component">
-                                        <md-icon class="fa fa-trash" style="font-size:20px; padding-top: 5px;"></md-icon>
+                                    <md-button ng-click="removeEntity(item, $event)" class="dfx-studio-table-button" aria-label="remove-element" title="Remove component">
+                                        <md-icon class="fa fa-trash"></md-icon>
                                     </md-button>
                                 </td>
                             </tr>

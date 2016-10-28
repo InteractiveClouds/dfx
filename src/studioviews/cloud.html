@@ -71,9 +71,9 @@
                                     <td></td>
                                     <td></td>
                                     <td>
-                                        <span ng-show="image.created"><md-button style="margin: 0; padding: 0; min-width: 20px" ng-click="bluemix.confirmImageDelete($event, image, $index)"><md-icon class="fa fa-lg fa-trash-o" style="font-size:20px; padding-top: 3px; color:#158194;"></md-icon></md-button></span>
+                                        <span ng-show="image.created"><md-button class="dfx-studio-table-button" ng-click="bluemix.confirmImageDelete($event, image, $index)"><md-icon class="fa fa-lg fa-trash-o" style="color:#158194;"></md-icon></md-button></span>
                                         <i style="margin-left: 5px;" ng-show="!image.created" class="fa fa-spinner fa-spin"></i>
-                                        <!--<span><md-button style="margin: 0; padding: 0; min-width: 20px" ng-click="bluemix.runImage(image)"><md-icon class="fa fa-lg fa-play" style="font-size:20px; padding-top: 3px; color:#158194;"></md-icon></md-button></span>-->
+                                        <!--<span><md-button class="dfx-studio-table-button" ng-click="bluemix.runImage(image)"><md-icon class="fa fa-lg fa-play" style="color:#158194;"></md-icon></md-button></span>-->
                                     </td>
                                 </tr>
                                 <tr ng-if="image.show_apps === true" ng-repeat="application in image.content track by $index" style="background: #ffffff">
@@ -92,21 +92,23 @@
     </md-tab>
     <md-tab label="PhoneGap">
         <md-content style="padding-top: 20px;">
-            <h5 class="md-title" style="padding-left: 10px">Login</h5>
-            <div layout="row" class="layout-padding">
-                <md-input-container class="md-block flex-25" style="margin: 0; padding-top: 20px;">
-                    <input id="phoneGapLogin" ng-model="phoneGapLogin" md-autofocus>
-                </md-input-container>
-            </div>
-            <h5 class="md-title" style="padding-left: 10px">Password</h5>
-            <div layout="row" class="layout-padding">
-                <md-input-container class="md-block flex-25" style="margin: 0; padding-top: 20px;">
-                    <input id="phoneGapPassword" type="password" ng-model="phoneGapPassword">
-                </md-input-container>
-            </div>
-            <div layout="row" layout-align ="start">
-                <button ng-click="savePhoneGapData()" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-floppy-o" style="color: #757575"></span><span style="padding-left:5px">Save</span></button>
-            </div>
+            <form ng-submit="savePhoneGapData()">
+                <h5 class="md-title" style="padding-left: 10px">Login</h5>
+                <div layout="row" class="layout-padding">
+                    <md-input-container class="md-block flex-25" style="margin: 0; padding-top: 20px;">
+                        <input id="phoneGapLogin" ng-model="phoneGapLogin" required md-autofocus>
+                    </md-input-container>
+                </div>
+                <h5 class="md-title" style="padding-left: 10px">Password</h5>
+                <div layout="row" class="layout-padding">
+                    <md-input-container class="md-block flex-25" style="margin: 0; padding-top: 20px;">
+                        <input id="phoneGapPassword" type="password" ng-model="phoneGapPassword" required>
+                    </md-input-container>
+                </div>
+                <div layout="row" layout-align ="start">
+                    <button type="submit" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-floppy-o" style="color: #757575"></span><span style="padding-left:5px">Save</span></button>
+                </div>
+            </form>
         </md-content>
     </md-tab>
 </md-tabs>

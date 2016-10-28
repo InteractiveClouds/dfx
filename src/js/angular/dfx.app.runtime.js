@@ -1,10 +1,10 @@
-var dfxSystemModules = ['ngRoute', 'ngMaterial', 'dfxGControls', 'dfxAppServices', 'dfxStudioApi', 'nvd3'];
+var dfxSystemModules = ['ngRoute', 'ngMaterial', 'dfxAppServices', 'dfxStudioApi', 'nvd3'];
 if (typeof dfxAppRuntimeModules != 'undefined')
     dfxSystemModules = dfxSystemModules.concat(dfxAppRuntimeModules);
 var dfxAppRuntime = angular.module('dfxAppRuntime', dfxSystemModules);
 
 dfxAppRuntime
-    .config( function($routeProvider) {
+    .config( function($routeProvider, $locationProvider) {
         $routeProvider
             .when('/page.html', {
                 controller: 'dfx_page_controller',
@@ -125,12 +125,19 @@ dfxAppRuntime.controller('dfx_app_controller', [ '$scope', '$rootScope', 'dfxAut
     $scope.design_device_orientation = 'Portrait';
 
     $scope.getGCDefaultAttributes = function( type ) {
+		var cached_gc_types = sessionStorage.getItem('DFX_gc_types');
+		if (cached_gc_types===null) {
+			cached_gc_types = {};
+		} else {
+			cached_gc_types = JSON.parse(cached_gc_types);
+		}
         var deferred = $q.defer();
-        if ($scope.gc_types[type] != null) {
-            deferred.resolve( $scope.gc_types[type] );
-        } else {
+		if (cached_gc_types[type]!=null) {
+			deferred.resolve( cached_gc_types[type] );
+		} else {
             $http.get( '/gcontrols/web/' + type + '.json' ).success( function(data) {
-                $scope.gc_types[type] = data;
+                cached_gc_types[type] = data;
+				sessionStorage.setItem('DFX_gc_types', JSON.stringify(cached_gc_types));
                 deferred.resolve( data );
             });
         }
@@ -139,8 +146,43 @@ dfxAppRuntime.controller('dfx_app_controller', [ '$scope', '$rootScope', 'dfxAut
 
     $scope.logout = function() {
         authRequest.removeToken();
-
     }
+
+    $scope.refreshDevice = function() {
+        var dfx_ve_platform = $('div[dfx-ve-platform]');
+        if ($scope.design_device_orientation=='Portrait') {
+            dfx_ve_platform.css('width', $scope.design_selected_device.portrait['width']);
+            dfx_ve_platform.css('height', $scope.design_selected_device.portrait['height']);
+            dfx_ve_platform.css('padding-top', $scope.design_selected_device.portrait['padding-top']);
+            dfx_ve_platform.css('padding-left', $scope.design_selected_device.portrait['padding-left']);
+            dfx_ve_platform.css('padding-right', $scope.design_selected_device.portrait['padding-right']);
+            dfx_ve_platform.css('padding-bottom', $scope.design_selected_device.portrait['padding-bottom']);
+            dfx_ve_platform.css( 'background', 'url(/images/' + $scope.design_selected_device.portrait['image'] + ') no-repeat' );
+        } else {
+            dfx_ve_platform.css('width', $scope.design_selected_device.landscape['width']);
+            dfx_ve_platform.css('height', $scope.design_selected_device.landscape['height']);
+            dfx_ve_platform.css('padding-top', $scope.design_selected_device.landscape['padding-top']);
+            dfx_ve_platform.css('padding-left', $scope.design_selected_device.landscape['padding-left']);
+            dfx_ve_platform.css('padding-right', $scope.design_selected_device.landscape['padding-right']);
+            dfx_ve_platform.css('padding-bottom', $scope.design_selected_device.landscape['padding-bottom']);
+            dfx_ve_platform.css( 'background', 'url(/images/' + $scope.design_selected_device.landscape['image'] + ') no-repeat' );
+        }
+    };
+
+    $scope.changeDevice = function(index) {
+        $scope.design_selected_device = $scope.design_devices[index];
+        $scope.refreshDevice();
+    };
+
+	/*$scope.routeToPage = function(page_name, ev) {
+		if ($('.dfx-core-web-menu-item-selected').size()>0) {
+			$('.dfx-core-web-menu-item-selected').removeClass('dfx-core-web-menu-item-selected');
+			$(ev.srcElement).addClass('dfx-core-web-menu-item-selected');
+
+		}
+        //$location.url( '/page.html?name=' + page_name );
+        //$scope.$apply();
+    };*/
 }]);
 
 dfxAppRuntime.controller('dfx_page_controller', [ '$scope', '$rootScope', 'dfxAuthRequest', '$q', '$http', '$compile', '$routeParams', '$location', 'dfxPages', function( $scope, $rootScope, dfxAuthRequest, $q, $http, $compile, $routeParams, $location, dfxPages) {
@@ -152,14 +194,22 @@ dfxAppRuntime.controller('dfx_page_controller', [ '$scope', '$rootScope', 'dfxAu
         $scope.page_preview = true;
     }
 
-    $scope.loadPageDefinition = function() {
+    $scope.loadPageDefinition = function(snippet) {
         if ($scope.page_preview) {
             $http({
                 method: 'GET',
                 url: '/studio/screen/item/' + $scope.page_name + '/' + $scope.app_name + '/' + 'web'
             }).then(function successCallback(response) {
                 $scope.selected_page = response.data.screen;
-                $scope.loadPageTemplate(response.data.screen.template);
+				var current_template = $('[dfx-page-template]').attr('dfx-page-template');
+				if (current_template!=response.data.screen.template) {
+					$('#dfx_page_content').empty();
+                	$scope.loadPageTemplate(response.data.screen.template);
+				} else {
+					$('#pagebody').empty();
+					$('#pagebody').append($compile(snippet)($scope));
+					$('#pagebody').removeClass('slideOutLeft').addClass('slideInRight');
+				}
             });
         } else {
             $http({
@@ -167,7 +217,15 @@ dfxAppRuntime.controller('dfx_page_controller', [ '$scope', '$rootScope', 'dfxAu
                 url: 'pages/' + $scope.page_name + '.json'
             }).then(function successCallback(request) {
                 $scope.selected_page = request.data;
-                $scope.loadPageTemplate(request.data.template);
+				var current_template = $('[dfx-page-template]').attr('dfx-page-template');
+				if (current_template!=request.data.template) {
+					$('#dfx_page_content').empty();
+                	$scope.loadPageTemplate(request.data.template);
+				} else {
+					$('#pagebody').empty();
+					$('#pagebody').append($compile(snippet)($scope));
+					$('#pagebody').removeClass('slideOutLeft').addClass('slideInRight');
+				}
             });
         }
     };
@@ -187,7 +245,6 @@ dfxAppRuntime.controller('dfx_page_controller', [ '$scope', '$rootScope', 'dfxAu
             }).then(function successCallback(request) {
                 $scope.selected_template = request.data.screenTemplate;
                 var snippet = '<div layout="column" flex dfx-page-template="' + template + '"></div>';
-                $('#dfx_page_content').empty();
                 angular.element(document.getElementById('dfx_page_content')).append($compile(snippet)($scope));
             });
         } else {
@@ -197,15 +254,30 @@ dfxAppRuntime.controller('dfx_page_controller', [ '$scope', '$rootScope', 'dfxAu
             }).then(function successCallback(request) {
                 $scope.selected_template = request.data;
                 var snippet = '<div layout="column" flex dfx-page-template="' + template + '"></div>';
-                $('#dfx_page_content').empty();
                 angular.element(document.getElementById('dfx_page_content')).append($compile(snippet)($scope));
             });
         }
     };
 
-    $scope.routeToPage = function(page_name) {
-        $location.search( 'name', page_name );
-        //$scope.$apply();
+    $scope.routeToPage = function(page_name, ev) {
+		if ($('.dfx-core-web-menu-item-selected').size()>0) {
+			$('.dfx-core-web-menu-item-selected').removeClass('dfx-core-web-menu-item-selected');
+			$(ev.srcElement).addClass('dfx-core-web-menu-item-selected');
+		}
+		$('#pagebody').addClass('animated slideOutLeft').one('animationend', function(eventOne) {
+			$scope.page_name = page_name;
+			var flex_row = $('#pagebody').attr('dfx-flex');
+			var flex_view = $('#pagebody').attr('dfx-flex-view');
+			var tpl_snippet = '<div layout="row" flex="' + flex_row + '" style="" ng-repeat="row in selected_page.layout.rows">';
+            tpl_snippet += '<div layout="column" flex="{{col.width}}" data-row="{{$parent.$index}}" data-column="{{$index}}" ng-repeat="col in row.columns" style="padding:5px">';
+            tpl_snippet += '<div layout="column" flex="' + flex_view + '" ng-repeat="view in col.views">';
+			tpl_snippet += '<div id="wrapper" dfx-view-wrapper="view.name" dfx-view-wrapper-id="view.id" flex="100" layout="column">';
+            tpl_snippet += '</div>';
+            tpl_snippet += '</div>';
+            tpl_snippet += '</div>';
+            tpl_snippet += '</div>';
+			$scope.loadPageDefinition(tpl_snippet);
+		});
     };
 
     $scope.toggleLeftSide = function() {
@@ -238,12 +310,12 @@ dfxAppRuntime.controller('dfx_view_controller', [ '$scope', '$rootScope', '$comp
 
     $scope.getComponent = function( element ) {
         var id = $(element).attr('id');
-        if ($(element).attr('dfx-gc-renderer-content')!=null) {
+        if ($(element).parent().attr('dfx-gcc-renderer')!=null) {
             var component_id = $(element).parent().attr('component-id');
             var column_id = $(element).parent().attr('column-id');
             var row_id = $(element).parent().attr('row-id');
             var component = $scope.gc_instances[component_id].attributes.columns.value[column_id].renderer;
-            component.id = component_id + '_renderer_' + row_id + '_' + column_id;
+            component.id = $(element).attr('id');
             return component;
         } else {
             return $scope.gc_instances[id];
@@ -272,14 +344,15 @@ dfxAppRuntime.controller('dfx_view_controller', [ '$scope', '$rootScope', '$comp
 
     // Add a component
     $scope.addComponent = function( component, container_component, parent_id, view_id) {
-        var component_instance = $scope.renderGraphicalControl(component, parent_id, view_id);
-        $timeout(function() {
+        $scope.gc_instances[component.id] = component;
+        //var component_instance = $scope.gc_instances[component.id] = component;//$scope.renderGraphicalControl(component, parent_id, view_id);
+        /*$timeout(function() {
             if (component.container==null) {
                 $('#' + container_component.id).append(component_instance.fragment);
             } else {
                 $('#' + container_component.id + '_' + component.container).append(component_instance.fragment);
             }
-        }, 0);
+        }, 0);*/
     };
 
     // Render GControls
@@ -355,8 +428,8 @@ dfxAppRuntime.directive('dfxPageTemplate', ['$compile', '$mdSidenav', '$timeout'
         link: function($scope, $element, $attrs) {
             var tpl_snippet = '',
                 page_auto_height = $scope.selected_page.autoHeight,
-                flex_row = (page_auto_height != true) ? '{{row.height}}' : 'none',
-                flex_view = (page_auto_height != true) ? '' : 'none';
+                flex_row = (page_auto_height != true) ? '{{row.height}}' : '',
+                flex_view = (page_auto_height != true) ? '{{row.height}}' : '';
 
             // Header
             tpl_snippet = '<div layout="row" ng-show="selected_template.layout.header.display==\'true\'" style="min-height:{{selected_template.layout.header.height}}"><div layout layout-align="{{selected_template.layout.header.halignment}} {{selected_template.layout.header.valignment}}" flex="100" style="height:{{selected_template.layout.header.height}};{{selected_template.layout.header.style}}" dfx-page-include-template="header"></div></div>';
@@ -368,13 +441,13 @@ dfxAppRuntime.directive('dfxPageTemplate', ['$compile', '$mdSidenav', '$timeout'
             tpl_snippet += '<div id="dfxpageleft" ng-show="selected_template.layout.left.display==\'true\'" style="width:{{selected_template.layout.left.width}};{{selected_template.layout.left.style}}" class="{{selected_template.layout.left.whiteframe}}"><md-content layout layout-align="{{selected_template.layout.left.halignment}} {{selected_template.layout.left.valignment}}" style="background:inherit" dfx-page-include-template="left"></md-content></div>';
 
             // Body
-            tpl_snippet += '<div layout="column" style="background:inherit;overflow:auto;" layout-padding flex id="pagebody">';
+            tpl_snippet += '<div layout="column" style="background:inherit;overflow:auto;" flex id="pagebody" dfx-flex="' + flex_row + '" dfx-flex-view="' + flex_view + '">';
 
             tpl_snippet += '<div layout="row" flex="' + flex_row + '" style="" ng-repeat="row in selected_page.layout.rows">';
             tpl_snippet += '<div layout="column" flex="{{col.width}}" data-row="{{$parent.$index}}" data-column="{{$index}}" ng-repeat="col in row.columns" style="padding:5px">';
             tpl_snippet += '<div layout="column" flex="' + flex_view + '" ng-repeat="view in col.views">';
 
-            tpl_snippet += '<div id="wrapper" dfx-view-wrapper="view.name" dfx-view-wrapper-id="view.id" flex layout="column">';
+            tpl_snippet += '<div id="wrapper" dfx-view-wrapper="view.name" dfx-view-wrapper-id="view.id" flex="100" layout="column">';
             tpl_snippet += '</div>';
             tpl_snippet += '</div>';
             tpl_snippet += '</div>';
@@ -402,42 +475,88 @@ dfxAppRuntime.filter("sanitize", ['$sce', function($sce) {
     }
 }]);
 
-dfxAppRuntime.directive('dfxViewPreview', function() {
+dfxAppRuntime.directive('dfxViewPreviewCompiled', ['$compile', function($compile) {
     return {
         restrict: 'A',
         controller: function($scope, $element, $attrs) {
             $scope.view_id = $attrs.id;
             $scope.$parent.dfxViewCard = $attrs.dfxViewCard;
-            var widget_definition = JSON.parse(window.localStorage.getItem( 'dfx_' + $attrs.dfxViewPreview ));
+            var widget_definition = JSON.parse(window.localStorage.getItem( 'dfx_' + $attrs.dfxViewPreviewCompiled ));
             $scope.$watch('dfxViewCard', function(new_card, old_card) {
                 if (new_card!=null) {
-                  var animation = (widget_definition.definition[new_card][0].animation) ? widget_definition.definition[new_card][0].animation : {
-                    in: 'fadeIn',
-                    out: 'slideOutLeft'
-                  };
-                  $('#dfx_view_preview_container').removeClass().addClass('animated ' + animation.out).one('animationend', function(eventOne) {
-                    angular.element($('#dfx_view_preview_container')).html('');
-                    $('#dfx_view_preview_container').removeClass().addClass('animated ' + animation.in);
-                    $scope.addComponents( widget_definition.definition, { "id": "dfx_view_preview_container" }, '', new_card, 'dfx_view_preview_container' );
-                  });
+					var view_compiled = window.localStorage.getItem( 'DFX_view_compiled_' + $attrs.dfxViewPreviewCompiled + '_' + new_card );
+                  	var animation = (widget_definition.definition[new_card][0].animation) ? widget_definition.definition[new_card][0].animation : {
+                    	in: 'fadeIn',
+                    	out: 'slideOutLeft'
+                  	};
+                	$('#dfx_view_preview_container').removeClass().addClass('animated ' + animation.out).one('animationend', function(eventOne) {
+	                    angular.element($('#dfx_view_preview_container')).html('');
+	                    $('#dfx_view_preview_container').removeClass().addClass('animated ' + animation.in);
+	                    $scope.addComponents( widget_definition.definition, { "id": "dfx_view_preview_container" }, '', new_card, 'dfx_view_preview_container' );
+	                    angular.element($('#dfx_view_preview_container')).html(view_compiled);
+	                    $compile(angular.element($('#dfx_view_preview_container')).contents())($scope);
+                	});
                 }
             });
         }
     }
-});
+}]);
 
-dfxAppRuntime.directive('dfxViewPreviewInDialog', [ '$http', function( $http ) {
+/* it seems we don't use it */
+
+//dfxAppRuntime.directive('dfxViewPreview', function() {
+//    return {
+//        restrict: 'A',
+//        controller: function($scope, $element, $attrs) {
+//            $scope.view_id = $attrs.id;
+//            $scope.$parent.dfxViewCard = $attrs.dfxViewCard;
+//            var widget_definition = JSON.parse(window.localStorage.getItem( 'dfx_' + $attrs.dfxViewPreview ));
+//            $scope.$watch('dfxViewCard', function(new_card, old_card) {
+//                if (new_card!=null) {
+//                  var animation = (widget_definition.definition[new_card][0].animation) ? widget_definition.definition[new_card][0].animation : {
+//                    in: 'fadeIn',
+//                    out: 'slideOutLeft'
+//                  };
+//                  $('#dfx_view_preview_container').removeClass().addClass('animated ' + animation.out).one('animationend', function(eventOne) {
+//                    angular.element($('#dfx_view_preview_container')).html('');
+//                    $('#dfx_view_preview_container').removeClass().addClass('animated ' + animation.in);
+//                    $scope.addComponents( widget_definition.definition, { "id": "dfx_view_preview_container" }, '', new_card, 'dfx_view_preview_container' );
+//                  });
+//                }
+//            });
+//        }
+//    }
+//});
+
+dfxAppRuntime.directive('dfxViewPreviewInDialog', [ '$http', '$timeout', '$compile', function( $http, $timeout, $compile ) {
     return {
         restrict: 'A',
         controller: function($scope, $element, $attrs) {
+            var renderHtmlForRuntime = function() {
+                $http.get( 'views/' + $attrs.dfxViewPreviewInDialog+'/' + $attrs.dfxViewPreviewInDialog + '_' + $attrs.dfxCard+ '.html' ).success(function(response) {
+                    angular.element($("#dfx_view_preview_container_in_dialog_" + component_id)).html(response);
+                    $compile(angular.element($("#dfx_view_preview_container_in_dialog_" + component_id)).contents())($scope);
+                });
+            }
+            var renderHtmlForPreview = function() {
+                var response = window.localStorage.getItem( 'DFX_view_compiled_' + $attrs.dfxViewPreviewInDialog + '_' + $attrs.dfxCard );
+                angular.element($("#dfx_view_preview_container_in_dialog_" + component_id)).html(response);
+                $compile(angular.element($("#dfx_view_preview_container_in_dialog_" + component_id)).contents())($scope);
+            }
             var view_object = $('#' + $scope.$parent._view_id)[0];
             var component_id = $('div:first',view_object).attr('id');
             var widget_definition = window.localStorage.getItem('dfx_' + $attrs.dfxViewPreviewInDialog);
             if (widget_definition) {
                 $scope.addComponents( JSON.parse(widget_definition).definition, { "id": "dfx_view_preview_container_in_dialog_" + component_id  }, '', $attrs.dfxCard, 'dfx_view_preview_container_in_dialog_' + component_id  );
+                $timeout(function(){
+                    renderHtmlForPreview();
+                },0);
             } else {
-                $http.get('views/' + $attrs.dfxViewPreviewInDialog + '.json').then(function (response) {
+                $http.get('views/' + $attrs.dfxViewPreviewInDialog + '/' + $attrs.dfxViewPreviewInDialog + '.json').then(function (response) {
                     $scope.addComponents( JSON.parse(response.data.src).definition, { "id": "dfx_view_preview_container_in_dialog_" + component_id  }, '', $attrs.dfxCard, 'dfx_view_preview_container_in_dialog_' + component_id  );
+                    $timeout(function(){
+                        renderHtmlForRuntime();
+                    },0);
                 }, function (err) {
                     console.log("Can't get view " + $attrs.dfxViewPreviewInDialog + " defintion");
                 });
@@ -446,18 +565,35 @@ dfxAppRuntime.directive('dfxViewPreviewInDialog', [ '$http', function( $http ) {
     }
 }]);
 
-dfxAppRuntime.directive('dfxViewPreviewInSidenav', [ '$http', function( $http ) {
+dfxAppRuntime.directive('dfxViewPreviewInSidenav', [ '$http', '$compile', '$timeout', function( $http, $compile, $timeout ) {
     return {
         restrict: 'A',
         controller: function($scope, $element, $attrs) {
+            var renderHtmlForRuntime = function() {
+                $http.get( 'views/' + $attrs.dfxViewPreviewInSidenav+'/' + $attrs.dfxViewPreviewInSidenav + '_' + $attrs.dfxCard+ '.html' ).success(function(response) {
+                    angular.element($("#dfx_view_preview_container_in_sidenav_" + component_id)).html(response);
+                    $compile(angular.element($("#dfx_view_preview_container_in_sidenav_" + component_id)).contents())($scope);
+                });
+            }
+            var renderHtmlForPreview = function() {
+                var response = window.localStorage.getItem( 'DFX_view_compiled_' + $attrs.dfxViewPreviewInSidenav + '_' + $attrs.dfxCard );
+                angular.element($("#dfx_view_preview_container_in_sidenav_" + component_id)).html(response);
+                $compile(angular.element($("#dfx_view_preview_container_in_sidenav_" + component_id)).contents())($scope);
+            }
             var view_object = $('#' + $scope.$parent._view_id)[0];
             var component_id = $('div:first',view_object).attr('id');
             var widget_definition = window.localStorage.getItem('dfx_' + $attrs.dfxViewPreviewInSidenav);
             if (widget_definition) {
                 $scope.addComponents( JSON.parse(widget_definition).definition, { "id": "dfx_view_preview_container_in_sidenav_" + component_id }, '', $attrs.dfxCard, 'dfx_view_preview_container_in_sidenav_' + component_id );
+                $timeout(function(){
+                    renderHtmlForPreview();
+                },0);
             } else {
-                $http.get('views/' + $attrs.dfxViewPreviewInSidenav + '.json').then(function (response) {
+                $http.get('views/' + $attrs.dfxViewPreviewInSidenav + '/' + $attrs.dfxViewPreviewInSidenav + '.json').then(function (response) {
                     $scope.addComponents( JSON.parse(response.data.src).definition, { "id": "dfx_view_preview_container_in_sidenav_" + component_id }, '', $attrs.dfxCard, 'dfx_view_preview_container_in_sidenav_' + component_id );
+                    $timeout(function(){
+                        renderHtmlForRuntime();
+                    },0);
                 }, function (err) {
                     console.log("Can't get view " + $attrs.dfxViewPreviewInSidenav + " defintion");
                 });
@@ -466,18 +602,35 @@ dfxAppRuntime.directive('dfxViewPreviewInSidenav', [ '$http', function( $http ) 
     }
 }]);
 
-dfxAppRuntime.directive('dfxViewPreviewInBottom', [ '$http', function( $http ) {
+dfxAppRuntime.directive('dfxViewPreviewInBottom', [ '$http', '$timeout', '$compile', function( $http, $timeout, $compile ) {
     return {
         restrict: 'A',
         controller: function($scope, $element, $attrs) {
+            var renderHtmlForRuntime = function() {
+                $http.get( 'views/' + $attrs.dfxViewPreviewInBottom+'/' + $attrs.dfxViewPreviewInBottom + '_' + $attrs.dfxCard+ '.html' ).success(function(response) {
+                    angular.element($("#dfx_view_preview_container_in_bottom_" + component_id)).html(response);
+                    $compile(angular.element($("#dfx_view_preview_container_in_bottom_" + component_id)).contents())($scope);
+                });
+            }
+            var renderHtmlForPreview = function() {
+                var response = window.localStorage.getItem( 'DFX_view_compiled_' + $attrs.dfxViewPreviewInBottom + '_' + $attrs.dfxCard );
+                angular.element($("#dfx_view_preview_container_in_bottom_" + component_id)).html(response);
+                $compile(angular.element($("#dfx_view_preview_container_in_bottom_" + component_id)).contents())($scope);
+            }
             var view_object = $('#' + $scope.$parent._view_id)[0];
             var component_id = $('div:first',view_object).attr('id');
             var widget_definition = window.localStorage.getItem('dfx_' + $attrs.dfxViewPreviewInBottom);
             if (widget_definition) {
                 $scope.addComponents( JSON.parse(widget_definition).definition, { "id": "dfx_view_preview_container_in_bottom_" + component_id  }, '', $attrs.dfxCard, 'dfx_view_preview_container_in_bottom_' + component_id  );
+                $timeout(function(){
+                    renderHtmlForPreview();
+                },0);
             } else {
-                $http.get('views/' + $attrs.dfxViewPreviewInBottom + '.json').then(function (response) {
+                $http.get('views/' + $attrs.dfxViewPreviewInBottom + '/' + $attrs.dfxViewPreviewInBottom + '.json').then(function (response) {
                     $scope.addComponents( JSON.parse(response.data.src).definition, { "id": "dfx_view_preview_container_in_bottom_" + component_id  }, '', $attrs.dfxCard, 'dfx_view_preview_container_in_bottom_' + component_id  );
+                    $timeout(function(){
+                        renderHtmlForRuntime();
+                    },0);
                 }, function (err) {
                     console.log("Can't get view " + $attrs.dfxViewPreviewInBottom + " defintion");
                 });
@@ -486,20 +639,37 @@ dfxAppRuntime.directive('dfxViewPreviewInBottom', [ '$http', function( $http ) {
     }
 }]);
 
-dfxAppRuntime.directive('dfxViewPreviewWithCard', [ '$http', function( $http ) {
+dfxAppRuntime.directive('dfxViewPreviewWithCard', [ '$http', '$timeout', '$compile', function( $http, $timeout, $compile ) {
     return {
         restrict: 'A',
         controller: function($scope, $element, $attrs) {
+            var renderHtmlForRuntime = function() {
+                $http.get( 'views/' + $attrs.dfxViewPreviewWithCard+'/' + $attrs.dfxViewPreviewWithCard + '_' + $attrs.dfxCard+ '.html' ).success(function(response) {
+                    angular.element($("#dfx_view_preview_with_card_content_" + component_id)).html(response);
+                    $compile(angular.element($("#dfx_view_preview_with_card_content_" + component_id)).contents())($scope);
+                });
+            }
+            var renderHtmlForPreview = function() {
+                var response = window.localStorage.getItem( 'DFX_view_compiled_' + $attrs.dfxViewPreviewWithCard + '_' + $attrs.dfxCard );
+                angular.element($("#dfx_view_preview_with_card_content_" + component_id)).html(response);
+                $compile(angular.element($("#dfx_view_preview_with_card_content_" + component_id)).contents())($scope);
+            }
             var view_object = $('#' + $scope.$parent._view_id)[0];
             var component_id = $('div:first',view_object).attr('id');
             var widget_definition = window.localStorage.getItem('dfx_' + $attrs.dfxViewPreviewWithCard);
             if (widget_definition) {
                 $scope.addComponents( JSON.parse(widget_definition).definition, { "id": "dfx_view_preview_with_card_content_" + component_id  }, '', $attrs.dfxCard, 'dfx_view_preview_with_card_content_' + component_id  );
+                $timeout(function(){
+                    renderHtmlForPreview();
+                },0);
             } else {
-                $http.get('views/' + $attrs.dfxViewPreviewWithCard + '.json').then(function (response) {
+                $http.get('views/' + $attrs.dfxViewPreviewWithCard + '/' + $attrs.dfxViewPreviewWithCard + '.json').then(function (response) {
                     $scope.addComponents( JSON.parse(response.data.src).definition, { "id": "dfx_view_preview_with_card_content_" + component_id  }, '', $attrs.dfxCard, 'dfx_view_preview_with_card_content_' + component_id  );
+                    $timeout(function(){
+                        renderHtmlForRuntime();
+                    },0);
                 }, function (err) {
-                    console.log("Can't get view " + $attrs.dfxViewPreviewInBottom + " defintion");
+                    console.log("Can't get view " + $attrs.dfxViewPreviewWithCard + " defintion");
                 });
             }
         }
@@ -515,7 +685,7 @@ dfxAppRuntime.directive('dfxViewWrapper', [ '$http', '$compile', function($http,
         },
         priority: 100000,
         link: function($scope, $element, $attrs) {
-            var wrapper_snippet = '<div id="' + $scope.wrapper_view_id + '" dfx-view="' + $scope.wrapper_view_name + '" dfx-view-card="default" ng-controller="dfx_view_controller" style="width:100%" layout="column" flex="100"></div>';
+            var wrapper_snippet = '<div id="' + $scope.wrapper_view_id + '" dfx-view="' + $scope.wrapper_view_name + '" dfx-view-card="default" ng-controller="dfx_view_controller" class="flex-100" style="width:100%" layout="column" flex="100"></div>';
             $element.attr('ng-controller', $scope.wrapper_view_name + 'Controller');
             $element.append(wrapper_snippet);
             $element.removeAttr('dfx-view-wrapper');
@@ -533,10 +703,16 @@ dfxAppRuntime.directive('dfxViewWrapper', [ '$http', '$compile', function($http,
     }
 }]);
 
-dfxAppRuntime.directive('dfxView', [ '$http', '$timeout', function($http, $timeout) {
+dfxAppRuntime.directive('dfxView', [ '$http', '$timeout', '$compile', function($http, $timeout, $compile) {
     return {
         restrict: 'A',
         controller: function($scope, $element, $attrs) {
+            var renderHtml = function() {
+                $http.get( 'views/' + $attrs.dfxView +'/' + $attrs.dfxView + '_' + $scope.dfxViewCard + '.html' ).success(function(response) {
+                    angular.element($('#'+ $scope.view_id)).html(response);
+                    $compile(angular.element($('#'+ $scope.view_id)).contents())($scope);
+                });
+            }
             $timeout( function() {
                 $scope.view_id = $attrs.id;
                 $scope.$parent.view_id = $attrs.id;
@@ -558,16 +734,19 @@ dfxAppRuntime.directive('dfxView', [ '$http', '$timeout', function($http, $timeo
                                 });
                             });
                         } else {
-                            $http.get( 'views/' + $attrs.dfxView + '.json' ).success(function(response) {
+                            $http.get( 'views/' + $attrs.dfxView + '/' + $attrs.dfxView + '.json' ).success(function(response) {
                                 var view_definition = JSON.parse(response.src);
                                 var animation = (view_definition.definition[new_card][0].animation) ? view_definition.definition[new_card][0].animation : {
                                   in: 'fadeIn',
                                   out: 'slideOutLeft'
                                 };
-                                $('#' + $scope.view_id).removeClass().addClass('animated ' + animation.out + ' flex layout-column').one('animationend', function(eventOne) {
+                                $('#' + $scope.view_id).removeClass().addClass('animated ' + animation.out + ' flex-100 layout-column').one('animationend', function(eventOne) {
                                   angular.element($('#' + $scope.view_id)).html('');
-                                  $('#' + $scope.view_id).removeClass().addClass('animated ' + animation.in + ' flex layout-column');
+                                  $('#' + $scope.view_id).removeClass().addClass('animated ' + animation.in + ' flex-100 layout-column');
                                   $scope.addComponents( view_definition.definition, { "id": $scope.view_id }, '', $scope.dfxViewCard, $scope.view_id );
+
+                                  renderHtml();
+
                                 });
                             });
                         }

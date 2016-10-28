@@ -1,0 +1,20 @@
+<div ATTR-IF{{class="attributes.classes.value"}} ATTR-IF{{style="attributes.style.value"}}
+    ng-show="attributes.display.value"    
+    ATTR-IF{{ng-class="attributes.dynamicClasses.value"}}
+	ATTR-IF{{ng-click="attributes.onclick.value"}}
+	ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
+	ATTR-IF{{ng-keypress="attributes.onkeypress.value"}}
+	ATTR-IF{{ng-keydown="attributes.onkeydown.value"}}
+	ATTR-IF{{ng-keyup="attributes.onkeyup.value"}}
+	ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}}
+	ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}}
+	ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}}
+	ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
+	ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}>
+	{{ ATTR-NONV{{text.value}} }}
+	FRAG-IF{{attributes.tooltipProperties.toolTipText!=''}}
+    <md-tooltip md-direction="ATTR-NONV{{tooltipProperties.direction}}" style="ATTR-NONV{{tooltipProperties.style}}" class="ATTR-NONV{{tooltipProperties.class}}">
+        <span ATTR-IF{{ng-bind="attributes.tooltipProperties.toolTipText"}}></span>
+    </md-tooltip>
+	FRAG-ENDIF
+</div>

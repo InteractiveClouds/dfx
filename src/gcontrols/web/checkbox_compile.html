@@ -1,0 +1,84 @@
+<div ng-show="attributes.display.value" 
+    class="dfx-core-gc-checkbox ATTR-EXP{{(attributes.classes.value!='') ? attributes.classes.value : ''}}ATTR-ENDEXP" 
+    ATTR-IF{{style="attributes.style.value"}}
+    ATTR-IF{{ng-class="attributes.dynamicClasses.value"}}>
+    <div><span ATTR-IF{{style="attributes.labelStyle.style"}} 
+        class="dfx-core-gc-checkbox-label ATTR-NONV{{labelStyle.class}}" 
+        ATTR-IF{{ng-bind="attributes.label.value"}}></span></div>
+    FRAG-IF{{attributes.binding.value !== '' && attributes.optionsType.value==='dynamic'}}
+    <div ng-repeat="item in ATTR-NONV{{source.value}} track by $index" 
+        ng-style="{'margin-top' : $index > 0 && 'attributes.direction.value'==='column' ? '21px' : '4px', 'display': 'attributes.direction.value'==='column' ? 'block' : 'inline-block', 'margin-right':'15px', 'margin-left':'5px'}">
+        <md-checkbox class="ATTR-NONV{{itemStyle.item.class}} dfx-core-gc-checkbox-button md-altTheme-theme md-primary" 
+            ATTR-IF{{style="attributes.itemStyle.item.style"}} 
+            ng-model="ATTR-NONV{{binding.value}}[$index]" 
+            ng-true-value="{{ item.ATTR-NONV{{checkValue.trueCheckValue}} }}" 
+            ng-false-value="{{ item.ATTR-NONV{{checkValue.falseCheckValue}} }}" 
+            ATTR-IF{{ng-disabled="attributes.disabled.value"}} ATTR-IF{{ng-click="attributes.onclick.value"}} ATTR-IF{{ng-change="attributes.onchange.value"}} ATTR-IF{{ng-focus="attributes.onfocus.value"}} ATTR-IF{{ng-blur="attributes.onblur.value"}} ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}} ATTR-IF{{ng-keypress="attributes.onkeypress.value"}} ATTR-IF{{ng-keydown="attributes.onkeydown.value"}} ATTR-IF{{ng-keyup="attributes.onkeyup.value"}} ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}} ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}} ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}} ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}} ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}} ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}} aria-label="Checkbox Item">
+            <span ATTR-IF{{class="attributes.itemStyle.label.class"}}
+                ATTR-IF{{style="attributes.itemStyle.label.style"}} ng-bind="item.ATTR-NONV{{checkValue.label}}"></span>
+            <span ng-if="ATTR-EXP{{attributes.displayValue.value}}ATTR-ENDEXP" 
+                ATTR-IF{{style="attributes.itemStyle.val.style"}} 
+                ATTR-IF{{class="attributes.itemStyle.val.class"> 
+                <span ng-if="ATTR-NONV{{binding.value}}[$index] === item.ATTR-NONV{{checkValue.trueCheckValue}}" ng-bind="item.ATTR-NONV{{checkValue.trueCheckValue}}"></span>
+                <span ng-if="ATTR-NONV{{binding.value}}[$index] === item.ATTR-NONV{{checkValue.falseCheckValue}}" ng-bind="item.ATTR-NONV{{checkValue.falseCheckValue}}"></span>
+            </span>
+        </md-checkbox>
+    </div>
+    FRAG-ENDIF
+    FRAG-IF{{attributes.binding.value !== '' && attributes.optionsType.value==='static'}}
+    <div ng-repeat="item in ATTR-STATIC{{staticArray.value}} track by $index" 
+        ng-style="{'margin-top' : $index > 0 && 'attributes.direction.value' ==='column' ? '21px' : '4px', 'display': 'attributes.direction.value' === 'column' ? 'block' : 'inline-block', 'margin-right':'15px', 'margin-left':'5px'}">
+        <md-checkbox class="ATTR-NONV{{itemStyle.item.class}} dfx-core-gc-checkbox-button md-altTheme-theme md-primary" 
+            ATTR-IF{{style="attributes.itemStyle.item.style"}} 
+            ng-model="ATTR-NONV{{binding.value}}[$index]" 
+            ng-true-value="{{ dfxCheckValueType($eval(item.checked)) }}" 
+            ng-false-value="{{ dfxCheckValueType($eval(item.unchecked)) }}" 
+            ATTR-IF{{ng-disabled="attributes.disabled.value"}} ATTR-IF{{ng-click="attributes.onclick.value"}} ATTR-IF{{ng-change="attributes.onchange.value"}} ATTR-IF{{ng-focus="attributes.onfocus.value"}} ATTR-IF{{ng-blur="attributes.onblur.value"}} ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}} ATTR-IF{{ng-keypress="attributes.onkeypress.value"}} ATTR-IF{{ng-keydown="attributes.onkeydown.value"}} ATTR-IF{{ng-keyup="attributes.onkeyup.value"}} ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}} ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}} ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}} ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}} ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}} ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}} aria-label="Checkbox Item">
+            <span ATTR-IF{{class="attributes.itemStyle.label.class"}} 
+                ATTR-IF{{style="attributes.itemStyle.label.style"}} ng-bind="$eval(item.label)"></span>
+            <span ng-if="ATTR-EXP{{attributes.displayValue.value}}ATTR-ENDEXP" 
+                ATTR-IF{{style="attributes.itemStyle.val.style"}} 
+                ATTR-IF{{class="attributes.itemStyle.val.class"}}> 
+                <span ng-if="ATTR-NONV{{binding.value}}[$index] === $eval(item.checked)" ng-bind="$eval(item.checked)"></span>
+                <span ng-if="ATTR-NONV{{binding.value}}[$index] === $eval(item.unchecked)" ng-bind="$eval(item.unchecked)"></span>
+            </span>
+        </md-checkbox>
+    </div>      
+    FRAG-ENDIF
+    FRAG-IF{{attributes.binding.value === '' && attributes.optionsType.value==='dynamic'}}
+    <div ng-repeat="item in ATTR-NONV{{source.value}} track by $index" 
+        ng-style="{'margin-top' : $index > 0 && 'attributes.direction.value'==='column' ? '21px' : '4px', 'display': 'attributes.direction.value'==='column' ? 'block' : 'inline-block', 'margin-right':'15px', 'margin-left':'5px'}">
+        <md-checkbox class="ATTR-NONV{{itemStyle.item.class}} dfx-core-gc-checkbox-button md-altTheme-theme md-primary" 
+            ATTR-IF{{style="attributes.itemStyle.item.style"}} 
+            ng-model="item.isChecked" 
+            ATTR-IF{{ng-disabled="attributes.disabled.value"}} ATTR-IF{{ng-click="attributes.onclick.value"}} ATTR-IF{{ng-change="attributes.onchange.value"}} ATTR-IF{{ng-focus="attributes.onfocus.value"}} ATTR-IF{{ng-blur="attributes.onblur.value"}} ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}} ATTR-IF{{ng-keypress="attributes.onkeypress.value"}} ATTR-IF{{ng-keydown="attributes.onkeydown.value"}} ATTR-IF{{ng-keyup="attributes.onkeyup.value"}} ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}} ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}} ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}} ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}} ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}} ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}} aria-label="Checkbox Item">
+            <span ATTR-IF{{class="attributes.itemStyle.label.class"}}
+                ATTR-IF{{style="attributes.itemStyle.label.style"}} ng-bind="item.ATTR-NONV{{checkValue.label}}"></span>
+            <span ng-if="ATTR-EXP{{attributes.displayValue.value}}ATTR-ENDEXP" 
+                ATTR-IF{{style="attributes.itemStyle.val.style"}} 
+                ATTR-IF{{class="attributes.itemStyle.val.class"> 
+                <span ng-if="item.isChecked" ng-bind="item.ATTR-NONV{{checkValue.trueCheckValue}}"></span>
+                <span ng-if="!item.isChecked" ng-bind="item.ATTR-NONV{{checkValue.falseCheckValue}}"></span>
+            </span>
+        </md-checkbox>
+    </div>
+    FRAG-ENDIF
+    FRAG-IF{{attributes.binding.value === '' && attributes.optionsType.value==='static'}}
+    <div ng-repeat="item in ATTR-STATIC{{staticArray.value}} track by $index" 
+        ng-style="{'margin-top' : $index > 0 && 'attributes.direction.value' ==='column' ? '21px' : '4px', 'display': 'attributes.direction.value' === 'column' ? 'block' : 'inline-block', 'margin-right':'15px', 'margin-left':'5px'}">
+        <md-checkbox class="ATTR-NONV{{itemStyle.item.class}} dfx-core-gc-checkbox-button md-altTheme-theme md-primary" 
+            ATTR-IF{{style="attributes.itemStyle.item.style"}} 
+            ng-model="item.isChecked" 
+            ATTR-IF{{ng-disabled="attributes.disabled.value"}} ATTR-IF{{ng-click="attributes.onclick.value"}} ATTR-IF{{ng-change="attributes.onchange.value"}} ATTR-IF{{ng-focus="attributes.onfocus.value"}} ATTR-IF{{ng-blur="attributes.onblur.value"}} ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}} ATTR-IF{{ng-keypress="attributes.onkeypress.value"}} ATTR-IF{{ng-keydown="attributes.onkeydown.value"}} ATTR-IF{{ng-keyup="attributes.onkeyup.value"}} ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}} ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}} ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}} ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}} ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}} ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}} aria-label="Checkbox Item">
+            <span ATTR-IF{{class="attributes.itemStyle.label.class"}} 
+                ATTR-IF{{style="attributes.itemStyle.label.style"}} ng-bind="$eval(item.label)"></span>
+            <span ng-if="ATTR-EXP{{attributes.displayValue.value}}ATTR-ENDEXP" 
+                ATTR-IF{{style="attributes.itemStyle.val.style"}} 
+                ATTR-IF{{class="attributes.itemStyle.val.class"}}> 
+                <span ng-if="item.isChecked" ng-bind="$eval(item.checked)"></span>
+                <span ng-if="!item.isChecked" ng-bind="$eval(item.unchecked)"></span>
+            </span>
+        </md-checkbox>
+    </div>      
+    FRAG-ENDIF
+</div>

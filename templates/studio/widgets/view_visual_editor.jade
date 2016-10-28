@@ -1,4 +1,4 @@
-div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", layout="column", flex, style="height:100%;", data-view-cat="#{widget.category}", data-view-platform="#{widget.platform}")
+div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", dfx-ve-ctrl-s="saveView()", layout="column", flex, style="height:100%;", data-view-cat="#{widget.category}", data-view-platform="#{widget.platform}")
     div#dfx-ve-header
         img(src="/images/df_logo_blanc_1029x223.png", style="width: 90px;margin-top: -3px;margin-left:10px;")
         div(style="color: #fff;font-size: 13px;font-style: italic;display: inline-block;") - View Editor
@@ -88,13 +88,17 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", layout="co
                             img(src="/images/vb/icons/preview_global.png", class="dfx-ve-toolbar-icon", ng-click="$mdOpenMenu($event)", title="Settings")
                             md-menu-content(width="4")
                                 md-menu-item
-                                    md-button(ng-click="openPreviewSettings()")
+                                    md-button(ng-click="openPreviewSettings($event)")
                                         ng-md-icon(icon="tune")
                                         span(style="padding-left:10px") Settings
                                 md-menu-item
-                                    md-button(ng-click="openPreviewInPage()")
+                                    md-button(ng-click="openPreviewInPage($event)")
                                         ng-md-icon(icon="ondemand_video")
                                         span(style="padding-left:10px") Preview in Page
+                                md-menu-item
+                                    md-button(ng-click="compileView($event)")
+                                        ng-md-icon(icon="track_changes")
+                                        span(style="padding-left:10px") Compile View
                         div(style="color:#fff;display: inline-block;margin-left: 10px;", ng-if="preview_wait_icon_visible === true")
                             md-icon.fa.fa-spinner.fa-pulse(style="font-size: 24px;")
                             span(style="padding-left:10px") compiling

@@ -6,7 +6,7 @@
             </div>
         </md-toolbar>
         <md-dialog-content id="{{component_id}}_md_dialog" layout="column" style="max-width:880px;max-height:810px;width:880px;height:400px;margin:0px;">
-           <md-radio-group ng-model="attributes.optionsType.value" ng-change="overrideAttribute('optionsType');focusSamples(attributes.optionsType.value);" class="dfx-ve-options-editor-radio-group">
+           <md-radio-group ng-model="attributes.optionsType.value" ng-change="setOptionsType(attributes.optionsType.value);focusSamples(attributes.optionsType.value);" class="dfx-ve-options-editor-radio-group">
               <md-radio-button class="dfx-ve-options-editor-radio-button md-primary" value="static" aria-label="Static options">Static options</md-radio-button>
               <md-radio-button class="dfx-ve-options-editor-radio-button md-primary" value="dynamic" aria-label="Dynamic options">Dynamic options</md-radio-button>
             </md-radio-group>
@@ -39,7 +39,7 @@
                     </md-toolbar>
                     <md-content layout-padding flex style="">
                         <div class="dfx-ve-property-treeview hover clearfix" style="padding:8px 16px 12px 12px;margin:0 -8px;">
-                            <ul class="dfx-ve-property-picker-content" style="margin:0;padding:0">                                
+                            <ul class="dfx-ve-property-picker-content" style="margin:0;padding:0">
                                 <li class="col-md-12">
                                     <span class="col-md-4">Checked value:</span>
                                     <div class="col-md-8" layout="row">
@@ -82,7 +82,7 @@
                                         <input class="col-md-12" type="text" ng-model="attributes.source.value" ng-change="overrideAttribute('source')" style="margin-left:-15px;"/>
                                         <dfx-ve-menu-expression></dfx-ve-menu-expression>
                                     </div>
-                                </li>                                
+                                </li>
                                 <li class="col-md-12">
                                     <span class="col-md-4" style="padding-left:16px;">Checked value:</span>
                                     <div class="col-md-8" layout="row">
@@ -112,7 +112,7 @@
             <div class="second-dialog-box"></div>
         </md-dialog-content>
         <div class="md-actions">
-            <md-button ng-show="attributes.optionsType.value === 'dynamic'" ng-click="showSamples()" id="samples-btn" class="md-primary">Samples</md-button> 
+            <md-button ng-show="attributes.optionsType.value === 'dynamic'" ng-click="showSamples()" id="samples-btn" class="md-primary">Samples</md-button>
             <md-button ng-click="closeDialog()" class="md-primary">Close</md-button>
         </div>
     </form>

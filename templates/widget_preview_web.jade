@@ -23,7 +23,7 @@ html(ng-app="dfx_preview_app")
         script(type="text/javascript").
             DreamFace.initSession( {dfx_appname:'#{appname}', dfx_tenantid:'#{tenantid}'} );
             DreamFace.setUserDefinition();
-            var dfx_preview_app = angular.module('dfx_preview_app', [ 'ngMaterial', 'dfxAppRuntime', 'dfxAppServices', 'dfxGControls', '#{wclass.name}']);
+            var dfx_preview_app = angular.module('dfx_preview_app', [ 'ngMaterial', 'dfxAppRuntime', 'dfxAppServices', 'dfxGCC', '#{wclass.name}']);
             dfx_preview_app.config(function($mdThemingProvider) {
                 $mdThemingProvider.theme('altTheme').primaryPalette('blue');
                 $mdThemingProvider.setDefaultTheme('altTheme');
@@ -70,5 +70,5 @@ html(ng-app="dfx_preview_app")
                     | !{dyn_res}
                 - } else if (wclass.definition.wtype=='visual') {
                     div#dfx_view_preview_main_container(ng-controller="#{widgetname}Controller", layout="row", layout-align="center start", style="height:100%;")
-                        div#dfx_view_preview_container.animated(dfx-view-preview="#{widgetname}", dfx-ve-platform="#{platform}", ng-controller="dfx_view_controller", dfx-view-card="default", style="height:100%;")
+                        div#dfx_view_preview_container.animated(dfx-view-preview-compiled="#{widgetname}", dfx-ve-platform="#{platform}", ng-controller="dfx_view_controller", dfx-view-card="default", style="height:100%;")
                 - }

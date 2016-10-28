@@ -1,0 +1,30 @@
+<md-input-container flex
+	ng-show="attributes.display.value"
+	class="md-input-has-value md-block ATTR-NONV{{classes.value}}"
+	style="ATTR-NONV{{style.value}}"
+	ATTR-IF{{ng-class="attributes.dynamicClasses.value"}}>
+	<label ATTR-IF{{ng-bind="attributes.label.value"}}></label>
+	<ul class="dfx-core-gc-rating" ATTR-IF{{aria-label="attributes.name.value"}}>
+        <li class="dfx-core-gc-rating-item" ng-repeat="star in stars" ng-init="($last && isDfxRepeatableRating) ? showDfxRatingElement($dfx_item) : ''">
+	        <button class="dfx-core-gc-rating-button" style="height: ATTR-NONV{{icon.size}}px; width: ATTR-NONV{{icon.size}}px;"
+				ng-style="{color: star.filled ? 'attributes.highlighted.value' : 'attributes.color.value' }"
+				ng-class="{filled: star.filled}"
+				ATTR-IF{{ng-disabled="attributes.disabled.value"}}
+				ATTR-IF{{aria-disabled="attributes.disabled.value"}}
+				ng-click="ATTR-EXP{{(attributes.binding.value.indexOf('.') > -1) || (attributes.binding.value.indexOf('$dfx_item') > -1) ? attributes.binding.value : '$parent_scope.' + attributes.binding.value}}ATTR-ENDEXP = toggle($index); ATTR-NONV{{onclick.value}}"
+				ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}}
+		        ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}}
+				ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}}
+				ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
+				ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
+		        ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}>
+				FRAG-IF{{attributes.icon.type ==='fa-icon'}}
+	            <i class="fa dfx-core-gc-rating-icon {{attributes.icon.value}}" style="font-size: ATTR-NONV{{icon.size}}px; height: ATTR-NONV{{icon.size}}px; width: ATTR-NONV{{icon.size}}px;"></i>
+				FRAG-ENDIF
+				FRAG-IF{{attributes.icon.type ==='svg-icon'}}
+	            <ng-md-icon class="dfx-core-gc-rating-icon" icon="{{attributes.icon.value}}" size="ATTR-NONV{{icon.size}}" style="height: ATTR-NONV{{icon.size}}px; width: ATTR-NONV{{icon.size}}px;"></ng-md-icon>
+				FRAG-ENDIF
+	        </button>
+        </li>
+    </ul>
+</md-input-container>

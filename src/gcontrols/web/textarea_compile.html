@@ -1,0 +1,28 @@
+<div ng-form name="textareaForm"
+    ng-show="attributes.display.value"
+    style="ATTR-NONV{{style.value}}"
+    ATTR-IF{{class="attributes.classes.value"}}
+    ATTR-IF{{ng-class="attributes.dynamicClasses.value"}}>
+    <div layout="row" style="flex-direction: {{ ATTR-STATIC{{position.value}} === 'left' ? 'row' : 'row-reverse'}}">
+        <div ng-if="ATTR-EXP{{attributes.icon.value !=='' ? 'true' : 'false'}}ATTR-ENDEXP" class="gc_w_input_icon_wrap_preview"
+            style="padding: {{ ATTR-STATIC{{position.value}} === 'left' ? '26px 5px 0 0' : '26px 0 0 5px'}}" >
+            <span class="gc_w_input_icon">
+                <md-icon ng-if="ATTR-EXP{{attributes.icon.type === 'fa-icon' ? 'true' : 'false'}}ATTR-ENDEXP" class="fa {{ ATTR-NONV{{icon.value}} }} ATTR-NONV{{icon.class}}" style="ATTR-NONV{{icon.style}}; font-size: ATTR-NONV{{icon.size}}px; height: ATTR-NONV{{icon.size}}px; width: ATTR-NONV{{icon.size}}px;"></md-icon>
+                <ng-md-icon ng-if="ATTR-EXP{{attributes.icon.type === 'svg-icon' ? 'true' : 'false'}}ATTR-ENDEXP" icon="{{ ATTR-NONV{{icon.value}} }}" size="ATTR-NONV{{icon.size}}" style="ATTR-NONV{{icon.style}}; height: ATTR-NONV{{icon.size}}px; width: ATTR-NONV{{icon.size}}px;" class="ATTR-NONV{{icon.class}}"></ng-md-icon>
+            </span>
+        </div>
+        <md-input-container flex class="gc-textarea-icon-container">
+            <label ATTR-IF{{ng-bind="attributes.label.value"}}></label>
+                FRAG-IF{{attributes.maxlength.value !==''}}
+                <textarea name="cur_textarea" style="padding-left: 5px" ATTR-IF{{ng-model="attributes.binding.value"}} columns="1" md-maxlength="attributes.maxlength.value" ATTR-IF{{ng-required="attributes.required.value"}} ATTR-IF{{rows="attributes.rowsNumber.value"}} ATTR-IF{{ng-disabled="attributes.disabled.value"}} ATTR-IF{{ng-change="attributes.onchange.value"}} ATTR-IF{{ng-focus="attributes.onfocus.value"}} ATTR-IF{{ng-blur="attributes.onblur.value"}} ATTR-IF{{ng-click="attributes.onclick.value"}} ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}} ATTR-IF{{ng-keypress="attributes.onkeypress.value"}} ATTR-IF{{ng-keydown="attributes.onkeydown.value"}} ATTR-IF{{ng-keyup="attributes.onkeyup.value"}} ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}} ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}} ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}} ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}} ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}} ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}></textarea>
+                FRAG-ENDIF
+                FRAG-IF{{attributes.maxlength.value ===''}}
+                <textarea name="cur_textarea" style="padding-left: 5px" ATTR-IF{{ng-model="attributes.binding.value"}} columns="1" ATTR-IF{{ng-required="attributes.required.value"}} ATTR-IF{{rows="attributes.rowsNumber.value"}} ATTR-IF{{ng-disabled="attributes.disabled.value"}} ATTR-IF{{ng-change="attributes.onchange.value"}} ATTR-IF{{ng-focus="attributes.onfocus.value"}} ATTR-IF{{ng-blur="attributes.onblur.value"}} ATTR-IF{{ng-click="attributes.onclick.value"}} ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}} ATTR-IF{{ng-keypress="attributes.onkeypress.value"}} ATTR-IF{{ng-keydown="attributes.onkeydown.value"}} ATTR-IF{{ng-keyup="attributes.onkeyup.value"}} ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}} ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}} ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}} ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}} ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}} ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}></textarea>
+                FRAG-ENDIF
+                <div ng-if="textareaForm.$dirty" ng-messages="textareaForm.cur_textarea.$error">
+                    <span ng-message="required">{{attributes.label.value}} <br>is required.</span>
+                    <span ng-message="md-maxlength">{{attributes.label.value}} <br>has to be less than {{attributes.maxlength.value}} characters long.</span>
+                </div>
+        </md-input-container>
+    </div>
+</div>

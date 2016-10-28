@@ -1,0 +1,71 @@
+<div class="attributes.whiteframe.value">
+    <md-card ng-show="attributes.display.value" class="ATTR-EXP{{(attributes.classes.value!='') ? attributes.classes.value : ''}}ATTR-ENDEXP dfx-core-gc-table" ATTR-IF{{ng-class="attributes.dynamicClasses.value"}} style="box-shadow: 0 0 0;overflow-x:hidden;ATTR-EXP{{(attributes.style.value!='') ? attributes.style.value : ''}}ATTR-ENDEXP "
+		ATTR-IF{{ng-click="attributes.onclick.value"}}
+		ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
+		ATTR-IF{{ng-keypress="attributes.onkeypress.value"}}
+		ATTR-IF{{ng-keydown="attributes.onkeydown.value"}}
+		ATTR-IF{{ng-keyup="attributes.onkeyup.value"}}
+		ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}}
+		ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}}
+		ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}}
+		ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
+		ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}>
+        <div class="dt_toolbar">
+            <div ng-show="attributes.titleVisible.value" class="dt_title_block">
+                <h2 class="dt_title">{{attributes.title.value}}</h2>
+            </div>
+            <md-input-container ng-show="ATTR-STATIC{{filterable.value}}" class="dt_filter_block">
+                <label>Filter by:</label>
+                <input type="text" ng-model="ATTR-STATIC{{filterBy.value}}" ng-change="filterTableData( ATTR-STATIC{{filterBy.value}} )"/>
+                <ng-md-icon icon="search" size="21"></ng-md-icon>
+            </md-input-container>
+        </div>
+        <div>
+            <table class="datatable" style="width:100%">
+                <thead ng-show="attributes.headerVisible.value">
+                <tr>
+                    <th ng-if="ATTR-EXP{{(attributes.checkOption.value !== 'none') ? 'true' : 'false'}}ATTR-ENDEXP" class="dt_checkbox"><md-checkbox class="md-primary"
+                        ng-disabled="ATTR-EXP{{(attributes.disabled.value || attributes.checkOption.value ==='single') ? 'true' : 'false'}}ATTR-ENDEXP" aria-label="Select Row" ng-click="toggleSelectRows()" ng-checked="isSelectedRows()"></md-checkbox></th>
+                    <th ng-repeat="col in ATTR-STATIC{{columns.value}} track by $index">
+                        <a ng-if="attributes.disabled.value === false" ng-click="changeIndexAndSortDir($index)" href="#" style="text-decoration: none;">
+                            <span ng-if="ATTR-STATIC{{sortedBy.value}} === col.value && col.isNumeric ==='true'"><md-icon ng-if="ATTR-STATIC{{columns.value}}[$index].isAscending === 'false'" style="padding-top: 5px" class="fa fa-arrow-down"></md-icon><md-icon ng-if="ATTR-STATIC{{columns.value}}[$index].isAscending === 'true'" style="padding-top: 5px" class="fa fa-arrow-up"></md-icon></span>
+                            <span>{{$eval(col.header)}}</span>
+                            <span ng-if="ATTR-STATIC{{sortedBy.value}} === col.value && col.isNumeric ==='false'"><md-icon ng-if="ATTR-STATIC{{columns.value}}[$index].isAscending === 'false'" style="padding-top: 5px" class="fa fa-arrow-down"></md-icon><md-icon ng-if="ATTR-STATIC{{columns.value}}[$index].isAscending === 'true'" style="padding-top: 5px" class="fa fa-arrow-up"></md-icon></span>
+                        </a>
+                        <span ng-if="attributes.disabled.value === true">
+                            <span ng-if="ATTR-STATIC{{sortedBy.value}} === col.value && col.isNumeric ==='true'"><md-icon ng-if="ATTR-STATIC{{columns.value}}[$index].isAscending === 'false'" style="padding-top: 5px" class="fa fa-arrow-down"></md-icon><md-icon ng-if="ATTR-STATIC{{columns.value}}[$index].isAscending === 'true'" style="padding-top: 5px" class="fa fa-arrow-up"></md-icon></span>
+                            <span>{{$eval(col.header)}}</span>
+                            <span ng-if="ATTR-STATIC{{sortedBy.value}} === col.value && col.isNumeric ==='false'"><md-icon ng-if="ATTR-STATIC{{columns.value}}[$index].isAscending === 'false'" style="padding-top: 5px" class="fa fa-arrow-down"></md-icon><md-icon ng-if="ATTR-STATIC{{columns.value}}[$index].isAscending === 'true'" style="padding-top: 5px" class="fa fa-arrow-up"></md-icon></span>
+                        </span>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="$dfx_item in ATTR-STATIC{{bindingClone.value}} track by $index" dfx-datatable ng-if="(ATTR-STATIC{{paging.value}}==false) || (ATTR-STATIC{{paging.value}}==true && $index >= (ATTR-STATIC{{rangeStart.value}}-1)) && ($index < ATTR-STATIC{{rangeEnd.value}})">
+						FRAG-IF{{attributes.checkOption.value !== 'none'}}
+                        <td class="dt_checkbox"><md-checkbox class="md-primary" ng-disabled="attributes.disabled.value" aria-label="Select Row" ng-checked="isSelectedRows() || isSelectedRow($dfx_item)" ng-click="toggleSelectRow($dfx_item)"></md-checkbox></td>
+						FRAG-ENDIF
+                        <!--td ng-repeat="col in attributes.columns" class="{{col.classes}}" ng-class="{{col.dynamicClasses}}" style="{{col.style}}">{{row[col.value]}}</td-->
+						TABLECOLUMNS-RENDERING
+                    </tr>
+                </tbody>
+            </table>
+            <div ng-show="attributes.paging.value" class="dt_footer" layout="row" layout-align="center center">
+                <div flex style="display: flex; justify-content: flex-end;"><span class="dt_footer_font" style="margin-right: 32px; padding-top: 1px">Rows per page:</span>
+                    <md-select ng-disabled="attributes.disabled.value" placeholder="{{ATTR-STATIC{{rowCount.value}}}}" aria-label="Row Count:" ng-model="ATTR-STATIC{{rowCount.value}}">
+                        <md-option ng-repeat="count in [3, 5, 10, 15, 20, 25]" value="{{count}}">{{count}}</md-option>
+                    </md-select>
+                    <span class="dt_footer_font" style="margin-right: 32px; padding-top: 2px">{{ATTR-STATIC{{rangeStart.value}}}} - {{ATTR-STATIC{{rangeEnd.value}}}} of {{attributes.binding.value.length}}</span><!--{{$gcscope[attributes.binding.value].length}}-->
+                </div>
+                <div class="dt_nav_pages">
+                    <md-button ng-click="minusStep()" ng-disabled="attributes.disabled.value" aria-label="minus-step">
+                        <md-icon class="fa fa-chevron-left"></md-icon>
+                    </md-button>
+                    <md-button ng-click="plusStep()" ng-disabled="attributes.disabled.value" aria-label="plus-step">
+                        <md-icon class="fa fa-chevron-right"></md-icon>
+                    </md-button>
+                </div>
+            </div>
+        </div>
+    </md-card>
+</div>

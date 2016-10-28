@@ -1,231 +1,197 @@
-<div layout="row" layout-align="space-between center" style="background:#DCDCDC">
+<div layout="row" layout-align="space-between center" style="background:#DCDCDC; height: 48px;">
     <h4 style="padding-left:10px">
         Applications > {{app_name}} > Configuration
     </h4>
 </div>
 <md-sidenav md-component-id="side_nav_left" md-is-open="isSidenavOpen" class="md-sidenav-left layout-padding" style="width: 450px; max-width: 450px;" ng-cloak>
     <div ng-if="settings ==='api_sources'">
-        <div ng-if="api_sources.operation==='create'">
-            <md-tabs md-dynamic-height md-center-tabs md-stretch-tabs="always" md-border-bottom>
-                <md-tab label="Provider Properties">
-                    <md-content style="padding-top: 20px;">
-                        <div class="md-dialog-content layout-row layout-padding">
-                            <div class="layout-column flex-100">
-                                <md-input-container class="md-block flex" style="margin: 0;">
-                                    <label>Name</label>
-                                    <input ng-model="api_sources.new_auth_provider.provider" md-autofocus>
-                                </md-input-container>
-                                <md-input-container class="layout-row">
-                                    <label>API Provider:</label>
-                                    <md-select class="flex-100" ng-model="api_sources.new_auth_provider.selected_data_source">
-                                        <md-option ng-repeat="data_source in api_sources.dataSources" value="{{data_source.name}}">
-                                            {{data_source.name}}
-                                        </md-option>
-                                    </md-select>
-                                </md-input-container>
-                                <md-input-container>
-                                    <label>Auth Protocol:</label>
-                                    <md-select ng-model="api_sources.new_auth_provider.schema">
-                                        <md-option ng-repeat="protocol in api_sources.schemas" value="{{protocol}}">
-                                            {{protocol}}
-                                        </md-option>
-                                    </md-select>
-                                </md-input-container>
-                                <md-input-container class="md-block flex" style="margin: 30px 0 0 0;" ng-if="api_sources.new_auth_provider.selected_data_source === 'StrongLoop'">
-                                    <label>Endpoint:</label>
-                                    <input ng-model="api_sources.new_auth_provider.rest.route" style="color: rgba(0,0,0,0.87);">
-                                </md-input-container>
-                            </div>
-                        </div>
-                    </md-content>
-                </md-tab>
-                <md-tab label="Credentials" ng-if="api_sources.new_auth_provider.selected_data_source !== 'StrongLoop' && !(api_sources.new_auth_provider.selected_data_source ==='REST' && api_sources.new_auth_provider.schema ==='none')">
-                    <md-content>
-                        <div class="md-dialog-content layout-row layout-padding">
-                            <div class="layout-column flex-100">
-                                <div ng-if="api_sources.new_auth_provider.schema === 'basic' || api_sources.new_auth_provider.schema === 'digest'" style="margin-top: 20px;">
+        <form ng-submit="api_sources.saveProvider()">
+            <div ng-if="api_sources.operation==='create'">
+                <md-tabs md-dynamic-height md-center-tabs md-stretch-tabs="always" md-border-bottom>
+                    <md-tab label="Provider Properties">
+                        <md-content style="padding-top: 20px;">
+                            <div class="md-dialog-content layout-row layout-padding">
+                                <div class="layout-column flex-100">
                                     <md-input-container class="md-block flex" style="margin: 0;">
-                                        <label>Username:</label>
-                                        <input ng-model="api_sources.new_auth_provider.ap_basic_digest.credentials.username">
+                                        <label>Name</label>
+                                        <input ng-model="api_sources.new_auth_provider.provider" md-autofocus>
                                     </md-input-container>
-                                    <md-input-container class="md-block flex" style="margin: 0;">
-                                        <label>Password:</label>
-                                        <input ng-model="api_sources.new_auth_provider.ap_basic_digest.credentials.password">
-                                    </md-input-container>
-                                </div>
-                                <div ng-if="api_sources.new_auth_provider.schema === 'oAuth1'" >
-                                    <md-input-container class="layout-row">
-                                        <label>Signature Method:</label>
-                                        <md-select class="flex-100" ng-model="api_sources.new_auth_provider.ap_oAuth_1.credentials.selected_method">
-                                            <md-option ng-repeat="method in ['HMAC-SHA1','PLAINTEXT']" value="{{method}}">
-                                                {{method}}
-                                            </md-option>
-                                        </md-select>
-                                    </md-input-container>
-                                    <md-input-container class="md-block flex" style="margin: 0;">
-                                        <label>Consumer Key:</label>
-                                        <input ng-model="api_sources.new_auth_provider.ap_oAuth_1.credentials.consumer_key">
-                                    </md-input-container>
-                                    <md-input-container class="md-block flex" style="margin: 0;">
-                                        <label>Consumer Secret:</label>
-                                        <input ng-model="api_sources.new_auth_provider.ap_oAuth_1.credentials.consumer_secret">
-                                    </md-input-container>
-                                    <md-input-container class="md-block flex" style="margin: 0;">
-                                        <label>Access Token:</label>
-                                        <input ng-model="api_sources.new_auth_provider.ap_oAuth_1.credentials.access_token">
-                                    </md-input-container>
-                                    <md-input-container class="md-block flex" style="margin: 0;">
-                                        <label>Access Secret:</label>
-                                        <input ng-model="api_sources.new_auth_provider.ap_oAuth_1.credentials.access_secret">
-                                    </md-input-container>
-                                </div>
-                                <div ng-if="api_sources.new_auth_provider.schema === 'oAuth2'" >
-                                    <md-input-container class="layout-row">
-                                        <label>Auth Provider Type:</label>
-                                        <md-select class="flex-100" ng-model="api_sources.new_auth_provider.ap_oAuth_2.selected_type">
-                                            <md-option ng-repeat="type in ['facebook', 'google']" value="{{type}}">
-                                                {{type}}
-                                            </md-option>
-                                        </md-select>
-                                    </md-input-container>
-                                    <div ng-if="api_sources.new_auth_provider.ap_oAuth_2.selected_type !==''">
-                                        <md-input-container class="md-block flex" style="margin: 30px 0 0 0;">
-                                            <label>Access Token:</label>
-                                            <input ng-model="api_sources.new_auth_provider.ap_oAuth_2.credentials.access_token">
-                                        </md-input-container>
-                                        <div>
-                                            <h3 style="color: rgba(0,0,0,0.3)">or</h3>
-                                            <hr>
-                                        </div>
-                                        <md-input-container class="md-block flex" style="margin: 0;">
-                                            <label>Consumer Key:</label>
-                                            <input ng-model="api_sources.new_auth_provider.ap_oAuth_2.credentials.consumer_key">
-                                        </md-input-container>
-                                        <md-input-container class="md-block flex" style="margin: 0;">
-                                            <label>Consumer Secret:</label>
-                                            <input ng-model="api_sources.new_auth_provider.ap_oAuth_2.credentials.consumer_secret">
-                                        </md-input-container>
-                                        <md-input-container ng-if="api_sources.new_auth_provider.ap_oAuth_2.selected_type==='google'" class="md-block flex" style="margin: 0;">
-                                            <label>Base Provider's URL:</label>
-                                            <input ng-model="api_sources.new_auth_provider.ap_oAuth_2.credentials.authorize_path">
-                                        </md-input-container>
-                                        <md-input-container class="md-block flex" style="margin: 0;">
-                                            <label>Authorize Path:</label>
-                                            <input ng-model="api_sources.new_auth_provider.ap_oAuth_2.credentials.authorize_path">
-                                        </md-input-container>
-                                        <md-input-container class="md-block flex" style="margin: 0;">
-                                            <label>Access Token Path:</label>
-                                            <input ng-model="api_sources.new_auth_provider.ap_oAuth_2.credentials.access_token_path">
-                                        </md-input-container>
-                                        <md-input-container class="md-block flex" style="margin: 0;">
-                                            <label>Response Type:</label>
-                                            <input ng-model="api_sources.new_auth_provider.ap_oAuth_2.credentials.response_type">
-                                        </md-input-container>
-                                        <md-input-container class="md-block flex" style="margin: 0;">
-                                            <label>Scope:</label>
-                                            <input ng-model="api_sources.new_auth_provider.ap_oAuth_2.credentials.scope">
-                                        </md-input-container>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </md-content>
-                </md-tab>
-            </md-tabs>
-        </div>
-        <div ng-if="api_sources.operation==='update'">
-            <md-tabs md-dynamic-height md-center-tabs md-stretch-tabs="always" md-border-bottom>
-                <md-tab label="Provider Properties">
-                    <md-content style="padding-top: 20px;">
-                        <div class="md-dialog-content layout-row layout-padding">
-                            <div class="layout-column flex-100">
-                                <md-input-container class="md-block flex" style="margin: 0;">
-                                    <label>Name:</label>
-                                    <input ng-model="api_sources.current_auth_provider.provider" md-autofocus disabled>
-                                </md-input-container>
-                                <md-input-container>
                                     <md-input-container class="layout-row">
                                         <label>API Provider:</label>
-                                        <md-select class="flex-100" ng-model="api_sources.current_auth_provider.dataSource">
+                                        <md-select class="flex-100" ng-model="api_sources.new_auth_provider.selected_data_source">
                                             <md-option ng-repeat="data_source in api_sources.dataSources" value="{{data_source.name}}">
                                                 {{data_source.name}}
                                             </md-option>
                                         </md-select>
                                     </md-input-container>
-                                    <md-input-container class="layout-row">
+                                    <md-input-container>
                                         <label>Auth Protocol:</label>
-                                        <md-select class="flex-100" ng-model="api_sources.current_auth_provider.schema" md-on-open="api_sources.setSchemaOnOpen(api_sources.current_auth_provider.schema)" md-on-close="api_sources.setSchemaOnClose(api_sources.current_auth_provider.schema)">
+                                        <md-select ng-model="api_sources.new_auth_provider.schema">
                                             <md-option ng-repeat="protocol in api_sources.schemas" value="{{protocol}}">
                                                 {{protocol}}
                                             </md-option>
                                         </md-select>
                                     </md-input-container>
-                                    <md-input-container style="margin-top: 30px;" ng-if="api_sources.current_auth_provider.dataSource === 'StrongLoop'"  class="md-block flex" style="margin: 0;">
+                                    <md-input-container class="md-block flex" style="margin: 30px 0 0 0;" ng-if="api_sources.new_auth_provider.selected_data_source === 'StrongLoop'">
                                         <label>Endpoint:</label>
-                                        <input ng-model="api_sources.current_auth_provider.route" style="color: rgba(0,0,0,0.87);">
+                                        <input ng-model="api_sources.new_auth_provider.rest.route" style="color: rgba(0,0,0,0.87);">
                                     </md-input-container>
+                                </div>
                             </div>
-                        </div>
-                    </md-content>
-                </md-tab>
-                <md-tab label="Credentials" ng-if="api_sources.current_auth_provider.dataSource !== 'StrongLoop' && !(api_sources.current_auth_provider.dataSource ==='REST' && api_sources.current_auth_provider.schema ==='none')">
-                    <md-content>
-                        <div class="md-dialog-content layout-row layout-padding">
-                            <div class="layout-column flex-100">
-                                <div ng-if="api_sources.current_auth_provider.schema === 'basic' || api_sources.current_auth_provider.schema === 'digest'" style="margin-top: 20px;">
-                                    <md-input-container class="md-block flex" style="margin: 0;">
-                                        <label>Username:</label>
-                                        <input ng-model="api_sources.current_auth_provider.credentials.username">
-                                    </md-input-container>
-                                    <md-input-container class="md-block flex" style="margin: 0;">
-                                        <label>Password:</label>
-                                        <input ng-model="api_sources.current_auth_provider.credentials.password">
-                                    </md-input-container>
-                                </div>
-                                <div ng-if="api_sources.current_auth_provider.schema === 'oAuth1'" >
-                                    <md-input-container class="layout-row">
-                                        <label>Signature Method:</label>
-                                        <md-select class="flex-100" ng-model="api_sources.current_auth_provider.credentials.signature_method">
-                                            <md-option ng-repeat="method in ['HMAC-SHA1','PLAINTEXT']" value="{{method}}">
-                                                {{method}}
-                                            </md-option>
-                                        </md-select>
-                                    </md-input-container>
-                                    <md-input-container class="md-block flex" style="margin: 0;">
-                                        <label>Consumer Key:</label>
-                                        <input ng-model="api_sources.current_auth_provider.credentials.consumer_key">
-                                    </md-input-container>
-                                    <md-input-container class="md-block flex" style="margin: 0;">
-                                        <label>Consumer Secret:</label>
-                                        <input ng-model="api_sources.current_auth_provider.credentials.consumer_secret">
-                                    </md-input-container>
-                                    <md-input-container class="md-block flex" style="margin: 0;">
-                                        <label>Access Token:</label>
-                                        <input ng-model="api_sources.current_auth_provider.credentials.access_token">
-                                    </md-input-container>
-                                    <md-input-container class="md-block flex" style="margin: 0;">
-                                        <label>Access Secret:</label>
-                                        <input ng-model="api_sources.current_auth_provider.credentials.access_secret">
-                                    </md-input-container>
-                                </div>
-                                <div ng-if="api_sources.current_auth_provider.schema === 'oAuth2'" >
-                                    <md-input-container class="layout-row">
-                                        <label>Auth Provider Type:</label>
-                                        <md-select class="flex-100" ng-model="api_sources.current_auth_provider.credentials.type" md-on-open="api_sources.setTypeOnOpen(api_sources.current_auth_provider.credentials.type)" md-on-close="api_sources.setTypeOnClose(api_sources.current_auth_provider.credentials.type)">
-                                            <md-option ng-repeat="type in ['facebook', 'google']" ng-value="type">
-                                                {{type}}
-                                            </md-option>
-                                        </md-select>
-                                    </md-input-container>
-                                    <div ng-if="api_sources.current_auth_provider.selected_type !==''">
-                                        <md-input-container class="md-block flex" style="margin: 30px 0 0 0;">
-                                            <label>Access Token:</label>
-                                            <input ng-model="api_sources.current_auth_provider.credentials.access_token">
+                        </md-content>
+                    </md-tab>
+                    <md-tab label="Credentials" ng-if="api_sources.new_auth_provider.selected_data_source !== 'StrongLoop' && !(api_sources.new_auth_provider.selected_data_source ==='REST' && api_sources.new_auth_provider.schema ==='none')">
+                        <md-content>
+                            <div class="md-dialog-content layout-row layout-padding">
+                                <div class="layout-column flex-100">
+                                    <div ng-if="api_sources.new_auth_provider.schema === 'basic' || api_sources.new_auth_provider.schema === 'digest'" style="margin-top: 20px;">
+                                        <md-input-container class="md-block flex" style="margin: 0;">
+                                            <label>Username:</label>
+                                            <input ng-model="api_sources.new_auth_provider.ap_basic_digest.credentials.username">
                                         </md-input-container>
-                                        <div>
-                                            <h3 style="color: rgba(0,0,0,0.3)">or</h3>
-                                            <hr>
+                                        <md-input-container class="md-block flex" style="margin: 0;">
+                                            <label>Password:</label>
+                                            <input ng-model="api_sources.new_auth_provider.ap_basic_digest.credentials.password">
+                                        </md-input-container>
+                                    </div>
+                                    <div ng-if="api_sources.new_auth_provider.schema === 'oAuth1'" >
+                                        <md-input-container class="layout-row">
+                                            <label>Signature Method:</label>
+                                            <md-select class="flex-100" ng-model="api_sources.new_auth_provider.ap_oAuth_1.credentials.selected_method">
+                                                <md-option ng-repeat="method in ['HMAC-SHA1','PLAINTEXT']" value="{{method}}">
+                                                    {{method}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                        <md-input-container class="md-block flex" style="margin: 0;">
+                                            <label>Consumer Key:</label>
+                                            <input ng-model="api_sources.new_auth_provider.ap_oAuth_1.credentials.consumer_key">
+                                        </md-input-container>
+                                        <md-input-container class="md-block flex" style="margin: 0;">
+                                            <label>Consumer Secret:</label>
+                                            <input ng-model="api_sources.new_auth_provider.ap_oAuth_1.credentials.consumer_secret">
+                                        </md-input-container>
+                                        <md-input-container class="md-block flex" style="margin: 0;">
+                                            <label>Access Token:</label>
+                                            <input ng-model="api_sources.new_auth_provider.ap_oAuth_1.credentials.access_token">
+                                        </md-input-container>
+                                        <md-input-container class="md-block flex" style="margin: 0;">
+                                            <label>Access Secret:</label>
+                                            <input ng-model="api_sources.new_auth_provider.ap_oAuth_1.credentials.access_secret">
+                                        </md-input-container>
+                                    </div>
+                                    <div ng-if="api_sources.new_auth_provider.schema === 'oAuth2'" >
+                                        <md-input-container class="layout-row">
+                                            <label>Auth Provider Type:</label>
+                                            <md-select class="flex-100" ng-model="api_sources.new_auth_provider.ap_oAuth_2.selected_type">
+                                                <md-option ng-repeat="type in ['facebook', 'google']" value="{{type}}">
+                                                    {{type}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                        <div ng-if="api_sources.new_auth_provider.ap_oAuth_2.selected_type !==''">
+                                            <md-input-container class="md-block flex" style="margin: 30px 0 0 0;">
+                                                <label>Access Token:</label>
+                                                <input ng-model="api_sources.new_auth_provider.ap_oAuth_2.credentials.access_token">
+                                            </md-input-container>
+                                            <div>
+                                                <h3 style="color: rgba(0,0,0,0.3)">or</h3>
+                                                <hr>
+                                            </div>
+                                            <md-input-container class="md-block flex" style="margin: 0;">
+                                                <label>Consumer Key:</label>
+                                                <input ng-model="api_sources.new_auth_provider.ap_oAuth_2.credentials.consumer_key">
+                                            </md-input-container>
+                                            <md-input-container class="md-block flex" style="margin: 0;">
+                                                <label>Consumer Secret:</label>
+                                                <input ng-model="api_sources.new_auth_provider.ap_oAuth_2.credentials.consumer_secret">
+                                            </md-input-container>
+                                            <md-input-container ng-if="api_sources.new_auth_provider.ap_oAuth_2.selected_type==='google'" class="md-block flex" style="margin: 0;">
+                                                <label>Base Provider's URL:</label>
+                                                <input ng-model="api_sources.new_auth_provider.ap_oAuth_2.credentials.authorize_path">
+                                            </md-input-container>
+                                            <md-input-container class="md-block flex" style="margin: 0;">
+                                                <label>Authorize Path:</label>
+                                                <input ng-model="api_sources.new_auth_provider.ap_oAuth_2.credentials.authorize_path">
+                                            </md-input-container>
+                                            <md-input-container class="md-block flex" style="margin: 0;">
+                                                <label>Access Token Path:</label>
+                                                <input ng-model="api_sources.new_auth_provider.ap_oAuth_2.credentials.access_token_path">
+                                            </md-input-container>
+                                            <md-input-container class="md-block flex" style="margin: 0;">
+                                                <label>Response Type:</label>
+                                                <input ng-model="api_sources.new_auth_provider.ap_oAuth_2.credentials.response_type">
+                                            </md-input-container>
+                                            <md-input-container class="md-block flex" style="margin: 0;">
+                                                <label>Scope:</label>
+                                                <input ng-model="api_sources.new_auth_provider.ap_oAuth_2.credentials.scope">
+                                            </md-input-container>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </md-content>
+                    </md-tab>
+                </md-tabs>
+            </div>
+            <div ng-if="api_sources.operation==='update'">
+                <md-tabs md-dynamic-height md-center-tabs md-stretch-tabs="always" md-border-bottom>
+                    <md-tab label="Provider Properties">
+                        <md-content style="padding-top: 20px;">
+                            <div class="md-dialog-content layout-row layout-padding">
+                                <div class="layout-column flex-100">
+                                    <md-input-container class="md-block flex" style="margin: 0;">
+                                        <label>Name:</label>
+                                        <input ng-model="api_sources.current_auth_provider.provider" md-autofocus disabled>
+                                    </md-input-container>
+                                    <md-input-container>
+                                        <md-input-container class="layout-row">
+                                            <label>API Provider:</label>
+                                            <md-select class="flex-100" ng-model="api_sources.current_auth_provider.dataSource">
+                                                <md-option ng-repeat="data_source in api_sources.dataSources" value="{{data_source.name}}">
+                                                    {{data_source.name}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                        <md-input-container class="layout-row">
+                                            <label>Auth Protocol:</label>
+                                            <md-select class="flex-100" ng-model="api_sources.current_auth_provider.schema" md-on-open="api_sources.setSchemaOnOpen(api_sources.current_auth_provider.schema)" md-on-close="api_sources.setSchemaOnClose(api_sources.current_auth_provider.schema)">
+                                                <md-option ng-repeat="protocol in api_sources.schemas" value="{{protocol}}">
+                                                    {{protocol}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                        <md-input-container style="margin-top: 30px;" ng-if="api_sources.current_auth_provider.dataSource === 'StrongLoop'"  class="md-block flex" style="margin: 0;">
+                                            <label>Endpoint:</label>
+                                            <input ng-model="api_sources.current_auth_provider.route" style="color: rgba(0,0,0,0.87);">
+                                        </md-input-container>
+                                </div>
+                            </div>
+                        </md-content>
+                    </md-tab>
+                    <md-tab label="Credentials" ng-if="api_sources.current_auth_provider.dataSource !== 'StrongLoop' && !(api_sources.current_auth_provider.dataSource ==='REST' && api_sources.current_auth_provider.schema ==='none')">
+                        <md-content>
+                            <div class="md-dialog-content layout-row layout-padding">
+                                <div class="layout-column flex-100">
+                                    <div ng-if="api_sources.current_auth_provider.schema === 'basic' || api_sources.current_auth_provider.schema === 'digest'" style="margin-top: 20px;">
+                                        <md-input-container class="md-block flex" style="margin: 0;">
+                                            <label>Username:</label>
+                                            <input ng-model="api_sources.current_auth_provider.credentials.username">
+                                        </md-input-container>
+                                        <md-input-container class="md-block flex" style="margin: 0;">
+                                            <label>Password:</label>
+                                            <input ng-model="api_sources.current_auth_provider.credentials.password">
+                                        </md-input-container>
+                                    </div>
+                                    <div ng-if="api_sources.current_auth_provider.schema === 'oAuth1'" >
+                                        <md-input-container class="layout-row">
+                                            <label>Signature Method:</label>
+                                            <md-select class="flex-100" ng-model="api_sources.current_auth_provider.credentials.signature_method">
+                                                <md-option ng-repeat="method in ['HMAC-SHA1','PLAINTEXT']" value="{{method}}">
+                                                    {{method}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
                                         <md-input-container class="md-block flex" style="margin: 0;">
                                             <label>Consumer Key:</label>
                                             <input ng-model="api_sources.current_auth_provider.credentials.consumer_key">
@@ -234,292 +200,327 @@
                                             <label>Consumer Secret:</label>
                                             <input ng-model="api_sources.current_auth_provider.credentials.consumer_secret">
                                         </md-input-container>
-                                        <md-input-container ng-if="api_sources.current_auth_provider.credentials.type === 'google'" class="md-block flex" style="margin: 0;">
-                                            <label>Base Provider's URL:</label>
-                                            <input ng-model="api_sources.current_auth_provider.credentials.base_site">
+                                        <md-input-container class="md-block flex" style="margin: 0;">
+                                            <label>Access Token:</label>
+                                            <input ng-model="api_sources.current_auth_provider.credentials.access_token">
                                         </md-input-container>
                                         <md-input-container class="md-block flex" style="margin: 0;">
-                                            <label>Authorize Path:</label>
-                                            <input ng-model="api_sources.current_auth_provider.credentials.authorize_path">
+                                            <label>Access Secret:</label>
+                                            <input ng-model="api_sources.current_auth_provider.credentials.access_secret">
                                         </md-input-container>
-                                        <md-input-container class="md-block flex" style="margin: 0;">
-                                            <label>Access Token Path:</label>
-                                            <input ng-model="api_sources.current_auth_provider.credentials.access_token_path">
+                                    </div>
+                                    <div ng-if="api_sources.current_auth_provider.schema === 'oAuth2'" >
+                                        <md-input-container class="layout-row">
+                                            <label>Auth Provider Type:</label>
+                                            <md-select class="flex-100" ng-model="api_sources.current_auth_provider.credentials.type" md-on-open="api_sources.setTypeOnOpen(api_sources.current_auth_provider.credentials.type)" md-on-close="api_sources.setTypeOnClose(api_sources.current_auth_provider.credentials.type)">
+                                                <md-option ng-repeat="type in ['facebook', 'google']" ng-value="type">
+                                                    {{type}}
+                                                </md-option>
+                                            </md-select>
                                         </md-input-container>
-                                        <md-input-container class="md-block flex" style="margin: 0;">
-                                            <label>Response Type:</label>
-                                            <input ng-model="api_sources.current_auth_provider.credentials.response_type">
-                                        </md-input-container>
-                                        <md-input-container class="md-block flex" style="margin: 0;">
-                                            <label>Scope:</label>
-                                            <input ng-model="api_sources.current_auth_provider.credentials.scope">
-                                        </md-input-container>
+                                        <div ng-if="api_sources.current_auth_provider.selected_type !==''">
+                                            <md-input-container class="md-block flex" style="margin: 30px 0 0 0;">
+                                                <label>Access Token:</label>
+                                                <input ng-model="api_sources.current_auth_provider.credentials.access_token">
+                                            </md-input-container>
+                                            <div>
+                                                <h3 style="color: rgba(0,0,0,0.3)">or</h3>
+                                                <hr>
+                                            </div>
+                                            <md-input-container class="md-block flex" style="margin: 0;">
+                                                <label>Consumer Key:</label>
+                                                <input ng-model="api_sources.current_auth_provider.credentials.consumer_key">
+                                            </md-input-container>
+                                            <md-input-container class="md-block flex" style="margin: 0;">
+                                                <label>Consumer Secret:</label>
+                                                <input ng-model="api_sources.current_auth_provider.credentials.consumer_secret">
+                                            </md-input-container>
+                                            <md-input-container ng-if="api_sources.current_auth_provider.credentials.type === 'google'" class="md-block flex" style="margin: 0;">
+                                                <label>Base Provider's URL:</label>
+                                                <input ng-model="api_sources.current_auth_provider.credentials.base_site">
+                                            </md-input-container>
+                                            <md-input-container class="md-block flex" style="margin: 0;">
+                                                <label>Authorize Path:</label>
+                                                <input ng-model="api_sources.current_auth_provider.credentials.authorize_path">
+                                            </md-input-container>
+                                            <md-input-container class="md-block flex" style="margin: 0;">
+                                                <label>Access Token Path:</label>
+                                                <input ng-model="api_sources.current_auth_provider.credentials.access_token_path">
+                                            </md-input-container>
+                                            <md-input-container class="md-block flex" style="margin: 0;">
+                                                <label>Response Type:</label>
+                                                <input ng-model="api_sources.current_auth_provider.credentials.response_type">
+                                            </md-input-container>
+                                            <md-input-container class="md-block flex" style="margin: 0;">
+                                                <label>Scope:</label>
+                                                <input ng-model="api_sources.current_auth_provider.credentials.scope">
+                                            </md-input-container>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                        </md-content>
+                    </md-tab>
+                </md-tabs>
+            </div>
+            <div style="display:flex; justify-content: flex-end; margin-top: 15px;">
+                <md-button class="md-primary" ng-if="api_sources.operation==='update'" type="submit" ng-disabled="api_sources.current_auth_provider.schema === '' || (api_sources.current_auth_provider.schema==='oAuth2' && api_sources.current_auth_provider.selected_type === '')">Save</md-button>
+                <md-button class="md-primary" ng-if="api_sources.operation==='create'" type="submit" ng-disabled="api_sources.new_auth_provider.schema === '' || (api_sources.new_auth_provider.schema==='oAuth2' && api_sources.new_auth_provider.ap_oAuth_2.selected_type === '')">Save</md-button>
+                <md-button class="md-primary" ng-click="api_sources.closeSidenav()">Cancel</md-button>
+            </div>
+        </form>
+    </div>
+    <div ng-if="settings ==='users'">
+        <form ng-submit="app_roles.operation==='create' ? app_roles.create() : ''; app_roles.operation==='update' ? app_roles.update() : ''; app_users.operation==='create' ? app_users.create() : ''; app_users.operation==='update' ? app_users.update() : '';">
+            <md-tabs md-dynamic-height md-center-tabs md-stretch-tabs="always" md-border-bottom>
+                <md-tab label="{{app_roles.operation ? 'Role Properties' : 'Identity'}}">
+                    <md-content style="padding-top: 20px;">
+                        <div ng-if="app_roles.operation==='create'">
+                            <md-input-container class="md-block">
+                                <label>Name:</label>
+                                <input ng-model="app_roles.new_app_role.name" md-autofocus required>
+                            </md-input-container>
+                            <md-input-container class="md-block">
+                                <label>Description:</label>
+                                <input ng-model="app_roles.new_app_role.description">
+                            </md-input-container>
+                        </div>
+
+                        <div ng-if="app_roles.operation==='update'">
+                            <md-input-container class="md-block">
+                                <label>Name:</label>
+                                <input ng-model="app_roles.current_app_role.data.name" disabled>
+                            </md-input-container>
+                            <md-input-container class="md-block">
+                                <label>Description:</label>
+                                <input ng-model="app_roles.current_app_role.data.description" md-autofocus>
+                            </md-input-container>
+                        </div>
+
+                        <div ng-if="app_users.operation==='create'">
+                            <md-input-container class="md-block">
+                                <label>Login:</label>
+                                <input ng-model="app_users.new_app_user.login" md-autofocus required>
+                            </md-input-container>
+                            <md-input-container class="md-block">
+                                <label>First Name:</label>
+                                <input ng-model="app_users.new_app_user.firstName">
+                            </md-input-container>
+                            <md-input-container class="md-block">
+                                <label>Last Name:</label>
+                                <input ng-model="app_users.new_app_user.lastName">
+                            </md-input-container>
+                            <md-input-container class="md-block">
+                                <label>Email:</label>
+                                <input ng-model="app_users.new_app_user.email">
+                            </md-input-container>
+                            <md-input-container class="md-block">
+                                <label>Password:</label>
+                                <input ng-model="app_users.new_app_user.new_pass" type="password">
+                            </md-input-container>
+                            <md-input-container class="md-block">
+                                <label>Repeat Password:</label>
+                                <input ng-model="app_users.new_app_user.repeat_pass" type="password" ng-change="app_users.showPassMessage(app_users.new_app_user)">
+                                <div ng-if="app_users.new_app_user.pass_matching === true && app_users.new_app_user.show_pass_message" style="color: green; margin-top: 35px; font-size: 12px;">password is matching</div>
+                                <div ng-if="app_users.new_app_user.pass_matching === false && app_users.new_app_user.show_pass_message" style="color: red; margin-top: 35px; font-size: 12px;">password is not matching</div>
+                            </md-input-container>
+                        </div>
+
+                        <div ng-if="app_users.operation==='update'">
+                            <md-input-container class="md-block">
+                                <label>Login:</label>
+                                <input ng-model="app_users.current_app_user.login" disabled>
+                            </md-input-container>
+                            <md-input-container class="md-block">
+                                <label>First Name:</label>
+                                <input ng-model="app_users.current_app_user.firstName" ng-disabled="app_users.current_app_user.type==='openid'">
+                            </md-input-container>
+                            <md-input-container class="md-block">
+                                <label>Last Name:</label>
+                                <input ng-model="app_users.current_app_user.lastName" ng-disabled="app_users.current_app_user.type==='openid'">
+                            </md-input-container>
+                            <md-input-container class="md-block">
+                                <label>Email:</label>
+                                <input ng-model="app_users.current_app_user.email" ng-disabled="app_users.current_app_user.type==='openid'">
+                            </md-input-container>
+                            <md-input-container class="md-block" ng-if="app_users.current_app_user.type!=='openid'">
+                                <label>Password:</label>
+                                <input ng-change="app_users.changePass()" ng-model="app_users.current_app_user.new_pass" type="password">
+                            </md-input-container>
+                            <md-input-container ng-if="app_users.current_app_user.pass_changed === true && app_users.current_app_user.type!=='openid'" class="md-block">
+                                <label>Repeat Password:</label>
+                                <input ng-model="app_users.current_app_user.repeat_pass" type="password" ng-change="app_users.showPassMessage(app_users.current_app_user)">
+                                <div ng-if="app_users.current_app_user.pass_matching === true && app_users.current_app_user.show_pass_message" style="color: green; margin-top: 35px; font-size: 12px;">password is matching</div>
+                                <div ng-if="app_users.current_app_user.pass_matching === false && app_users.current_app_user.show_pass_message" style="color: red; margin-top: 35px; font-size: 12px;">password is not matching</div>
+                            </md-input-container>
+                        </div>
+                    </md-content>
+                </md-tab>
+                <md-tab label="Properties" ng-if="app_users.operation==='create' || app_users.operation==='update'">
+                    <md-content style="padding-top: 20px;">
+                        <div style="display:flex;flex-direction:row;flex-wrap:wrap;justify-content:space-between;">
+                            <span ng-if="!app_users.isThereOptionalProps">User definition does not have any optional properties.</span>
+
+                            <section style="width:49.5%;overflow:hidden;">
+                                <md-content layout-padding flex style="">
+                                    <div class="dfx-studio-explorer-treeview hover">
+                                        <ul id="dfx_studio_user_properties_tree"></ul>
+                                    </div>
+                                </md-content>
+                            </section>
+
+                            <section style="width:49.5%;overflow:hidden;">
+                                <md-content layout-padding flex style="">
+                                    <div class="dfx-ve-property-treeview hover clearfix" style="padding:8px 16px 12px 12px;margin:0 -8px;">
+                                        <md-input-container class="md-block" ng-if="app_users.user_definition.current_node">
+                                            <label ng-if="app_users.user_definition.current_node.type != 'subdocument'">
+                                                Value:
+                                            </label>
+                                            <input ng-if="app_users.user_definition.current_node.type != 'subdocument'"
+                                                   ng-model="app_users.user_definition.current_node.defaults"
+                                                   ng-disabled="app_users.current_app_user.type==='openid'">
+                                        </md-input-container>
+                                    </div>
+                                </md-content>
+                            </section>
+                        </div>
+                    </md-content>
+                </md-tab>
+                <md-tab label="{{app_roles.operation ? 'Rights' : 'Roles'}}">
+                    <md-content style="padding-top: 20px;">
+                        <div ng-if="app_roles.operation==='create'">
+                            <table class="datatable" class="layout-row" style="width: 100%">
+                                <thead>
+                                <tr style="height: 40px;">
+                                    <th style="padding-left: 0;">
+                                        <span>API Route Execution Rights</span>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="right in app_roles.all_rights" style="border-bottom: solid 1px #c6c6c6">
+                                    <td style="padding-top: 17px; padding-left: 0;">
+                                        <md-checkbox ng-model="right.isChecked" class="md-primary" style="margin-top: -1px; display: block;">
+                                            {{right.name}}
+                                        </md-checkbox>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div ng-if="app_roles.operation==='update'">
+                            <table class="datatable" class="layout-row" style="width: 100%">
+                                <thead>
+                                <tr style="height: 40px;">
+                                    <th style="padding-left: 0;">
+                                        <span>API Route Execution Rights</span>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="right in app_roles.all_rights" style="border-bottom: solid 1px #c6c6c6">
+                                    <td style="padding-top: 17px; padding-left: 0;">
+                                        <md-checkbox ng-model="right.isChecked" class="md-primary" style="margin-top: -1px; display: block;">
+                                            {{right.name}}
+                                        </md-checkbox>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div ng-if="app_users.operation==='create'">
+                            <table class="datatable" class="layout-row" style="width: 100%">
+                                <thead>
+                                <tr style="height: 40px;">
+                                    <th style="padding-left: 0;">
+                                        <span>Default</span>
+                                    </th>
+                                    <th style="padding-left: 0;">
+                                        <span>Assigned</span>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr style="border-bottom: solid 1px #c6c6c6">
+                                    <td style="padding-top: 17px; padding-left: 0;">
+                                        <md-radio-group ng-model="app_users.new_app_user.default_role_updated" class="md-primary">
+                                            <md-radio-button ng-repeat="role in app_users.new_app_user.all_roles | filter: { type: '!staff' }"
+                                                             value="{{role.name}}">
+                                            </md-radio-button>
+                                        </md-radio-group>
+                                    </td>
+                                    <td style="padding-top: 17px; padding-left: 0;">
+                                        <md-checkbox style="margin-top: -1px; display: block;"
+                                                     class="md-primary"
+                                                     ng-model="app_users.new_app_user.roles_updated[role.name]"
+                                                     ng-repeat="role in app_users.new_app_user.all_roles | filter: { type: '!staff' }"
+                                                     ng-disabled="app_users.new_app_user.role_updated_disabled[role.name]">
+                                            {{role.name}}
+                                        </md-checkbox>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div ng-if="app_users.operation==='update'">
+                            <table class="datatable" class="layout-row" style="width: 100%">
+                                <thead>
+                                <tr style="height: 40px;">
+                                    <th style="padding-left: 0;">
+                                        <span>Default</span>
+                                    </th>
+                                    <th style="padding-left: 0;">
+                                        <span>Assigned</span>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr style="border-bottom: solid 1px #c6c6c6">
+                                    <td style="padding-top: 17px; padding-left: 0;">
+                                        <md-radio-group ng-model="app_users.current_app_user.default_role_updated" class="md-primary">
+                                            <md-radio-button ng-repeat="role in app_users.current_app_user.all_roles | filter: { type: '!staff' }"
+                                                             value="{{role.name}}"
+                                                             ng-disabled="app_users.current_app_user.type=='openid'">
+                                            </md-radio-button>
+                                        </md-radio-group>
+                                    </td>
+                                    <td style="padding-top: 17px; padding-left: 0;">
+                                        <md-checkbox style="margin-top: -1px; display: block;"
+                                                     class="md-primary"
+                                                     ng-model="app_users.current_app_user.roles_updated[role.name]"
+                                                     ng-repeat="role in app_users.current_app_user.all_roles | filter: { type: '!staff' }"
+                                                     ng-disabled="app_users.current_app_user.type=='openid' || app_users.current_app_user.role_updated_disabled[role.name]">
+                                            {{role.name}}
+                                        </md-checkbox>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </md-content>
                 </md-tab>
             </md-tabs>
-        </div>
-        <div ng-if="api_sources.operation==='update'" style="display:flex; justify-content: flex-end; margin-top: 15px;">
-            <md-button class="md-primary" ng-click="api_sources.saveProvider()" ng-disabled="api_sources.current_auth_provider.schema === '' ||(api_sources.current_auth_provider.schema==='oAuth2' && api_sources.current_auth_provider.selected_type === '')">Save</md-button>
-            <md-button class="md-primary" ng-click="api_sources.closeSidenav()">Cancel</md-button>
-        </div>
-        <div ng-if="api_sources.operation==='create'" style="display:flex; justify-content: flex-end">
-            <md-button class="md-primary" ng-click="api_sources.saveProvider()" ng-disabled="api_sources.new_auth_provider.schema === '' ||(api_sources.new_auth_provider.schema==='oAuth2' && api_sources.new_auth_provider.ap_oAuth_2.selected_type === '')">Save</md-button>
-            <md-button class="md-primary" ng-click="api_sources.closeSidenav()">Cancel</md-button>
-        </div>
-    </div>
-    <div ng-if="settings ==='users'">
-        <md-tabs md-dynamic-height md-center-tabs md-stretch-tabs="always" md-border-bottom>
-            <md-tab label="{{app_roles.operation ? 'Role Properties' : 'Identity'}}">
-                <md-content style="padding-top: 20px;">
-                    <div ng-if="app_roles.operation==='create'">
-                        <md-input-container class="md-block">
-                            <label>Name:</label>
-                            <input ng-model="app_roles.new_app_role.name">
-                        </md-input-container>
-                        <md-input-container class="md-block">
-                            <label>Description:</label>
-                            <input ng-model="app_roles.new_app_role.description">
-                        </md-input-container>
-                    </div>
 
-                    <div ng-if="app_roles.operation==='update'">
-                        <md-input-container class="md-block">
-                            <label>Name:</label>
-                            <input ng-model="app_roles.current_app_role.data.name" disabled>
-                        </md-input-container>
-                        <md-input-container class="md-block">
-                            <label>Description:</label>
-                            <input ng-model="app_roles.current_app_role.data.description">
-                        </md-input-container>
-                    </div>
-
-                    <div ng-if="app_users.operation==='create'">
-                        <md-input-container class="md-block">
-                            <label>Login:</label>
-                            <input ng-model="app_users.new_app_user.login">
-                        </md-input-container>
-                        <md-input-container class="md-block">
-                            <label>First Name:</label>
-                            <input ng-model="app_users.new_app_user.firstName">
-                        </md-input-container>
-                        <md-input-container class="md-block">
-                            <label>Last Name:</label>
-                            <input ng-model="app_users.new_app_user.lastName">
-                        </md-input-container>
-                        <md-input-container class="md-block">
-                            <label>Email:</label>
-                            <input ng-model="app_users.new_app_user.email">
-                        </md-input-container>
-                        <md-input-container class="md-block">
-                            <label>Password:</label>
-                            <input ng-model="app_users.new_app_user.new_pass" type="password">
-                        </md-input-container>
-                        <md-input-container class="md-block">
-                            <label>Repeat Password:</label>
-                            <input ng-model="app_users.new_app_user.repeat_pass" type="password" ng-change="app_users.showPassMessage(app_users.new_app_user)">
-                            <div ng-if="app_users.new_app_user.pass_matching === true && app_users.new_app_user.show_pass_message" style="color: green; margin-top: 35px; font-size: 12px;">password is matching</div>
-                            <div ng-if="app_users.new_app_user.pass_matching === false && app_users.new_app_user.show_pass_message" style="color: red; margin-top: 35px; font-size: 12px;">password is not matching</div>
-                        </md-input-container>
-                    </div>
-
-                    <div ng-if="app_users.operation==='update'">
-                        <md-input-container class="md-block">
-                            <label>Login:</label>
-                            <input ng-model="app_users.current_app_user.login" disabled>
-                        </md-input-container>
-                        <md-input-container class="md-block">
-                            <label>First Name:</label>
-                            <input ng-model="app_users.current_app_user.firstName" ng-disabled="app_users.current_app_user.type==='openid'">
-                        </md-input-container>
-                        <md-input-container class="md-block">
-                            <label>Last Name:</label>
-                            <input ng-model="app_users.current_app_user.lastName" ng-disabled="app_users.current_app_user.type==='openid'">
-                        </md-input-container>
-                        <md-input-container class="md-block">
-                            <label>Email:</label>
-                            <input ng-model="app_users.current_app_user.email" ng-disabled="app_users.current_app_user.type==='openid'">
-                        </md-input-container>
-                        <md-input-container class="md-block" ng-if="app_users.current_app_user.type!=='openid'">
-                            <label>Password:</label>
-                            <input ng-change="app_users.changePass()" ng-model="app_users.current_app_user.new_pass" type="password">
-                        </md-input-container>
-                        <md-input-container ng-if="app_users.current_app_user.pass_changed === true && app_users.current_app_user.type!=='openid'" class="md-block">
-                            <label>Repeat Password:</label>
-                            <input ng-model="app_users.current_app_user.repeat_pass" type="password" ng-change="app_users.showPassMessage(app_users.current_app_user)">
-                            <div ng-if="app_users.current_app_user.pass_matching === true && app_users.current_app_user.show_pass_message" style="color: green; margin-top: 35px; font-size: 12px;">password is matching</div>
-                            <div ng-if="app_users.current_app_user.pass_matching === false && app_users.current_app_user.show_pass_message" style="color: red; margin-top: 35px; font-size: 12px;">password is not matching</div>
-                        </md-input-container>
-                    </div>
-                </md-content>
-            </md-tab>
-            <md-tab label="Properties" ng-if="app_users.operation==='create' || app_users.operation==='update'">
-                <md-content style="padding-top: 20px;">
-                    <div style="display:flex;flex-direction:row;flex-wrap:wrap;justify-content:space-between;">
-                        <span ng-if="!app_users.isThereOptionalProps">User definition does not have any optional properties.</span>
-
-                        <section style="width:49.5%;overflow:hidden;">
-                            <md-content layout-padding flex style="">
-                                <div class="dfx-studio-explorer-treeview hover">
-                                    <ul id="dfx_studio_user_properties_tree"></ul>
-                                </div>
-                            </md-content>
-                        </section>
-
-                        <section style="width:49.5%;overflow:hidden;">
-                            <md-content layout-padding flex style="">
-                                <div class="dfx-ve-property-treeview hover clearfix" style="padding:8px 16px 12px 12px;margin:0 -8px;">
-                                    <md-input-container class="md-block" ng-if="app_users.user_definition.current_node">
-                                        <label ng-if="app_users.user_definition.current_node.type != 'subdocument'">
-                                            Value:
-                                        </label>
-                                        <input ng-if="app_users.user_definition.current_node.type != 'subdocument'"
-                                               ng-model="app_users.user_definition.current_node.defaults"
-                                               ng-disabled="app_users.current_app_user.type==='openid'">
-                                    </md-input-container>
-                                </div>
-                            </md-content>
-                        </section>
-                    </div>
-                </md-content>
-            </md-tab>
-            <md-tab label="{{app_roles.operation ? 'Rights' : 'Roles'}}">
-                <md-content style="padding-top: 20px;">
-                    <div ng-if="app_roles.operation==='create'">
-                        <table class="datatable" class="layout-row" style="width: 100%">
-                            <thead>
-                            <tr style="height: 40px;">
-                                <th style="padding-left: 0;">
-                                    <span>API Route Execution Rights</span>
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr ng-repeat="right in app_roles.all_rights" style="border-bottom: solid 1px #c6c6c6">
-                                <td style="padding-top: 17px; padding-left: 0;">
-                                    <md-checkbox ng-model="right.isChecked" class="md-primary" style="margin-top: -1px; display: block;">
-                                        {{right.name}}
-                                    </md-checkbox>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div ng-if="app_roles.operation==='update'">
-                        <table class="datatable" class="layout-row" style="width: 100%">
-                            <thead>
-                            <tr style="height: 40px;">
-                                <th style="padding-left: 0;">
-                                    <span>API Route Execution Rights</span>
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr ng-repeat="right in app_roles.all_rights" style="border-bottom: solid 1px #c6c6c6">
-                                <td style="padding-top: 17px; padding-left: 0;">
-                                    <md-checkbox ng-model="right.isChecked" class="md-primary" style="margin-top: -1px; display: block;">
-                                        {{right.name}}
-                                    </md-checkbox>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div ng-if="app_users.operation==='create'">
-                        <table class="datatable" class="layout-row" style="width: 100%">
-                            <thead>
-                            <tr style="height: 40px;">
-                                <th style="padding-left: 0;">
-                                    <span>Default</span>
-                                </th>
-                                <th style="padding-left: 0;">
-                                    <span>Assigned</span>
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr style="border-bottom: solid 1px #c6c6c6">
-                                <td style="padding-top: 17px; padding-left: 0;">
-                                    <md-radio-group ng-model="app_users.new_app_user.default_role_updated" class="md-primary">
-                                        <md-radio-button ng-repeat="role in app_users.new_app_user.all_roles | filter: { type: '!staff' }"
-                                                         value="{{role.name}}">
-                                        </md-radio-button>
-                                    </md-radio-group>
-                                </td>
-                                <td style="padding-top: 17px; padding-left: 0;">
-                                    <md-checkbox style="margin-top: -1px; display: block;"
-                                                 class="md-primary"
-                                                 ng-model="app_users.new_app_user.roles_updated[role.name]"
-                                                 ng-repeat="role in app_users.new_app_user.all_roles | filter: { type: '!staff' }"
-                                                 ng-disabled="app_users.new_app_user.role_updated_disabled[role.name]">
-                                        {{role.name}}
-                                    </md-checkbox>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div ng-if="app_users.operation==='update'">
-                        <table class="datatable" class="layout-row" style="width: 100%">
-                            <thead>
-                            <tr style="height: 40px;">
-                                <th style="padding-left: 0;">
-                                    <span>Default</span>
-                                </th>
-                                <th style="padding-left: 0;">
-                                    <span>Assigned</span>
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr style="border-bottom: solid 1px #c6c6c6">
-                                <td style="padding-top: 17px; padding-left: 0;">
-                                    <md-radio-group ng-model="app_users.current_app_user.default_role_updated" class="md-primary">
-                                        <md-radio-button ng-repeat="role in app_users.current_app_user.all_roles | filter: { type: '!staff' }"
-                                                         value="{{role.name}}"
-                                                         ng-disabled="app_users.current_app_user.type=='openid'">
-                                        </md-radio-button>
-                                    </md-radio-group>
-                                </td>
-                                <td style="padding-top: 17px; padding-left: 0;">
-                                    <md-checkbox style="margin-top: -1px; display: block;"
-                                                 class="md-primary"
-                                                 ng-model="app_users.current_app_user.roles_updated[role.name]"
-                                                 ng-repeat="role in app_users.current_app_user.all_roles | filter: { type: '!staff' }"
-                                                 ng-disabled="app_users.current_app_user.type=='openid' || app_users.current_app_user.role_updated_disabled[role.name]">
-                                        {{role.name}}
-                                    </md-checkbox>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </md-content>
-            </md-tab>
-        </md-tabs>
-
-        <div ng-if="app_roles.operation==='update'" style="display:flex; justify-content: flex-end;">
-            <md-button class="md-primary" ng-click="app_roles.update()">Save</md-button>
-            <md-button class="md-primary" ng-click="app_roles.closeSidenav()">Cancel</md-button>
-        </div>
-        <div ng-if="app_roles.operation==='create'" style="display:flex; justify-content: flex-end">
-            <md-button class="md-primary" ng-click="app_roles.create()">Save</md-button>
-            <md-button class="md-primary" ng-click="app_roles.closeSidenav()">Cancel</md-button>
-        </div>
-        <div ng-if="app_users.operation==='update'" style="display:flex; justify-content: flex-end;">
-            <md-button class="md-primary" ng-click="app_users.update()" ng-disabled="(!app_users.current_app_user.pass_matching && app_users.current_app_user.pass_changed) || app_users.current_app_user.type=='openid'">Save</md-button>
-            <md-button class="md-primary" ng-click="app_users.closeSidenav()">Cancel</md-button>
-        </div>
-        <div ng-if="app_users.operation==='create'" style="display:flex; justify-content: flex-end;">
-            <md-button class="md-primary" ng-click="app_users.create()" ng-disabled="!app_users.new_app_user.pass_matching">Save</md-button>
-            <md-button class="md-primary" ng-click="app_users.closeSidenav()">Cancel</md-button>
-        </div>
+            <div ng-if="app_roles.operation==='update'" style="display:flex; justify-content: flex-end;">
+                <md-button class="md-primary" type="submit">Save</md-button>
+                <md-button class="md-primary" ng-click="app_roles.closeSidenav()">Cancel</md-button>
+            </div>
+            <div ng-if="app_roles.operation==='create'" style="display:flex; justify-content: flex-end">
+                <md-button class="md-primary" type="submit">Save</md-button>
+                <md-button class="md-primary" ng-click="app_roles.closeSidenav()">Cancel</md-button>
+            </div>
+            <div ng-if="app_users.operation==='update'" style="display:flex; justify-content: flex-end;">
+                <md-button class="md-primary" type="submit" ng-disabled="(!app_users.current_app_user.pass_matching && app_users.current_app_user.pass_changed) || app_users.current_app_user.type=='openid'">Save</md-button>
+                <md-button class="md-primary" ng-click="app_users.closeSidenav()">Cancel</md-button>
+            </div>
+            <div ng-if="app_users.operation==='create'" style="display:flex; justify-content: flex-end;">
+                <md-button class="md-primary" type="submit" ng-disabled="!app_users.new_app_user.pass_matching">Save</md-button>
+                <md-button class="md-primary" ng-click="app_users.closeSidenav()">Cancel</md-button>
+            </div>
+        </form>
     </div>
 </md-sidenav>
 
@@ -540,7 +541,7 @@
         </md-content>
     </md-tab>
     <md-tab label="Resources" md-on-select="defineSettings('resources')" ng-click="resourcesClick()">
-        <md-content class="md-padding"  ng-cloak">
+        <md-content class="md-padding"  ng-cloak>
             <div ng-include="resourcesPath"></div>
         </md-content>
     </md-tab>

@@ -1,6 +1,6 @@
 <div layout="column" style="height:100vh;overflow:hidden">
-    <div layout="row" layout-align="space-between center" style="background:#DCDCDC">
-            <h4 style="padding-left:10px">Play with Samples</h4>
+    <div layout="row" layout-align="space-between center" style="background:#DCDCDC; height: 48px;">
+        <h4 style="padding-left:10px">Play with Samples</h4>
     </div>
     <div layout="column" layout-padding ng-show="isCategoriesLoaded==false || isCategoryLoaded==false || isSampleLoaded==false">
         <h4>Loading samples from GitHub...</h4>
@@ -9,10 +9,10 @@
     <div layout="column" flex style="overflow:auto;">
         <md-content layout-padding>
             <div layout="row" flex="100">
-                <div layout="row" layout-padding layout-align="start start">
+                <div layout="row" layout-padding layout-wrap layout-align="start start">
                     <md-card ng-repeat="sample in samples" style="width:315px;height:460px;padding:0;">
                         <div style="width:100%;height:237px;background:#000" layout="row" layout-align="center center">
-                            <img ng-src="{{sample.content.thumbnail}}" style="width:315px;height:237px"/>
+                            <img ng-src="{{sample.content.thumbnail || '/images/sampleapps/samples_default.png'}}" style="width:315px;height:237px"/>
                         </div>
                         <md-card-title style="height: 100px;max-height: 100px;">
                             <md-card-title-text style="color: #2196F3">

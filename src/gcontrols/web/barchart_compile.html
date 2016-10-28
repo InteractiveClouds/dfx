@@ -1,0 +1,10 @@
+<div ng-show="attributes.display.value"
+    class="ATTR-NONV{{classes.value}} dfx-core-gc-chart"
+    ATTR-IF{{style="attributes.style.value"}}
+    ATTR-IF{{ng-class="attributes.dynamicClasses.value"}}>
+    <nvd3 flex
+          options="attributes.options.value"
+          data="attributes.binding.value"
+          api="dfx_chart_api">
+    </nvd3>
+</div>

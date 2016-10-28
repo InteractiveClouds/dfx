@@ -1,7 +1,7 @@
 var dfxStudioLandingApp = angular.module("dfxStudioLandingApp", ['ngRoute', 'ngMaterial', 'dfxStudioApi']);
 
 dfxStudioLandingApp.config([ '$routeProvider', '$mdThemingProvider', function($routeProvider, $mdThemingProvider) {
-    
+
     $routeProvider
 	    .when('/home', {
 	      controller: 'dfx_studio_landing_controller',
@@ -26,8 +26,8 @@ dfxStudioLandingApp.config([ '$routeProvider', '$mdThemingProvider', function($r
 dfxStudioLandingApp.controller("dfx_studio_landing_controller", [ '$scope', '$location', '$window', function($scope, $location, $window) {
 	$scope.tenant_id = $('#dfx-studio-landing-body').attr( 'data-tenantid' );
 	$scope.dfx_version_major   = '3';
-    $scope.dfx_version_minor   = '02';
-    $scope.dfx_version_release = 'R6';
+    $scope.dfx_version_minor   = '1';
+    $scope.dfx_version_release = '0';
 
 	$scope.openDocumentation = function() {
 		$window.open( 'http://interactive-clouds.com/documentation/' );

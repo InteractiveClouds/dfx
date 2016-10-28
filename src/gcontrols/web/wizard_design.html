@@ -19,10 +19,10 @@
                             </div>
                         </div>
                     </md-content>
-                    <div layout="row" layout-align="end-center">
+                    <div layout="row" layout-align="end-center" class="dfx-core-gc-wizard-navbuttons">
                         <button ng-click="decrIndex()"
                                 style="{{attributes.previousButton.style.value}}"
-                                class="md-altTheme-theme md-primary md-raised glyph md-button"
+                                class="dfx-core-gc-wizard-prev md-altTheme-theme md-primary md-raised glyph md-button"
                                 ng-class="attributes.previousButton.classes.value"
                                 ng-disabled="$index===0">
                             {{attributes.previousButton.label.value | checkExpression}}
@@ -30,14 +30,14 @@
                         <button ng-if="!step.isLast.value"
                                 ng-click="incrIndex();"
                                 style="{{attributes.nextButton.style.value}}"
-                                class="md-altTheme-theme md-primary md-raised glyph md-button"
+                                class="dfx-core-gc-wizard-next md-altTheme-theme md-primary md-raised glyph md-button"
                                 ng-class="attributes.nextButton.classes.value">
                             {{attributes.nextButton.label.value | checkExpression}}
                         </button>
                         <button ng-if="step.isLast.value"
                                 ng-click="incrIndex();"
                                 style="{{attributes.submitButton.style.value}}"
-                                class="md-button md-altTheme-theme md-raised glyph dfx-core-gc-wizard-submit"
+                                class="dfx-core-gc-wizard-submit md-altTheme-theme md-raised glyph md-button"
                                 ng-class="attributes.submitButton.classes.value">
                             {{attributes.submitButton.label.value | checkExpression}}
                         </button>

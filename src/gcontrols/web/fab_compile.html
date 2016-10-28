@@ -1,0 +1,46 @@
+<div layout="column" layout-align="center end" style="ATTR-NONV{{style.value}}" ATTR-IF{{class="attributes.classes.value"}} ATTR-IF{{ng-class="attributes.dynamicClasses.value"}} ng-show="attributes.display.value">
+  <md-fab-speed-dial md-direction="attributes.fabDirection.value" ng-class="'attributes.animation.value'" ng-disabled="attributes.disabled.value">
+    <md-fab-trigger ng-disabled="attributes.disabled.value">
+      <md-button id="{{component_id}}_fab_menu" aria-label="{{component_id}}_fab_menu" class="ATTR-NONV{{triggerButton.class}} dfx-core-gc-fab md-fab" style="ATTR-NONV{{triggerButton.style}}"
+		ATTR-IF{{ng-focus="attributes.onfocus.value"}}
+		ATTR-IF{{ng-blur="attributes.onblur.value"}}
+		ATTR-IF{{ng-click="attributes.onclick.value"}}
+        ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
+        ATTR-IF{{ng-keypress="attributes.onkeypress.value"}}
+        ATTR-IF{{ng-keydown="attributes.onkeydown.value"}}
+        ATTR-IF{{ng-keyup="attributes.onkeyup.value"}}
+        ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}}
+        ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}}
+        ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}}
+        ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
+        ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}
+        ng-disabled="attributes.disabled.value">
+        <md-tooltip ng-if="ATTR-EXP{{(attributes.label.value !=='' ) ? 'true' : 'false'}}ATTR-ENDEXP" md-autohide="true" md-direction="ATTR-NONV{{triggerButton.tooltip.direction}}" class="dfx-core-gc-fab-tooltip ATTR-NONV{{triggerButton.tooltip.classes}}" style="ATTR-NONV{{triggerButton.tooltip.style}}" ATTR-IF{{ng-bind="attributes.label.value"}}></md-tooltip>
+        <md-icon ng-if="ATTR-EXP{{(attributes.icon.type ==='fa-icon') ? 'true' : 'false'}}ATTR-ENDEXP"  class="fa {{attributes.icon.value || 'fa-bars'}} dfx-core-gc-fab-icon" style="ATTR-NONV{{icon.style}};font-size:ATTR-NONV{{icon.size}}px;width:ATTR-NONV{{icon.size}}px;height:ATTR-NONV{{icon.size}}px;"></md-icon>
+        <ng-md-icon ng-if="ATTR-EXP{{(attributes.icon.type ==='svg-icon') ? 'true' : 'false'}}ATTR-ENDEXP" icon="{{attributes.icon.value || 'menu'}}" size="ATTR-NONV{{icon.size}}" class="dfx-core-gc-fab-icon" style="ATTR-NONV{{icon.style}};width:ATTR-NONV{{icon.size}}px;height:ATTR-NONV{{icon.size}}px;"></ng-md-icon>
+      </md-button>
+    </md-fab-trigger>
+    <md-fab-actions id="{{component_id}}_fab_menu_list">
+	FRAG-IF{{attributes.menuItemsType.value === 'static'}}
+      <div class="md-fab-action-item" ng-repeat="item in ATTR-STATIC{{menuItems.value}} track by $index" >
+        <md-button aria-label="{{component_id}}_fab-icon_{{$index}}"
+          ng-click="$eval(item.onclick);hideTooltip();" class="ATTR-NONV{{actionButton.class}} dfx-core-gc-fab-item md-fab" style="ATTR-NONV{{actionButton.style}}" ng-show="$eval(item.display)" ng-disabled="$eval(item.disabled)">
+          <md-tooltip ng-if="item.label.length>0" md-autohide="true" md-direction="ATTR-NONV{{actionButton.tooltip.direction}}" class="dfx-core-gc-fab-tooltip ATTR-NONV{{actionButton.tooltip.classes}}" style="ATTR-NONV{{actionButton.tooltip.style}}">{{$eval(item.label)}}</md-tooltip>
+          <md-icon ng-if="item.icon.type ==='fa-icon'" class="fa {{$eval(item.icon.value) || 'fa-home'}} dfx-core-gc-fab-item-icon" style="ATTR-NONV{{actionButton.icon.style}};font-size:ATTR-NONV{{actionButton.icon.size}}px;width:ATTR-NONV{{actionButton.icon.size}}px;height:ATTR-NONV{{actionButton.icon.size}}px;"></md-icon>
+          <ng-md-icon ng-if="item.icon.type ==='svg-icon'" icon="{{$eval(item.icon.value) || 'home'}}" size="ATTR-NONV{{actionButton.icon.size}}" class="dfx-core-gc-fab-item-icon" style="ATTR-NONV{{actionButton.icon.style}};width:ATTR-NONV{{actionButton.icon.size}}px;height:ATTR-NONV{{actionButton.icon.size}}px;"></ng-md-icon>
+        </md-button>
+      </div>
+	FRAG-ENDIF
+  	FRAG-IF{{attributes.menuItemsType.value === 'dynamic'}}
+      <div class="md-fab-action-item" ng-repeat="item in ATTR-NONV{{menuItemNames.value.main.source}} track by $index" >
+        <md-button aria-label="{{component_id}}_fab-icon_{{$index}}"
+          ng-click="$eval(item.ATTR-NONV{{menuItemNames.value.main.onclick}});hideTooltip();" class="ATTR-NONV{{actionButton.class}} dfx-core-gc-fab-item md-fab" style="ATTR-NONV{{actionButton.style}}" ng-show="ATTR-EXP{{(attributes.menuItemNames.value.main.display !=='') ? '$eval(item.' + attributes.menuItemNames.value.main.display+')' : 'true'}}ATTR-ENDEXP" ng-disabled="ATTR-EXP{{(attributes.menuItemNames.value.main.disabled !=='') ? '$eval(item.' + attributes.menuItemNames.value.main.disabled+')' : 'false'}}ATTR-ENDEXP">
+          <md-tooltip ng-if="item.ATTR-NONV{{menuItemNames.value.main.label}}.length>0" md-autohide="true" md-direction="ATTR-NONV{{actionButton.tooltip.direction}}" class="dfx-core-gc-fab-tooltip ATTR-NONV{{actionButton.tooltip.classes}}" style="ATTR-NONV{{actionButton.tooltip.style}}">{{ATTR-EXP{{(1==1) ? 'item.' + attributes.menuItemNames.value.main.label : ''}}ATTR-ENDEXP}}</md-tooltip>
+		  <md-icon ng-if="item.ATTR-NONV{{menuItemNames.value.main.icon.value}}.ATTR-NONV{{menuItemNames.value.main.icon.type}} === 'fa-icon'" class="fa {{item.ATTR-NONV{{menuItemNames.value.main.icon.value}}.ATTR-NONV{{menuItemNames.value.main.icon.name}} || 'fa-home'}} dfx-core-gc-fab-item-icon" style="ATTR-NONV{{actionButton.icon.style}};font-size:ATTR-NONV{{actionButton.icon.size}}px;width:ATTR-NONV{{actionButton.icon.size}}px;height:ATTR-NONV{{actionButton.icon.size}}px;"></md-icon>
+          <ng-md-icon ng-if="item.ATTR-NONV{{menuItemNames.value.main.icon.value}}.ATTR-NONV{{menuItemNames.value.main.icon.type}} === 'svg-icon'" icon="{{item.ATTR-NONV{{menuItemNames.value.main.icon.value}}.ATTR-NONV{{menuItemNames.value.main.icon.name}} || 'home'}}" size="ATTR-NONV{{actionButton.icon.size}}" class="dfx-core-gc-fab-item-icon" style="ATTR-NONV{{actionButton.icon.style}};width:ATTR-NONV{{actionButton.icon.size}}px;height:ATTR-NONV{{actionButton.icon.size}}px;"></ng-md-icon>
+        </md-button>
+      </div>
+	FRAG-ENDIF
+    </md-fab-actions>
+  </md-fab-speed-dial>
+</div>

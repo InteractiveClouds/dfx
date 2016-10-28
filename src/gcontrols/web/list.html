@@ -1,0 +1,28 @@
+<md-content ng-if="attributes.optionsType.value === 'static'" id="{{component_id}}_selectable_list" tabindex="0" ng-show="$eval(attributes.display.value)" style="{{attributes.style.value}}" class="dfx-core-gc-list-container {{attributes.classes.value}}" ng-class="$eval(attributes.dynamicClasses.value)">
+    <md-list flex ng-if="!$eval(attributes.disabled.value)">
+        <md-subheader ng-if="attributes.labelVisible.value" style="{{attributes.labelStyle.style}}" class="dfx-core-gc-list-subheader {{attributes.labelStyle.class}} md-no-sticky"><span ng-bind="$eval(attributes.label.value)"></span></md-subheader>
+        <md-list-item class="dfx-core-gc-list-item md-3-line" ng-class="attributes.itemStyle.class" ng-repeat="it in attributes.static.value track by $index" ng-click="toggleItem($event, it, $index); $eval(attributes.onclick.value)" style="{{attributes.itemStyle.style}}; background-color: {{itemSelected(it) ? attributes.itemStyle.bgSelected : attributes.itemStyle.bgDefault}}" ng-dblclick="$eval(attributes.ondblclick.value)" ng-keypress="$eval(attributes.onkeypress.value)" ng-keydown="$eval(attributes.onkeydown.value)" ng-keyup="$eval(attributes.onkeyup.value)" ng-mouseover="$eval(attributes.onmouseover.value)" ng-mouseenter="$eval(attributes.onmouseenter.value)" ng-mousemove="$eval(attributes.onmousemove.value)" ng-mouseleave="$eval(attributes.onmouseleave.value)" ng-mousedown="$eval(attributes.onmousedown.value)" ng-mouseup="$eval(attributes.onmouseup.value)" aria-label="List Item">
+            <div class="dfx-core-gc-list-item-inner md-list-item-inner" ng-bind-html="it.data"></div>
+        </md-list-item>        
+    </md-list>
+    <md-list flex ng-if="$eval(attributes.disabled.value)" class="md-dense">
+        <md-subheader ng-if="attributes.labelVisible.value" style="{{attributes.labelStyle.style}}" class="dfx-core-gc-list-subheader {{attributes.labelStyle.class}} md-no-sticky"><span ng-bind="$eval(attributes.label.value)"></span></md-subheader>
+        <md-list-item class="dfx-core-gc-list-item md-3-line" ng-class="attributes.itemStyle.class" ng-repeat="it in attributes.static.value track by $index" style="{{attributes.itemStyle.style}}; background-color: {{attributes.itemStyle.bgDefault}}" aria-label="List Item">
+            <div class="dfx-core-gc-list-item-text md-list-item-text" ng-bind-html="it.data"></div>
+        </md-list-item>        
+    </md-list>
+</md-content>
+<md-content ng-if="attributes.optionsType.value === 'dynamic'" id="{{component_id}}_selectable_list" tabindex="0" ng-show="$eval(attributes.display.value)" ng-init="sourceList.value = ($eval(listSourceObject))" style="{{attributes.style.value}}" class="dfx-core-gc-list-container {{attributes.classes.value}}" ng-class="$eval(attributes.dynamicClasses.value)">
+    <md-list flex ng-if="!$eval(attributes.disabled.value)">
+        <md-subheader ng-if="attributes.labelVisible.value" style="{{attributes.labelStyle.style}}" class="dfx-core-gc-list-subheader {{attributes.labelStyle.class}} md-no-sticky"><span ng-bind="$eval(attributes.label.value)"></span></md-subheader>
+        <md-list-item class="dfx-core-gc-list-item md-3-line" ng-class="attributes.itemStyle.class" ng-repeat="it in sourceList.value track by $index" ng-init="listItem = ($eval('it.' + attributes.optionItemNames.value.data))" ng-click="toggleItem($event, it, $index); $eval(attributes.onclick.value)" style="{{attributes.itemStyle.style}}; background-color: {{itemSelected(it) ? attributes.itemStyle.bgSelected : attributes.itemStyle.bgDefault}}" ng-dblclick="$eval(attributes.ondblclick.value)" ng-keypress="$eval(attributes.onkeypress.value)" ng-keydown="$eval(attributes.onkeydown.value)" ng-keyup="$eval(attributes.onkeyup.value)" ng-mouseover="$eval(attributes.onmouseover.value)" ng-mouseenter="$eval(attributes.onmouseenter.value)" ng-mousemove="$eval(attributes.onmousemove.value)" ng-mouseleave="$eval(attributes.onmouseleave.value)" ng-mousedown="$eval(attributes.onmousedown.value)" ng-mouseup="$eval(attributes.onmouseup.value)" aria-label="List Item">
+            <div class="dfx-core-gc-list-item-inner md-list-item-inner" ng-bind-html="listItem"></div>
+        </md-list-item>        
+    </md-list>
+    <md-list flex ng-if="$eval(attributes.disabled.value)" class="md-dense">
+        <md-subheader ng-if="attributes.labelVisible.value" style="{{attributes.labelStyle.style}}" class="dfx-core-gc-list-subheader {{attributes.labelStyle.class}} md-no-sticky"><span ng-bind="$eval(attributes.label.value)"></span></md-subheader>
+        <md-list-item class="dfx-core-gc-list-item md-3-line" ng-class="attributes.itemStyle.class" ng-repeat="it in sourceList.value track by $index" ng-init="listItem = ($eval('it.' + attributes.optionItemNames.value.data))" style="{{attributes.itemStyle.style}}; background-color: {{attributes.itemStyle.bgDefault}}" aria-label="List Item">
+            <div class="dfx-core-gc-list-item-text md-list-item-text" ng-bind-html="listItem"></div>
+        </md-list-item>        
+    </md-list>
+</md-content>

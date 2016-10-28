@@ -1,9 +1,14 @@
 <md-input-container flex class="md-input-has-value md-block {{attributes.classes.value}}" style="{{attributes.style.value}}">
 	<label style="margin-top:-2px;font-size: 14px;font-weight:300;">{{attributes.label.value | checkExpression}}</label>
-	<ul ng-model="attributes.binding.value" class="star-rating" aria-label="{{attributes.name.value}}" ng-click="$eval(attributes.onclick.value)" ng-disabled="$eval(attributes.disabled.value)">
-    <li ng-repeat="star in stars" class="star" ng-class="{filled: star.filled}" ng-style="{color: star.filled ? attributes.highlighted.value : attributes.color.value }" ng-click="toggle($index)">
-        <i ng-if="attributes.icon.type ==='fa-icon'" class="fa {{$eval(attributes.icon.value) || 'fa-star'}}" style="font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></i>
-        <ng-md-icon ng-if="attributes.icon.type ==='svg-icon'" icon="{{$eval(attributes.icon.value) || 'star'}}" size="{{attributes.icon.size}}" style="height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></ng-md-icon>
-    </li>
-  </ul>
+	<ul ng-model="attributes.binding.value" class="dfx-core-gc-rating" aria-label="{{attributes.name.value}}" ng-click="$eval(attributes.onclick.value)" ng-disabled="$eval(attributes.disabled.value)">
+	    <li ng-repeat="star in stars" class="dfx-core-gc-rating-item" ng-class="{filled: star.filled}" ng-style="{color: star.filled ? attributes.highlighted.value : attributes.color.value }" ng-click="toggle($index)">
+	    	<button class="dfx-core-gc-rating-button" style="height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"
+				ng-style="{color: star.filled ? 'attributes.highlighted.value' : 'attributes.color.value' }"
+				ng-class="{filled: star.filled}"
+				ng-click="toggle($index)">
+		        <i ng-if="attributes.icon.type ==='fa-icon'" class="fa dfx-core-gc-rating-icon {{$eval(attributes.icon.value) || 'fa-star'}}" style="font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></i>
+		        <ng-md-icon ng-if="attributes.icon.type ==='svg-icon'" icon="{{$eval(attributes.icon.value) || 'star'}}" size="{{attributes.icon.size}}" class="dfx-core-gc-rating-icon" style="height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px;"></ng-md-icon>
+	        </button>
+	    </li>
+  	</ul>
 </md-input-container>
