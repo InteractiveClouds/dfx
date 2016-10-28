@@ -644,8 +644,8 @@ dfxGCC.directive('dfxGccWebDatepicker', ['$timeout', function($timeout) {
                     }
                 }
 
-                if(!scope.attributes.labelClass){
-                    scope.attributes.labelClass = 'dp-label-focus-off';
+                if(!scope.labelClass){
+                    scope.labelClass = 'dp-label-focus-off';
                 }
                 scope.isLoaded.value = true;
                 scope.$watch('attributes.ranged.monthsBefore', function(monthsBefore){
@@ -668,12 +668,12 @@ dfxGCC.directive('dfxGccWebDatepicker', ['$timeout', function($timeout) {
                     try{
                         scope.dp_input = '#' + scope.component_id + ' > div > div > md-datepicker > div.md-datepicker-input-container > input';
                         $(scope.dp_input).focus(function(){
-                            scope.attributes.labelClass = 'dp-label-focus-on';
+                            scope.labelClass = 'dp-label-focus-on';
                             scope.$apply(function(){
                             });
                         });
                         $(scope.dp_input).blur(function(){
-                            scope.attributes.labelClass = 'dp-label-focus-off';
+                            scope.labelClass = 'dp-label-focus-off';
                             scope.$apply(function(){
                             });
                         });

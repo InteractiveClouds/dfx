@@ -5,7 +5,7 @@
     ATTR-IF{{ng-class="attributes.dynamicClasses.value"}}>
 
     <label style="font-size: 11px; margin-top: 6px; margin-bottom: 3px"
-           ATTR-IF{{ng-class="attributes.labelClass"}}
+           ng-class="labelClass"
            ATTR-IF{{ng-bind="attributes.label.value"}}></label>
     <div ng-if="isLoaded.value">
         FRAG-IF{{attributes.selectedType.value !== 'ranged'}}
