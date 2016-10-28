@@ -43,14 +43,14 @@
 								<li class="col-md-12">
 									<span class="col-md-4">Value:</span>
 									<div class="col-md-8" layout="row">
-										<input class="col-md-12" type="text" ng-model="attributes.currentItem.value" style="margin-left:-15px;"/>
+										<input class="col-md-12" type="text" ng-model="attributes.currentItem.value" style="margin-left:-15px;" ng-change="overrideAttribute('slidersArray')"/>
 										<dfx-ve-menu-expression></dfx-ve-menu-expression>
 									</div>
 								</li>
 								<li class="col-md-12">
 									<span class="col-md-4">Label:</span>
 									<div class="col-md-8" layout="row">
-										<input class="col-md-12" type="text" ng-model="attributes.currentItem.label" style="margin-left:-15px;"/>
+										<input class="col-md-12" type="text" ng-model="attributes.currentItem.label" style="margin-left:-15px;" ng-change="overrideAttribute('slidersArray')"/>
 										<dfx-ve-menu-expression></dfx-ve-menu-expression>
 									</div>
 								</li>

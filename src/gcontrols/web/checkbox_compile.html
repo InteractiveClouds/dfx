@@ -18,7 +18,7 @@
                 ATTR-IF{{style="attributes.itemStyle.label.style"}} ng-bind="item.ATTR-NONV{{checkValue.label}}"></span>
             <span ng-if="ATTR-EXP{{attributes.displayValue.value}}ATTR-ENDEXP" 
                 ATTR-IF{{style="attributes.itemStyle.val.style"}} 
-                ATTR-IF{{class="attributes.itemStyle.val.class"> 
+                ATTR-IF{{class="attributes.itemStyle.val.class"}}> 
                 <span ng-if="ATTR-NONV{{binding.value}}[$index] === item.ATTR-NONV{{checkValue.trueCheckValue}}" ng-bind="item.ATTR-NONV{{checkValue.trueCheckValue}}"></span>
                 <span ng-if="ATTR-NONV{{binding.value}}[$index] === item.ATTR-NONV{{checkValue.falseCheckValue}}" ng-bind="item.ATTR-NONV{{checkValue.falseCheckValue}}"></span>
             </span>
@@ -56,7 +56,7 @@
                 ATTR-IF{{style="attributes.itemStyle.label.style"}} ng-bind="item.ATTR-NONV{{checkValue.label}}"></span>
             <span ng-if="ATTR-EXP{{attributes.displayValue.value}}ATTR-ENDEXP" 
                 ATTR-IF{{style="attributes.itemStyle.val.style"}} 
-                ATTR-IF{{class="attributes.itemStyle.val.class"> 
+                ATTR-IF{{class="attributes.itemStyle.val.class"}}> 
                 <span ng-if="item.isChecked" ng-bind="item.ATTR-NONV{{checkValue.trueCheckValue}}"></span>
                 <span ng-if="!item.isChecked" ng-bind="item.ATTR-NONV{{checkValue.falseCheckValue}}"></span>
             </span>
