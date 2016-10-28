@@ -399,15 +399,15 @@ md-datepicker > button{
 }
 
 .dp-label-focus-off{
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    margin-left: 27px !important;
-    color: rgba(0,0,0,0.54)!important;
+    /*font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;*/
+    margin-left: 27px;
+    color: rgba(0,0,0,0.54);
 }
 
 .dp-label-focus-on{
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    margin-left: 27px !important;
-    color: rgb(33, 150, 243) !important;
+    /*font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;*/
+    margin-left: 27px;
+    color: rgb(33, 150, 243);
 }
 
 md-input-container label{
@@ -1021,7 +1021,6 @@ md-tooltip.md-show div.md-content {
     transition: background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 .gc-btn-group button.gc-btn-group-last md-icon {
-    margin-top:10px!important;
     color:inherit;
 }
 .gc-btn-group button.gc-btn-group-last:not(.dfx-core-button-wait):hover:before { 
