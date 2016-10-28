@@ -1,10 +1,90 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-</head>
-<body>
-    You browser is not supported, use Chrome.
-    <img src="images/sampleapps/samples_buttons.png"/>
-</body>
+ <head>
+  <title>Browser Not Supported</title>
+
+<style type="text/css">
+* {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    outline: 0;
+    font: 13pt/1.4 arial,'Hiragino Sans GB',sans-serif;
+    text-decoration: none;
+    color: rgb(67, 74, 84);
+    }
+body {
+    background-color: #eceef3;
+    text-align: center;
+}
+#announcement {
+    width: 800px;
+    min-height: 222px;
+    margin: 150px auto 0 auto;
+    text-align: left;
+    background: #fff url(images/df_logo_browser_warning.png) no-repeat 75px center;
+    position: relative;
+    box-shadow: 1px 1px 1px 1px rgb(200, 200, 200);
+}
+#announcement-content {
+    margin-left: 225px;
+    padding: 65px;
+    padding-left: 20px;
+}
+#announcement-content a {
+    color: rgb(27, 194, 232);
+    font-style: italic;
+}
+#announcement-content h1 {
+    color: rgb(97, 108, 123);
+    font-weight: bold;
+    font-size: 18pt;
+}
+#announcement-content p {
+    padding-top: 10px;
+}
+#announcement-content p.download {
+    padding-top: 20px;
+}
+#announcement a.hidden-link {
+    text-indent: -12345px;
+    border: 0;
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 225px;
+}
+#copyright {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 50px;
+}
+#copyright p, #copyright p a {
+    line-height: 1.8;
+    font-size: 10pt;
+}
+</style>
+
+ </head>
+
+ <body>
+
+<div id="announcement">
+    <div id="announcement-content">
+        <h1>OOPS! Your browser is not supported.</h1>
+        <p>Dreamface currently supports the Chrome browser.
+        <br>Your browser will be available soon!</p>
+        <p class="download"><a href="https://www.google.com/chrome/">Download Chrome</a></p>
+    </div>
+    <a href="https://www.interactive-clouds.com/theproduct.html" class="hidden-link" title="DreamFace">&nbsp;</a>
+</div>
+
+<div id="copyright">
+    <p><a href="https://www.interactive-clouds.com/theproduct.html" title="DreamFace"><img src="images/df_name_browser_warning.png"></a></p>
+    <p>Copyright &copy; <a href="https://www.interactive-clouds.com/">Interactive Clouds</a>. All Rights Reserved</p>
+</div>
+
+ </body>
 </html>

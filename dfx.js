@@ -771,11 +771,6 @@ function isBrowserSupported(req, res) {
     var browser_name = parser.setUA(ua).getBrowser().name;
     var full_browser_version = parser.setUA(ua).getBrowser().version;
 
-    //console.log('********************** BROWSER *********************');
-    //console.log('browser_name: ', browser_name, ', full_browser_version: ', full_browser_version);
-    //console.log('********************** BROWSER *********************');
-
-
     if (browser_name == 'IE' || browser_name == 'Firefox' || browser_name == 'Safari' || browser_name == 'Opera') {
         res.redirect('/browser_warning');
         return false;
