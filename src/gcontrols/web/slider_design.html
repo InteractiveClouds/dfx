@@ -1,17 +1,21 @@
-<div class="{{attributes.classes.value}}" style="{{attributes.style.value}}">
-    <div class="gc-checkbox-label-design">{{attributes.label.value | checkExpression}}</div>
-    <div layout="row">
-        <div ng-if="attributes.direction.value === 'column'" layout="column" style="margin-right: 5px">
-            <div ng-repeat="item in attributes.slidersArray.value track by $index" layout layout-align="start center"  style="padding-left: 5px;margin-bottom: 3px;" ng-style="{'margin-top' : $index === 0? '3px' : '18px'}">{{ item.label | checkExpression}}</div>
-        </div>
-        <div layout="{{attributes.direction.value}}" flex>
-            <div flex layout layout-align="start center" ng-repeat="item in attributes.slidersArray.value track by $index">
-                <div flex="none" ng-if="attributes.direction.value === 'row'" style="margin:-11px 5px 0 0; padding-left: 5px">{{ item.label | checkExpression }}</div>
-                <md-slider flex ng-if="$eval(attributes.discrete.value)" class="md-altTheme-theme md-primary flex" style="margin-top: -9px; margin-bottom: 2px;" ng-model="item.value" ng-class="attributes.buttonClass.value" min="{{attributes.minValue.value}}" max="{{attributes.maxValue.value}}" step="{{attributes.step.value}}" md-discrete aria-label="{{attributes.name.value}}" id="{{attributes.name.value}}-slider"></md-slider><!--width:{{attributes.sliderWidth.value}}{{attributes.widthUnits.value}};-->
-                <md-slider flex ng-if="!$eval(attributes.discrete.value)" class="md-altTheme-theme md-primary flex" style="margin-top: -9px; margin-bottom: 2px;" ng-model="item.value" ng-class="attributes.buttonClass.value" min="{{attributes.minValue.value}}" max="{{attributes.maxValue.value}}" aria-label="{{attributes.name.value}}" id="{{attributes.name.value}}-slider"></md-slider><!--width:{{attributes.sliderWidth.value}}{{attributes.widthUnits.value}};-->
-                <div flex="none" layout layout-align="center center" ng-show="$eval(attributes.inputVisible.value)">
-                    <input ng-disabled="$eval(attributes.disabled.value)" type="number" style="text-align: center; width:55px; margin:-11px 10px 0 5px" ng-model="item.value" aria-label="{{attributes.name.value}}" aria-controls="{{attributes.name.value}}-slider">
-                </div>
+<div class="dfx-core-gc-slider {{attributes.classes.value}}" style="{{attributes.style.value}}">
+    <div style="{{attributes.labelStyle.style}}" class="dfx-core-gc-slider-label {{attributes.labelStyle.class}}">
+        {{attributes.label.value | checkExpression}}
+    </div>
+    <div layout="{{attributes.direction.value}}" class="dfx-core-gc-slider-items"x>
+        <div ng-init="item.temp_value = temp_values()" ng-repeat="item in attributes.slidersArray.value track by $index" style="{{attributes.itemStyle.item.style}}" class="dfx-core-gc-slider-item flex {{attributes.itemStyle.item.class}}">
+            <div style="{{attributes.itemStyle.label.style}}" class="dfx-core-gc-slider-item-label {{attributes.itemStyle.label.class}}"><span>{{ item.label | checkExpression }}</span></div>
+            <div class="dfx-core-gc-slider-item-slider" ng-if="$eval(attributes.discrete.value)">
+                <md-slider ng-if="dfx_is_number(item.value)" style="{{attributes.itemStyle.slider.style}}" class="md-altTheme-theme md-primary {{attributes.itemStyle.slider.class}}" ng-model="item.value" min="{{attributes.minValue.value}}" max="{{attributes.maxValue.value}}" step="{{attributes.step.value}}" md-discrete aria-label="{{attributes.name.value}}" id="{{attributes.name.value}}-slider"></md-slider>
+                <md-slider ng-if="!dfx_is_number(item.value)" style="{{attributes.itemStyle.slider.style}}" class="md-altTheme-theme md-primary {{attributes.itemStyle.slider.class}}" ng-model="item.temp_value" min="{{attributes.minValue.value}}" max="{{attributes.maxValue.value}}" step="{{attributes.step.value}}" md-discrete aria-label="{{attributes.name.value}}" id="{{attributes.name.value}}-slider"></md-slider>
+            </div>
+            <div class="dfx-core-gc-slider-item-slider" ng-if="!$eval(attributes.discrete.value)">
+                <md-slider ng-if="dfx_is_number(item.value)" style="{{attributes.itemStyle.slider.style}}" class="md-altTheme-theme md-primary {{attributes.itemStyle.slider.class}}" ng-model="item.value" min="{{attributes.minValue.value}}" max="{{attributes.maxValue.value}}" aria-label="{{attributes.name.value}}" id="{{attributes.name.value}}-slider"></md-slider>
+                <md-slider ng-if="!dfx_is_number(item.value)" style="{{attributes.itemStyle.slider.style}}" class="md-altTheme-theme md-primary {{attributes.itemStyle.slider.class}}" ng-model="item.temp_value" min="{{attributes.minValue.value}}" max="{{attributes.maxValue.value}}" aria-label="{{attributes.name.value}}" id="{{attributes.name.value}}-slider"></md-slider>
+            </div>
+            <div class="dfx-core-gc-slider-item-input" ng-show="$eval(attributes.inputVisible.value)">
+                <input ng-if="dfx_is_number(item.value)" ng-disabled="$eval(attributes.disabled.value)" type="number" style="{{attributes.itemStyle.input.style}}" ng-model="item.value" class="{{attributes.itemStyle.input.class}}" aria-label="{{attributes.name.value}}">
+                <input ng-if="!dfx_is_number(item.value)" ng-disabled="$eval(attributes.disabled.value)" type="number" style="{{attributes.itemStyle.input.style}}" ng-model="item.temp_value" class="{{attributes.itemStyle.input.class}}" aria-label="{{attributes.name.value}}">
             </div>
         </div>
     </div>
