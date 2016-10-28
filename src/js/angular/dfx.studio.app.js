@@ -140,7 +140,7 @@ dfxStudioApp.controller("dfx_studio_controller", [ '$scope', '$rootScope', '$mdD
     $scope.studio_explorer_visible = true;
     $scope.dfx_version_major   = '3';
     $scope.dfx_version_minor   = '1';
-    $scope.dfx_version_release = '0';
+    $scope.dfx_version_release = '1';
 
     $scope.initStudio = function() {
         return '/studio/home';
@@ -5612,7 +5612,7 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
             if (( data.data.data !== '' ) && ($scope.currentEditingUrlName !== $scope.scopeService.name)) {
                 $scope.validUrlResult = 'failed';
                 $scope.serviceUrlError = data.data.data;
-            } else if(serviceModeBtn) {                    
+            } else if(serviceModeBtn) {
                 $scope.checkKeyboardEvents(serviceModeBtn);
             }
         });
