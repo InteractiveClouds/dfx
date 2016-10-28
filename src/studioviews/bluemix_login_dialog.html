@@ -1,12 +1,12 @@
 <md-dialog aria-label="create_resource" style="width: 400px;" ng-cloak>
-    <form>
+    <form ng-submit="bluemix.login()">
         <md-toolbar>
             <div class="md-toolbar-tools">
                 <img src="/images/bluemix_Logo.png" style="width: 32px; margin-right: 5px;"/>
                 <h5 style="padding-top: 2px;">Bluemix Login</h5>
                 <span flex></span>
-                <md-button class="md-icon-button" ng-click="cancel()">
-                    <md-icon class="fa fa-lg fa-times" aria-label="Close dialog"></md-icon>
+                <md-button class="md-icon-button" ng-click="bluemix.cancel()">
+                    <md-icon class="fa fa-lg fa-times dfx-studio-flex-icon" aria-label="Close dialog"></md-icon>
                 </md-button>
             </div>
         </md-toolbar>
@@ -45,15 +45,9 @@
         </md-dialog-content>
         <md-dialog-actions layout="row">
             <span flex></span>
-            <md-button ng-if="bluemix.logged_in === false" class="md-primary" ng-click="bluemix.login()">
-                Login
-            </md-button>
-            <md-button ng-if="bluemix.logged_in === true" class="md-primary" ng-click="bluemix.hide()">
-                Close
-            </md-button>
-            <md-button ng-if="bluemix.logged_in === false" class="md-primary" ng-click="bluemix.cancel()">
-                Cancel
-            </md-button>
+            <md-button ng-if="bluemix.logged_in === false" class="md-primary" type="submit">Login</md-button>
+            <md-button ng-if="bluemix.logged_in === true" class="md-primary" ng-click="bluemix.hide()">Close</md-button>
+            <md-button ng-if="bluemix.logged_in === false" class="md-primary" ng-click="bluemix.cancel()">Cancel</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog>

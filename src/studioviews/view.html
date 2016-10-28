@@ -1,50 +1,50 @@
-<div layout="row" layout-align="space-between center" style="background:#DCDCDC">
-	<h4 style="padding-left:10px">
-		Edit View
-	</h4>
-	<div layout="row">
-		<md-button ng-click="update()" class="md-primary">Save</md-button>
-		<md-button ng-click="cancel($event)" class="md-primary">Cancel</md-button>
+<form ng-submit="update()">
+	<div layout="row" layout-align="space-between center" style="background:#DCDCDC">
+		<h4 style="padding-left:10px">Edit View</h4>
+		<div layout="row">
+			<md-button type="submit" class="md-primary">Save</md-button>
+			<md-button ng-click="cancel($event)" class="md-primary">Cancel</md-button>
+		</div>
 	</div>
-</div>
-<div layout="column" layout-padding>
-	<div layout="row" layout-padding>
-		<md-input-container flex="40">
-	        <label>Name</label>
-	        <input type="text" disabled ng-model="view.name"/>
-	    </md-input-container>
-		<md-input-container flex="60">
-	        <label>Description</label>
-	        <input type="text"  ng-model="view.description" ng-keyup="( $event.keyCode == 13 && view.description !=='') ? update() : ''"/>
-	    </md-input-container>
+	<div layout="column" layout-padding>
+		<div layout="row" layout-padding>
+			<md-input-container flex="40">
+		        <label>Name</label>
+		        <input type="text" disabled ng-model="view.name"/>
+		    </md-input-container>
+			<md-input-container flex="60">
+		        <label>Description</label>
+		        <input type="text"  ng-model="view.description"/>
+		    </md-input-container>
+		</div>
+		<div layout="row" layout-padding>
+			<md-input-container class="input-select-aligned margin-select" flex="40" style="padding: 0px 8px;">
+			  <label>Category</label>
+			  <md-select ng-model="view.category" aria-label="view.category">
+			    <md-option ng-value="category.name" ng-repeat="category in app_categories track by $index">{{ category.name }}</md-option>
+			  </md-select>
+			</md-input-container>
+			<md-input-container flex="60">
+		        <label>Owner</label>
+		        <input type="text" disabled ng-model="view.owner"/>
+		    </md-input-container>
+		</div>
+		<div layout="row" layout-padding>
+			<md-input-container flex="40">
+		        <label>Last change</label>
+		        <input type="text" disabled ng-model="view.requestDate"/>
+		    </md-input-container>
+		</div>
+	    <!--<div layout="row" layout-padding>-->
+	        <!--<md-input-container class="input-select-aligned margin-select" flex="40" style="padding: 0px 8px;">-->
+	            <!--<label>Platform</label>-->
+	            <!--<md-select ng-model="view.platform" aria-label="view.platform" ng-disabled="true">-->
+	                <!--<md-option ng-value="platform.value" ng-repeat="platform in [{'value':'web', 'label':'Web'}, {'value':'tablet', 'label':'Tablet'}, {'value':'mobile', 'label':'Mobile'}] track by $index">{{ platform.label }}</md-option>-->
+	            <!--</md-select>-->
+	        <!--</md-input-container>-->
+	    <!--</div>-->
 	</div>
-	<div layout="row" layout-padding>
-		<md-input-container class="input-select-aligned margin-select" flex="40" style="padding: 0px 8px;">
-		  <label>Category</label>
-		  <md-select ng-model="view.category" aria-label="view.category">
-		    <md-option ng-value="category.name" ng-repeat="category in app_categories track by $index">{{ category.name }}</md-option>
-		  </md-select>
-		</md-input-container>
-		<md-input-container flex="60">
-	        <label>Owner</label>
-	        <input type="text" disabled ng-model="view.owner"/>
-	    </md-input-container>
-	</div>
-	<div layout="row" layout-padding>
-		<md-input-container flex="40">
-	        <label>Last change</label>
-	        <input type="text" disabled ng-model="view.requestDate"/>
-	    </md-input-container>
-	</div>
-    <!--<div layout="row" layout-padding>-->
-        <!--<md-input-container class="input-select-aligned margin-select" flex="40" style="padding: 0px 8px;">-->
-            <!--<label>Platform</label>-->
-            <!--<md-select ng-model="view.platform" aria-label="view.platform" ng-disabled="true">-->
-                <!--<md-option ng-value="platform.value" ng-repeat="platform in [{'value':'web', 'label':'Web'}, {'value':'tablet', 'label':'Tablet'}, {'value':'mobile', 'label':'Mobile'}] track by $index">{{ platform.label }}</md-option>-->
-            <!--</md-select>-->
-        <!--</md-input-container>-->
-    <!--</div>-->
-</div>
+</form>
 <div layout="row" layout-align ="space-between center">
     <button ng-click="openViewDesigner()" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-floppy-o" style="color: #757575"></span><span style="padding-left:5px">Open Designer</span></button>
     <button ng-click="delete($event)" class="md-raised md-warn md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-trash-o" style="color: #ffffff"></span><span style="padding-left:5px">Delete the View</span></button>

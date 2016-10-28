@@ -1,20 +1,20 @@
-<div layout="row" layout-align="space-between center" style="background:#DCDCDC">
-    <h4 style="padding-left:10px">
-        Contact our team
-    </h4>
-    <div layout="row">
-        <md-button ng-click="sendMail()" class="md-primary" ng-disabled="supportForm.$invalid || contact_msg.value ===''|| show_form==false">Send</md-button>
+<form name="supportForm" ng-if="show_form == true" ng-submit="sendMail()">
+    <div layout="row" layout-align="space-between center" style="background:#DCDCDC">
+        <h4 style="padding-left:10px">
+            Contact our team
+        </h4>
+        <div layout="row">
+            <md-button type="submit" class="md-primary" ng-disabled="supportForm.$invalid || contact_msg.value ===''|| show_form==false">Send</md-button>
+        </div>
     </div>
-</div>
-<form name="supportForm" class="md-padding" ng-if="show_form == true">
     <div class="layout-row layout-padding" flex="100">
         <md-input-container class="md-block flex-40">
             <label>Your name:</label>
-            <input ng-model="contact_name.value" ng-required="true" ng-keyup="($event.keyCode == 13 && !supportForm.$invalid) ? sendMail() : ''">
+            <input ng-model="contact_name.value" ng-required="true">
         </md-input-container>
         <md-input-container class="md-block flex-60" >
             <label>Your email:</label>
-            <input type="email" ng-model="contact_email.value" ng-required="true" ng-keyup="($event.keyCode == 13 && !supportForm.$invalid) ? sendMail() : ''">
+            <input type="email" ng-model="contact_email.value" ng-required="true">
         </md-input-container>
     </div>
     <div class="layout-row layout-padding" flex="100">
@@ -24,7 +24,7 @@
         </md-input-container>
         <md-input-container flex="60">
             <label>Message:</label>
-            <textarea ng-model="contact_msg.value" columns="1" ng-required="true" ng-keyup="($event.keyCode == 13 && !supportForm.$invalid) ? sendMail() : ''"></textarea>
+            <textarea ng-model="contact_msg.value" columns="1" ng-required="true"></textarea>
         </md-input-container>
     </div>
 </form>

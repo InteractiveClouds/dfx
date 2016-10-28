@@ -142,12 +142,13 @@ dfxGCC.directive('dfxGccWebBase', ['$rootScope', '$http', '$compile', '$injector
             };
 
             this.changeWidth = function(scope) {
+                var component = angular.element(document.querySelectorAll('[id="' + scope.component_id + '"]'));//for repeatable panels
                 var parent_column_orientation = $('#' + scope.component_id).parent().attr('layout');
                 if (parent_column_orientation == 'column') {
-                    $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+                    component.css('width', scope.attributes.flex.value + '%');
                 } else {
-                    $('#' + scope.component_id).removeClass('flex-100');
-                    $('#' + scope.component_id).addClass('flex' + '-' + scope.attributes.flex.value);
+                    component.removeClass('flex-100');
+                    component.addClass('flex' + '-' + scope.attributes.flex.value);
                 }
             };
         }
@@ -174,9 +175,9 @@ dfxGCC.directive('dfxGccWebPanel', ['$timeout', '$compile', function($timeout, $
                 scope.attributes.toolbar.rightMenu.initialClick = { "value": false };
                 scope.attributes.toolbar.rightMenu.dynamicPresent = { "value": false };
                 scope.dfx_rep_panels;
-                var is_rep_title = (scope.attributes.repeat_in.value !=='' && scope.attributes.repeat_title.value) ? true : false, 
+                var is_rep_title = (scope.attributes.repeat_in.value !=='' && scope.attributes.repeat_title.value) ? true : false,
                     is_rep_panel = scope.attributes.repeat_in.value !=='' ? true : false;
-				
+
                 scope.collapsePanelContent = function(ev, dfxIndex){
                     var toggle_btn_id = ev.target.id,
                         toggle_btn = $('#'+toggle_btn_id),
@@ -189,7 +190,7 @@ dfxGCC.directive('dfxGccWebPanel', ['$timeout', '$compile', function($timeout, $
                     }
                     if(!is_rep_title && is_rep_panel && scope.dfx_rep_panels>0){
                         toggle_btn.toggleClass('dfx-expanded');
-                        for (var i = 0; i < scope.dfx_rep_panels; i++) {                                
+                        for (var i = 0; i < scope.dfx_rep_panels; i++) {
                             var item_collapse_cont = $('#'+collapse_cont_id+'_'+i);
                             if(item_collapse_cont.hasClass('ng-hide')) item_collapse_cont.css('display', 'none').removeClass('ng-hide');
                             toggle_btn.hasClass('dfx-expanded') ? item_collapse_cont.slideDown() : item_collapse_cont.slideUp();
@@ -293,7 +294,8 @@ dfxGCC.directive('dfxGccWebHtml', function($sce, $compile, $parse, $timeout) {
                     }, 0);
 
                     scope.changeWidth = function(){
-                        $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+                        var component = angular.element(document.querySelectorAll('[id="' + scope.component_id + '"]'));//for repeatable panels
+                        component.css('width', scope.attributes.flex.value + '%');
                     };
                     scope.changeWidth();
                 });
@@ -330,7 +332,7 @@ dfxGCC.directive('dfxGccWebCarousel', ['$http', '$sce', '$mdDialog', '$mdToast',
                     scope.carouselDataName.value = scope.attributes.optionsType.value === 'dynamic' ? scope.attributes.optionItemNames.value.source : 'attributes.static.value';
                 }
                 scope.compileSlide = function( slide ){
-                    $compile(slide)(scope); 
+                    $compile(slide)(scope);
                 }
                 scope.compileSlides = function(){
                     $timeout(function(){
@@ -338,7 +340,7 @@ dfxGCC.directive('dfxGccWebCarousel', ['$http', '$sce', '$mdDialog', '$mdToast',
                         if ( scope.attributes.optionsType.value === 'dynamic' ) {
                             var slidesCount = scope.$parent_scope[scope.attributes.optionItemNames.value.source].length;
                             for ( var i = 0; i < slidesCount; i++ ) {
-                                $(screenSlides).eq(i+1).find('img').attr('ng-src', '{{\''+scope.$parent_scope[source_name][i][src_name]+'\'}}');                                    
+                                $(screenSlides).eq(i+1).find('img').attr('ng-src', '{{\''+scope.$parent_scope[source_name][i][src_name]+'\'}}');
                                 $(screenSlides).eq(i+1).find('.dfx-carousel-item-title').html(scope.$parent_scope[source_name][i][title_name]);
                                 $(screenSlides).eq(i+1).find('.dfx-carousel-item-description').html(scope.$parent_scope[source_name][i][description_name]);
                                 $(screenSlides).eq(i+1).attr('ng-click', scope.$parent_scope[source_name][i][onclick_name]);
@@ -441,7 +443,8 @@ dfxGCC.directive('dfxGccWebCarousel', ['$http', '$sce', '$mdDialog', '$mdToast',
                     }, true);
                 }
                 scope.changeWidth = function(){//necessary to show carousel if parent orientation is column
-                    $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+                    var component = angular.element(document.querySelectorAll('[id="' + scope.component_id + '"]'));//for repeatable panels
+                    component.css('width', scope.attributes.flex.value + '%');
                 };
                 scope.changeWidth();
             });
@@ -605,7 +608,8 @@ dfxGCC.directive('dfxGccWebTreeview', [ '$timeout', '$compile', '$q', '$http', '
                 //     return scope.attributes.static.value;
                 // };
                 scope.changeWidth = function(){
-                    $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+                    var component = angular.element(document.querySelectorAll('[id="' + scope.component_id + '"]'));//for repeatable panels
+                    component.css('width', scope.attributes.flex.value + '%');
                 };
                 scope.changeWidth();
             });
@@ -640,8 +644,8 @@ dfxGCC.directive('dfxGccWebDatepicker', ['$timeout', function($timeout) {
                     }
                 }
 
-                if(!scope.attributes.labelClass){
-                    scope.attributes.labelClass = 'dp-label-focus-off';
+                if(!scope.labelClass){
+                    scope.labelClass = 'dp-label-focus-off';
                 }
                 scope.isLoaded.value = true;
                 scope.$watch('attributes.ranged.monthsBefore', function(monthsBefore){
@@ -664,12 +668,12 @@ dfxGCC.directive('dfxGccWebDatepicker', ['$timeout', function($timeout) {
                     try{
                         scope.dp_input = '#' + scope.component_id + ' > div > div > md-datepicker > div.md-datepicker-input-container > input';
                         $(scope.dp_input).focus(function(){
-                            scope.attributes.labelClass = 'dp-label-focus-on';
+                            scope.labelClass = 'dp-label-focus-on';
                             scope.$apply(function(){
                             });
                         });
                         $(scope.dp_input).blur(function(){
-                            scope.attributes.labelClass = 'dp-label-focus-off';
+                            scope.labelClass = 'dp-label-focus-off';
                             scope.$apply(function(){
                             });
                         });
@@ -684,11 +688,12 @@ dfxGCC.directive('dfxGccWebDatepicker', ['$timeout', function($timeout) {
                 };
 
                 scope.changeWidth = function() {
-                    $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+                    var component = angular.element(document.querySelectorAll('[id="' + scope.component_id + '"]'));//for repeatable panels
+                    component.css('width', scope.attributes.flex.value + '%');
 
                     $timeout(function(){
                         var preview_wrapper = '#' + scope.component_id;
-                        $(preview_wrapper).css('width', scope.attributes.flex.value + '%');
+                        component.css('width', scope.attributes.flex.value + '%');
 
                         var dp_input = '#' + scope.component_id + ' > div > div > md-datepicker > div.md-datepicker-input-container > input' ;
                         $(dp_input).css('text-align', scope.attributes.alignment.value);
@@ -924,9 +929,8 @@ dfxGCC.directive('dfxGccWebButton', ['$timeout', '$compile', '$filter', function
                             if(buttonWidth > 220) scope.positionModeSide = 'right';
                         }, 0);
                     }
-                    if (!angular.isDefined(attrs.dfxGcEdit)) {
-                        scope.changeWidth();
-                    }
+                    scope.changeWidth();
+
                     scope.$watch('attributes.menuItems.value', function(newVal, oldVal) {
                         if ( newVal != null && !angular.equals(newVal, oldVal) ) {
                             $timeout(function() {
@@ -2875,7 +2879,8 @@ dfxGCC.directive('dfxGccWebTextarea', ['$timeout', function($timeout) {
                 if ( !scope.attributes.icon.hasOwnProperty('size') ) { scope.attributes.icon.size = 21; }
 
                 scope.changeWidth = function(){
-                    $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+                    var component = angular.element(document.querySelectorAll('[id="' + scope.component_id + '"]'));//for repeatable panels
+                    component.css('width', scope.attributes.flex.value + '%');
                 };
                 scope.changeWidth();
             });
@@ -2923,7 +2928,8 @@ dfxGCC.directive('dfxGccWebChips', ['$timeout', function($timeout) {
                 };
 
                 scope.changeWidth = function(){
-                    $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+                    var component = angular.element(document.querySelectorAll('[id="' + scope.component_id + '"]'));//for repeatable panels
+                    component.css('width', scope.attributes.flex.value + '%');
                 };
                 scope.changeWidth();
             });
@@ -3002,7 +3008,8 @@ dfxGCC.directive('dfxGccWebSlider', ['$timeout', '$mdDialog', '$q', '$http', '$m
                 };
 
                 scope.changeWidth = function(){
-                    $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+                    var component = angular.element(document.querySelectorAll('[id="' + scope.component_id + '"]'));//for repeatable panels
+                    component.css('width', scope.attributes.flex.value + '%');
                 };
                 scope.changeWidth();
             });
@@ -3073,7 +3080,8 @@ dfxGCC.directive('dfxGccWebInput', ['$timeout', '$compile', function($timeout, $
                 if ( !scope.attributes.icon.hasOwnProperty('size') ) { scope.attributes.icon.size = 21; }
 
                 scope.changeWidth = function(){
-                    $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+                    var component = angular.element(document.querySelectorAll('[id="' + scope.component_id + '"]'));//for repeatable panels
+                    component.css('width', scope.attributes.flex.value + '%');
                 };
                 scope.changeWidth();
             });
@@ -3219,7 +3227,8 @@ dfxGCC.directive('dfxGccWebSelect', ['$timeout', '$compile', function($timeout, 
             var component = scope.$parent.getComponent(element);
             basectrl.init(scope, element, component, attrs, 'select').then(function(){
                 scope.changeWidth = function(){
-                    $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+                    var component = angular.element(document.querySelectorAll('[id="' + scope.component_id + '"]'));//for repeatable panels
+                    component.css('width', scope.attributes.flex.value + '%');
                 };
                 scope.changeWidth();
                 scope.hideWebGcSelectMask = function() {
@@ -3246,10 +3255,16 @@ dfxGCC.directive('dfxGccWebList', ['$timeout', '$compile', function($timeout, $c
                 scope.itemSelected = function(it){
                     return scope.selected_items.indexOf(it) > -1;
                 }
+                Array.prototype.max_value = function() {
+                    return Math.max.apply(null, this);
+                };
+                Array.prototype.min_value = function() {
+                    return Math.min.apply(null, this);
+                };
                 scope.toggleItem = function(e, it, curr_ind){
                     var it_is = scope.selected_items.indexOf(it),
-                        min_ind = Math.min(...scope.selected_indexes),
-                        max_ind = Math.max(...scope.selected_indexes);
+                        min_ind = scope.selected_indexes.min_value(),
+                        max_ind = scope.selected_indexes.max_value();
                     if(e.shiftKey && scope.selected_items.length>0) {
                         scope.selected_items = [];
                         scope.selected_indexes = [];
@@ -3280,7 +3295,8 @@ dfxGCC.directive('dfxGccWebList', ['$timeout', '$compile', function($timeout, $c
                     scope.togglingArray = scope.attributes.static.value;
                 }
                 scope.changeWidth = function(){
-                    $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+                    var component = angular.element(document.querySelectorAll('[id="' + scope.component_id + '"]'));//for repeatable panels
+                    component.css('width', scope.attributes.flex.value + '%');
                 };
                 scope.changeWidth();
             });
@@ -3302,11 +3318,11 @@ dfxGCC.directive('dfxGccWebRichtext', function($timeout, $compile) {
                 scope.attributes.flex.status = "overridden";
                 $(element).css('opacity', 0);
                 scope.changeWidth = function(){
-                    $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+                    var component = angular.element(document.querySelectorAll('[id="' + scope.component_id + '"]'));//for repeatable panels
+                    component.css('width', scope.attributes.flex.value + '%');
                 };
-                if (!angular.isDefined(attrs.dfxGcEdit)) {
-                    scope.changeWidth();
-                }
+                scope.changeWidth();
+
                 var dfxRichText = '<ng-quill-editor name="'+scope.attributes.name.value+'" ';
                 dfxRichText += scope.attributes.binding.value !== '' ? 'ng-model="'+scope.attributes.binding.value+'" ' : 'ng-model="attributes.bindedData.value" ';
 
@@ -3568,7 +3584,8 @@ dfxGCC.directive('dfxGccWebJson', ['$http', '$sce', '$mdDialog', '$timeout', '$c
                 }
 
                 scope.changeWidth = function(){
-                    $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+                    var component = angular.element(document.querySelectorAll('[id="' + scope.component_id + '"]'));//for repeatable panels
+                    component.css('width', scope.attributes.flex.value + '%');
                 };
                 scope.changeWidth();
             });
@@ -4165,7 +4182,8 @@ dfxGCC.directive('dfxGccWebHorizontalmenu', ['$mdMenu', '$timeout', '$compile', 
                 }, true);
                 scope.iconbarBuilder();
                 scope.changeWidth = function(){
-                    $('#' + scope.component_id).addClass('flex' + '-' + scope.attributes.flex.value);
+                    var component = angular.element(document.querySelectorAll('[id="' + scope.component_id + '"]'));//for repeatable panels
+                    component.addClass('flex' + '-' + scope.attributes.flex.value);
                 };
                 scope.changeWidth();
             });
@@ -4756,7 +4774,8 @@ dfxGCC.directive('dfxGccWebDatatable', ['$timeout', '$mdDialog', '$filter', '$ht
                     }
 
                     scope.changeWidth = function(){
-                        $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%');
+                        var component = angular.element(document.querySelectorAll('[id="' + scope.component_id + '"]'));//for repeatable panels
+                        component.css('width', scope.attributes.flex.value + '%');
                     };
                     scope.changeWidth();
                 });

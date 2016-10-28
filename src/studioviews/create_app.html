@@ -1,5 +1,5 @@
-<div id="create-app-form" tabindex="0">
-    <div layout="row" layout-align="space-between center" style="background:#DCDCDC">
+<form ng-submit="createNewApp()">
+    <div layout="row" layout-align="space-between center" style="background:#DCDCDC; height: 48px;">
         <h4 style="padding-left:10px">
             Create a new application
         </h4>
@@ -8,18 +8,18 @@
     <div layout="row" class="layout-padding">
         <md-input-container class="md-block flex-40">
             <label>Application Name</label>
-            <input ng-model="appl_name" ng-keyup="($event.keyCode == 13 && appl_name !=='') ? createNewApp() : ''">
+            <input ng-model="appl_name">
         </md-input-container>
         <md-input-container class="md-block flex-60">
             <label>Title</label>
-            <input ng-model="appl_title" ng-keyup="($event.keyCode == 13 && appl_name !=='') ? createNewApp() : ''">
+            <input ng-model="appl_title">
         </md-input-container>
     </div>
     <div layout="row" class="layout-padding" style="padding-bottom: 0">
         <div class="layout-row flex-40" style="padding-bottom: 0">
             <md-input-container class="md-block" flex style="margin-bottom: 0; padding-bottom: 0;">
                 <label>Logo</label>
-                <input ng-model="selected_logo_image_input" ng-model-options="{ debounce: 500 }" ng-change="changeLogo(selected_logo_image_input)" ng-keyup="($event.keyCode == 13 && appl_name !=='') ? createNewApp() : ''">
+                <input ng-model="selected_logo_image_input" ng-model-options="{ debounce: 500 }" ng-change="changeLogo(selected_logo_image_input)">
             </md-input-container>
             <a ng-click="chooseLogoImage($event)" style="height: 30px; margin-top: 36px; padding: 0 10px 0 10px"><i style="font-size:20px;cursor:pointer;" class="fa fa-ellipsis-h md-altTheme-theme"></i></a>
         </div>
@@ -31,8 +31,7 @@
     <div layout="row" class="layout-padding" style="padding-top: 0">
         <img ng-src="{{selected_logo_image}}" style="height: 150px; width: auto;">
     </div>
-
     <div layout="row" layout-align="start" style="margin-top: 15px;">
-        <button ng-click="createNewApp()" class="md-raised md-button md-altTheme-theme md-ink-ripple" ng-disabled="appl_name===''"><span class="fa fa-lg fa-floppy-o" style="color: #757575"></span><span style="padding-left:5px">Save</span></button>
+        <button type="submit" class="md-raised md-button md-altTheme-theme md-ink-ripple" ng-disabled="appl_name===''"><span class="fa fa-lg fa-floppy-o" style="color: #757575"></span><span style="padding-left:5px">Save</span></button>
     </div>
-</div>
+</form>
