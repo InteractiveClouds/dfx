@@ -164,7 +164,7 @@
 		                </md-input-container>
 					</md-content>
 				</md-tab>
-				<md-tab label="Parameters" md-on-select="closeActionsEditor()">
+				<md-tab label="Parameters" md-on-select="closeActionsEditor()" ng-disabled="!scopeService.data.settings.url">
 					<md-content class="md-padding sidenav-service">
 						<h4>Parameters for: {{scopeService.data.settings.url}}</h4>
 						<table ng-if="scopeService.data.parameters.length > 0" class="sidenavtable" style="width:100%;">
