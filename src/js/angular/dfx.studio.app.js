@@ -5511,6 +5511,14 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
         sideNavInstance.toggle();
     }
 
+    $scope.cloneService = function( service ) {
+        var cloned = JSON.parse(JSON.stringify(service));
+        var time = Math.round(new Date().getTime()/1000);
+        cloned.name = "clone_of_" + service.name + '_' + time;
+        delete cloned.data.uuid;
+        $scope.api_so.apiRoutes.push( cloned );
+    }
+
     $scope.addServices = function() {
         $scope.serviceModeBtn = 'addServices';
         $scope.servicesApiSource = 'none';
