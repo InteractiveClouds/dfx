@@ -5261,6 +5261,8 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
 
     dfxApiServiceObjects.getAll( $scope, $scope.app_name ).then( function( data ) {
         $scope.strongLoopProvider = '';
+        var rest_source = {"provider": "none", "dataSource": "REST"};
+        $scope.api_sources.push(rest_source);
         for ( var i = 0; i < data.data.data.length; i++ ) {
             $scope.api_sources.push( data.data.data[i] );
         };
