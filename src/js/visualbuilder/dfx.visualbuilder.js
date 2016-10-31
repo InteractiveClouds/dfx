@@ -1381,7 +1381,6 @@ DfxVisualBuilder.removeNotOverriddenAttributes = function (updated_attributes, g
 
         // compare
         if (angular.equals(attr_updated_value, attr_default_value)) {
-            console.log('equal');
             delete updated_attributes_parent[attribute_name];
         }
     };
