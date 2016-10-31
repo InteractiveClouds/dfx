@@ -9,7 +9,7 @@
   "centerSteps":  { "value": false },
   "whiteframe":   { "value": "md-whiteframe-1dp" },
   "percentage":   { "value": "" },
-  "toolbar": { 
+  "toolbar": {
     "visible":        { "value": "true" },
     "collapsible":    { "value": "false" },
     "collapsed":      { "value": "false" },
@@ -39,12 +39,12 @@
         "triggerButton": {
           "label": "'Home'", "style": "", "class": "",
           "icon": { "value": "'fa-bars'", "type": "fa-icon", "size": 24, "style": "", "class": "" },
-          "tooltip": { "direction": "top", "style": "", "class": "" } 
+          "tooltip": { "direction": "top", "style": "", "class": "" }
         },
         "actionButton": {
           "style": "", "class": "",
           "icon": { "value": "", "type": "", "size": 20, "style": "", "class": "" },
-          "tooltip": { "direction": "top", "style": "", "class": "" } 
+          "tooltip": { "direction": "top", "style": "", "class": "" }
         }
       },
       "iconBar": {
@@ -116,12 +116,12 @@
         "triggerButton": {
           "label": "'Home'", "style": "", "class": "",
           "icon": { "value": "'fa-bars'", "type": "fa-icon", "size": 24, "style": "", "class": "" },
-          "tooltip": { "direction": "top", "style": "", "class": "" } 
+          "tooltip": { "direction": "top", "style": "", "class": "" }
         },
         "actionButton": {
           "style": "", "class": "",
           "icon": { "value": "", "type": "", "size": 20, "style": "", "class": "" },
-          "tooltip": { "direction": "top", "style": "", "class": "" } 
+          "tooltip": { "direction": "top", "style": "", "class": "" }
         }
       },
       "iconBar": {
@@ -204,14 +204,16 @@
     "style":          { "value": "" },
     "onclick":        { "value": "" }
   },
-  "steps": {  
+  "steps": {
     "value": [
       {
         "label":          "'Step 1'",
         "validDisabled":  { "value": false },
-        "disabled":       { "value": "false" },        
+        "disabled":       { "value": "false" },
+        "percent":          { "value": 0 },
         "classes":        { "value": "" },
         "dynamicClasses": { "value": "" },
+        "isLast":           { "value": false },
         "style":          { "value": "" },
         "layout": {
           "rows": [
@@ -236,14 +238,16 @@
           "classes":        { "value": "" },
           "dynamicClasses": { "value": "" },
           "style":          { "value": ""}
-        } 
+        }
       },
       {
         "label":          "'Step 2'",
         "validDisabled":  { "value": true },
-        "disabled":       { "value": "false" },        
+        "disabled":       { "value": "false" },
+        "percent":          { "value": 0 },
         "classes":        { "value": "" },
         "dynamicClasses": { "value": "" },
+        "isLast":           { "value": true },
         "style":          { "value": "" },
         "layout": {
           "rows": [
@@ -272,7 +276,7 @@
       }
     ]
   },
-  "flex":           { "value": 100 },  
+  "flex":           { "value": 100 },
   "style":          { "value": "" },
   "bodyStyle":      { "value": "" },
   "classes":        { "value": "" },
