@@ -5395,10 +5395,9 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
                             dfxApiServiceObjects.getOne( $scope, $scope.app_name, $scope.api_so_name ).then(function( data ) {
                                 if ( data.data.apiRoutes ) {
                                     $scope.api_so.apiRoutes = data.data.apiRoutes;
-                                    $scope.getAll();
-                                    $timeout(function() {
+                                    $scope.getAll().then(function(){
                                         $scope.refresh_scope_service(route_add);
-                                    }, 0);
+                                    });
                                 }
                             });
                         } else {
@@ -6045,28 +6044,26 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
     $scope.saveActions = function() {
         var editor = $('#dfx_filter_src_query_editor.CodeMirror')[0].CodeMirror,
             codeValue = editor.getValue();
-        $scope.renderFilters( $scope.scopeService );
-        $timeout(function(){
-            if ( $scope.isEmptyFilterName ) {
-                dfxMessaging.showWarning("Filter name can't be empty");
-                $scope.selected_service_tab = 2;
-            } else {
-                switch( $scope.codeArrayName ) {
-                    case 'precode': $scope.scopeService.data.precode[$scope.codeArrayItemIndex].code = codeValue; break;
-                    case 'postcode': $scope.scopeService.data.postcode[$scope.codeArrayItemIndex].code = codeValue; break;
-                }
-                if($scope.serviceModeBtn==='serviceAdd'){
-                    $scope.saveApiSoService();
-                    $scope.serviceModeBtn = 'serviceEdit';
-                }else{
-                    $scope.updateApiSo();
-                }
-            }
-            $scope.editorOpened = false;
-            editor.setValue('');
-            $scope.editFilterTitle = null;
-        }, 200);
 
+        $scope.renderFilters( $scope.scopeService );
+        if ( $scope.isEmptyFilterName ) {
+            dfxMessaging.showWarning("Filter name can't be empty");
+            $scope.selected_service_tab = 2;
+        } else {
+            switch( $scope.codeArrayName ) {
+                case 'precode': $scope.scopeService.data.precode[$scope.codeArrayItemIndex].code = codeValue; break;
+                case 'postcode': $scope.scopeService.data.postcode[$scope.codeArrayItemIndex].code = codeValue; break;
+            }
+            if($scope.serviceModeBtn==='serviceAdd'){
+                $scope.saveApiSoService();
+                $scope.serviceModeBtn = 'serviceEdit';
+            }else{
+                $scope.updateApiSo();
+            }
+        }
+        $scope.editorOpened = false;
+        editor.setValue('');
+        $scope.editFilterTitle = null;
     }
 
     $scope.closeActionsEditor = function() {
