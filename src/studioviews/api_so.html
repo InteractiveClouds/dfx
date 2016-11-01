@@ -417,11 +417,11 @@
 					</md-content>
 				</md-tab>
 			</md-tabs>	
-			<md-button type="submit" style="display: none !important;"></md-button>
+			<md-button type="submit" style="display: none !important;" ng-disabled="validUrlResult === 'failed' || existUrl === true"></md-button>
 		</form>
 	  <div style="display:flex; justify-content: flex-end;">
-		  <md-button ng-if="serviceModeBtn === 'serviceAdd'" class="md-primary" ng-click="saveApiSoService()" ng-disabled="validUrlResult === 'failed' || existUrl === true">Add Service</md-button>
 	      <md-button ng-if="editorOpened" class="md-primary" ng-click="closeActionsEditor()">Back</md-button>
+		  <md-button ng-if="!editorOpened" class="md-primary" ng-click="validateServiceUrl(serviceModeBtn)" ng-disabled="validUrlResult === 'failed' || existUrl === true">Save</md-button>
 	      <md-button ng-if="editorOpened" class="md-primary" ng-click="saveActions()">Save</md-button>
 	      <md-button ng-if="serviceModeBtn === 'serviceAdd'" class="md-primary" ng-click="closeServiceSidenav()">Cancel</md-button>
 		  <md-button ng-if="serviceModeBtn === 'serviceEdit' && !editorOpened" class="md-primary" ng-click="closeServiceSidenav()">Close</md-button>
@@ -467,7 +467,7 @@
 								<div>
 									<md-input-container class="input-select-aligned" ng-class="validNameResult === 'failed' ? 'md-input-invalid' : ''" style="width:30%;margin-right:14px;">
 									  <label>API Service Name</label>
-						  			<input type="text" ng-model="api_so.name" ng-disabled="serviceMode === 'serviceEdit'" ng-blur="validateServiceName( api_so.name )" aria-label="api_so.name">			  
+						  			<input type="text" id="api-so-name" ng-model="api_so.name" ng-disabled="serviceMode === 'serviceEdit'" ng-blur="validateServiceName( api_so.name )" aria-label="api_so.name">			  
 						  			<div class="md-errors-spacer" style="float:left;">
 										<span style="color:#DD2C00; margin-top: 35px; font-size: 12px;">{{serviceNameError}}</span>
 						  			</div>			
@@ -493,7 +493,7 @@
 					    <button ng-click="confirmApiSoDelete($event)" class="md-raised md-warn md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-trash-o" style="color: #ffffff"></span><span style="padding-left:5px">Delete the API Service Object</span></button>
 						</div>
 					</md-tab>
-					<md-tab label="Services">
+					<md-tab ng-if="serviceMode === 'serviceEdit'" label="Services">
 						<md-content class="md-padding" layout="column">
 							<div layout="row" layout-align="end center">							
 								<md-button class="md-raised" ng-click="addService()">
