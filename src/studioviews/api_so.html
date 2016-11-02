@@ -237,7 +237,15 @@
 									<md-menu-content>
 										<md-menu-item><md-button ng-click="setCodemirrorValue(executeDataQuery)" style="line-height:32px;">Execute service with parameters</md-button></md-menu-item>
 										<md-menu-item><md-button ng-click="setCodemirrorValue(executeDataQueryParams)" style="line-height:32px;">Execute service with parameters and body</md-button></md-menu-item>
-										<md-menu-item ng-show="editFilterParameters">
+                                        <md-menu-item ng-show="!editFilterParameters">
+                                            <md-menu>
+                                                <md-button ng-click="$mdOpenMenu()" style="line-height:32px;">Parameters</md-button>
+                                                <md-menu-content>
+                                                    <md-menu-item><md-button ng-click="setCodemirrorValue(getParameter)" style="line-height:32px;">Get Parameter Value</md-button></md-menu-item>
+                                                </md-menu-content>
+                                            </md-menu>
+                                        </md-menu-item>
+                                        <md-menu-item ng-show="editFilterParameters">
 		                                    <md-menu>
 		                                      <md-button ng-click="$mdOpenMenu()" style="line-height:32px;">Parameters</md-button>
 		                                      <md-menu-content>
