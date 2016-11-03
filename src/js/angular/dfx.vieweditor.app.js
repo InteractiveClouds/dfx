@@ -1921,13 +1921,9 @@ dfxViewEditorApp.directive('dfxVePickerColumn', [ '$compile', '$mdDialog', funct
                 }
             };
             scope.overrideAttribute = function(attribute_name) {
-                console.log('1) overrideAttribute, scope: ', scope);
-
                 scope.gc_selected.attributes[attribute_name].status = 'overridden';
                 setAttributeValue(attribute_name);
                 updateDataTableContent();
-
-                console.log('2) overrideAttribute, scope: ', scope);
             };
         }
 
