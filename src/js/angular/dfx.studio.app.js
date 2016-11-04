@@ -2189,8 +2189,14 @@ dfxStudioApp.controller("dfx_studio_new_application_controller", [ '$scope','dfx
             templateUrl: '/gcontrols/web/picker_images_form.html',
             controller: function(){
                 $scope.setImage = function(src) {
-                    $scope.selected_logo_image = src ;
-                    $scope.selected_logo_image_input = src ;
+                    var fileName = src.split('/')[src.split('/').length -1];
+                    if (fileName !== 'dfx_login_logo_black.png') {
+                        $scope.selected_logo_image = "/assets/" + fileName;
+                        $scope.selected_logo_image_input.value = "/assets/" + fileName;
+                    } else {
+                        $scope.selected_logo_image = src;
+                        $scope.selected_logo_image_input.value = src;
+                    }
                     $mdDialog.hide();
                 }
                 $scope.closeDialog = function(){
@@ -2233,8 +2239,14 @@ dfxStudioApp.controller("dfx_studio_general_settings_controller", [ '$scope','df
             templateUrl: '/gcontrols/web/picker_images_form.html',
             controller: function(){
                 $scope.setImage = function(src) {
-                    $scope.selected_logo_image = src ;
-                    $scope.selected_logo_image_input.value = src;
+                    var fileName = src.split('/')[src.split('/').length -1];
+                    if (fileName !== 'dfx_login_logo_black.png') {
+                        $scope.selected_logo_image = "/assets/" + fileName;
+                        $scope.selected_logo_image_input.value = "/assets/" + fileName;
+                    } else {
+                        $scope.selected_logo_image = src;
+                        $scope.selected_logo_image_input.value = src;
+                    }
                     $mdDialog.hide();
                 }
                 $scope.closeDialog = function(){
