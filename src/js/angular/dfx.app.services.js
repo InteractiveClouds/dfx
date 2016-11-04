@@ -9,9 +9,25 @@ dfxAppServices.factory('dfxAuthRequest', function() {
             callback(data);
         });
     };
-    
+
     return aut_request;
 });
+
+dfxAppServices.factory('dfxPages', [ '$q', function($q) {
+
+	var pages = {};
+
+	pages.clearPageBody = function() {
+		var deferred_clearance = $q.defer();
+		$('#pagebody').addClass('animated slideOutLeft').one('animationend', function(eventOne) {
+			deferred_clearance.resolve();
+		});
+		return deferred_clearance.promise;
+	}
+
+	return pages;
+
+}]);
 
 dfxAppServices.factory('dfxDialog', [ '$mdDialog', '$mdToast', function($mdDialog, $mdToast) {
 
