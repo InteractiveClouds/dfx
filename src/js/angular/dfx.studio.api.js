@@ -2360,7 +2360,9 @@ dfxStudioApi.factory('dfxRendering', [ '$http', '$q', function($http, $q) {
             method: 'POST',
             url: '/studio/view/render',
 			data: {
-				view_source: JSON.parse(view_definition)
+				view_source: JSON.parse(view_definition),
+                application: scope.application_name,
+                platform: scope.view_platform
 			}
         }).then(function successCallback(response) {
             deferred.resolve( response.data );

@@ -4,46 +4,49 @@
             <input class="dfx-ve-property-treeview-button" type="checkbox" id="item-0" />
             <label for="item-0">Main Properties</label>
             <ul class="dfx-ve-property-treeview-content">
-                <li class="col-md-12">
+                <li class="col-md-12" ng-show="isGcSpecialAttributeVisible()">
                     <span class="col-md-4">Id:</span>
                     <input class="col-md-8" type="text" ng-model="component_id" disabled/>
                 </li>
-                <li class="col-md-12" dfx-gc-property="template">
-                    <span class="col-md-4">Template:</span>
-                    <input class="col-md-8" type="text" ng-model="attributes.template.value" ng-change="overrideAttribute('template')" disabled/>
+                <li class="col-md-12" dfx-gc-property="template" ng-show="isGcSpecialAttributeVisible()">
+                    <span class="col-md-4">Template:<dfx-gc-template-locking attr_name="template"></dfx-gc-template-locking></span>
+                    <md-input-container class="col-md-8" style="padding: 0 0 4px 0">
+                        <md-select aria-label="rating-range" ng-model="attributes.template.value"
+                                   ng-change="overrideAttribute('template');reinitComponentWithTemplate(attributes.template.value);">
+                            <md-option ng-repeat="gc_template in gc_templates_by_type" value="{{gc_template.name}}">{{gc_template.name}}</md-option>
+                        </md-select>
+                    </md-input-container>
                 </li>
-                <li class="col-md-12" dfx-gc-property="name">
+                <li class="col-md-12" dfx-gc-property="name" ng-show="isGcAttributeVisible(attributes.name.locked)">
                     <span class="col-md-4">Name:</span>
                     <input class="col-md-8" type="text" ng-model="attributes.name.value" ng-change="overrideAttribute('name')" ng-focus="cacheAttributeOldValue({'name':'name'})" ng-blur="cacheAttributeNewValue('name')"/>
                 </li>
-                <li class="col-md-12" dfx-gc-property="binding">
-                    <span class="col-md-4">Binding:</span>
+                <li class="col-md-12" dfx-gc-property="binding" ng-show="isGcAttributeVisible(attributes.binding.locked)">
+                    <span class="col-md-4">Binding:<dfx-gc-template-locking attr_name="binding"></dfx-gc-template-locking></span>
                     <div class="col-md-8" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.binding.value" style="margin-left:-15px;" ng-change="overrideAttribute('binding')" ng-focus="cacheAttributeOldValue({'name':'binding'})" ng-blur="cacheAttributeNewValue('binding')"/><dfx-ve-expression-editor></dfx-ve-expression-editor>
+                        <input class="col-md-12" type="text" ng-model="attributes.binding.value" style="margin-left:-15px;" ng-change="overrideAttribute('binding')" ng-disabled="attributes.binding.locked" ng-focus="cacheAttributeOldValue({'name':'binding'})" ng-blur="cacheAttributeNewValue('binding')"/><dfx-ve-expression-editor></dfx-ve-expression-editor>
                     </div>
                 </li>
-                <li class="col-md-12" dfx-gc-property="label">
-                    <span class="col-md-4">Label:</span>
-                    <div class="col-md-8" layout="row"><input class="col-md-12" type="text" ng-model="attributes.label.value" style="margin-left:-15px;" ng-change="overrideAttribute('label')" ng-focus="cacheAttributeOldValue({'name':'label'})" ng-blur="cacheAttributeNewValue('label')"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                <li class="col-md-12" dfx-gc-property="label" ng-show="isGcAttributeVisible(attributes.label.locked)">
+                    <span class="col-md-4">Label:<dfx-gc-template-locking attr_name="label"></dfx-gc-template-locking></span>
+                    <div class="col-md-8" layout="row"><input class="col-md-12" type="text" ng-model="attributes.label.value" style="margin-left:-15px;" ng-change="overrideAttribute('label')" ng-disabled="attributes.label.locked"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
                 </li>
-                <li class="col-md-12">
-                    <span class="col-md-4">Options:</span>
-                    <a ng-click="showOptionsEditor($event)" style="font-size:12px;color:#97CFFF;text-decoration:none;cursor:pointer;"><span style="padding-left:0"><md-icon class="fa fa-edit" style="font-size:14px;height:16px;min-height: 14px;"></md-icon>Edit</span></a>
-                    <!-- <span ng-click="showOptionsEditor($event)" class="dfx-ve-property-treeview-edit-button">
-                        <ng-md-icon icon="edit" size="20" class="dfx-ve-property-treeview-edit-button-icon"></ng-md-icon>
-                        Edit
-                    </span> -->
+                <li class="col-md-12" ng-show="isGcAttributeVisible(attributes.staticArray.locked)">
+                    <span class="col-md-4">Options:<dfx-gc-template-locking attr_name="staticArray"></dfx-gc-template-locking></span>
+                    <a ng-click="showOptionsEditor($event)" style="font-size:12px;color:#97CFFF;text-decoration:none;cursor:pointer;{{attributes.staticArray.locked ? 'pointer-events:none;color:grey;' : 'color:#97CFFF;'}}">
+                        <span style="padding-left:0"><md-icon class="fa fa-edit" style="font-size:14px;height:16px;min-height: 14px;"></md-icon>Edit</span>
+                    </a>
                 </li>
-                <li class="col-md-12">
-                    <span class="col-md-4">Direction:</span>
-                    <md-radio-group class="dfx-ve-property-treeview-radiogroup row-radio" ng-model="attributes.direction.value" ng-change="overrideAttribute('direction')" ng-focus="cacheAttributeOldValue({'name':'direction'})" ng-blur="cacheAttributeNewValue('direction')">
+                <li class="col-md-12" ng-show="isGcAttributeVisible(attributes.direction.locked)">
+                    <span class="col-md-4">Direction:<dfx-gc-template-locking attr_name="direction"></dfx-gc-template-locking></span>
+                    <md-radio-group class="dfx-ve-property-treeview-radiogroup row-radio" ng-model="attributes.direction.value" ng-disabled="attributes.direction.locked" ng-change="overrideAttribute('direction')" ng-focus="cacheAttributeOldValue({'name':'direction'})" ng-blur="cacheAttributeNewValue('direction')">
                         <md-radio-button class="md-primary" value="column" aria-label="Direction">Column</md-radio-button>
                         <md-radio-button class="md-primary" value="row" aria-label="Direction">Row</md-radio-button>
                     </md-radio-group>
                 </li>
-                <li class="col-md-12">
-                    <span class="col-md-4">Display value:</span>
-                    <md-checkbox class="dfx-ve-property-treeview-checkbox md-primary" ng-model="attributes.displayValue.value" ng-true-value="true" ng-false-value="false" ng-change="overrideAttribute('displayValue');" ng-focus="cacheAttributeOldValue({'name':'displayValue'})" ng-blur="cacheAttributeNewValue('displayValue')" aria-label="displayValue"></md-checkbox>
+                <li class="col-md-12" ng-show="isGcAttributeVisible(attributes.displayValue.locked)">
+                    <span class="col-md-4">Display value:<dfx-gc-template-locking attr_name="displayValue"></dfx-gc-template-locking></span>
+                    <md-checkbox class="dfx-ve-property-treeview-checkbox md-primary" ng-model="attributes.displayValue.value" ng-true-value="true" ng-false-value="false" ng-disabled="attributes.displayValue.locked" ng-change="overrideAttribute('displayValue');" ng-focus="cacheAttributeOldValue({'name':'displayValue'})" ng-blur="cacheAttributeNewValue('displayValue')" aria-label="displayValue"></md-checkbox>
                 </li>
                 <li class="col-md-12" dfx-gc-property="display">
                     <span class="col-md-4">Display:</span>
@@ -131,9 +134,9 @@
             <input class="dfx-ve-property-treeview-button" type="checkbox" checked id="item-4" />
             <label for="item-4">Events</label>
             <ul class="dfx-ve-property-treeview-content">
-                <li class="col-md-12">
-                    <span class="col-md-4">On Click:</span>
-                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onclick.value" ng-change="overrideAttribute('onclick')" ng-focus="cacheAttributeOldValue({'name':'onclick'})" ng-blur="cacheAttributeNewValue('onclick')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                <li class="col-md-12" ng-show="isGcAttributeVisible(attributes.onclick.locked)">
+                    <span class="col-md-4">On Click:<dfx-gc-template-locking attr_name="onclick"></span>
+                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onclick.value" ng-change="overrideAttribute('onclick')" ng-focus="cacheAttributeOldValue({'name':'onclick'})" ng-blur="cacheAttributeNewValue('onclick')" ng-disabled="attributes.onclick.locked" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
                 </li>
                 <li class="col-md-12">
                     <span class="col-md-4">On Double Click:</span>
