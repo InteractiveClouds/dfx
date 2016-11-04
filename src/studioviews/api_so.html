@@ -425,7 +425,7 @@
 					</md-content>
 				</md-tab>
 			</md-tabs>	
-			<md-button type="submit" style="display: none !important;" ng-disabled="validUrlResult === 'failed' || existUrl === true"></md-button>
+			<md-button type="submit" style="display: none !important;" ng-disabled="validUrlResult === 'failed' || existUrl === true" aria-label="submit"></md-button>
 		</form>
 	  <div style="display:flex; justify-content: flex-end;">
 	      <md-button ng-if="editorOpened" class="md-primary" ng-click="closeActionsEditor()">Back</md-button>
@@ -447,7 +447,7 @@
 		<div layout="row" layout-align="start center" style="padding:0px 8px;">
 			<md-input-container class="input-select-aligned margin-select" style="width:180px;margin-right:14px;">
 			  <label>API Source:</label>
-			  <md-select ng-model="servicesApiSource" aria-label="servicesApiSource">
+			  <md-select ng-model="servicesApiSource" aria-label="servicesApiSource" ng-disabled="api_sources.length === 1">
 			    <md-option ng-if="source.dataSource !=='REST'" ng-value="source.provider" ng-repeat="source in api_sources track by $index" ng-click="chooseDataSource( source )">
 			    	{{ source.provider === 'none' ? 'public/rest' : source.provider }}
 			    </md-option>
@@ -494,7 +494,7 @@
 									  </md-select>
 									</md-input-container>
 								</div>
-								<md-button type="submit" ng-disabled="api_so.name ===''" style="display: none !important;"></md-button>
+								<md-button type="submit" ng-disabled="api_so.name ===''" style="display: none !important;" aria-label="submit"></md-button>
 							</form>						
 						</md-content>
 						<div ng-if="serviceMode === 'serviceEdit'" layout="row" layout-align ="end center">
