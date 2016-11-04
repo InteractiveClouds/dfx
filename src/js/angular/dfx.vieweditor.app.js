@@ -219,7 +219,7 @@ dfxViewEditorApp.controller("dfx_main_controller", [ '$scope', '$rootScope', '$q
 
 }]);
 
-dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScope', '$compile', '$timeout', '$mdDialog', '$mdToast', '$mdSidenav', '$log', '$mdMedia', '$window', '$http', 'dfxMessaging', 'dfxViews', 'dfxRendering', function($scope, $rootScope, $compile, $timeout, $mdDialog, $mdToast, $mdSidenav, $log, $mdMedia, $window, $http, dfxMessaging, dfxViews, dfxRendering) {
+dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScope', '$compile', '$timeout', '$mdDialog', '$mdToast', '$mdSidenav', '$log', '$mdMedia', '$window', '$http', '$location', 'dfxMessaging', 'dfxViews', 'dfxRendering', function($scope, $rootScope, $compile, $timeout, $mdDialog, $mdToast, $mdSidenav, $log, $mdMedia, $window, $http, $location, dfxMessaging, dfxViews, dfxRendering) {
 
     $scope.palette_visible = true;
     $scope.property_visible = true;
@@ -944,29 +944,11 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
 			}
         });
     }
-    $scope.export_view = function(event) {
+    $scope.export_view = function(event){
         dfxViews.get_view_zip($scope, $scope.application_name, $scope.view_name, $scope.view_platform).then(function(data){
-            console.log('$scope.exportView response data: ', data);
+            var view_zip_link = '/studio/widget/download/' + $scope.view_name + '?path=' + data.data.data;
+            $window.open( view_zip_link, '_blank' );
         });
-        // console.log('exportView');
-        // var view_source_editor = ($('#dfx_src_editor.CodeMirror')[0].CodeMirror).getValue(),
-        //     view_script_editor = ($('#dfx_script_editor.CodeMirror')[0].CodeMirror).getValue(),
-        //     view_style_editor  = ($('#dfx_styles_editor.CodeMirror')[0].CodeMirror).getValue(),
-        //     view_config = { "input": [], "output": [], "context":[] },
-        //     view_html = '<link rel="stylesheet" type="text/css" href="/'+$scope.view_name+'.css" />'+
-        //                 '<div ng-controller="'+$scope.view_name+'Controller">'+
-        //                     '<div id="1" ng-controller="dfx_view_controller" dfx-view="'+$scope.view_name+'" '+
-        //                     'dfx-view-card="'+$scope.view_card_selected+'"></div>'+
-        //                 '</div>';
-        // view_parsed_source = JSON.parse(view_source_editor);
-        // view_parsed_source.config = view_config;
-        // view_string_source = JSON.stringify(view_parsed_source, null, '\t')
-        // console.log('VIEW CONFIG:', view_config);
-        // console.log('VIEW HTML:', view_html);
-        // console.log('SOURCE:', view_string_source);
-        // console.log('SCRIPTS:', view_script_editor);
-        // console.log('STYLES:', view_style_editor);
-        // console.log('COMPILED TEMPLATE: ', window.localStorage.getItem('DFX_view_compiled_'+$scope.view_name+'_'+$scope.view_card_selected));
     }
 
     var platform = $('#dfx_visual_editor').attr('platform');
