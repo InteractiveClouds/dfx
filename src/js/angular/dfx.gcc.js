@@ -644,8 +644,8 @@ dfxGCC.directive('dfxGccWebDatepicker', ['$timeout', function($timeout) {
                     }
                 }
 
-                if(!scope.attributes.labelClass){
-                    scope.attributes.labelClass = 'dp-label-focus-off';
+                if(!scope.labelClass){
+                    scope.labelClass = 'dp-label-focus-off';
                 }
                 scope.isLoaded.value = true;
                 scope.$watch('attributes.ranged.monthsBefore', function(monthsBefore){
@@ -668,12 +668,12 @@ dfxGCC.directive('dfxGccWebDatepicker', ['$timeout', function($timeout) {
                     try{
                         scope.dp_input = '#' + scope.component_id + ' > div > div > md-datepicker > div.md-datepicker-input-container > input';
                         $(scope.dp_input).focus(function(){
-                            scope.attributes.labelClass = 'dp-label-focus-on';
+                            scope.labelClass = 'dp-label-focus-on';
                             scope.$apply(function(){
                             });
                         });
                         $(scope.dp_input).blur(function(){
-                            scope.attributes.labelClass = 'dp-label-focus-off';
+                            scope.labelClass = 'dp-label-focus-off';
                             scope.$apply(function(){
                             });
                         });
@@ -2946,6 +2946,7 @@ dfxGCC.directive('dfxGccWebSlider', ['$timeout', '$mdDialog', '$q', '$http', '$m
             var component = scope.getComponent(element);
             scope.$gcscope = scope;
             basectrl.init(scope, element, component, attrs, 'slider').then(function(){
+                scope.dfx_is_number = angular.isNumber;
                 if(!scope.attributes.hasOwnProperty('isBindingPresent')){scope.attributes.isBindingPresent = { "value": "" };}
                 if(!scope.attributes.hasOwnProperty('dynamicPresent')){scope.attributes.dynamicPresent = { "value": false };}
                 if(!scope.attributes.hasOwnProperty('counterCheck')){scope.attributes.counterCheck = { "value": "" };}
@@ -2954,8 +2955,6 @@ dfxGCC.directive('dfxGccWebSlider', ['$timeout', '$mdDialog', '$q', '$http', '$m
                 scope.attributes.binding.status = "overridden";
                 scope.attributes.isBindingPresent.status = "overridden";
                 scope.attributes.flex.status = "overridden";
-                scope.attributes.buttonClass.value = scope.attributes.buttonClass.value.replace("md-primary", "");
-
                 if(scope.attributes.isBindingPresent.value){
                     if(scope.$gcscope[scope.attributes.binding.value] instanceof Array){
                         for(var i = 0; i < scope.$gcscope[scope.attributes.binding.value].length; i++){
@@ -3012,6 +3011,9 @@ dfxGCC.directive('dfxGccWebSlider', ['$timeout', '$mdDialog', '$q', '$http', '$m
                     component.css('width', scope.attributes.flex.value + '%');
                 };
                 scope.changeWidth();
+                for (var i = 0; i < scope.attributes.slidersArray.value.length; i++) {
+                    if(scope.attributes.slidersArray.value[i].hasOwnProperty('temp_value')) delete scope.attributes.slidersArray.value[i].temp_value;
+                };
             });
         }
     }
@@ -4331,8 +4333,8 @@ dfxGCC.directive('dfxGccWebTabs', ['$timeout', '$compile', function($timeout, $c
                 scope.setTabWidth = function() {
                     $timeout(function () {
                         try{
-                            var paginationWrapper = '#' + scope.component_id + '> div.flex > md-content > md-tabs > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper';
-                            var inkBar = '#' + scope.component_id + '> div.flex > md-content > md-tabs > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper > md-ink-bar';
+                            var paginationWrapper = '#' + scope.component_id + '> div.flex > md-content > div > md-tabs > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper';
+                            var inkBar = '#' + scope.component_id + '> div.flex > md-content > div > md-tabs > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper > md-ink-bar';
                             $(paginationWrapper).css('width', '100%');
                             var temp = $($(paginationWrapper).children()[0]).css('width');
                             var stepWidth = parseInt(temp.substring(0, temp.length - 2));
@@ -4358,65 +4360,20 @@ dfxGCC.directive('dfxGccWebTabs', ['$timeout', '$compile', function($timeout, $c
 
                 basectrl.changeWidth(scope);
 
-                scope.collapsePanelBody = function(isCollapsed, index) {
-                    if ( scope.attributes.repeat_title.value ) {
-                        basectrl.bindScopeVariable( scope, component.attributes.repeat_in.value );
-                    } else {
-                        basectrl.bindScopeVariable( scope, component.attributes.toolbar.collapsed.value );
-                    }
-                    if ( scope.attributes.toolbar.collapsed.value == 'true' || scope.attributes.toolbar.collapsed.value == 'false' ) {
-                        if ( isCollapsed ) {
-                            scope.attributes.toolbar.collapsed.value = 'false';
-                        } else {
-                            scope.attributes.toolbar.collapsed.value = 'true';
-                        }
-                    } else {
-                        if ( scope.attributes.repeat_title.value ) {
-                            var collapsedEl = scope.attributes.toolbar.collapsed.value.replace("$dfx_item.", "");
-                            if ( isCollapsed ) {
-                                scope[scope.attributes.repeat_in.value][index][collapsedEl] = false;
-                            } else {
-                                scope[scope.attributes.repeat_in.value][index][collapsedEl] = true;
-                            }
-                        } else {
-                            if ( isCollapsed ) {
-                                scope.$parent_scope[scope.attributes.toolbar.collapsed.value] = false;
-                            } else {
-                                scope.$parent_scope[scope.attributes.toolbar.collapsed.value] = true;
-                            }
-                        }
-                    }
+                scope.collapsePanelContent = function(ev, dfxIndex){
+                    var toggle_btn_id = ev.target.id,
+                        toggle_btn = $('#'+toggle_btn_id),
+                        collapse_cont_id = toggle_btn_id.replace('toggling_', '');
+                    var collapse_container = $('#'+collapse_cont_id);
+                    if(collapse_container.hasClass('ng-hide')) collapse_container.css('display', 'none').removeClass('ng-hide');
+                    toggle_btn.toggleClass('dfx-expanded');
+                    collapse_container.slideToggle();
                 }
-
-                scope.checkPanelBody = function() {
-                    if ( scope.attributes.toolbar.collapsed.value == 'true' ) {
-                        scope.attributes.toolbar.collapsed.designValue = true;
-                    } else {
-                        scope.attributes.toolbar.collapsed.designValue = false;
-                    }
-                }
-
-                scope.checkCollapses = function() {
-                    if ( !scope.attributes.toolbar.hasOwnProperty('collapsed') ) {
-                        var addCollapsed = { "collapsed": { "value": "false" }};
-                        scope.attributes.toolbar.collapsed = addCollapsed.collapsed;
-                    }
-                    if ( !scope.attributes.toolbar.hasOwnProperty('collapsible') ) {
-                        var addCollapsible = { "collapsible": { "value": "false" }};
-                        scope.attributes.toolbar.collapsible = addCollapsible.collapsible;
-                    }
-                    if ( !scope.attributes.hasOwnProperty('repeat_title') ) {
-                        var addRepeatTitle = { "repeat_title": { "value": false }};
-                        scope.attributes.repeat_title = addRepeatTitle.repeat_title;
-                    }
-                }
-
-                scope.checkCollapses();
 
                 var flexTabInRunTime = function() {
                     if (!scope.attributes.autoHeight || scope.attributes.autoHeight.value != true) {
                         $timeout(function () {
-                            var $md_tab_content_wrapper = $('#' + scope.component_id + ' > div > md-content > md-tabs > md-tabs-content-wrapper');
+                            var $md_tab_content_wrapper = $('#' + scope.component_id + ' > div > md-content > div > md-tabs > md-tabs-content-wrapper');
                             $md_tab_content_wrapper.attr('flex', '100');
                             $md_tab_content_wrapper.addClass('flex-100');
                             $md_tab_content_wrapper.attr('layout', 'column');
@@ -4480,6 +4437,22 @@ dfxGCC.directive('dfxComplexValue', ['$timeout', '$compile', '$parse', function 
                     $compile(element)(scope);
                 }
             }, 10);
+        }
+    };
+}]);
+
+/* Directive for Dynamic item values */
+dfxGCC.directive('dfxItemComplexValue', ['$timeout', '$compile', '$parse', function ($timeout, $compile, $parse) {
+    return {
+        restrict: 'A',
+        terminal: true,
+        priority: 100000,
+        link: function (scope, elem) {
+            var item_value = $parse(elem.attr('dfx-item-complex-value'))(scope);
+            if(/^[a-zA-Z_][a-zA-Z0-9_]+$/.test(item_value)) item_value = '$parent_scope.'+item_value;
+            elem.removeAttr('dfx-item-complex-value');
+            elem.attr('ng-model', item_value);
+            $compile(elem)(scope);
         }
     };
 }]);
@@ -4594,6 +4567,16 @@ dfxGCC.directive('dfxGccWebWizard', ['$mdDialog', '$timeout', '$compile', functi
                     },0);
                 };
 
+                scope.collapsePanelContent = function(ev, dfxIndex){
+                    var toggle_btn_id = ev.target.id,
+                        toggle_btn = $('#'+toggle_btn_id),
+                        collapse_cont_id = toggle_btn_id.replace('toggling_', '');
+                    var collapse_container = $('#'+collapse_cont_id);
+                    if(collapse_container.hasClass('ng-hide')) collapse_container.css('display', 'none').removeClass('ng-hide');
+                    toggle_btn.toggleClass('dfx-expanded');
+                    collapse_container.slideToggle();
+                }
+
                 basectrl.changeWidth(scope);
 
                 if (!scope.attributes.autoHeight || scope.attributes.autoHeight.value != true) {
@@ -4612,7 +4595,7 @@ dfxGCC.directive('dfxGccWebWizard', ['$mdDialog', '$timeout', '$compile', functi
                         $md_tabs_template.css('height', '100%');
                         $md_tabs_template.addClass('layout-column');
                     }, 0);
-                }
+                }                
             });
         }
     }

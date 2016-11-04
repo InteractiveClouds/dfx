@@ -27,7 +27,7 @@ dfxStudioLandingApp.controller("dfx_studio_landing_controller", [ '$scope', '$lo
 	$scope.tenant_id = $('#dfx-studio-landing-body').attr( 'data-tenantid' );
 	$scope.dfx_version_major   = '3';
     $scope.dfx_version_minor   = '1';
-    $scope.dfx_version_release = '0';
+    $scope.dfx_version_release = '1';
 
 	$scope.openDocumentation = function() {
 		$window.open( 'http://interactive-clouds.com/documentation/' );

@@ -27,6 +27,7 @@ var fs = require('fs');
 var QFS = require('q-io/fs');
 var CHANNELS = require('./lib/channels').channels;
 var Q = require('q');
+var uaparser = require('ua-parser-js');
 var sockets = require('./lib/dfx_sockets');
 var version = require('./package.json').version;
 var isPortFree = require('./lib/utils/isPortFree');
@@ -98,7 +99,7 @@ out.init = function ( settings ) {
                 ? ':' + SETTINGS.external_server_port
                 : ''
         );
-        
+
 
     // choose edition and storage
     if ( SETTINGS.edition === 'deployment' && SETTINGS.storage === 'file' ) {
@@ -127,7 +128,7 @@ out.init = function ( settings ) {
         Log.init.file(  SETTINGS.logging.file);
     }
     log = new Log.Instance({label:'DFX_MAIN'});
-    
+
     cache   = require('./lib/dfx_cache').init({
         log : new Log.Instance({label:'CACHE'}),
         selectDatabase : SETTINGS.selectRedisDatabase
@@ -186,9 +187,9 @@ out.init = function ( settings ) {
     function overwriteSettings ( a, b, path ) {
 
         path = path || [];
-    
+
         for ( var param in b ) {
-    
+
             if ( !a.hasOwnProperty(param) ) {
                 console.log(
                     'WARN   : Unknown parameter ' +
@@ -200,7 +201,7 @@ out.init = function ( settings ) {
 
                 continue;
             }
-    
+
             if ( typeof b[param] !== 'object' || b[param] instanceof Array ) {
                 a[param] = b[param];
             } else {
@@ -425,7 +426,7 @@ function initFileStorage (fsdbFolder) {
     //.then(function(){
     //    return new Fdb(fsdbMap);
     //});
-    
+
 
     return Q.resolve(new Fdb({path:fsdbFolder}));
 }
@@ -640,6 +641,7 @@ function _start () {
     app.use("/studio/studioviews", express.static(path.join(__dirname, 'public/studioviews')));
     app.use("/src/catalog", express.static(path.join(__dirname, 'src/catalog')));
     //app.use("/studio/widget", express.static(path.join(__dirname, 'src/js/vendor')));
+    app.use("/browser_warning", express.static(path.join(__dirname, 'public', 'studioviews', 'browser_warning.html')));
     app.use(bodyParser.urlencoded({extended: true, limit:'50mb', parameterLimit:'Infinity'}));
     app.use(bodyParser.json({limit:'50mb'}));
     app.use(cookieParser());
@@ -653,6 +655,8 @@ function _start () {
     app.use(passport.initialize());
     app.use(passport.session());
     app.use( function(req, res, next){
+        if (! isBrowserSupported(req, res) ) { return; }
+
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.setHeader("Access-Control-Allow-Headers",  'WWW-Authenticate, Authorization, Accept');
         res.setHeader("Access-Control-Expose-Headers", 'WWW-Authenticate, Authorization, Accept');
@@ -759,4 +763,18 @@ if ( !module.parent ) out.start();
 
 function isPathAbsolute ( a ) {
     return path.resolve(a) === path.normalize(a).replace(/[\/\\]+$/, '');
+}
+
+function isBrowserSupported(req, res) {
+    var parser = new uaparser();
+    var ua = req.headers['user-agent'];
+    var browser_name = parser.setUA(ua).getBrowser().name;
+    var full_browser_version = parser.setUA(ua).getBrowser().version;
+
+    if (browser_name == 'IE' || browser_name == 'Firefox' || browser_name == 'Safari' || browser_name == 'Opera') {
+        res.redirect('/browser_warning');
+        return false;
+    } else {
+        return true;
+    }
 }

@@ -154,7 +154,7 @@ md-fab-speed-dial {
     height: 40px;
     padding: 0;
     line-height: 0;
-    margin: 6px 2px;
+    margin: 2px;
     background-color: #f5f5f5;
 }
 .dfx-core-gc-fab.md-button.md-fab .dfx-core-gc-fab-icon {
@@ -165,9 +165,9 @@ md-fab-speed-dial {
     width: 30px;
     height: 30px;
     padding: 0;
-    min-height: 30px;
+    min-height: 0px;
     line-height: 0px;
-    margin: 6px 2px;
+    margin: 2px;
     background-color: #f5f5f5;
 }
 .dfx-core-gc-fab-item.md-button.md-fab .dfx-core-gc-fab-item-icon {
@@ -176,8 +176,13 @@ md-fab-speed-dial {
     width: 20px;
     height: 20px;
 }
-div:not([style]).md-fab-action-item button.dfx-core-gc-fab-item {
+md-fab-speed-dial.dfx-core-gc-fab-speed-dial.md-up div:not([style]).md-fab-action-item button.dfx-core-gc-fab-item,
+md-fab-speed-dial.dfx-core-gc-fab-speed-dial.md-down div:not([style]).md-fab-action-item button.dfx-core-gc-fab-item {
     width: 0px;
+}
+md-fab-speed-dial.dfx-core-gc-fab-speed-dial.md-right div:not([style]).md-fab-action-item button.dfx-core-gc-fab-item,
+md-fab-speed-dial.dfx-core-gc-fab-speed-dial.md-left div:not([style]).md-fab-action-item button.dfx-core-gc-fab-item {
+    height: 0px;
 }
 .dfx-core-gc-fab.md-button.md-fab:not([disabled]).md-focused,
 .dfx-core-gc-fab.md-button.md-fab:not([disabled]):hover,
@@ -187,6 +192,7 @@ div:not([style]).md-fab-action-item button.dfx-core-gc-fab-item {
 }
 md-tooltip.dfx-core-gc-fab-tooltip, md-tooltip.dfx-core-gc-fab-tooltip-item {
     background: rgba(0,0,0,0.5);
+    color: #ffffff;
 }
 md-tooltip.dfx-core-gc-fab-tooltip .md-content, md-tooltip.dfx-core-gc-fab-tooltip-item .md-content {
     background: none;
@@ -289,6 +295,60 @@ button[disabled="disabled"].dfx-core-gc-button.md-button md-icon, button[disable
 .dfx-core-gc-select {
     margin-bottom: 24px;
 }
+/* Slider */
+.dfx-core-gc-slider {
+    padding: 8px 0;
+}
+.dfx-core-gc-slider-label {
+    font-size: 11px;
+    padding-left: 3px;
+    color: rgba(0,0,0,.54);
+}
+.dfx-core-gc-slider-items { 
+    width: 100%;
+    margin-top: -4px;
+}
+.dfx-core-gc-slider-items.layout-row {
+    display: -webkit-flex;
+    display: flex;
+}
+.dfx-core-gc-slider-items.layout-column {
+    display: table; 
+}
+.dfx-core-gc-slider-item {
+    display: table-row; 
+}
+.dfx-core-gc-slider-item-label, .dfx-core-gc-slider-item-slider, .dfx-core-gc-slider-item-input {
+    display: table-cell;
+    vertical-align: middle;
+    height: 41px;
+    max-height: 41px;
+    min-width: 0px;
+}
+.dfx-core-gc-slider-item-label {
+    white-space: nowrap; 
+    padding: 0 5px;
+}
+.dfx-core-gc-slider-item-label span {
+    display: block;  
+    margin-top: 6px;    
+}
+.dfx-core-gc-slider-item-slider {
+    width: 100%;
+}
+.dfx-core-gc-slider-item-slider md-slider {
+    height: 41px;
+    min-width: 0px;
+}
+.dfx-core-gc-slider-item-input {
+    padding: 0 10px 0 5px;
+}
+.dfx-core-gc-slider-item-input > input {
+    text-align: center; 
+    width:55px; 
+    margin-top: 6px;
+}
+
 /* Table */
 .dfx-core-gc-table {
     width:100%;

@@ -1395,6 +1395,17 @@ DfxVisualBuilder.removeNotOverriddenAttributes = function (updated_attributes, g
     {
         var attr_default_value = getDeepValue(template, attr_full_path);
 
+        // to compare without status
+        attr_updated_value = angular.copy(attr_updated_value);
+        if (attr_updated_value.status == 'overridden') {
+            if (attr_default_value.status == '') {
+                attr_updated_value.status == '';
+            } else if (! attr_default_value.hasOwnProperty('status')) {
+                delete attr_updated_value['status'];
+            }
+        }
+
+        // compare
         if (angular.equals(attr_updated_value, attr_default_value)) {
             delete updated_attributes_parent[attribute_name];
         }
@@ -1403,7 +1414,19 @@ DfxVisualBuilder.removeNotOverriddenAttributes = function (updated_attributes, g
     var removeNotOverridden = function (updated_attributes, attr_full_path, template, updated_attributes_parent) {
         for (var attribute in updated_attributes) {
             if (updated_attributes.hasOwnProperty(attribute)) {
-                if (attribute != 'value' && attribute != 'status' && !Array.isArray(updated_attributes[attribute])) {
+                if ( (attribute == 'value' && Array.isArray(updated_attributes[attribute]))
+                    || (attribute == 'value' && angular.isObject(updated_attributes[attribute]) && !angular.isString(updated_attributes[attribute]))
+                    || (attribute == 'layout' && gc_type == 'panel') )
+                {
+                    var attr_path = attr_full_path ? attr_full_path + '.' + attribute : attribute;
+                    var attribute_name = attr_full_path ? attr_full_path.substring(attr_full_path.lastIndexOf('.') + 1) : attribute;
+                    var updated_attributes_parent = updated_attributes_parent ? updated_attributes_parent : updated_attributes;
+
+                    removeOverriddenDefaultArraysOrObjects(updated_attributes[attribute], updated_attributes_parent, attribute_name,
+                        attr_path, template);
+                }
+                else if (attribute != 'value' && attribute != 'status' && !Array.isArray(updated_attributes[attribute]))
+                {
                     var attr_path = attr_full_path ? attr_full_path + '.' + attribute : attribute;
 
                     if (updated_attributes[attribute] !== null && typeof updated_attributes[attribute] === 'object') {
@@ -1413,16 +1436,6 @@ DfxVisualBuilder.removeNotOverriddenAttributes = function (updated_attributes, g
                         removeNotOverridden(updated_attributes[attribute], attr_path, template, updated_attributes);
                     }
                     removeOverriddenWithDefaultValues(attr_path, updated_attributes[attribute], updated_attributes, attribute, template);
-                }
-                else if ( (attribute == 'value' && Array.isArray(updated_attributes[attribute]))
-                    || (attribute == 'value' && angular.isObject(updated_attributes[attribute]) && !angular.isString(updated_attributes[attribute])) )
-                {
-                    var attr_path = attr_full_path ? attr_full_path + '.' + attribute : attribute;
-                    var path_without_value = attr_full_path;
-                    var attribute_name = path_without_value.substring(path_without_value.lastIndexOf('.') + 1);
-
-                    removeOverriddenDefaultArraysOrObjects(updated_attributes[attribute], updated_attributes_parent, attribute_name,
-                        attr_path, template);
                 }
             }
         }
