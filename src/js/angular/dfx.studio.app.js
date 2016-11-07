@@ -5529,7 +5529,8 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
     }
 
     $scope.cloneService = function( service ) {
-        var cloned = JSON.parse(JSON.stringify(service));
+        //var cloned = JSON.parse(JSON.stringify(service));
+        var cloned = angular.copy( service );
 
         $mdDialog.show({
             scope: $scope,
