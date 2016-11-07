@@ -1917,8 +1917,19 @@ dfxViewEditorApp.directive('dfxVePickerColumn', [ '$compile', '$mdDialog', funct
                 $('#dfx_visual_editor_property_panel').append(gc_property_panel);
             };
 
+            var setAttributeValue = function(attribute_name) {
+                scope.column.renderer.attributes[attribute_name] = scope.gc_selected.attributes[attribute_name];
+            };
+            var updateDataTableContent = function() {
+                var column_scope = angular.element(document.getElementById(scope.gc_selected.id)).scope();
+                if (column_scope.updateRows) {
+                    column_scope.updateRows();
+                }
+            };
             scope.overrideAttribute = function(attribute_name) {
                 scope.gc_selected.attributes[attribute_name].status = 'overridden';
+                setAttributeValue(attribute_name);
+                updateDataTableContent();
             };
         }
 
