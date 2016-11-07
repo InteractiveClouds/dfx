@@ -944,8 +944,8 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
 			}
         });
     }
-    $scope.export_view = function(event){
-        dfxViews.get_view_zip($scope, $scope.application_name, $scope.view_name, $scope.view_platform).then(function(data){
+    $scope.exportView = function(event){
+        dfxViews.getViewZip($scope, $scope.application_name, $scope.view_name, $scope.view_platform).then(function(data){
             var view_zip_link = '/studio/widget/download/' + $scope.view_name + '?path=' + data.data.data;
             $window.open( view_zip_link, '_blank' );
         });

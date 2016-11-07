@@ -1420,7 +1420,7 @@ dfxStudioApi.factory('dfxViews', [ '$http', '$q', function($http, $q) {
         return deferred.promise;
     }
 
-    api_views.get_view_zip = function( scope, app_name, view_name, platform ) {
+    api_views.getViewZip = function( scope, app_name, view_name, platform ) {
         var deferred = $q.defer();
         
         $http({
