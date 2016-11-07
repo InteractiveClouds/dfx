@@ -403,7 +403,12 @@ div[dfx-gcc-web-treemenu] {
     text-align: center;
 }
 .dfx-core-gc-treemenu button .tree-menu-label {
-    flex-grow:1;
+    -webkit-flex-grow: 1;
+    flex-grow: 1;
+    -ms-text-overflow: ellipsis; 
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 .dfx-core-gc-treemenu button .trigger-icon-box {
     padding-left: 16px;
