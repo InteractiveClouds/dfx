@@ -3013,6 +3013,7 @@ dfxGCC.directive('dfxGccWebSlider', ['$timeout', '$mdDialog', '$q', '$http', '$m
                 scope.changeWidth();
                 for (var i = 0; i < scope.attributes.slidersArray.value.length; i++) {
                     if(scope.attributes.slidersArray.value[i].hasOwnProperty('temp_value')) delete scope.attributes.slidersArray.value[i].temp_value;
+                    if(!isNaN(scope.attributes.slidersArray.value[i].value)) scope.attributes.slidersArray.value[i].value = parseFloat(scope.attributes.slidersArray.value[i].value);
                 };
             });
         }
