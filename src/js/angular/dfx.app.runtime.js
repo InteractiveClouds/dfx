@@ -594,35 +594,11 @@ dfxAppRuntime.directive('dfxViewPreviewCompiled', ['$compile', function($compile
                 	});
                 }
             });
+
+            $scope.$parent_scope = $scope.$parent;
         }
     }
 }]);
-
-/* it seems we don't use it */
-
-//dfxAppRuntime.directive('dfxViewPreview', function() {
-//    return {
-//        restrict: 'A',
-//        controller: function($scope, $element, $attrs) {
-//            $scope.view_id = $attrs.id;
-//            $scope.$parent.dfxViewCard = $attrs.dfxViewCard;
-//            var widget_definition = JSON.parse(window.localStorage.getItem( 'dfx_' + $attrs.dfxViewPreview ));
-//            $scope.$watch('dfxViewCard', function(new_card, old_card) {
-//                if (new_card!=null) {
-//                  var animation = (widget_definition.definition[new_card][0].animation) ? widget_definition.definition[new_card][0].animation : {
-//                    in: 'fadeIn',
-//                    out: 'slideOutLeft'
-//                  };
-//                  $('#dfx_view_preview_container').removeClass().addClass('animated ' + animation.out).one('animationend', function(eventOne) {
-//                    angular.element($('#dfx_view_preview_container')).html('');
-//                    $('#dfx_view_preview_container').removeClass().addClass('animated ' + animation.in);
-//                    $scope.addComponents( widget_definition.definition, { "id": "dfx_view_preview_container" }, '', new_card, 'dfx_view_preview_container' );
-//                  });
-//                }
-//            });
-//        }
-//    }
-//});
 
 dfxAppRuntime.directive('dfxViewPreviewInDialog', [ '$http', '$timeout', '$compile', function( $http, $timeout, $compile ) {
     return {
@@ -657,6 +633,8 @@ dfxAppRuntime.directive('dfxViewPreviewInDialog', [ '$http', '$timeout', '$compi
                     console.log("Can't get view " + $attrs.dfxViewPreviewInDialog + " defintion");
                 });
             }
+
+            $scope.$parent_scope = $scope.$parent;
         }
     }
 }]);
@@ -694,6 +672,8 @@ dfxAppRuntime.directive('dfxViewPreviewInSidenav', [ '$http', '$compile', '$time
                     console.log("Can't get view " + $attrs.dfxViewPreviewInSidenav + " defintion");
                 });
             }
+
+            $scope.$parent_scope = $scope.$parent;
         }
     }
 }]);
@@ -731,6 +711,8 @@ dfxAppRuntime.directive('dfxViewPreviewInBottom', [ '$http', '$timeout', '$compi
                     console.log("Can't get view " + $attrs.dfxViewPreviewInBottom + " defintion");
                 });
             }
+
+            $scope.$parent_scope = $scope.$parent;
         }
     }
 }]);
@@ -768,6 +750,8 @@ dfxAppRuntime.directive('dfxViewPreviewWithCard', [ '$http', '$timeout', '$compi
                     console.log("Can't get view " + $attrs.dfxViewPreviewWithCard + " defintion");
                 });
             }
+
+            $scope.$parent_scope = $scope.$parent;
         }
     }
 }]);

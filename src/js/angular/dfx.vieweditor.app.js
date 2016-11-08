@@ -219,7 +219,7 @@ dfxViewEditorApp.controller("dfx_main_controller", [ '$scope', '$rootScope', '$q
 
 }]);
 
-dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScope', '$compile', '$timeout', '$mdDialog', '$mdToast', '$mdSidenav', '$log', '$mdMedia', '$window', '$http', 'dfxMessaging', 'dfxRendering', function($scope, $rootScope, $compile, $timeout, $mdDialog, $mdToast, $mdSidenav, $log, $mdMedia, $window, $http, dfxMessaging, dfxRendering) {
+dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScope', '$compile', '$timeout', '$mdDialog', '$mdToast', '$mdSidenav', '$log', '$mdMedia', '$window', '$http', '$location', 'dfxMessaging', 'dfxViews', 'dfxRendering', function($scope, $rootScope, $compile, $timeout, $mdDialog, $mdToast, $mdSidenav, $log, $mdMedia, $window, $http, $location, dfxMessaging, dfxViews, dfxRendering) {
 
     $scope.palette_visible = true;
     $scope.property_visible = true;
@@ -942,6 +942,12 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
 			for (var card_name in data) {
 				window.localStorage.setItem('DFX_view_compiled_'+$scope.view_name+'_'+card_name, data[card_name]);
 			}
+        });
+    }
+    $scope.exportView = function(event){
+        dfxViews.getViewZip($scope, $scope.application_name, $scope.view_name, $scope.view_platform).then(function(data){
+            var view_zip_link = '/studio/widget/download/' + $scope.view_name + '?path=' + data.data.data;
+            $window.open( view_zip_link, '_blank' );
         });
     }
 
@@ -1911,8 +1917,19 @@ dfxViewEditorApp.directive('dfxVePickerColumn', [ '$compile', '$mdDialog', funct
                 $('#dfx_visual_editor_property_panel').append(gc_property_panel);
             };
 
+            var setAttributeValue = function(attribute_name) {
+                scope.column.renderer.attributes[attribute_name] = scope.gc_selected.attributes[attribute_name];
+            };
+            var updateDataTableContent = function() {
+                var column_scope = angular.element(document.getElementById(scope.gc_selected.id)).scope();
+                if (column_scope.updateRows) {
+                    column_scope.updateRows();
+                }
+            };
             scope.overrideAttribute = function(attribute_name) {
                 scope.gc_selected.attributes[attribute_name].status = 'overridden';
+                setAttributeValue(attribute_name);
+                updateDataTableContent();
             };
         }
 
