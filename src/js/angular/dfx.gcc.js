@@ -1,6 +1,6 @@
 var dfxGCC = angular.module('dfxGCC',['ngMaterial', 'ngMdIcons', 'ngMessages', 'ngSanitize', 'ngAnimate', 'nvd3', 'ngQuill', 'jkAngularCarousel', 'ui.knob']);
 
-dfxGCC.directive('dfxGccWebBase', ['$rootScope', '$http', '$compile', '$injector', '$mdToast', '$q', function($rootScope, $http, $compile, $injector, $mdToast, $q) {
+dfxGCC.directive('dfxGccWebBase', ['$rootScope', '$http', '$compile', '$injector', '$mdToast', '$q', '$location', function($rootScope, $http, $compile, $injector, $mdToast, $q, $location) {
     return {
         controller: function($element) {
             var base = this;
@@ -129,6 +129,14 @@ dfxGCC.directive('dfxGccWebBase', ['$rootScope', '$http', '$compile', '$injector
                     }
                 }
 
+				scope.routeToPage = function(page_name, ev) {
+					$('#pagebody').addClass('animated slideOutLeft').one('animationend', function(eventOne) {
+						$rootScope.page_name = page_name;
+						$location.url('/'+$rootScope.page_name);
+						scope.$apply();
+					});
+				};
+
                 return $q.when(component.id);
             };
 
@@ -151,6 +159,7 @@ dfxGCC.directive('dfxGccWebBase', ['$rootScope', '$http', '$compile', '$injector
                     component.addClass('flex' + '-' + scope.attributes.flex.value);
                 }
             };
+
         }
     }
 }]);
@@ -4232,7 +4241,7 @@ dfxGCC.directive('dfxGccWebTreemenu', ['$timeout', '$compile', function($timeout
                 scope.itemNames = scope.attributes.menuItemNames.value;
                 scope.menuToggle = function(ev) {
                     var clickedItem = ev.target,
-                        treeButton = $(clickedItem);
+                        treeButton = $(clickedItem),
                         clickedItemPadding = parseFloat($(clickedItem).css('padding-left')),
                         subMenu = $(clickedItem).parent().siblings(),
                         treeItem = $(clickedItem).parent();
@@ -4596,7 +4605,7 @@ dfxGCC.directive('dfxGccWebWizard', ['$mdDialog', '$timeout', '$compile', functi
                         $md_tabs_template.css('height', '100%');
                         $md_tabs_template.addClass('layout-column');
                     }, 0);
-                }                
+                }
             });
         }
     }
