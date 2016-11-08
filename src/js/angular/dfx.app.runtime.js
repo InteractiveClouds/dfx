@@ -24,7 +24,7 @@ dfxAppRuntime
 dfxAppRuntime
 	.run(['$rootScope', '$route', '$timeout', function($rootScope, $route, $timeout) {
 		$rootScope.$on('$routeChangeStart', function (event, next, current) {
-			console.log(next);
+
 		});
 	}]);
 
@@ -339,13 +339,6 @@ dfxAppRuntime.controller('dfx_page_controller', [ '$scope', '$rootScope', 'dfxAu
     };
 
     $scope.loadPageTemplate = function(template) {
-        /*dfxTemplates.getOne( $scope, $scope.app_name, template )
-         .then( function(template) {
-         $scope.selected_template = template;
-         var snippet = '<div layout="column" flex dfx-page-template="' + template.name + '"></div>';
-         $('#dfx_page_content').empty();
-         angular.element(document.getElementById('dfx_page_content')).append($compile(snippet)($scope));
-         });*/
 		$('body').attr('dfx-page-template', template);
         if ($scope.page_preview) {
             $http({
