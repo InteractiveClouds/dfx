@@ -1420,6 +1420,19 @@ dfxStudioApi.factory('dfxViews', [ '$http', '$q', function($http, $q) {
         return deferred.promise;
     }
 
+    api_views.getViewZip = function( scope, app_name, view_name, platform ) {
+        var deferred = $q.defer();
+        
+        $http({
+            url: '/studio/widget/exportView/' + app_name + '/' + view_name + '/' + platform,
+            method: 'GET'
+        }).then(function successCallback(response) {
+            deferred.resolve( response );
+        });
+
+        return deferred.promise;
+    }
+
     return api_views;
 }]);
 

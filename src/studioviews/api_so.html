@@ -425,7 +425,7 @@
 					</md-content>
 				</md-tab>
 			</md-tabs>	
-			<md-button type="submit" style="display: none !important;" ng-disabled="validUrlResult === 'failed' || existUrl === true"></md-button>
+			<md-button type="submit" style="display: none !important;" ng-disabled="validUrlResult === 'failed' || existUrl === true" aria-label="submit"></md-button>
 		</form>
 	  <div style="display:flex; justify-content: flex-end;">
 	      <md-button ng-if="editorOpened" class="md-primary" ng-click="closeActionsEditor()">Back</md-button>
@@ -447,7 +447,7 @@
 		<div layout="row" layout-align="start center" style="padding:0px 8px;">
 			<md-input-container class="input-select-aligned margin-select" style="width:180px;margin-right:14px;">
 			  <label>API Source:</label>
-			  <md-select ng-model="servicesApiSource" aria-label="servicesApiSource">
+			  <md-select ng-model="servicesApiSource" aria-label="servicesApiSource" ng-disabled="api_sources.length === 1">
 			    <md-option ng-if="source.dataSource !=='REST'" ng-value="source.provider" ng-repeat="source in api_sources track by $index" ng-click="chooseDataSource( source )">
 			    	{{ source.provider === 'none' ? 'public/rest' : source.provider }}
 			    </md-option>
@@ -494,7 +494,7 @@
 									  </md-select>
 									</md-input-container>
 								</div>
-								<md-button type="submit" ng-disabled="api_so.name ===''" style="display: none !important;"></md-button>
+								<md-button type="submit" ng-disabled="api_so.name ===''" style="display: none !important;" aria-label="submit"></md-button>
 							</form>						
 						</md-content>
 						<div ng-if="serviceMode === 'serviceEdit'" layout="row" layout-align ="end center">
@@ -534,6 +534,7 @@
 													<td width="25%">{{serviceItem.data.settings.authentication === 'none' ? 'public/rest' : serviceItem.data.settings.authentication}}</td>
 													<td>
 		                        						<md-button class="dfx-studio-table-button" ng-click="editService( serviceItem, $index )" aria-label="edit-service"><md-icon class="fa fa-edit"></md-icon></md-button>
+                                                        <md-button class="dfx-studio-table-button" ng-click="cloneService( serviceItem )" aria-label="clone-service"><md-icon class="fa fa-files-o"></md-icon></md-button>
 	                            						<md-button class="dfx-studio-table-button" ng-click="showCurl( serviceItem )" aria-label="show-curl"><md-icon class="fa fa-info"></md-icon></md-button>
 	                            						<md-button class="dfx-studio-table-button" ng-click="confirmDelete( $event, $index )" aria-label="delete-service"><md-icon class="fa fa-trash"></md-icon></md-button>
 													</td>

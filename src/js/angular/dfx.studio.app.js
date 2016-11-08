@@ -2198,8 +2198,14 @@ dfxStudioApp.controller("dfx_studio_new_application_controller", [ '$scope','dfx
             templateUrl: '/gcontrols/web/picker_images_form.html',
             controller: function(){
                 $scope.setImage = function(src) {
-                    $scope.selected_logo_image = src ;
-                    $scope.selected_logo_image_input = src ;
+                    var fileName = src.split('/')[src.split('/').length -1];
+                    if (fileName !== 'dfx_login_logo_black.png') {
+                        $scope.selected_logo_image = "/assets/" + fileName;
+                        $scope.selected_logo_image_input.value = "/assets/" + fileName;
+                    } else {
+                        $scope.selected_logo_image = src;
+                        $scope.selected_logo_image_input.value = src;
+                    }
                     $mdDialog.hide();
                 }
                 $scope.closeDialog = function(){
@@ -2242,8 +2248,14 @@ dfxStudioApp.controller("dfx_studio_general_settings_controller", [ '$scope','df
             templateUrl: '/gcontrols/web/picker_images_form.html',
             controller: function(){
                 $scope.setImage = function(src) {
-                    $scope.selected_logo_image = src ;
-                    $scope.selected_logo_image_input.value = src;
+                    var fileName = src.split('/')[src.split('/').length -1];
+                    if (fileName !== 'dfx_login_logo_black.png') {
+                        $scope.selected_logo_image = "/assets/" + fileName;
+                        $scope.selected_logo_image_input.value = "/assets/" + fileName;
+                    } else {
+                        $scope.selected_logo_image = src;
+                        $scope.selected_logo_image_input.value = src;
+                    }
                     $mdDialog.hide();
                 }
                 $scope.closeDialog = function(){
@@ -5350,6 +5362,8 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
 
     dfxApiServiceObjects.getAll( $scope, $scope.app_name ).then( function( data ) {
         $scope.strongLoopProvider = '';
+        var rest_source = {"provider": "none", "dataSource": "REST"};
+        $scope.api_sources.push(rest_source);
         for ( var i = 0; i < data.data.data.length; i++ ) {
             $scope.api_sources.push( data.data.data[i] );
         };
@@ -5465,7 +5479,7 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
                 if ( $scope.urlErrors.length > 0 ) {
                     switch ( $scope.urlErrors[0].errorName ) {
                         case 'Service url name incorrect': dfxMessaging.showWarning('Service url name "' + $scope.urlErrors[0].errorUrl + '" is incorrect'); break;
-                        case 'Current service url already exists': dfxMessaging.showWarning('Service url "' + $scope.urlErrors[0].errorUrl + '" already exists'); break;
+                        case 'Current service url already exists': dfxMessaging.showWarning('API Route URL "' + $scope.urlErrors[0].errorUrl + '" must be unique'); break;
                     }
                 } else {
                     dfxApiServiceObjects.updateSo( $scope, $scope.api_so ).then(function( data ) {
@@ -5591,6 +5605,54 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
             $scope.editorOpened = false;
         }, 0);
         sideNavInstance.toggle();
+    }
+
+    $scope.cloneService = function( service ) {
+        //var cloned = JSON.parse(JSON.stringify(service));
+        var cloned = angular.copy( service );
+
+        $mdDialog.show({
+            scope: $scope,
+            preserveScope: true,
+            parent: angular.element(document.body),
+            clickOutsideToClose: true,
+            ariaLabel: 'api-so-clone',
+            templateUrl: 'studioviews/apiSourceClone.html',
+            onComplete: function() {
+                $scope.clonedServiceName = cloned.name;
+                $scope.allowClone = false;
+                $scope.clonedServiceUrl = cloned.data.settings.url;
+                $scope.closeDialog = function() {
+                    $mdDialog.hide();
+                }
+                $scope.clonedServiceNameChangeAction = function() {
+                    if ($scope.clonedServiceName !== cloned.name) {
+                        $scope.allowClone = true;
+                    } else {
+                        $scope.allowClone = false;
+                    }
+                    $scope.validUrlResult = '';
+                    $scope.serviceUrlError = '';
+                    dfxApiServiceObjects.validateSoUrl( $scope, $scope.clonedServiceName, $scope.app_name ).then(function( data ) {
+                        if ( data.data.data !== '' ) {
+                            $scope.validUrlResult = 'failed';
+                            $scope.serviceUrlError = data.data.data;
+                            $scope.allowClone = false;
+                        }
+                    });
+                }
+
+                $scope.cloneServiceDo = function() {
+                    cloned.name = $scope.clonedServiceName;
+                    cloned.data.settings.url = $scope.clonedServiceUrl;
+                    delete cloned.data.uuid;
+                    $scope.api_so.apiRoutes.push( cloned );
+                    $mdDialog.hide();
+                }
+            }
+        })
+
+
     }
 
     $scope.addServices = function() {
