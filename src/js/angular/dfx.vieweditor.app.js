@@ -1545,18 +1545,24 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
         $scope.display_locked_attributes = false;
         $scope.display_unlocked_attributes = false;
         $scope.closeGcTemplateLockingMenu();
+
+        $scope.$broadcast('toggleGcTemplateProperties',{});
     };
     $scope.displayLockedGcTemplateAttributes = function() {
         $scope.display_all_attributes = false;
         $scope.display_locked_attributes = true;
         $scope.display_unlocked_attributes = false;
         $scope.closeGcTemplateLockingMenu();
+
+        $scope.$broadcast('toggleGcTemplateProperties',{});
     };
     $scope.displayUnlockedGcTemplateAttributes = function() {
         $scope.display_all_attributes = false;
         $scope.display_locked_attributes = false;
         $scope.display_unlocked_attributes = true;
         $scope.closeGcTemplateLockingMenu();
+
+        $scope.$broadcast('toggleGcTemplateProperties',{});
     };
     $scope.isGcAttributeVisible = function(is_locked) {
         if ($scope.display_all_attributes) {
@@ -1575,34 +1581,6 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
             return false;
         }
         return true;
-    };
-
-    $scope.___previewGcTemplate = function(gc_template, $event) {
-        var gc_id = Math.floor(Math.random() * 100000),
-            view_editor = document.querySelector('#dfx_src_widget_editor'),
-            view_editor_scope = angular.element(view_editor).scope(),
-            is_rendering_gc_template = true;
-
-        var gc = view_editor_scope.renderGraphicalControl({id: gc_id, type: gc_template.type}, null, is_rendering_gc_template);
-        $('#gc_preview_container').html(gc.fragment);
-
-        $timeout(function() {
-            var gc_component_definition = {
-                'id': gc_id,
-                'type': gc_template.type,
-                'attributes': {
-                    'template': {'value': gc_template.name, 'status': 'overridden'}
-                }
-            };
-
-            var reload_property_panel = false;
-            var gc_element = $('#' + gc_id);
-            var gc_element_scope = angular.element(gc_element).scope();
-            gc_element_scope.reinitAttributes(gc_component_definition, reload_property_panel, is_rendering_gc_template);
-        }, 0);
-
-        //put it in popup and close on mouse out?
-        //save as in gc_templates editor & verification if this template name already exists - in both editors
     };
 
     $scope.previewGcTemplate = function(gc_template, $event) {
@@ -1644,47 +1622,6 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
                 }, 0);
             }
         });
-
-
-/*
-        $mdDialog.show({
-            controller: DialogController,
-            templateUrl: '/gcontrols/web/template_preview.html',
-            parent: angular.element(document.body),
-            targetEvent: $event,
-            clickOutsideToClose: true
-        })
-        .then(function(gc_template) {
-            var gc_id = Math.floor(Math.random() * 100000),
-                view_editor = document.querySelector('#dfx_src_widget_editor'),
-                view_editor_scope = angular.element(view_editor).scope(),
-                is_rendering_gc_template = true;
-
-            var gc = view_editor_scope.renderGraphicalControl({id: gc_id, type: gc_template.type}, null, is_rendering_gc_template);
-            $('#gc_preview_container').html(gc.fragment);
-
-            $timeout(function() {
-                var gc_component_definition = {
-                    'id': gc_id,
-                    'type': gc_template.type,
-                    'attributes': {
-                        'template': {'value': gc_template.name, 'status': 'overridden'}
-                    }
-                };
-
-                var reload_property_panel = false;
-                var gc_element = $('#' + gc_id);
-                var gc_element_scope = angular.element(gc_element).scope();
-                gc_element_scope.reinitAttributes(gc_component_definition, reload_property_panel, is_rendering_gc_template);
-            }, 0);
-        }, function() {
-            // do nothing
-        });
-
-        function DialogController($scope, $mdDialog) {
-
-        }
-*/
         //save as in gc_templates editor & verification if this template name already exists - in both editors
     };
     // Functions to work with GC Templates - END
