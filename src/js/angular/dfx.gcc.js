@@ -4231,7 +4231,7 @@ dfxGCC.directive('dfxGccWebTreemenu', ['$timeout', '$compile', function($timeout
                 scope.itemNames = scope.attributes.menuItemNames.value;
                 scope.menuToggle = function(ev) {
                     var clickedItem = ev.target,
-                        treeButton = $(clickedItem);
+                        treeButton = $(clickedItem),
                         clickedItemPadding = parseFloat($(clickedItem).css('padding-left')),
                         subMenu = $(clickedItem).parent().siblings(),
                         treeItem = $(clickedItem).parent();
@@ -4595,7 +4595,7 @@ dfxGCC.directive('dfxGccWebWizard', ['$mdDialog', '$timeout', '$compile', functi
                         $md_tabs_template.css('height', '100%');
                         $md_tabs_template.addClass('layout-column');
                     }, 0);
-                }                
+                }
             });
         }
     }

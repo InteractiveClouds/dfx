@@ -313,14 +313,12 @@ dfxAppRuntime.controller('dfx_page_controller', [ '$scope', '$rootScope', 'dfxAu
                 url: '/studio/screen/item/' + $rootScope.page_name + '/' + $scope.app_name + '/' + 'web'
             }).then(function successCallback(response) {
                 $scope.selected_page = response.data.screen;
-				var current_template = $('[dfx-page-template]').attr('dfx-page-template');
+				var current_template = $('body').attr('dfx-page-template');
 				if (current_template!=response.data.screen.template) {
-					$('#dfx_page_content').empty();
                 	$scope.loadPageTemplate(response.data.screen.template);
 				} else {
-					$('#pagebody').empty();
-					$('#pagebody').append($compile(snippet)($scope));
-					$('#pagebody').removeClass('slideOutLeft').addClass('slideInRight');
+					var snippet = '<div layout="column" flex dfx-page-template="' + request.data.template + '"></div>';
+	                angular.element(document.getElementById('dfx_page_content')).append($compile(snippet)($scope));
 				}
             });
         } else {
@@ -329,14 +327,12 @@ dfxAppRuntime.controller('dfx_page_controller', [ '$scope', '$rootScope', 'dfxAu
                 url: 'pages/' + $rootScope.page_name + '.json'
             }).then(function successCallback(request) {
                 $scope.selected_page = request.data;
-				var current_template = $('[dfx-page-template]').attr('dfx-page-template');
+				var current_template = $('body').attr('dfx-page-template');
 				if (current_template!=request.data.template) {
-					$('#dfx_page_content').empty();
                 	$scope.loadPageTemplate(request.data.template);
 				} else {
-					$('#pagebody').empty();
-					$('#pagebody').append($compile(snippet)($scope));
-					$('#pagebody').removeClass('slideOutLeft').addClass('slideInRight');
+					var snippet = '<div layout="column" flex dfx-page-template="' + request.data.template + '"></div>';
+	                angular.element(document.getElementById('dfx_page_content')).append($compile(snippet)($scope));
 				}
             });
         }
@@ -350,6 +346,7 @@ dfxAppRuntime.controller('dfx_page_controller', [ '$scope', '$rootScope', 'dfxAu
          $('#dfx_page_content').empty();
          angular.element(document.getElementById('dfx_page_content')).append($compile(snippet)($scope));
          });*/
+		$('body').attr('dfx-page-template', template);
         if ($scope.page_preview) {
             $http({
                 method: 'GET',
