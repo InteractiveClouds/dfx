@@ -1422,7 +1422,7 @@ dfxStudioApi.factory('dfxViews', [ '$http', '$q', function($http, $q) {
 
     api_views.getViewZip = function( scope, app_name, view_name, platform ) {
         var deferred = $q.defer();
-        
+
         $http({
             url: '/studio/widget/exportView/' + app_name + '/' + view_name + '/' + platform,
             method: 'GET'
@@ -2375,7 +2375,8 @@ dfxStudioApi.factory('dfxRendering', [ '$http', '$q', function($http, $q) {
 			data: {
 				view_source: JSON.parse(view_definition),
                 application: scope.application_name,
-                platform: scope.view_platform
+                platform: scope.view_platform,
+                tenant_id: DfxStudio.tenantId
 			}
         }).then(function successCallback(response) {
             deferred.resolve( response.data );
