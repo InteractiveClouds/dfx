@@ -1584,6 +1584,9 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     };
 
     $scope.previewGcTemplate = function(gc_template, $event) {
+        //TODO: switched off for now
+        return;
+
         var fillPreviewContainer = function(container_id) {
             var gc_id = Math.floor(Math.random() * 100000),
                 view_editor = document.querySelector('#dfx_src_widget_editor'),
