@@ -295,6 +295,7 @@ out.start = function () {
                                 getClName : function () { return 'BlueMixCF' },
                                 DEBUG     : SETTINGS.debug_BM_CF
                             });
+                        require('./lib/dfx_gc_templates').init({ storage: _storage });
                     } else {
                         return initFileStorage(fsdbFolder).then(function(_storage) {
                             tenants.init({ storage: _storage });
@@ -323,6 +324,8 @@ out.start = function () {
                             require('./lib/dfx_menus').init({ storage: _storage });
 
                             require('./lib/dfx_applications').init({ storage: _storage });
+
+                            require('./lib/dfx_gc_templates').init({ storage: _storage });
                         });
                     }
 
