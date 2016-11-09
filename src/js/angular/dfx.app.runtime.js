@@ -525,19 +525,10 @@ dfxAppRuntime.directive('dfxPageTemplate', ['$compile', '$mdSidenav', '$timeout'
             var tpl_snippet = '',
                 page_auto_height = $scope.selected_page.autoHeight,
                 flex_row = (page_auto_height != true) ? '{{row.height}}' : '',
-                flex_view = (page_auto_height != true) ? '{{row.height}}' : '';
+                flex_view = (page_auto_height != true) ? '{{view.height}}' : '';
 
-            // Header
-            //tpl_snippet = '<div layout="row" ng-show="selected_template.layout.header.display==\'true\'" style="min-height:{{selected_template.layout.header.height}}"><div layout layout-align="{{selected_template.layout.header.halignment}} {{selected_template.layout.header.valignment}}" flex="100" style="height:{{selected_template.layout.header.height}};{{selected_template.layout.header.style}}" dfx-page-include-template="header"></div></div>';
-
-            // Middle Section Start
-            //tpl_snippet += '<div layout="row" flex layout-fill style="overflow:auto;{{selected_template.layout.body.style}}">';
-
-            // Left
-            //tpl_snippet += '<div id="dfxpageleft" ng-show="selected_template.layout.left.display==\'true\'" style="width:{{selected_template.layout.left.width}};{{selected_template.layout.left.style}}" class="{{selected_template.layout.left.whiteframe}}"><md-content layout layout-align="{{selected_template.layout.left.halignment}} {{selected_template.layout.left.valignment}}" style="background:inherit" dfx-include-page-template="left"></md-content></div>';
-
-            // Body
-            tpl_snippet += '<div layout="column" style="background:inherit;overflow:auto;" flex id="pagebody" dfx-flex="' + flex_row + '" dfx-flex-view="' + flex_view + '">';
+            // Dynamic HTML construction of Page Body
+            tpl_snippet += '<div ng-controller="' + $scope.selected_page.name + 'PageController" layout="column" style="background:inherit;overflow:auto;" flex id="pagebody" dfx-flex="' + flex_row + '" dfx-flex-view="' + flex_view + '">';
 
             tpl_snippet += '<div layout="row" flex="' + flex_row + '" style="" ng-repeat="row in selected_page.layout.rows">';
             tpl_snippet += '<div layout="column" flex="{{col.width}}" data-row="{{$parent.$index}}" data-column="{{$index}}" ng-repeat="col in row.columns" style="padding:5px">';
@@ -550,15 +541,6 @@ dfxAppRuntime.directive('dfxPageTemplate', ['$compile', '$mdSidenav', '$timeout'
             tpl_snippet += '</div>';
 
             tpl_snippet += '</div>';
-
-            // Right
-            //tpl_snippet += '<div id="dfxpageright" ng-show="selected_template.layout.right.display==\'true\'" style="width:{{selected_template.layout.right.width}};{{selected_template.layout.right.style}}" class="{{selected_template.layout.right.whiteframe}}"><md-content layout layout-align="{{selected_template.layout.right.halignment}} {{selected_template.layout.right.valignment}}" style="background:inherit" dfx-include-page-template="right"></md-content></div>';
-
-            // Middle Section End
-            //tpl_snippet += '</div>';
-
-            // Footer
-            //tpl_snippet += '<div layout="row" ng-show="selected_template.layout.footer.display==\'true\'" style="min-height:{{selected_template.layout.footer.height}}"><div layout layout-align="{{selected_template.layout.footer.halignment}} {{selected_template.layout.header.valignment}}" flex="100" style="height:{{selected_template.layout.footer.height}};{{selected_template.layout.footer.style}}" dfx-page-include-template="footer"></div></div>';
 
             $element.append($compile(tpl_snippet)($scope));
         }

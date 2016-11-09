@@ -397,13 +397,13 @@ dfxPageEditorApp.directive('dfxPageTemplate', ['$compile', '$mdSidenav', functio
             tpl_snippet = '<div layout="row" ng-show="selected_template.layout.header.display==\'true\'"><div layout-align="{{selected_template.layout.header.halignment}} {{selected_template.layout.header.valignment}}" flex="100" style="height:{{selected_template.layout.header.height}};{{selected_template.layout.header.style}}" dfx-page-include-template="header"></div></div>';
 
             // Middle Section Start
-            tpl_snippet += '<div layout="row" style="position:relative;{{selected_template.layout.body.style}}" flex>';
+            tpl_snippet += '<div layout="row" style="position:relative;" flex>';
 
             // Left
             tpl_snippet += '<div id="dfxpageleft" ng-show="selected_template.layout.left.display==\'true\'" style="width:{{selected_template.layout.left.width}};{{selected_template.layout.left.style}};z-index:50;" class="{{selected_template.layout.left.whiteframe}}"><md-content layout="column" layout-align="{{selected_template.layout.left.halignment}} {{selected_template.layout.left.valignment}}" style="background:inherit" dfx-page-include-template="left"></md-content></div>';
 
             // Body
-            tpl_snippet += '<div layout="column" style="background:inherit;z-index: 51;overflow:auto;" class="content-wrapper" flex id="pagebody">';
+            tpl_snippet += '<div layout="column" style="background:inherit;z-index: 51;overflow:auto;{{selected_template.layout.body.style}}" class="content-wrapper" flex id="pagebody">';
 
             tpl_snippet += '<div layout="row" style="" flex="{{selected_page.autoHeight != true ? row.height : \'\'}}" ng-repeat="row in selected_page.layout.rows">';
             tpl_snippet += '<div layout="column" flex="{{col.width}}" class="dfx-page-droppable-column" dfx-page-droppable-column data-row="{{$parent.$index}}" data-column="{{$index}}" ng-repeat="col in row.columns" style="border:1px #999 solid;">';
