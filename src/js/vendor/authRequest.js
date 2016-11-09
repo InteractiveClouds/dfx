@@ -183,31 +183,32 @@ var authRequest =  (function(){
 
         document.cookie = "X-DREAMFACE-TENANT=" + sessionStorage.dfx_tenantid + ";path=/;";
 
-        $.ajax(params).then(
-            function ( data, textStatus, jqXHR ) {
-                if ( data.result !== 'success' ) {
-                    console.error('REQUEST ERROR REASON: %s', data.reason);
+        setTimeout(function(){
+            $.ajax(params).then(
+                function ( data, textStatus, jqXHR ) {
+                    if ( data.result !== 'success' ) {
+                        console.error('REQUEST ERROR REASON: %s', data.reason);
 
-                    //if ( data.reason === 'unauthorized' ) window.location = 'index.html';
+                        //if ( data.reason === 'unauthorized' ) window.location = 'index.html';
 
-                    return Defer.reject();
+                        return Defer.reject();
+                    }
+
+                    var answer = data.data;
+
+                    try { answer = JSON.parse(answer) } catch (e) {};
+
+                    Defer.resolve(answer);
+                },
+                function ( jqXHR, textStatus, errorThrown ) {
+                    console.error('REQUEST ERROR: %s', errorThrown);
+                    //console.error(errorThrown.stack());
+                    var error = jqXHR.responseText;
+                    try { error = JSON.parse(error) } catch (e) {}
+                    return Defer.reject(error);
                 }
-
-                var answer = data.data;
-
-                try { answer = JSON.parse(answer) } catch (e) {};
-
-                Defer.resolve(answer);
-            },
-            function ( jqXHR, textStatus, errorThrown ) {
-                console.error('REQUEST ERROR: %s', errorThrown);
-                //console.error(errorThrown.stack());
-                var error = jqXHR.responseText;
-                try { error = JSON.parse(error) } catch (e) {}
-                return Defer.reject(error);
-            }
-        );
-    
+            );
+        },0);
     }
 
     request.isLoggedIn = function () {
