@@ -1,36 +1,36 @@
 doctype html
 html(ng-app="dfxAppRuntime")
-    head
-        meta(http-equiv="content-type", content="text/HTML;charset=UTF-8")
-        meta(name="viewport", content="width=device-width,initial-scale=1")
-        title #{apptitle}
+	head
+		meta(http-equiv="content-type", content="text/HTML;charset=UTF-8")
+		meta(name="viewport", content="width=device-width,initial-scale=1")
+		title #{apptitle}
 
-        link(rel="stylesheet", type="text/css", href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,700', rel='stylesheet'")
-        link(rel="stylesheet", type="text/css", href="css/mobile/runtime_mobile/dfx.min.css", media="screen")
-        link(rel="stylesheet", type="text/css", href="css/mobile/app.css", media="screen")
+		link(rel="stylesheet", type="text/css", href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,700', rel='stylesheet'")
+		link(rel="stylesheet", type="text/css", href="css/mobile/runtime_mobile/dfx.min.css", media="screen")
+		link(rel="stylesheet", type="text/css", href="css/mobile/app.css", media="screen")
 
-        script(src="js/mobile/runtime_mobile/script.js")
-        script(src="js/mobile/app.js")
-        script(src="js/mobile/runtime_mobile/dfx.js")
+		script(src="js/mobile/runtime_mobile/script.js")
+		script(src="js/mobile/app.js")
+		script(src="js/mobile/runtime_mobile/dfx.js")
 
-        script.
-            $( document ).bind( "mobileinit", function() {
-                try {
-                    $.support.cors = true;
-                    $.mobile.allowCrossDomainPages = true;
-                } catch (e) {
-                    alert('cratch failed');
-                }
-            });
-        if (loadGoogleMap)
-            script(src='https://maps.googleapis.com/maps/api/js?key=#{googleMapAPIKey}')
-        each resource_item in resources
-            - if ( resource_item.type == 'JavaScript' ) {
-                script(src="#{resource_item.path}")
-            - } else if ( resource_item.type == 'CSS' ) {
-                link(rel="stylesheet", type="text/css", href="#{resource_item.path}", media="screen")
-            - }
-    body(layout="row", ng-controller="dfx_app_controller", dfx-app="#{appname}")
+		script.
+			$( document ).bind( "mobileinit", function() {
+				try {
+					$.support.cors = true;
+					$.mobile.allowCrossDomainPages = true;
+				} catch (e) {
+					alert('cratch failed');
+				}
+			});
+		if (loadGoogleMap)
+			script(src='https://maps.googleapis.com/maps/api/js?key=#{googleMapAPIKey}')
+		each resource_item in resources
+			- if ( resource_item.type == 'JavaScript' ) {
+				script(src="#{resource_item.path}")
+			- } else if ( resource_item.type == 'CSS' ) {
+				link(rel="stylesheet", type="text/css", href="#{resource_item.path}", media="screen")
+			- }
+	body(layout="row", ng-controller="dfx_app_controller", dfx-app="#{appname}")
 		div(ng-controller="dfx_page_template_controller", style="width:100%", layout="column", flex)
 			div#pageheader(layout="row", ng-show="selected_template.layout.header.display=='true'", style="min-height:{{selected_template.layout.header.height}}", class="animated", dfx-include-page-template="header")
 				div(layout,layout-align="{{selected_template.layout.header.halignment}} {{selected_template.layout.header.valignment}}", flex="100", style="height:{{selected_template.layout.header.height}};{{selected_template.layout.header.style}}")
