@@ -57,6 +57,7 @@ dfxAppRuntime.controller('dfx_login_controller', [ '$scope', '$rootScope', funct
 dfxAppRuntime.controller('dfx_app_controller', [ '$scope', '$rootScope', 'dfxAuthRequest', '$q', '$http', '$compile', 'dfxPages', function( $scope, $rootScope, dfxAuthRequest, $q, $http, $compile, dfxPages) {
     $scope.app_name = $('body').attr('dfx-app');
     $scope.platform = $('body').attr('dfx-platform');
+    $scope.tenant_id = $('body').attr('dfx-tenant');
     $scope.gc_types = {};
     $rootScope.page_name = 'Home';
 	$rootScope.fullscreen = false;

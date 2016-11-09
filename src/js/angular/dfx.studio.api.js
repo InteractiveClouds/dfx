@@ -1652,12 +1652,17 @@ dfxStudioApi.factory('dfxGcTemplates', [ '$http', '$q', function($http, $q) {
 
     var api_gc_templates = {};
 
-    api_gc_templates.getOne = function( scope, app_name, template_name, template_platform ) {
+    api_gc_templates.getOne = function( scope, app_name, template_name, template_platform, tenant_id ) {
         var deferred = $q.defer();
+
+        var url = '/studio/gctemplates/item/' + template_name + '/' + app_name + '/' + template_platform;
+        if (tenant_id) {
+            url = url + '/' + tenant_id;
+        }
 
         $http({
             method: 'GET',
-            url: '/studio/gctemplates/item/' + template_name + '/' + app_name + '/' + template_platform
+            url: url
         }).then(function successCallback(response) {
             deferred.resolve(response.data.gc_template);
         });

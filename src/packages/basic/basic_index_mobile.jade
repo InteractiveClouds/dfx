@@ -30,5 +30,5 @@ html(ng-app="dfxAppRuntime")
             - } else if ( resource_item.type == 'CSS' ) {
                 link(rel="stylesheet", type="text/css", href="#{resource_item.path}", media="screen")
             - }
-    body(layout="row", ng-controller="dfx_app_controller", dfx-app="#{appname}", dfx-platform="#{platform}")
+    body(layout="row", ng-controller="dfx_app_controller", dfx-app="#{appname}", dfx-tenant="#{tenantid}", dfx-platform="#{platform}")
         div.ng-view(style="width:100%", layout="column", flex)

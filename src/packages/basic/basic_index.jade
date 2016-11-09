@@ -19,7 +19,7 @@ html(ng-app="dfxAppRuntime")
 			- } else if ( resource_item.type == 'CSS' ) {
 				link(rel="stylesheet", type="text/css", href="#{resource_item.path}", media="screen")
 			- }
-	body(layout="row", ng-controller="dfx_app_controller", dfx-app="#{appname}", dfx-platform="#{platform}")
+	body(layout="row", ng-controller="dfx_app_controller", dfx-app="#{appname}", dfx-tenant="#{tenantid}", dfx-platform="#{platform}")
 		div(ng-controller="dfx_page_template_controller", style="width:100%", layout="column", flex)
 			div#pagefsbtn.dfx-core-web-fullscreen-btn.fa.fa-compress(ng-show='fullscreen', ng-click='toggleFullScreen()')
 				span Exit Full Screen

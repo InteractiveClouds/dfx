@@ -36,7 +36,6 @@ var watcher = require('./lib/utils/watcher');
 var activator = require('./lib/utils/activator');
 var cache;
 
-
 var out = module.exports = {},
     Log,
     log,
