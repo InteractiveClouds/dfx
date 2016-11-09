@@ -3627,11 +3627,50 @@ dfxStudioApp.controller("dfx_studio_deployment_controller", [ '$scope', '$mdDial
     $scope.building_status = 'pending...';
     $scope.new_build = {};
     $scope.host_port = $('body').attr('deploymenturl') ;
+    $scope.env_vars = [];
 
     //dfxDeployment.getAppBuilds($scope.app_name).then(function(data){
     //    $scope.platform = data.platform;
     //    $scope.compiler = data.compiler ;
     //});
+
+    $scope.getAppEnvVariables = function(app){
+        var response = {
+            content:[
+                {
+                    name: "development",
+                    data: {
+                        VCAP_APP_HOST: '10.10.10.10',
+                        USER: 'DEV_Admin',
+                        MEMORY_LIMIT: '50mb',
+                        PORT: '3001',
+                        TMPDIR: '/home/vcap/tmp/dev'
+                    }
+                },
+                {
+                    name: "testing",
+                    data: {
+                        VCAP_APP_HOST : '11.11.11.11',
+                        USER : 'TEST_Admin',
+                        MEMORY_LIMIT : '10mb',
+                        PORT : '3002',
+                        TMPDIR : '/home/vcap/tmp/test'
+                    }
+                },
+                {
+                    name: "production",
+                    data: {
+                        VCAP_APP_HOST : '12.12.12.12',
+                        USER : 'PROD_Admin',
+                        MEMORY_LIMIT : '80mb',
+                        PORT : '3003',
+                        TMPDIR : '/home/vcap/tmp/prod'
+                    }
+                }
+            ]
+        }
+        $scope.env_vars = response.content;
+    }
 
     $scope.getAppBuilds = function(platform){
         dfxDeployment.getAppBuilds($scope.app_name, platform).then(function(data){
@@ -3669,6 +3708,7 @@ dfxStudioApp.controller("dfx_studio_deployment_controller", [ '$scope', '$mdDial
 
     $scope.getAppBuilds('web');
     $scope.getAppBuilds('mobile');
+    $scope.getAppEnvVariables($scope.app_name);
 
     $scope.doRebuild = function(build, platform) {
         for(var i =0; i < $scope.builds[platform].length; i++){

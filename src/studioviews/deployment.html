@@ -43,8 +43,27 @@
                                 <span><md-button ng-click="confirmDelete($event, build, 'web', $index)" class="dfx-studio-table-button"><md-tooltip>Delete this build</md-tooltip><md-icon class="fa fa-lg fa-trash-o" style="color:#F50057;"></md-icon></md-button></span>
                                 <span ng-if="build.deployed === true"><a target="_blank" ng-href={{build.link}} class="dfx-studio-table-button"><md-tooltip>Run the application</md-tooltip><md-icon class="fa fa-lg fa-play" style="color:#158194;"></md-icon></a></span>
                                 <span ng-if="build.status==='success'"><a class="dfx-studio-table-button md-button" href="/studio/build/download?path=/{{build.tenant_id + '/' + build.platform + '/' + build.application + '_' + build.app_version + '.' + build.build_number + '/' + build.application + '_' + build.app_version + '.' + build.build_number + '.zip'}}" ng-click="getBuildFile()"><md-tooltip>Download a zip</md-tooltip><md-icon class="fa fa-download" style="color:#158194;"></md-icon></a></span>
+                                <span><md-button ng-click="showDeployments(build, 'web')" class="dfx-studio-table-button"><md-tooltip>Show deployments</md-tooltip><md-icon class="fa fa-arrow-down" style="color:#158194;"></md-icon></md-button></span>
                             </td>
                         </tr>
+                        <tr>
+                            <table class="datatable" class="layout-row" style="width: 80%;">
+                                <thead>
+                                    <tr>
+                                        <th>Environment</th>
+                                        <th>Variables</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody ng-repeat="build in builds.web track by $index">
+                                    <tr>
+                                        <td>{{var.name}}</td>
+                                        <td colspan="3">{{var.data}}</td>
+                                        <td><span ng-if="build.status==='success' && !build.waitingMessage"><md-button ng-click="deployBuild(build, 'web')" class="dfx-studio-table-button"><md-tooltip>Deploy locally</md-tooltip><md-icon class="fa fa-lg fa-cloud-upload" style="color:#158194;"></md-icon></md-button></span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                </tr>
                         <tr ng-show="build.displayLog === true">
                             <td colspan="5" style="background: #ffffff">
                                 <p ng-repeat="log in build.logs track by $index">
