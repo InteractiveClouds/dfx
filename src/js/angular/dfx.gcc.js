@@ -1008,15 +1008,19 @@ dfxGCC.directive('dfxGccWebToolbar', function($sce, $compile, $timeout) {
                             var html_title = '#' + scope.component_id + '_toolbar_bindingHtml';
                             $compile($(html_title).contents())(scope);
                         }
-                        if(scope.attributes.toolbar.rightMenu.type.value === 'Icon Bar'){
-                            scope.iconbarBuilder('right');
-                        }else if(scope.attributes.toolbar.rightMenu.type.value === 'Buttons'){
-                            scope.iconbarBuilder('right');
+                        if(scope.attributes.toolbar.rightMenu.visible.value !=='' && scope.attributes.toolbar.rightMenu.visible.value!=='false'){
+                            if(scope.attributes.toolbar.rightMenu.type.value === 'Icon Bar'){
+                                scope.iconbarBuilder('right');
+                            }else if(scope.attributes.toolbar.rightMenu.type.value === 'Buttons'){
+                                scope.iconbarBuilder('right');
+                            }
                         }
-                        if(scope.attributes.toolbar.leftMenu.type.value === 'Icon Bar'){
-                            scope.iconbarBuilder('left');
-                        }else if(scope.attributes.toolbar.leftMenu.type.value === 'Buttons'){
-                            scope.iconbarBuilder('left');
+                        if(scope.attributes.toolbar.leftMenu.visible.value !=='' && scope.attributes.toolbar.leftMenu.visible.value!=='false'){
+                            if(scope.attributes.toolbar.leftMenu.type.value === 'Icon Bar'){
+                                scope.iconbarBuilder('left');
+                            }else if(scope.attributes.toolbar.leftMenu.type.value === 'Buttons'){
+                                scope.iconbarBuilder('left');
+                            }
                         }
                     },0);
                 };
@@ -1201,47 +1205,49 @@ dfxGCC.directive('dfxGccWebToolbar', function($sce, $compile, $timeout) {
                         }
                         if ( toolbarType==='iconBar' ) {
                             if ( dfxMenuItem.hasOwnProperty('waiting')) { delete dfxMenuItem.waiting; }
-                            if ( !dfxMenuItem.state.value ) {
-                                // dfxMenuItem.state = {
-                                //     "value":           false,
-                                //     "binding":         "true",
-                                //     "checkedIcon":   { "value": "'thumb_up'", "type": "svg-icon", "style": "", "class": "" },
-                                //     "uncheckedIcon": { "value": "'thumb_down'", "type": "svg-icon", "style": "", "class": "" }
-                                // };
-                                tempPropObject.notState =               true;
-                                tempPropObject.isState =                false;
-                                tempPropObject.ifFaIcon =               dfxMenuItem.icon.value !=='' && dfxMenuItem.icon.type === 'fa-icon' ? true : false;
-                                tempPropObject.ifSvgIcon =              dfxMenuItem.icon.value !=='' && dfxMenuItem.icon.type === 'svg-icon' ? true : false;
-                                if ( dfxMenuItem.menuItems.value.length > 0 ) {
-                                    tempPropObject.itemClick = '$mdOpenMenu();'+dfxMenuItem.onclick;
+                            if (dfxMenuItem.hasOwnProperty('state')){                                
+                                if ( !dfxMenuItem.state.value ) {
+                                    // dfxMenuItem.state = {
+                                    //     "value":           false,
+                                    //     "binding":         "true",
+                                    //     "checkedIcon":   { "value": "'thumb_up'", "type": "svg-icon", "style": "", "class": "" },
+                                    //     "uncheckedIcon": { "value": "'thumb_down'", "type": "svg-icon", "style": "", "class": "" }
+                                    // };
+                                    tempPropObject.notState =               true;
+                                    tempPropObject.isState =                false;
+                                    tempPropObject.ifFaIcon =               dfxMenuItem.icon.value !=='' && dfxMenuItem.icon.type === 'fa-icon' ? true : false;
+                                    tempPropObject.ifSvgIcon =              dfxMenuItem.icon.value !=='' && dfxMenuItem.icon.type === 'svg-icon' ? true : false;
+                                    if ( dfxMenuItem.menuItems.value.length > 0 ) {
+                                        tempPropObject.itemClick = '$mdOpenMenu();'+dfxMenuItem.onclick;
+                                    } else {
+                                        tempPropObject.itemClick = 'unfocusButton($event);'+dfxMenuItem.onclick;
+                                    }
                                 } else {
-                                    tempPropObject.itemClick = 'unfocusButton($event);'+dfxMenuItem.onclick;
-                                }
-                            } else {
-                                tempPropObject.notState =                   false;
-                                tempPropObject.isState =                    true;
-                                tempPropObject.trueState =                  dfxMenuItem.state.binding;
-                                tempPropObject.falseState =                 dfxMenuItem.state.binding;
-                                tempPropObject.ifTrueStateFaIcon =          dfxMenuItem.state.checkedIcon.value.length > 0 && dfxMenuItem.state.checkedIcon.type === 'fa-icon' && dfxMenuItem.state.value ? true : false;
-                                tempPropObject.ifFalseStateFaIcon =         dfxMenuItem.state.uncheckedIcon.value.length > 0 && dfxMenuItem.state.uncheckedIcon.type === 'fa-icon' && dfxMenuItem.state.value ? true : false;
-                                tempPropObject.ifTrueStateSvgIcon =         dfxMenuItem.state.checkedIcon.value.length > 0 && dfxMenuItem.state.checkedIcon.type === 'svg-icon' && dfxMenuItem.state.value ? true : false;
-                                tempPropObject.ifFalseStateSvgIcon =        dfxMenuItem.state.uncheckedIcon.value.length > 0 && dfxMenuItem.state.uncheckedIcon.type === 'svg-icon' && dfxMenuItem.state.value ? true : false;
-                                tempPropObject.trueStateFaIcon =            dfxMenuItem.state.checkedIcon.value.indexOf("'") == -1 ? '{{'+dfxMenuItem.state.checkedIcon.value+'}}' : eval(dfxMenuItem.state.checkedIcon.value);
-                                tempPropObject.falseStateFaIcon =           dfxMenuItem.state.uncheckedIcon.value.indexOf("'") == -1 ? '{{'+dfxMenuItem.state.uncheckedIcon.value+'}}' : eval(dfxMenuItem.state.uncheckedIcon.value);
-                                tempPropObject.trueStateSvgIcon =           dfxMenuItem.state.checkedIcon.value.indexOf("'") == -1 ? '{{'+dfxMenuItem.state.checkedIcon.value+'}}' : eval(dfxMenuItem.state.checkedIcon.value);
-                                tempPropObject.falseStateSvgIcon =          dfxMenuItem.state.uncheckedIcon.value.indexOf("'") == -1 ? '{{'+dfxMenuItem.state.uncheckedIcon.value+'}}' : eval(dfxMenuItem.state.uncheckedIcon.value);
-                                tempPropObject.trueStateFaIconStyle =       dfxMenuItem.state.checkedIcon.style;
-                                tempPropObject.falseStateFaIconStyle =      dfxMenuItem.state.uncheckedIcon.style;
-                                tempPropObject.trueStateSvgIconStyle =      dfxMenuItem.state.checkedIcon.style;
-                                tempPropObject.falseStateSvgIconStyle =     dfxMenuItem.state.uncheckedIcon.style;
-                                tempPropObject.trueStateFaIconClass =       dfxMenuItem.state.checkedIcon.class;
-                                tempPropObject.falseStateFaIconClass =      dfxMenuItem.state.uncheckedIcon.class;
-                                tempPropObject.trueStateSvgIconClass =      dfxMenuItem.state.checkedIcon.class;
-                                tempPropObject.falseStateSvgIconClass =     dfxMenuItem.state.uncheckedIcon.class;
-                                if ( dfxMenuItem.menuItems.value.length > 0 ) {
-                                    tempPropObject.itemClick = dfxMenuItem.state.value ? '$mdOpenMenu();changeState('+"'"+tempPropObject.itemIndex+"'"+', $event, '+"'"+side+"'"+', '+"'"+optionsType+"'"+');'+dfxMenuItem.onclick : '$mdOpenMenu();'+dfxMenuItem.onclick;
-                                } else {
-                                    tempPropObject.itemClick = dfxMenuItem.state.value ? 'changeState('+"'"+tempPropObject.itemIndex+"'"+', $event, '+"'"+side+"'"+', '+"'"+optionsType+"'"+');unfocusButton($event);'+dfxMenuItem.onclick : 'unfocusButton($event);'+dfxMenuItem.onclick;
+                                    tempPropObject.notState =                   false;
+                                    tempPropObject.isState =                    true;
+                                    tempPropObject.trueState =                  dfxMenuItem.state.binding;
+                                    tempPropObject.falseState =                 dfxMenuItem.state.binding;
+                                    tempPropObject.ifTrueStateFaIcon =          dfxMenuItem.state.checkedIcon.value.length > 0 && dfxMenuItem.state.checkedIcon.type === 'fa-icon' && dfxMenuItem.state.value ? true : false;
+                                    tempPropObject.ifFalseStateFaIcon =         dfxMenuItem.state.uncheckedIcon.value.length > 0 && dfxMenuItem.state.uncheckedIcon.type === 'fa-icon' && dfxMenuItem.state.value ? true : false;
+                                    tempPropObject.ifTrueStateSvgIcon =         dfxMenuItem.state.checkedIcon.value.length > 0 && dfxMenuItem.state.checkedIcon.type === 'svg-icon' && dfxMenuItem.state.value ? true : false;
+                                    tempPropObject.ifFalseStateSvgIcon =        dfxMenuItem.state.uncheckedIcon.value.length > 0 && dfxMenuItem.state.uncheckedIcon.type === 'svg-icon' && dfxMenuItem.state.value ? true : false;
+                                    tempPropObject.trueStateFaIcon =            dfxMenuItem.state.checkedIcon.value.indexOf("'") == -1 ? '{{'+dfxMenuItem.state.checkedIcon.value+'}}' : eval(dfxMenuItem.state.checkedIcon.value);
+                                    tempPropObject.falseStateFaIcon =           dfxMenuItem.state.uncheckedIcon.value.indexOf("'") == -1 ? '{{'+dfxMenuItem.state.uncheckedIcon.value+'}}' : eval(dfxMenuItem.state.uncheckedIcon.value);
+                                    tempPropObject.trueStateSvgIcon =           dfxMenuItem.state.checkedIcon.value.indexOf("'") == -1 ? '{{'+dfxMenuItem.state.checkedIcon.value+'}}' : eval(dfxMenuItem.state.checkedIcon.value);
+                                    tempPropObject.falseStateSvgIcon =          dfxMenuItem.state.uncheckedIcon.value.indexOf("'") == -1 ? '{{'+dfxMenuItem.state.uncheckedIcon.value+'}}' : eval(dfxMenuItem.state.uncheckedIcon.value);
+                                    tempPropObject.trueStateFaIconStyle =       dfxMenuItem.state.checkedIcon.style;
+                                    tempPropObject.falseStateFaIconStyle =      dfxMenuItem.state.uncheckedIcon.style;
+                                    tempPropObject.trueStateSvgIconStyle =      dfxMenuItem.state.checkedIcon.style;
+                                    tempPropObject.falseStateSvgIconStyle =     dfxMenuItem.state.uncheckedIcon.style;
+                                    tempPropObject.trueStateFaIconClass =       dfxMenuItem.state.checkedIcon.class;
+                                    tempPropObject.falseStateFaIconClass =      dfxMenuItem.state.uncheckedIcon.class;
+                                    tempPropObject.trueStateSvgIconClass =      dfxMenuItem.state.checkedIcon.class;
+                                    tempPropObject.falseStateSvgIconClass =     dfxMenuItem.state.uncheckedIcon.class;
+                                    if ( dfxMenuItem.menuItems.value.length > 0 ) {
+                                        tempPropObject.itemClick = dfxMenuItem.state.value ? '$mdOpenMenu();changeState('+"'"+tempPropObject.itemIndex+"'"+', $event, '+"'"+side+"'"+', '+"'"+optionsType+"'"+');'+dfxMenuItem.onclick : '$mdOpenMenu();'+dfxMenuItem.onclick;
+                                    } else {
+                                        tempPropObject.itemClick = dfxMenuItem.state.value ? 'changeState('+"'"+tempPropObject.itemIndex+"'"+', $event, '+"'"+side+"'"+', '+"'"+optionsType+"'"+');unfocusButton($event);'+dfxMenuItem.onclick : 'unfocusButton($event);'+dfxMenuItem.onclick;
+                                    }
                                 }
                             }
                         } else if (  toolbarType==='buttons' ) {
