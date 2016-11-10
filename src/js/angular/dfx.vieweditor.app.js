@@ -2415,13 +2415,42 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
             scope.actionsMode = {"value": false};
             scope.showMenuEditor = function(ev) {
                 // needed for UNDO functionality
-                scope.$parent.cacheAttributeOldValue({
-                    'value': {
-                        menuItems: scope.attributes.menuItems.value,
-                        menuItemNames: scope.attributes.menuItemNames.value,
-                        menuItemsType: scope.attributes.menuItemsType.value
+                // scope.$parent.cacheAttributeOldValue({
+                //     'value': {
+                //         menuItems: scope.attributes.menuItems.value,
+                //         menuItemNames: scope.attributes.menuItemNames.value,
+                //         menuItemsType: scope.attributes.menuItemsType.value
+                //     }
+                // });
+                
+                if (scope.attributes.layoutType.value === 'wizard' || scope.attributes.layoutType.value === 'tabs' || scope.attributes.layoutType.value === 'panel'){
+                    scope.toolbarSide = $(ev.target).attr('side');
+                    if(scope.toolbarSide==='left'){
+                        scope.$parent.cacheAttributeOldValue({
+                            'value': {
+                                menuItems: scope.attributes.toolbar.leftMenu.menuItems.value,
+                                menuItemNames: scope.attributes.toolbar.leftMenu.menuItemNames.value,
+                                menuItemsType: scope.attributes.toolbar.leftMenu.menuItemsType.value
+                            }
+                        });                    
+                    }else{
+                        scope.$parent.cacheAttributeOldValue({
+                            'value': {
+                                menuItems: scope.attributes.toolbar.rightMenu.menuItems.value,
+                                menuItemNames: scope.attributes.toolbar.rightMenu.menuItemNames.value,
+                                menuItemsType: scope.attributes.toolbar.rightMenu.menuItemsType.value
+                            }
+                        });
                     }
-                });
+                } else {
+                    scope.$parent.cacheAttributeOldValue({
+                        'value': {
+                            menuItems: scope.attributes.menuItems.value,
+                            menuItemNames: scope.attributes.menuItemNames.value,
+                            menuItemsType: scope.attributes.menuItemsType.value
+                        }
+                    });                
+                }
 
                 scope.menu = {};
                 if(scope.attributes.layoutType.value === 'none' ){
@@ -2544,21 +2573,34 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                     controller: function(){
                         scope.menuEditorItem = {};
                         scope.setMenuItemsType = function( type ){
-                            if (type == 'static') {
-                                scope.attributes.menuItems.status = "overridden";
-                                scope.attributes.menuItemNames.status = "";
-                            } else if (type == 'dynamic') {
-                                scope.attributes.menuItems.status = "";
-                                scope.attributes.menuItemNames.status = "overridden";
-                            }
-
                             if(scope.toolbarSide === 'left'){
+                                if (type == 'static') {
+                                    scope.attributes.toolbar.leftMenu.menuItems.status = "overridden";
+                                    scope.attributes.toolbar.leftMenu.menuItemNames.status = "";
+                                } else if (type == 'dynamic') {
+                                    scope.attributes.toolbar.leftMenu.menuItems.status = "";
+                                    scope.attributes.toolbar.leftMenu.menuItemNames.status = "overridden";
+                                }
                                 scope.attributes.toolbar.leftMenu.menuItemsType.value = type;
                                 scope.$parent.overrideAttribute('toolbar.leftMenu.menuItemsType');
                             }else if(scope.toolbarSide === 'right'){
+                                if (type == 'static') {
+                                    scope.attributes.toolbar.rightMenu.menuItems.status = "overridden";
+                                    scope.attributes.toolbar.rightMenu.menuItemNames.status = "";
+                                } else if (type == 'dynamic') {
+                                    scope.attributes.toolbar.rightMenu.menuItems.status = "";
+                                    scope.attributes.toolbar.rightMenu.menuItemNames.status = "overridden";
+                                }
                                 scope.attributes.toolbar.rightMenu.menuItemsType.value = type;
                                 scope.$parent.overrideAttribute('toolbar.rightMenu.menuItemsType');
                             } else {
+                                if (type == 'static') {
+                                    scope.attributes.menuItems.status = "overridden";
+                                    scope.attributes.menuItemNames.status = "";
+                                } else if (type == 'dynamic') {
+                                    scope.attributes.menuItems.status = "";
+                                    scope.attributes.menuItemNames.status = "overridden";
+                                }
                                 scope.attributes.menuItemsType.value = type;
                                 scope.$parent.overrideAttribute('menuItemsType');
                             }
