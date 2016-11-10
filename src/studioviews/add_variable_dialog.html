@@ -1,8 +1,8 @@
 <md-dialog aria-label="add-variable-dialog" ng-cloak>
-    <form ng-submit="saveVariable()">
+    <form ng-submit="saveVariable(env_var_data.name)">
         <md-toolbar>
             <div class="md-toolbar-tools layout-padding">
-                <h5>Add Environment Variable</h5>
+                <h5>{{env_var_mode}} environment variable</h5>
                 <span flex></span>
                 <md-button class="md-icon-button" ng-click="closeDialog()" style="margin-right:-6px;" aria-label="Studio button">
                     <md-icon class="fa fa-lg fa-times dfx-studio-flex-icon" aria-label="Close dialog"></md-icon>
@@ -10,27 +10,26 @@
             </div>
         </md-toolbar>
         <md-dialog-content style="width:400px;">
-            <div class="md-dialog-content layout-column">
-                <md-input-container class="md-block flex" ng-class="validUrlResult === 'failed' || existUrl === true ? 'md-input-invalid' : ''" style="margin: 0;">
+            <div class="md-dialog-content layout-column" style="padding-bottom: 0;height: 100px;">
+                <md-input-container class="md-block flex" ng-class="not_valid_var_name ? 'md-input-invalid' : ''" style="margin: 0;">
                     <label>Name:</label>
-                    <input id="" ng-model="environment.var_name" md-autofocus>
+                    <input type="text" ng-model="env_var_data.name" ng-change="validateVarName(env_var_data.name)" md-autofocus aria-label="Studio input">
+                    <span ng-if="not_valid_var_name" style="color:#DD2C00; margin-top: 35px; font-size: 12px;">
+                        Environment variable name must be unique and can consist only of letters, numbers and underscore
+                    </span>
                 </md-input-container>
-            </div>
+            </div>        
             <div class="md-dialog-content layout-column">
                 <md-input-container class="md-block flex" style="margin: 0;">
                     <label>Description:</label>
-                    <input id="" ng-model="environment.var_description">
+                    <input type="text" ng-model="env_var_data.description" aria-label="Studio input">
                 </md-input-container>
             </div>
         </md-dialog-content>
         <md-dialog-actions layout="row">
             <span flex></span>
-            <md-button class="md-primary" ng-disabled="!allowClone" type="submit" aria-label="Studio button">
-                OK
-            </md-button>
-            <md-button class="md-primary" ng-click="closeDialog()" aria-label="Studio button">
-                Cancel
-            </md-button>
+            <md-button class="md-primary" ng-disabled="not_valid_var_name" type="submit" aria-label="Studio button">OK</md-button>
+            <md-button class="md-primary" ng-click="closeDialog()" aria-label="Studio button">Cancel</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog>

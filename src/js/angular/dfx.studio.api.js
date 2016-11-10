@@ -817,25 +817,12 @@ dfxStudioApi.factory('dfxApplications', [ '$http', '$q', function($http, $q) {
         return deferred.promise;
     }
 
-    api_applications.getEnvironmentVariables = function (appname){
+    api_applications.getEnvironmentVariablesList = function (data){
         var deferred = $q.defer();
 
         $http({
-            url: '//' + appname,
-            method: "GET"
-        }).then(function successCallback(response) {
-            deferred.resolve( response );
-        });
-
-        return deferred.promise;
-    }
-
-    api_applications.editEnvironmentVariables = function (data){
-        var deferred = $q.defer();
-
-        $http({
-            url: '//',
-            method: "PUT",
+            url: '/studio/environment_variables/getAll',
+            method: "POST",
             data: data
         }).then(function successCallback(response) {
             deferred.resolve( response );
@@ -844,12 +831,41 @@ dfxStudioApi.factory('dfxApplications', [ '$http', '$q', function($http, $q) {
         return deferred.promise;
     }
 
-    api_applications.removeEnvironmentVariables = function(name, appname){
+    api_applications.addEnvironmentVariable = function (data){
+        var deferred = $q.defer();
+
+        $http({
+            url: '/studio/environment_variables/add',
+            method: "POST",
+            data: data
+        }).then(function successCallback(response) {
+            deferred.resolve( response );
+        });
+
+        return deferred.promise;
+    }
+
+    api_applications.editEnvironmentVariable = function (data){
+        var deferred = $q.defer();
+
+        $http({
+            url: '/studio/environment_variables/edit',
+            method: "POST",
+            data: data
+        }).then(function successCallback(response) {
+            deferred.resolve( response );
+        });
+
+        return deferred.promise;
+    }
+
+    api_applications.deleteEnvironmentVariable = function(data){
         var deferred = $q.defer();
         
         $http({
-            url: '//' + name + '/' + appname,
-            method: "DELETE"
+            url: '/studio/environment_variables/delete',
+            method: "POST",
+            data: data
         }).then(function successCallback(response) {
             deferred.resolve(response);
         });

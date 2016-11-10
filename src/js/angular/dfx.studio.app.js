@@ -2371,13 +2371,118 @@ dfxStudioApp.controller("dfx_studio_general_settings_controller", [ '$scope','df
 }]);
 
 dfxStudioApp.controller("dfx_studio_devops_controller", [ '$scope', '$mdDialog', 'dfxApplications', 'dfxMessaging', function($scope, $mdDialog, dfxApplications, dfxMessaging) {
-    var parentScope = $scope.$parent;
+    var parentScope = $scope.$parent,
+        app_data = { "app_name": $scope.app_name };
     parentScope.devops = $scope;
 
-    $scope.environment = {
-        "var_name": "",
-        "var_description": ""
+    $scope.env_vars_list = [];
+    $scope.env_var_data = { "name": "", "description": "" };
+    $scope.not_valid_var_name = false;
+
+    $scope.getAppEnvVars = function(data){        
+        dfxApplications.getEnvironmentVariablesList( data ).then(function(response){
+            $scope.env_vars_list = response.data.data;
+        });
     }
+    $scope.getAppEnvVars(app_data);
+
+    $scope.addVariable = function(data){
+        dfxApplications.addEnvironmentVariable(data).then(function(){
+            dfxMessaging.showMessage('Environment variable ' + data.name + ' has been successfully saved');
+            $scope.getAppEnvVars(app_data);
+        });
+    }
+    
+    $scope.editVariable = function(data){
+        dfxApplications.editEnvironmentVariable(data).then(function(){
+            dfxMessaging.showMessage('Environment variable ' + data.name + ' has been successfully updated');
+            $scope.getAppEnvVars(app_data);
+        });
+    }
+
+    $scope.openDialog = function(env_var){
+        $scope.env_var_mode = env_var ? 'Edit' : 'Add';
+        $scope.not_valid_var_name = false;
+        $scope.env_var_data = {
+            "name":         env_var ? env_var.name : '',
+            "description":  env_var ? env_var.description : ''
+        }
+        $mdDialog.show({
+            scope: $scope,
+            preserveScope: true,
+            parent: angular.element(document.body),
+            clickOutsideToClose: true,
+            ariaLabel: 'add_variable_dialog',
+            templateUrl: 'studioviews/add_variable_dialog.html',
+            onComplete: function() {                
+                $scope.validateVarName = function( name ){                         
+                    if (!/^[a-zA-Z0-9_]+$/.test(name)) {
+                        $scope.not_valid_var_name = true;
+                        return;
+                    }else{
+                        $scope.not_valid_var_name = false;
+                        for (var i = 0; i < $scope.env_vars_list.length; i++) {
+                            if(name === $scope.env_vars_list[i].name){
+                                $scope.not_valid_var_name = true;
+                                return;
+                            }else{
+                                if($scope.not_valid_var_name) $scope.not_valid_var_name = false;
+                            }
+                        }
+                    }
+                }
+
+                $scope.saveVariable = function( name ){
+                    $scope.validateVarName(name);
+                    if(!$scope.not_valid_var_name){
+                        if(env_var){
+                            var data = {                        
+                                "_id": env_var._id,
+                                "name": $scope.env_var_data.name,
+                                "description": $scope.env_var_data.description,
+                            }
+                            $scope.editVariable(data);
+                        }else{
+                            var data = {
+                                "app_name": $scope.app_name,
+                                "name": $scope.env_var_data.name,
+                                "description": $scope.env_var_data.description
+                            }
+                            $scope.addVariable(data);
+                        }
+                        $scope.closeDialog();                    
+                    }
+                }
+                
+                $scope.closeDialog = function() {
+                    $mdDialog.hide();
+                }
+            }
+        });
+    }
+
+    $scope.confirmProviderRemove = function(ev, env_var_id) {
+        var confirm = $mdDialog.confirm()
+            .title('Are you sure you want to delete this environment variable?')
+            .textContent('Environment variable will be removed from the repository.')
+            .ariaLabel('Environment variable')
+            .targetEvent(ev)
+            .cancel('Cancel')
+            .ok('OK');
+        $mdDialog.show(confirm).then(function() {
+            $scope.deleteVariable(env_var_id);
+        }, function() {
+        });
+    };
+
+    $scope.deleteVariable = function(env_var_id){
+        var data = { "_id": env_var_id }
+
+        dfxApplications.deleteEnvironmentVariable(data).then(function(){
+            dfxMessaging.showMessage('Environment variable has been successfully deleted');
+            $scope.getAppEnvVars(app_data);
+        })
+    };
 
     $scope.saveCollaboration = function(){
         dfxApplications.saveCollaboration($scope.devops.channel, $scope.app_name).then(function(){
@@ -2408,33 +2513,6 @@ dfxStudioApp.controller("dfx_studio_devops_controller", [ '$scope', '$mdDialog',
             dfxMessaging.showWarning("Can\'t save github data");
         });
     };
-
-    $scope.addVariable = function() {
-        $mdDialog.show({
-            scope: $scope,
-            preserveScope: true,
-            parent: angular.element(document.body),
-            clickOutsideToClose: true,
-            ariaLabel: 'add_variable_dialog',
-            templateUrl: 'studioviews/add_variable_dialog.html',
-            onComplete: function() {
-                $scope.closeDialog = function() {
-                    $mdDialog.hide();
-                }
-            }
-        })
-    }
-
-    $scope.saveVariable = function(){
-
-    }
-    $scope.editVariable = function(){
-
-    }
-    $scope.deleteVariable = function(){
-
-    }
-
 }]);
 
 dfxStudioApp.controller("dfx_studio_api_sources_controller", [ '$scope','dfxAuthProviders', 'dfxMessaging', '$mdDialog', '$mdSidenav', 'dfxApiServiceObjects', '$timeout', function($scope, dfxAuthProviders, dfxMessaging, $mdDialog, $mdSidenav, dfxApiServiceObjects, $timeout) {
