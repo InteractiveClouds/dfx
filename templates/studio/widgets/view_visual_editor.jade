@@ -37,6 +37,9 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", dfx-ve-ctr
                     span(style="margin-right:5px") Cards:
                     img(src="/images/vb/icons/cards_add.png", ng-show="design_visible", class="dfx-ve-toolbar-icon", ng-click="addCard($event)", title="Add a new card")
                     img(src="/images/vb/icons/cards_subtract.png", ng-show="design_visible", class="dfx-ve-toolbar-icon", ng-click="removeCard($event)", title="Remove the current card")
+                span(style="font-size: 12px;margin-left: 1px;background: #4a4a4a;line-height: 48px;color: #fff;padding: 0 8px;border-left: 1px #6b6a6a solid;border-right: 1px #6b6a6a solid;", ng-show="design_visible")
+                    span(style="margin-right:5px") Workspace:
+                    img(src="/images/vb/icons/preview_global.png", ng-show="design_visible", class="dfx-ve-toolbar-icon", ng-click="changeViewWorkspaceWidth($event)", title="Change workspace size")
                 span(style="font-size: 12px;margin-left: 1px;background: #4a4a4a;line-height: 48px;color: #fff;padding: 0 8px;border-left: 1px #6b6a6a solid;border-right: 1px #6b6a6a solid;", ng-show="script_visible")
                     span(style="margin-right:5px") Script:
                     img(src="/images/vb/icons/script_assistant.png", class="dfx-ve-toolbar-icon", ng-click="showHelpEditor($event)", title="Code Assistant")
@@ -186,9 +189,6 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", dfx-ve-ctr
                                             span
                                                 ng-md-icon(icon="archive", size="18", style="margin-top: -3px")
                                                 p(style="display: inline-block; margin: 0 4px 2px;") Export the View
-                                    li.col-md-12
-                                        span.col-md-4 Workspace Width:
-                                        input.col-md-8(type="number", ng-blur="changeViewWorkspaceWidth($event)")
                             li
                                 input.dfx-ve-property-treeview-button(type="checkbox", id="item-0")
                                 label(for="item-0") Card Properties

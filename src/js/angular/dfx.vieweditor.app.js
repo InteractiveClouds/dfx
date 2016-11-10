@@ -951,18 +951,41 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
         });
     }
 
-    $scope.changeViewWorkspaceWidth = function($event){
-        var worspace_width = $event.target.value;
-        var workspace = angular.element(document.querySelectorAll('[md-selected="view_card_select_index"]'));
+    $scope.changeViewWorkspaceWidth = function($event) {
+        $(event.srcElement).animateCss('pulse');
+        $mdDialog.show({
+            controller: DialogController,
+            templateUrl: '/gcontrols/web/workspace_change.html',
+            parent: angular.element(document.body),
+            targetEvent: $event
+        })
+        .then(function(workspace) {
+            $rootScope.worspace_width = workspace.width;
+            var workspace_container = angular.element(document.querySelectorAll('[md-selected="view_card_select_index"]'));
 
-        if (!worspace_width || worspace_width == "0") {
-            workspace.css('overflow', 'initial');
-            workspace.css('width', '');
-        } else {
-            workspace.css('overflow', 'auto');
-            workspace.css('width', worspace_width + 'px');
+            if (!workspace.width || workspace.width == "0") {
+                workspace_container.css('overflow', 'initial');
+                workspace_container.css('width', '');
+            } else {
+                var workspace_width = workspace.width.indexOf('px') > 0 ? workspace.width : workspace.width + 'px';
+                workspace_container.css('overflow', 'auto');
+                workspace_container.css('width', workspace_width);
+            }
+        }, function() {
+            // do nothing
+        });
+
+        function DialogController($scope, $mdDialog) {
+            $scope.workspace = $rootScope.worspace_width ? {"width":$rootScope.worspace_width} : {"width":""};
+            $scope.changeWorkspaceConfirm = function(answer) {
+                $mdDialog.hide($scope.workspace);
+            };
+
+            $scope.changeWorkspaceCancel = function() {
+                $mdDialog.cancel();
+            };
         }
-    }
+    };
 
     var platform = $('#dfx_visual_editor').attr('platform');
     $('.dfx_visual_editor_gc_cat_item').empty();
