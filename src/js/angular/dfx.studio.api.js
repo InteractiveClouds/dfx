@@ -817,6 +817,46 @@ dfxStudioApi.factory('dfxApplications', [ '$http', '$q', function($http, $q) {
         return deferred.promise;
     }
 
+    api_applications.getEnvironmentVariables = function (appname){
+        var deferred = $q.defer();
+
+        $http({
+            url: '//' + appname,
+            method: "GET"
+        }).then(function successCallback(response) {
+            deferred.resolve( response );
+        });
+
+        return deferred.promise;
+    }
+
+    api_applications.editEnvironmentVariables = function (data){
+        var deferred = $q.defer();
+
+        $http({
+            url: '//',
+            method: "PUT",
+            data: data
+        }).then(function successCallback(response) {
+            deferred.resolve( response );
+        });
+
+        return deferred.promise;
+    }
+
+    api_applications.removeEnvironmentVariables = function(name, appname){
+        var deferred = $q.defer();
+        
+        $http({
+            url: '//' + name + '/' + appname,
+            method: "DELETE"
+        }).then(function successCallback(response) {
+            deferred.resolve(response);
+        });
+
+        return deferred.promise;
+    }
+
     return api_applications;
 }]);
 

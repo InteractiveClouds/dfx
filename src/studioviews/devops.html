@@ -6,6 +6,45 @@
             <md-button class="md-raised md-primary" ng-href="#contactus">DreamFace Support</md-button>
         </md-content>
     </md-tab>
+    <md-tab label="Environments Variables">
+        <md-content class="md-padding">
+            <div layout="row" class="layout-align-end">
+                <md-button class="md-raised" ng-click="addVariable()" aria-label="Studio button">
+                    <md-icon class="fa fa-plus dfx-studio-flex-icon"></md-icon>
+                    Variable
+                </md-button>
+            </div>
+            <div layout="row">
+                <md-card class="md-altTheme-theme" style="width:100%;overflow:hidden;">
+                    <md-card-content style="padding:0;">
+                        <table class="datatable" class="layout-row" style="width: 100%">
+                            <thead>
+                                <tr>
+                                    <th><span>Name</span></th>
+                                    <th><span>Description</span></th>
+                                    <th><span>Actions</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="provider in auth_providers track by $index">
+                                <td>{{}}</td>
+                                <td>{{}}</td>
+                                <td>
+                                    <md-button ng-click="" class="dfx-studio-table-button" aria-label="Studio button">
+                                        <md-icon class="fa fa-edit dfx-studio-flex-icon"></md-icon>
+                                    </md-button>
+                                    <md-button ng-click="" class="dfx-studio-table-button" aria-label="Studio button">
+                                        <md-icon class="fa fa-trash dfx-studio-flex-icon"></md-icon>
+                                    </md-button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </md-card-content>
+                </md-card>
+            </div>
+        </md-content>
+    </md-tab>
     <md-tab label="Collaboration">
         <md-content class="md-padding">
             <form ng-submit="saveCollaboration()">

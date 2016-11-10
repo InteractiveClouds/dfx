@@ -2370,9 +2370,14 @@ dfxStudioApp.controller("dfx_studio_general_settings_controller", [ '$scope','df
 
 }]);
 
-dfxStudioApp.controller("dfx_studio_devops_controller", [ '$scope','dfxApplications', 'dfxMessaging', function($scope, dfxApplications, dfxMessaging) {
+dfxStudioApp.controller("dfx_studio_devops_controller", [ '$scope', '$mdDialog', 'dfxApplications', 'dfxMessaging', function($scope, $mdDialog, dfxApplications, dfxMessaging) {
     var parentScope = $scope.$parent;
     parentScope.devops = $scope;
+
+    $scope.environment = {
+        "var_name": "",
+        "var_description": ""
+    }
 
     $scope.saveCollaboration = function(){
         dfxApplications.saveCollaboration($scope.devops.channel, $scope.app_name).then(function(){
@@ -2403,6 +2408,33 @@ dfxStudioApp.controller("dfx_studio_devops_controller", [ '$scope','dfxApplicati
             dfxMessaging.showWarning("Can\'t save github data");
         });
     };
+
+    $scope.addVariable = function() {
+        $mdDialog.show({
+            scope: $scope,
+            preserveScope: true,
+            parent: angular.element(document.body),
+            clickOutsideToClose: true,
+            ariaLabel: 'add_variable_dialog',
+            templateUrl: 'studioviews/add_variable_dialog.html',
+            onComplete: function() {
+                $scope.closeDialog = function() {
+                    $mdDialog.hide();
+                }
+            }
+        })
+    }
+
+    $scope.saveVariable = function(){
+
+    }
+    $scope.editVariable = function(){
+
+    }
+    $scope.deleteVariable = function(){
+
+    }
+
 }]);
 
 dfxStudioApp.controller("dfx_studio_api_sources_controller", [ '$scope','dfxAuthProviders', 'dfxMessaging', '$mdDialog', '$mdSidenav', 'dfxApiServiceObjects', '$timeout', function($scope, dfxAuthProviders, dfxMessaging, $mdDialog, $mdSidenav, dfxApiServiceObjects, $timeout) {
