@@ -951,6 +951,19 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
         });
     }
 
+    $scope.changeViewWorkspaceWidth = function($event){
+        var worspace_width = $event.target.value;
+        var workspace = angular.element(document.querySelectorAll('[md-selected="view_card_select_index"]'));
+
+        if (!worspace_width || worspace_width == "0") {
+            workspace.css('overflow', 'initial');
+            workspace.css('width', '');
+        } else {
+            workspace.css('overflow', 'auto');
+            workspace.css('width', worspace_width + 'px');
+        }
+    }
+
     var platform = $('#dfx_visual_editor').attr('platform');
     $('.dfx_visual_editor_gc_cat_item').empty();
 
@@ -2172,7 +2185,7 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                 //         menuItemsType: scope.attributes.menuItemsType.value
                 //     }
                 // });
-                
+
                 if (scope.attributes.layoutType.value === 'wizard' || scope.attributes.layoutType.value === 'tabs' || scope.attributes.layoutType.value === 'panel'){
                     scope.toolbarSide = $(ev.target).attr('side');
                     if(scope.toolbarSide==='left'){
@@ -2182,7 +2195,7 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                                 menuItemNames: scope.attributes.toolbar.leftMenu.menuItemNames.value,
                                 menuItemsType: scope.attributes.toolbar.leftMenu.menuItemsType.value
                             }
-                        });                    
+                        });
                     }else{
                         scope.$parent.cacheAttributeOldValue({
                             'value': {
@@ -2199,7 +2212,7 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                             menuItemNames: scope.attributes.menuItemNames.value,
                             menuItemsType: scope.attributes.menuItemsType.value
                         }
-                    });                
+                    });
                 }
 
                 scope.menu = {};
