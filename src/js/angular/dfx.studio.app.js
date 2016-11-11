@@ -3615,13 +3615,6 @@ dfxStudioApp.controller("dfx_studio_deployment_controller", [ '$scope', '$mdDial
     $scope.application_version = "1.0";
     $scope.build_number = {};
 
-    /*$timeout(function(){
-        for(var i =0; i < $scope.applications.length; i++){
-            if($scope.applications[i].name === $scope.app_name){
-                $scope.application_version = $scope.applications[i].version ;
-            }
-        }
-    },0);*/
 
     $scope.platform = 0;
     $scope.building_status = 'pending...';
@@ -3629,51 +3622,16 @@ dfxStudioApp.controller("dfx_studio_deployment_controller", [ '$scope', '$mdDial
     $scope.host_port = $('body').attr('deploymenturl') ;
     $scope.env_vars = [];
 
-    //dfxDeployment.getAppBuilds($scope.app_name).then(function(data){
-    //    $scope.platform = data.platform;
-    //    $scope.compiler = data.compiler ;
-    //});
 
     $scope.getAppEnvVariables = function(app){
-        var response = {
-            content:[
-                {
-                    name: "development",
-                    data: {
-                        VCAP_APP_HOST: '10.10.10.10',
-                        USER: 'DEV_Admin',
-                        MEMORY_LIMIT: '50mb',
-                        PORT: '3001',
-                        TMPDIR: '/home/vcap/tmp/dev'
-                    }
-                },
-                {
-                    name: "testing",
-                    data: {
-                        VCAP_APP_HOST : '11.11.11.11',
-                        USER : 'TEST_Admin',
-                        MEMORY_LIMIT : '10mb',
-                        PORT : '3002',
-                        TMPDIR : '/home/vcap/tmp/test'
-                    }
-                },
-                {
-                    name: "production",
-                    data: {
-                        VCAP_APP_HOST : '12.12.12.12',
-                        USER : 'PROD_Admin',
-                        MEMORY_LIMIT : '80mb',
-                        PORT : '3003',
-                        TMPDIR : '/home/vcap/tmp/prod'
-                    }
-                }
-            ]
-        }
-        response.content.map(function(cont){
-            cont.data = JSON.stringify(cont.data,null,4);
-            cont.waitingMessage = false;
-        })
-        $scope.env_vars = response.content;
+        dfxApplications.getGeneratedEnvironment({'app_name':app}).then(function(res) {
+            var response = res.data.data[0];
+            response.content.map(function(cont){
+                cont.data = JSON.stringify(cont.data,null,4);
+                cont.waitingMessage = false;
+            })
+            $scope.env_vars = response.content;
+        });
     }
 
     $scope.showDeployments = function (build, platform){
