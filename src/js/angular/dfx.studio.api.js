@@ -860,6 +860,7 @@ dfxStudioApi.factory('dfxDeployment', [ '$http', '$q', function($http, $q) {
                 buildDescription:   data.description,
                 buildReleaseNotes:  data.release_notes,
                 buildDate:          data.build_date,
+                deploymentVersion : data.deploymentVersion,
                 error:              data.error
             }
         }).then(function successCallback(response) {

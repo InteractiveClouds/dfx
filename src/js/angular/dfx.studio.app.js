@@ -3669,7 +3669,19 @@ dfxStudioApp.controller("dfx_studio_deployment_controller", [ '$scope', '$mdDial
                 }
             ]
         }
+        response.content.map(function(cont){
+            cont.data = JSON.stringify(cont.data,null,4);
+            cont.waitingMessage = false;
+        })
         $scope.env_vars = response.content;
+    }
+
+    $scope.showDeployments = function (build, platform){
+        build.displayDeployments = true;
+    }
+
+    $scope.hideDeployments = function (build, platform){
+        delete build.displayDeployments;
     }
 
     $scope.getAppBuilds = function(platform){
@@ -3689,20 +3701,6 @@ dfxStudioApp.controller("dfx_studio_deployment_controller", [ '$scope', '$mdDial
             if(!$scope.compiler){
                 $scope.compiler = data.compiler ;
             }
-
-            dfxDeployment.getDeployedBuilds().then(function(data){
-                var builds = data[$scope.app_name];
-                for(var key in builds){
-                    for(var i =0; i < $scope.builds[platform].length; i++){
-                        if(($scope.builds[platform][i].app_version + '.' + $scope.builds[platform][i].build_number) === key){
-                            $scope.builds[platform][i].is_deployed = true;
-                            $scope.builds[platform][i].link = $scope.host_port + "/deploy/" + $scope.tenant_id + '/' + $scope.app_name + '/' + platform + '/' + key + "/login.html" ;
-                        }
-                    }
-                }
-            }, function(err){
-                console.log('Seems deployment server doesn\'t respond');
-            });
         });
     };
 
@@ -3710,9 +3708,32 @@ dfxStudioApp.controller("dfx_studio_deployment_controller", [ '$scope', '$mdDial
     $scope.getAppBuilds('mobile');
     $scope.getAppEnvVariables($scope.app_name);
 
+
+    $scope.deployBuild = function(build, platform, env){
+        env.waitingMessage = true;
+        var body = {
+            applicationName:        $scope.app_name,
+            platform:               platform,
+            applicationVersion:     build.app_version,
+            buildNumber:            build.build_number,
+            tenantId:               $scope.tenant_id,
+            deploymentVersion :     env
+        };
+        dfxDeployment.deployBuild(body).then(function(data){
+            env.waitingMessage = false;
+            dfxMessaging.showMessage('Build has been successfully deployed on deployment server');
+            build.deploymentVersion = env.name;
+            build.link = $scope.host_port + '/deploy/' + $scope.tenant_id + '/' + $scope.app_name + '/' + platform + '/' + build.app_version + '.' + build.build_number + '/login.html';
+        },function (err) {
+            env.waitingMessage = false;
+            dfxMessaging.showWarning('Build has been failed');
+        });
+    };
+
     $scope.doRebuild = function(build, platform) {
         for(var i =0; i < $scope.builds[platform].length; i++){
             if($scope.builds[platform][i].build_number === build.build_number && $scope.builds[platform][i].app_version === build.app_version){
+                $scope.builds[platform][i].displayDeployments = false;
                 $scope.builds[platform][i].status = "pending..." ;
             }
         }
@@ -3839,6 +3860,7 @@ dfxStudioApp.controller("dfx_studio_deployment_controller", [ '$scope', '$mdDial
                 $scope.new_build = {
                     application:        $scope.app_name,
                     platform:           platform,
+                    deploymentVersion:  null,
                     app_version:        $scope.application_version,
                     build_number:       "" +  $scope.build_number[platform],
                     build:              ($scope.application_version + '.' + $scope.build_number),
@@ -3847,6 +3869,7 @@ dfxStudioApp.controller("dfx_studio_deployment_controller", [ '$scope', '$mdDial
                     release_notes:      "",
                     build_date:          $filter('date')(new Date(), 'EEE MMM dd yyyy HH:mm:ss') + ' GMT' + $filter('date')(new Date(), 'Z'),
                     displayLog:          false,
+                    displayDeployments:  false,
                     logs:               [],
                     status:             'pending...'
                 }
@@ -3936,32 +3959,7 @@ dfxStudioApp.controller("dfx_studio_deployment_controller", [ '$scope', '$mdDial
         });
     };
 
-    $scope.deployBuild = function(build, platform){
-        setWaitingMessageValue(build, true);
-        var body = {
-            applicationName:        $scope.app_name,
-            platform:               platform,
-            applicationVersion:     build.app_version,
-            buildNumber:            build.build_number,
-            tenantId:               $scope.tenant_id
-        };
-        dfxDeployment.deployBuild(body).then(function(data){
-            setWaitingMessageValue(build, false);
-            dfxMessaging.showMessage('Build has been successfully deployed on deployment server');
-            $scope.getAppBuilds(platform);
-        },function (err) {
-            setWaitingMessageValue(build, false);
-            dfxMessaging.showWarning('Build has been failed');
-        });
-    };
 
-    function setWaitingMessageValue(build, value) {
-        $scope.builds[build.platform].forEach(function(b, index){
-            if (build._id === b._id) {
-                $scope.builds[build.platform][index].waitingMessage = value;
-            }
-        });
-    }
 
     $scope.getDeployedQRCode = function(build) {
         dfxDeployment.getMobileApp(build).then( function(response) {
