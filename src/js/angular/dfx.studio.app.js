@@ -2375,13 +2375,151 @@ dfxStudioApp.controller("dfx_studio_devops_controller", [ '$scope', '$mdDialog',
         app_data = { "app_name": $scope.app_name };
     parentScope.devops = $scope;
 
+    // Environments
+    $scope.environments_list = [];
+    $scope.environment_data = { "name": "" };
+    $scope.not_valid_environment_name = false;
+
+    // Environments variables
     $scope.env_vars_list = [];
     $scope.env_var_data = { "name": "", "description": "" };
     $scope.not_valid_var_name = false;
 
+    $scope.getAppEnvironments = function(data){
+        return dfxApplications.getEnvironmentsList( data ).then(function(response){
+            $scope.environments_list = response.data.data;
+            console.log('$scope.environments_list', $scope.environments_list);
+        });
+    }
+
+    $scope.addEnvironment = function(data){
+        dfxApplications.addEnvironment(data).then(function(){
+            dfxMessaging.showMessage('Environment ' + data.name + ' has been successfully saved');
+            $scope.getAppEnvironments(app_data);
+        });
+    }
+    
+    $scope.editEnvironment = function(data){
+        dfxApplications.editEnvironment(data).then(function(){
+            dfxMessaging.showMessage('Environment ' + data.name + ' has been successfully updated');
+            $scope.getAppEnvironments(app_data);
+        });
+    }
+
+    $scope.openEnvironmentDialog = function(index, environment){
+        $scope.environment_mode = environment ? 'Edit' : 'Add';
+        $scope.not_valid_environment_name = false;
+        $scope.environment_data.name = environment ? environment.name : ''
+        $mdDialog.show({
+            scope: $scope,
+            preserveScope: true,
+            parent: angular.element(document.body),
+            clickOutsideToClose: true,
+            ariaLabel: 'add_variable_dialog',
+            templateUrl: 'studioviews/add_environment_dialog.html',
+            onComplete: function() {                               
+                $scope.validateEnvironmentName = function( name ){                         
+                    // if (!/^[a-zA-Z0-9_]+$/.test(name)) {
+                    //     $scope.not_valid_environment_name = true;
+                    //     return;
+                    // }else{
+                    //     $scope.not_valid_environment_name = false;
+                    //     for (var i = 0; i < $scope.environments_list.length; i++) {
+                    //         if(name === $scope.environments_list[i].name){
+                    //             $scope.not_valid_environment_name = true;
+                    //             return;
+                    //         }else{
+                    //             if($scope.not_valid_environment_name) $scope.not_valid_environment_name = false;
+                    //         }
+                    //     }
+                    // }
+                }
+
+                $scope.saveEnvironment = function( name ){
+                    $scope.validateEnvironmentName(name);
+                    if(!$scope.not_valid_environment_name){
+                        var data = {};
+
+                        for (var i = 0; i < $scope.env_vars_list.length; i++) {
+                            data[$scope.env_vars_list[i].name] = '';
+                        };
+
+                        if(environment){
+                            var data = {                        
+                                "_id": environment._id,
+                                "name": name,
+                                "data": data
+                            }
+                            $scope.editEnvironment(data);
+                        }else{
+                            var data = {
+                                "app_name": $scope.app_name,
+                                "name": name,
+                                "data": data
+                            }
+                            $scope.addEnvironment(data);
+                        }
+                        $scope.closeDialog();                    
+                    }
+                }
+                
+                $scope.closeDialog = function() {
+                    $mdDialog.hide();
+                }
+            }
+        });
+    }
+
+    $scope.saveAppEnvironments = function(){
+        var app_environments = {
+            "app_name": $scope.app_name,
+            "content": []
+        }
+        for (var i = 0; i < $scope.environments_list.length; i++) {
+            delete $scope.environments_list[i]._id;
+            delete $scope.environments_list[i].app_name;
+        };
+        app_environments.content = $scope.environments_list;
+        dfxApplications.generateEnvironments(app_environments).then(function(){
+            dfxMessaging.showMessage('Environments has been successfully generated');
+        })
+    }
+
+    $scope.confirmEnvironmentRemove = function(ev, environment_id) {
+        var confirm = $mdDialog.confirm()
+            .title('Are you sure you want to delete this environment?')
+            .textContent('Environment will be removed from the repository.')
+            .ariaLabel('Environment')
+            .targetEvent(ev)
+            .cancel('Cancel')
+            .ok('OK');
+        $mdDialog.show(confirm).then(function() {
+            $scope.deleteEnvironment(environment_id);
+        }, function() {
+        });
+    };
+
+    $scope.deleteEnvironment = function(environment_id){
+        var data = { "_id": environment_id }
+
+        dfxApplications.deleteEnvironment(data).then(function(){
+            dfxMessaging.showMessage('Environment has been successfully deleted');
+            $scope.getAppEnvVars(app_data);
+        })
+    };
+
+    /* env vars functions */
+
     $scope.getAppEnvVars = function(data){        
         dfxApplications.getEnvironmentVariablesList( data ).then(function(response){
-            $scope.env_vars_list = response.data.data;
+            $scope.env_vars_list = response.data.data;            
+            $scope.getAppEnvironments(data).then(function(){
+                console.log('here', data) ;
+                dfxApplications.getGeneratedEnvironment(data).then(function(response){
+                    console.log('gener', response);
+                    if(response.data.data.length>0) $scope.environments_list = response.data.data[0].content;
+                });
+            });
         });
     }
     $scope.getAppEnvVars(app_data);
@@ -2461,7 +2599,7 @@ dfxStudioApp.controller("dfx_studio_devops_controller", [ '$scope', '$mdDialog',
         });
     }
 
-    $scope.confirmProviderRemove = function(ev, env_var_id) {
+    $scope.confirmEnvVarRemove = function(ev, env_var_id) {
         var confirm = $mdDialog.confirm()
             .title('Are you sure you want to delete this environment variable?')
             .textContent('Environment variable will be removed from the repository.')

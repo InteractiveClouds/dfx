@@ -817,6 +817,90 @@ dfxStudioApi.factory('dfxApplications', [ '$http', '$q', function($http, $q) {
         return deferred.promise;
     }
 
+    api_applications.generateEnvironments = function (data){
+        var deferred = $q.defer();
+
+        $http({
+            url: '/studio/environments/generate',
+            method: "POST",
+            data: data
+        }).then(function successCallback(response) {
+            deferred.resolve( response );
+        });
+
+        return deferred.promise;
+    }
+
+    api_applications.getGeneratedEnvironment = function (data){
+        var deferred = $q.defer();
+
+        $http({
+            url: '/studio/environments/getGeneratedEnvironment',
+            method: "POST",
+            data: data
+        }).then(function successCallback(response) {
+            deferred.resolve( response );
+        });
+
+        return deferred.promise;
+    }
+
+    api_applications.getEnvironmentsList = function (data){
+        var deferred = $q.defer();
+
+        $http({
+            url: '/studio/environments/getAll',
+            method: "POST",
+            data: data
+        }).then(function successCallback(response) {
+            deferred.resolve( response );
+        });
+
+        return deferred.promise;
+    }
+
+    api_applications.addEnvironment = function (data){
+        var deferred = $q.defer();
+
+        $http({
+            url: '/studio/environments/add',
+            method: "POST",
+            data: data
+        }).then(function successCallback(response) {
+            deferred.resolve( response );
+        });
+
+        return deferred.promise;
+    }
+
+    api_applications.editEnvironment = function (data){
+        var deferred = $q.defer();
+
+        $http({
+            url: '/studio/environments/edit',
+            method: "POST",
+            data: data
+        }).then(function successCallback(response) {
+            deferred.resolve( response );
+        });
+
+        return deferred.promise;
+    }
+
+    api_applications.deleteEnvironment = function(data){
+        var deferred = $q.defer();
+        
+        $http({
+            url: '/studio/environments/delete',
+            method: "POST",
+            data: data
+        }).then(function successCallback(response) {
+            deferred.resolve(response);
+        });
+
+        return deferred.promise;
+    }
+
     api_applications.getEnvironmentVariablesList = function (data){
         var deferred = $q.defer();
 
