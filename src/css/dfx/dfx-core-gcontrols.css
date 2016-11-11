@@ -657,10 +657,10 @@ div.dfx-core-gc-switch md-switch[disabled].dfx-core-gc-switch-button .md-thumb:b
 
 /* Radio */
 .dfx-core-gc-radio-label {
-    font-size: 10px !important;
-    margin: 7px 0!important;
-    padding-left: 3px !important;
-    color: rgba(0,0,0,0.54) !important;
+    font-size: 10px;
+    margin: 7px 0;
+    padding-left: 3px;
+    color: rgba(0,0,0,0.54);
 }
 .dfx-core-gc-radio-group {
     display: -webkit-flex;
@@ -668,7 +668,7 @@ div.dfx-core-gc-switch md-switch[disabled].dfx-core-gc-switch-button .md-thumb:b
 }
 .dfx-core-gc-radio-button {
     height: 26px;
-    margin: 0 0 0 5px;
+    margin: 0 0 19px 3px;
     display: -webkit-flex;
     -webkit-flex-direction: row;
     display: flex;
