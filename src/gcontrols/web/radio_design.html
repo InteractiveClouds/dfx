@@ -1,7 +1,9 @@
 <div style="{{attributes.style.value}}" class="dfx-core-gc-radio {{attributes.classes.value}}">
-    <div class="gc-radio-label-design">{{attributes.label.value | checkExpression}}</div>
+    <div style="{{attributes.labelStyle.style}}" class="dfx-core-gc-radio-label {{attributes.labelStyle.class}}">
+    	{{attributes.label.value | checkExpression}}
+    </div>
     <md-radio-group ng-model="currentItem" class="dfx-core-gc-radio-group md-primary" ng-class="attributes.buttonClass.value" ng-style="{'flex-direction': attributes.direction.value }">
-        <md-radio-button style="{{attributes.itemStyle.item.style}}" class="dfx-core-gc-radio-button gc-radio {{attributes.itemStyle.item.class}}" ng-repeat="it in attributes.radioItems.value track by $index" ng-value="it" aria-label="{{it.value}}">        
+        <md-radio-button style="{{attributes.itemStyle.item.style}}" class="dfx-core-gc-radio-button {{attributes.itemStyle.item.class}}" ng-repeat="it in attributes.radioItems.value track by $index" ng-value="it" aria-label="{{it.value}}">        
         	<span class="{{attributes.itemStyle.label.class}}" style="{{attributes.itemStyle.label.style}}">{{ it.display | checkExpression }}</span>
     	</md-radio-button>
     </md-radio-group>
