@@ -11,26 +11,27 @@
                         Environment
                     </md-button>
                 </div>
-                <div layout="row">
+                <h2 ng-if="environments_list.length===0">You have no Environments yet</h2>
+                <div layout="row" ng-if="environments_list.length>0">
                     <md-card class="md-altTheme-theme" style="margin: 16px 0;width:100%;overflow:hidden;">
                         <md-card-content style="padding:0;">
                             <md-toolbar class="md-altTheme-theme" style="min-height: 48px; flex-direction: row; font-size: 14px;">
                                 <div style="display: inline-flex; width: 200px; padding: 0 8px"></div>
-                                <div ng-repeat="environment in environments_list track by $index" style="display: inline-flex; flex-grow: 1; align-items: center; justify-content: space-between; text-transform: capitalize; padding: 0 8px;">
-                                    <b style="display: inline-flex; flex-grow: 1">{{environment.name}}</b>
-                                    <span>
+                                <div ng-repeat="environment in environments_list track by $index" style="display: inline-flex; flex-grow: 1; flex-basis: 0; align-items: center; justify-content: space-between; text-transform: capitalize; padding: 0 8px;max-width: 300px;">
+                                    <b style="display:inline-flex;text-overflow: ellipsis;overflow: hidden;">{{environment.name}}</b>
+                                    <div style="display:flex">
                                         <md-button ng-click="openEnvironmentDialog($index, environment)" class="dfx-studio-table-button" aria-label="Studio button">
                                             <md-icon class="fa fa-edit dfx-studio-flex-icon" style="font-size: 16px"></md-icon>
                                         </md-button>
                                         <md-button ng-click="confirmEnvironmentRemove($event, environment._id)" class="dfx-studio-table-button" aria-label="Studio button">
                                             <md-icon class="fa fa-trash dfx-studio-flex-icon" style="font-size: 16px"></md-icon>
                                         </md-button>
-                                    </span>
+                                    </div>
                                 </div>                            
                             </md-toolbar>
                             <div ng-repeat="env_var in env_vars_list track by $index" style="display: flex; min-height: 32px;">
                                 <div style="display: inline-flex; align-items: center; width: 200px; text-transform: capitalize; background: #ddd; padding: 0 8px">{{env_var.name}}</div>
-                                <div ng-repeat="environment in environments_list track by $index" style="display: inline-flex; align-items: center; flex-grow: 1; padding: 0 8px">                                
+                                <div ng-repeat="environment in environments_list track by $index" style="display: inline-flex; align-items: center; flex-grow: 1; flex-basis: 0; padding: 0 8px;max-width: 300px;">                                
                                     <md-input-container class="dfx-input-container-simple">
                                         <input type="text" ng-model="environment.data[env_var.name]" aria-label="list">
                                     </md-input-container>
@@ -73,7 +74,7 @@
                                     <md-button ng-click="openDialog(env_var)" class="dfx-studio-table-button" aria-label="Studio button">
                                         <md-icon class="fa fa-edit dfx-studio-flex-icon"></md-icon>
                                     </md-button>
-                                    <md-button ng-click="confirmEnvVarRemove($event, env_var._id)" class="dfx-studio-table-button" aria-label="Studio button">
+                                    <md-button ng-click="confirmEnvVarRemove($event, env_var)" class="dfx-studio-table-button" aria-label="Studio button">
                                         <md-icon class="fa fa-trash dfx-studio-flex-icon"></md-icon>
                                     </md-button>
                                 </td>
