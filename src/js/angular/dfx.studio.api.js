@@ -1659,7 +1659,7 @@ dfxStudioApi.factory('dfxGcTemplates', [ '$http', '$q', function($http, $q) {
         if (tenant_id) {
             url = url + '/' + tenant_id;
         }
-
+        
         $http({
             method: 'GET',
             url: url

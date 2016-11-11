@@ -40,11 +40,13 @@ dfxGCC.directive('dfxGccWebBase', ['$rootScope', '$http', '$compile', '$injector
             };
             var mergeWithGcTemplates = function (component_template, component_default_attributes, app_scope) {
                 if (component_template && component_template.value !== 'default') {
-                    var application_name = app_scope.application_name || app_scope.app_user.application || app_scope.app_name;
+                    var application_name = sessionStorage.dfx_appname || app_scope.application_name || app_scope.app_name || app_scope.app_user.application;
                     var view_platform = app_scope.view_platform || app_scope.platform;
-                    var tenant_id = app_scope.tenant_id;
+                    var tenant_id = app_scope.tenant_id || sessionStorage.dfx_tenantid;
 
                     return dfxGcTemplates.getOne( app_scope, application_name, component_template.value, view_platform, tenant_id ).then( function(gc_template) {
+                        if (!gc_template) { return $q.resolve('no more templates'); }
+
                         var template_definition = gc_template.attributes;
                         if (template_definition.template && template_definition.template.value !== 'default') {
                             return mergeWithGcTemplates(template_definition.template, component_default_attributes, app_scope)
