@@ -175,11 +175,11 @@ md-toast.md-success-toast-theme div {
   padding: 2px;
 }
 
-#dfx_visual_editor_property_panel a {
+#dfx_page_editor_property_panel a {
   color: #97CFFF;
 }
 
-#dfx_visual_editor_property_panel a md-icon {
+#dfx_page_editor_property_panel a md-icon {
   color: #97CFFF !important;
 }
 
@@ -211,7 +211,7 @@ md-toast.md-success-toast-theme div {
   user-select: @select;
 }
 
-// Graphical Controls Palette Treeview
+// Page Editor Treeview
 .dfx-pe-palette-treeview {
   float: left; //Prevent 100% width
   .user-select; //Prevent accidental selection on dbl click to fast expand/collapse
@@ -277,7 +277,7 @@ md-toast.md-success-toast-theme div {
       margin-top: 0.55em;
       border-width: 4px;
       border-style: solid;
-      border-top-color: @defaultColor;
+      border-top-color: #69a7f5;
       border-right-color: transparent;
       border-bottom-color: transparent;
       border-left-color: transparent;
@@ -308,6 +308,33 @@ md-toast.md-success-toast-theme div {
   font-family: "Open Sans",Arial,sans-serif;
   font-size: 12px;
   line-height: 25px;
+}
+
+.dfx-pe-draggable-view {
+	cursor:move;
+	border: 1px solid #95ccfb;
+	margin: 5px;
+	padding: 5px;
+	background: #347786;
+}
+
+.dfx-pe-draggable-view:hover {
+	background: #4cd5f3;
+}
+
+.dfx-pe-draggable-helper {
+	width:120px;
+	height:50px;
+	letter-spacing: 0.2em;
+	color:#383838;
+	background:#4cd5f3;
+	line-height:50px;
+	text-align:center;
+	vertical-align:middle;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	padding: 0px 5px 0px 5px;
 }
 
 // Property Panel Treeview
@@ -417,6 +444,26 @@ md-dialog .dfx-pe-property-treeview label:before {
   line-height: 25px;
 }
 
+.dfx-pe-property-treeview-content-level-1 {
+    margin-left: 10px!important;
+}
+
+.dfx-pe-property-treeview-content-level-2 {
+    margin-left: 10px!important;
+}
+
+.dfx-ve-property-title-level-1 {
+    width: 420px!important;
+    border-left: 1px #6b6a6a solid;
+    padding: 5px 10px 5px 15px!important;
+}
+
+.dfx-pe-property-title-level-2 {
+    width: 410px!important;
+    border-left: 1px #6b6a6a solid;
+    padding: 5px 10px 5px 15px!important;
+}
+
 .dfx-pe-gc-handle {
   left: 0;
   top: 0;
@@ -502,6 +549,14 @@ md-dialog .dfx-pe-property-treeview label:before {
   background: #383838;
 }
 
+.dfx-pe-property-separator {
+	margin: 10px 0px;
+    height: 1px;
+    background: #95ccfb;
+    width: 100%;
+    display: inline-block;
+}
+
 /* Script Editor */
 #dfx_pe_script_editor {
   width:100%;
@@ -558,7 +613,7 @@ md-dialog .dfx-pe-property-treeview label:before {
 }
 
 .dfx-pe-view-menu a {
-  color: #383838;
+  color: #2f5e8a;
   display: none;
   margin-left:5px;
 }

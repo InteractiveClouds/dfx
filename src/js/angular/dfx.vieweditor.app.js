@@ -266,7 +266,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
                 'padding-top': '109px',
                 'padding-left': '31px',
                 'padding-right': '30px',
-                'padding-bottom': '30px'
+                'padding-bottom': '109px'
             },
             'landscape': {
                 'image':  'iphone_6_landscape_375x667.png',
@@ -288,7 +288,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
                 'padding-top': '103px',
                 'padding-left': '31px',
                 'padding-right': '30px',
-                'padding-bottom': '30px'
+                'padding-bottom': '120px'
             },
             'landscape': {
                 'image':  'iphone_6plus_landscape_414x736.png',
@@ -301,7 +301,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
             }
         }
     ];
-    $scope.design_selected_device = $scope.design_devices[0];
+    $scope.design_selected_device = $scope.design_devices[1];
     $scope.design_device_orientation = 'Portrait';
 
     $scope.toggleRight = function() {
