@@ -3231,7 +3231,9 @@ dfxGCC.directive('dfxGccWebRadio', ['$timeout', '$compile', function($timeout, $
         scope: true,
         link: function(scope, element, attrs, basectrl) {
             var component = scope.$parent.getComponent(element);
-            basectrl.init(scope, element, component, attrs, 'radio').then(function(){});
+            basectrl.init(scope, element, component, attrs, 'radio').then(function(){
+                scope.currentItem = {"value": ""};
+            });
         }
     }
 }]);
