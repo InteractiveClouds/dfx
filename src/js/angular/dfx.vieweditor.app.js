@@ -13,6 +13,7 @@ dfxViewEditorApp.controller("dfx_main_controller", [ '$scope', '$rootScope', '$q
     $scope.application_name = $('#dfx-view-editor-body').attr('data-application');
     $scope.view_name = $('#dfx-view-editor-body').attr('data-widget');
     $scope.view_platform = $('#dfx-view-editor-body').attr('data-platform');
+    $scope.tenant_id = $('#dfx-view-editor-body').attr('data-tenantid');
     //$scope.view_category = $('#dfx_src_widget_editor').attr('data-view-cat'); //here in that moment #dfx_src_widget_editor attribute 'data-platform' is empty. That attribute takes value inside dfx_view_editor_controller.
     $scope.closed_gc_palette = false;
     $scope.gc_types = {};
@@ -20,7 +21,7 @@ dfxViewEditorApp.controller("dfx_main_controller", [ '$scope', '$rootScope', '$q
     $scope.helpForm = false;
     $scope.scopeOptionsVarNameInput = false;
 
-	$scope.$on('keypress:83', function(onEvent, keypressEvent) {
+    $scope.$on('keypress:83', function(onEvent, keypressEvent) {
     	alert('here');
     });
 
@@ -950,6 +951,58 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
             $window.open( view_zip_link, '_blank' );
         });
     }
+
+    // View workspace width - START
+    var workspace_width_path = 'DFX_' + $scope.tenant_id + '_' + $scope.view_name + '_worspace_width';
+    var getWorkspaceWidth = function() {
+        var width = window.localStorage.getItem(workspace_width_path);
+        return width || '';
+    };
+    var setWorkspaceWidth = function(workspace) {
+        var width = workspace ? workspace.width : getWorkspaceWidth();
+        window.localStorage.setItem(workspace_width_path, width);
+
+        var workspace_container = angular.element(document.querySelectorAll('[md-selected="view_card_select_index"]'));
+
+        if (!width || width == "0") {
+            workspace_container.css('overflow', 'initial');
+            workspace_container.css('width', '');
+        } else {
+            var workspace_width = width.indexOf('px') > 0 ? width : width + 'px';
+            workspace_container.css('overflow', 'auto');
+            workspace_container.css('width', workspace_width);
+        }
+    };
+    setWorkspaceWidth();
+
+    $scope.changeViewWorkspaceWidth = function($event) {
+        $(event.srcElement).animateCss('pulse');
+        $mdDialog.show({
+            controller: DialogController,
+            templateUrl: '/gcontrols/web/workspace_change.html',
+            parent: angular.element(document.body),
+            targetEvent: $event
+        })
+        .then(function(workspace) {
+            setWorkspaceWidth(workspace);
+        }, function() {
+            // do nothing
+        });
+
+        function DialogController(scope, $mdDialog) {
+            var width = getWorkspaceWidth();
+            scope.workspace = width ? {'width': width} : {'width': ''};
+
+            scope.changeWorkspaceConfirm = function(answer) {
+                $mdDialog.hide(scope.workspace);
+            };
+
+            scope.changeWorkspaceCancel = function() {
+                $mdDialog.cancel();
+            };
+        }
+    };
+    // View workspace width - END
 
     var platform = $('#dfx_visual_editor').attr('platform');
     $('.dfx_visual_editor_gc_cat_item').empty();
