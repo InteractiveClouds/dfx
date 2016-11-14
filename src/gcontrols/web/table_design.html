@@ -25,7 +25,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="row in attributes.tableRows.value.slice(attributes.rangeStart.value -1, attributes.rangeEnd.value) track by getRowId()">
+                    <tr ng-repeat="row in attributes.tableRows.value.slice(attributes.rangeStart.value -1, attributes.rangeEnd.value) track by $index">
                         <td id="{{component_id}}_{{$index}}" ng-if="attributes.checkOption.value !== 'none'" class="dt_checkbox"><md-checkbox class="md-primary" aria-label="Select Row" ng-checked="isSelectedRows() || isSelectedRow($index)" ng-click="toggleSelectRow($index)"></md-checkbox></td>
                         <!--td ng-repeat="col in attributes.columns" class="{{col.classes}}" ng-class="{{col.dynamicClasses}}" style="{{col.style}}">{{row[col.value]}}</td-->
                         <td ng-repeat="col in attributes.columns.value" width="{{col.flex}}%">
