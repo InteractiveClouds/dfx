@@ -265,7 +265,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
                 'padding-top': '109px',
                 'padding-left': '31px',
                 'padding-right': '30px',
-                'padding-bottom': '30px'
+                'padding-bottom': '109px'
             },
             'landscape': {
                 'image':  'iphone_6_landscape_375x667.png',
@@ -287,7 +287,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
                 'padding-top': '103px',
                 'padding-left': '31px',
                 'padding-right': '30px',
-                'padding-bottom': '30px'
+                'padding-bottom': '120px'
             },
             'landscape': {
                 'image':  'iphone_6plus_landscape_414x736.png',
@@ -300,7 +300,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
             }
         }
     ];
-    $scope.design_selected_device = $scope.design_devices[0];
+    $scope.design_selected_device = $scope.design_devices[1];
     $scope.design_device_orientation = 'Portrait';
 
     $scope.toggleRight = function() {
@@ -2172,7 +2172,7 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                 //         menuItemsType: scope.attributes.menuItemsType.value
                 //     }
                 // });
-                
+
                 if (scope.attributes.layoutType.value === 'wizard' || scope.attributes.layoutType.value === 'tabs' || scope.attributes.layoutType.value === 'panel'){
                     scope.toolbarSide = $(ev.target).attr('side');
                     if(scope.toolbarSide==='left'){
@@ -2182,7 +2182,7 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                                 menuItemNames: scope.attributes.toolbar.leftMenu.menuItemNames.value,
                                 menuItemsType: scope.attributes.toolbar.leftMenu.menuItemsType.value
                             }
-                        });                    
+                        });
                     }else{
                         scope.$parent.cacheAttributeOldValue({
                             'value': {
@@ -2199,7 +2199,7 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                             menuItemNames: scope.attributes.menuItemNames.value,
                             menuItemsType: scope.attributes.menuItemsType.value
                         }
-                    });                
+                    });
                 }
 
                 scope.menu = {};

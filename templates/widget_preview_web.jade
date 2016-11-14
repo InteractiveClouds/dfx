@@ -54,7 +54,7 @@ html(ng-app="dfx_preview_app")
                     span(style="line-height:25px;") Logged as {{app_user.firstName + ' ' + app_user.lastName}}
                 span.flex
                     label.pull-right(style="font-size:12px;background:#8731AB;padding: 2px 4px;color:#fff;margin-top:6px;margin-right:10px;border-radius:8px;cursor:pointer", ng-if="platform=='mobile'", ng-click="changeDeviceOrientation()") {{design_device_orientation}}
-                    md-menu.pull-right(style="margin-top:-6px", ng-if="platform=='mobile'")
+                    md-menu.pull-right(style="margin-top:2px", md-offset="0 32", ng-if="platform=='mobile'")
                         label(md-menu-origin, style="font-size:12px;background:#14BD39;padding: 2px 4px;color:#fff;margin-top:4px;margin-right:10px;border-radius:8px;cursor:pointer", ng-click="$mdOpenMenu($event)") {{design_selected_device.label}}
                         md-menu-content(width="6")
                             md-menu-item(ng-repeat="device in design_devices")

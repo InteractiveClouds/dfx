@@ -27,7 +27,7 @@ dfxStudioLandingApp.controller("dfx_studio_landing_controller", [ '$scope', '$lo
 	$scope.tenant_id = $('#dfx-studio-landing-body').attr( 'data-tenantid' );
 	$scope.dfx_version_major   = '3';
     $scope.dfx_version_minor   = '1';
-    $scope.dfx_version_release = '1';
+    $scope.dfx_version_release = '2';
 
 	$scope.openDocumentation = function() {
 		$window.open( 'http://interactive-clouds.com/documentation/' );
@@ -35,6 +35,10 @@ dfxStudioLandingApp.controller("dfx_studio_landing_controller", [ '$scope', '$lo
 
 	$scope.openGettingStarted = function() {
 		$location.path('/getting-started');
+	}
+
+	$scope.openSampleApp = function() {
+		$window.open( 'http://50.22.58.40:3300/deploy/qa/SampleApp/web/1.0.1/login.html?login=guest' );
 	}
 
 }]);
