@@ -2863,35 +2863,19 @@ dfxGCC.directive('dfxGccWebTextarea', ['$timeout', function($timeout) {
         scope: true,
         link: function(scope, element, attrs, basectrl) {
             var component = scope.$parent.getComponent(element);
-            scope.$gcscope = scope;
             basectrl.init(scope, element, component, attrs, 'textarea').then(function(){
+                if ( !scope.attributes.hasOwnProperty('flex') ) { scope.attributes.flex = { "value": 50 }; }
+                scope.attributes.flex.status = "overridden" ;
+
+                scope.arbitrary = {"value":""};
+                
                 scope.isMaxLength = function() {
                     return scope.attributes.maxlength.value ? true : false;
                 };
 
-                if ( !scope.attributes.hasOwnProperty('flex') ) { scope.attributes.flex = { "value": 50 }; }
-                scope.attributes.flex.status = "overridden" ;
-                scope.attributes.icon.status = "overridden" ;
                 scope.$watch('attributes.rowsNumber.value', function(newValue){
                     scope.attributes.rowsNumber.value = parseInt(newValue);
                 });
-                scope.$watch("$gcscope[attributes.binding.value]", function(newValue){
-                    if(scope.attributes.binding.value !== ""){
-                        var bindingString = scope.attributes.binding.value;
-                        eval("scope." + bindingString + "= newValue ;");
-                    }
-                });
-
-                basectrl.bindScopeVariable( scope, component.attributes.binding.value );
-
-                if ( typeof scope.attributes.icon === 'string' ) {
-                    var tempIcon = scope.attributes.icon;
-                    scope.attributes.icon = {
-                        "value": tempIcon,
-                        "type": scope.attributes.hasOwnProperty('iconType') ? scope.attributes.iconType : 'fa-icon'
-                    }
-                }
-                if ( !scope.attributes.icon.hasOwnProperty('size') ) { scope.attributes.icon.size = 21; }
 
                 scope.changeWidth = function(){
                     var component = angular.element(document.querySelectorAll('[id="' + scope.component_id + '"]'));//for repeatable panels

@@ -10,7 +10,6 @@
   "required":       { "value": "false" },
   "maxlength":      { "value": "" },
   "rowsNumber":     { "value": "1" },
-  "temporary":      { "value": "" },
   "classes":        { "value": "" },
   "dynamicClasses": { "value": "" },
   "flex":           { "value": 50 },
