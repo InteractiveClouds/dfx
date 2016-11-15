@@ -4264,7 +4264,7 @@ dfxStudioApp.controller("dfx_studio_page_create_controller", [ '$scope', '$route
         "platform" : "web",
         "template": "basic",
         "category": "Default",
-        "script": "dfxAppRuntime.controller('dfx_page_controller', [ '$scope', '$rootScope', function( $scope, $rootScope) {\n\t// Insert your code here\n}]);",
+        "script": "dfxAppPages.controller('NewPageController', [ '$scope', '$rootScope', function( $scope, $rootScope) {\n\t// Insert your code here\n}]);",
         "layout": {
             "rows" : [ { "height" : "100", "columns" : [ {"width" : "100", "views" : []} ] } ]
         }
@@ -4303,6 +4303,7 @@ dfxStudioApp.controller("dfx_studio_page_create_controller", [ '$scope', '$route
                 case 'Tablet' : $scope.page.platform = 'tablet'; break;
                 case 'Mobile' : $scope.page.platform = 'mobile'; break;
             }
+			$scope.page.script = "dfxAppPages.controller('" + $scope.page.name + "PageController', [ '$scope', '$rootScope', function( $scope, $rootScope) {\n\t// Insert your code here\n}]);",
             dfxPages.create( $scope, $scope.page ).then( function(data) {
                 dfxMessaging.showMessage('Page has been successfully created');
                 $scope.getAll();
