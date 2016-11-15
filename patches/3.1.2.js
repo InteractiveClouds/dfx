@@ -18,7 +18,9 @@ exports.run = function (cfg, opts) {
                 return Q.all(screens.map(function (screen) {
 					/* prepare script */
 					var re_ctrl = /(dfxAppRuntime.controller)(.*)(\[)/g;
-                    var patched_script = screen.script.replace(re_ctrl, 'dfxAppPages.controller(\'' + screen.name + 'PageController\', [');
+                    var patched_script = (screen.script == null || screen.script == '')
+						? 'dfxAppPages.controller(\'' + screen.name + 'PageController\', [ \'$scope\', \'$rootScope\', function( $scope, $rootScope) {\n\t// Insert your code here\n}]);'
+						: screen.script.replace(re_ctrl, 'dfxAppPages.controller(\'' + screen.name + 'PageController\', [');
 
 					/* update collection*/
 					return db.update(
