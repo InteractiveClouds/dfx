@@ -37,6 +37,9 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", dfx-ve-ctr
                     span(style="margin-right:5px") Cards:
                     img(src="/images/vb/icons/cards_add.png", ng-show="design_visible", class="dfx-ve-toolbar-icon", ng-click="addCard($event)", title="Add a new card")
                     img(src="/images/vb/icons/cards_subtract.png", ng-show="design_visible", class="dfx-ve-toolbar-icon", ng-click="removeCard($event)", title="Remove the current card")
+                span(style="font-size: 12px;margin-left: 1px;background: #4a4a4a;line-height: 48px;color: #fff;padding: 0 8px;border-left: 1px #6b6a6a solid;border-right: 1px #6b6a6a solid;", ng-show="design_visible")
+                    span(style="margin-right:5px") Workspace:
+                    img(src="/images/vb/icons/preview_global.png", ng-show="design_visible", class="dfx-ve-toolbar-icon", ng-click="changeViewWorkspaceWidth($event)", title="Change workspace size")
                 span(style="font-size: 12px;margin-left: 1px;background: #4a4a4a;line-height: 48px;color: #fff;padding: 0 8px;border-left: 1px #6b6a6a solid;border-right: 1px #6b6a6a solid;", ng-show="script_visible")
                     span(style="margin-right:5px") Script:
                     img(src="/images/vb/icons/script_assistant.png", class="dfx-ve-toolbar-icon", ng-click="showHelpEditor($event)", title="Code Assistant")
@@ -102,9 +105,9 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", dfx-ve-ctr
                         div(style="color:#fff;display: inline-block;margin-left: 10px;", ng-if="preview_wait_icon_visible === true")
                             md-icon.fa.fa-spinner.fa-pulse(style="font-size: 24px;")
                             span(style="padding-left:10px") compiling
-                    label.pull-right(style="font-size:12px;background:#8731AB;padding: 2px 4px;color:#fff;margin-top:4px;margin-right:10px;border-radius:8px;cursor:pointer", ng-if="view_platform=='mobile'", ng-click="changeDeviceOrientation()") {{design_device_orientation}}
-                    md-menu.pull-right(style="margin-top:-3px", ng-if="view_platform=='mobile'")
-                        label(md-menu-origin, style="font-size:12px;background:#14BD39;padding: 2px 4px;color:#fff;margin-top:4px;margin-right:10px;border-radius:8px;cursor:pointer", ng-click="$mdOpenMenu($event)") {{design_selected_device.label}}
+                    label.pull-right(style="font-size:12px;background:#8731AB;padding: 2px 4px;color:#fff;margin-top:14px;margin-right:10px;border-radius:8px;cursor:pointer", ng-if="view_platform=='mobile'", ng-click="changeDeviceOrientation()") {{design_device_orientation}}
+                    md-menu.pull-right(style="margin-top:-3px", md-offset="0 32", ng-if="view_platform=='mobile'")
+                        label(md-menu-origin, style="font-size:12px;background:#14BD39;padding: 2px 4px;color:#fff;margin-top:16px;margin-right:10px;border-radius:8px;cursor:pointer", ng-click="$mdOpenMenu($event)") {{design_selected_device.label}}
                         md-menu-content(width="6")
                             md-menu-item(ng-repeat="device in design_devices")
                                 md-button(ng-click="changeDevice($index)") {{device.name}}
@@ -176,20 +179,29 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", dfx-ve-ctr
                     div(ng-show="gc_selected==null")
                       div.dfx-ve-property-treeview.hover
                         ul
-                          li
-                            input.dfx-ve-property-treeview-button(type="checkbox", id="item-0")
-                            label(for="item-0") Card Properties
-                            ul.dfx-ve-property-treeview-content
-                              li.col-md-12
-                                span.col-md-4(style="margin-top: 3px") Animation In:
-                                md-input-container.col-md-8(style="padding: 0 0 4px 0")
-                                  md-select(aria-label="Animation In", ng-model="view_card_animation.in")
-                                    md-option(ng-repeat="animation in animation_in_list", value="{{animation}}") {{animation}}
-                              li.col-md-12
-                                span.col-md-4(style="margin-top: 3px") Animation Out:
-                                md-input-container.col-md-8(style="padding: 0 0 4px 0")
-                                  md-select(aria-label="Animation Out", ng-model="view_card_animation.out")
-                                    md-option(ng-repeat="animation in animation_out_list", value="{{animation}}") {{animation}}
+                            li
+                                input.dfx-ve-property-treeview-button(type="checkbox", id="view-properties")
+                                label(for="view-properties") View Properties
+                                ul.dfx-ve-property-treeview-content
+                                    li.col-md-12
+                                        a(href="#", ng-click="exportView()", style="text-decoration: none!important; color: white") 
+                                            span
+                                                ng-md-icon(icon="archive", size="18", style="margin-top: -3px")
+                                                p(style="display: inline-block; margin: 0 4px 2px;") Export the View
+                            li
+                                input.dfx-ve-property-treeview-button(type="checkbox", id="item-0")
+                                label(for="item-0") Card Properties
+                                ul.dfx-ve-property-treeview-content
+                                    li.col-md-12
+                                        span.col-md-4(style="margin-top: 3px") Animation In:
+                                        md-input-container.col-md-8(style="padding: 0 0 4px 0")
+                                            md-select(aria-label="Animation In", ng-model="view_card_animation.in")
+                                                md-option(ng-repeat="animation in animation_in_list", value="{{animation}}") {{animation}}
+                                    li.col-md-12
+                                        span.col-md-4(style="margin-top: 3px") Animation Out:
+                                        md-input-container.col-md-8(style="padding: 0 0 4px 0")
+                                            md-select(aria-label="Animation Out", ng-model="view_card_animation.out")
+                                                md-option(ng-repeat="animation in animation_out_list", value="{{animation}}") {{animation}}
                     div#dfx_visual_editor_property(ng-show="gc_selected!=null")
                         a#dfx_visual_editor_property_title
                         div#dfx_visual_editor_property_panel

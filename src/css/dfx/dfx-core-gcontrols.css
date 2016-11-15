@@ -154,7 +154,7 @@ md-fab-speed-dial {
     height: 40px;
     padding: 0;
     line-height: 0;
-    margin: 6px 2px;
+    margin: 2px;
     background-color: #f5f5f5;
 }
 .dfx-core-gc-fab.md-button.md-fab .dfx-core-gc-fab-icon {
@@ -165,9 +165,9 @@ md-fab-speed-dial {
     width: 30px;
     height: 30px;
     padding: 0;
-    min-height: 30px;
+    min-height: 0px;
     line-height: 0px;
-    margin: 6px 2px;
+    margin: 2px;
     background-color: #f5f5f5;
 }
 .dfx-core-gc-fab-item.md-button.md-fab .dfx-core-gc-fab-item-icon {
@@ -176,8 +176,13 @@ md-fab-speed-dial {
     width: 20px;
     height: 20px;
 }
-div:not([style]).md-fab-action-item button.dfx-core-gc-fab-item {
+md-fab-speed-dial.dfx-core-gc-fab-speed-dial.md-up div:not([style]).md-fab-action-item button.dfx-core-gc-fab-item,
+md-fab-speed-dial.dfx-core-gc-fab-speed-dial.md-down div:not([style]).md-fab-action-item button.dfx-core-gc-fab-item {
     width: 0px;
+}
+md-fab-speed-dial.dfx-core-gc-fab-speed-dial.md-right div:not([style]).md-fab-action-item button.dfx-core-gc-fab-item,
+md-fab-speed-dial.dfx-core-gc-fab-speed-dial.md-left div:not([style]).md-fab-action-item button.dfx-core-gc-fab-item {
+    height: 0px;
 }
 .dfx-core-gc-fab.md-button.md-fab:not([disabled]).md-focused,
 .dfx-core-gc-fab.md-button.md-fab:not([disabled]):hover,
@@ -187,6 +192,7 @@ div:not([style]).md-fab-action-item button.dfx-core-gc-fab-item {
 }
 md-tooltip.dfx-core-gc-fab-tooltip, md-tooltip.dfx-core-gc-fab-tooltip-item {
     background: rgba(0,0,0,0.5);
+    color: #ffffff;
 }
 md-tooltip.dfx-core-gc-fab-tooltip .md-content, md-tooltip.dfx-core-gc-fab-tooltip-item .md-content {
     background: none;
@@ -298,7 +304,7 @@ button[disabled="disabled"].dfx-core-gc-button.md-button md-icon, button[disable
     padding-left: 3px;
     color: rgba(0,0,0,.54);
 }
-.dfx-core-gc-slider-items { 
+.dfx-core-gc-slider-items {
     width: 100%;
     margin-top: -4px;
 }
@@ -307,10 +313,10 @@ button[disabled="disabled"].dfx-core-gc-button.md-button md-icon, button[disable
     display: flex;
 }
 .dfx-core-gc-slider-items.layout-column {
-    display: table; 
+    display: table;
 }
 .dfx-core-gc-slider-item {
-    display: table-row; 
+    display: table-row;
 }
 .dfx-core-gc-slider-item-label, .dfx-core-gc-slider-item-slider, .dfx-core-gc-slider-item-input {
     display: table-cell;
@@ -320,12 +326,12 @@ button[disabled="disabled"].dfx-core-gc-button.md-button md-icon, button[disable
     min-width: 0px;
 }
 .dfx-core-gc-slider-item-label {
-    white-space: nowrap; 
+    white-space: nowrap;
     padding: 0 5px;
 }
 .dfx-core-gc-slider-item-label span {
-    display: block;  
-    margin-top: 6px;    
+    display: block;
+    margin-top: 6px;
 }
 .dfx-core-gc-slider-item-slider {
     width: 100%;
@@ -338,8 +344,8 @@ button[disabled="disabled"].dfx-core-gc-button.md-button md-icon, button[disable
     padding: 0 10px 0 5px;
 }
 .dfx-core-gc-slider-item-input > input {
-    text-align: center; 
-    width:55px; 
+    text-align: center;
+    width:55px;
     margin-top: 6px;
 }
 
@@ -397,7 +403,12 @@ div[dfx-gcc-web-treemenu] {
     text-align: center;
 }
 .dfx-core-gc-treemenu button .tree-menu-label {
-    flex-grow:1;
+    -webkit-flex-grow: 1;
+    flex-grow: 1;
+    -ms-text-overflow: ellipsis; 
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 .dfx-core-gc-treemenu button .trigger-icon-box {
     padding-left: 16px;
@@ -646,10 +657,10 @@ div.dfx-core-gc-switch md-switch[disabled].dfx-core-gc-switch-button .md-thumb:b
 
 /* Radio */
 .dfx-core-gc-radio-label {
-    font-size: 10px !important;
-    margin: 7px 0!important;
-    padding-left: 3px !important;
-    color: rgba(0,0,0,0.54) !important;
+    font-size: 10px;
+    margin: 7px 0;
+    padding-left: 3px;
+    color: rgba(0,0,0,0.54);
 }
 .dfx-core-gc-radio-group {
     display: -webkit-flex;
@@ -657,7 +668,7 @@ div.dfx-core-gc-switch md-switch[disabled].dfx-core-gc-switch-button .md-thumb:b
 }
 .dfx-core-gc-radio-button {
     height: 26px;
-    margin: 0 0 0 5px;
+    margin: 0 0 19px 3px;
     display: -webkit-flex;
     -webkit-flex-direction: row;
     display: flex;
@@ -781,7 +792,7 @@ button[disabled="disabled"].dfx-core-gc-json-button ng-md-icon {
 }
 .dfx-gc-web-carousel md-radio-group.radio-buttons-container md-radio-button {
     width: 20px;
-    margin-right: 10px;   
+    margin-right: 10px;
     margin-left: 10px;
 }
 
@@ -4206,4 +4217,45 @@ button.dfx-core-gc-rating-button {
 	letter-spacing:1px;
 	line-height:28px;
 	text-align:right;
+}
+
+.dfx-core-web-menu-toolbar {
+	cursor:pointer;
+	margin-left:10px;
+	color:#fff;
+	font-size:14px;
+	font-face:helveticaNeue;
+}
+
+.dfx-core-web-menu-toolbar:hover {
+	text-decoration: none;
+	color: #146275;
+	text-shadow: 1px 1px 4px white;
+}
+
+.dfx-core-web-menu-toolbar-separator {
+	margin-left:10px;
+	color:#fff;
+	font-size:14px;
+	font-face:helveticaNeue;
+}
+
+.dfx-core-web-fullscreen-btn {
+	padding: 10px;
+	position: fixed;
+	z-index: 1000;
+	right: 5px;
+	top: 5px;
+	width: auto;
+	height: auto;
+	color: #fff;
+	background-color: #000;
+	opacity: 0.75;
+	cursor: pointer;
+}
+
+.dfx-core-web-fullscreen-btn span {
+	font-family:HelveticaNeue;
+	font-size:12px;
+	margin-left: 5px;
 }

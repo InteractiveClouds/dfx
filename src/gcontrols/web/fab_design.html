@@ -1,5 +1,5 @@
 <div layout="column" layout-align="center end" class="{{attributes.classes.value}}" style="{{attributes.style.value}}">
-  <md-fab-speed-dial md-direction="{{attributes.fabDirection.value}}" ng-class="attributes.animation.value" ng-disabled="$eval(attributes.disabled.value)" style="position:relative;z-index:0">
+  <md-fab-speed-dial md-direction="{{attributes.fabDirection.value}}" ng-class="attributes.animation.value" ng-disabled="$eval(attributes.disabled.value)" style="position:relative;z-index:0" class="dfx-core-gc-fab-speed-dial">
     <md-fab-trigger ng-disabled="$eval(attributes.disabled.value)" >
       <md-button id="{{component_id}}_fab_menu" aria-label="{{component_id}}_fab_menu"  class="{{attributes.triggerButton.class}} dfx-core-gc-fab md-fab" style="{{attributes.triggerButton.style}}" ng-disabled="$eval(attributes.disabled.value)">
         <md-tooltip ng-if="attributes.label.value.length !=='' " md-autohide="true" md-direction="{{attributes.triggerButton.tooltip.direction}}" class="dfx-core-gc-fab-tooltip {{attributes.triggerButton.tooltip.classes}}" style="{{attributes.triggerButton.tooltip.style}}">{{attributes.label.value | checkExpression}}</md-tooltip>

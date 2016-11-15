@@ -13,6 +13,7 @@ dfxViewEditorApp.controller("dfx_main_controller", [ '$scope', '$rootScope', '$q
     $scope.application_name = $('#dfx-view-editor-body').attr('data-application');
     $scope.view_name = $('#dfx-view-editor-body').attr('data-widget');
     $scope.view_platform = $('#dfx-view-editor-body').attr('data-platform');
+    $scope.tenant_id = $('#dfx-view-editor-body').attr('data-tenantid');
     //$scope.view_category = $('#dfx_src_widget_editor').attr('data-view-cat'); //here in that moment #dfx_src_widget_editor attribute 'data-platform' is empty. That attribute takes value inside dfx_view_editor_controller.
     $scope.closed_gc_palette = false;
     $scope.gc_types = {};
@@ -20,7 +21,7 @@ dfxViewEditorApp.controller("dfx_main_controller", [ '$scope', '$rootScope', '$q
     $scope.helpForm = false;
     $scope.scopeOptionsVarNameInput = false;
 
-	$scope.$on('keypress:83', function(onEvent, keypressEvent) {
+    $scope.$on('keypress:83', function(onEvent, keypressEvent) {
     	alert('here');
     });
 
@@ -219,7 +220,7 @@ dfxViewEditorApp.controller("dfx_main_controller", [ '$scope', '$rootScope', '$q
 
 }]);
 
-dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScope', '$compile', '$timeout', '$mdDialog', '$mdToast', '$mdSidenav', '$log', '$mdMedia', '$window', '$http', 'dfxMessaging', 'dfxRendering', function($scope, $rootScope, $compile, $timeout, $mdDialog, $mdToast, $mdSidenav, $log, $mdMedia, $window, $http, dfxMessaging, dfxRendering) {
+dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScope', '$compile', '$timeout', '$mdDialog', '$mdToast', '$mdSidenav', '$log', '$mdMedia', '$window', '$http', '$location', 'dfxMessaging', 'dfxViews', 'dfxRendering', function($scope, $rootScope, $compile, $timeout, $mdDialog, $mdToast, $mdSidenav, $log, $mdMedia, $window, $http, $location, dfxMessaging, dfxViews, dfxRendering) {
 
     $scope.palette_visible = true;
     $scope.property_visible = true;
@@ -265,7 +266,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
                 'padding-top': '109px',
                 'padding-left': '31px',
                 'padding-right': '30px',
-                'padding-bottom': '30px'
+                'padding-bottom': '109px'
             },
             'landscape': {
                 'image':  'iphone_6_landscape_375x667.png',
@@ -287,7 +288,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
                 'padding-top': '103px',
                 'padding-left': '31px',
                 'padding-right': '30px',
-                'padding-bottom': '30px'
+                'padding-bottom': '120px'
             },
             'landscape': {
                 'image':  'iphone_6plus_landscape_414x736.png',
@@ -300,7 +301,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
             }
         }
     ];
-    $scope.design_selected_device = $scope.design_devices[0];
+    $scope.design_selected_device = $scope.design_devices[1];
     $scope.design_device_orientation = 'Portrait';
 
     $scope.toggleRight = function() {
@@ -944,6 +945,64 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
 			}
         });
     }
+    $scope.exportView = function(event){
+        dfxViews.getViewZip($scope, $scope.application_name, $scope.view_name, $scope.view_platform).then(function(data){
+            var view_zip_link = '/studio/widget/download/' + $scope.view_name + '?path=' + data.data.data;
+            $window.open( view_zip_link, '_blank' );
+        });
+    }
+
+    // View workspace width - START
+    var workspace_width_path = 'DFX_' + $scope.tenant_id + '_' + $scope.view_name + '_worspace_width';
+    var getWorkspaceWidth = function() {
+        var width = window.localStorage.getItem(workspace_width_path);
+        return width || '';
+    };
+    var setWorkspaceWidth = function(workspace) {
+        var width = workspace ? workspace.width : getWorkspaceWidth();
+        window.localStorage.setItem(workspace_width_path, width);
+
+        var workspace_container = angular.element(document.querySelectorAll('[md-selected="view_card_select_index"]'));
+
+        if (!width || width == "0") {
+            workspace_container.css('overflow', 'initial');
+            workspace_container.css('width', '');
+        } else {
+            var workspace_width = width.indexOf('px') > 0 ? width : width + 'px';
+            workspace_container.css('overflow', 'auto');
+            workspace_container.css('width', workspace_width);
+        }
+    };
+    setWorkspaceWidth();
+
+    $scope.changeViewWorkspaceWidth = function($event) {
+        $(event.srcElement).animateCss('pulse');
+        $mdDialog.show({
+            controller: DialogController,
+            templateUrl: '/gcontrols/web/workspace_change.html',
+            parent: angular.element(document.body),
+            targetEvent: $event
+        })
+        .then(function(workspace) {
+            setWorkspaceWidth(workspace);
+        }, function() {
+            // do nothing
+        });
+
+        function DialogController(scope, $mdDialog) {
+            var width = getWorkspaceWidth();
+            scope.workspace = width ? {'width': width} : {'width': ''};
+
+            scope.changeWorkspaceConfirm = function(answer) {
+                $mdDialog.hide(scope.workspace);
+            };
+
+            scope.changeWorkspaceCancel = function() {
+                $mdDialog.cancel();
+            };
+        }
+    };
+    // View workspace width - END
 
     var platform = $('#dfx_visual_editor').attr('platform');
     $('.dfx_visual_editor_gc_cat_item').empty();
@@ -1911,8 +1970,20 @@ dfxViewEditorApp.directive('dfxVePickerColumn', [ '$compile', '$mdDialog', funct
                 $('#dfx_visual_editor_property_panel').append(gc_property_panel);
             };
 
+            var setAttributeValue = function(attribute_name) {
+                scope.column.renderer.attributes[attribute_name] = scope.gc_selected.attributes[attribute_name];
+            };
+            var updateDataTableContent = function(attribute_name) {
+                var components = document.querySelectorAll('[id="' + scope.gc_selected.id + '"]');
+                for (var i = 0; i < components.length; i++) {
+                    var component_scope = angular.element(components[i]).scope();
+                    component_scope.attributes[attribute_name] = scope.gc_selected.attributes[attribute_name];
+                }
+            };
             scope.overrideAttribute = function(attribute_name) {
                 scope.gc_selected.attributes[attribute_name].status = 'overridden';
+                setAttributeValue(attribute_name);
+                updateDataTableContent(attribute_name);
             };
         }
 
@@ -2148,13 +2219,42 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
             scope.actionsMode = {"value": false};
             scope.showMenuEditor = function(ev) {
                 // needed for UNDO functionality
-                scope.$parent.cacheAttributeOldValue({
-                    'value': {
-                        menuItems: scope.attributes.menuItems.value,
-                        menuItemNames: scope.attributes.menuItemNames.value,
-                        menuItemsType: scope.attributes.menuItemsType.value
+                // scope.$parent.cacheAttributeOldValue({
+                //     'value': {
+                //         menuItems: scope.attributes.menuItems.value,
+                //         menuItemNames: scope.attributes.menuItemNames.value,
+                //         menuItemsType: scope.attributes.menuItemsType.value
+                //     }
+                // });
+
+                if (scope.attributes.layoutType.value === 'wizard' || scope.attributes.layoutType.value === 'tabs' || scope.attributes.layoutType.value === 'panel'){
+                    scope.toolbarSide = $(ev.target).attr('side');
+                    if(scope.toolbarSide==='left'){
+                        scope.$parent.cacheAttributeOldValue({
+                            'value': {
+                                menuItems: scope.attributes.toolbar.leftMenu.menuItems.value,
+                                menuItemNames: scope.attributes.toolbar.leftMenu.menuItemNames.value,
+                                menuItemsType: scope.attributes.toolbar.leftMenu.menuItemsType.value
+                            }
+                        });
+                    }else{
+                        scope.$parent.cacheAttributeOldValue({
+                            'value': {
+                                menuItems: scope.attributes.toolbar.rightMenu.menuItems.value,
+                                menuItemNames: scope.attributes.toolbar.rightMenu.menuItemNames.value,
+                                menuItemsType: scope.attributes.toolbar.rightMenu.menuItemsType.value
+                            }
+                        });
                     }
-                });
+                } else {
+                    scope.$parent.cacheAttributeOldValue({
+                        'value': {
+                            menuItems: scope.attributes.menuItems.value,
+                            menuItemNames: scope.attributes.menuItemNames.value,
+                            menuItemsType: scope.attributes.menuItemsType.value
+                        }
+                    });
+                }
 
                 scope.menu = {};
                 if(scope.attributes.layoutType.value === 'none' ){
@@ -2277,21 +2377,34 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                     controller: function(){
                         scope.menuEditorItem = {};
                         scope.setMenuItemsType = function( type ){
-                            if (type == 'static') {
-                                scope.attributes.menuItems.status = "overridden";
-                                scope.attributes.menuItemNames.status = "";
-                            } else if (type == 'dynamic') {
-                                scope.attributes.menuItems.status = "";
-                                scope.attributes.menuItemNames.status = "overridden";
-                            }
-
                             if(scope.toolbarSide === 'left'){
+                                if (type == 'static') {
+                                    scope.attributes.toolbar.leftMenu.menuItems.status = "overridden";
+                                    scope.attributes.toolbar.leftMenu.menuItemNames.status = "";
+                                } else if (type == 'dynamic') {
+                                    scope.attributes.toolbar.leftMenu.menuItems.status = "";
+                                    scope.attributes.toolbar.leftMenu.menuItemNames.status = "overridden";
+                                }
                                 scope.attributes.toolbar.leftMenu.menuItemsType.value = type;
                                 scope.$parent.overrideAttribute('toolbar.leftMenu.menuItemsType');
                             }else if(scope.toolbarSide === 'right'){
+                                if (type == 'static') {
+                                    scope.attributes.toolbar.rightMenu.menuItems.status = "overridden";
+                                    scope.attributes.toolbar.rightMenu.menuItemNames.status = "";
+                                } else if (type == 'dynamic') {
+                                    scope.attributes.toolbar.rightMenu.menuItems.status = "";
+                                    scope.attributes.toolbar.rightMenu.menuItemNames.status = "overridden";
+                                }
                                 scope.attributes.toolbar.rightMenu.menuItemsType.value = type;
                                 scope.$parent.overrideAttribute('toolbar.rightMenu.menuItemsType');
                             } else {
+                                if (type == 'static') {
+                                    scope.attributes.menuItems.status = "overridden";
+                                    scope.attributes.menuItemNames.status = "";
+                                } else if (type == 'dynamic') {
+                                    scope.attributes.menuItems.status = "";
+                                    scope.attributes.menuItemNames.status = "overridden";
+                                }
                                 scope.attributes.menuItemsType.value = type;
                                 scope.$parent.overrideAttribute('menuItemsType');
                             }

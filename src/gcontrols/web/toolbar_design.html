@@ -2,7 +2,7 @@
     <div style="min-height:48px;" layout="row" flex="100">
         <!--leftMenu-->
         <div id="{{component_id}}_toolbar_left_menu" flex="{{attributes.toolbar.leftMenu.flexWidth.value}}" layout="column" layout-align="center start" ng-if="$eval(attributes.toolbar.leftMenu.visible.value)" style="{{attributes.toolbar.leftMenu.style.value}}" class="{{'flex-' + attributes.toolbar.leftMenu.flexWidth.value}} dfx_toolbar_leftmenu {{attributes.toolbar.leftMenu.classes.value}}">
-            <md-fab-speed-dial ng-if="attributes.toolbar.leftMenu.type.value === 'Fab'" md-direction="{{attributes.toolbar.leftMenu.fabDirection.value}}" ng-class="attributes.toolbar.leftMenu.animation.value">
+            <md-fab-speed-dial ng-if="attributes.toolbar.leftMenu.type.value === 'Fab'" md-direction="{{attributes.toolbar.leftMenu.fabDirection.value}}" class="dfx-core-gc-fab-speed-dial" ng-class="attributes.toolbar.leftMenu.animation.value">
                 <md-fab-trigger>
                     <md-button aria-label="{{component_id}}_fab_menu" class="{{attributes.toolbar.leftMenu.fab.triggerButton.class}} md-fab dfx-core-gc-fab" style="{{attributes.toolbar.leftMenu.fab.triggerButton.style}}" ng-click="leftFabClick()">
                         <md-tooltip ng-if="attributes.toolbar.leftMenu.fab.triggerButton.label.length>0" md-autohide="true" md-direction="{{attributes.toolbar.leftMenu.fab.triggerButton.tooltip.direction}}" class="dfx-core-gc-fab-tooltip {{attributes.toolbar.leftMenu.fab.triggerButton.tooltip.class}}" style="{{attributes.toolbar.leftMenu.fab.triggerButton.tooltip.style}}">{{attributes.toolbar.leftMenu.fab.triggerButton.label | checkExpression}}</md-tooltip>
@@ -49,7 +49,7 @@
 
         <!--RightMenu-->
         <div id="{{component_id}}_toolbar_right_menu" flex="{{attributes.toolbar.rightMenu.flexWidth.value}}" layout="column" layout-align="center end" ng-if="$eval(attributes.toolbar.rightMenu.visible.value)" style="{{attributes.toolbar.rightMenu.style.value}}" class="{{'flex-' + attributes.toolbar.rightMenu.flexWidth.value}} dfx_toolbar_rightmenu {{attributes.toolbar.rightMenu.classes.value}}">
-            <md-fab-speed-dial ng-if="attributes.toolbar.rightMenu.type.value === 'Fab'" md-direction="{{attributes.toolbar.rightMenu.fabDirection.value}}" ng-class="attributes.toolbar.rightMenu.animation.value">
+            <md-fab-speed-dial ng-if="attributes.toolbar.rightMenu.type.value === 'Fab'" md-direction="{{attributes.toolbar.rightMenu.fabDirection.value}}" class="dfx-core-gc-fab-speed-dial" ng-class="attributes.toolbar.rightMenu.animation.value">
                 <md-fab-trigger>
                     <md-button aria-label="{{component_id}}_fab_menu" class="{{attributes.toolbar.rightMenu.fab.triggerButton.class}} md-fab dfx-core-gc-fab" style="{{attributes.toolbar.rightMenu.fab.triggerButton.style}}" ng-click="rightFabClick()">
                         <md-tooltip ng-if="attributes.toolbar.rightMenu.fab.triggerButton.label.length>0" md-autohide="true" md-direction="{{attributes.toolbar.rightMenu.fab.triggerButton.tooltip.direction}}" class="dfx-core-gc-fab-tooltip {{attributes.toolbar.rightMenu.fab.triggerButton.tooltip.class}}" style="{{attributes.toolbar.rightMenu.fab.triggerButton.tooltip.style}}">{{attributes.toolbar.rightMenu.fab.triggerButton.label | checkExpression}}</md-tooltip>
