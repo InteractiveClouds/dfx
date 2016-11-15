@@ -558,6 +558,13 @@ div[dfx-gc-web-panel] > div > section > md-content > div > div {
 .dfx-core-gc-progressbar {
     padding-bottom: 35px;
 }
+.dfx-core-gc-progressbar-label {
+    font-size: 10px;
+    margin: 7px 0 5px;
+    padding-left: 3px;
+    color: rgba(0,0,0,0.54);
+}
+
 /* Google Map */
 .dfx-core-gc-google-map {
     width: 100%;
