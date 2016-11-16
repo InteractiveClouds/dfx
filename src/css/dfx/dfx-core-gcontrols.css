@@ -814,7 +814,8 @@ md-list .md-subheader.dfx-core-gc-list-subheader {
 }
 
 /* GC Rating */
-.dfx-core-gc-rating {
+.dfx-core-gc-rating {}
+.dfx-core-gc-rating-buttons {
     padding: 0;
     line-height: 100%;
     display: -webkit-flex;
@@ -824,6 +825,9 @@ md-list .md-subheader.dfx-core-gc-list-subheader {
     -ms-flex-order: 2;
     order: 2;
     margin: 3px 0 0 0;
+}
+.dfx-core-gc-rating-label {
+    
 }
 .dfx-core-gc-rating .dfx-core-gc-rating-item {
     list-style: none;
