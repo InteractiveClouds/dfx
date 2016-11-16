@@ -807,7 +807,8 @@ md-list .md-subheader.dfx-core-gc-list-subheader {
 }
 
 /* GC Rating */
-.dfx-core-gc-rating {
+.dfx-core-gc-rating {}
+.dfx-core-gc-rating-buttons {
     padding: 0;
     line-height: 100%;
     display: -webkit-flex;

@@ -1,10 +1,10 @@
 <md-input-container flex
 	ng-show="attributes.display.value"
-	class="md-input-has-value md-block ATTR-NONV{{classes.value}}"
+	class="md-input-has-value dfx-core-gc-rating md-block dfx-core ATTR-NONV{{classes.value}}"
 	style="ATTR-NONV{{style.value}}"
 	ATTR-IF{{ng-class="attributes.dynamicClasses.value"}}>
-	<label class="dfx-core-gc-rating-label" ATTR-IF{{ng-bind="attributes.label.value"}}></label>
-	<ul class="dfx-core-gc-rating" ATTR-IF{{aria-label="attributes.name.value"}}>
+	<label ATTR-IF{{style="attributes.labelStyle.style"}} class="dfx-core-gc-rating-label ATTR-NONV{{labelStyle.class}}" ATTR-IF{{ng-bind="attributes.label.value"}}></label>
+	<ul class="dfx-core-gc-rating-buttons" ATTR-IF{{aria-label="attributes.name.value"}}>
         <li class="dfx-core-gc-rating-item" ng-repeat="star in stars" ng-init="($last && isDfxRepeatableRating) ? showDfxRatingElement($dfx_item) : ''">
 	        <button class="dfx-core-gc-rating-button" style="height: ATTR-NONV{{icon.size}}px; width: ATTR-NONV{{icon.size}}px;"
 				ng-style="{color: star.filled ? 'attributes.highlighted.value' : 'attributes.color.value' }"
