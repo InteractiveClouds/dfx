@@ -558,6 +558,13 @@ div[dfx-gc-web-panel] > div > section > md-content > div > div {
 .dfx-core-gc-progressbar {
     padding-bottom: 35px;
 }
+.dfx-core-gc-progressbar-label {
+    font-size: 10px;
+    margin: 7px 0 5px;
+    padding-left: 3px;
+    color: rgba(0,0,0,0.54);
+}
+
 /* Google Map */
 .dfx-core-gc-google-map {
     width: 100%;
@@ -807,7 +814,8 @@ md-list .md-subheader.dfx-core-gc-list-subheader {
 }
 
 /* GC Rating */
-.dfx-core-gc-rating {
+.dfx-core-gc-rating {}
+.dfx-core-gc-rating-buttons {
     padding: 0;
     line-height: 100%;
     display: -webkit-flex;
@@ -817,6 +825,9 @@ md-list .md-subheader.dfx-core-gc-list-subheader {
     -ms-flex-order: 2;
     order: 2;
     margin: 3px 0 0 0;
+}
+.dfx-core-gc-rating-label {
+    
 }
 .dfx-core-gc-rating .dfx-core-gc-rating-item {
     list-style: none;
