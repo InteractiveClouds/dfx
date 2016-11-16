@@ -818,6 +818,9 @@ md-list .md-subheader.dfx-core-gc-list-subheader {
     order: 2;
     margin: 3px 0 0 0;
 }
+.dfx-core-gc-rating-label {
+    
+}
 .dfx-core-gc-rating .dfx-core-gc-rating-item {
     list-style: none;
     list-style-type: none;

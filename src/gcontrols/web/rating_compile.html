@@ -3,7 +3,7 @@
 	class="md-input-has-value md-block ATTR-NONV{{classes.value}}"
 	style="ATTR-NONV{{style.value}}"
 	ATTR-IF{{ng-class="attributes.dynamicClasses.value"}}>
-	<label ATTR-IF{{ng-bind="attributes.label.value"}}></label>
+	<label class="dfx-core-gc-rating-label" ATTR-IF{{ng-bind="attributes.label.value"}}></label>
 	<ul class="dfx-core-gc-rating" ATTR-IF{{aria-label="attributes.name.value"}}>
         <li class="dfx-core-gc-rating-item" ng-repeat="star in stars" ng-init="($last && isDfxRepeatableRating) ? showDfxRatingElement($dfx_item) : ''">
 	        <button class="dfx-core-gc-rating-button" style="height: ATTR-NONV{{icon.size}}px; width: ATTR-NONV{{icon.size}}px;"
