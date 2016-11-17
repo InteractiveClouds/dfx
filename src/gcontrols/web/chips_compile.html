@@ -1,12 +1,7 @@
-<div flex ng-if="attributes.isBindEmpty.value === false"
-    ng-show="attributes.display.value"
-    ATTR-IF{{style="attributes.style.value"}}
-    ATTR-IF{{class="attributes.classes.value"}}
-    ATTR-IF{{ng-class="attributes.dynamicClasses.value"}}>
-
-    FRAG-IF{{attributes.selectedType.value==='standard' && attributes.selectedInput.value!=='number'}}
+<div flex ng-show="attributes.display.value" ATTR-IF{{style="attributes.style.value"}} ATTR-IF{{class="attributes.classes.value"}} ATTR-IF{{ng-class="attributes.dynamicClasses.value"}}>
+    FRAG-IF{{attributes.binding.value!=='' && attributes.selectedInput.value!=='number'}}
     <md-chips ng-model="ATTR-EXP{{ (attributes.binding.value.indexOf('.')>-1 || attributes.binding.value.indexOf('$dfx_iten')>-1) ? attributes.binding.value : '$parent_scope.' + attributes.binding.value }}ATTR-ENDEXP"
-              ATTR-IF{{placeholder="attributes.addPlaceholder.value"}}
+              ATTR-IF{{placeholder="attributes.basicPlaceholder.value"}}
               ATTR-IF{{readonly="attributes.disabled.value"}}
               md-on-add="attributes.onAdd.value" md-on-select="attributes.onSelect.value" md-on-remove="attributes.onRemove.value"
               ATTR-IF{{ng-click="attributes.onclick.value"}}
@@ -20,12 +15,12 @@
               ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
               ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
               ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}
-              ATTR-IF{{secondary-placeholder="attributes.basicPlaceholder.value"}}>
+              ATTR-IF{{secondary-placeholder="attributes.addPlaceholder.value"}}>
     </md-chips>
     FRAG-ENDIF
-    FRAG-IF{{attributes.selectedType.value==='standard' && attributes.selectedInput.value==='number'}}
+    FRAG-IF{{attributes.binding.value!=='' && attributes.selectedInput.value==='number'}}
     <md-chips ng-model="ATTR-EXP{{ (attributes.binding.value.indexOf('.')>-1 || attributes.binding.value.indexOf('$dfx_iten')>-1) ? attributes.binding.value : '$parent_scope.' + attributes.binding.value }}ATTR-ENDEXP"
-              ATTR-IF{{placeholder="attributes.addPlaceholder.value"}}
+              ATTR-IF{{placeholder="attributes.basicPlaceholder.value"}}
               ATTR-IF{{readonly="attributes.disabled.value"}}
               md-on-add="attributes.onAdd.value" md-on-select="attributes.onSelect.value" md-on-remove="attributes.onRemove.value"
               ATTR-IF{{ng-click="attributes.onclick.value"}}
@@ -39,22 +34,14 @@
               ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
               ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
               ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}
-              ATTR-IF{{secondary-placeholder="attributes.basicPlaceholder.value"}}>
+              ATTR-IF{{secondary-placeholder="attributes.addPlaceholder.value"}}>
         <input type="number" ATTR-IF{{placeholder="attributes.basicPlaceholder.value"}}>
     </md-chips>
     FRAG-ENDIF
-</div>
-
-<div flex ng-if="attributes.isBindEmpty.value === true"
-    ng-show="attributes.display.value"
-    ATTR-IF{{style="attributes.style.value"}}
-    ATTR-IF{{class="attributes.classes.value"}}
-    ATTR-IF{{ng-class="attributes.dynamicClasses.value"}}>
-
-    FRAG-IF{{attributes.selectedType.value==='standard' && attributes.selectedInput.value!=='number'}}
+    FRAG-IF{{attributes.binding.value==='' && attributes.selectedInput.value!=='number'}}
     <md-chips ng-model="attributes.bindEmptyModel"
               ng-model-options="{ getterSetter: true }"
-              ATTR-IF{{placeholder="attributes.addPlaceholder.value"}}
+              ATTR-IF{{placeholder="attributes.basicPlaceholder.value"}}
               ATTR-IF{{readonly="attributes.disabled.value"}}
               md-on-add="attributes.onAdd.value" md-on-select="attributes.onSelect.value" md-on-remove="attributes.onRemove.value"
               ATTR-IF{{ng-click="attributes.onclick.value"}}
@@ -68,13 +55,13 @@
               ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
               ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
               ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}
-              ATTR-IF{{secondary-placeholder="attributes.basicPlaceholder.value"}}>
+              ATTR-IF{{secondary-placeholder="attributes.addPlaceholder.value"}}>
     </md-chips>
     FRAG-ENDIF
-    FRAG-IF{{attributes.selectedType.value==='standard' && attributes.selectedInput.value==='number'}}
+    FRAG-IF{{attributes.binding.value==='' && attributes.selectedInput.value==='number'}}
     <md-chips ng-model="attributes.bindEmptyModel"
               ng-model-options="{ getterSetter: true }"
-              ATTR-IF{{placeholder="attributes.addPlaceholder.value"}}
+              ATTR-IF{{placeholder="attributes.basicPlaceholder.value"}}
               ATTR-IF{{readonly="attributes.disabled.value"}}
               md-on-add="attributes.onAdd.value" md-on-select="attributes.onSelect.value" md-on-remove="attributes.onRemove.value"
               ATTR-IF{{ng-click="attributes.onclick.value"}}
@@ -88,7 +75,7 @@
               ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
               ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
               ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}
-              ATTR-IF{{secondary-placeholder="attributes.basicPlaceholder.value"}}>
+              ATTR-IF{{secondary-placeholder="attributes.addPlaceholder.value"}}>
         <input type="number" ATTR-IF{{placeholder="attributes.basicPlaceholder.value"}}>
     </md-chips>
     FRAG-ENDIF

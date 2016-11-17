@@ -2895,32 +2895,32 @@ dfxGCC.directive('dfxGccWebChips', ['$timeout', function($timeout) {
         link: function(scope, element, attrs, basectrl) {
             var component = scope.$parent.getComponent(element);
             basectrl.init(scope, element, component, attrs, 'chips').then(function(){
-                if(!scope.attributes.hasOwnProperty('isBindEmpty')){scope.attributes.isBindEmpty = { "value": true };}
-                if(scope.attributes.hasOwnProperty('property1')){delete scope.attributes.property1;}
-                if(scope.attributes.hasOwnProperty('property2')){delete scope.attributes.property2;}
-                if(scope.attributes.hasOwnProperty('customItems')){delete scope.attributes.customItems;}
-
                 scope.attributes.flex.status = "overridden" ;
-                scope.attributes.binding.status = "overridden" ;
-                scope.attributes.isBindEmpty.status = "overridden" ;
-                scope.attributes.selectedInput.status = "overridden" ;
-                scope.attributes.newItem = function(chip) {
-                    return { name: chip, type: 'unknown' };
-                };
-                scope.$watch('attributes.binding.value', function(binding){
-                    binding ? scope.attributes.isBindEmpty.value = false : scope.attributes.isBindEmpty.value = true;
-                });
-                scope.$watch('attributes.selectedInput.value', function(newValue){
-                        $timeout(function () {
-                            try{
-                                scope.chips = '#' + scope.component_id + '> div > md-chips > md-chips-wrap';
-                                $(scope.chips).css("padding-top", "8px");
-                            }catch(e){
-                                /*console.log(e.message);*/
-                            }
-                        },0);
-                    scope.attributes.isBindEmpty.status = "overridden" ;
-                });
+                // if(!scope.attributes.hasOwnProperty('isBindEmpty')){scope.attributes.isBindEmpty = { "value": true };}
+                // if(scope.attributes.hasOwnProperty('property1')){delete scope.attributes.property1;}
+                // if(scope.attributes.hasOwnProperty('property2')){delete scope.attributes.property2;}
+                // if(scope.attributes.hasOwnProperty('customItems')){delete scope.attributes.customItems;}
+
+                // scope.attributes.binding.status = "overridden" ;
+                // scope.attributes.isBindEmpty.status = "overridden" ;
+                // scope.attributes.selectedInput.status = "overridden" ;
+                // scope.attributes.newItem = function(chip) {
+                //     return { name: chip, type: 'unknown' };
+                // };
+                // scope.$watch('attributes.binding.value', function(binding){
+                //     binding ? scope.attributes.isBindEmpty.value = false : scope.attributes.isBindEmpty.value = true;
+                // });
+                // scope.$watch('attributes.selectedInput.value', function(newValue){
+                //         $timeout(function () {
+                //             try{
+                //                 scope.chips = '#' + scope.component_id + '> div > md-chips > md-chips-wrap';
+                //                 $(scope.chips).css("padding-top", "8px");
+                //             }catch(e){
+                //                 /*console.log(e.message);*/
+                //             }
+                //         },0);
+                //     scope.attributes.isBindEmpty.status = "overridden" ;
+                // });
 
                 scope.attributes.bindEmptyModel = function() {
                     return scope.attributes.defaultArray.value;

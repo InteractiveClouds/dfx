@@ -564,7 +564,17 @@ div[dfx-gc-web-panel] > div > section > md-content > div > div {
     padding-left: 3px;
     color: rgba(0,0,0,0.54);
 }
-
+/* Chips */
+.dfx-core-gc-chips {}
+.dfx-core-gc-chips md-chips-wrap {
+    padding-top: 8px; 
+}
+.dfx-core-gc-chips-placeholder {
+    font-size: 14px;
+    color: rgb(186, 186, 186);
+    position: absolute;
+    z-index: 1;
+}
 /* Google Map */
 .dfx-core-gc-google-map {
     width: 100%;

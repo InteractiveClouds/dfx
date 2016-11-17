@@ -1,12 +1,14 @@
-<div flex style="{{attributes.style.value}}" class="{{attributes.classes.value}}">
-    <md-chips ng-if="attributes.selectedType.value==='standard' && attributes.selectedInput.value!=='number'"
-              ng-model="attributes.itemsArray.value" placeholder="{{attributes.addPlaceholder.value | checkExpression}}"
-              secondary-placeholder="{{attributes.basicPlaceholder.value | checkExpression}}">
+<div flex style="{{attributes.style.value}}" class="dfx-core-gc-chips-container {{attributes.classes.value}}">
+    <md-chips ng-if="attributes.selectedInput.value!=='number'" class="dfx-core-gc-chips"
+              ng-model="attributes.itemsArray.value" 
+              placeholder="{{attributes.basicPlaceholder.value | checkExpression}}"
+              secondary-placeholder="{{attributes.addPlaceholder.value | checkExpression}}">
+    	<!-- <input type="text" ng-model="current_chip" ng-change="dfxChipsPlaceholders(attributes.itemsArray.value.length, current_chip)"> -->
     </md-chips>
-
-    <md-chips ng-if="attributes.selectedType.value==='standard' && attributes.selectedInput.value==='number'"
-              ng-model="attributes.itemsArray.value" placeholder="{{attributes.addPlaceholder.value | checkExpression}}"
-              secondary-placeholder="{{attributes.basicPlaceholder.value | checkExpression}}">
+    <md-chips ng-if="attributes.selectedInput.value==='number'" class="dfx-core-gc-chips"
+              ng-model="attributes.itemsArray.value" 
+              placeholder="{{attributes.basicPlaceholder.value | checkExpression}}"
+              secondary-placeholder="{{attributes.addPlaceholder.value | checkExpression}}">
         <input type="number" placeholder="{{attributes.basicPlaceholder.value | checkExpression}}">
     </md-chips>
 </div>
