@@ -4,7 +4,8 @@
 		<div id="{{component_id}}_layout_0_row_{{$index}}" layout="row" layout-wrap flex="{{row.height.value}}" style="{{row.style.value}}"
       		ng-class="row.classes.value" ng-repeat="row in attributes.layout.rows">
 			<div id="{{component_id}}_layout_0_row_{{$parent.$index}}_column_{{$index}}" flex="{{col.autoWidth.value == true ? '' : col.width.value}}"
-             layout="{{col.orientation.value}}" layout-align="{{col.halignment.value}} {{col.valignment.value}}"
+             layout="{{col.orientation.value}}"
+             layout-align="{{col.orientation.value ==='row' ? col.halignment.value + ' ' + col.valignment.value : col.valignment.value + ' ' + col.halignment.value}}"
              gc-container="layout_0_row_{{$parent.$index}}_column_{{$index}}" gc-parent="{{component_id}}"
              style="{{col.style.value}}"
              ng-style="{'flex-wrap': col.orientation.value ==='row' ? 'wrap' : 'nowrap'}"

@@ -54,41 +54,72 @@
     </ul>
     <ul>
         <li>
-            <input class="dfx-ve-property-treeview-button" type="checkbox" id="item-3" />
-            <label for="item-3">Styling Attributes</label>
+            <input class="dfx-ve-property-treeview-button" type="checkbox" id="styling-section" />
+            <label for="styling-section">Styling Attributes</label>
             <ul class="dfx-ve-property-treeview-content">
                 <li class="col-md-12">
-					<span class="col-md-12">
-						<div layout>
-                            <span class="col-md-3" style="margin-top:10px;margin-left:-5px;">Flex Width:</span>
-                            <md-slider class="md-primary" flex ng-model="attributes.flex.value" step="5" min="0" max="100" aria-label="Flex width:" ng-change="overrideAttribute('flex');changeWidth()" ng-model-options="{ debounce: 500 }" ng-focus="cacheAttributeOldValue({'name':'flex'})" ng-blur="cacheAttributeNewValue('flex')">
-                            </md-slider>
-                            <div flex="20" layout layout-align="center center">
-                                <input flex type="number" step="5" min="0" max="100" ng-model="attributes.flex.value" aria-label="blue" aria-controls="flex-width" style="margin-left:5px; text-align: center" ng-change="overrideAttribute('flex');changeWidth()" ng-focus="cacheAttributeOldValue({'name':'flex'})" ng-blur="cacheAttributeNewValue('flex')">
-                            </div>
-                        </div>
-	  				</span>
+                    <input class="dfx-ve-property-treeview-button" type="checkbox" checked aria-label="container-styling" id="container-styling" />
+                    <label for="container-styling" class="dfx-ve-property-title-level-1"><span>Container Styling</span></label>
+                    <ul class="dfx-ve-property-treeview-content">
+                        <li class="col-md-12">
+        					<span class="col-md-12">
+        						<div layout>
+                                    <span class="col-md-3" style="margin-top:10px;margin-left:-5px;">Flex Width:</span>
+                                    <md-slider class="md-primary" flex ng-model="attributes.flex.value" step="5" min="0" max="100" aria-label="Flex width:" ng-change="overrideAttribute('flex');changeWidth()" ng-model-options="{ debounce: 500 }" ng-focus="cacheAttributeOldValue({'name':'flex'})" ng-blur="cacheAttributeNewValue('flex')">
+                                    </md-slider>
+                                    <div flex="20" layout layout-align="center center">
+                                        <input flex type="number" step="5" min="0" max="100" ng-model="attributes.flex.value" aria-label="blue" aria-controls="flex-width" style="margin-left:5px; text-align: center" ng-change="overrideAttribute('flex');changeWidth()" ng-focus="cacheAttributeOldValue({'name':'flex'})" ng-blur="cacheAttributeNewValue('flex')">
+                                    </div>
+                                </div>
+        	  				</span>
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-4">Style:</span>
+                            <div class="col-md-8" layout="row"><input class="col-md-12" type="text" ng-model="attributes.style.value" ng-change="overrideAttribute('style')" ng-focus="cacheAttributeOldValue({'name':'style'})" ng-blur="cacheAttributeNewValue('style')" style="margin-left:-15px;"/><dfx-ve-css-style></dfx-ve-css-style></div>
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-4">Class:</span>
+                            <input class="col-md-8" type="text" ng-model="attributes.classes.value" ng-change="overrideAttribute('classes')" ng-focus="cacheAttributeOldValue({'name':'classes'})" ng-blur="cacheAttributeNewValue('classes')"/>
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-4">Dynamic Class:</span>
+                            <input class="col-md-8" type="text" ng-model="attributes.dynamicClasses.value"  ng-change="overrideAttribute('dynamicClasses')" ng-focus="cacheAttributeOldValue({'name':'dynamicClasses'})" ng-blur="cacheAttributeNewValue('dynamicClasses')"/>
+                        </li>
+                    </ul>
                 </li>
                 <li class="col-md-12">
-                    <span class="col-md-4">Style:</span>
-                    <div class="col-md-8" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.style.value" ng-change="overrideAttribute('style')" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue({'name':'style'})" ng-blur="cacheAttributeNewValue('style')"/>
-                        <dfx-ve-css-style></dfx-ve-css-style>
-                    </div>
-                </li>
+                    <input class="dfx-ve-property-treeview-button" type="checkbox" checked aria-label="label-styling" id="label-styling" />
+                    <label for="label-styling" class="dfx-ve-property-title-level-1"><span>Label Styling</span></label>
+                    <ul class="dfx-ve-property-treeview-content">
+                        <li class="col-md-12">
+                            <span class="col-md-4">Style:</span>
+                            <div class="col-md-8" layout="row"><input class="col-md-12" type="text" ng-model="attributes.labelStyle.style" ng-change="overrideAttribute('labelStyle.style')" ng-focus="cacheAttributeOldValue({'name':'labelStyle.style'})" ng-blur="cacheAttributeNewValue('labelStyle.style')" style="margin-left:-15px;"/><dfx-ve-css-style></dfx-ve-css-style></div>
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-4">Class:</span>
+                            <input class="col-md-8" type="text" ng-model="attributes.labelStyle.class" ng-change="overrideAttribute('labelStyle.class')" ng-focus="cacheAttributeOldValue({'name':'labelStyle.class'})" ng-blur="cacheAttributeNewValue('labelStyle.class')"/>
+                        </li>
+                    </ul>
+                </li>     
                 <li class="col-md-12">
-                    <span class="col-md-4">Class:</span>
-                    <input class="col-md-8" type="text" ng-model="attributes.classes.value" ng-change="overrideAttribute('classes')" ng-focus="cacheAttributeOldValue({'name':'classes'})" ng-blur="cacheAttributeNewValue('classes')"/>
-                </li>
-                <li class="col-md-12">
-                    <span class="col-md-4">Dynamic Class:</span>
-                    <input class="col-md-8" type="text" ng-model="attributes.dynamicClasses.value" ng-change="overrideAttribute('dynamicClasses')" ng-focus="cacheAttributeOldValue({'name':'dynamicClasses'})" ng-blur="cacheAttributeNewValue('dynamicClasses')"/>
-                </li>
+                    <input class="dfx-ve-property-treeview-button" type="checkbox" checked aria-label="item-styling" id="item-styling" />
+                    <label for="item-styling" class="dfx-ve-property-title-level-1"><span>Progressbar Styling</span></label>
+                    <ul class="dfx-ve-property-treeview-content">
+                        <li class="col-md-12">
+                            <span class="col-md-4">Style:</span>
+                            <div class="col-md-8" layout="row"><input class="col-md-12" type="text" ng-model="attributes.itemStyle.style" ng-change="overrideAttribute('itemStyle.style')" ng-focus="cacheAttributeOldValue({'name':'itemStyle.style'})" ng-blur="cacheAttributeNewValue('itemStyle.style')" style="margin-left:-15px;"/><dfx-ve-css-style></dfx-ve-css-style></div>
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-4">Class:</span>
+                            <input class="col-md-8" type="text" ng-model="attributes.itemStyle.class" ng-change="overrideAttribute('itemStyle.class')" ng-focus="cacheAttributeOldValue({'name':'itemStyle.class'})" ng-blur="cacheAttributeNewValue('itemStyle.class')"/>
+                        </li>
+                    </ul>
+                </li>     
             </ul>
         </li>
     </ul>
     <ul>
-        <li">
+        <li>
         <input class="dfx-ve-property-treeview-button" type="checkbox" checked id="item-4" />
         <label for="item-4">Events</label>
         <ul class="dfx-ve-property-treeview-content">

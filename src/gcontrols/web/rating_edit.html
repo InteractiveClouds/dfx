@@ -84,8 +84,8 @@
 	</ul>
 	<ul>
 		<li>
-			<input class="dfx-ve-property-treeview-button" type="checkbox" id="item-3" />
-			<label for="item-3">Styling Attributes</label>
+			<input class="dfx-ve-property-treeview-button" type="checkbox" id="styling-section" />
+			<label for="styling-section">Styling Attributes</label>
 			<ul class="dfx-ve-property-treeview-content">
 				<li class="col-md-12">
                     <input class="dfx-ve-property-treeview-button" type="checkbox" checked aria-label="container-styles" id="container-styles" />
@@ -106,6 +106,20 @@
 							<span class="col-md-4">Dynamic Class:</span>
 							<input class="col-md-8" type="text" ng-model="attributes.dynamicClasses.value" ng-change="overrideAttribute('dynamicClasses')" ng-focus="cacheAttributeOldValue({'name':'dynamicClasses'})" ng-blur="cacheAttributeNewValue('dynamicClasses')"/>
 						</li>
+                    </ul>
+                </li>
+                <li class="col-md-12">
+                    <input class="dfx-ve-property-treeview-button" type="checkbox" checked aria-label="label-styling" id="label-styling" />
+                    <label for="label-styling" class="dfx-ve-property-title-level-1"><span>Label Styling</span></label>
+                    <ul class="dfx-ve-property-treeview-content">
+                        <li class="col-md-12">
+                            <span class="col-md-4">Style:</span>
+                            <div class="col-md-8" layout="row"><input class="col-md-12" type="text" ng-model="attributes.labelStyle.style" ng-change="overrideAttribute('labelStyle.style')" ng-focus="cacheAttributeOldValue({'name':'labelStyle.style'})" ng-blur="cacheAttributeNewValue('labelStyle.style')" style="margin-left:-15px;"/><dfx-ve-css-style></dfx-ve-css-style></div>
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-4">Class:</span>
+                            <input class="col-md-8" type="text" ng-model="attributes.labelStyle.class" ng-change="overrideAttribute('labelStyle.class')" ng-focus="cacheAttributeOldValue({'name':'labelStyle.class'})" ng-blur="cacheAttributeNewValue('labelStyle.class')"/>
+                        </li>
                     </ul>
                 </li>
                 <li class="col-md-12">

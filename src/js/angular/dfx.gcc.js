@@ -2898,35 +2898,19 @@ dfxGCC.directive('dfxGccWebTextarea', ['$timeout', function($timeout) {
         scope: true,
         link: function(scope, element, attrs, basectrl) {
             var component = scope.$parent.getComponent(element);
-            scope.$gcscope = scope;
             basectrl.init(scope, element, component, attrs, 'textarea').then(function(){
+                if ( !scope.attributes.hasOwnProperty('flex') ) { scope.attributes.flex = { "value": 50 }; }
+                scope.attributes.flex.status = "overridden" ;
+
+                scope.arbitrary = {"value":""};
+                
                 scope.isMaxLength = function() {
                     return scope.attributes.maxlength.value ? true : false;
                 };
 
-                if ( !scope.attributes.hasOwnProperty('flex') ) { scope.attributes.flex = { "value": 50 }; }
-                scope.attributes.flex.status = "overridden" ;
-                scope.attributes.icon.status = "overridden" ;
                 scope.$watch('attributes.rowsNumber.value', function(newValue){
                     scope.attributes.rowsNumber.value = parseInt(newValue);
                 });
-                scope.$watch("$gcscope[attributes.binding.value]", function(newValue){
-                    if(scope.attributes.binding.value !== ""){
-                        var bindingString = scope.attributes.binding.value;
-                        eval("scope." + bindingString + "= newValue ;");
-                    }
-                });
-
-                basectrl.bindScopeVariable( scope, component.attributes.binding.value );
-
-                if ( typeof scope.attributes.icon === 'string' ) {
-                    var tempIcon = scope.attributes.icon;
-                    scope.attributes.icon = {
-                        "value": tempIcon,
-                        "type": scope.attributes.hasOwnProperty('iconType') ? scope.attributes.iconType : 'fa-icon'
-                    }
-                }
-                if ( !scope.attributes.icon.hasOwnProperty('size') ) { scope.attributes.icon.size = 21; }
 
                 scope.changeWidth = function(){
                     var component = angular.element(document.querySelectorAll('[id="' + scope.component_id + '"]'));//for repeatable panels
@@ -2994,63 +2978,11 @@ dfxGCC.directive('dfxGccWebSlider', ['$timeout', '$mdDialog', '$q', '$http', '$m
         scope: true,
         link: function(scope, element, attrs, basectrl) {
             var component = scope.getComponent(element);
-            scope.$gcscope = scope;
             basectrl.init(scope, element, component, attrs, 'slider').then(function(){
                 scope.dfx_is_number = angular.isNumber;
-                if(!scope.attributes.hasOwnProperty('isBindingPresent')){scope.attributes.isBindingPresent = { "value": "" };}
-                if(!scope.attributes.hasOwnProperty('dynamicPresent')){scope.attributes.dynamicPresent = { "value": false };}
-                if(!scope.attributes.hasOwnProperty('counterCheck')){scope.attributes.counterCheck = { "value": "" };}
-                if(!scope.attributes.hasOwnProperty('selectedIndex')){scope.attributes.selectedIndex = { "value": "" };}
+
                 if ( !scope.attributes.hasOwnProperty('flex') ) { scope.attributes.flex = { "value": 50 }; }
-                scope.attributes.binding.status = "overridden";
-                scope.attributes.isBindingPresent.status = "overridden";
                 scope.attributes.flex.status = "overridden";
-                if(scope.attributes.isBindingPresent.value){
-                    if(scope.$gcscope[scope.attributes.binding.value] instanceof Array){
-                        for(var i = 0; i < scope.$gcscope[scope.attributes.binding.value].length; i++){
-                            if(!isNaN(scope.$gcscope[scope.attributes.binding.value][i][scope.attributes.displayValue.value])){
-                                scope.$gcscope[scope.attributes.binding.value][i][scope.attributes.displayValue.value] = parseInt(scope.$gcscope[scope.attributes.binding.value][i][scope.attributes.displayValue.value]);
-                            }else{
-                                /*console.log('Values should be numeric.');*/
-                                break;
-                            }
-                        }
-                    }else{
-                        /*console.log('Binding data should be an array.');*/
-                    }
-                }
-
-                if(scope.attributes.inputVisible.value === ""){
-                    scope.attributes.inputVisible.value = "true";
-                    scope.attributes.discrete.value = false;
-                    scope.attributes.selectedIndex.value = 0;
-                    scope.attributes.counterCheck.value = 1;
-                    scope.attributes.isBindingPresent.value = false;
-                }
-
-                scope.$watch('attributes.selectedIndex.value', function(newValue){
-                    scope.attributes.selectedIndex.status = "overridden";
-                    scope.attributes.selectedIndex.value = parseInt(newValue);
-                });
-
-                scope.$watch('attributes.binding.value', function(newValue){
-                    if(newValue){
-                        scope.attributes.isBindingPresent.value = true;
-                    }else{
-                        scope.attributes.isBindingPresent.value = false;
-                    }
-                });
-
-                scope.$watch('attributes.source.value', function(newValue){
-                    if(newValue){
-                        scope.attributes.dynamicPresent.value = true;
-                    }else{
-                        scope.attributes.dynamicPresent.value = false;
-                    }
-                });
-
-                basectrl.bindScopeVariable(scope, component.attributes.binding.value);
-                basectrl.bindScopeVariable(scope, component.attributes.source.value);
 
                 scope.getStaticItems = function() {
                     return scope.attributes.slidersArray.value;
@@ -3061,6 +2993,7 @@ dfxGCC.directive('dfxGccWebSlider', ['$timeout', '$mdDialog', '$q', '$http', '$m
                     component.css('width', scope.attributes.flex.value + '%');
                 };
                 scope.changeWidth();
+
                 for (var i = 0; i < scope.attributes.slidersArray.value.length; i++) {
                     if(scope.attributes.slidersArray.value[i].hasOwnProperty('temp_value')) delete scope.attributes.slidersArray.value[i].temp_value;
                     if(!isNaN(scope.attributes.slidersArray.value[i].value)) scope.attributes.slidersArray.value[i].value = parseFloat(scope.attributes.slidersArray.value[i].value);
@@ -3266,7 +3199,9 @@ dfxGCC.directive('dfxGccWebRadio', ['$timeout', '$compile', function($timeout, $
         scope: true,
         link: function(scope, element, attrs, basectrl) {
             var component = scope.$parent.getComponent(element);
-            basectrl.init(scope, element, component, attrs, 'radio').then(function(){});
+            basectrl.init(scope, element, component, attrs, 'radio').then(function(){
+                scope.currentItem = {"value": ""};
+            });
         }
     }
 }]);

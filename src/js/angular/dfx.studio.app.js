@@ -148,7 +148,7 @@ dfxStudioApp.controller("dfx_studio_controller", [ '$scope', '$rootScope', '$mdD
     $scope.studio_explorer_visible = true;
     $scope.dfx_version_major   = '3';
     $scope.dfx_version_minor   = '1';
-    $scope.dfx_version_release = '1';
+    $scope.dfx_version_release = '2';
 
     $scope.initStudio = function() {
         return '/studio/home';
@@ -324,7 +324,7 @@ dfxStudioApp.controller("dfx_studio_controller", [ '$scope', '$rootScope', '$mdD
                 if ( (newName !== '') && (/^[-a-zA-Z0-9_]+$/.test( newName )) ) {
                     if ( $scope.cat_type === 'page' ) {
                         dfxPages.editCategory( $scope, $scope.cat_name, newName, $scope.cat_app, $scope.cat_platform ).then(function( data ) {
-                            if ( data.data.data !== 'Current category name already exists' ) {
+                            if ( data.data.data !== 'This category name already exists' ) {
                                 dfxMessaging.showMessage(data.data.data);
                                 $scope.getAll();
                                 $route.reload();
@@ -335,7 +335,7 @@ dfxStudioApp.controller("dfx_studio_controller", [ '$scope', '$rootScope', '$mdD
                         });
                     } else if ( $scope.cat_type === 'view' ) {
                         dfxViews.editCategory( $scope, $scope.cat_name, newName, $scope.cat_app, $scope.cat_platform ).then(function( data ) {
-                            if ( data.data.data !== 'Current category name already exists' ) {
+                            if ( data.data.data !== 'This category name already exists' ) {
                                 dfxMessaging.showMessage(data.data.data);
                                 $scope.getAll();
                                 $route.reload();
@@ -346,7 +346,7 @@ dfxStudioApp.controller("dfx_studio_controller", [ '$scope', '$rootScope', '$mdD
                         });
                     } else if ( $scope.cat_type === 'apiso' ) {
                         dfxApiServiceObjects.editCategory( $scope, $scope.cat_name, newName, $scope.cat_app ).then(function( data ) {
-                            if ( data.data.data !== 'Current category name already exists' ) {
+                            if ( data.data.data !== 'This category name already exists' ) {
                                 dfxMessaging.showMessage(data.data.data);
                                 $scope.getAll();
                                 $route.reload();
@@ -357,7 +357,7 @@ dfxStudioApp.controller("dfx_studio_controller", [ '$scope', '$rootScope', '$mdD
                         });
                     }
                 } else {
-                    dfxMessaging.showWarning('Not valid category name');
+                    dfxMessaging.showWarning('Invalid category name');
                 }
             }
 
@@ -449,11 +449,11 @@ dfxStudioApp.controller("dfx_studio_controller", [ '$scope', '$rootScope', '$mdD
                                 $location.path('/view/update/' + to_rename.application + '/' + to_rename.name);
                             }
                         }, function(data) {
-                            dfxMessaging.showWarning('View with name "' + newName + '" already exists');
+                            dfxMessaging.showWarning('A View named "' + newName + '" already exists');
                         });
                     });
                 } else {
-                    dfxMessaging.showWarning('Not valid view name');
+                    dfxMessaging.showWarning('Invalid View name');
                 }
             }
 
@@ -565,14 +565,14 @@ dfxStudioApp.controller("dfx_studio_controller", [ '$scope', '$rootScope', '$mdD
                     });
                 } else {
                     switch ( $scope.targetComponent.type ) {
-                        case 'page': dfxMessaging.showWarning( 'Not valid page name' ); break;
-                        case 'view': dfxMessaging.showWarning( 'Not valid view name' ); break;
+                        case 'page': dfxMessaging.showWarning( 'Invalid Page name' ); break;
+                        case 'view': dfxMessaging.showWarning( 'Invalid View name' ); break;
                         case 'apiso':
                             if ( nameRes ) {
-                                dfxMessaging.showWarning( 'Not valid API service object name' );
+                                dfxMessaging.showWarning( 'Invalid API service object name' );
                                 break;
                             } else if ( prefixRes || $scope.prefix.value === '' ) {
-                                dfxMessaging.showWarning( 'Not valid API route prefix' );
+                                dfxMessaging.showWarning( 'Invalid API route prefix' );
                                 break;
                             } else {
                                 dfxMessaging.showWarning( 'API route prefix "' + $scope.prefix.value + '" already exists' );
@@ -1046,7 +1046,7 @@ dfxStudioApp.controller("dfx_studio_cloud_controller", [ '$scope', 'dfxPlatformB
             dfxPlatformBluemix.saveImage($scope.bluemix.new_image.name, $scope.bluemix.new_image.version, result).then(function(){
                 $scope.bluemix.disabled_button = false ;
                 $scope.bluemix.show_sidenav_content = true;
-                dfxMessaging.showMessage('Started creating Bluemix image');
+                dfxMessaging.showMessage('Bluemix image creation started');
                 $scope.bluemix.images.push({
                     clearImageName:     $scope.bluemix.new_image.name,
                     version:            $scope.bluemix.new_image.version,
@@ -1237,7 +1237,7 @@ dfxStudioApp.controller("dfx_studio_cloud_controller", [ '$scope', 'dfxPlatformB
                     dfxPlatformBluemix.bluemixLogin(data).then(function(res){
                         $scope.bluemix.logged_in = true ;
                         $scope.bluemix.email_pass_spinner = false;
-                        dfxMessaging.showMessage('You have logged in successfully. Choose organization and space in order to finish authentication.') ;
+                        dfxMessaging.showMessage('You have logged in successfully. Choose organization and space to complete the authentication process.') ;
                         $scope.bluemix.getOrgsList();
                     }, function(){
                         $scope.bluemix.logged_in = false ;
@@ -2386,9 +2386,9 @@ dfxStudioApp.controller("dfx_studio_devops_controller", [ '$scope','dfxApplicati
     $scope.saveCollaboration = function(){
         dfxApplications.saveCollaboration($scope.devops.channel, $scope.app_name).then(function(){
             $scope.initApps();
-            dfxMessaging.showMessage("Collaboration data has been successfully saved");
+            dfxMessaging.showMessage("Collaboration settings have been successfully saved");
         }, function(){
-            dfxMessaging.showWarning("Can\'t save collaboration data");
+            dfxMessaging.showWarning("Can\'t save collaboration settings");
         });
     };
 
@@ -2407,9 +2407,9 @@ dfxStudioApp.controller("dfx_studio_devops_controller", [ '$scope','dfxApplicati
         };
         dfxApplications.saveGithub(body).then(function(){
             $scope.getGithubData();
-            dfxMessaging.showMessage("Github data has been successfully saved");
+            dfxMessaging.showMessage("Github settings have been successfully saved");
         }, function(){
-            dfxMessaging.showWarning("Can\'t save github data");
+            dfxMessaging.showWarning("Can\'t save github settings");
         });
     };
 }]);
@@ -2536,7 +2536,7 @@ dfxStudioApp.controller("dfx_studio_api_sources_controller", [ '$scope','dfxAuth
                         sideNavInstance.toggle();
                     });
                 }else{
-                    dfxMessaging.showWarning("API source with such name already exists");
+                    dfxMessaging.showWarning("An API source already exists with this name");
                 }
             }
         }else if($scope.operation === "update"){
@@ -3793,13 +3793,13 @@ dfxStudioApp.controller("dfx_studio_deployment_controller", [ '$scope', '$mdDial
         }).then(function() {
             var alert = null;
             if ($scope.description.value.indexOf(" ") != -1) {
-                alert = "The name can't have empty spaces";
+                alert = "The build name cannot contain spaces";
             }
             else if ($.isEmptyObject($scope.description.value)) {
-                alert = "The name can't be empty";
+                alert = "The build name cannot be empty";
             }
             else if (!/^[a-zA-Z0-9-_.]+$/.test($scope.description.value)) {
-                alert = "The name can have only letters, numbers, underscore or dash symbols";
+                alert = "The build name can contain only letters, numbers, underscore or dash symbols";
             }
             if (alert) {
                 dfxMessaging.showWarning(alert);
@@ -3920,7 +3920,7 @@ dfxStudioApp.controller("dfx_studio_deployment_controller", [ '$scope', '$mdDial
             $scope.getAppBuilds(platform);
         },function (err) {
             setWaitingMessageValue(build, false);
-            dfxMessaging.showWarning('Build has been failed');
+            dfxMessaging.showWarning('The build deployment failed');
         });
     };
 
@@ -4344,7 +4344,7 @@ dfxStudioApp.controller("dfx_studio_page_create_controller", [ '$scope', '$route
         "platform" : "web",
         "template": "basic",
         "category": "Default",
-        "script": "dfxAppRuntime.controller('dfx_page_controller', [ '$scope', '$rootScope', function( $scope, $rootScope) {\n\t// Insert your code here\n}]);",
+        "script": "dfxAppPages.controller('NewPageController', [ '$scope', '$rootScope', function( $scope, $rootScope) {\n\t// Insert your code here\n}]);",
         "layout": {
             "rows" : [ { "height" : "100", "columns" : [ {"width" : "100", "views" : []} ] } ]
         }
@@ -4383,6 +4383,7 @@ dfxStudioApp.controller("dfx_studio_page_create_controller", [ '$scope', '$route
                 case 'Tablet' : $scope.page.platform = 'tablet'; break;
                 case 'Mobile' : $scope.page.platform = 'mobile'; break;
             }
+			$scope.page.script = "dfxAppPages.controller('" + $scope.page.name + "PageController', [ '$scope', '$rootScope', function( $scope, $rootScope) {\n\t// Insert your code here\n}]);",
             dfxPages.create( $scope, $scope.page ).then( function(data) {
                 dfxMessaging.showMessage('Page has been successfully created');
                 $scope.getAll();
@@ -5259,7 +5260,7 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
     $scope.serviceMode = 'serviceAdd';
     $scope.serviceModeBtn = 'serviceAdd';
     $scope.selected_tab = 0;
-    
+
     if ( $routeParams.categoryname ) {
         $scope.api_so.category = $routeParams.categoryname;
     }
@@ -5801,10 +5802,10 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
     $scope.refresh_scope_service = function(route_add){
         if(route_add && route_add === 'add_new_route'){
             var new_route = $scope.api_so.apiRoutes.filter(function(route){ return route.name === $scope.scopeService.name })[0];
-            $scope.scopeService = new_route;            
+            $scope.scopeService = new_route;
         }else{
             var scope_service_index = $scope.api_so.apiRoutes.findIndex(get_route_index);
-            $scope.scopeService = $scope.api_so.apiRoutes[scope_service_index];            
+            $scope.scopeService = $scope.api_so.apiRoutes[scope_service_index];
         }
         $scope.serviceModeBtn = 'serviceEdit';
     }
