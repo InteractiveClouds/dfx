@@ -48,6 +48,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('copy_static', [
         'copy:studioviews',
+		'copy:commons',
         'copy:gcontrols',
         'copy:gcontrols_build',
         'copy:fonts',

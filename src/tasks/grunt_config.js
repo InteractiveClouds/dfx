@@ -69,6 +69,13 @@ var exports = (function () {
             dest:   pub + 'studioviews/',
             filter: 'isFile'
         },
+		commons: {
+            expand: true,
+            cwd:    src + 'commons/views',
+            src:    ['*'],
+            dest:   pub + 'commons/views',
+            filter: 'isFile'
+        },
         fonts:             {
             expand: true,
             cwd:    src + 'fonts/',
