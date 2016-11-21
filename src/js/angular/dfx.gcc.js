@@ -914,20 +914,28 @@ dfxGCC.directive('dfxGccWebButton', ['$timeout', '$compile', '$filter', function
                             }, 0);
                         }
                     }
-                    scope.changeWidth = function(){
-                        if(scope.attributes.notFlex.value) {
+                    scope.changeWidth = function() {
+                        if (scope.attributes.notFlex.value) {
                             $(element).css({
                                 'flex': '0',
                                 'width': 'auto',
                                 'max-width': '100%'
                             });
                             scope.attributes.flex.value = 'none';
-                        }else{
-                            $(element).css({
-                                'flex': scope.attributes.flex.value + '%',
+                        } else {
+                            $('#' + scope.component_id).css({
                                 'width': scope.attributes.flex.value + '%',
                                 'max-width': scope.attributes.flex.value + '%'
                             });
+
+                            // flex with values cannot be used in css, because if parent layout is column,
+                            // it overides the flex classes and used for button height instead of width
+                            var flex_style = $('#' + scope.component_id).css('flex');
+                            if (flex_style) {
+                                var button_style = $('#' + scope.component_id).attr('style');
+                                var button_style_no_flex = button_style.replace('flex: ' + flex_style + ';', '');
+                                $('#' + scope.component_id).attr('style', button_style_no_flex);
+                            }
                         }
                     };
                     scope.menuPosition = function(button){
@@ -1205,7 +1213,7 @@ dfxGCC.directive('dfxGccWebToolbar', function($sce, $compile, $timeout) {
                         }
                         if ( toolbarType==='iconBar' ) {
                             if ( dfxMenuItem.hasOwnProperty('waiting')) { delete dfxMenuItem.waiting; }
-                            if (dfxMenuItem.hasOwnProperty('state')){                                
+                            if (dfxMenuItem.hasOwnProperty('state')){
                                 if ( !dfxMenuItem.state.value ) {
                                     // dfxMenuItem.state = {
                                     //     "value":           false,
@@ -2868,7 +2876,7 @@ dfxGCC.directive('dfxGccWebTextarea', ['$timeout', function($timeout) {
                 scope.attributes.flex.status = "overridden" ;
 
                 scope.arbitrary = {"value":""};
-                
+
                 scope.isMaxLength = function() {
                     return scope.attributes.maxlength.value ? true : false;
                 };
@@ -2943,63 +2951,11 @@ dfxGCC.directive('dfxGccWebSlider', ['$timeout', '$mdDialog', '$q', '$http', '$m
         scope: true,
         link: function(scope, element, attrs, basectrl) {
             var component = scope.getComponent(element);
-            scope.$gcscope = scope;
             basectrl.init(scope, element, component, attrs, 'slider').then(function(){
                 scope.dfx_is_number = angular.isNumber;
-                if(!scope.attributes.hasOwnProperty('isBindingPresent')){scope.attributes.isBindingPresent = { "value": "" };}
-                if(!scope.attributes.hasOwnProperty('dynamicPresent')){scope.attributes.dynamicPresent = { "value": false };}
-                if(!scope.attributes.hasOwnProperty('counterCheck')){scope.attributes.counterCheck = { "value": "" };}
-                if(!scope.attributes.hasOwnProperty('selectedIndex')){scope.attributes.selectedIndex = { "value": "" };}
+
                 if ( !scope.attributes.hasOwnProperty('flex') ) { scope.attributes.flex = { "value": 50 }; }
-                scope.attributes.binding.status = "overridden";
-                scope.attributes.isBindingPresent.status = "overridden";
                 scope.attributes.flex.status = "overridden";
-                if(scope.attributes.isBindingPresent.value){
-                    if(scope.$gcscope[scope.attributes.binding.value] instanceof Array){
-                        for(var i = 0; i < scope.$gcscope[scope.attributes.binding.value].length; i++){
-                            if(!isNaN(scope.$gcscope[scope.attributes.binding.value][i][scope.attributes.displayValue.value])){
-                                scope.$gcscope[scope.attributes.binding.value][i][scope.attributes.displayValue.value] = parseInt(scope.$gcscope[scope.attributes.binding.value][i][scope.attributes.displayValue.value]);
-                            }else{
-                                /*console.log('Values should be numeric.');*/
-                                break;
-                            }
-                        }
-                    }else{
-                        /*console.log('Binding data should be an array.');*/
-                    }
-                }
-
-                if(scope.attributes.inputVisible.value === ""){
-                    scope.attributes.inputVisible.value = "true";
-                    scope.attributes.discrete.value = false;
-                    scope.attributes.selectedIndex.value = 0;
-                    scope.attributes.counterCheck.value = 1;
-                    scope.attributes.isBindingPresent.value = false;
-                }
-
-                scope.$watch('attributes.selectedIndex.value', function(newValue){
-                    scope.attributes.selectedIndex.status = "overridden";
-                    scope.attributes.selectedIndex.value = parseInt(newValue);
-                });
-
-                scope.$watch('attributes.binding.value', function(newValue){
-                    if(newValue){
-                        scope.attributes.isBindingPresent.value = true;
-                    }else{
-                        scope.attributes.isBindingPresent.value = false;
-                    }
-                });
-
-                scope.$watch('attributes.source.value', function(newValue){
-                    if(newValue){
-                        scope.attributes.dynamicPresent.value = true;
-                    }else{
-                        scope.attributes.dynamicPresent.value = false;
-                    }
-                });
-
-                basectrl.bindScopeVariable(scope, component.attributes.binding.value);
-                basectrl.bindScopeVariable(scope, component.attributes.source.value);
 
                 scope.getStaticItems = function() {
                     return scope.attributes.slidersArray.value;
@@ -3010,6 +2966,7 @@ dfxGCC.directive('dfxGccWebSlider', ['$timeout', '$mdDialog', '$q', '$http', '$m
                     component.css('width', scope.attributes.flex.value + '%');
                 };
                 scope.changeWidth();
+
                 for (var i = 0; i < scope.attributes.slidersArray.value.length; i++) {
                     if(scope.attributes.slidersArray.value[i].hasOwnProperty('temp_value')) delete scope.attributes.slidersArray.value[i].temp_value;
                     if(!isNaN(scope.attributes.slidersArray.value[i].value)) scope.attributes.slidersArray.value[i].value = parseFloat(scope.attributes.slidersArray.value[i].value);
