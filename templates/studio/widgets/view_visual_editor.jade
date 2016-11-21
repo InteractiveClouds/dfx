@@ -39,7 +39,7 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", dfx-ve-ctr
                     img(src="/images/vb/icons/cards_subtract.png", ng-show="design_visible", class="dfx-ve-toolbar-icon", ng-click="removeCard($event)", title="Remove the current card")
                 span(style="font-size: 12px;margin-left: 1px;background: #4a4a4a;line-height: 48px;color: #fff;padding: 0 8px;border-left: 1px #6b6a6a solid;border-right: 1px #6b6a6a solid;", ng-show="design_visible")
                     span(style="margin-right:5px") Workspace:
-                    img(src="/images/vb/icons/preview_global.png", ng-show="design_visible", class="dfx-ve-toolbar-icon", ng-click="changeViewWorkspaceWidth($event)", title="Change workspace size")
+                    img(src="/images/vb/icons/preview_global.png", ng-show="design_visible", class="dfx-ve-toolbar-icon", ng-click="loadViewSettingsMenu($event)", title="View Settings")
                 span(style="font-size: 12px;margin-left: 1px;background: #4a4a4a;line-height: 48px;color: #fff;padding: 0 8px;border-left: 1px #6b6a6a solid;border-right: 1px #6b6a6a solid;", ng-show="script_visible")
                     span(style="margin-right:5px") Script:
                     img(src="/images/vb/icons/script_assistant.png", class="dfx-ve-toolbar-icon", ng-click="showHelpEditor($event)", title="Code Assistant")
@@ -125,6 +125,9 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", dfx-ve-ctr
     div(layout="column", flex, ng-show="!script_visible && !style_visible && !source_visible", style="height:100%")
         section(layout="row", flex="100")
             md-sidenav#dfx-ve-sidenav-left.md-sidenav-left.md-whiteframe-z2(md-component-id="left", md-is-locked-open="$mdMedia('gt-md')", ng-show="palette_visible")
+                div#dfx-ve-sidenav-left-header(class = "dfx-ve-floating-panel-header dfx-ve-hidden-element") Palette
+                div.dfx-ve-floating-panel-collapser(ng-click="minimizePanel('dfx-ve-sidenav-left')")
+                    md-icon(class="fa fa-expand", style="color: #fff;", aria-label="Minimize Panel")
                 md-content#dfx-ve-sidenav-left-content(layout-padding show-gt-md)
                     div#dfx_visual_editor_gc_palette_content.dfx-ve-palette-treeview.hover
                         ul(style="border-top: 1px #6b6a6a solid")
@@ -174,7 +177,11 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", dfx-ve-ctr
                         md-content(style="padding:10px;background-color:#efefef", layout="row", layout-align="center start")
                             div#dfx-ve-platform(layout="column", style="height:100%;", dfx-ve-platform)
                                 div(id="dfx_visual_editor_workspace_{{card.name}}", dfx-card="{{card.name}}", dfx-ve-workspace, style="overflow:auto", flex="100", layout="column")
+                div#dfx-ve-main-content-ruler(style="display:none;") This is Ruler            
             md-sidenav#dfx-ve-sidenav-right.md-sidenav-right.md-whiteframe-z2(md-component-id="right", md-is-locked-open="$mdMedia('gt-md')", ng-show="property_visible")
+                div#dfx-ve-sidenav-right-header(class = "dfx-ve-floating-panel-header dfx-ve-hidden-element") Properties
+                div.dfx-ve-floating-panel-collapser(ng-click="minimizePanel('dfx-ve-sidenav-right')")
+                    md-icon(class="fa fa-expand", style="color: #fff;", aria-label="Minimize Panel")
                 md-content#dfx-ve-sidenav-right-content(show-gt-md)
                     div(ng-show="gc_selected==null")
                       div.dfx-ve-property-treeview.hover

@@ -1176,6 +1176,66 @@ md-content#dfx-ve-main-content > md-tabs {
   }
 }
 
+/*view editor workspace ruler*/
+#dfx-ve-main-content-ruler {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0 9px;
+    background-color: #ccc;
+    color: #777;
+    font-size: 9pt;
+    height: 27px;
+    line-height: 27px;
+}
+
+/*view editor floating panels*/
+.dfx-ve-hidden-element {
+    display: none!important;
+}
+
+.dfx-ve-floating-panel-header {
+    font-weight: bold;
+    padding: 10px;
+    border: 1px #6b6a6a solid;
+    background: #4a4a4a;
+}
+
+.dfx-ve-floating-palette-panel {
+    position: fixed!important;
+    width: 400px;
+    height: 300px;
+    left: 20px;
+    top: 90px;
+    overflow-y: auto;
+    z-index: 100000!important;
+    right: auto;
+}
+
+.dfx-ve-floating-properties-panel {
+    position: fixed!important;
+    width: 400px;
+    height: 300px;
+    right: 20px;
+    top: 90px;
+    overflow-y: auto;
+    z-index: 100000!important;
+    left: auto;
+}
+
+.dfx-ve-floating-collapsed-panel {
+    height: auto;
+    bottom: auto!important;
+}
+
+.dfx-ve-floating-panel-collapser {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
 /*view editor tabs gc*/
 md-tabs[dfx-gc-tabs-design] > md-tabs-content-wrapper {
   top: 0 !important;
