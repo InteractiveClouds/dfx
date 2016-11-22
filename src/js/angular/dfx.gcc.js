@@ -2895,7 +2895,7 @@ dfxGCC.directive('dfxGccWebTextarea', ['$timeout', function($timeout) {
     }
 }]);
 
-dfxGCC.directive('dfxGccWebChips', ['$timeout', function($timeout) {
+dfxGCC.directive('dfxGccWebChips', ['$timeout', '$compile', function($timeout, $compile) {
     return {
         restrict: 'A',
         require: '^dfxGccWebBase',
@@ -2903,36 +2903,107 @@ dfxGCC.directive('dfxGccWebChips', ['$timeout', function($timeout) {
         link: function(scope, element, attrs, basectrl) {
             var component = scope.$parent.getComponent(element);
             basectrl.init(scope, element, component, attrs, 'chips').then(function(){
-                if(!scope.attributes.hasOwnProperty('isBindEmpty')){scope.attributes.isBindEmpty = { "value": true };}
-                if(scope.attributes.hasOwnProperty('property1')){delete scope.attributes.property1;}
-                if(scope.attributes.hasOwnProperty('property2')){delete scope.attributes.property2;}
-                if(scope.attributes.hasOwnProperty('customItems')){delete scope.attributes.customItems;}
+                var element_chips = angular.element(element).find('md-chips');
 
                 scope.attributes.flex.status = "overridden" ;
-                scope.attributes.binding.status = "overridden" ;
-                scope.attributes.isBindEmpty.status = "overridden" ;
-                scope.attributes.selectedInput.status = "overridden" ;
-                scope.attributes.newItem = function(chip) {
-                    return { name: chip, type: 'unknown' };
-                };
-                scope.$watch('attributes.binding.value', function(binding){
-                    binding ? scope.attributes.isBindEmpty.value = false : scope.attributes.isBindEmpty.value = true;
-                });
-                scope.$watch('attributes.selectedInput.value', function(newValue){
-                        $timeout(function () {
-                            try{
-                                scope.chips = '#' + scope.component_id + '> div > md-chips > md-chips-wrap';
-                                $(scope.chips).css("padding-top", "8px");
-                            }catch(e){
-                                /*console.log(e.message);*/
-                            }
-                        },0);
-                    scope.attributes.isBindEmpty.status = "overridden" ;
-                });
 
-                scope.attributes.bindEmptyModel = function() {
-                    return scope.attributes.defaultArray.value;
-                };
+                scope.dfx_chip_placeholder = {
+                    'basic': true,
+                    'following': false
+                }
+
+                scope.dfxAddChipsPlaceholders = function(){
+                    $timeout(function() {
+                        var placeholders = '',
+                            basic_placeholder = ''.
+                            following_placeholder = '';
+
+                        if($(element_chips).find('input.dfx-core-gc-chips-input').val()===''){
+                            if(scope.attributes.binding.value===''){
+                                if(scope.attributes.defaultArray.value.length > 0){
+                                    scope.dfx_chip_placeholder.basic = false;
+                                    scope.dfx_chip_placeholder.following = true;
+                                }else{
+                                    scope.dfx_chip_placeholder.basic = true;
+                                    scope.dfx_chip_placeholder.following = false;
+                                }
+                            }
+                            if(scope.attributes.binding.value!==''){
+                                if(scope.dfx_chips_source.value.length > 0){
+                                    scope.dfx_chip_placeholder.basic = false;
+                                    scope.dfx_chip_placeholder.following = true;
+                                }else{
+                                    scope.dfx_chip_placeholder.basic = true;
+                                    scope.dfx_chip_placeholder.following = false;
+                                }
+                            }
+                        }else{
+                            scope.dfx_chip_placeholder.basic = false;
+                            scope.dfx_chip_placeholder.following = false;
+                        }
+                        if(scope.attributes.basicPlaceholder.value!==''){
+                            basic_placeholder =  '<span ng-if="dfx_chip_placeholder.basic" ' +
+                                                    'style="{{attributes.labelStyle.basic.style}}" ' +
+                                                    'class="dfx-core-gc-chips-placeholder basic-placeholder ' + 
+                                                    '{{attributes.labelStyle.basic.class}}">' +
+                                                        '{{' + scope.attributes.basicPlaceholder.value + '}}' +
+                                                '</span>';
+                        }
+                        if(scope.attributes.addPlaceholder.value!==''){
+                            following_placeholder =  '<span ng-if="dfx_chip_placeholder.following" ' +
+                                                        'style="{{attributes.labelStyle.following.style}}" ' +
+                                                        'class="dfx-core-gc-chips-placeholder following-placeholder ' +
+                                                        '{{attributes.labelStyle.following.class}}">' +
+                                                            '{{' + scope.attributes.addPlaceholder.value + '}}' +
+                                                    '</span>';
+                        }
+                        placeholders = '<span class="dfx-core-gc-chips-placeholders">' + basic_placeholder + following_placeholder + '</span>';
+
+                        if($(element_chips).find('.dfx-core-gc-chips-placeholders').length === 0) {
+                            $(element_chips).find('.md-chip-input-container').prepend(placeholders).promise().done(function(){
+                                $compile($(element_chips).find('.dfx-core-gc-chips-placeholders'))(scope);                                
+                            });
+                        }
+                    }, 0);
+                }
+
+                scope.dfxCheckChipsPlaceholders = function(index, val){   
+                    if(!val){
+                        scope.dfx_chip_placeholder.basic = index > 0 ? false : true;
+                        scope.dfx_chip_placeholder.following = index > 0 ? true : false;                    
+                    }else{
+                        scope.dfx_chip_placeholder.basic = false;
+                        scope.dfx_chip_placeholder.following = false;
+                    }                 
+                }
+
+                scope.dfxSetChipsPlaceholders = function(arr_length, buffer){
+                    if($(element_chips).find('input.dfx-core-gc-chips-input').val()===''){
+                        scope.dfx_chip_placeholder.basic = arr_length > 0 ? false : true;
+                        scope.dfx_chip_placeholder.following = arr_length > 0 ? true : false;                    
+                    }else{
+                        scope.dfx_chip_placeholder.basic = false;
+                        scope.dfx_chip_placeholder.following = false;
+                    }
+                }
+
+                scope.attributes.bindEmptyModel = function() { return scope.attributes.defaultArray.value; };
+
+                if(scope.attributes.binding.value==='' || scope.dfx_chips_source){
+                    scope.dfxAddChipsPlaceholders();
+                }else{                    
+                    var dfx_chips_interval = setInterval(function() {
+                        if (!scope.dfx_chips_source) return;
+                        clearInterval(dfx_chips_interval);
+                        scope.dfxAddChipsPlaceholders();                        
+                    }, 10);
+                }
+
+                scope.$watch(function (newValue) {
+                    return $(element_chips).find('md-chips-wrap').hasClass('md-readonly');
+                }, function (newValue) {
+                    if(!newValue && $(element_chips).find('.dfx-core-gc-chips-placeholders').length === 0) scope.dfxAddChipsPlaceholders();
+                });
 
                 scope.changeWidth = function(){
                     var component = angular.element(document.querySelectorAll('[id="' + scope.component_id + '"]'));//for repeatable panels
