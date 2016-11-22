@@ -591,6 +591,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
             $scope.view_cards.push({'name':card.name});
             $timeout(function() {
                 $scope.view_card_select_index = $scope.view_cards.length-1;
+                DfxViewEditorSettings.fitRulerPosition();
             });
         }, function() {
             // do nothing
@@ -965,7 +966,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
         DfxViewEditorSettings.changeCanvasSize($scope, $mdDialog, $event);
     };
     $scope.toggleRuler = function($event) {
-        DfxViewEditorSettings.toggleRuler($event);
+        DfxViewEditorSettings.toggleRuler();
     };
     $scope.togglePanels = function($event) {
         DfxViewEditorSettings.togglePanels();

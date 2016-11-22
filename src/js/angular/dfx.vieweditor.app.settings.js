@@ -128,7 +128,19 @@ var DfxViewEditorSettings = (function() {
         }
     };
 
-    api.toggleRuler = function($event) {
+    api.fitRulerPosition = function() {
+        var dfx_ruler = $('.dfx-ve-ruler');
+
+        if ( dfx_ruler.hasClass('dfx-ve-hidden-element') ) {
+            $('.dfx-ve-main-content-tab-content').css('padding', '10px ');
+            $('#dfx-ve-main-content').css('padding', '10px');
+        } else {
+            $('.dfx-ve-main-content-tab-content').css('padding', '20px 10px 10px 0');
+            $('#dfx-ve-main-content').css('padding', '10px 10px 10px 20px');
+        }
+    };
+
+    api.toggleRuler = function() {
         api.closeViewSettingsMenu();
 
         var dfx_ruler = $('.dfx-ve-ruler');
@@ -136,18 +148,14 @@ var DfxViewEditorSettings = (function() {
         var menu_label = $('#dfx-ve-settings-menu-show-ruler-label');
 
         dfx_ruler.toggleClass('dfx-ve-hidden-element');
+        api.fitRulerPosition();
 
+        // change icons and title in editor settings menu
         if ( dfx_ruler.hasClass('dfx-ve-hidden-element') ) {
-            $('#dfx-ve-main-content-tab-content').css('padding', '10px');
-
-            // change icons and title in editor settings menu
             //menu_icon.removeClass('fa-bars');
             //menu_icon.addClass('fa-bars');
             menu_label.text('Show Ruler');
         } else {
-            $('#dfx-ve-main-content-tab-content').css('padding', '20px 10px 10px 20px');
-
-            // change icons and title in editor settings menu
             //menu_icon.removeClass('fa-bars');
             //menu_icon.addClass('fa-bars');
             menu_label.text('Hide Ruler');
