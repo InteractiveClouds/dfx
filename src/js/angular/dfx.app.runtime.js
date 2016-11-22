@@ -224,12 +224,15 @@ dfxAppRuntime.controller('dfx_page_template_controller', [ '$scope', '$rootScope
 		}
 	};
 
-	$scope.routeToPage = function(page_name, ev) {
-		$('#pagebody').addClass('animated slideOutLeft').one('animationend', function(eventOne) {
-			$rootScope.page_name = page_name;
-			$location.url('/'+$rootScope.page_name);
-			$scope.$apply();
-		});
+	$scope.routeToPage = function(page_name) {
+		/* check if user is not trying to go on the same page, then apply animation and route to targeted page */
+		if (page_name != $rootScope.page_name) {
+			$('#pagebody').addClass('animated slideOutLeft').one('animationend', function(eventOne) {
+				$rootScope.page_name = page_name;
+				$location.url('/'+$rootScope.page_name);
+				$scope.$apply();
+			});
+		}
     };
 
 	/* Toggle Fullscreen - remove/restore template elements with animation */
@@ -343,7 +346,16 @@ dfxAppRuntime.controller('dfx_page_controller', [ '$scope', '$rootScope', 'dfxAu
 					var snippet = '<div layout="column" flex dfx-page-template="' + request.data.template + '"></div>';
 	                angular.element(document.getElementById('dfx_page_content')).append($compile(snippet)($scope));
 				}
-            });
+            }, function errorCallback(response) {
+				$scope.selected_page = {};
+				$http({
+	                method: 'GET',
+	                url: '/commons/views/ui-route-error.html'
+	            }).then(function successCallback(request) {
+					var snippet = request.data;
+					angular.element(document.getElementById('dfx_page_content')).append($compile(snippet)($scope));
+	            });
+			});
         }
     };
 

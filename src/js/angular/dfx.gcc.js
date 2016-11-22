@@ -914,20 +914,28 @@ dfxGCC.directive('dfxGccWebButton', ['$timeout', '$compile', '$filter', function
                             }, 0);
                         }
                     }
-                    scope.changeWidth = function(){
-                        if(scope.attributes.notFlex.value) {
+                    scope.changeWidth = function() {
+                        if (scope.attributes.notFlex.value) {
                             $(element).css({
                                 'flex': '0',
                                 'width': 'auto',
                                 'max-width': '100%'
                             });
                             scope.attributes.flex.value = 'none';
-                        }else{
-                            $(element).css({
-                                'flex': scope.attributes.flex.value + '%',
+                        } else {
+                            $('#' + scope.component_id).css({
                                 'width': scope.attributes.flex.value + '%',
                                 'max-width': scope.attributes.flex.value + '%'
                             });
+
+                            // flex with values cannot be used in css, because if parent layout is column,
+                            // it overides the flex classes and used for button height instead of width
+                            var flex_style = $('#' + scope.component_id).css('flex');
+                            if (flex_style) {
+                                var button_style = $('#' + scope.component_id).attr('style');
+                                var button_style_no_flex = button_style.replace('flex: ' + flex_style + ';', '');
+                                $('#' + scope.component_id).attr('style', button_style_no_flex);
+                            }
                         }
                     };
                     scope.menuPosition = function(button){
@@ -1205,7 +1213,7 @@ dfxGCC.directive('dfxGccWebToolbar', function($sce, $compile, $timeout) {
                         }
                         if ( toolbarType==='iconBar' ) {
                             if ( dfxMenuItem.hasOwnProperty('waiting')) { delete dfxMenuItem.waiting; }
-                            if (dfxMenuItem.hasOwnProperty('state')){                                
+                            if (dfxMenuItem.hasOwnProperty('state')){
                                 if ( !dfxMenuItem.state.value ) {
                                     // dfxMenuItem.state = {
                                     //     "value":           false,
@@ -2868,7 +2876,7 @@ dfxGCC.directive('dfxGccWebTextarea', ['$timeout', function($timeout) {
                 scope.attributes.flex.status = "overridden" ;
 
                 scope.arbitrary = {"value":""};
-                
+
                 scope.isMaxLength = function() {
                     return scope.attributes.maxlength.value ? true : false;
                 };
