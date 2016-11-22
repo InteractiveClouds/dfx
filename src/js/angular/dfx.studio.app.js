@@ -2190,13 +2190,8 @@ dfxStudioApp.controller("dfx_studio_new_application_controller", [ '$scope','dfx
             controller: function(){
                 $scope.setImage = function(src) {
                     var fileName = src.split('/')[src.split('/').length -1];
-                    if (fileName !== 'dfx_login_logo_black.png') {
-                        $scope.selected_logo_image = src;
-                        $scope.selected_logo_image_input.value = "/assets/" + fileName;
-                    } else {
-                        $scope.selected_logo_image = src;
-                        $scope.selected_logo_image_input.value = src;
-                    }
+                    $scope.selected_logo_image_input.value = "/assets/" + fileName;
+                    $scope.selected_logo_image = "/studio-assets/" + fileName + "?app_name=" + $scope.app_name + "&tenantId=" + $("body").attr("data-tenantid");
                     $mdDialog.hide();
                 }
                 $scope.closeDialog = function(){
@@ -2240,13 +2235,8 @@ dfxStudioApp.controller("dfx_studio_general_settings_controller", [ '$scope','df
             controller: function(){
                 $scope.setImage = function(src) {
                     var fileName = src.split('/')[src.split('/').length -1];
-                    if (fileName !== 'dfx_login_logo_black.png') {
-                            $scope.selected_logo_image = src;
-                            $scope.selected_logo_image_input.value = "/assets/" + fileName;
-                        } else {
-                            $scope.selected_logo_image = src;
-                            $scope.selected_logo_image_input.value = src;
-                        }
+                    $scope.selected_logo_image_input.value = "/assets/" + fileName;
+                    $scope.selected_logo_image = "/studio-assets/" + fileName + "?app_name=" + $scope.app_name + "&tenantId=" + $("body").attr("data-tenantid");
 
                     $mdDialog.hide();
                 }
@@ -2259,14 +2249,12 @@ dfxStudioApp.controller("dfx_studio_general_settings_controller", [ '$scope','df
 
     $scope.$watch('$parent.logo_initialized', function(newVal){
         if(newVal){
-            var fileName = $scope.selected_logo_image.split('/')[$scope.selected_logo_image.split('/').length -1];
-            if (fileName !== 'dfx_login_logo_black.png') {
-                $scope.selected_logo_image = $scope.selected_logo_image;
-                $scope.selected_logo_image_input.value = "/assets/" + fileName;
-            } else {
-                $scope.selected_logo_image = $scope.selected_logo_image;
-                $scope.selected_logo_image_input.value = $scope.selected_logo_image;
-            }
+            var src = (!$scope.selected_logo_image_input.value) ? $scope.selected_logo_image : $scope.selected_logo_image_input.value;
+            var fileName = src.split('/')[src.split('/').length -1];
+
+            $scope.selected_logo_image_input.value = "/assets/" + fileName;
+            $scope.selected_logo_image = "/studio-assets/" + fileName + "?app_name=" + $scope.app_name + "&tenantId=" + $("body").attr("data-tenantid");
+
             $timeout(function(){
                 dfxApplications.getImages($scope.app_name).then(function(images){
                     $scope.appImages = images;
@@ -2289,8 +2277,8 @@ dfxStudioApp.controller("dfx_studio_general_settings_controller", [ '$scope','df
     $scope.getGeneral();
 
     $scope.saveGeneral = function(){
-        dfxApplications.saveGeneral($scope.general.title, $scope.app_name, $scope.selected_logo_image).then(function(){
-            $scope.initApps();
+        dfxApplications.saveGeneral($scope.general.title, $scope.app_name, $scope.selected_logo_image_input.value).then(function(){
+           // $scope.initApps();
             dfxMessaging.showMessage("General application settings has been successfully updated");
         }, function(){
             dfxMessaging.showWarning("Can\'t save general application settings");
