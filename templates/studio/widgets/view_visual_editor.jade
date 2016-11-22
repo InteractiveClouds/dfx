@@ -125,9 +125,11 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", dfx-ve-ctr
     div(layout="column", flex, ng-show="!script_visible && !style_visible && !source_visible", style="height:100%")
         section(layout="row", flex="100")
             md-sidenav#dfx-ve-sidenav-left.md-sidenav-left.md-whiteframe-z2(md-component-id="left", md-is-locked-open="$mdMedia('gt-md')", ng-show="palette_visible")
-                div#dfx-ve-sidenav-left-header(class = "dfx-ve-floating-panel-header dfx-ve-hidden-element") Palette
+                div#dfx-ve-sidenav-left-header(class = "dfx-ve-floating-panel-header dfx-ve-hidden-element") &nbsp;
                 div.dfx-ve-floating-panel-collapser(ng-click="minimizePanel('dfx-ve-sidenav-left')")
-                    md-icon(class="fa fa-expand", style="color: #fff;", aria-label="Minimize Panel")
+                    md-icon#dfx-ve-sidenav-left-collapser(class="fa fa-minus", style="color: #fff;", aria-label="Minimize Panel")
+                div.dfx-ve-floating-panel-closer(ng-click="closePanel('dfx-ve-sidenav-left')")
+                    md-icon(class="fa fa-close", style="color: #fff;", aria-label="Close Panel")
                 md-content#dfx-ve-sidenav-left-content(layout-padding show-gt-md)
                     div#dfx_visual_editor_gc_palette_content.dfx-ve-palette-treeview.hover
                         ul(style="border-top: 1px #6b6a6a solid")
@@ -174,14 +176,17 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", dfx-ve-ctr
             md-content#dfx-ve-main-content(flex="100", ng-click="unselectComponent()")
                 md-tabs.md-dynamic-height(layout="column", md-selected="view_card_select_index")
                     md-tab(ng-repeat="card in view_cards", label="{{card.name}}")
-                        md-content(style="padding:10px;background-color:#efefef", layout="row", layout-align="center start")
+                        md-content#dfx-ve-main-content-tab-content(style="padding:10px;background-color:#efefef", layout="row", layout-align="center start")
                             div#dfx-ve-platform(layout="column", style="height:100%;", dfx-ve-platform)
                                 div(id="dfx_visual_editor_workspace_{{card.name}}", dfx-card="{{card.name}}", dfx-ve-workspace, style="overflow:auto", flex="100", layout="column")
-                div#dfx-ve-main-content-ruler(style="display:none;") This is Ruler            
+                            div#dfx-ve-ruler-vertical.dfx-ve-ruler.dfx-ve-hidden-element
+                            div#dfx-ve-ruler-horizontal.dfx-ve-ruler.dfx-ve-hidden-element
             md-sidenav#dfx-ve-sidenav-right.md-sidenav-right.md-whiteframe-z2(md-component-id="right", md-is-locked-open="$mdMedia('gt-md')", ng-show="property_visible")
                 div#dfx-ve-sidenav-right-header(class = "dfx-ve-floating-panel-header dfx-ve-hidden-element") Properties
                 div.dfx-ve-floating-panel-collapser(ng-click="minimizePanel('dfx-ve-sidenav-right')")
-                    md-icon(class="fa fa-expand", style="color: #fff;", aria-label="Minimize Panel")
+                    md-icon#dfx-ve-sidenav-right-collapser(class="fa fa-minus", style="color: #fff;", aria-label="Minimize Panel")
+                div.dfx-ve-floating-panel-closer(ng-click="closePanel('dfx-ve-sidenav-right')")
+                    md-icon(class="fa fa-close", style="color: #fff;", aria-label="Close Panel")
                 md-content#dfx-ve-sidenav-right-content(show-gt-md)
                     div(ng-show="gc_selected==null")
                       div.dfx-ve-property-treeview.hover

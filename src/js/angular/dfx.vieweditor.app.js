@@ -953,134 +953,31 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     }
 
     // View workspace settings - START
-    var view_settings_path = 'DFX_' + $scope.tenant_id + '_' + $scope.view_name + '_view_settings';
-    var getViewSettings = function() {
-        var view_settings = window.localStorage.getItem(view_settings_path);
-        return view_settings ? JSON.parse(view_settings) : { 'width': '', 'height': '' };
-    };
-    var setViewSettings = function(view_settings) {
-        window.localStorage.setItem(view_settings_path, JSON.stringify(view_settings));
-    };
-
-    var setWorkspaceSize = function(workspace) {
-        var view_settings = getViewSettings();
-        var width = workspace ? workspace.width : view_settings.width;
-        var height = workspace ? workspace.height : view_settings.height;
-        view_settings.width = width;
-        view_settings.height = height;
-        setViewSettings(view_settings);
-
-        var workspace_container = angular.element(document.querySelectorAll('[md-selected="view_card_select_index"]'));
-
-        if (!width || width == "0") {
-            workspace_container.css('overflow', 'initial');
-            workspace_container.css('width', '');
-        } else {
-            var workspace_width = width.indexOf('px') > 0 ? width : width + 'px';
-            workspace_container.css('overflow', 'auto');
-            workspace_container.css('width', workspace_width);
-        }
-        if (!height || height == "0") {
-            workspace_container.css('height', '');
-        } else {
-            var workspace_height = height.indexOf('px') > 0 ? height : height + 'px';
-            workspace_container.css('height', workspace_height);
-        }
-    };
-    setWorkspaceSize();
+    DfxViewEditorSettings.setWorkspaceSize($scope);
 
     $scope.loadViewSettingsMenu = function($event) {
-        $event.stopImmediatePropagation();
-        $scope.closeViewSettingsMenu();
-        var snippet = '<div class="_md md-open-menu-container md-whiteframe-z2 md-altTheme-theme md-active md-clickable" id="dfx-view-settings-popmenu" style="left:'+($event.x-20)+'px;top:'+($event.y+15)+'px;" ng-mouseleave="closeViewSettingsMenu()" aria-hidden="false">';
-        snippet += '<md-menu-content width="4" class="md-altTheme-theme">';
-        snippet += '<md-menu-item><md-button ng-click="changeCanvasSize()"><md-icon class="fa fa-square-o" aria-label="Change Canvas Size"></md-icon>Change Canvas Size</md-button></md-menu-item>';
-        snippet += '<md-menu-item><md-button ng-click="toggleRuler()"><md-icon class="fa fa-bars" aria-label="Show/Hide Ruler"></md-icon>Show/Hide Ruler</md-button></md-menu-item>';
-        snippet += '<md-menu-item><md-button ng-click="togglePanels()"><md-icon class="fa fa-expand" aria-label="Show/Hide Panels"></md-icon>Show/Hide Panels</md-button></md-menu-item>';
-        snippet += '<md-menu-item><md-button ng-click="detachPanels()"><md-icon class="fa fa-pinterest-p" aria-label="Detach/Pin Panels"></md-icon>Detach/Pin Panels</md-button></md-menu-item>';
-        snippet += '</md-menu-content>';
-        snippet += '</div>';
-        angular.element(document.getElementById('dfx-view-editor-body')).append($compile(snippet)($scope));
+        DfxViewEditorSettings.loadViewSettingsMenu($scope, $compile, $event);
     };
     $scope.closeViewSettingsMenu = function() {
-        $('#dfx-view-settings-popmenu').remove();
+        DfxViewEditorSettings.closeViewSettingsMenu();
     };
     $scope.changeCanvasSize = function($event) {
-        $(event.srcElement).animateCss('pulse');
-        $scope.closeViewSettingsMenu();
-        $mdDialog.show({
-            controller: DialogController,
-            templateUrl: '/gcontrols/web/workspace_change.html',
-            parent: angular.element(document.body),
-            targetEvent: $event
-        })
-        .then(function(workspace) {
-            setWorkspaceSize(workspace);
-        }, function() {
-            // do nothing
-        });
-
-        function DialogController(scope, $mdDialog) {
-            var width = getViewSettings().width;
-            var height = getViewSettings().height;
-            scope.workspace = width || height ? {'width': width, 'height': height} : {'width': '', 'height': ''};
-
-            scope.changeWorkspaceConfirm = function(answer) {
-                $mdDialog.hide(scope.workspace);
-            };
-
-            scope.changeWorkspaceCancel = function() {
-                $mdDialog.cancel();
-            };
-        }
+        DfxViewEditorSettings.changeCanvasSize($scope, $mdDialog, $event);
     };
     $scope.toggleRuler = function($event) {
-        $scope.closeViewSettingsMenu();
-
-        var workspace = $('#dfx-ve-main-content');
-        var workspace_ruler = $('#dfx-ve-main-content-ruler');
-
-        // TODO: once having Ruler design, move styles to class
-        // use dfx-ve-hidden-element
-        if (workspace_ruler.css('display') == 'none') {
-            workspace.css('position', 'relative');
-            workspace.css('padding-bottom', '27px');
-            workspace_ruler.css('display', 'block');
-        } else {
-            workspace.css('position', 'initial');
-            workspace.css('padding-bottom', '');
-            workspace_ruler.css('display', 'none');
-        }
+        DfxViewEditorSettings.toggleRuler($event);
     };
     $scope.togglePanels = function($event) {
-        $scope.closeViewSettingsMenu();
-
-        $('#dfx-ve-sidenav-left').toggleClass('dfx-ve-hidden-element');
-        $('#dfx-ve-sidenav-right').toggleClass('dfx-ve-hidden-element');
+        DfxViewEditorSettings.togglePanels();
     };
     $scope.detachPanels = function($event) {
-        $scope.closeViewSettingsMenu();
-
-        $('#dfx-ve-sidenav-left').toggleClass('dfx-ve-floating-palette-panel');
-        $('#dfx-ve-sidenav-right').toggleClass('dfx-ve-floating-properties-panel');
-
-        $('#dfx-ve-property-title').toggleClass('dfx-ve-hidden-element');
-        $('#dfx-ve-sidenav-left-header').toggleClass('dfx-ve-hidden-element');
-        $('#dfx-ve-sidenav-right-header').toggleClass('dfx-ve-hidden-element');
-
-        // acting if panel is minimized
-        if ($('#dfx-ve-sidenav-left').hasClass('dfx-ve-floating-collapsed-panel')) {
-            $('#dfx-ve-sidenav-left').removeClass('dfx-ve-floating-collapsed-panel');
-            $('#dfx-ve-sidenav-left-content').removeClass('dfx-ve-hidden-element');
-        }
-        if ($('#dfx-ve-sidenav-right').hasClass('dfx-ve-floating-collapsed-panel')) {
-            $('#dfx-ve-sidenav-right').removeClass('dfx-ve-floating-collapsed-panel');
-            $('#dfx-ve-sidenav-right-content').removeClass('dfx-ve-hidden-element');
-        }
+        DfxViewEditorSettings.detachPanels();
     };
     $scope.minimizePanel = function(panel_id) {
-        $('#' + panel_id).toggleClass('dfx-ve-floating-collapsed-panel');
-        $('#' + panel_id + '-content').toggleClass('dfx-ve-hidden-element');
+        DfxViewEditorSettings.minimizePanel(panel_id);
+    };
+    $scope.closePanel = function(panel_id) {
+        DfxViewEditorSettings.closePanel(panel_id);
     };
     // View workspace settings - END
 

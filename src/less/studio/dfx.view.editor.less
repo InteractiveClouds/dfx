@@ -1190,7 +1190,7 @@ md-content#dfx-ve-main-content > md-tabs {
     line-height: 27px;
 }
 
-/*view editor floating panels*/
+/*view editor settings menu*/
 .dfx-ve-hidden-element {
     display: none!important;
 }
@@ -1202,26 +1202,23 @@ md-content#dfx-ve-main-content > md-tabs {
     background: #4a4a4a;
 }
 
-.dfx-ve-floating-palette-panel {
+.dfx-ve-floating-panel {
     position: fixed!important;
     width: 400px;
     height: 300px;
-    left: 20px;
     top: 90px;
     overflow-y: auto;
-    z-index: 100000!important;
+    z-index: 2!important;
+}
+
+.dfx-ve-floating-palette-panel {
+    left: 20px;
     right: auto;
 }
 
 .dfx-ve-floating-properties-panel {
-    position: fixed!important;
-    width: 400px;
-    height: 300px;
-    right: 20px;
-    top: 90px;
-    overflow-y: auto;
-    z-index: 100000!important;
     left: auto;
+    right: 20px;
 }
 
 .dfx-ve-floating-collapsed-panel {
@@ -1232,8 +1229,35 @@ md-content#dfx-ve-main-content > md-tabs {
 .dfx-ve-floating-panel-collapser {
     position: absolute;
     top: 10px;
+    right: 30px;
+    cursor: pointer;
+}
+
+.dfx-ve-floating-panel-closer {
+    position: absolute;
+    top: 10px;
     right: 10px;
     cursor: pointer;
+}
+
+.dfx-ve-ruler {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1!important;
+}
+
+#dfx-ve-ruler-vertical {
+    width: 20px;
+    height: 100%;
+    background: url('/images/dfx_ruler_vertical.png') no-repeat 0 0;
+}
+
+#dfx-ve-ruler-horizontal {
+    width: 100%;
+    height: 20px;
+    left: -1px;
+    background: url('/images/dfx_ruler_horizontal.png') no-repeat 0 0;
 }
 
 /*view editor tabs gc*/
