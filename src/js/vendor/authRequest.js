@@ -41,22 +41,6 @@ var authRequest =  (function(){
         TOKENS = 'DFX_app_tokens',
         FAKE   = '{}';
 
-
-    /*var _localStorage_getItem = localStorage.getItem.bind(localStorage),
-        _localStorage_setItem = localStorage.setItem.bind(localStorage);
-
-    localStorage.getItem = function (param) {
-        return param === TOKENS ? FAKE : localStorage.getItem(param);
-    };
-    localStorage.setItem = function (param, value) {
-        return param !== TOKENS && localStorage.setItem(param, value);
-    };*/
-
-    /*Object.defineProperty(localStorage, TOKENS, {
-        get : function () { return FAKE},
-        set : function (value) {}
-    });
-	*/
     try {
         tenant = sessionStorage.dfx_tenantid;
         token = JSON.parse(localStorage.getItem(TOKENS))[tenant];
@@ -64,13 +48,8 @@ var authRequest =  (function(){
         console.log('authRequest. first attempt to init is failed.');
     };
 
-    // TODO
-    // window.addEventListener('storage', function(e) {
-    //     console.log('HACKER GOT THE TOKEN : ', e.oldValue, e.newValue );
-    // });
 
-
-    setRefreshTokenTimeuot();
+    setRefreshTokenTimeout();
 
 
     function sign ( o ) {
@@ -297,7 +276,7 @@ var authRequest =  (function(){
                 tokens[tenant] = token;
                 localStorage.setItem(TOKENS, JSON.stringify(tokens));
 
-                setRefreshTokenTimeuot();
+                setRefreshTokenTimeout();
 
                 //console.log('token nonce is refreshed. "%s"', token.nonce);
 
@@ -309,7 +288,7 @@ var authRequest =  (function(){
     };
 
 
-    function setRefreshTokenTimeuot () {
+    function setRefreshTokenTimeout () {
 
         if ( !token ) return;
 

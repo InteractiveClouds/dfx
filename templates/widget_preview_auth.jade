@@ -35,7 +35,7 @@ html
           /* simulate user login */
           var cached_username = window.localStorage.getItem('DFX_ve_login_userid');
           var cached_app_tokens = window.localStorage.getItem('DFX_app_tokens');
-          if (cached_app_tokens == 'fake') {
+          if (cached_app_tokens == '{}') {
             if (cached_username!=null && cached_username!='') {
               $('#waiting_message').css('display', 'block');
               $('#username').val(cached_username);

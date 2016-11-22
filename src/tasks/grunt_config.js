@@ -76,6 +76,13 @@ var exports = (function () {
             dest:   pub + 'commons/views',
             filter: 'isFile'
         },
+		commons_build:{
+            expand: true,
+            cwd:    src + 'commons/views',
+            src:    ['*'],
+            dest:   build + 'commons/views/',
+            filter: 'isFile'
+        },
         fonts:             {
             expand: true,
             cwd:    src + 'fonts/',
