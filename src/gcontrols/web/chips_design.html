@@ -1,14 +1,16 @@
 <div flex style="{{attributes.style.value}}" class="dfx-core-gc-chips-container {{attributes.classes.value}}">
-    <md-chips ng-if="attributes.selectedInput.value!=='number'" class="dfx-core-gc-chips"
-              ng-model="attributes.itemsArray.value" 
-              placeholder="{{attributes.basicPlaceholder.value | checkExpression}}"
-              secondary-placeholder="{{attributes.addPlaceholder.value | checkExpression}}">
-    	<!-- <input type="text" ng-model="current_chip" ng-change="dfxChipsPlaceholders(attributes.itemsArray.value.length, current_chip)"> -->
-    </md-chips>
-    <md-chips ng-if="attributes.selectedInput.value==='number'" class="dfx-core-gc-chips"
-              ng-model="attributes.itemsArray.value" 
-              placeholder="{{attributes.basicPlaceholder.value | checkExpression}}"
-              secondary-placeholder="{{attributes.addPlaceholder.value | checkExpression}}">
-        <input type="number" placeholder="{{attributes.basicPlaceholder.value | checkExpression}}">
-    </md-chips>
+    <div ng-if="attributes.selectedInput.value==='text'">
+        <md-chips class="dfx-core-gc-chips" ng-model="attributes.itemsArray.value" md-on-remove="dfxSetChipsPlaceholders(attributes.itemsArray.value.length)">
+            <input type="text" class="dfx-core-gc-chips-input"
+                ng-model="$mdChipsCtrl.chipBuffer" 
+                ng-change="dfxCheckChipsPlaceholders(attributes.itemsArray.value.length, $mdChipsCtrl.chipBuffer)">
+        </md-chips>
+    </div>
+    <div ng-if="attributes.selectedInput.value==='number'">
+        <md-chips class="dfx-core-gc-chips" ng-model="attributes.itemsArray.value" md-on-remove="dfxSetChipsPlaceholders(attributes.itemsArray.value.length)">
+            <input type="number" class="dfx-core-gc-chips-input"
+                ng-model="$mdChipsCtrl.chipBuffer" 
+                ng-change="dfxCheckChipsPlaceholders(attributes.itemsArray.value.length, $mdChipsCtrl.chipBuffer)">
+        </md-chips>
+    </div>
 </div>
