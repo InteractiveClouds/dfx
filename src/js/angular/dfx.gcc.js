@@ -2895,6 +2895,8 @@ dfxGCC.directive('dfxGccWebChips', ['$timeout', '$compile', function($timeout, $
         link: function(scope, element, attrs, basectrl) {
             var component = scope.$parent.getComponent(element);
             basectrl.init(scope, element, component, attrs, 'chips').then(function(){
+                var element_chips = angular.element(element).find('md-chips');
+
                 scope.attributes.flex.status = "overridden" ;
 
                 scope.dfx_chip_placeholder = {
@@ -2908,7 +2910,7 @@ dfxGCC.directive('dfxGccWebChips', ['$timeout', '$compile', function($timeout, $
                             basic_placeholder = ''.
                             following_placeholder = '';
 
-                        if($('#' + component.id).find('input.dfx-core-gc-chips-input').val()===''){
+                        if($(element_chips).find('input.dfx-core-gc-chips-input').val()===''){
                             if(scope.attributes.binding.value===''){
                                 if(scope.attributes.defaultArray.value.length > 0){
                                     scope.dfx_chip_placeholder.basic = false;
@@ -2949,9 +2951,9 @@ dfxGCC.directive('dfxGccWebChips', ['$timeout', '$compile', function($timeout, $
                         }
                         placeholders = '<span class="dfx-core-gc-chips-placeholders">' + basic_placeholder + following_placeholder + '</span>';
 
-                        if($('#' + component.id + ' .dfx-core-gc-chips-placeholders').length === 0) {
-                            $('#' + component.id + ' .md-chip-input-container').prepend(placeholders).promise().done(function(){
-                                $compile($('#'+component.id+' .dfx-core-gc-chips-placeholders'))(scope);                                
+                        if($(element_chips).find('.dfx-core-gc-chips-placeholders').length === 0) {
+                            $(element_chips).find('.md-chip-input-container').prepend(placeholders).promise().done(function(){
+                                $compile($(element_chips).find('.dfx-core-gc-chips-placeholders'))(scope);                                
                             });
                         }
                     }, 0);
@@ -2968,7 +2970,7 @@ dfxGCC.directive('dfxGccWebChips', ['$timeout', '$compile', function($timeout, $
                 }
 
                 scope.dfxSetChipsPlaceholders = function(arr_length, buffer){
-                    if($('#' + component.id).find('input.dfx-core-gc-chips-input').val()===''){
+                    if($(element_chips).find('input.dfx-core-gc-chips-input').val()===''){
                         scope.dfx_chip_placeholder.basic = arr_length > 0 ? false : true;
                         scope.dfx_chip_placeholder.following = arr_length > 0 ? true : false;                    
                     }else{
@@ -2990,9 +2992,9 @@ dfxGCC.directive('dfxGccWebChips', ['$timeout', '$compile', function($timeout, $
                 }
 
                 scope.$watch(function (newValue) {
-                    return $('#' + component.id + ' md-chips-wrap').hasClass('md-readonly');
+                    return $(element_chips).find('md-chips-wrap').hasClass('md-readonly');
                 }, function (newValue) {
-                    if(!newValue && $('#' + component.id + ' .dfx-core-gc-chips-placeholders').length === 0) scope.dfxAddChipsPlaceholders();
+                    if(!newValue && $(element_chips).find('.dfx-core-gc-chips-placeholders').length === 0) scope.dfxAddChipsPlaceholders();
                 });
 
                 scope.changeWidth = function(){
