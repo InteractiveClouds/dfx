@@ -4392,9 +4392,9 @@ dfxGCC.directive('dfxGccWebTabs', ['$timeout', '$compile', function($timeout, $c
 
                 scope.collapsePanelContent = function(ev, dfxIndex){
                     var toggle_btn_id = ev.target.id,
-                        toggle_btn = $('#'+toggle_btn_id),
+                        toggle_btn = $(element).find('#'+toggle_btn_id),
                         collapse_cont_id = toggle_btn_id.replace('toggling_', '');
-                    var collapse_container = $('#'+collapse_cont_id);
+                    var collapse_container = $(element).find('#'+collapse_cont_id);
                     if(collapse_container.hasClass('ng-hide')) collapse_container.css('display', 'none').removeClass('ng-hide');
                     toggle_btn.toggleClass('dfx-expanded');
                     collapse_container.slideToggle();
@@ -4596,12 +4596,11 @@ dfxGCC.directive('dfxGccWebWizard', ['$mdDialog', '$timeout', '$compile', functi
                         scope.attributes.percentage.value = Math.round(scope.attributes.percentage.value);
                     },0);
                 };
-
                 scope.collapsePanelContent = function(ev, dfxIndex){
                     var toggle_btn_id = ev.target.id,
-                        toggle_btn = $('#'+toggle_btn_id),
+                        toggle_btn = $(element).find('#'+toggle_btn_id),
                         collapse_cont_id = toggle_btn_id.replace('toggling_', '');
-                    var collapse_container = $('#'+collapse_cont_id);
+                    var collapse_container = $(element).find('#'+collapse_cont_id);
                     if(collapse_container.hasClass('ng-hide')) collapse_container.css('display', 'none').removeClass('ng-hide');
                     toggle_btn.toggleClass('dfx-expanded');
                     collapse_container.slideToggle();
