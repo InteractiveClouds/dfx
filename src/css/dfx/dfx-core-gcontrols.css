@@ -575,6 +575,9 @@ div[dfx-gc-web-panel] > div > section > md-content > div > div {
     position: absolute;
     z-index: 1;
 }
+md-chips-wrap.md-readonly {
+    min-height: 48px;
+}
 /* Google Map */
 .dfx-core-gc-google-map {
     width: 100%;
