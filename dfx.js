@@ -149,7 +149,7 @@ out.init = function ( settings ) {
         settingsErrors = [],
         obligateSETTINGS = ['auth_conf_path', 'tempDir'];
     if (SETTINGS.studio) {
-        obligateSETTINGS = obligateSETTINGS.concat(['tempDirForTemplates', 'app_build_path', 'resources_development_path']);
+        obligateSETTINGS = obligateSETTINGS.concat(['tempDirForTemplates', 'app_build_path', 'resources_development_path', 'public_dir_path']);
     } else {
         obligateSETTINGS = obligateSETTINGS.concat(['fsdb_path', 'deploy_path']);
     }
