@@ -2152,96 +2152,6 @@ var DfxGcChartUtil = (function () {
     return api;
 }());
 
-dfxGCC.directive('dfxGccWebAreachart', ['$timeout', '$filter', function($timeout, $filter) {
-    return {
-        restrict: 'A',
-        require: '^dfxGccWebBase',
-        scope: true,
-        link: function(scope, element, attrs, basectrl) {
-            var component = scope.getComponent(element);
-
-            var chartData    = [
-                {
-                    "key" : "North America" ,
-                    "values" : [ [ 1320033600000 , 26.672] , [ 1322629200000 , 27.297] , [ 1325307600000 , 20.174] , [ 1327986000000 , 19.631] , [ 1330491600000 , 20.366] , [ 1333166400000 , 19.284] , [ 1335758400000 , 19.157]]
-                },
-                {
-                    "key" : "Europe" ,
-                    "values" : [ [ 1320033600000 , 35.611] , [ 1322629200000 , 35.320] , [ 1325307600000 , 31.564] , [ 1327986000000 , 32.074] , [ 1330491600000 , 35.053] , [ 1333166400000 , 33.873] , [ 1335758400000 , 32.321]]
-                },
-                {
-                    "key" : "Australia" ,
-                    "values" : [ [ 1320033600000 , 5.453] , [ 1322629200000 , 7.672] , [ 1325307600000 , 8.014] , [ 1327986000000 , 0] , [ 1330491600000 , 0] , [ 1333166400000 , 0] , [ 1335758400000 , 0]]
-                }
-            ];
-            var chartOptions = {
-                chart: {
-                    type: 'stackedAreaChart',
-                    margin : {
-                        top: 20,
-                        right: 20,
-                        bottom: 50,
-                        left: 55
-                    },
-                    x: function(d){return d[0];},
-                    y: function(d){return d[1];},
-                    useVoronoi: false,
-                    clipEdge: true,
-                    duration: 100,
-                    useInteractiveGuideline: true,
-                    xAxis: {
-                        showMaxMin: false,
-                        tickFormat: function(d) {
-                            return d3.time.format('%x')(new Date(d))
-                        },
-                        axisLabel: 'X Axis'
-                    },
-                    yAxis: {
-                        tickFormat: function(d){
-                            return d3.format(',.2f')(d);
-                        }
-                    }
-                },
-                title: {
-                    text: 'Stacked Area Chart',
-                    enable: true
-                }
-            };
-
-            basectrl.init(scope, element, component, attrs, 'areachart').then(function () {
-                if (scope.attributes.dynamicOptions) scope.attributes.dynamicOptions.status = "overridden";
-                scope.attributes.flex.status = "overridden";
-
-                DfxGcChartUtil.setRunTimeChartNameVariable(scope, basectrl, component, $timeout);
-
-                basectrl.bindScopeVariable(scope, component.attributes.title.value);
-
-                // dynamicOptions is a priority over all static options, title and events (ex. onclick)
-                if (scope.attributes.dynamicOptions && scope.attributes.dynamicOptions.value) {
-                    scope.attributes.options.value = scope[scope.attributes.dynamicOptions.value];
-                } else {
-                    scope.attributes.options.value = chartOptions;
-
-                    var eventsList = {
-                        onareaclick: 'areaClick',
-                        onareamouseover: 'areaMouseover',
-                        onareamouseleave: 'areaMouseout',
-                        onstatechange: 'stateChange',
-                        onrenderend: 'renderEnd'
-                    };
-
-                    DfxGcChartUtil.setRunTimeAttributes(scope, 'stacked', eventsList, basectrl, $timeout);
-                    DfxGcChartUtil.watchRunTimeAttributes(scope, basectrl, $timeout);
-                }
-
-                DfxGcChartUtil.adjustContainerHeight(scope);
-            });
-
-            DfxGcChartUtil.setAttributesBeforeInit(scope, attrs, chartOptions, chartData);
-        }
-    }
-}]);
-
 dfxGCC.directive('dfxGccWebBarchart', ['$timeout', '$filter', function($timeout, $filter) {
     return {
         restrict: 'A',
@@ -2309,13 +2219,14 @@ dfxGCC.directive('dfxGccWebBarchart', ['$timeout', '$filter', function($timeout,
             basectrl.init(scope, element, component, attrs, 'barchart').then(function () {
                 if (scope.attributes.dynamicOptions) scope.attributes.dynamicOptions.status = "overridden";
                 scope.attributes.flex.status = "overridden";
+                scope.attributes.optionsType = scope.attributes.optionsType ? scope.attributes.optionsType : {"value": "static"};
 
                 DfxGcChartUtil.setRunTimeChartNameVariable(scope, basectrl, component, $timeout);
 
                 basectrl.bindScopeVariable(scope, component.attributes.title.value);
 
                 // dynamicOptions is a priority over all static options, title and events (ex. onclick)
-                if (scope.attributes.dynamicOptions && scope.attributes.dynamicOptions.value) {
+                if (scope.attributes.optionsType.value == 'dynamic') {
                     scope.attributes.options.value = scope[scope.attributes.dynamicOptions.value];
                 } else {
                     scope.attributes.options.value = chartOptions;
@@ -2438,13 +2349,14 @@ dfxGCC.directive('dfxGccWebHzbarchart', ['$timeout', '$filter', function($timeou
             basectrl.init(scope, element, component, attrs, 'hzbarchart').then(function () {
                 if (scope.attributes.dynamicOptions) scope.attributes.dynamicOptions.status = "overridden";
                 scope.attributes.flex.status = "overridden";
+                scope.attributes.optionsType = scope.attributes.optionsType ? scope.attributes.optionsType : {"value": "static"};
 
                 DfxGcChartUtil.setRunTimeChartNameVariable(scope, basectrl, component, $timeout);
 
                 basectrl.bindScopeVariable(scope, component.attributes.title.value);
 
                 // dynamicOptions is a priority over all static options, title and events (ex. onclick)
-                if (scope.attributes.dynamicOptions && scope.attributes.dynamicOptions.value) {
+                if (scope.attributes.optionsType.value == 'dynamic') {
                     scope.attributes.options.value = scope[scope.attributes.dynamicOptions.value];
                 } else {
                     scope.attributes.options.value = chartOptions;
@@ -2534,13 +2446,14 @@ dfxGCC.directive('dfxGccWebPiechart', ['$timeout', '$filter', function($timeout,
             basectrl.init(scope, element, component, attrs, 'piechart').then(function () {
                 if (scope.attributes.dynamicOptions) scope.attributes.dynamicOptions.status = "overridden";
                 scope.attributes.flex.status = "overridden";
+                scope.attributes.optionsType = scope.attributes.optionsType ? scope.attributes.optionsType : {"value": "static"};
 
                 DfxGcChartUtil.setRunTimeChartNameVariable(scope, basectrl, component, $timeout);
 
                 basectrl.bindScopeVariable(scope, component.attributes.title.value);
 
                 // dynamicOptions is a priority over all static options, title and events (ex. onclick)
-                if (scope.attributes.dynamicOptions && scope.attributes.dynamicOptions.value) {
+                if (scope.attributes.optionsType.value == 'dynamic') {
                     scope.attributes.options.value = scope[scope.attributes.dynamicOptions.value];
                 } else {
                     scope.attributes.options.value = chartOptions;
@@ -2634,13 +2547,14 @@ dfxGCC.directive('dfxGccWebDonutchart', ['$timeout', '$filter', function($timeou
             basectrl.init(scope, element, component, attrs, 'donutchart').then(function () {
                 if (scope.attributes.dynamicOptions) scope.attributes.dynamicOptions.status = "overridden";
                 scope.attributes.flex.status = "overridden";
+                scope.attributes.optionsType = scope.attributes.optionsType ? scope.attributes.optionsType : {"value": "static"};
 
                 DfxGcChartUtil.setRunTimeChartNameVariable(scope, basectrl, component, $timeout);
 
                 basectrl.bindScopeVariable(scope, component.attributes.title.value);
 
                 // dynamicOptions is a priority over all static options, title and events (ex. onclick)
-                if (scope.attributes.dynamicOptions && scope.attributes.dynamicOptions.value) {
+                if (scope.attributes.optionsType.value == 'dynamic') {
                     scope.attributes.options.value = scope[scope.attributes.dynamicOptions.value];
                 } else {
                     scope.attributes.options.value = chartOptions;
@@ -2737,13 +2651,14 @@ dfxGCC.directive('dfxGccWebLinechart', ['$timeout', '$filter', function($timeout
             basectrl.init(scope, element, component, attrs, 'linechart').then(function () {
                 if (scope.attributes.dynamicOptions) scope.attributes.dynamicOptions.status = "overridden";
                 scope.attributes.flex.status = "overridden";
+                scope.attributes.optionsType = scope.attributes.optionsType ? scope.attributes.optionsType : {"value": "static"};
 
                 DfxGcChartUtil.setRunTimeChartNameVariable(scope, basectrl, component, $timeout);
 
                 basectrl.bindScopeVariable(scope, component.attributes.title.value);
 
                 // dynamicOptions is a priority over all static options, title and events (ex. onclick)
-                if (scope.attributes.dynamicOptions && scope.attributes.dynamicOptions.value) {
+                if (scope.attributes.optionsType.value == 'dynamic') {
                     scope.attributes.options.value = scope[scope.attributes.dynamicOptions.value];
                 } else {
                     scope.attributes.options.value = chartOptions;
@@ -2833,13 +2748,14 @@ dfxGCC.directive('dfxGccWebCmlinechart', ['$timeout', '$filter', function($timeo
             basectrl.init(scope, element, component, attrs, 'cmlinechart').then(function () {
                 if (scope.attributes.dynamicOptions) scope.attributes.dynamicOptions.status = "overridden";
                 scope.attributes.flex.status = "overridden";
+                scope.attributes.optionsType = scope.attributes.optionsType ? scope.attributes.optionsType : {"value": "static"};
 
                 DfxGcChartUtil.setRunTimeChartNameVariable(scope, basectrl, component, $timeout);
 
                 basectrl.bindScopeVariable(scope, component.attributes.title.value);
 
                 // dynamicOptions is a priority over all static options, title and events (ex. onclick)
-                if (scope.attributes.dynamicOptions && scope.attributes.dynamicOptions.value) {
+                if (scope.attributes.optionsType.value == 'dynamic') {
                     scope.attributes.options.value = scope[scope.attributes.dynamicOptions.value];
                 } else {
                     scope.attributes.options.value = chartOptions;
@@ -2853,6 +2769,97 @@ dfxGCC.directive('dfxGccWebCmlinechart', ['$timeout', '$filter', function($timeo
                     };
 
                     DfxGcChartUtil.setRunTimeAttributes(scope, 'interactiveLayer', eventsList, basectrl, $timeout);
+                    DfxGcChartUtil.watchRunTimeAttributes(scope, basectrl, $timeout);
+                }
+
+                DfxGcChartUtil.adjustContainerHeight(scope);
+            });
+
+            DfxGcChartUtil.setAttributesBeforeInit(scope, attrs, chartOptions, chartData);
+        }
+    }
+}]);
+
+dfxGCC.directive('dfxGccWebAreachart', ['$timeout', '$filter', function($timeout, $filter) {
+    return {
+        restrict: 'A',
+        require: '^dfxGccWebBase',
+        scope: true,
+        link: function(scope, element, attrs, basectrl) {
+            var component = scope.getComponent(element);
+
+            var chartData    = [
+                {
+                    "key" : "North America" ,
+                    "values" : [ [ 1320033600000 , 26.672] , [ 1322629200000 , 27.297] , [ 1325307600000 , 20.174] , [ 1327986000000 , 19.631] , [ 1330491600000 , 20.366] , [ 1333166400000 , 19.284] , [ 1335758400000 , 19.157]]
+                },
+                {
+                    "key" : "Europe" ,
+                    "values" : [ [ 1320033600000 , 35.611] , [ 1322629200000 , 35.320] , [ 1325307600000 , 31.564] , [ 1327986000000 , 32.074] , [ 1330491600000 , 35.053] , [ 1333166400000 , 33.873] , [ 1335758400000 , 32.321]]
+                },
+                {
+                    "key" : "Australia" ,
+                    "values" : [ [ 1320033600000 , 5.453] , [ 1322629200000 , 7.672] , [ 1325307600000 , 8.014] , [ 1327986000000 , 0] , [ 1330491600000 , 0] , [ 1333166400000 , 0] , [ 1335758400000 , 0]]
+                }
+            ];
+            var chartOptions = {
+                chart: {
+                    type: 'stackedAreaChart',
+                    margin : {
+                        top: 20,
+                        right: 20,
+                        bottom: 50,
+                        left: 55
+                    },
+                    x: function(d){return d[0];},
+                    y: function(d){return d[1];},
+                    useVoronoi: false,
+                    clipEdge: true,
+                    duration: 100,
+                    useInteractiveGuideline: true,
+                    xAxis: {
+                        showMaxMin: false,
+                        tickFormat: function(d) {
+                            return d3.time.format('%x')(new Date(d))
+                        },
+                        axisLabel: 'X Axis'
+                    },
+                    yAxis: {
+                        tickFormat: function(d){
+                            return d3.format(',.2f')(d);
+                        }
+                    }
+                },
+                title: {
+                    text: 'Stacked Area Chart',
+                    enable: true
+                }
+            };
+
+            basectrl.init(scope, element, component, attrs, 'areachart').then(function () {
+                if (scope.attributes.dynamicOptions) scope.attributes.dynamicOptions.status = "overridden";
+                scope.attributes.flex.status = "overridden";
+                scope.attributes.optionsType = scope.attributes.optionsType ? scope.attributes.optionsType : {"value": "static"};
+
+                DfxGcChartUtil.setRunTimeChartNameVariable(scope, basectrl, component, $timeout);
+
+                basectrl.bindScopeVariable(scope, component.attributes.title.value);
+
+                // dynamicOptions is a priority over all static options, title and events (ex. onclick)
+                if (scope.attributes.optionsType.value == 'dynamic') {
+                    scope.attributes.options.value = scope[scope.attributes.dynamicOptions.value];
+                } else {
+                    scope.attributes.options.value = chartOptions;
+
+                    var eventsList = {
+                        onareaclick: 'areaClick',
+                        onareamouseover: 'areaMouseover',
+                        onareamouseleave: 'areaMouseout',
+                        onstatechange: 'stateChange',
+                        onrenderend: 'renderEnd'
+                    };
+
+                    DfxGcChartUtil.setRunTimeAttributes(scope, 'stacked', eventsList, basectrl, $timeout);
                     DfxGcChartUtil.watchRunTimeAttributes(scope, basectrl, $timeout);
                 }
 
@@ -2944,7 +2951,7 @@ dfxGCC.directive('dfxGccWebChips', ['$timeout', '$compile', function($timeout, $
                         if(scope.attributes.basicPlaceholder.value!==''){
                             basic_placeholder =  '<span ng-if="dfx_chip_placeholder.basic" ' +
                                                     'style="{{attributes.labelStyle.basic.style}}" ' +
-                                                    'class="dfx-core-gc-chips-placeholder basic-placeholder ' + 
+                                                    'class="dfx-core-gc-chips-placeholder basic-placeholder ' +
                                                     '{{attributes.labelStyle.basic.class}}">' +
                                                         '{{' + scope.attributes.basicPlaceholder.value + '}}' +
                                                 '</span>';
@@ -2961,26 +2968,26 @@ dfxGCC.directive('dfxGccWebChips', ['$timeout', '$compile', function($timeout, $
 
                         if($(element_chips).find('.dfx-core-gc-chips-placeholders').length === 0) {
                             $(element_chips).find('.md-chip-input-container').prepend(placeholders).promise().done(function(){
-                                $compile($(element_chips).find('.dfx-core-gc-chips-placeholders'))(scope);                                
+                                $compile($(element_chips).find('.dfx-core-gc-chips-placeholders'))(scope);
                             });
                         }
                     }, 0);
                 }
 
-                scope.dfxCheckChipsPlaceholders = function(index, val){   
+                scope.dfxCheckChipsPlaceholders = function(index, val){
                     if(!val){
                         scope.dfx_chip_placeholder.basic = index > 0 ? false : true;
-                        scope.dfx_chip_placeholder.following = index > 0 ? true : false;                    
+                        scope.dfx_chip_placeholder.following = index > 0 ? true : false;
                     }else{
                         scope.dfx_chip_placeholder.basic = false;
                         scope.dfx_chip_placeholder.following = false;
-                    }                 
+                    }
                 }
 
                 scope.dfxSetChipsPlaceholders = function(arr_length, buffer){
                     if($(element_chips).find('input.dfx-core-gc-chips-input').val()===''){
                         scope.dfx_chip_placeholder.basic = arr_length > 0 ? false : true;
-                        scope.dfx_chip_placeholder.following = arr_length > 0 ? true : false;                    
+                        scope.dfx_chip_placeholder.following = arr_length > 0 ? true : false;
                     }else{
                         scope.dfx_chip_placeholder.basic = false;
                         scope.dfx_chip_placeholder.following = false;
@@ -2991,11 +2998,11 @@ dfxGCC.directive('dfxGccWebChips', ['$timeout', '$compile', function($timeout, $
 
                 if(scope.attributes.binding.value==='' || scope.dfx_chips_source){
                     scope.dfxAddChipsPlaceholders();
-                }else{                    
+                }else{
                     var dfx_chips_interval = setInterval(function() {
                         if (!scope.dfx_chips_source) return;
                         clearInterval(dfx_chips_interval);
-                        scope.dfxAddChipsPlaceholders();                        
+                        scope.dfxAddChipsPlaceholders();
                     }, 10);
                 }
 
