@@ -1,0 +1,27 @@
+doctype html
+html
+	head
+		title Browser Not Supported
+		link(rel="stylesheet", type="text/css", href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,700', rel='stylesheet'")
+		link(rel="stylesheet", type="text/css", href="/css/preview/dfx.min.css", media="screen")
+	body
+		div.dfx-core-error-page
+			div.dfx-core-error-msg
+				div.dfx-core-error-msg-content
+					div(style="display:inline-block")
+						a(href="https://www.interactive-clouds.com/theproduct.html", title="DreamFace")
+							img(src="/images/df_logo_error.png")
+					div(style="display:inline-block")
+						h1 #{title}
+						p
+							span Dreamface currently supports the Chrome browser.
+						p.download
+							a(href="https://www.google.com/chrome/") Download Chrome
+			div.dfx-core-error-copyright
+				p
+					a(href="https://www.interactive-clouds.com/theproduct.html", title="DreamFace")
+						img(src="/images/df_name_browser_warning.png")
+				p
+					span Copyright &copy;&nbsp;
+					a(href="https://www.interactive-clouds.com/") Interactive Clouds
+					span , All Rights Reserved

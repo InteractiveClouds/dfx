@@ -22,8 +22,9 @@ var BasicStrategy = require('passport-http').BasicStrategy;
 var express = require('express');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
+var jade = require('jade');
 var path = require('path');
-var fs = require('fs');
+var fs = require('graceful-fs');
 var QFS = require('q-io/fs');
 var CHANNELS = require('./lib/channels').channels;
 var Q = require('q');
@@ -148,7 +149,7 @@ out.init = function ( settings ) {
         settingsErrors = [],
         obligateSETTINGS = ['auth_conf_path', 'tempDir'];
     if (SETTINGS.studio) {
-        obligateSETTINGS = obligateSETTINGS.concat(['tempDirForTemplates', 'app_build_path', 'resources_development_path']);
+        obligateSETTINGS = obligateSETTINGS.concat(['tempDirForTemplates', 'app_build_path', 'resources_development_path', 'public_dir_path']);
     } else {
         obligateSETTINGS = obligateSETTINGS.concat(['fsdb_path', 'deploy_path']);
     }
@@ -548,7 +549,7 @@ function _start () {
             watcher.getInactiveTenants().then(function(inactiveTenants) {
                 activator.getAll().then(function (tenants) {
                     if (((inactiveTenants.indexOf(tenantId) != -1) || (tenants.indexOf(tenantId) == -1)) && watcher.verifyAuthRequest(req.url)) {
-                        res.status(SETTINGS.loadBalancing.disabledRequestsStatus).send();
+                        res.status(200).send("Your tenant has been put in retired mode. Please remove and add again the DreamFace Service");
                     } else {
                         watcher.setRequestRun(tenantId);
                         res.on('finish', function () {
@@ -639,9 +640,8 @@ function _start () {
     app.use("/node_modules/codemirror", express.static(path.join(__dirname, '/node_modules/codemirror')));
     app.use("/gcontrols/web", express.static(path.join(__dirname, '/gcontrols/web')));
     app.use("/studio/studioviews", express.static(path.join(__dirname, 'public/studioviews')));
+	app.use("/commons/views", express.static(path.join(__dirname, 'public/commons/views')));
     app.use("/src/catalog", express.static(path.join(__dirname, 'src/catalog')));
-    //app.use("/studio/widget", express.static(path.join(__dirname, 'src/js/vendor')));
-    app.use("/browser_warning", express.static(path.join(__dirname, 'public', 'studioviews', 'browser_warning.html')));
     app.use(bodyParser.urlencoded({extended: true, limit:'50mb', parameterLimit:'Infinity'}));
     app.use(bodyParser.json({limit:'50mb'}));
     app.use(cookieParser());
@@ -710,7 +710,7 @@ function _start () {
 
     // Application Server Start
     console.log('------------------------------------------------------');
-    console.log('Starting DreamFace X-Platform on port %s', SETTINGS.server_port);
+	console.log('Starting DreamFace X-Platform on port %s', SETTINGS.server_port);
     console.log('v%s', version);
     console.log('Copyright (c) 2016 Interactive Clouds, Inc.');
     console.log('"DreamFace" is a trademark of Interactive Clouds, Inc.');
@@ -771,8 +771,18 @@ function isBrowserSupported(req, res) {
     var browser_name = parser.setUA(ua).getBrowser().name;
     var full_browser_version = parser.setUA(ua).getBrowser().version;
 
-    if (browser_name == 'IE' || browser_name == 'Firefox' || browser_name == 'Safari' || browser_name == 'Opera') {
-        res.redirect('/browser_warning');
+    if (browser_name == 'IE' || browser_name == 'Firefox' || browser_name == 'Opera') {
+        fs.readFile(path.join(__dirname, 'templates/studio/errors/browser-support.jade'), 'utf8', function(err, data) {
+			if (err) throw err;
+			var fn = jade.compile(data);
+			var body = fn({
+				title: "OOPS! Your browser is not supported."
+			});
+			res.setHeader('Content-Type', 'text/html');
+			res.setHeader('Content-Length', body.length);
+			res.end(body);
+		});
+		//res.redirect('/studio/studioviews/browser_warning.html');
         return false;
     } else {
         return true;

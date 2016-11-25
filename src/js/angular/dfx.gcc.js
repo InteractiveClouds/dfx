@@ -914,20 +914,28 @@ dfxGCC.directive('dfxGccWebButton', ['$timeout', '$compile', '$filter', function
                             }, 0);
                         }
                     }
-                    scope.changeWidth = function(){
-                        if(scope.attributes.notFlex.value) {
+                    scope.changeWidth = function() {
+                        if (scope.attributes.notFlex.value) {
                             $(element).css({
                                 'flex': '0',
                                 'width': 'auto',
                                 'max-width': '100%'
                             });
                             scope.attributes.flex.value = 'none';
-                        }else{
-                            $(element).css({
-                                'flex': scope.attributes.flex.value + '%',
+                        } else {
+                            $('#' + scope.component_id).css({
                                 'width': scope.attributes.flex.value + '%',
                                 'max-width': scope.attributes.flex.value + '%'
                             });
+
+                            // flex with values cannot be used in css, because if parent layout is column,
+                            // it overides the flex classes and used for button height instead of width
+                            var flex_style = $('#' + scope.component_id).css('flex');
+                            if (flex_style) {
+                                var button_style = $('#' + scope.component_id).attr('style');
+                                var button_style_no_flex = button_style.replace('flex: ' + flex_style + ';', '');
+                                $('#' + scope.component_id).attr('style', button_style_no_flex);
+                            }
                         }
                     };
                     scope.menuPosition = function(button){
@@ -1205,7 +1213,7 @@ dfxGCC.directive('dfxGccWebToolbar', function($sce, $compile, $timeout) {
                         }
                         if ( toolbarType==='iconBar' ) {
                             if ( dfxMenuItem.hasOwnProperty('waiting')) { delete dfxMenuItem.waiting; }
-                            if (dfxMenuItem.hasOwnProperty('state')){                                
+                            if (dfxMenuItem.hasOwnProperty('state')){
                                 if ( !dfxMenuItem.state.value ) {
                                     // dfxMenuItem.state = {
                                     //     "value":           false,
@@ -2863,35 +2871,19 @@ dfxGCC.directive('dfxGccWebTextarea', ['$timeout', function($timeout) {
         scope: true,
         link: function(scope, element, attrs, basectrl) {
             var component = scope.$parent.getComponent(element);
-            scope.$gcscope = scope;
             basectrl.init(scope, element, component, attrs, 'textarea').then(function(){
+                if ( !scope.attributes.hasOwnProperty('flex') ) { scope.attributes.flex = { "value": 50 }; }
+                scope.attributes.flex.status = "overridden" ;
+
+                scope.arbitrary = {"value":""};
+
                 scope.isMaxLength = function() {
                     return scope.attributes.maxlength.value ? true : false;
                 };
 
-                if ( !scope.attributes.hasOwnProperty('flex') ) { scope.attributes.flex = { "value": 50 }; }
-                scope.attributes.flex.status = "overridden" ;
-                scope.attributes.icon.status = "overridden" ;
                 scope.$watch('attributes.rowsNumber.value', function(newValue){
                     scope.attributes.rowsNumber.value = parseInt(newValue);
                 });
-                scope.$watch("$gcscope[attributes.binding.value]", function(newValue){
-                    if(scope.attributes.binding.value !== ""){
-                        var bindingString = scope.attributes.binding.value;
-                        eval("scope." + bindingString + "= newValue ;");
-                    }
-                });
-
-                basectrl.bindScopeVariable( scope, component.attributes.binding.value );
-
-                if ( typeof scope.attributes.icon === 'string' ) {
-                    var tempIcon = scope.attributes.icon;
-                    scope.attributes.icon = {
-                        "value": tempIcon,
-                        "type": scope.attributes.hasOwnProperty('iconType') ? scope.attributes.iconType : 'fa-icon'
-                    }
-                }
-                if ( !scope.attributes.icon.hasOwnProperty('size') ) { scope.attributes.icon.size = 21; }
 
                 scope.changeWidth = function(){
                     var component = angular.element(document.querySelectorAll('[id="' + scope.component_id + '"]'));//for repeatable panels
@@ -2903,7 +2895,7 @@ dfxGCC.directive('dfxGccWebTextarea', ['$timeout', function($timeout) {
     }
 }]);
 
-dfxGCC.directive('dfxGccWebChips', ['$timeout', function($timeout) {
+dfxGCC.directive('dfxGccWebChips', ['$timeout', '$compile', function($timeout, $compile) {
     return {
         restrict: 'A',
         require: '^dfxGccWebBase',
@@ -2911,36 +2903,107 @@ dfxGCC.directive('dfxGccWebChips', ['$timeout', function($timeout) {
         link: function(scope, element, attrs, basectrl) {
             var component = scope.$parent.getComponent(element);
             basectrl.init(scope, element, component, attrs, 'chips').then(function(){
-                if(!scope.attributes.hasOwnProperty('isBindEmpty')){scope.attributes.isBindEmpty = { "value": true };}
-                if(scope.attributes.hasOwnProperty('property1')){delete scope.attributes.property1;}
-                if(scope.attributes.hasOwnProperty('property2')){delete scope.attributes.property2;}
-                if(scope.attributes.hasOwnProperty('customItems')){delete scope.attributes.customItems;}
+                var element_chips = angular.element(element).find('md-chips');
 
                 scope.attributes.flex.status = "overridden" ;
-                scope.attributes.binding.status = "overridden" ;
-                scope.attributes.isBindEmpty.status = "overridden" ;
-                scope.attributes.selectedInput.status = "overridden" ;
-                scope.attributes.newItem = function(chip) {
-                    return { name: chip, type: 'unknown' };
-                };
-                scope.$watch('attributes.binding.value', function(binding){
-                    binding ? scope.attributes.isBindEmpty.value = false : scope.attributes.isBindEmpty.value = true;
-                });
-                scope.$watch('attributes.selectedInput.value', function(newValue){
-                        $timeout(function () {
-                            try{
-                                scope.chips = '#' + scope.component_id + '> div > md-chips > md-chips-wrap';
-                                $(scope.chips).css("padding-top", "8px");
-                            }catch(e){
-                                /*console.log(e.message);*/
-                            }
-                        },0);
-                    scope.attributes.isBindEmpty.status = "overridden" ;
-                });
 
-                scope.attributes.bindEmptyModel = function() {
-                    return scope.attributes.defaultArray.value;
-                };
+                scope.dfx_chip_placeholder = {
+                    'basic': true,
+                    'following': false
+                }
+
+                scope.dfxAddChipsPlaceholders = function(){
+                    $timeout(function() {
+                        var placeholders = '',
+                            basic_placeholder = ''.
+                            following_placeholder = '';
+
+                        if($(element_chips).find('input.dfx-core-gc-chips-input').val()===''){
+                            if(scope.attributes.binding.value===''){
+                                if(scope.attributes.defaultArray.value.length > 0){
+                                    scope.dfx_chip_placeholder.basic = false;
+                                    scope.dfx_chip_placeholder.following = true;
+                                }else{
+                                    scope.dfx_chip_placeholder.basic = true;
+                                    scope.dfx_chip_placeholder.following = false;
+                                }
+                            }
+                            if(scope.attributes.binding.value!==''){
+                                if(scope.dfx_chips_source.value.length > 0){
+                                    scope.dfx_chip_placeholder.basic = false;
+                                    scope.dfx_chip_placeholder.following = true;
+                                }else{
+                                    scope.dfx_chip_placeholder.basic = true;
+                                    scope.dfx_chip_placeholder.following = false;
+                                }
+                            }
+                        }else{
+                            scope.dfx_chip_placeholder.basic = false;
+                            scope.dfx_chip_placeholder.following = false;
+                        }
+                        if(scope.attributes.basicPlaceholder.value!==''){
+                            basic_placeholder =  '<span ng-if="dfx_chip_placeholder.basic" ' +
+                                                    'style="{{attributes.labelStyle.basic.style}}" ' +
+                                                    'class="dfx-core-gc-chips-placeholder basic-placeholder ' + 
+                                                    '{{attributes.labelStyle.basic.class}}">' +
+                                                        '{{' + scope.attributes.basicPlaceholder.value + '}}' +
+                                                '</span>';
+                        }
+                        if(scope.attributes.addPlaceholder.value!==''){
+                            following_placeholder =  '<span ng-if="dfx_chip_placeholder.following" ' +
+                                                        'style="{{attributes.labelStyle.following.style}}" ' +
+                                                        'class="dfx-core-gc-chips-placeholder following-placeholder ' +
+                                                        '{{attributes.labelStyle.following.class}}">' +
+                                                            '{{' + scope.attributes.addPlaceholder.value + '}}' +
+                                                    '</span>';
+                        }
+                        placeholders = '<span class="dfx-core-gc-chips-placeholders">' + basic_placeholder + following_placeholder + '</span>';
+
+                        if($(element_chips).find('.dfx-core-gc-chips-placeholders').length === 0) {
+                            $(element_chips).find('.md-chip-input-container').prepend(placeholders).promise().done(function(){
+                                $compile($(element_chips).find('.dfx-core-gc-chips-placeholders'))(scope);                                
+                            });
+                        }
+                    }, 0);
+                }
+
+                scope.dfxCheckChipsPlaceholders = function(index, val){   
+                    if(!val){
+                        scope.dfx_chip_placeholder.basic = index > 0 ? false : true;
+                        scope.dfx_chip_placeholder.following = index > 0 ? true : false;                    
+                    }else{
+                        scope.dfx_chip_placeholder.basic = false;
+                        scope.dfx_chip_placeholder.following = false;
+                    }                 
+                }
+
+                scope.dfxSetChipsPlaceholders = function(arr_length, buffer){
+                    if($(element_chips).find('input.dfx-core-gc-chips-input').val()===''){
+                        scope.dfx_chip_placeholder.basic = arr_length > 0 ? false : true;
+                        scope.dfx_chip_placeholder.following = arr_length > 0 ? true : false;                    
+                    }else{
+                        scope.dfx_chip_placeholder.basic = false;
+                        scope.dfx_chip_placeholder.following = false;
+                    }
+                }
+
+                scope.attributes.bindEmptyModel = function() { return scope.attributes.defaultArray.value; };
+
+                if(scope.attributes.binding.value==='' || scope.dfx_chips_source){
+                    scope.dfxAddChipsPlaceholders();
+                }else{                    
+                    var dfx_chips_interval = setInterval(function() {
+                        if (!scope.dfx_chips_source) return;
+                        clearInterval(dfx_chips_interval);
+                        scope.dfxAddChipsPlaceholders();                        
+                    }, 10);
+                }
+
+                scope.$watch(function (newValue) {
+                    return $(element_chips).find('md-chips-wrap').hasClass('md-readonly');
+                }, function (newValue) {
+                    if(!newValue && $(element_chips).find('.dfx-core-gc-chips-placeholders').length === 0) scope.dfxAddChipsPlaceholders();
+                });
 
                 scope.changeWidth = function(){
                     var component = angular.element(document.querySelectorAll('[id="' + scope.component_id + '"]'));//for repeatable panels
@@ -2959,63 +3022,11 @@ dfxGCC.directive('dfxGccWebSlider', ['$timeout', '$mdDialog', '$q', '$http', '$m
         scope: true,
         link: function(scope, element, attrs, basectrl) {
             var component = scope.getComponent(element);
-            scope.$gcscope = scope;
             basectrl.init(scope, element, component, attrs, 'slider').then(function(){
                 scope.dfx_is_number = angular.isNumber;
-                if(!scope.attributes.hasOwnProperty('isBindingPresent')){scope.attributes.isBindingPresent = { "value": "" };}
-                if(!scope.attributes.hasOwnProperty('dynamicPresent')){scope.attributes.dynamicPresent = { "value": false };}
-                if(!scope.attributes.hasOwnProperty('counterCheck')){scope.attributes.counterCheck = { "value": "" };}
-                if(!scope.attributes.hasOwnProperty('selectedIndex')){scope.attributes.selectedIndex = { "value": "" };}
+
                 if ( !scope.attributes.hasOwnProperty('flex') ) { scope.attributes.flex = { "value": 50 }; }
-                scope.attributes.binding.status = "overridden";
-                scope.attributes.isBindingPresent.status = "overridden";
                 scope.attributes.flex.status = "overridden";
-                if(scope.attributes.isBindingPresent.value){
-                    if(scope.$gcscope[scope.attributes.binding.value] instanceof Array){
-                        for(var i = 0; i < scope.$gcscope[scope.attributes.binding.value].length; i++){
-                            if(!isNaN(scope.$gcscope[scope.attributes.binding.value][i][scope.attributes.displayValue.value])){
-                                scope.$gcscope[scope.attributes.binding.value][i][scope.attributes.displayValue.value] = parseInt(scope.$gcscope[scope.attributes.binding.value][i][scope.attributes.displayValue.value]);
-                            }else{
-                                /*console.log('Values should be numeric.');*/
-                                break;
-                            }
-                        }
-                    }else{
-                        /*console.log('Binding data should be an array.');*/
-                    }
-                }
-
-                if(scope.attributes.inputVisible.value === ""){
-                    scope.attributes.inputVisible.value = "true";
-                    scope.attributes.discrete.value = false;
-                    scope.attributes.selectedIndex.value = 0;
-                    scope.attributes.counterCheck.value = 1;
-                    scope.attributes.isBindingPresent.value = false;
-                }
-
-                scope.$watch('attributes.selectedIndex.value', function(newValue){
-                    scope.attributes.selectedIndex.status = "overridden";
-                    scope.attributes.selectedIndex.value = parseInt(newValue);
-                });
-
-                scope.$watch('attributes.binding.value', function(newValue){
-                    if(newValue){
-                        scope.attributes.isBindingPresent.value = true;
-                    }else{
-                        scope.attributes.isBindingPresent.value = false;
-                    }
-                });
-
-                scope.$watch('attributes.source.value', function(newValue){
-                    if(newValue){
-                        scope.attributes.dynamicPresent.value = true;
-                    }else{
-                        scope.attributes.dynamicPresent.value = false;
-                    }
-                });
-
-                basectrl.bindScopeVariable(scope, component.attributes.binding.value);
-                basectrl.bindScopeVariable(scope, component.attributes.source.value);
 
                 scope.getStaticItems = function() {
                     return scope.attributes.slidersArray.value;
@@ -3026,6 +3037,7 @@ dfxGCC.directive('dfxGccWebSlider', ['$timeout', '$mdDialog', '$q', '$http', '$m
                     component.css('width', scope.attributes.flex.value + '%');
                 };
                 scope.changeWidth();
+
                 for (var i = 0; i < scope.attributes.slidersArray.value.length; i++) {
                     if(scope.attributes.slidersArray.value[i].hasOwnProperty('temp_value')) delete scope.attributes.slidersArray.value[i].temp_value;
                     if(!isNaN(scope.attributes.slidersArray.value[i].value)) scope.attributes.slidersArray.value[i].value = parseFloat(scope.attributes.slidersArray.value[i].value);
@@ -4380,9 +4392,9 @@ dfxGCC.directive('dfxGccWebTabs', ['$timeout', '$compile', function($timeout, $c
 
                 scope.collapsePanelContent = function(ev, dfxIndex){
                     var toggle_btn_id = ev.target.id,
-                        toggle_btn = $('#'+toggle_btn_id),
+                        toggle_btn = $(element).find('#'+toggle_btn_id),
                         collapse_cont_id = toggle_btn_id.replace('toggling_', '');
-                    var collapse_container = $('#'+collapse_cont_id);
+                    var collapse_container = $(element).find('#'+collapse_cont_id);
                     if(collapse_container.hasClass('ng-hide')) collapse_container.css('display', 'none').removeClass('ng-hide');
                     toggle_btn.toggleClass('dfx-expanded');
                     collapse_container.slideToggle();
@@ -4584,12 +4596,11 @@ dfxGCC.directive('dfxGccWebWizard', ['$mdDialog', '$timeout', '$compile', functi
                         scope.attributes.percentage.value = Math.round(scope.attributes.percentage.value);
                     },0);
                 };
-
                 scope.collapsePanelContent = function(ev, dfxIndex){
                     var toggle_btn_id = ev.target.id,
-                        toggle_btn = $('#'+toggle_btn_id),
+                        toggle_btn = $(element).find('#'+toggle_btn_id),
                         collapse_cont_id = toggle_btn_id.replace('toggling_', '');
-                    var collapse_container = $('#'+collapse_cont_id);
+                    var collapse_container = $(element).find('#'+collapse_cont_id);
                     if(collapse_container.hasClass('ng-hide')) collapse_container.css('display', 'none').removeClass('ng-hide');
                     toggle_btn.toggleClass('dfx-expanded');
                     collapse_container.slideToggle();
