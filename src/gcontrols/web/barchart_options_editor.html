@@ -1,5 +1,5 @@
 <md-dialog id="dfx-ve-menu-editor-dialog" aria-label="textarea" ng-cloak tabindex="0">
-    <form>
+    <form ng-submit="closeDialog()">
         <md-toolbar>
             <div class="md-toolbar-tools">
                 <h2>Options editor</h2>
@@ -109,7 +109,7 @@
         </md-dialog-content>
         <div class="md-actions">
             <md-button ng-show="attributes.optionsType.value === 'dynamic'" ng-click="showSamples()" id="samples-btn" class="md-primary">Samples</md-button>
-            <md-button ng-click="closeDialog()" class="md-primary">Close</md-button>
+            <md-button type="submit" class="md-primary">Close</md-button>
         </div>
     </form>
 </md-dialog>
