@@ -1,116 +1,118 @@
 (function(){
-
     authRequest.initToken()
-    .then(function(){
-        return getUserDefinitionAndRedirect();
-    })
-    .fail(function(error){
-        authRequest.removeToken();
-        sessionStorage.setItem('applicationToken', '');
+        .then(function(){
+            return getUserDefinitionAndRedirect();
+        })
+        .fail(function(error){
+            authRequest.removeToken();
+            sessionStorage.setItem('applicationToken', '');
 
-        var $form     = $('#loginForm'),
-            $username = $('#username'),
-            $password = $('#password');
+            var $form     = $('#loginForm'),
+                $username = $('#username'),
+                $password = $('#password');
 
-        var rawToken = '';
+            var rawToken = '';
 
-        $form.submit(function(e){
+            $.get(sessionStorage.dfx_server + '/app/allowGuestSession/' + sessionStorage.dfx_tenantid + '/' + sessionStorage.dfx_appname).then(function(result){
+                if (result) {
+                    $('body').hide();
+                    $username.val("guest");
+                    $password.val("guest");
+                    $form.submit();
+                } else {
+                    $('body').show();
+                }
+            });
 
-            e.preventDefault();
 
-            var username = $username.val(),
-                password = $password.val(),
-                D = $.Deferred();
+            $form.submit(function(e){
+                if (e.isTrigger) {
+                    e.preventDefault();
 
-            (function(){
-                return rawToken
-                    ? D.resolve(rawToken)
-                    : $.post(
+                    var username = $username.val(),
+                        password = $password.val(),
+                        D = $.Deferred();
+
+                    (function () {
+                        return rawToken
+                            ? D.resolve(rawToken)
+                            : $.post(
                             sessionStorage.dfx_server + '/app/login',
                             {
-                                tenantid  : sessionStorage.dfx_tenantid,
-                                appid     : sessionStorage.dfx_appname,
-                                ispreview : sessionStorage.dfx_ispreview,
-                                userid    : username
+                                tenantid: sessionStorage.dfx_tenantid,
+                                appid: sessionStorage.dfx_appname,
+                                ispreview: sessionStorage.dfx_ispreview,
+                                userid: username
                             }
                         ).then(
-                            function(answer){
-
-                                if ( !answer.result ) {
+                            function (answer) {
+                                if (!answer.result) {
                                     return D.reject('no result in server response');
                                 }
 
-                                if ( answer.result === 'failed' ) {
+                                if (answer.result === 'failed') {
                                     return D.reject('unknown user or wrong password');
                                 }
 
                                 rawToken = answer.data;
 
                                 return D.resolve(rawToken);
-                            },
-                            function(error){
-                                return $.Deferred().reject(error);
                             }
                         );
 
-            })()
-            .then(function(rawToken){
+                    })()
+                        .then(function (rawToken) {
 
-                var token = rawToken.type === 'default'
-                    ? decryptToken(rawToken.token, password)
-                    : rawToken.token; // type === 'plain'
+                            var token = rawToken.type === 'default'
+                                ? decryptToken(rawToken.token, password)
+                                : rawToken.token; // type === 'plain'
 
-                if ( !token ) {
-                    return $.Deferred().reject('unknown user or wrong password');
+                            if (!token) {
+                                return $.Deferred().reject('unknown user or wrong password');
+                            }
+
+                            $username.val('');
+                            $password.val('');
+
+                            sessionStorage.setItem('applicationToken', token);
+
+                            return authRequest
+                                .initToken(token)
+                                .then(getUserDefinitionAndRedirect)
+                        })
+                        .fail(function (message) {
+                            $username.val('');
+                            $password.val('');
+                            $username.focus();
+                            $username.val(JSON.stringify(message));
+                            if ((message) && (typeof message !== 'object')) {
+                                alert(message);
+                            }
+                        })
                 }
+            });
 
-                $username.val('');
-                $password.val('');
-
-                sessionStorage.setItem('applicationToken', token);
-
-                return authRequest
-                    .initToken(token)
-                    .then(getUserDefinitionAndRedirect)
-            })
-            .fail(function(message){
-                $username.val('');
-                $password.val('');
-                $username.focus();
-                $username.val(JSON.stringify(message));
-                if ( message ) {
-                    alert(message);
-                }
-            })
-        });
-
-        if ( getUrlParameter('login') === 'guest' ) {
-            $username.val('guest');
-            $password.val('guest');
-            $form.submit();
-        } else {
             var cached_username = window.localStorage.getItem('DFX_ve_login_userid');
             if (cached_username!=null && cached_username!='') {
-              $username.val(cached_username);
-              $password.val(window.localStorage.getItem('DFX_ve_login_password'));
-              $form.submit();
+                $username.val(cached_username);
+                $password.val(window.localStorage.getItem('DFX_ve_login_password'));
+                $form.submit();
             }
-        }
 
-        function decryptToken ( raw, pass ) {
+            function decryptToken ( raw, pass ) {
 
-            var token = '';
+                var token = '';
 
-            try {
-                token = CryptoJS.TripleDES
-                    .decrypt(raw, pass)
-                    .toString(CryptoJS.enc.Utf8)
+                try {
+                    token = CryptoJS.TripleDES
+                        .decrypt(raw, pass)
+                        .toString(CryptoJS.enc.Utf8)
 
-            } catch (e) {}
+                } catch (e) {}
 
-            return token;
-        }
-    })
+                return token;
+            }
+        })
 
     function getUserDefinitionAndRedirect () {
         return authRequest({
