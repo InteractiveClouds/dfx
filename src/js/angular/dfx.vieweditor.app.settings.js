@@ -47,7 +47,7 @@ var DfxViewEditorSettings = (function() {
             api.loadViewSettingsMenu($scope, $compile);
             api.closeViewSettingsMenu();
 
-            setWorkspaceSize(view_settings);
+            api.setWorkspaceSize(view_settings);
             api.toggleRuler(view_settings);
             api.togglePanels(view_settings);
             api.detachOrAttachPanels(view_settings);
@@ -120,11 +120,12 @@ var DfxViewEditorSettings = (function() {
         $('#dfx-ve-settings-menu').hide();
     };
 
-    var setWorkspaceSize = function(view_settings) {
-        var width = view_settings.width,
+    api.setWorkspaceSize = function(view_settings) {
+        var view_settings = view_settings ? view_settings : getViewSettings(),
+            width = view_settings.width,
             height = view_settings.height;
 
-        var workspace_container = angular.element(document.querySelectorAll('[md-selected="view_card_select_index"]'));
+        var workspace_container = $('#dfx-ve-main-content > md-tabs');
 
         if (!width || width == "0") {
             workspace_container.css('overflow', 'initial');
@@ -151,7 +152,7 @@ var DfxViewEditorSettings = (function() {
         })
         .then(function(workspace) {
             var view_settings = {'width': workspace.width, 'height': workspace.height};
-            setWorkspaceSize(view_settings);
+            api.setWorkspaceSize(view_settings);
             setViewSettings(view_settings);
         }, function() {
             // do nothing

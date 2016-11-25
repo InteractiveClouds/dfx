@@ -962,6 +962,9 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     $scope.closeViewSettingsMenu = function() {
         DfxViewEditorSettings.closeViewSettingsMenu();
     };
+    $scope.setWorkspaceSize = function($event) {
+        DfxViewEditorSettings.setWorkspaceSize();
+    };
     $scope.changeCanvasSize = function($event) {
         DfxViewEditorSettings.changeCanvasSize($scope, $mdDialog, $event);
     };

@@ -38,7 +38,7 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", dfx-ve-ctr
                     img(src="/images/vb/icons/cards_add.png", ng-show="design_visible", class="dfx-ve-toolbar-icon", ng-click="addCard($event)", title="Add a new card")
                     img(src="/images/vb/icons/cards_subtract.png", ng-show="design_visible", class="dfx-ve-toolbar-icon", ng-click="removeCard($event)", title="Remove the current card")
                 span(style="font-size: 12px;margin-left: 1px;background: #4a4a4a;line-height: 48px;color: #fff;padding: 0 8px;border-left: 1px #6b6a6a solid;border-right: 1px #6b6a6a solid;", ng-show="design_visible")
-                    span(style="margin-right:5px") Workspace:
+                    span(style="margin-right:5px") Settings:
                     img#dfx-ve-workspace-menu-icon(src="/images/vb/icons/preview_global.png", ng-show="design_visible", class="dfx-ve-toolbar-icon", ng-click="loadViewSettingsMenu($event)", title="View Settings")
                 span(style="font-size: 12px;margin-left: 1px;background: #4a4a4a;line-height: 48px;color: #fff;padding: 0 8px;border-left: 1px #6b6a6a solid;border-right: 1px #6b6a6a solid;", ng-show="script_visible")
                     span(style="margin-right:5px") Script:
@@ -177,7 +177,7 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", dfx-ve-ctr
                                 ul.dfx-ve-palette-treeview-content(gc-cat="custom", style="margin-bottom:5px")
             md-content#dfx-ve-main-content(flex="100", ng-click="unselectComponent()")
                 md-tabs.md-dynamic-height(layout="column", md-selected="view_card_select_index")
-                    md-tab(ng-repeat="card in view_cards", label="{{card.name}}")
+                    md-tab(ng-repeat="card in view_cards", md-on-select="setWorkspaceSize()", label="{{card.name}}")
                         md-content.dfx-ve-main-content-tab-content(style="padding:10px;background-color:#efefef;", layout="row", layout-align="center start")
                             div#dfx-ve-platform(layout="column", style="height:100%;", dfx-ve-platform)
                                 div(id="dfx_visual_editor_workspace_{{card.name}}", dfx-card="{{card.name}}", dfx-ve-workspace, style="overflow:auto", flex="100", layout="column")
