@@ -26,70 +26,68 @@
 
 
             $form.submit(function(e){
-                if (e.isTrigger) {
-                    e.preventDefault();
+                e.preventDefault();
 
-                    var username = $username.val(),
-                        password = $password.val(),
-                        D = $.Deferred();
+                var username = $username.val(),
+                    password = $password.val(),
+                    D = $.Deferred();
 
-                    (function () {
-                        return rawToken
-                            ? D.resolve(rawToken)
-                            : $.post(
-                            sessionStorage.dfx_server + '/app/login',
-                            {
-                                tenantid: sessionStorage.dfx_tenantid,
-                                appid: sessionStorage.dfx_appname,
-                                ispreview: sessionStorage.dfx_ispreview,
-                                userid: username
-                            }
-                        ).then(
-                            function (answer) {
-                                if (!answer.result) {
-                                    return D.reject('no result in server response');
-                                }
-
-                                if (answer.result === 'failed') {
-                                    return D.reject('unknown user or wrong password');
-                                }
-
-                                rawToken = answer.data;
-
-                                return D.resolve(rawToken);
-                            }
-                        );
-
-                    })()
-                        .then(function (rawToken) {
-
-                            var token = rawToken.type === 'default'
-                                ? decryptToken(rawToken.token, password)
-                                : rawToken.token; // type === 'plain'
-
-                            if (!token) {
-                                return $.Deferred().reject('unknown user or wrong password');
+                (function () {
+                    return rawToken
+                        ? D.resolve(rawToken)
+                        : $.post(
+                        sessionStorage.dfx_server + '/app/login',
+                        {
+                            tenantid: sessionStorage.dfx_tenantid,
+                            appid: sessionStorage.dfx_appname,
+                            ispreview: sessionStorage.dfx_ispreview,
+                            userid: username
+                        }
+                    ).then(
+                        function (answer) {
+                            if (!answer.result) {
+                                return D.reject('no result in server response');
                             }
 
-                            $username.val('');
-                            $password.val('');
-
-                            sessionStorage.setItem('applicationToken', token);
-
-                            return authRequest
-                                .initToken(token)
-                                .then(getUserDefinitionAndRedirect)
-                        })
-                        .fail(function (message) {
-                            $username.val('');
-                            $password.val('');
-                            $username.focus();
-                            $username.val(JSON.stringify(message));
-                            if ((message) && (typeof message !== 'object')) {
-                                alert(message);
+                            if (answer.result === 'failed') {
+                                return D.reject('unknown user or wrong password');
                             }
-                        })
-                }
+
+                            rawToken = answer.data;
+
+                            return D.resolve(rawToken);
+                        }
+                    );
+
+                })()
+                    .then(function (rawToken) {
+
+                        var token = rawToken.type === 'default'
+                            ? decryptToken(rawToken.token, password)
+                            : rawToken.token; // type === 'plain'
+
+                        if (!token) {
+                            return $.Deferred().reject('unknown user or wrong password');
+                        }
+
+                        $username.val('');
+                        $password.val('');
+
+                        sessionStorage.setItem('applicationToken', token);
+
+                        return authRequest
+                            .initToken(token)
+                            .then(getUserDefinitionAndRedirect)
+                    })
+                    .fail(function (message) {
+                        $username.val('');
+                        $password.val('');
+                        $username.focus();
+                        $username.val(JSON.stringify(message));
+                        if ((message) && (typeof message !== 'object')) {
+                            alert(message);
+                        }
+                    })
             });
 
             var cached_username = window.localStorage.getItem('DFX_ve_login_userid');
