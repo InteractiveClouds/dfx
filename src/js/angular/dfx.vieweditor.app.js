@@ -954,7 +954,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     }
 
     // View workspace settings - START
-    DfxViewEditorSettings.setWorkspaceSize($scope);
+    DfxViewEditorSettings.init($scope, $compile, $interval);
 
     $scope.loadViewSettingsMenu = function($event) {
         DfxViewEditorSettings.loadViewSettingsMenu($scope, $compile, $event);
@@ -971,11 +971,11 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     $scope.togglePanels = function($event) {
         DfxViewEditorSettings.togglePanels();
     };
-    $scope.detachPanels = function($event) {
-        DfxViewEditorSettings.detachPanels();
+    $scope.detachOrAttachPanels = function($event) {
+        DfxViewEditorSettings.detachOrAttachPanels();
     };
-    $scope.minimizePanel = function(panel_id) {
-        DfxViewEditorSettings.minimizePanel(panel_id);
+    $scope.minimizeOrMaximizePanel = function(panel_id) {
+        DfxViewEditorSettings.minimizeOrMaximizePanel(panel_id);
     };
     $scope.closePanel = function(panel_id) {
         DfxViewEditorSettings.closePanel(panel_id);
