@@ -1,0 +1,115 @@
+<md-dialog id="dfx-ve-menu-editor-dialog" aria-label="textarea" ng-cloak tabindex="0">
+    <form ng-submit="closeDialog()">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Options editor</h2>
+            </div>
+        </md-toolbar>
+        <md-dialog-content id="{{component_id}}_md_dialog" layout="column" style="max-width:880px;max-height:810px;width:880px;height:400px;margin:0px;">
+           <md-radio-group ng-model="attributes.optionsType.value" ng-change="setOptionsType(attributes.optionsType.value);focusSamples(attributes.optionsType.value);" class="dfx-ve-options-editor-radio-group">
+              <md-radio-button class="dfx-ve-options-editor-radio-button md-primary" value="static" aria-label="Static options">Static options</md-radio-button>
+              <md-radio-button class="dfx-ve-options-editor-radio-button md-primary" value="dynamic" aria-label="Dynamic options">Dynamic options</md-radio-button>
+            </md-radio-group>
+
+            <div ng-show="attributes.optionsType.value === 'static'" style="padding:8px;">
+                <section id="{{component_id}}_static_properties" class="md-whiteframe-1dp" style="border-radius:4px;overflow:hidden;">
+                    <md-toolbar style="min-height:36px;background:rgba(128,128,128,0.46);">
+                        <div class="md-toolbar-tools" style="height:36px;max-height:36px">
+                            <h3 style="font-size:16px;">Choose variables from scope</h3>
+                        </div>
+                    </md-toolbar>
+                    <md-content layout-padding flex style="">
+                        <div class="dfx-ve-property-treeview hover clearfix" style="padding:8px 16px 12px 12px;margin:0 -8px;width:65%;">
+                            <ul class="dfx-ve-property-picker-content" style="margin:0;padding:0">
+                                <li class="col-md-12">
+                                    <span class="col-md-4">Sunbeam Labels:</span>
+                                    <div class="col-md-8" layout="row">
+                                        <input class="col-md-12" type="text" ng-model="attributes.options.labelSunbeamLayout" ng-change="overrideAttribute('options.labelSunbeamLayout')" style="margin-left:-15px;"/>
+                                        <dfx-ve-menu-expression></dfx-ve-menu-expression>
+                                    </div>
+                                </li>
+                                <li class="col-md-12">
+                                    <span class="col-md-4">Label Threshold:</span>
+                                    <div class="col-md-8" layout="row">
+                                        <input class="col-md-12" type="text" ng-model="attributes.options.labelThreshold" ng-change="overrideAttribute('options.labelThreshold')" style="margin-left:-15px;"/>
+                                        <dfx-ve-menu-expression></dfx-ve-menu-expression>
+                                    </div>
+                                </li>
+                                <li class="col-md-12">
+                                    <span class="col-md-4">Labels Outside:</span>
+                                    <div class="col-md-8" layout="row">
+                                        <input class="col-md-12" type="text" ng-model="attributes.options.donutLabelsOutside" ng-change="overrideAttribute('options.donutLabelsOutside')" style="margin-left:-15px;"/>
+                                        <dfx-ve-menu-expression></dfx-ve-menu-expression>
+                                    </div>
+                                </li>
+                                <li class="col-md-12">
+                                    <span class="col-md-4">Show Labels:</span>
+                                    <div class="col-md-8" layout="row">
+                                        <input class="col-md-12" type="text" ng-model="attributes.options.showLabels" ng-change="overrideAttribute('options.showLabels')" style="margin-left:-15px;"/>
+                                        <dfx-ve-menu-expression></dfx-ve-menu-expression>
+                                    </div>
+                                </li>
+                                <li class="col-md-12">
+                                    <span class="col-md-4">Show Legend:</span>
+                                    <div class="col-md-8" layout="row">
+                                        <input class="col-md-12" type="text" ng-model="attributes.options.showLegend" ng-change="overrideAttribute('options.showLegend')" style="margin-left:-15px;"/>
+                                        <dfx-ve-menu-expression></dfx-ve-menu-expression>
+                                    </div>
+                                </li>
+                                <li class="col-md-12">
+                                    <span class="col-md-4">Donut Ratio:</span>
+                                    <div class="col-md-8" layout="row">
+                                        <input class="col-md-12" type="text" ng-model="attributes.options.donutRatio" ng-change="overrideAttribute('options.donutRatio')" style="margin-left:-15px;"/>
+                                        <dfx-ve-menu-expression></dfx-ve-menu-expression>
+                                    </div>
+                                </li>
+                                <li class="col-md-12">
+                                    <span class="col-md-4">Corner Radius:</span>
+                                    <div class="col-md-8" layout="row">
+                                        <input class="col-md-12" type="text" ng-model="attributes.options.cornerRadius" ng-change="overrideAttribute('options.cornerRadius')" style="margin-left:-15px;"/>
+                                        <dfx-ve-menu-expression></dfx-ve-menu-expression>
+                                    </div>
+                                </li>
+                                <li class="col-md-12">
+                                    <span class="col-md-4">Grow On Hover:</span>
+                                    <div class="col-md-8" layout="row">
+                                        <input class="col-md-12" type="text" ng-model="attributes.options.growOnHover" ng-change="overrideAttribute('options.growOnHover')" style="margin-left:-15px;"/>
+                                        <dfx-ve-menu-expression></dfx-ve-menu-expression>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </md-content>
+                </section>
+            </div>
+
+            <div ng-show="attributes.optionsType.value === 'dynamic'" style="padding:8px;">
+                <section id="{{component_id}}_dynamic_properties" class="md-whiteframe-1dp" style="border-radius:4px;overflow:hidden;">
+                    <md-toolbar style="min-height:36px;background:rgba(128,128,128,0.46);">
+                        <div class="md-toolbar-tools" style="height:36px;max-height:36px">
+                            <h3 style="font-size:16px;">Choose variables from scope</h3>
+                        </div>
+                    </md-toolbar>
+                    <md-content layout-padding flex style="">
+                        <div class="dfx-ve-property-treeview hover clearfix" style="padding:8px 16px 12px 12px;margin:0 -8px;width:65%;">
+                            <ul class="dfx-ve-property-picker-content" style="margin:0;padding:0">
+                                <li class="col-md-12">
+                                    <span class="col-md-4">Scope options variable:</span>
+                                    <div class="col-md-8" layout="row">
+                                        <input class="col-md-12" type="text" ng-model="attributes.dynamicOptions.value" ng-change="overrideAttribute('dynamicOptions')" style="margin-left:-15px;"/>
+                                        <dfx-ve-menu-expression></dfx-ve-menu-expression>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </md-content>
+                </section>
+            </div>
+            <div class="second-dialog-box"></div>
+        </md-dialog-content>
+        <div class="md-actions">
+            <md-button ng-show="attributes.optionsType.value === 'dynamic'" ng-click="showSamples()" id="samples-btn" class="md-primary">Samples</md-button>
+            <md-button type="submit" class="md-primary">Close</md-button>
+        </div>
+    </form>
+</md-dialog>

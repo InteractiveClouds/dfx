@@ -1910,7 +1910,7 @@ var DfxGcChartUtil = (function () {
     var removeBracketsFromEventListener = function(eventListener) {
         return (eventListener) ? eventListener.replace(/\(.*?\)/g, "") : eventListener;
     };
-    var refreshChartToReflectFlexSize = function(scope, isDesignTime, basectrl, $timeout, oldFlexValue) {
+    var refreshChartToReflectFlexSize = function(scope, basectrl, $timeout, oldFlexValue) {
           $timeout(function() {
               if (scope[scope.attributes.name.value].refresh) {
                   oldFlexValue = oldFlexValue || 100;
@@ -2028,7 +2028,7 @@ var DfxGcChartUtil = (function () {
         assignEvent('onareamouseleave', specificDispatch);
         scope.attributes.options.value.chart[chartTypeDef] = { dispatch: specificDispatch };
 
-        refreshChartToReflectFlexSize(scope, false, basectrl, $timeout);
+        refreshChartToReflectFlexSize(scope, basectrl, $timeout);
     };
     api.setRunTimeChartNameVariable = function (scope, basectrl, component, $timeout) {
         $timeout(function() {
@@ -2071,7 +2071,7 @@ var DfxGcChartUtil = (function () {
         if (scope.attributes.options.showValues) {
             scope.$gcscope.$watch(scope.attributes.options.showValues, function (newValue, oldValue) {
                 scope.attributes.options.value.chart.showValues = newValue;
-                refreshChartToReflectFlexSize(scope, false, basectrl, $timeout, oldValue);
+                refreshChartToReflectFlexSize(scope, basectrl, $timeout, oldValue);
             });
         }
         if (scope.attributes.options.showXAxis) {
@@ -2085,31 +2085,31 @@ var DfxGcChartUtil = (function () {
         if (scope.attributes.options.showControls) {
             scope.$gcscope.$watch(scope.attributes.options.showControls, function (newValue, oldValue) {
                 scope.attributes.options.value.chart.showControls = newValue;
-                refreshChartToReflectFlexSize(scope, false, basectrl, $timeout, oldValue);
+                refreshChartToReflectFlexSize(scope, basectrl, $timeout, oldValue);
             });
         }
         if (scope.attributes.options.showLegend) {
             scope.$gcscope.$watch(scope.attributes.options.showLegend, function (newValue, oldValue) {
                 scope.attributes.options.value.chart.showLegend = newValue;
-                refreshChartToReflectFlexSize(scope, false, basectrl, $timeout, oldValue);
+                refreshChartToReflectFlexSize(scope, basectrl, $timeout, oldValue);
             });
         }
         if (scope.attributes.options.stacked) {
             scope.$gcscope.$watch(scope.attributes.options.stacked, function (newValue, oldValue) {
                 scope.attributes.options.value.chart.stacked = newValue;
-                refreshChartToReflectFlexSize(scope, false, basectrl, $timeout, oldValue);
+                refreshChartToReflectFlexSize(scope, basectrl, $timeout, oldValue);
             });
         }
         if (scope.attributes.options.useInteractiveGuideline) {
             scope.$gcscope.$watch(scope.attributes.options.useInteractiveGuideline, function (newValue, oldValue) {
                 scope.attributes.options.value.chart.useInteractiveGuideline = newValue;
-                refreshChartToReflectFlexSize(scope, false, basectrl, $timeout, oldValue);
+                refreshChartToReflectFlexSize(scope, basectrl, $timeout, oldValue);
             });
         }
         if (scope.attributes.options.rescaleY) {
             scope.$gcscope.$watch(scope.attributes.options.rescaleY, function (newValue, oldValue) {
                 scope.attributes.options.value.chart.rescaleY = newValue;
-                refreshChartToReflectFlexSize(scope, false, basectrl, $timeout, oldValue);
+                refreshChartToReflectFlexSize(scope, basectrl, $timeout, oldValue);
             });
         }
         if (scope.attributes.options.labelSunbeamLayout) {
