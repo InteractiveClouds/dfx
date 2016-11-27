@@ -953,7 +953,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
         });
     }
 
-    // View workspace settings - START
+    // Facade for view workspace settings - START
     DfxViewEditorSettings.init($scope, $compile, $interval);
 
     $scope.loadViewSettingsMenu = function($event) {
@@ -961,6 +961,9 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     };
     $scope.closeViewSettingsMenu = function() {
         DfxViewEditorSettings.closeViewSettingsMenu();
+    };
+    $scope.closeViewSettingsPanelsMenu = function() {
+        DfxViewEditorSettings.closeViewSettingsPanelsMenu();
     };
     $scope.setWorkspaceSize = function($event) {
         DfxViewEditorSettings.setWorkspaceSize();
@@ -971,11 +974,11 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     $scope.toggleRuler = function($event) {
         DfxViewEditorSettings.toggleRuler();
     };
-    $scope.togglePanels = function($event) {
-        DfxViewEditorSettings.togglePanels();
+    $scope.togglePanel = function(panel_id) {
+        DfxViewEditorSettings.togglePanel(panel_id);
     };
-    $scope.detachOrAttachPanels = function($event) {
-        DfxViewEditorSettings.detachOrAttachPanels();
+    $scope.detachOrAttachPanel = function(panel_id) {
+        DfxViewEditorSettings.detachOrAttachPanel(panel_id);
     };
     $scope.minimizeOrMaximizePanel = function(panel_id) {
         DfxViewEditorSettings.minimizeOrMaximizePanel(panel_id);
@@ -983,7 +986,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     $scope.closePanel = function(panel_id) {
         DfxViewEditorSettings.closePanel(panel_id);
     };
-    // View workspace settings - END
+    // Facade for view workspace settings - END
 
     var platform = $('#dfx_visual_editor').attr('platform');
     $('.dfx_visual_editor_gc_cat_item').empty();
