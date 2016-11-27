@@ -20,8 +20,8 @@ var DfxViewEditorSettings = (function() {
             'minimize_dfx-ve-sidenav-right': false,
 
             'left_dfx-ve-sidenav-left': -1,
-            'top_dfx-ve-sidenav-right': -1,
-            'left_dfx-ve-sidenav-left': -1,
+            'top_dfx-ve-sidenav-left': -1,
+            'left_dfx-ve-sidenav-right': -1,
             'top_dfx-ve-sidenav-right': -1,
 
             'height_dfx-ve-sidenav-left': -1,
@@ -313,17 +313,36 @@ var DfxViewEditorSettings = (function() {
             stop: handleDragStop
         });
     };
+    var wasPanelMoved = function(panel_id) {
+        var view_settings = getViewSettings(),
+            left_settings_key = 'left_' + panel_id;
+
+        return (view_settings[left_settings_key] && view_settings[left_settings_key] !== -1) ? true : false;
+    };
     var setPanelPosition = function(panel_id) {
         var view_settings = getViewSettings(),
             dfx_panel = $('#' + panel_id),
+            panel_info = getPanelInfoById(panel_id),
             left_settings_key = 'left_' + panel_id,
             top_settings_key = 'top_' + panel_id;
 
-        if (isPanelDetached(dfx_panel) && view_settings[left_settings_key] && view_settings[left_settings_key] !== -1) {
+        if (isPanelDetached(dfx_panel) && wasPanelMoved(panel_id)) {
             dfx_panel.css('left', view_settings[left_settings_key] + 'px');
             dfx_panel.css('top', view_settings[top_settings_key] + 'px');
+        } else if (isPanelDetached(dfx_panel) && !wasPanelMoved(panel_id)) {
+            var panel_left = 'auto';
+            var panel_right = 'auto';
+            if (panel_info.name == 'palette') {
+                panel_left = '20px';
+            } else if (panel_info.name == 'property') {
+                panel_right = '20px';
+            }
+            dfx_panel.css('left', panel_left);
+            dfx_panel.css('right', panel_right);
+            dfx_panel.css('top', '90px');
         } else if (!isPanelDetached(dfx_panel)) {
             dfx_panel.css('left', 'initial');
+            dfx_panel.css('right', 'initial');
             dfx_panel.css('top', 'initial');
             dfx_panel.css('position', 'relative');
         }
