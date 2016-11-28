@@ -39,38 +39,17 @@ var authRequest =  (function(){
      */
     const
         TOKENS = 'DFX_app_tokens',
-        FAKE   = 'fake';
-
-
-    var _localStorage_getItem = localStorage.getItem.bind(localStorage),
-        _localStorage_setItem = localStorage.setItem.bind(localStorage);
-
-    localStorage.getItem = function (param) {
-        return param === TOKENS ? FAKE : _localStorage_getItem(param);
-    };
-    localStorage.setItem = function (param, value) {
-        return param !== TOKENS && _localStorage_setItem(param, value);
-    };
-
-    Object.defineProperty(localStorage, TOKENS, {
-        get : function () { return FAKE},
-        set : function (value) {}
-    });
+        FAKE   = '{}';
 
     try {
         tenant = sessionStorage.dfx_tenantid;
-        token = JSON.parse(_localStorage_getItem(TOKENS))[tenant];
+        token = JSON.parse(localStorage.getItem(TOKENS))[tenant];
     } catch (e) {
         console.log('authRequest. first attempt to init is failed.');
     };
 
-    // TODO
-    // window.addEventListener('storage', function(e) {
-    //     console.log('HACKER GOT THE TOKEN : ', e.oldValue, e.newValue );
-    // });
 
-
-    setRefreshTokenTimeuot();
+    setRefreshTokenTimeout();
 
 
     function sign ( o ) {
@@ -138,9 +117,9 @@ var authRequest =  (function(){
         } else {
             token.callsLeft--;
 
-            tokens = JSON.parse(_localStorage_getItem(TOKENS)) || {};
+            tokens = JSON.parse(localStorage.getItem(TOKENS)) || {};
             tokens[tenant] = token;
-            _localStorage_setItem(TOKENS, JSON.stringify(tokens));
+            localStorage.setItem(TOKENS, JSON.stringify(tokens));
 
             activeRequests++;
             if ( token.callsLeft < 4 ) pendingRefresh = true; // yep, magic number
@@ -168,9 +147,9 @@ var authRequest =  (function(){
                 performRequest(r.params, r.defer);
                 token.callsLeft--;
 
-                tokens = JSON.parse(_localStorage_getItem(TOKENS)) || {};
+                tokens = JSON.parse(localStorage.getItem(TOKENS)) || {};
                 tokens[tenant] = token;
-                _localStorage_setItem(TOKENS, JSON.stringify(tokens));
+                localStorage.setItem(TOKENS, JSON.stringify(tokens));
             }
         })
     }
@@ -224,7 +203,7 @@ var authRequest =  (function(){
 
         if ( !_token ) {
             try {
-                token = JSON.parse(_localStorage_getItem(TOKENS))[tenant];
+                token = JSON.parse(localStorage.getItem(TOKENS))[tenant];
             } catch (e) {};
 
             return !!token
@@ -241,9 +220,9 @@ var authRequest =  (function(){
         token = _token;
 
         try {
-            tokens = JSON.parse(_localStorage_getItem(TOKENS)) || {};
+            tokens = JSON.parse(localStorage.getItem(TOKENS)) || {};
             tokens[tenant] = token;
-            _localStorage_setItem(TOKENS, JSON.stringify(tokens));
+            localStorage.setItem(TOKENS, JSON.stringify(tokens));
         } catch (e) {}
 
         return request.refreshToken();
@@ -262,7 +241,7 @@ var authRequest =  (function(){
         if ( refreshTimeoutProcess ) clearTimeout(refreshTimeoutProcess);
 
         var DD = $.Deferred();
-    
+
         return request({url : '/app/refreshtoken', type : 'post'}, true).then(
             function ( data, textStatus, jqXHR ) {
                 var upO,
@@ -293,11 +272,11 @@ var authRequest =  (function(){
                 token.callsLeft = upO.callsLeft;
                 token.expires   = upO.expires;
 
-                tokens = JSON.parse(_localStorage_getItem(TOKENS)) || {};
+                tokens = JSON.parse(localStorage.getItem(TOKENS)) || {};
                 tokens[tenant] = token;
-                _localStorage_setItem(TOKENS, JSON.stringify(tokens));
+                localStorage.setItem(TOKENS, JSON.stringify(tokens));
 
-                setRefreshTokenTimeuot();
+                setRefreshTokenTimeout();
 
                 //console.log('token nonce is refreshed. "%s"', token.nonce);
 
@@ -309,7 +288,7 @@ var authRequest =  (function(){
     };
 
 
-    function setRefreshTokenTimeuot () {
+    function setRefreshTokenTimeout () {
 
         if ( !token ) return;
 
@@ -346,14 +325,14 @@ var authRequest =  (function(){
     };
 
     request.removeToken = function () {
-        
+
         tenant = tenant || sessionStorage.dfx_tenantid;
 
         if ( !tenant ) throw('authRequest. can not remove token, cause tenant is undefined.');
 
-        tokens = JSON.parse(_localStorage_getItem(TOKENS)) || {};
+        tokens = JSON.parse(localStorage.getItem(TOKENS)) || {};
         delete tokens[tenant];
-        _localStorage_setItem(TOKENS, JSON.stringify(tokens));
+        localStorage.setItem(TOKENS, JSON.stringify(tokens));
     };
 
     return request

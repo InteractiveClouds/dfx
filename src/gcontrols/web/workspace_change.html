@@ -2,7 +2,7 @@
 	<form name="frmChangeWorkspace" ng-submit="changeWorkspaceConfirm('ok')">
 		<md-toolbar>
 			<div class="md-toolbar-tools">
-				<h2>Change Workspace Width</h2>
+				<h2>Change Canvas Size</h2>
 			</div>
 	    </md-toolbar>
 	    <md-dialog-content>
@@ -11,6 +11,12 @@
 					<md-input-container class="md-block" flex-gt-sm>
 						<label>Workspace width</label>
 						<input ng-model="workspace.width" md-autofocus>
+					</md-input-container>
+				</div>
+				<div layout-gt-sm="row">
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Workspace height</label>
+						<input ng-model="workspace.height">
 					</md-input-container>
 				</div>
 			</div>
