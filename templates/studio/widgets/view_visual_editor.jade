@@ -126,8 +126,6 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", dfx-ve-ctr
         section(layout="row", flex="100")
             md-sidenav#dfx-ve-sidenav-left.md-sidenav-left.md-whiteframe-z2(md-component-id="left", md-is-locked-open="$mdMedia('gt-md')", style="overflow-y: hidden;", ng-show="palette_visible")
                 div#dfx-ve-sidenav-left-header(class = "dfx-ve-floating-panel-header dfx-ve-hidden-element") &nbsp;
-                //div.dfx-ve-sidenav-header-icon
-                //    md-icon(class="fa fa-cube", style="color: #fff;")
                 div.dfx-ve-floating-panel-detacher(ng-click="detachOrAttachPanel('dfx-ve-sidenav-left')")
                     md-icon(class="fa fa-thumb-tack", style="color: #fff;")
                 div.dfx-ve-floating-panel-collapser(ng-click="minimizeOrMaximizePanel('dfx-ve-sidenav-left')")
@@ -187,8 +185,6 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", dfx-ve-ctr
                 div.dfx-ve-ruler-horizontal.dfx-ve-ruler.dfx-ve-hidden-element
             md-sidenav#dfx-ve-sidenav-right.md-sidenav-right.md-whiteframe-z2(md-component-id="right", md-is-locked-open="$mdMedia('gt-md')", style="overflow-y: hidden;", ng-show="property_visible")
                 div#dfx-ve-sidenav-right-header(class = "dfx-ve-floating-panel-header dfx-ve-hidden-element") Properties
-                //div.dfx-ve-sidenav-header-icon
-                //    md-icon(class="fa fa-th", style="color: #fff;")
                 div.dfx-ve-floating-panel-detacher(ng-click="detachOrAttachPanel('dfx-ve-sidenav-right')")
                     md-icon(class="fa fa-thumb-tack", style="color: #fff;")
                 div.dfx-ve-floating-panel-collapser(ng-click="minimizeOrMaximizePanel('dfx-ve-sidenav-right')")

@@ -103,15 +103,17 @@ var DfxViewEditorSettings = (function() {
         });
     };
 
-    var createViewSettingsMenu = function($scope, $compile, options) {
-        var snippet = '<div id="dfx-ve-settings-menu" class="_md md-open-menu-container md-whiteframe-z2 md-altTheme-theme md-active md-clickable" style="left:'+options.x+'px;top:'+options.y+'px;" ng-mouseleave="closeViewSettingsMenu()" aria-hidden="false">';
+    /*var createViewSettingsMenu = function($scope, $compile, options) {
+        var snippet = '<md-menu-bar>';
+        snippet += '<div id="dfx-ve-settings-menu" ng-mouseleave="closeViewSettingsMenu()" class="_md md-open-menu-container md-whiteframe-z2 md-altTheme-theme md-active md-clickable" style="left:'+options.x+'px;top:'+options.y+'px;" aria-hidden="false">';
         snippet += '<md-menu-content width="4" class="md-altTheme-theme">';
         snippet += '<md-menu-item ng-if="view_platform!==\'mobile\'"><md-button ng-click="changeCanvasSize()"><md-icon class="fa fa-square-o"></md-icon>Change Canvas Size</md-button></md-menu-item>';
         snippet += '<md-menu-item ng-if="view_platform!==\'mobile\'"><md-button ng-click="toggleRuler()"><md-icon class="fa fa-bars"></md-icon><span id="dfx-ve-settings-menu-show-ruler-label">Show Ruler</span></md-button></md-menu-item>';
         snippet += '<md-menu-divider></md-menu-divider>';
+
         snippet += '<md-menu-item>';
-        snippet += '<md-menu id="dfx-ve-settings-panels-menu" ng-mouseleave="closeViewSettingsPanelsMenu()">';
-        snippet += '<md-menu-item><md-button ng-click="$mdOpenMenu()"><md-icon class="fa fa-columns"></md-icon>Panels</md-button></md-menu-item>';
+        snippet += '<md-menu id="dfx-ve-settings-panels-menu" md-offset="150 0">';
+        snippet += '<md-menu-item><md-button ng-click="$mdOpenMenu();"><md-icon class="fa fa-columns"></md-icon>Panels</md-button></md-menu-item>';
         snippet += '<md-menu-content>';
         snippet += '<md-menu-item><md-button ng-click="togglePanel(\'dfx-ve-sidenav-left\')"><md-icon id="dfx-ve-settings-menu-hide-palette-panel-icon" class="fa fa-compress"></md-icon><span id="dfx-ve-settings-menu-hide-palette-panel-label">Hide Palette Panel</span></md-button></md-menu-item>';
         snippet += '<md-menu-item><md-button ng-click="togglePanel(\'dfx-ve-sidenav-right\')"><md-icon id="dfx-ve-settings-menu-hide-property-panel-icon" class="fa fa-compress"></md-icon><span id="dfx-ve-settings-menu-hide-property-panel-label">Hide Property Panel</span></md-button></md-menu-item>';
@@ -120,8 +122,26 @@ var DfxViewEditorSettings = (function() {
         snippet += '</md-menu-content>';
         snippet += '</md-menu>';
         snippet += '</md-menu-item>';
+
         snippet += '</md-menu-content>';
-        snippet += '</div>';
+        snippet += '</div>'
+        snippet += '</md-menu-bar>';
+        angular.element(document.getElementById('dfx-view-editor-body')).append($compile(snippet)($scope));
+    };*/
+    var createViewSettingsMenu = function($scope, $compile, options) {
+        var snippet = '<md-menu-bar>';
+        snippet += '<div id="dfx-ve-settings-menu" ng-mouseleave="closeViewSettingsMenu()" class="_md md-open-menu-container md-whiteframe-z2 md-altTheme-theme md-active md-clickable" style="left:'+options.x+'px;top:'+options.y+'px;" aria-hidden="false">';
+        snippet += '<md-menu-content width="4" class="md-altTheme-theme">';
+        snippet += '<md-menu-item ng-if="view_platform!==\'mobile\'"><md-button ng-click="changeCanvasSize()"><md-icon class="fa fa-square-o"></md-icon>Change Canvas Size</md-button></md-menu-item>';
+        snippet += '<md-menu-item ng-if="view_platform!==\'mobile\'"><md-button ng-click="toggleRuler()"><md-icon class="fa fa-bars"></md-icon><span id="dfx-ve-settings-menu-show-ruler-label">Show Ruler</span></md-button></md-menu-item>';
+        snippet += '<md-menu-divider></md-menu-divider>';
+        snippet += '<md-menu-item><md-button ng-click="togglePanel(\'dfx-ve-sidenav-left\')"><md-icon id="dfx-ve-settings-menu-hide-palette-panel-icon" class="fa fa-compress"></md-icon><span id="dfx-ve-settings-menu-hide-palette-panel-label">Hide Palette Panel</span></md-button></md-menu-item>';
+        snippet += '<md-menu-item><md-button ng-click="togglePanel(\'dfx-ve-sidenav-right\')"><md-icon id="dfx-ve-settings-menu-hide-property-panel-icon" class="fa fa-compress"></md-icon><span id="dfx-ve-settings-menu-hide-property-panel-label">Hide Property Panel</span></md-button></md-menu-item>';
+        snippet += '<md-menu-item><md-button ng-click="detachOrAttachPanel(\'dfx-ve-sidenav-left\')"><md-icon id="dfx-ve-settings-menu-detach-palette-panel-icon" class="fa fa-external-link"></md-icon><span id="dfx-ve-settings-menu-detach-palette-panel-label">Detach Palette Panel</span></md-button></md-menu-item>';
+        snippet += '<md-menu-item><md-button ng-click="detachOrAttachPanel(\'dfx-ve-sidenav-right\')"><md-icon id="dfx-ve-settings-menu-detach-property-panel-icon" class="fa fa-external-link"></md-icon><span id="dfx-ve-settings-menu-detach-property-panel-label">Detach Property Panel</span></md-button></md-menu-item>';
+        snippet += '</md-menu-content>';
+        snippet += '</div>'
+        snippet += '</md-menu-bar>';
         angular.element(document.getElementById('dfx-view-editor-body')).append($compile(snippet)($scope));
     };
     api.loadViewSettingsMenu = function($scope, $compile, $event) {
@@ -138,11 +158,8 @@ var DfxViewEditorSettings = (function() {
     api.openViewSettingsMenu = function() {
         $('#dfx-ve-settings-menu').show();
     };
-    api.closeViewSettingsMenu = function() {
+    api.closeViewSettingsMenu = function(called_from_main_menu) {
         $('#dfx-ve-settings-menu').hide();
-    };
-    api.closeViewSettingsPanelsMenu = function() {
-        //$('#dfx-ve-settings-panels-menu').hide();
     };
 
     api.setWorkspaceSize = function(view_settings) {
