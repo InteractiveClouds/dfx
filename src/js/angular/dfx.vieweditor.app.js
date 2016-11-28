@@ -973,6 +973,9 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     $scope.togglePanel = function(panel_id) {
         DfxViewEditorSettings.togglePanel(panel_id);
     };
+    $scope.showGcTemplatesPanel = function() {
+        DfxViewEditorSettings.showGcTemplatesPanel();
+    };
     $scope.detachOrAttachPanel = function(panel_id) {
         DfxViewEditorSettings.detachOrAttachPanel(panel_id);
     };
