@@ -1054,10 +1054,17 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
 
     for (var cat in $scope.palette) {
         for (var gc in $scope.palette[cat]) {
+            // Add GC to GC Palette
             item_fragment = '<li class="dfx_visual_editor_draggable dfx_visual_editor_gc_cat_item_draggable dfx-ve-palette-icon-li" gc-cat="' + cat + '" gc-type="' + gc + '" gc-flex="' + $scope.palette[cat][gc].flex + '" style="position:relative;">' +
                 '<img id="dfx_ve_palette_icon_' + gc + '" class="dfx-ve-palette-icon" src="/images/vb/icons/' + cat + '_' + gc + '.png" title="' + gc + '" gc-cat="' + cat + '" gc-type="' + gc + '"/>' +
                 '</li>';
             $('ul[gc-cat=' + cat + ']').append(item_fragment);
+
+            // Add GC to GC Template popup menu
+            item_fragment = '<li class="dfx-ve-palette-icon-li" gc-cat="' + cat + '" gc-type="' + gc + '" gc-flex="' + $scope.palette[cat][gc].flex + '" style="position:relative;padding:2px;">' +
+                '<img id="dfx_ve_gc_template_icon_' + gc + '" class="dfx-ve-palette-icon" src="/images/vb/icons/' + cat + '_' + gc + '.png" title="' + gc + '" gc-cat="' + cat + '" gc-type="' + gc + '"/>' +
+                '</li>';
+            $('ul[gc-template-cat=' + cat + ']').append(item_fragment);
         }
     }
 
@@ -1505,12 +1512,17 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
                 });
 
                 for (var i = 0; i < gc_templates_unique_types.length; i++) {
-                    var $dfx_ve_palette_icon = $('#dfx_ve_palette_icon_' + gc_templates_unique_types[i]);
+                    var $dfx_ve_gc_template_icon = $('#dfx_ve_gc_template_icon_' + gc_templates_unique_types[i]);
 
-                    var gc_template_icon = '<a id="dfx_gc_template_' + gc_templates_unique_types[i] + '" class="dfx-ve-gc-templates-handle" href="#" ' +
-                        'onclick="DfxVisualBuilder.getGcTemplatesToDragDrop(\'' + gc_templates_unique_types[i] + '\',\'' + $dfx_ve_palette_icon.attr('gc-cat') + '\')">' +
-                        '<i class="fa fa-cube"></i></a>';
-                    $dfx_ve_palette_icon.after(gc_template_icon);
+                    var gc_type = gc_templates_unique_types[i];
+                    var gc_cat = $dfx_ve_gc_template_icon.attr('gc-cat');
+
+                    var createGcTemplateListener = function(gc_type, gc_cat) {
+                        $dfx_ve_gc_template_icon.on('click', function() {
+                            $scope.getGcTemplatesToDragDrop(gc_type, gc_cat);
+                        });
+                    };
+                    createGcTemplateListener(gc_type, gc_cat);
                 }
             }, 0);
         });
@@ -1519,7 +1531,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     $scope.getGcTemplatesToDragDrop = function(gc_type, gc_cat) {
         var makeGcTemplatesDraggable = function() {
             $timeout(function() {
-                $('.dfx-ve-gc-templates-content').draggable({
+                $('.dfx-ve-gc-template-draggable-instance').draggable({
                     appendTo:          "body",
                     cursorAt:          {top: 5, left: 17},
                     cursor:            "move",
@@ -1531,7 +1543,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
                 });
             }, 0);
         };
-        var addGcTemplatesToToolbar = function() {
+        var addGcTemplatesToFloatingPanel = function() {
             $timeout(function() {
                 $scope.gc_templates_to_drag_drop = [];
                 for (var i = 0; i < $scope.gc_templates.length; i++) {
@@ -1539,13 +1551,11 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
                         $scope.gc_templates_to_drag_drop.push( $scope.gc_templates[i] );
                     }
                 }
-                $('#dfx-ve-gc-templates-toolbar').show();
-
                 makeGcTemplatesDraggable();
             }, 0);
         };
 
-        addGcTemplatesToToolbar();
+        addGcTemplatesToFloatingPanel();
     };
 
     $scope.loadGcTemplatesByType = function() {
@@ -1626,10 +1636,15 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
         return true;
     };
 
-    $scope.previewGcTemplate = function(gc_template, $event) {
-        //TODO: switched off for now
-        return;
+    $scope.openGcTemplateEditor = function(gc_template_name) {
+        window.localStorage.removeItem('pagePreviewName');
 
+        var application_name = $('#dfx-view-editor-body').attr('data-application');
+        var view_platform = $('#dfx-view-editor-body').attr('data-platform');
+        
+        $window.open( '/studio/gctemplates/' + view_platform + '/' + application_name + '/' + gc_template_name + '/index.html', '_blank' );
+    };
+    /*$scope.previewGcTemplate = function(gc_template, $event) {
         var fillPreviewContainer = function(container_id) {
             var gc_id = Math.floor(Math.random() * 100000),
                 view_editor = document.querySelector('#dfx_src_widget_editor'),
@@ -1669,7 +1684,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
             }
         });
         //save as in gc_templates editor & verification if this template name already exists - in both editors
-    };
+    };*/
     // Functions to work with GC Templates - END
 
     DfxVisualBuilder.init();

@@ -181,10 +181,6 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", dfx-ve-ctr
                                     span Custom
                                 ul.dfx-ve-palette-treeview-content(gc-cat="custom", style="margin-bottom:5px")
             md-content#dfx-ve-main-content(flex="100", ng-click="unselectComponent()")
-                div#dfx-ve-gc-templates-toolbar(style="width:100%;display:none;overflow-x:auto;white-space:nowrap;height:75px;")
-                    div.dfx-ve-gc-templates-content.dfx_visual_editor_draggable.dfx_visual_editor_gc_cat_item_draggable(ng-repeat="gc_template in gc_templates_to_drag_drop", gc-type="{{gc_template.type}}", gc-template-name="{{gc_template.name}}", title="{{gc_template.name + (gc_template.description ? ' (' + gc_template.description + ')' : '')}}") {{gc_template.name}}
-                        i(class="fa fa-eye" ng-click="previewGcTemplate(gc_template, $event)")
-                //div#gc_preview_container
                 md-tabs.md-dynamic-height(layout="column", md-selected="view_card_select_index")
                     md-tab(ng-repeat="card in view_cards", md-on-select="setWorkspaceSize()", label="{{card.name}}")
                         md-content.dfx-ve-main-content-tab-content(style="padding:10px;background-color:#efefef;", layout="row", layout-align="center start")
@@ -237,48 +233,49 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", dfx-ve-ctr
                 div.dfx-ve-floating-panel-closer(ng-click="closePanel('dfx-ve-sidenav-gc-templates')")
                     md-icon(class="fa fa-close", style="color: #fff;", aria-label="Close Panel")
                 md-content#dfx-ve-sidenav-gc-templates-content(layout-padding show-gt-md)
-                    div#dfx_visual_editor_gc_palette_content.dfx-ve-palette-treeview.hover
-                        //ul(style="border-top: 1px #6b6a6a solid")
+                    div#dfx_visual_editor_gc_palette_content.dfx-ve-palette-treeview.hover.dfx-ve-palette-gc-templates-pop-menu
+                        ul(style="border-top: 1px #6b6a6a solid")
                             li
-                                input#palette-item-0.dfx-ve-palette-treeview-button(type="checkbox")
-                                label(for="palette-item-0")
+                                input#gc-templates-palette-item-0.dfx-ve-palette-treeview-button(type="checkbox")
+                                label(for="gc-templates-palette-item-0")
                                     span Basic
-                                ul.dfx-ve-palette-treeview-content(gc-cat="basic", style="margin-bottom:5px")
+                                ul.dfx-ve-palette-treeview-content(gc-template-cat="basic", style="margin-bottom:5px")
                             li
-                                input#palette-item-1.dfx-ve-palette-treeview-button(type="checkbox", checked)
-                                label(for="palette-item-1")
+                                input#gc-templates-palette-item-1.dfx-ve-palette-treeview-button(type="checkbox", checked)
+                                label(for="gc-templates-palette-item-1")
                                     span Input
-                                ul.dfx-ve-palette-treeview-content(gc-cat="input", style="margin-bottom:5px")
+                                ul.dfx-ve-palette-treeview-content(gc-template-cat="input", style="margin-bottom:5px")
                             li
-                                input#palette-item-2.dfx-ve-palette-treeview-button(type="checkbox", checked)
-                                label(for="palette-item-2")
+                                input#gc-templates-palette-item-2.dfx-ve-palette-treeview-button(type="checkbox", checked)
+                                label(for="gc-templates-palette-item-2")
                                     span Menu
-                                ul.dfx-ve-palette-treeview-content(gc-cat="menu", style="margin-bottom:5px")
+                                ul.dfx-ve-palette-treeview-content(gc-template-cat="menu", style="margin-bottom:5px")
                             li
-                                input#palette-item-3.dfx-ve-palette-treeview-button(type="checkbox", checked)
-                                label(for="palette-item-3")
+                                input#gc-templates-palette-item-3.dfx-ve-palette-treeview-button(type="checkbox", checked)
+                                label(for="gc-templates-palette-item-3")
                                     span Selection
-                                ul.dfx-ve-palette-treeview-content(gc-cat="selection", style="margin-bottom:5px")
+                                ul.dfx-ve-palette-treeview-content(gc-template-cat="selection", style="margin-bottom:5px")
                             li
-                                input#palette-item-4.dfx-ve-palette-treeview-button(type="checkbox", checked)
-                                label(for="palette-item-4")
+                                input#gc-templates-palette-item-4.dfx-ve-palette-treeview-button(type="checkbox", checked)
+                                label(for="gc-templates-palette-item-4")
                                     span Table
-                                ul.dfx-ve-palette-treeview-content(gc-cat="table", style="margin-bottom:5px")
+                                ul.dfx-ve-palette-treeview-content(gc-template-cat="table", style="margin-bottom:5px")
                             li
-                                input#palette-item-5.dfx-ve-palette-treeview-button(type="checkbox", checked)
-                                label(for="palette-item-5")
+                                input#gc-templates-palette-item-5.dfx-ve-palette-treeview-button(type="checkbox", checked)
+                                label(for="gc-templates-palette-item-5")
                                     span Chart
-                                ul.dfx-ve-palette-treeview-content(gc-cat="chart", style="margin-bottom:5px")
+                                ul.dfx-ve-palette-treeview-content(gc-template-cat="chart", style="margin-bottom:5px")
                             li
-                                input#palette-item-6.dfx-ve-palette-treeview-button(type="checkbox", checked)
-                                label(for="palette-item-6")
+                                input#gc-templates-palette-item-6.dfx-ve-palette-treeview-button(type="checkbox", checked)
+                                label(for="gc-templates-palette-item-6")
                                     span Layout
-                                ul.dfx-ve-palette-treeview-content(gc-cat="layout", style="margin-bottom:5px")
-                            li(style="display:none")
-                                input#palette-item-7.dfx-ve-palette-treeview-button(type="checkbox", checked)
-                                label(for="palette-item-7")
-                                    span Custom
-                                ul.dfx-ve-palette-treeview-content(gc-cat="custom", style="margin-bottom:5px")
+                                ul.dfx-ve-palette-treeview-content(gc-template-cat="layout", style="margin-bottom:5px")
+                    div#dfx-ve-gc-template-draggable-instances
+                        input(type="text", placeholder="Filter GC Template", style="color: grey;")
+                        div(ng-repeat="gc_template in gc_templates_to_drag_drop")
+                            div.dfx-ve-gc-template-draggable-instance.dfx_visual_editor_draggable.dfx_visual_editor_gc_cat_item_draggable(gc-type="{{gc_template.type}}", gc-template-name="{{gc_template.name}}", title="{{gc_template.name + (gc_template.description ? ' (' + gc_template.description + ')' : '')}}") {{gc_template.name}}
+                                i(class="fa fa-eye" ng-click="openGcTemplateEditor(gc_template.name)")
+                            div {{gc_template.name + (gc_template.description ? ' (' + gc_template.description + ')' : '')}}
     pre#dfx_src_editor(style="border-radius: 0;display: none;").
         #{widget.src}
     pre#dfx_script_editor(style="border-radius: 0;display: none;").
