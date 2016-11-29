@@ -1910,7 +1910,8 @@ var DfxGcChartUtil = (function () {
     var removeBracketsFromEventListener = function(eventListener) {
         return (eventListener) ? eventListener.replace(/\(.*?\)/g, "") : eventListener;
     };
-    var refreshChartToReflectFlexSize = function(scope, basectrl, $timeout, oldFlexValue) {
+
+    api.refreshChartToReflectFlexSize = function(scope, basectrl, $timeout, oldFlexValue) {
           $timeout(function() {
               if (scope[scope.attributes.name.value].refresh) {
                   oldFlexValue = oldFlexValue || 100;
@@ -2028,7 +2029,7 @@ var DfxGcChartUtil = (function () {
         assignEvent('onareamouseleave', specificDispatch);
         scope.attributes.options.value.chart[chartTypeDef] = { dispatch: specificDispatch };
 
-        refreshChartToReflectFlexSize(scope, basectrl, $timeout);
+        api.refreshChartToReflectFlexSize(scope, basectrl, $timeout);
     };
     api.setRunTimeChartNameVariable = function (scope, basectrl, component, $timeout) {
         $timeout(function() {
@@ -2071,7 +2072,7 @@ var DfxGcChartUtil = (function () {
         if (scope.attributes.options.showValues) {
             scope.$gcscope.$watch(scope.attributes.options.showValues, function (newValue, oldValue) {
                 scope.attributes.options.value.chart.showValues = newValue;
-                refreshChartToReflectFlexSize(scope, basectrl, $timeout, oldValue);
+                api.refreshChartToReflectFlexSize(scope, basectrl, $timeout, oldValue);
             });
         }
         if (scope.attributes.options.showXAxis) {
@@ -2085,31 +2086,31 @@ var DfxGcChartUtil = (function () {
         if (scope.attributes.options.showControls) {
             scope.$gcscope.$watch(scope.attributes.options.showControls, function (newValue, oldValue) {
                 scope.attributes.options.value.chart.showControls = newValue;
-                refreshChartToReflectFlexSize(scope, basectrl, $timeout, oldValue);
+                api.refreshChartToReflectFlexSize(scope, basectrl, $timeout, oldValue);
             });
         }
         if (scope.attributes.options.showLegend) {
             scope.$gcscope.$watch(scope.attributes.options.showLegend, function (newValue, oldValue) {
                 scope.attributes.options.value.chart.showLegend = newValue;
-                refreshChartToReflectFlexSize(scope, basectrl, $timeout, oldValue);
+                api.refreshChartToReflectFlexSize(scope, basectrl, $timeout, oldValue);
             });
         }
         if (scope.attributes.options.stacked) {
             scope.$gcscope.$watch(scope.attributes.options.stacked, function (newValue, oldValue) {
                 scope.attributes.options.value.chart.stacked = newValue;
-                refreshChartToReflectFlexSize(scope, basectrl, $timeout, oldValue);
+                api.refreshChartToReflectFlexSize(scope, basectrl, $timeout, oldValue);
             });
         }
         if (scope.attributes.options.useInteractiveGuideline) {
             scope.$gcscope.$watch(scope.attributes.options.useInteractiveGuideline, function (newValue, oldValue) {
                 scope.attributes.options.value.chart.useInteractiveGuideline = newValue;
-                refreshChartToReflectFlexSize(scope, basectrl, $timeout, oldValue);
+                api.refreshChartToReflectFlexSize(scope, basectrl, $timeout, oldValue);
             });
         }
         if (scope.attributes.options.rescaleY) {
             scope.$gcscope.$watch(scope.attributes.options.rescaleY, function (newValue, oldValue) {
                 scope.attributes.options.value.chart.rescaleY = newValue;
-                refreshChartToReflectFlexSize(scope, basectrl, $timeout, oldValue);
+                api.refreshChartToReflectFlexSize(scope, basectrl, $timeout, oldValue);
             });
         }
         if (scope.attributes.options.labelSunbeamLayout) {
@@ -2228,6 +2229,8 @@ dfxGCC.directive('dfxGccWebBarchart', ['$timeout', '$filter', function($timeout,
                 // dynamicOptions is a priority over all static options, title and events (ex. onclick)
                 if (scope.attributes.optionsType.value == 'dynamic') {
                     scope.attributes.options.value = scope[scope.attributes.dynamicOptions.value];
+
+                    DfxGcChartUtil.refreshChartToReflectFlexSize(scope, basectrl, $timeout);
                 } else {
                     scope.attributes.options.value = chartOptions;
 
@@ -2358,6 +2361,8 @@ dfxGCC.directive('dfxGccWebHzbarchart', ['$timeout', '$filter', function($timeou
                 // dynamicOptions is a priority over all static options, title and events (ex. onclick)
                 if (scope.attributes.optionsType.value == 'dynamic') {
                     scope.attributes.options.value = scope[scope.attributes.dynamicOptions.value];
+
+                    DfxGcChartUtil.refreshChartToReflectFlexSize(scope, basectrl, $timeout);
                 } else {
                     scope.attributes.options.value = chartOptions;
 
@@ -2455,6 +2460,8 @@ dfxGCC.directive('dfxGccWebPiechart', ['$timeout', '$filter', function($timeout,
                 // dynamicOptions is a priority over all static options, title and events (ex. onclick)
                 if (scope.attributes.optionsType.value == 'dynamic') {
                     scope.attributes.options.value = scope[scope.attributes.dynamicOptions.value];
+
+                    DfxGcChartUtil.refreshChartToReflectFlexSize(scope, basectrl, $timeout);
                 } else {
                     scope.attributes.options.value = chartOptions;
 
@@ -2556,6 +2563,8 @@ dfxGCC.directive('dfxGccWebDonutchart', ['$timeout', '$filter', function($timeou
                 // dynamicOptions is a priority over all static options, title and events (ex. onclick)
                 if (scope.attributes.optionsType.value == 'dynamic') {
                     scope.attributes.options.value = scope[scope.attributes.dynamicOptions.value];
+
+                    DfxGcChartUtil.refreshChartToReflectFlexSize(scope, basectrl, $timeout);
                 } else {
                     scope.attributes.options.value = chartOptions;
 
@@ -2660,6 +2669,8 @@ dfxGCC.directive('dfxGccWebLinechart', ['$timeout', '$filter', function($timeout
                 // dynamicOptions is a priority over all static options, title and events (ex. onclick)
                 if (scope.attributes.optionsType.value == 'dynamic') {
                     scope.attributes.options.value = scope[scope.attributes.dynamicOptions.value];
+
+                    DfxGcChartUtil.refreshChartToReflectFlexSize(scope, basectrl, $timeout);
                 } else {
                     scope.attributes.options.value = chartOptions;
 
@@ -2757,6 +2768,8 @@ dfxGCC.directive('dfxGccWebCmlinechart', ['$timeout', '$filter', function($timeo
                 // dynamicOptions is a priority over all static options, title and events (ex. onclick)
                 if (scope.attributes.optionsType.value == 'dynamic') {
                     scope.attributes.options.value = scope[scope.attributes.dynamicOptions.value];
+
+                    DfxGcChartUtil.refreshChartToReflectFlexSize(scope, basectrl, $timeout);
                 } else {
                     scope.attributes.options.value = chartOptions;
 
@@ -2848,6 +2861,8 @@ dfxGCC.directive('dfxGccWebAreachart', ['$timeout', '$filter', function($timeout
                 // dynamicOptions is a priority over all static options, title and events (ex. onclick)
                 if (scope.attributes.optionsType.value == 'dynamic') {
                     scope.attributes.options.value = scope[scope.attributes.dynamicOptions.value];
+
+                    DfxGcChartUtil.refreshChartToReflectFlexSize(scope, basectrl, $timeout);
                 } else {
                     scope.attributes.options.value = chartOptions;
 
