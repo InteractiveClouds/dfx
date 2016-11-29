@@ -298,6 +298,7 @@ var exports = (function () {
                 src + 'js/angular/dfx.studio.app.js',
                 src + 'js/angular/dfx.studio.landing.js',
                 src + 'js/angular/dfx.vieweditor.app.js',
+                src + 'js/angular/dfx.vieweditor.app.settings.js',
                 src + 'js/vendor/qrcode.js',
                 src + 'js/vendor/jquery.knob.js',
                 src + 'js/vendor/dropzone.js',
@@ -378,7 +379,8 @@ var exports = (function () {
                 src + 'js/angular/dfx.studio.api.js',
                 src + 'js/angular/dfx.studio.app.js',
                 src + 'js/angular/dfx.studio.landing.js',
-                src + 'js/angular/dfx.vieweditor.app.js'
+                src + 'js/angular/dfx.vieweditor.app.js',
+                src + 'js/angular/dfx.vieweditor.app.settings.js'
             ],
             dest : pub + 'js/preview/dfx.js'
         },
@@ -443,7 +445,8 @@ var exports = (function () {
                 src + 'js/angular/dfx.studio.api.js',
                 src + 'js/angular/dfx.studio.app.js',
                 src + 'js/angular/dfx.studio.landing.js',
-                src + 'js/angular/dfx.vieweditor.app.js'
+                src + 'js/angular/dfx.vieweditor.app.js',
+                src + 'js/angular/dfx.vieweditor.app.settings.js'
             ],
             dest : build + 'js/runtime_web/script.js'
         },
@@ -462,7 +465,8 @@ var exports = (function () {
                 src + 'js/angular/dfx.studio.api.js',
                 src + 'js/angular/dfx.studio.app.js',
                 src + 'js/angular/dfx.studio.landing.js',
-                src + 'js/angular/dfx.vieweditor.app.js'
+                src + 'js/angular/dfx.vieweditor.app.js',
+                src + 'js/angular/dfx.vieweditor.app.settings.js'
             ],
             dest : build + 'js/runtime_web/dfx.js'
         },
@@ -527,7 +531,8 @@ var exports = (function () {
                 src + 'js/angular/dfx.studio.api.js',
                 src + 'js/angular/dfx.studio.app.js',
                 src + 'js/angular/dfx.studio.landing.js',
-                src + 'js/angular/dfx.vieweditor.app.js'
+                src + 'js/angular/dfx.vieweditor.app.js',
+                src + 'js/angular/dfx.vieweditor.app.settings.js'
             ],
             dest : build + 'js/runtime_mobile/script.js'
         },
@@ -546,7 +551,8 @@ var exports = (function () {
                 src + 'js/angular/dfx.studio.api.js',
                 src + 'js/angular/dfx.studio.app.js',
                 src + 'js/angular/dfx.studio.landing.js',
-                src + 'js/angular/dfx.vieweditor.app.js'
+                src + 'js/angular/dfx.vieweditor.app.js',
+                src + 'js/angular/dfx.vieweditor.app.settings.js'
             ],
             dest : build + 'js/runtime_mobile/dfx.js'
         }
