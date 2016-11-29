@@ -5,7 +5,7 @@
 			"value": [
 				{
 					"label": "My Button Label",
-					"icon": {"name": "star", "type": "svg-icon"},        
+					"icon": {"name": "star", "type": "svg-icon"},
 					"type": "standard",
 					"shortcut": "123",
 					"notification": "5",
@@ -13,20 +13,20 @@
 					"disabled": "false",
 					"onclick": "toggleScopeState()",
 					"scopeItems": [],
-					"waiting": { 
-						"binding": "scopeState", 
-						"autoDisabled": "scopeState", 
-						"icon": { 
-							"name": "fa-spinner", 
-							"type": "fa-icon", 
-							"style": "", 
-							"class": "fa-pulse" 
+					"waiting": {
+						"binding": "scopeState",
+						"autoDisabled": "scopeState",
+						"icon": {
+							"name": "fa-spinner",
+							"type": "fa-icon",
+							"style": "",
+							"class": "fa-pulse"
 						}
 					}
 				},
 				{
 					"label": "My Button Label",
-					"icon": {"name": "stars", "type": "svg-icon"},        
+					"icon": {"name": "stars", "type": "svg-icon"},
 					"myButtonsType": "standard",
 					"shortcut": "",
 					"notification": "",
@@ -41,47 +41,47 @@
 						{
 							"type": "divider"
 						}
-					]  
+					]
 				}
-			]	
-		}		
+			]
+		}
     ],
     "carousel": [
     	{
     		"name": "Example 1",
     		"value": [
-    			{ 
-		            "title": "<h2>Costa Rica</h2>", 
-		            "description": "<h4>Forest {{scopeState}}</h4>", 
+    			{
+		            "title": "<h2>Costa Rica</h2>",
+		            "description": "<h4>Forest {{scopeState}}</h4>",
 		            "src": "https://www.travelexcellence.com/images/movil/La_Paz_Waterfall.jpg",
 		            "onclick": "toggleScopeState()"
 		        },
-		        { 
-		            "title": "<h2>Indonesia</h2>", 
-		            "description": "<h4>Mountains {{scopeState}}</h4>", 
+		        {
+		            "title": "<h2>Indonesia</h2>",
+		            "description": "<h4>Mountains {{scopeState}}</h4>",
 		            "src": "http://images.kuoni.co.uk/73/indonesia-34834203-1451484722-ImageGalleryLightbox.jpg",
 		            "onclick": "toggleScopeState()"
-		        },    
-		        { 
-		            "title": "<h2>Vietnam</h2>", 
-		            "description": "<h4>Sea {{scopeState}}</h4>", 
+		        },
+		        {
+		            "title": "<h2>Vietnam</h2>",
+		            "description": "<h4>Sea {{scopeState}}</h4>",
 		            "src": "https://www.travcoa.com/sites/default/files/styles/flexslider_full/public/tours/images/imperialvietnam-halong-bay-14214576.jpg?itok=O-q1yr5_",
 		            "onclick": "toggleScopeState()"
 		        },
-		        { 
-		            "title": "<h2>USA</h2>", 
+		        {
+		            "title": "<h2>USA</h2>",
 		            "description": "<h4>River {{scopeState}}</h4>",
 		            "src": "http://www.parasholidays.in/blog/wp-content/uploads/2014/05/holiday-tour-packages-for-usa.jpg",
 		            "onclick": "toggleScopeState()"
 		        },
-		        { 
-		            "title": "<h2>New Zealand</h2>", 
-		            "description": "<h4>Volcano {{scopeState}}</h4>", 
+		        {
+		            "title": "<h2>New Zealand</h2>",
+		            "description": "<h4>Volcano {{scopeState}}</h4>",
 		            "src": "http://clickker.in/wp-content/uploads/2016/03/new-zealand-fy-8-1-Copy.jpg",
-		            "onclick": "toggleScopeState()" 
+		            "onclick": "toggleScopeState()"
 		        }
     		]
-    	}    	
+    	}
     ],
     "checkbox": [
     	{
@@ -123,20 +123,20 @@
 			"value": [
 				{
 					"label": "My Button Label",
-					"icon": {"name": "star", "type": "svg-icon"},        
+					"icon": {"name": "star", "type": "svg-icon"},
 					"display": "true",
 					"disabled": "false",
 					"onclick": "toggleScopeState()"
 				},
 				{
 					"label": "My Button Label",
-					"icon": {"name": "stars", "type": "svg-icon"},        
+					"icon": {"name": "stars", "type": "svg-icon"},
 					"display": "true",
 					"disabled": "false",
-					"onclick": "toggleScopeState()"					
+					"onclick": "toggleScopeState()"
 				}
-			]	
-		}		
+			]
+		}
 	],
 	"iconbar": [
 		{
@@ -146,7 +146,7 @@
 					"scopeItems": [
 						{
 							"label": "My Label",
-							"icon": {"name": "stars", "type": "svg-icon"},        
+							"icon": {"name": "stars", "type": "svg-icon"},
 							"shortcut": "ABC",
 							"notification": "8",
 							"display": "true",
@@ -165,7 +165,7 @@
 						"checkedIcon":   { "name": "thumb_up", "type": "svg-icon", "style": "color:lightgreen", "class": "greened" },
 						"uncheckedIcon": { "name": "thumb_down", "type": "svg-icon", "style": "color:violet", "class": "violetted" }
 					}
-				},				
+				},
 				{
 					"icon": {"name": "twitter", "type": "svg-icon"},
 					"type": "standard"
@@ -235,8 +235,8 @@
 				{"data": "<img src='https://material.angularjs.org/latest/img/100-0.jpeg' class='md-avatar' alt='Janet Perkins' /><div class='md-list-item-text' layout='column'><h3>Janet Perkins</h3></div>"},
 				{"data": "<img src='https://material.angularjs.org/latest/img/100-1.jpeg' class='md-avatar' alt='Mary Johnson' /><div class='md-list-item-text' layout='column'><h3>Mary Johnson</h3></div>"},
 				{"data": "<img src='https://material.angularjs.org/latest/img/100-2.jpeg' class='md-avatar' alt='Peter Carlsson' /><div class='md-list-item-text' layout='column'><h3>Peter Carlsson</h3></div>"}
-			]	
-		}		
+			]
+		}
     ],
 	"radio": [
     	{
@@ -436,5 +436,221 @@
     			}
     		]
     	}
+    ],
+	"barchart": [
+		{
+			"name": "Example 1",
+			"value": {
+				"chart": {
+					"type": "discreteBarChart",
+					"margin" : {
+						"top": 20,
+						"right": 20,
+						"bottom": 50,
+						"left": 55
+					},
+					"x": "function(d){return d.label;}",
+					"y": "function(d){return d.value;}",
+					"showValues":  true,
+					"valueFormat": "function (d) {return d3.format(',.4f')(d);}",
+					"duration":    500,
+					"xAxis":       {
+						"axisLabel": "X Axis"
+					},
+					"yAxis":       {
+						"axisLabel": "Y Axis",
+						"axisLabelDistance": -10
+					}
+				},
+				"title": {
+					"text": "Bar Chart",
+					"enable": true
+				}
+			}
+		}
+    ],
+	"hzbarchart": [
+		{
+			"name": "Example 1",
+			"value": {
+				"chart": {
+					"type": "multiBarHorizontalChart",
+					"margin" : {
+						"top": 20,
+						"right": 20,
+						"bottom": 50,
+						"left": 55
+					},
+					"showControls": true,
+					"showValues": true,
+					"duration":    500,
+					"xAxis":       {
+						"showMaxMin": false,
+						"axisLabel": ""
+					},
+					"yAxis":       {
+						"axisLabel": "Values"
+					}
+				},
+				"title": {
+					"text": "Horizontal Bar Chart",
+					"enable": true
+				}
+			}
+		}
+    ],
+	"piechart": [
+		{
+			"name": "Example 1",
+			"value": {
+				"chart": {
+					"type": "pieChart",
+					"margin" : {
+						"top": 20,
+						"right": 20,
+						"bottom": 50,
+						"left": 55
+					},
+					"showValues":  true,
+					"duration": 500,
+					"labelThreshold": 0.01,
+					"labelSunbeamLayout": true,
+					"legend": {
+						"margin": {
+							"top": 5,
+							"right": 35,
+							"bottom": 5,
+							"left": 0
+						}
+					}
+				},
+				"title": {
+					"text": "Pie Chart",
+					"enable": true
+				}
+			}
+		}
+    ],
+	"donutchart": [
+		{
+			"name": "Example 1",
+			"value": {
+				"chart": {
+					"type": "pieChart",
+					"donut": true,
+					"margin" : {
+						"top": 20,
+						"right": 20,
+						"bottom": 50,
+						"left": 55
+					},
+					"showValues": true,
+					"donutRatio": 0.35,
+					"duration": 500,
+					"legend": {
+						"margin": {
+							"top": 5,
+							"right": 35,
+							"bottom": 5,
+							"left": 0
+						}
+					}
+				},
+				"title": {
+					"text": "Donut Chart",
+					"enable": true
+				}
+			}
+		}
+    ],
+	"linechart": [
+		{
+			"name": "Example 1",
+			"value": {
+				"chart": {
+					"type": "lineChart",
+					"margin" : {
+						"top": 20,
+						"right": 20,
+						"bottom": 50,
+						"left": 55
+					},
+					"useInteractiveGuideline": true,
+					"xAxis":       {
+						"axisLabel": "Time (ms)"
+					},
+					"yAxis":       {
+						"axisLabel": "Voltage (v)",
+						"axisLabelDistance": -10
+					}
+				},
+				"title": {
+					"text": "Line Chart",
+					"enable": true
+				}
+			}
+		}
+    ],
+	"cmlinechart": [
+		{
+			"name": "Example 1",
+			"value": {
+				"chart": {
+					"type": "cumulativeLineChart",
+					"margin" : {
+						"top": 20,
+						"right": 20,
+						"bottom": 50,
+						"left": 55
+					},
+					"duration": 300,
+					"useInteractiveGuideline": true,
+					"clipVoronoi": false,
+					"interactive": true,
+					"rescaleY": true,
+					"xAxis":       {
+						"axisLabel": "X Axis",
+						"axisLabel": "X Axis",
+						"showMaxMin": false,
+						"staggerLabels": true
+					},
+					"yAxis":       {
+						"axisLabelDistance": 20
+					}
+				},
+				"title": {
+					"text": "Cumulative Line Chart",
+					"enable": true
+				}
+			}
+		}
+    ],
+	"areachart": [
+		{
+			"name": "Example 1",
+			"value": {
+				"chart": {
+					"type": "stackedAreaChart",
+					"margin" : {
+						"top": 20,
+						"right": 20,
+						"bottom": 50,
+						"left": 55
+					},
+					"useVoronoi": false,
+					"clipEdge": true,
+					"duration": 100,
+					"useInteractiveGuideline": true,
+					"xAxis":       {
+						"showMaxMin": false,
+						"axisLabel": "X Axis"
+					}
+				},
+				"title": {
+					"text": "Stacked Area Chart",
+					"enable": true
+				}
+			}
+		}
     ]
 }
