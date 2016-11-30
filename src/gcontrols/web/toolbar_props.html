@@ -9,7 +9,7 @@
         <li class="col-md-12">
             <span class="col-md-6">Toolbar Visible:</span>
             <div class="col-md-6" layout="row">
-                <input class="col-md-12" type="text" ng-model="attributes.toolbar.visible.value" style="margin-left:-15px;" ng-change="overrideAttribute('toolbar.visible')" ng-focus="cacheAttributeOldValue({'name':'toolbar.visible'})" ng-blur="cacheAttributeNewValue('toolbar.visible')"/>
+                <input class="col-md-12" type="text" ng-model="attributes.toolbar.visible.value" ng-model-options="{ debounce: 500 }" style="margin-left:-15px;" ng-change="overrideAttribute('toolbar.visible');checkToolbarMenus(attributes.toolbar.visible.value);" ng-focus="cacheAttributeOldValue({'name':'toolbar.visible'})" ng-blur="cacheAttributeNewValue('toolbar.visible')"/>
                 <dfx-ve-expression-editor></dfx-ve-expression-editor>
             </div>
         </li>

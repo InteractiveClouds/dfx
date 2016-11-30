@@ -3813,6 +3813,13 @@ dfxViewEditorApp.directive('dfxGcToolbarDesign', function($sce, $compile, $timeo
                 }
             }
 
+            scope.$parent.checkToolbarMenus = function(toolbar_visible){
+                if(toolbar_visible && toolbar_visible!=='false'){
+                    if(scope.attributes.toolbar.leftMenu.visible && scope.attributes.toolbar.leftMenu.visible!=='false' && scope.attributes.toolbar.leftMenu.type.value !== 'Fab') scope.iconbarBuilder('left');
+                    if(scope.attributes.toolbar.rightMenu.visible && scope.attributes.toolbar.rightMenu.visible!=='false' && scope.attributes.toolbar.rightMenu.type.value !== 'Fab') scope.iconbarBuilder('right');
+                }
+            }
+
             scope.$watch("attributes.toolbar.rightMenu.type.value", function(newValue){
                 if(newValue){
                     $timeout(function(){
