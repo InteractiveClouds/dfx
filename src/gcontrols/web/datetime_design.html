@@ -1,0 +1,23 @@
+<div id="{{component_id}}_design" ng-form style="{{attributes.style.value}}" class="{{attributes.classes.value}} dfx-core-gc-datetime">
+    <label class="dfx-core-gc-datetime-label" ng-class="labelClass" aria-label="{{labelClass}}">
+        {{attributes.label.value | checkExpression}}
+    </label>
+    <div ng-if="attributes.type.value === 'date' && attributes.selectedType.value !== 'ranged' && !attributes.dateFormating.value" style="margin-top:-2px">
+        <mdp-date-picker class="dfx-core-gc-datetime-picker" ng-model="attributes.designDate.value" md-placeholder="Enter date"></mdp-date-picker>
+    </div>
+    <div ng-if="attributes.type.value === 'date' && attributes.selectedType.value === 'ranged' && !attributes.dateFormating.value" style="margin-top:-2px">
+        <mdp-date-picker class="dfx-core-gc-datetime-picker" ng-model="attributes.designDate.value" mdp-min-date="minDate" mdp-max-date="maxDate" aria-label="{{minDate}} {{maxDate}}" md-placeholder="Enter date"></mdp-date-picker>
+    </div>
+    <div ng-if="attributes.type.value === 'date' && attributes.selectedType.value !== 'ranged' && attributes.dateFormating.value" style="margin-top:-2px">
+        <mdp-date-picker class="dfx-core-gc-datetime-picker" mdp-format="{{attributes.dateFormat.value}}" ng-model="attributes.designDate.value" md-placeholder="Enter date"></mdp-date-picker>
+    </div>
+    <div ng-if="attributes.type.value === 'date' && attributes.selectedType.value === 'ranged' && attributes.dateFormating.value" style="margin-top:-2px">
+        <mdp-date-picker class="dfx-core-gc-datetime-picker" mdp-format="{{attributes.dateFormat.value}}" ng-model="attributes.designDate.value" mdp-min-date="minDate" mdp-max-date="maxDate" aria-label="{{minDate}} {{maxDate}}" md-placeholder="Enter date"></mdp-date-picker>
+    </div>
+    <div ng-if="attributes.type.value === 'time' && !attributes.timeFormating.value " style="margin-top:-2px">
+        <mdp-time-picker class="dfx-core-gc-datetime-picker" ng-model="attributes.designTime.value" md-placeholder="Enter time"></mdp-time-picker>
+    </div>
+    <div ng-if="attributes.type.value === 'time' && attributes.timeFormating.value " style="margin-top:-2px">
+        <mdp-time-picker class="dfx-core-gc-datetime-picker" mdp-format="{{attributes.timeFormat.value}}" ng-model="attributes.designTime.value" md-placeholder="Enter time"></mdp-time-picker>
+    </div>
+</div>

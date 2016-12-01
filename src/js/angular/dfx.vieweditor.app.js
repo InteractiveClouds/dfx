@@ -1,4 +1,4 @@
-var dfxViewEditorApp = angular.module("dfxViewEditorApp", ['ngMaterial', 'ngMdIcons', 'dfxGControls', 'dfxStudioApi', 'nsPopover']);
+var dfxViewEditorApp = angular.module("dfxViewEditorApp", ['ngMaterial', 'ngMdIcons', 'dfxGControls', 'dfxStudioApi', 'nsPopover', 'mdPickers']);
 
 dfxViewEditorApp.config(function($mdThemingProvider) {
     $mdThemingProvider.theme('altTheme')
@@ -1023,6 +1023,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
             'input': {'default_name':'inpInput', 'flex':'true'},
             'textarea': {'default_name':'txtTextarea', 'flex':'true'},
             'datepicker': {'default_name':'dtField', 'flex':'true'},
+            'datetime': {'default_name':'mdpDatetime', 'flex':'true'},
             'select': {'default_name':'selSelect', 'flex':'true'},
             'slider': {'default_name':'sldSlider', 'flex':'true'},
             'knob': {'default_name':'knbKnob', 'flex':'false'},

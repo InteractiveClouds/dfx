@@ -1,0 +1,286 @@
+<div class="dfx-ve-property-treeview hover">
+    <ul>
+        <li>
+            <input class="dfx-ve-property-treeview-button" type="checkbox" id="item-0" />
+            <label for="item-0">Main Properties</label>
+            <ul class="dfx-ve-property-treeview-content">
+                <li class="col-md-12">
+                    <span class="col-md-4">Id:</span>
+                    <input class="col-md-8" type="text" ng-model="component_id" disabled/>
+                </li>
+                <li class="col-md-12">
+                    <span class="col-md-4">Template:</span>
+                    <input class="col-md-8" type="text" ng-model="attributes.template.value" ng-change="overrideAttribute('template')" disabled/>
+                </li>
+                <li class="col-md-12">
+                    <span class="col-md-4">Name:</span>
+                    <input class="col-md-8" type="text" ng-model="attributes.name.value" ng-change="overrideAttribute('name')" ng-focus="cacheAttributeOldValue({'name':'name'})" ng-blur="cacheAttributeNewValue('name')"/>
+                </li>
+                <li class="col-md-12">
+                    <span class="col-md-4">Type:</span>
+                    <div class="col-md-8" layout="row">
+                        <md-radio-group class="dfx-ve-property-treeview-radiogroup row-radio" ng-model="attributes.type.value" ng-change="overrideAttribute('type')" ng-focus="cacheAttributeOldValue({'name':'type'})" ng-blur="cacheAttributeNewValue('type')">
+                            <md-radio-button class="md-primary" value="date" aria-label="Direction">Date</md-radio-button>
+                            <md-radio-button class="md-primary" value="time" aria-label="Direction">Time</md-radio-button>
+                        </md-radio-group>
+                    </div>
+                </li>
+                <li class="col-md-12">
+                    <span class="col-md-4">Binding:</span>
+                    <div class="col-md-8" layout="row">
+                        <input class="col-md-12" type="text" ng-model="attributes.bindingExpression.value" style="margin-left:-15px;" ng-change="overrideAttribute('bindingExpression')" ng-focus="cacheAttributeOldValue({'name':'bindingExpression'})" ng-blur="cacheAttributeNewValue('bindingExpression')"/>
+                        <dfx-ve-expression-editor></dfx-ve-expression-editor>
+                    </div>
+                </li>
+                <li class="col-md-12">
+                    <span class="col-md-4">Label:</span>
+                    <div class="col-md-8" layout="row">
+                        <input class="col-md-12" type="text" ng-model="attributes.label.value" style="margin-left:-15px;" ng-change="overrideAttribute('label')" ng-focus="cacheAttributeOldValue({'name':'label'})" ng-blur="cacheAttributeNewValue('label')"/>
+                        <dfx-ve-expression-editor></dfx-ve-expression-editor>
+                    </div>
+                </li>
+                <li class="col-md-12" ng-if="attributes.type.value === 'date'">
+                    <span class="col-md-4">Ranged Date:</span>                    
+                    <span class="col-md-8"><md-checkbox style="margin: 0" class="md-primary" ng-model="attributes.selectedType.value" ng-true-value="'ranged'" ng-false-value="'standard'" ng-change="overrideAttribute('selectedType');setAlignment(attributes.alignment.value);" ng-focus="cacheAttributeOldValue({'name':'selectedType'})" ng-blur="cacheAttributeNewValue('selectedType')" aria-label="selectedType"></md-checkbox></span>
+                </li>
+                <li class="col-md-12" ng-if="attributes.type.value === 'date' && attributes.selectedType.value === 'ranged'">
+                    <span class="col-md-4">Months before:</span>
+                    <input type="number" min="1" class="col-md-8" ng-model="attributes.ranged.monthsBefore" ng-change="overrideAttribute('ranged.monthsBefore');setMinDate(attributes.ranged.monthsBefore);" ng-focus="cacheAttributeOldValue({'name':'ranged.monthsBefore'})" ng-blur="cacheAttributeNewValue('ranged.monthsBefore')"/>
+                </li>
+                <li class="col-md-12" ng-if="attributes.type.value === 'date' && attributes.selectedType.value === 'ranged'">
+                    <span class="col-md-4">Months after:</span>
+                    <input type="number" min="1" class="col-md-8" ng-model="attributes.ranged.monthsAfter" ng-change="overrideAttribute('ranged.monthsAfter');setMaxDate(attributes.ranged.monthsAfter);" ng-focus="cacheAttributeOldValue({'name':'ranged.monthsAfter'})" ng-blur="cacheAttributeNewValue('ranged.monthsAfter')"/>
+                </li>
+                <li class="col-md-12">
+                    <span class="col-md-4" style="margin-top: 5px">Required:</span>
+                    <md-input-container class="col-md-8" style="padding: 0 0 10px">
+                        <md-select aria-label="isRequire" ng-model="attributes.isDateRequired.value" ng-change="overrideAttribute('isDateRequired');cacheAttributeOldValue({'value':{{attributes.isDateRequired.value}}});cacheAttributeNewValue('isDateRequired');">
+                            <md-option ng-repeat="isRequire in attributes.requireOptions" value="{{isRequire}}">{{isRequire}}</md-option>
+                        </md-select>
+                    </md-input-container>
+                </li>
+                <li class="col-md-12" dfx-gc-property="display">
+                    <span class="col-md-4">Display:</span>
+                    <div class="col-md-8" layout="row">
+                        <input class="col-md-12" type="text" ng-model="attributes.display.value" style="margin-left:-15px;" ng-change="overrideAttribute('display')" ng-focus="cacheAttributeOldValue({'name':'display'})" ng-blur="cacheAttributeNewValue('display')"/>
+                        <dfx-ve-expression-editor></dfx-ve-expression-editor>
+                    </div>
+                </li>
+                <li class="col-md-12" dfx-gc-property="disabled">
+                    <span class="col-md-4">Disabled:</span>
+                    <div class="col-md-8" layout="row">
+                        <input class="col-md-12" type="text" ng-model="attributes.disabled.value" style="margin-left:-15px;" ng-change="overrideAttribute('disabled')" ng-focus="cacheAttributeOldValue({'name':'disabled'})" ng-blur="cacheAttributeNewValue('disabled')"/>
+                        <dfx-ve-expression-editor></dfx-ve-expression-editor>
+                    </div>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <ul>
+        <li ng-if="attributes.type.value === 'date'">
+            <input class="dfx-ve-property-treeview-button" type="checkbox" id="date-formats" />
+            <label for="date-formats">Date Formating</label>
+            <ul class="dfx-ve-property-treeview-content">
+                <li class="col-md-12">
+                    <span class="col-md-4">Enable:</span>                    
+                    <span class="col-md-8"><md-checkbox style="margin: 0" class="md-primary" ng-model="attributes.dateFormating.value" ng-change="overrideAttribute('dateFormating');setAlignment(attributes.alignment.value);" ng-focus="cacheAttributeOldValue({'name':'dateFormating'})" ng-blur="cacheAttributeNewValue('dateFormating')" aria-label="dateFormating"></md-checkbox></span>
+                </li>
+                <li class="col-md-12">
+                    <span class="col-md-4">Notations:</span>
+                    <span class="col-md-8">
+                        <div style="display: inline-block; margin-right: 10px;">
+                            <md-checkbox style="width:20px;margin:0" class="md-primary" ng-model="attributes.dateNotations.year" ng-true-value="'true'" ng-false-value="'false'" ng-change="overrideAttribute('dateNotations.year'); rebuildDateNotations(); dfxFormatDate()" ng-focus="cacheAttributeOldValue({'name':'dateNotations.year'})" ng-blur="cacheAttributeNewValue('dateNotations.year')" aria-label="{{attributes.dateNotations.year}}"></md-checkbox>
+                            <span>Year</span>
+                        </div>
+                        <div style="display: inline-block; margin-right: 10px;">
+                            <md-checkbox style="width:20px;margin:0" class="md-primary" ng-model="attributes.dateNotations.month" ng-true-value="'true'" ng-false-value="'false'" ng-change="overrideAttribute('dateNotations.month'); rebuildDateNotations(); dfxFormatDate()" ng-focus="cacheAttributeOldValue({'name':'dateNotations.month'})" ng-blur="cacheAttributeNewValue('dateNotations.month')" aria-label="{{attributes.dateNotations.month}}"></md-checkbox>
+                            <span>Month</span>
+                        </div>
+                        <div style="display: inline-block; margin-right: 10px;">
+                            <md-checkbox style="width:20px;margin:0" class="md-primary" ng-model="attributes.dateNotations.day" ng-true-value="'true'" ng-false-value="'false'" ng-change="overrideAttribute('dateNotations.day'); rebuildDateNotations(); dfxFormatDate()" ng-focus="cacheAttributeOldValue({'name':'dateNotations.day'})" ng-blur="cacheAttributeNewValue('dateNotations.day')" aria-label="{{attributes.dateNotations.day}}"></md-checkbox>
+                            <span>Day</span>
+                        </div>
+                    </span>
+                </li>
+                <li class="col-md-12">
+                    <span class="col-md-4">Separator:</span>
+                    <span class="col-md-8" layout="row">
+                        <md-radio-group class="dfx-ve-property-treeview-radiogroup row-radio" ng-model="attributes.dateSeparator.value" ng-change="overrideAttribute('dateSeparator'); dfxFormatDate()" ng-focus="cacheAttributeOldValue({'name':'dateSeparator'})" ng-blur="cacheAttributeNewValue('dateSeparator')">
+                            <md-radio-button class="md-primary" value="slash" aria-label="Direction">Slash</md-radio-button>
+                            <md-radio-button class="md-primary" value="dot" aria-label="Direction">Dot</md-radio-button>
+                            <md-radio-button class="md-primary" value="dash" aria-label="Direction">Dash</md-radio-button>
+                        </md-radio-group>
+                    </span>
+                </li>
+                <li class="col-md-12">
+                    <span class="col-md-4" style="padding: 3px 0 0 5px">Order:</span>
+                    <md-input-container class="col-md-8" style="padding: 0 0 10px">
+                        <md-select ng-model="attributes.dateOrder.value" aria-label="{{attributes.dateOrder.value}}" ng-change="overrideAttribute('dateOrder'); cacheAttributeOldValue({'value':'dateOrder'}); cacheAttributeNewValue('dateOrder'); dfxFormatDate()">                                     
+                            <md-option value="MM/DD/YYYY">Month Day Year</md-option>
+                            <md-option value="DD/MM/YYYY">Day Month Year</md-option>
+                            <md-option value="YYYY/MM/DD">Year Month Day</md-option>
+                            <md-option value="YYYY/DD/MM">Year Day Month</md-option>
+                        </md-select>
+                    </md-input-container>
+                </li>                
+            </ul>
+        </li>
+    </ul>
+    <ul >
+        <li ng-if="attributes.type.value === 'time'">
+            <input class="dfx-ve-property-treeview-button" type="checkbox" id="time-formats" />
+            <label for="time-formats">Time Formating</label>
+            <ul class="dfx-ve-property-treeview-content">
+                <li class="col-md-12">
+                    <span class="col-md-4">Enable:</span>                    
+                    <span class="col-md-8"><md-checkbox style="margin: 0" class="md-primary" ng-model="attributes.timeFormating.value" ng-change="overrideAttribute('timeFormating');setAlignment(attributes.alignment.value);" ng-focus="cacheAttributeOldValue({'name':'timeFormating'})" ng-blur="cacheAttributeNewValue('timeFormating')" aria-label="timeFormating"></md-checkbox></span>
+                </li>
+                <li class="col-md-12" >
+                    <span class="col-md-4">Notations:</span>
+                    <span class="col-md-8">
+                        <div style="display: inline-block; margin-right: 10px;">
+                            <md-checkbox style="width:20px;margin:0" class="md-primary" ng-model="attributes.timeNotations.hours" ng-true-value="'true'" ng-false-value="'false'" ng-change="overrideAttribute('timeNotations.hours'); rebuildtimeNotations(); dfxFormatTime()" ng-focus="cacheAttributeOldValue({'name':'timeNotations.hours'})" ng-blur="cacheAttributeNewValue('timeNotations.hours')" aria-label="{{attributes.timeNotations.hours}}"></md-checkbox>
+                            <span>Hours</span>
+                        </div>
+                        <div style="display: inline-block; margin-right: 10px;">
+                            <md-checkbox style="width:20px;margin:0" class="md-primary" ng-model="attributes.timeNotations.minutes" ng-true-value="'true'" ng-false-value="'false'" ng-change="overrideAttribute('timeNotations.minutes'); rebuildtimeNotations(); dfxFormatTime()" ng-focus="cacheAttributeOldValue({'name':'timeNotations.minutes'})" ng-blur="cacheAttributeNewValue('timeNotations.minutes')" aria-label="{{attributes.timeNotations.minutes}}"></md-checkbox>
+                            <span>Minutes</span>
+                        </div>
+                        <div style="display: inline-block; margin-right: 10px;">
+                            <md-checkbox style="width:20px;margin:0" class="md-primary" ng-model="attributes.timeNotations.ampm" ng-true-value="'true'" ng-false-value="'false'" ng-change="overrideAttribute('timeNotations.ampm'); rebuildtimeNotations(); dfxFormatTime()" ng-focus="cacheAttributeOldValue({'name':'timeNotations.ampm'})" ng-blur="cacheAttributeNewValue('timeNotations.ampm')" aria-label="{{attributes.timeNotations.ampm}}"></md-checkbox>
+                            <span>AM / PM</span>
+                        </div>
+                    </span>
+                </li>
+                <li class="col-md-12" >
+                    <span class="col-md-4">Separator:</span>
+                    <span class="col-md-8" layout="row">
+                        <md-radio-group class="dfx-ve-property-treeview-radiogroup row-radio" ng-model="attributes.timeSeparator.value" ng-change="overrideAttribute('timeSeparator'); dfxFormatTime()" ng-focus="cacheAttributeOldValue({'name':'timeSeparator'})" ng-blur="cacheAttributeNewValue('timeSeparator')">
+                            <md-radio-button class="md-primary" value="slash" aria-label="Direction">Slash</md-radio-button>
+                            <md-radio-button class="md-primary" value="dots" aria-label="Direction">Dots</md-radio-button>
+                            <md-radio-button class="md-primary" value="dash" aria-label="Direction">Dash</md-radio-button>
+                        </md-radio-group>
+                    </span>
+                </li>
+                <li class="col-md-12" >
+                    <span class="col-md-4" style="padding: 3px 0 0 5px">Order:</span>
+                    <md-input-container class="col-md-8" style="padding: 0 0 10px">
+                        <md-select ng-model="attributes.timeOrder.value" aria-label="{{attributes.timeOrder.value}}" ng-change="overrideAttribute('timeOrder'); cacheAttributeOldValue({'value':'timeOrder'}); cacheAttributeNewValue('timeOrder'); dfxFormatTime()">                                     
+                            <md-option value="HH:mm A">Hours Minutes AM/PM</md-option>
+                            <md-option value="mm:HH A">Minutes Hours AM/PM</md-option>
+                            <md-option value="A HH:mm">AM/PM Hours Minutes</md-option>
+                            <md-option value="A mm:HH">AM/PM Minutes Hours</md-option>
+                        </md-select>
+                    </md-input-container>
+                </li>                
+            </ul>
+        </li>
+    </ul>
+    <ul>
+        <li>
+            <input class="dfx-ve-property-treeview-button" type="checkbox" id="item-1" />
+            <label for="item-1">Styling Attributes</label>
+            <ul class="dfx-ve-property-treeview-content">
+                <li class="col-md-12">
+                    <span class="col-md-12">
+                        <div layout>
+                            <span class="col-md-3" style="margin-top:10px;margin-left:-5px;">Flex Width:</span>
+                            <md-slider class="md-primary" flex ng-model="attributes.flex.value" step="5" min="0" max="100" aria-label="Flex width:" ng-change="overrideAttribute('flex');changeWidth()" ng-model-options="{ debounce: 500 }" ng-focus="cacheAttributeOldValue({'name':'flex'})" ng-blur="cacheAttributeNewValue('flex')">
+                            </md-slider>
+                            <div flex="20" layout layout-align="center center">
+                                <input flex type="number" step="5" min="0" max="100" ng-model="attributes.flex.value" aria-label="blue" aria-controls="flex-width" style="margin-left:5px; text-align: center" ng-change="overrideAttribute('flex');changeWidth()" ng-focus="cacheAttributeOldValue({'name':'flex'})" ng-blur="cacheAttributeNewValue('flex')">
+                            </div>
+                        </div>
+                    </span>
+                </li>
+                <li class="col-md-12">
+                    <span class="col-md-4" style="padding: 3px 0 0 5px">Alignment:</span>
+                    <md-input-container class="col-md-8" style="padding: 0 0 10px">
+                        <md-select aria-label="dp_alignment" ng-model="attributes.alignment.value">
+                            <md-option ng-repeat="al in ['left', 'center','right']" ng-value="al">{{al}}</md-option>
+                        </md-select>
+                    </md-input-container>
+                </li>
+                <li class="col-md-12">
+                    <span class="col-md-4">Style:</span>
+                    <div class="col-md-8" layout="row">
+                        <input class="col-md-12" type="text" ng-model="attributes.style.value" style="margin-left:-15px;" ng-change="overrideAttribute('style')" ng-focus="cacheAttributeOldValue({'name':'style'})" ng-blur="cacheAttributeNewValue('style')"/>
+                        <dfx-ve-css-style></dfx-ve-css-style>
+                    </div>
+                </li>
+                <li class="col-md-12">
+                    <span class="col-md-4">Class:</span>
+                    <input class="col-md-8" type="text" ng-model="attributes.classes.value" ng-change="overrideAttribute('classes')" ng-focus="cacheAttributeOldValue({'name':'classes'})" ng-blur="cacheAttributeNewValue('classes')"/>
+                </li>
+                <li class="col-md-12">
+                    <span class="col-md-4">Dynamic Class:</span>
+                    <input class="col-md-8" type="text" ng-model="attributes.dynamicClasses.value" ng-change="overrideAttribute('dynamicClasses')" ng-focus="cacheAttributeOldValue({'name':'dynamicClasses'})" ng-blur="cacheAttributeNewValue('dynamicClasses')"/>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <ul>
+        <li>
+            <input class="dfx-ve-property-treeview-button" type="checkbox" checked id="item-2" />
+            <label for="item-2">Events</label>
+            <ul class="dfx-ve-property-treeview-content">
+                <li class="col-md-12">
+                    <span class="col-md-4">On Click:</span>
+                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onclick.value" ng-change="overrideAttribute('onclick')" ng-focus="cacheAttributeOldValue({'name':'onclick'})" ng-blur="cacheAttributeNewValue('onclick')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                </li>
+                <li class="col-md-12">
+                    <span class="col-md-4">On Double Click:</span>
+                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.ondblclick.value" ng-change="overrideAttribute('ondblclick')" ng-focus="cacheAttributeOldValue({'name':'ondblclick'})" ng-blur="cacheAttributeNewValue('ondblclick')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                </li>
+                <li class="col-md-12">
+                    <span class="col-md-4">On Change:</span>
+                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onchange.value" ng-change="overrideAttribute('onchange')" ng-focus="cacheAttributeOldValue({'name':'onchange'})" ng-blur="cacheAttributeNewValue('onchange')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                </li>
+                <li class="col-md-12">
+                    <span class="col-md-4">On Focus:</span>
+                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onfocus.value" ng-change="overrideAttribute('onfocus')" ng-focus="cacheAttributeOldValue({'name':'onfocus'})" ng-blur="cacheAttributeNewValue('onfocus')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                </li>
+                <li class="col-md-12">
+                    <span class="col-md-4">On Blur:</span>
+                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onblur.value" ng-change="overrideAttribute('onblur')" ng-focus="cacheAttributeOldValue({'name':'onblur'})" ng-blur="cacheAttributeNewValue('onblur')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                </li>
+                <li class="col-md-12">
+                    <span class="col-md-4">On Key Press:</span>
+                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onkeypress.value" ng-change="overrideAttribute('onkeypress')" ng-focus="cacheAttributeOldValue({'name':'onkeypress'})" ng-blur="cacheAttributeNewValue('onkeypress')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                </li>
+                <li class="col-md-12">
+                    <span class="col-md-4">On Key Down:</span>
+                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onkeydown.value" ng-change="overrideAttribute('onkeydown')" ng-focus="cacheAttributeOldValue({'name':'onkeydown'})" ng-blur="cacheAttributeNewValue('onkeydown')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                </li>
+                <li class="col-md-12">
+                    <span class="col-md-4">On Key Up:</span>
+                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onkeyup.value" ng-change="overrideAttribute('onkeyup')" ng-focus="cacheAttributeOldValue({'name':'onkeyup'})" ng-blur="cacheAttributeNewValue('onkeyup')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                </li>
+                <li class="col-md-12">
+                    <span class="col-md-4">On Mouse Over:</span>
+                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onmouseover.value" ng-change="overrideAttribute('onmouseover')" ng-focus="cacheAttributeOldValue({'name':'onmouseover'})" ng-blur="cacheAttributeNewValue('onmouseover')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                </li>
+                <li class="col-md-12">
+                    <span class="col-md-4">On Mouse Enter:</span>
+                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onmouseenter.value" ng-change="overrideAttribute('onmouseenter')" ng-focus="cacheAttributeOldValue({'name':'onmouseenter'})" ng-blur="cacheAttributeNewValue('onmouseenter')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                </li>
+                <li class="col-md-12">
+                    <span class="col-md-4">On Mouse Move:</span>
+                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onmousemove.value" ng-change="overrideAttribute('onmousemove')" ng-focus="cacheAttributeOldValue({'name':'onmousemove'})" ng-blur="cacheAttributeNewValue('onmousemove')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                </li>
+                <li class="col-md-12">
+                    <span class="col-md-4">On Mouse Leave:</span>
+                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onmouseleave.value" ng-change="overrideAttribute('onmouseleave')" ng-focus="cacheAttributeOldValue({'name':'onmouseleave'})" ng-blur="cacheAttributeNewValue('onmouseleave')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                </li>
+                <li class="col-md-12">
+                    <span class="col-md-4">On Mouse Down:</span>
+                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onmousedown.value" ng-change="overrideAttribute('onmousedown')" ng-focus="cacheAttributeOldValue({'name':'onmousedown'})" ng-blur="cacheAttributeNewValue('onmousedown')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                </li>
+                <li class="col-md-12">
+                    <span class="col-md-4">On Mouse Up:</span>
+                    <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onmouseup.value" ng-change="overrideAttribute('onmouseup')" ng-focus="cacheAttributeOldValue({'name':'onmouseup'})" ng-blur="cacheAttributeNewValue('onmouseup')" class="col-md-12" style="margin-left:-15px;"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>

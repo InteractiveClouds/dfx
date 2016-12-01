@@ -1,4 +1,4 @@
-var dfxGCC = angular.module('dfxGCC',['ngMaterial', 'ngMdIcons', 'ngMessages', 'ngSanitize', 'ngAnimate', 'nvd3', 'ngQuill', 'jkAngularCarousel', 'ui.knob']);
+var dfxGCC = angular.module('dfxGCC',['ngMaterial', 'ngMdIcons', 'ngMessages', 'ngSanitize', 'ngAnimate', 'nvd3', 'ngQuill', 'jkAngularCarousel', 'ui.knob', 'mdPickers']);
 
 dfxGCC.directive('dfxGccWebBase', ['$rootScope', '$http', '$compile', '$injector', '$mdToast', '$q', '$location', function($rootScope, $http, $compile, $injector, $mdToast, $q, $location) {
     return {
@@ -638,7 +638,7 @@ dfxGCC.directive('dfxGccWebDatepicker', ['$timeout', function($timeout) {
             basectrl.init(scope, element, component, attrs, 'datepicker').then(function() {
                 if ( !scope.attributes.hasOwnProperty('flex') ) { scope.attributes.flex = { "value": 20 }; }
                 scope.attributes.bindingDate.status = "overridden";
-                scope.attributes.ranged.status = "overridden";
+                // scope.attributes.ranged.status = "overridden";
 
                 scope.attributes.designDate.value = new Date();
 
@@ -709,6 +709,87 @@ dfxGCC.directive('dfxGccWebDatepicker', ['$timeout', function($timeout) {
                     }, 0);
                 };
                 scope.changeWidth();
+            });
+        }
+    }
+}]);
+
+dfxGCC.directive('dfxGccWebDatetime', ['$mdpDatePicker', '$mdpTimePicker', '$timeout', function($mdpDatePicker, $mdpTimePicker, $timeout) {
+    return {
+        restrict: 'A',
+        require: '^dfxGccWebBase',
+        scope: true,
+        link: function(scope, element, attrs, basectrl) {
+            var component = scope.$parent.getComponent(element);
+            scope.dp_input;
+            basectrl.init(scope, element, component, attrs, 'datetime').then(function() {
+                if(!scope.labelClass) scope.labelClass = 'dp-label-focus-off';
+
+                if(scope.attributes.dateNotations.hasOwnProperty('status')) delete scope.attributes.dateNotations.status;
+                if(scope.attributes.dateNotations.hasOwnProperty('value')) delete scope.attributes.dateNotations.value;
+                if(scope.attributes.timeNotations.hasOwnProperty('status')) delete scope.attributes.timeNotations.status;
+                if(scope.attributes.timeNotations.hasOwnProperty('value')) delete scope.attributes.timeNotations.value;
+                
+                scope.dateNotations = {"value": JSON.stringify(scope.attributes.dateNotations)};
+                scope.timeNotations = {"value": JSON.stringify(scope.attributes.timeNotations)};
+
+                if(scope.attributes.bindingExpression.value === ""){
+                    scope.attributes.bindingDate.value = new Date();
+                }else{
+                    try{
+                        scope.attributes.bindingDate.value = eval(scope.attributes.bindingExpression.value);
+                    }catch(e){
+                        scope.attributes.bindingDate.value = eval('scope.' + scope.attributes.bindingExpression.value);
+                        scope.attributes.bindingDate.value = new Date(scope.attributes.bindingDate.value);
+                    }
+                }
+
+                scope.setMinDate = function(monthes_before){
+                    scope.minDate = new Date(
+                        eval(scope.attributes.bindingDate.value).getFullYear(),
+                        eval(scope.attributes.bindingDate.value).getMonth() - monthes_before,
+                        eval(scope.attributes.bindingDate.value).getDate());
+                }
+                scope.setMinDate(scope.attributes.ranged.monthsBefore);
+
+                scope.setMaxDate = function(monthes_after){
+                    scope.maxDate = new Date(
+                        eval(scope.attributes.bindingDate.value).getFullYear(),
+                        eval(scope.attributes.bindingDate.value).getMonth() + monthes_after,
+                        eval(scope.attributes.bindingDate.value).getDate());
+                }
+                scope.setMaxDate(scope.attributes.ranged.monthsAfter);
+
+                $timeout(function () {
+                    try{
+                        if(scope.attributes.type.value === 'date') scope.dp_input = '#' + scope.component_id + '_preview > div > mdp-date-picker > div > md-input-container > input';
+                        if(scope.attributes.type.value === 'time') scope.dp_input = '#' + scope.component_id + '_preview > div > mdp-time-picker > div > md-input-container > input';
+                        $(scope.dp_input).focus(function(){ scope.labelClass = 'dp-label-focus-on'; scope.$apply(function(){}); });
+                        $(scope.dp_input).blur(function(){ scope.labelClass = 'dp-label-focus-off'; scope.$apply(function(){}); });
+                    }catch(e){}
+                },0);
+
+                scope.setAlignment = function(alignment){
+                    $timeout(function(){
+                        var dp_input;
+                        if(scope.attributes.type.value === 'date') dp_input = '#' + scope.component_id + '_preview > div > mdp-date-picker > div > md-input-container > input';
+                        if(scope.attributes.type.value === 'time') dp_input = '#' + scope.component_id + '_preview > div > mdp-time-picker > div > md-input-container > input';
+                        $(dp_input).css('text-align', alignment);
+                    },0)
+                }
+                scope.$watch('attributes.alignment.value', function(newValue){ scope.setAlignment(newValue); });                
+
+                scope.changeWidth = function(){ $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%'); };
+                if(!angular.isDefined(attrs.dfxGcEdit)) scope.changeWidth();
+
+                scope.showDatePicker = function (ev) {
+                    $mdpDatePicker(scope.attributes.bindingDate.value, { targetEvent: ev }).then(function (selectedDate) {
+                        scope.attributes.bindingDate.value = selectedDate;
+                        console.log('scope in mdpDatePicker', scope);
+                    });
+                };
+
+                console.log('scope', scope);
             });
         }
     }
