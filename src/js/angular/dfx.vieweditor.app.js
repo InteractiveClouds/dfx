@@ -1551,6 +1551,8 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
                         $scope.gc_templates_to_drag_drop.push( $scope.gc_templates[i] );
                     }
                 }
+                $scope.gc_templates_to_drag_drop_filtered = angular.copy($scope.gc_templates_to_drag_drop);
+                $scope.gc_template_filter = '';
                 makeGcTemplatesDraggable();
             }, 0);
         };
@@ -1641,8 +1643,17 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
 
         var application_name = $('#dfx-view-editor-body').attr('data-application');
         var view_platform = $('#dfx-view-editor-body').attr('data-platform');
-        
+
         $window.open( '/studio/gctemplates/' + view_platform + '/' + application_name + '/' + gc_template_name + '/index.html', '_blank' );
+    };
+
+    $scope.filterGcTemplates = function() {
+        if ($scope.gc_templates_to_drag_drop) {
+            $scope.gc_templates_to_drag_drop_filtered = $scope.gc_templates_to_drag_drop.filter(function(gc_template) {
+                return gc_template.name.indexOf($scope.gc_template_filter) > -1
+                    || gc_template.description.indexOf($scope.gc_template_filter) > -1;
+            });
+        }
     };
     /*$scope.previewGcTemplate = function(gc_template, $event) {
         var fillPreviewContainer = function(container_id) {
