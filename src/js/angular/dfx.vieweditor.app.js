@@ -506,6 +506,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
                 }
                 var arr_dependencies = m[3].split(',');
                 for (dependency in arr_dependencies) {
+                    if (isNaN(dependency)) { continue; }
                     if (arr_dependencies[dependency].trim() != '') {
                         var current_dependency =
                             arr_dependencies[dependency].substring(
