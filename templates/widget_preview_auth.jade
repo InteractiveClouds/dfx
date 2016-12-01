@@ -31,19 +31,19 @@ html
                                 label(for="previewPassword") Password
                                 input#password.form-control(type="password", style="border-radius:0px", placeholder="Enter password")
                             button#login_submit.btn.btn-sm.btn-default(type="submit") Sign in
-        script(type="text/javascript").
-          /* simulate user login */
-          var cached_username = window.localStorage.getItem('DFX_ve_login_userid');
-          var cached_app_tokens = window.localStorage.getItem('DFX_app_tokens');
-          if (cached_app_tokens == '{}') {
-            if (cached_username!=null && cached_username!='') {
-              $('#waiting_message').css('display', 'block');
-              $('#username').val(cached_username);
-              $('#password').val(window.localStorage.getItem('DFX_ve_login_password'));
-            } else {
-              $('#login_panel').css('display', 'block');
-            }
-          } else {
-            $('#waiting_message').css('display', 'block');
-          }
         script(src="/js/preview/login.js")
+        script(type="text/javascript").
+            /* simulate user login */
+            var cached_username = window.localStorage.getItem('DFX_ve_login_userid');
+            var cached_app_tokens = window.localStorage.getItem('DFX_app_tokens');
+            if (cached_app_tokens == '{}') {
+                if (cached_username!=null && cached_username!='') {
+                    $('#waiting_message').css('display', 'block');
+                    $('#username').val(cached_username);
+                    $('#password').val(window.localStorage.getItem('DFX_ve_login_password'));
+                } else {
+                    $('#login_panel').css('display', 'block');
+                }
+            } else {
+                $('#waiting_message').css('display', 'block');
+            }
