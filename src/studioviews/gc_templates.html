@@ -1,40 +1,51 @@
-<div layout="row" layout-align="space-between center" style="background:#DCDCDC">
-    <h4 style="padding: 5px 10px 4px;">
-        Applications > {{app_name}} > <span style="text-transform: capitalize;">{{view_platform === 'web' ? 'Desktop' : view_platform }}</span> > GC Templates
-    </h4>
-</div>
-
-<div layout="row">
-    <md-content class="md-padding flex-100" layout="column">
-        <md-card style="flex-grow:3;overflow:hidden;">
-            <md-card-content style="padding:0;">
-                <table class="datatable" style="width:100%;">
-                    <thead>
-                        <tr style="border-bottom:1px solid #C7C7C7;">
-                            <th width="15%">Name</th>
-                            <th width="15%">App</th>
-                            <th width="15%">Platform</th>
-                            <th width="45%">Description</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                </table>
-                <div id="scope-source-table" style="padding:0;overflow-y:auto;">
-                    <table class="datatable" style="width:100%;">
-                        <tbody>
-                            <tr ng-repeat="gc_template in gc_templates track by $index" ng-click="" style="cursor:pointer;">
-                                <td width="15%">{{gc_template.name}}</td>
-                                <td width="15%">{{gc_template.application}}</td>
-                                <td width="15%">{{gc_template.platform}}</td>
-                                <td width="45%">{{gc_template.description}}</td>
-                                <td>
-                                    <md-button ng-click="edit( gc_template )" ng-disabled="gc_template.name ==='default'" style="margin: 0; padding: 0; min-width: 20px" aria-label="editGcTemplate"><md-icon class="fa fa-edit" style="font-size:20px; padding-top: 5px;"></md-icon></md-button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+<md-content ng-controller="dfx_studio_gc_template_controller">
+    <div ng-hide="assets.hide_areas">
+        <div layout="row">
+            <md-content class="md-padding flex-100" layout="column">
+                <div layout="row" class="col-md-12" layout-align="end end">
+                    <span class="col-md-4" style="margin-top: 10px;">Platform:</span>
+                    <md-input-container class="col-md-4" style="margin-top: 0px;">
+                        <md-select ng-model="gc_templates_platform">
+                            <md-option value="web">Web</md-option>
+                            <md-option value="mobile">Mobile</md-option>
+                        </md-select>
+                    </md-input-container>
+                    <div class="col-md-4">
+                        <input type="text" ng-model="gc_templates_filter" style="width:100%;" placeholder="Search GC Template"/>
+                    </div>
                 </div>
-            </md-card-content>
-        </md-card>
-    </md-content>
-</div>
+                <md-card style="flex-grow:3;overflow:hidden;">
+                    <md-card-content style="padding:0;">
+                        <table class="datatable" style="width:100%;">
+                            <thead>
+                                <tr style="border-bottom:1px solid #C7C7C7;">
+                                    <th width="20%">Name</th>
+                                    <th width="20%">App</th>
+                                    <th width="50%">Description</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div id="scope-source-table" style="padding:0;overflow-y:auto;">
+                            <table class="datatable" style="width:100%;">
+                                <tbody>
+                                    <tr ng-repeat="gc_template in gc_templates track by $index" ng-click="" style="cursor:pointer;">
+                                        <td width="20%">{{gc_template.name}}</td>
+                                        <td width="20%">{{gc_template.application}}</td>
+                                        <td width="50%">{{gc_template.description}}</td>
+                                        <td>
+                                            <div layout="row" layout-align="space-between center">
+                                                <md-button ng-click="edit(gc_template)" ng-disabled="gc_template.name ==='default'" style="margin: 0; padding: 0; min-width: 20px"><md-icon class="fa fa-edit" style="font-size:20px; padding-top: 5px;"></md-icon></md-button>
+                                                <md-button ng-click="confirmDelete($event, gc_template.name)" ng-disabled="gc_template.name ==='default'" style="margin: 0; padding: 0; min-width: 20px"><md-icon class="fa fa-trash" style="font-size:20px; padding-top: 3px;"></md-icon></md-button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </md-card-content>
+                </md-card>
+            </md-content>
+        </div>
+    </div>
+</md-content>

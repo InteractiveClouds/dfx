@@ -75,14 +75,6 @@ dfxStudioApp.config([ '$routeProvider', '$mdThemingProvider', function($routePro
             controller: 'dfx_studio_view_category_controller',
             templateUrl: 'studioviews/views_categories.html'
         })
-        .when('/gc_templates/:app_name/:platform', {
-            controller: 'dfx_studio_gc_template_controller',
-            templateUrl: 'studioviews/gc_templates.html'
-        })
-        .when('/gc_templates/update/:app_name/:platform/:gc_name', {
-            controller: 'dfx_studio_gc_template_controller',
-            templateUrl: 'studioviews/gc_template.html'
-        })
         .when('/api_so/create/:appname', {
             controller: 'dfx_studio_api_so_controller',
             templateUrl: 'studioviews/api_so.html'
@@ -238,7 +230,6 @@ dfxStudioApp.controller("dfx_studio_controller", [ '$scope', '$rootScope', '$mdD
             snippet +=  '<md-menu-item><md-button ng-href="#/page/create/'+element+'/'+platform+'"><md-icon class="fa fa-plus" aria-label="Create Page"></md-icon>Create Page</md-button></md-menu-item><md-menu-item><md-button ng-href="#/pages_categories/'+element+'/'+platform+'"><md-icon class="fa fa-list" aria-label="Manage Categories"></md-icon>Manage Categories</md-button></md-menu-item>';
         } else if (entity=='view') {
             snippet +=  '<md-menu-item><md-button ng-href="#/view/create/'+element+'/'+platform+'"><md-icon class="fa fa-plus" aria-label="Create View"></md-icon>Create View</md-button></md-menu-item><md-menu-item><md-button ng-href="#/views_categories/'+element+'/'+platform+'"><md-icon class="fa fa-list" aria-label="Manage Categories"></md-icon>Manage Categories</md-button></md-menu-item>';
-            snippet +=  '<md-menu-item><md-button ng-href="#/gc_templates/'+element+'/'+platform+'"><md-icon class="fa fa-cube" aria-label="Manage GC Templates"></md-icon>Manage GC Templates</md-button></md-menu-item>';
         } else if (entity=='api_so') {
             snippet +=  '<md-menu-item><md-button ng-href="#/api_so/create/'+element+'"><md-icon class="fa fa-plus" aria-label="Create API Service Object"></md-icon>Create API Service Object</md-button></md-menu-item><md-menu-item><md-button ng-href="#/api_so_categories/'+element+'"><md-icon class="fa fa-list" aria-label="Manage Categories"></md-icon>Manage Categories</md-button></md-menu-item>';
         } else if (entity=='category') {
@@ -2055,7 +2046,7 @@ dfxStudioApp.controller("dfx_studio_contactus_controller", [ '$scope', 'dfxEmail
     };
 }]);
 
-dfxStudioApp.controller("dfx_studio_configuration_controller", [ '$rootScope', '$scope','dfxApplications', '$timeout', '$routeParams', function($rootScope, $scope, dfxApplications, $timeout, $routeParams) {
+dfxStudioApp.controller("dfx_studio_configuration_controller", [ '$rootScope', '$scope','dfxApplications', '$timeout', '$routeParams', 'dfxGcTemplates', function($rootScope, $scope, dfxApplications, $timeout, $routeParams, dfxGcTemplates) {
     $scope.general = {};
     $scope.devops = {};
     $scope.resources = {};
@@ -4201,32 +4192,36 @@ dfxStudioApp.controller("dfx_studio_view_category_controller", [ '$scope', '$rou
     }
 }]);
 
-dfxStudioApp.controller("dfx_studio_gc_template_controller", [ '$scope', '$routeParams', '$location', '$window', '$mdSidenav', '$mdDialog', '$timeout', 'dfxMessaging', 'dfxGcTemplates', function( $scope, $routeParams, $location, $window, $mdSidenav, $mdDialog, $timeout, dfxMessaging, dfxGcTemplates) {
-    $scope.gc_name = $routeParams.gc_name;
-    $scope.app_name = $routeParams.app_name;
-    $scope.view_platform = $routeParams.platform;
+dfxStudioApp.controller("dfx_studio_gc_template_controller", [ '$scope', '$routeParams', '$window', '$mdSidenav', '$mdDialog', '$timeout', 'dfxMessaging', 'dfxGcTemplates', function( $scope, $routeParams, $window, $mdSidenav, $mdDialog, $timeout, dfxMessaging, dfxGcTemplates) {
+    var parentScope = $scope.$parent.$parent.$parent;
+    parentScope.app_gc_templates = $scope;
 
-    if ($scope.gc_name) {
-        dfxGcTemplates.getOne( $scope, $scope.app_name, $scope.gc_name, $scope.view_platform ).then(function( data ) {
-            $scope.gc_template = data;
-        });
-    } else {
+    if(! $scope.app_name){
+        $scope.app_name = $routeParams.appname;
+    }
+    $scope.view_platform = $routeParams.platform || 'web';
+
+    $scope.getAll = function() {
         dfxGcTemplates.getAll( $scope, $scope.app_name, $scope.view_platform ).then(function( data ) {
             $scope.gc_templates = [];
             for ( var i = 0; i < data.length; i++ ) {
                 $scope.gc_templates.push(data[i]);
             }
         });
-    }
+    };
+    $scope.getAll();
 
     $scope.edit = function( gc_template ) {
-        $location.path('/gc_templates/update/' + gc_template.application + '/' + gc_template.platform + '/' + gc_template.name);
+        $scope.current_gc_template = gc_template;
+        var sideNavInstance = $mdSidenav('side_nav_gc_template');
+        sideNavInstance.toggle();
     };
 
     $scope.update = function() {
-        dfxGcTemplates.update( $scope, $scope.gc_template ).then(function( data ) {
+        dfxGcTemplates.update( $scope, $scope.current_gc_template ).then(function( data ) {
             dfxMessaging.showMessage(data.data);
             $scope.getAll();
+            $scope.closeSidenav();
         });
     };
 
@@ -4235,7 +4230,7 @@ dfxStudioApp.controller("dfx_studio_gc_template_controller", [ '$scope', '$route
         $window.open( '/studio/gctemplates/' + $scope.view_platform + '/' + $scope.app_name + '/' + $scope.gc_name + '/index.html', '_blank' );
     };
 
-    $scope.delete = function( ev ) {
+    $scope.confirmDelete = function(ev, gc_template_name) {
         var confirm = $mdDialog.confirm()
             .title('Are you sure you want to remove this GC Template?')
             .textContent('GC Template will be removed from the repository.')
@@ -4244,11 +4239,10 @@ dfxStudioApp.controller("dfx_studio_gc_template_controller", [ '$scope', '$route
             .cancel('Cancel')
             .ok('OK');
         $mdDialog.show(confirm).then(function() {
-            dfxGcTemplates.remove( $scope, $scope.gc_name, $scope.app_name, $scope.view_platform ).then(function( data ) {
+            dfxGcTemplates.remove( $scope, gc_template_name, $scope.app_name, $scope.view_platform ).then(function( data ) {
                 if ( data.status && data.status === 200 ) {
-                    dfxMessaging.showMessage("Template " + $scope.gc_name + " was successfully deleted!");
+                    dfxMessaging.showMessage("Template " + gc_template_name + " was successfully deleted!");
                     $scope.getAll();
-                    $location.path('/home');
                 } else {
                     dfxMessaging.showWarning(data.data);
                 }
@@ -4257,20 +4251,10 @@ dfxStudioApp.controller("dfx_studio_gc_template_controller", [ '$scope', '$route
         });
     };
 
-    $scope.cancel = function( ev ) {
-        var confirm = $mdDialog.confirm()
-            .title('Are you sure to exit?')
-            .textContent('All changes will be lost.')
-            .ariaLabel('leave Page')
-            .targetEvent(ev)
-            .cancel('Cancel')
-            .ok('OK');
-        $mdDialog.show(confirm).then(function() {
-            $scope.getAll();
-            $location.path('/home');
-        }, function() {
-        });
-    };
+    $scope.closeSidenav = function() {
+        var sideNavInstance = $mdSidenav('side_nav_gc_template');
+        sideNavInstance.toggle();
+    }
 }]);
 
 dfxStudioApp.controller("dfx_studio_page_controller", [ '$scope', '$routeParams', '$mdDialog', '$location', '$window', 'dfxMessaging', 'dfxPages', function($scope, $routeParams, $mdDialog, $location, $window, dfxMessaging, dfxPages) {

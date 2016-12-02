@@ -563,3 +563,32 @@
         </md-content>
     </md-tab>
 </md-tabs>
+
+<md-sidenav md-component-id="side_nav_gc_template" class="md-sidenav-left layout-padding" style="width: 450px; max-width: 450px;">
+	<div layout="row" layout-align="space-between center" style="height: 48px;">
+	    <h4 style="padding-left:10px">
+	        Edit GC Template
+	    </h4>
+	</div>
+	<div layout="row" layout-align ="space-between center">
+	    <button ng-click="openTemplateDesigner()" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-floppy-o" style="color: #757575"></span><span style="padding-left:5px">Open Designer</span></button>
+	    <button ng-click="delete($event)" class="md-raised md-warn md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-trash-o" style="color: #ffffff"></span><span style="padding-left:5px">Delete Template</span></button>
+	</div>
+
+	<form ng-submit="app_gc_templates.update();">
+		<md-content style="padding-top: 20px;">
+			<md-input-container class="md-block">
+				<label>Name:</label>
+				<input ng-model="app_gc_templates.current_gc_template.name" disabled>
+			</md-input-container>
+			<md-input-container class="md-block">
+				<label>Description:</label>
+				<input ng-model="app_gc_templates.current_gc_template.description" md-autofocus>
+			</md-input-container>
+		</md-content>
+		<div style="display:flex; justify-content: flex-end;">
+			<md-button class="md-primary" type="submit">Save</md-button>
+			<md-button class="md-primary" ng-click="app_gc_templates.closeSidenav()">Cancel</md-button>
+		</div>
+	</form>
+</md-sidenav>
