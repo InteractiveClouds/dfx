@@ -45,8 +45,7 @@
 						FRAG-IF{{attributes.checkOption.value !== 'none'}}
                         <td class="dt_checkbox"><md-checkbox class="md-primary" ng-disabled="attributes.disabled.value" aria-label="Select Row" ng-checked="isSelectedRows() || isSelectedRow($dfx_item)" ng-click="toggleSelectRow($dfx_item)"></md-checkbox></td>
 						FRAG-ENDIF
-                        <!--td ng-repeat="col in attributes.columns" class="{{col.classes}}" ng-class="{{col.dynamicClasses}}" style="{{col.style}}">{{row[col.value]}}</td-->
-						TABLECOLUMNS-RENDERING
+                        TABLECOLUMNS-RENDERING
                     </tr>
                 </tbody>
             </table>
@@ -55,7 +54,9 @@
                     <md-select ng-disabled="attributes.disabled.value" placeholder="{{ATTR-STATIC{{rowCount.value}}}}" aria-label="Row Count:" ng-model="ATTR-STATIC{{rowCount.value}}">
                         <md-option ng-repeat="count in [3, 5, 10, 15, 20, 25]" value="{{count}}">{{count}}</md-option>
                     </md-select>
-                    <span class="dt_footer_font" style="margin-right: 32px; padding-top: 2px">{{ATTR-STATIC{{rangeStart.value}}}} - {{ATTR-STATIC{{rangeEnd.value}}}} of {{attributes.binding.value.length}}</span><!--{{$gcscope[attributes.binding.value].length}}-->
+                    <span ng-if="attributes.binding.value" class="dt_footer_font" style="margin-right: 32px; padding-top: 2px">
+                        {{ATTR-STATIC{{rangeStart.value}}}} - {{ATTR-STATIC{{rangeEnd.value}}}} of {{attributes.binding.value.length}}
+                    </span>
                 </div>
                 <div class="dt_nav_pages">
                     <md-button ng-click="minusStep()" ng-disabled="attributes.disabled.value" aria-label="minus-step">
