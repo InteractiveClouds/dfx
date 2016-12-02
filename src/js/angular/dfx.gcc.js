@@ -4852,3 +4852,31 @@ dfxGCC.directive('dfxGccWebDatatable', ['$timeout', '$mdDialog', '$filter', '$ht
         }
     }
 }]);
+
+dfxGCC.directive('dfxGccWebImage', ['$timeout', function($timeout) {
+    return {
+        restrict: 'A',
+        require: '^dfxGccWebBase',
+        scope: true,
+        link: {
+            pre : function(scope, element, attrs, basectrl) {
+                var component = scope.getComponent(element);
+                scope.component_id = component.id;
+
+                basectrl.init(scope, element, component, attrs, 'image').then(function() {
+                    scope.dfxSetBaseSizes = function (side, value) {
+                        switch(side){
+                            case 'width': $(element).css('width', value); break;
+                            case 'height': $(element).css('height', value); break;
+                        }                        
+                    }
+
+                    if(scope.attributes.css.status === 'overridden') {
+                        scope.dfxSetBaseSizes('width', scope.attributes.css.width);
+                        scope.dfxSetBaseSizes('height', scope.attributes.css.height);
+                    }
+                });
+            }
+        }
+    }
+}]);
