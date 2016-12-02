@@ -26,8 +26,8 @@
                 <textarea name="cur_textarea" style="padding-left: 5px" ng-model="arbitrary.value" columns="1" ATTR-IF{{ng-required="attributes.required.value"}} ATTR-IF{{rows="attributes.rowsNumber.value"}} ATTR-IF{{ng-disabled="attributes.disabled.value"}} ATTR-IF{{ng-change="attributes.onchange.value"}} ATTR-IF{{ng-focus="attributes.onfocus.value"}} ATTR-IF{{ng-blur="attributes.onblur.value"}} ATTR-IF{{ng-click="attributes.onclick.value"}} ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}} ATTR-IF{{ng-keypress="attributes.onkeypress.value"}} ATTR-IF{{ng-keydown="attributes.onkeydown.value"}} ATTR-IF{{ng-keyup="attributes.onkeyup.value"}} ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}} ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}} ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}} ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}} ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}} ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}></textarea>
                 FRAG-ENDIF
                 <div ng-if="textareaForm.$dirty" ng-messages="textareaForm.cur_textarea.$error">
-                    <span ng-message="required">{{attributes.label.value}} <br>is required.</span>
-                    <span ng-message="md-maxlength">{{attributes.label.value}} <br>has to be less than {{attributes.maxlength.value}} characters long.</span>
+                    <span ng-message="required" ng-bind="ATTR-NONV{{required.errorMessage}}"></span>
+                    <span ng-message="md-maxlength" ng-bind="ATTR-NONV{{maxlength.errorMessage}}"></span>
                 </div>
         </md-input-container>
     </div>
