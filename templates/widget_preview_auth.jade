@@ -46,4 +46,7 @@ html
                 }
             } else {
                 $('#waiting_message').css('display', 'block');
+                setTimeout(function(){
+                    location.reload();
+                }, 2000);
             }
