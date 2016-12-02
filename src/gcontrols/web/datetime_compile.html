@@ -25,10 +25,10 @@
             ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
             ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}>
                 <div ng-messages="dateTimeForm.dateTimeField.$error">
-                    <div ng-message="required">This date is required!</div>
-                    <div ng-message="format">Invalid format!</div>
-                    <div ng-message="minDate">Date is too early!</div>
-                    <div ng-message="maxDate">Date is too late!</div>
+                    <div ng-message="required" ng-bind="ATTR-NONV{{isDateRequired.errorMessage}}"></div>
+                    <div ng-message="format" ng-bind="ATTR-NONV{{formatMessage.value}}"></div>
+                    <div ng-message="minDate" ng-bind="ATTR-NONV{{minDateMessage.value}}"></div>
+                    <div ng-message="maxDate" ng-bind="ATTR-NONV{{maxDateMessage.value}}"></div>
                 </div>
         </mdp-date-picker>
     </div>
@@ -54,10 +54,10 @@
             ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
             ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}>
                 <div ng-messages="dateTimeForm.dateTimeField.$error">
-                    <div ng-message="required">This date is required!</div>
-                    <div ng-message="format">Invalid format!</div>
-                    <div ng-message="minDate">Date is too early!</div>
-                    <div ng-message="maxDate">Date is too late!</div>
+                    <div ng-message="required" ng-bind="ATTR-NONV{{isDateRequired.errorMessage}}"></div>
+                    <div ng-message="format" ng-bind="ATTR-NONV{{formatMessage.value}}"></div>
+                    <div ng-message="minDate" ng-bind="ATTR-NONV{{minDateMessage.value}}"></div>
+                    <div ng-message="maxDate" ng-bind="ATTR-NONV{{maxDateMessage.value}}"></div>
                 </div>
         </mdp-date-picker>
     </div>
@@ -83,10 +83,10 @@
             ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
             ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}>
                 <div ng-messages="dateTimeForm.dateTimeField.$error">
-                    <div ng-message="required">This date is required!</div>
-                    <div ng-message="format">Invalid format!</div>
-                    <div ng-message="minDate">Date is too early!</div>
-                    <div ng-message="maxDate">Date is too late!</div>
+                    <div ng-message="required" ng-bind="ATTR-NONV{{isDateRequired.errorMessage}}"></div>
+                    <div ng-message="format" ng-bind="ATTR-NONV{{formatMessage.value}}"></div>
+                    <div ng-message="minDate" ng-bind="ATTR-NONV{{minDateMessage.value}}"></div>
+                    <div ng-message="maxDate" ng-bind="ATTR-NONV{{maxDateMessage.value}}"></div>
                 </div>
         </mdp-date-picker>
     </div>
@@ -112,10 +112,10 @@
             ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
             ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}>
                 <div ng-messages="dateTimeForm.dateTimeField.$error">
-                    <div ng-message="required">This date is required!</div>
-                    <div ng-message="format">Invalid format!</div>
-                    <div ng-message="minDate">Date is too early!</div>
-                    <div ng-message="maxDate">Date is too late!</div>
+                    <div ng-message="required" ng-bind="ATTR-NONV{{isDateRequired.errorMessage}}"></div>
+                    <div ng-message="format" ng-bind="ATTR-NONV{{formatMessage.value}}"></div>
+                    <div ng-message="minDate" ng-bind="ATTR-NONV{{minDateMessage.value}}"></div>
+                    <div ng-message="maxDate" ng-bind="ATTR-NONV{{maxDateMessage.value}}"></div>
                 </div>
         </mdp-date-picker>
     </div>
@@ -141,8 +141,8 @@
             ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
             ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}>
                 <div ng-messages="dateTimeForm.dateTimeField.$error">
-                    <div ng-message="format">Invalid format!</div>
-                    <div ng-message="required">This time is required!</div>
+                    <div ng-message="required" ng-bind="ATTR-NONV{{isDateRequired.errorMessage}}"></div>
+                    <div ng-message="format" ng-bind="ATTR-NONV{{formatMessage.value}}"></div>
                 </div>
         </mdp-time-picker>
     </div>
@@ -168,8 +168,8 @@
             ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}}
             ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}>
                 <div ng-messages="dateTimeForm.dateTimeField.$error">
-                    <div ng-message="format">Invalid format!</div>
-                    <div ng-message="required">This time is required!</div>
+                    <div ng-message="required" ng-bind="ATTR-NONV{{isDateRequired.errorMessage}}"></div>
+                    <div ng-message="format" ng-bind="ATTR-NONV{{formatMessage.value}}"></div>
                 </div>
         </mdp-time-picker>
     </div>

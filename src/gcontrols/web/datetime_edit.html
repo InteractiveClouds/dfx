@@ -50,15 +50,7 @@
                 <li class="col-md-12" ng-if="attributes.type.value === 'date' && attributes.selectedType.value === 'ranged'">
                     <span class="col-md-4">Months after:</span>
                     <input type="number" min="1" class="col-md-8" ng-model="attributes.ranged.monthsAfter" ng-change="overrideAttribute('ranged.monthsAfter');setMaxDate(attributes.ranged.monthsAfter);" ng-focus="cacheAttributeOldValue({'name':'ranged.monthsAfter'})" ng-blur="cacheAttributeNewValue('ranged.monthsAfter')"/>
-                </li>
-                <li class="col-md-12">
-                    <span class="col-md-4" style="margin-top: 5px">Required:</span>
-                    <md-input-container class="col-md-8" style="padding: 0 0 10px">
-                        <md-select aria-label="isRequire" ng-model="attributes.isDateRequired.value" ng-change="overrideAttribute('isDateRequired');cacheAttributeOldValue({'value':{{attributes.isDateRequired.value}}});cacheAttributeNewValue('isDateRequired');">
-                            <md-option ng-repeat="isRequire in attributes.requireOptions" value="{{isRequire}}">{{isRequire}}</md-option>
-                        </md-select>
-                    </md-input-container>
-                </li>
+                </li>                
                 <li class="col-md-12" dfx-gc-property="display">
                     <span class="col-md-4">Display:</span>
                     <div class="col-md-8" layout="row">
@@ -82,22 +74,18 @@
             <label for="date-formats">Date Formating</label>
             <ul class="dfx-ve-property-treeview-content">
                 <li class="col-md-12">
-                    <span class="col-md-4">Enable:</span>                    
-                    <span class="col-md-8"><md-checkbox style="margin: 0" class="md-primary" ng-model="attributes.dateFormating.value" ng-change="overrideAttribute('dateFormating');setAlignment(attributes.alignment.value);" ng-focus="cacheAttributeOldValue({'name':'dateFormating'})" ng-blur="cacheAttributeNewValue('dateFormating')" aria-label="dateFormating"></md-checkbox></span>
-                </li>
-                <li class="col-md-12">
                     <span class="col-md-4">Notations:</span>
                     <span class="col-md-8">
                         <div style="display: inline-block; margin-right: 10px;">
-                            <md-checkbox style="width:20px;margin:0" class="md-primary" ng-model="attributes.dateNotations.year" ng-true-value="'true'" ng-false-value="'false'" ng-change="overrideAttribute('dateNotations.year'); rebuildDateNotations(); dfxFormatDate()" ng-focus="cacheAttributeOldValue({'name':'dateNotations.year'})" ng-blur="cacheAttributeNewValue('dateNotations.year')" aria-label="{{attributes.dateNotations.year}}"></md-checkbox>
+                            <md-checkbox style="width:20px;margin:0" class="md-primary" ng-model="attributes.dateNotations.year" ng-true-value="'true'" ng-false-value="'false'" ng-change="overrideAttribute('dateNotations.year'); rebuildDateNotations(); dfxFormatDate()" ng-focus="cacheAttributeOldValue({'name':'dateNotations.year'})" ng-blur="cacheAttributeNewValue('dateNotations.year')" ng-disabled="attributes.dateNotations.day === 'false' && attributes.dateNotations.month === 'false'" aria-label="{{attributes.dateNotations.year}}"></md-checkbox>
                             <span>Year</span>
                         </div>
                         <div style="display: inline-block; margin-right: 10px;">
-                            <md-checkbox style="width:20px;margin:0" class="md-primary" ng-model="attributes.dateNotations.month" ng-true-value="'true'" ng-false-value="'false'" ng-change="overrideAttribute('dateNotations.month'); rebuildDateNotations(); dfxFormatDate()" ng-focus="cacheAttributeOldValue({'name':'dateNotations.month'})" ng-blur="cacheAttributeNewValue('dateNotations.month')" aria-label="{{attributes.dateNotations.month}}"></md-checkbox>
+                            <md-checkbox style="width:20px;margin:0" class="md-primary" ng-model="attributes.dateNotations.month" ng-true-value="'true'" ng-false-value="'false'" ng-change="overrideAttribute('dateNotations.month'); rebuildDateNotations(); dfxFormatDate()" ng-focus="cacheAttributeOldValue({'name':'dateNotations.month'})" ng-blur="cacheAttributeNewValue('dateNotations.month')" ng-disabled="attributes.dateNotations.year === 'false' && attributes.dateNotations.day === 'false'" aria-label="{{attributes.dateNotations.month}}"></md-checkbox>
                             <span>Month</span>
                         </div>
                         <div style="display: inline-block; margin-right: 10px;">
-                            <md-checkbox style="width:20px;margin:0" class="md-primary" ng-model="attributes.dateNotations.day" ng-true-value="'true'" ng-false-value="'false'" ng-change="overrideAttribute('dateNotations.day'); rebuildDateNotations(); dfxFormatDate()" ng-focus="cacheAttributeOldValue({'name':'dateNotations.day'})" ng-blur="cacheAttributeNewValue('dateNotations.day')" aria-label="{{attributes.dateNotations.day}}"></md-checkbox>
+                            <md-checkbox style="width:20px;margin:0" class="md-primary" ng-model="attributes.dateNotations.day" ng-true-value="'true'" ng-false-value="'false'" ng-change="overrideAttribute('dateNotations.day'); rebuildDateNotations(); dfxFormatDate()" ng-focus="cacheAttributeOldValue({'name':'dateNotations.day'})" ng-blur="cacheAttributeNewValue('dateNotations.day')" ng-disabled="attributes.dateNotations.year === 'false' && attributes.dateNotations.month === 'false'" aria-label="{{attributes.dateNotations.day}}"></md-checkbox>
                             <span>Day</span>
                         </div>
                     </span>
@@ -130,24 +118,20 @@
         <li ng-if="attributes.type.value === 'time'">
             <input class="dfx-ve-property-treeview-button" type="checkbox" id="time-formats" />
             <label for="time-formats">Time Formating</label>
-            <ul class="dfx-ve-property-treeview-content">
-                <li class="col-md-12">
-                    <span class="col-md-4">Enable:</span>                    
-                    <span class="col-md-8"><md-checkbox style="margin: 0" class="md-primary" ng-model="attributes.timeFormating.value" ng-change="overrideAttribute('timeFormating');setAlignment(attributes.alignment.value);" ng-focus="cacheAttributeOldValue({'name':'timeFormating'})" ng-blur="cacheAttributeNewValue('timeFormating')" aria-label="timeFormating"></md-checkbox></span>
-                </li>
+            <ul class="dfx-ve-property-treeview-content">                
                 <li class="col-md-12" >
                     <span class="col-md-4">Notations:</span>
                     <span class="col-md-8">
                         <div style="display: inline-block; margin-right: 10px;">
-                            <md-checkbox style="width:20px;margin:0" class="md-primary" ng-model="attributes.timeNotations.hours" ng-true-value="'true'" ng-false-value="'false'" ng-change="overrideAttribute('timeNotations.hours'); rebuildtimeNotations(); dfxFormatTime()" ng-focus="cacheAttributeOldValue({'name':'timeNotations.hours'})" ng-blur="cacheAttributeNewValue('timeNotations.hours')" aria-label="{{attributes.timeNotations.hours}}"></md-checkbox>
+                            <md-checkbox style="width:20px;margin:0" class="md-primary" ng-model="attributes.timeNotations.hours" ng-true-value="'true'" ng-false-value="'false'" ng-change="overrideAttribute('timeNotations.hours'); rebuildtimeNotations(); dfxFormatTime()" ng-focus="cacheAttributeOldValue({'name':'timeNotations.hours'})" ng-blur="cacheAttributeNewValue('timeNotations.hours')" ng-disabled="attributes.timeNotations.ampm === 'false' && attributes.timeNotations.minutes === 'false'" aria-label="{{attributes.timeNotations.hours}}"></md-checkbox>
                             <span>Hours</span>
                         </div>
                         <div style="display: inline-block; margin-right: 10px;">
-                            <md-checkbox style="width:20px;margin:0" class="md-primary" ng-model="attributes.timeNotations.minutes" ng-true-value="'true'" ng-false-value="'false'" ng-change="overrideAttribute('timeNotations.minutes'); rebuildtimeNotations(); dfxFormatTime()" ng-focus="cacheAttributeOldValue({'name':'timeNotations.minutes'})" ng-blur="cacheAttributeNewValue('timeNotations.minutes')" aria-label="{{attributes.timeNotations.minutes}}"></md-checkbox>
+                            <md-checkbox style="width:20px;margin:0" class="md-primary" ng-model="attributes.timeNotations.minutes" ng-true-value="'true'" ng-false-value="'false'" ng-change="overrideAttribute('timeNotations.minutes'); rebuildtimeNotations(); dfxFormatTime()" ng-focus="cacheAttributeOldValue({'name':'timeNotations.minutes'})" ng-blur="cacheAttributeNewValue('timeNotations.minutes')" ng-disabled="attributes.timeNotations.hours === 'false' && attributes.timeNotations.ampm === 'false'" aria-label="{{attributes.timeNotations.minutes}}"></md-checkbox>
                             <span>Minutes</span>
                         </div>
                         <div style="display: inline-block; margin-right: 10px;">
-                            <md-checkbox style="width:20px;margin:0" class="md-primary" ng-model="attributes.timeNotations.ampm" ng-true-value="'true'" ng-false-value="'false'" ng-change="overrideAttribute('timeNotations.ampm'); rebuildtimeNotations(); dfxFormatTime()" ng-focus="cacheAttributeOldValue({'name':'timeNotations.ampm'})" ng-blur="cacheAttributeNewValue('timeNotations.ampm')" aria-label="{{attributes.timeNotations.ampm}}"></md-checkbox>
+                            <md-checkbox style="width:20px;margin:0" class="md-primary" ng-model="attributes.timeNotations.ampm" ng-true-value="'true'" ng-false-value="'false'" ng-change="overrideAttribute('timeNotations.ampm'); rebuildtimeNotations(); dfxFormatTime()" ng-focus="cacheAttributeOldValue({'name':'timeNotations.ampm'})" ng-blur="cacheAttributeNewValue('timeNotations.ampm')" ng-disabled="attributes.timeNotations.hours === 'false' && attributes.timeNotations.minutes === 'false'" aria-label="{{attributes.timeNotations.ampm}}"></md-checkbox>
                             <span>AM / PM</span>
                         </div>
                     </span>
@@ -172,6 +156,52 @@
                             <md-option value="A mm:HH">AM/PM Minutes Hours</md-option>
                         </md-select>
                     </md-input-container>
+                </li>                
+            </ul>
+        </li>
+    </ul>
+    <ul>
+        <li>
+            <input class="dfx-ve-property-treeview-button" type="checkbox" id="item-2" />
+            <label for="item-2">Validation Properties</label>
+            <ul class="dfx-ve-property-treeview-content">
+                <li class="col-md-12">
+                    <input class="dfx-ve-property-treeview-button" type="checkbox" checked id="valid-item-1" />
+                    <label for="valid-item-1" class="dfx-ve-property-title-level-1"><span>Required</span></label>
+                    <ul class="dfx-ve-property-treeview-content">
+                        <li class="col-md-12">
+                            <span class="col-md-4">Is required:</span>
+                            <span class="col-md-8"><md-checkbox style="margin: 0" class="md-primary" ng-true-value="'true'" ng-false-value="'false'" ng-model="attributes.isDateRequired.value" ng-change="overrideAttribute('isDateRequired')" ng-focus="cacheAttributeOldValue({'name':'isDateRequired'})" ng-blur="cacheAttributeNewValue('isDateRequired')" aria-label="isDateRequired"></md-checkbox></span>
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-4">Error message:</span>
+                            <input class="col-md-8" type="text" ng-model="attributes.isDateRequired.errorMessage" ng-change="overrideAttribute('isDateRequired.errorMessage')" ng-focus="cacheAttributeOldValue({'name':'isDateRequired.errorMessage'})" ng-blur="cacheAttributeNewValue('isDateRequired.errorMessage')"/>
+                        </li>
+                    </ul>
+                </li>
+                <li ng-if="attributes.type.value === 'date' && attributes.selectedType.value ==='ranged'" class="col-md-12">
+                    <input class="dfx-ve-property-treeview-button" type="checkbox" checked id="valid-item-2" />
+                    <label for="valid-item-2" class="dfx-ve-property-title-level-1"><span>Range messages</span></label>
+                    <ul class="dfx-ve-property-treeview-content">
+                        <li class="col-md-12">                    
+                            <span class="col-md-4">Min date:</span>
+                            <input class="col-md-8" type="text" ng-model="attributes.minDateMessage.value" ng-change="overrideAttribute('minDateMessage')" ng-focus="cacheAttributeOldValue({'name':'minDateMessage'})" ng-blur="cacheAttributeNewValue('minDateMessage')"/>
+                        </li>                        
+                        <li class="col-md-12">                    
+                            <span class="col-md-4">Max date:</span>
+                            <input class="col-md-8" type="text" ng-model="attributes.maxDateMessage.value" ng-change="overrideAttribute('maxDateMessage')" ng-focus="cacheAttributeOldValue({'name':'maxDateMessage'})" ng-blur="cacheAttributeNewValue('maxDateMessage')"/>
+                        </li>                                            
+                    </ul>
+                </li>  
+                <li class="col-md-12">
+                    <input class="dfx-ve-property-treeview-button" type="checkbox" checked id="valid-item-3" />
+                    <label for="valid-item-3" class="dfx-ve-property-title-level-1"><span>Format</span></label>
+                    <ul class="dfx-ve-property-treeview-content">
+                        <li class="col-md-12">                    
+                            <span class="col-md-4">Message:</span>
+                            <input class="col-md-8" type="text" ng-model="attributes.formatMessage.value" ng-change="overrideAttribute('formatMessage')" ng-focus="cacheAttributeOldValue({'name':'formatMessage'})" ng-blur="cacheAttributeNewValue('formatMessage')"/>
+                        </li>                                                                                         
+                    </ul>
                 </li>                
             </ul>
         </li>
