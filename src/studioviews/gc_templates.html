@@ -19,7 +19,7 @@
                             <thead>
                                 <tr style="border-bottom:1px solid #C7C7C7;">
                                     <th width="20%">Name</th>
-                                    <th width="20%">App</th>
+                                    <th width="20%">Type</th>
                                     <th width="50%">Description</th>
                                     <th>Actions</th>
                                 </tr>
@@ -30,7 +30,7 @@
                                 <tbody>
                                     <tr ng-repeat="gc_template in gc_templates | filter:gc_templates_platform track by $index" ng-click="" style="cursor:pointer;">
                                         <td width="20%">{{gc_template.name}}</td>
-                                        <td width="20%">{{gc_template.application}}</td>
+                                        <td width="20%">{{gc_template.type}}</td>
                                         <td width="50%">{{gc_template.description}}</td>
                                         <td>
                                             <div layout="row" layout-align="space-between center">
