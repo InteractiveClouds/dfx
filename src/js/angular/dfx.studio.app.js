@@ -4216,6 +4216,53 @@ dfxStudioApp.controller("dfx_studio_gc_template_controller", [ '$scope', '$route
         sideNavInstance.toggle();
     };
 
+    $scope.copy = function($event, gc_template) {
+        var parentEl = angular.element(document.body);
+
+        $mdDialog.show({
+            parent: parentEl,
+            targetEvent: $event,
+            clickOutsideToClose: true,
+            scope: $scope.$new(),
+            templateUrl: 'studioviews/copy_gc_template_dialog.html',
+            controller: DialogController
+        });
+
+        function DialogController($scope, $mdDialog) {
+            $scope.toCopy = {
+                "gcTemplateName":        gc_template.name,
+                "gcTemplateNameTarget":  gc_template.name,
+                "applicationName":       $scope.app_name,
+                "applicationNameTarget": $scope.app_name,
+                "platform":              gc_template.platform
+            }
+            $scope.validPrefix = true;
+
+            $scope.copyComponent = function() {
+                var nameExp = /([\\/\-+(){}[\]=<>*~`?\! '\"',.;:$@#])/ig,
+                    nameRes = nameExp.exec( $scope.toCopy.gcTemplateName);
+
+                if ( $scope.validPrefix && !nameRes && $scope.toCopy.gcTemplateName !== '' ) {
+                    dfxGcTemplates.copy($scope, $scope.toCopy).then(function( data ) {
+                        if ( data.data.data.type === 'error' ) {
+                            dfxMessaging.showWarning( data.data.data.message );
+                        } else {
+                            dfxMessaging.showMessage('GC Template ' + $scope.toCopy.gcTemplateName + ' has been successfully copied');
+                            $scope.getAll();
+                            $mdDialog.hide();
+                        }
+                    });
+                } else {
+                    dfxMessaging.showWarning('Invalid GC Template Name');
+                }
+            }
+
+            $scope.closeDialog = function() {
+                $mdDialog.hide();
+            }
+        }
+    };
+
     $scope.update = function() {
         dfxGcTemplates.update( $scope, $scope.current_gc_template ).then(function( data ) {
             dfxMessaging.showMessage(data.data);

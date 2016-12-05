@@ -1720,6 +1720,8 @@ dfxStudioApi.factory('dfxGcTemplates', [ '$http', '$q', function($http, $q) {
             data: template
         }).then(function successCallback(response) {
             deferred.resolve( response );
+        }, function failCallback(response) {
+            deferred.reject( response );
         });
 
         return deferred.promise;
@@ -1753,7 +1755,21 @@ dfxStudioApi.factory('dfxGcTemplates', [ '$http', '$q', function($http, $q) {
         });
 
         return deferred.promise;
-    }
+    };
+
+    api_gc_templates.copy = function( scope, to_copy ) {
+        var deferred = $q.defer();
+
+        $http({
+            method: 'POST',
+            url: '/studio/gctemplates/copy',
+            data: to_copy
+        }).then(function successCallback(response) {
+            deferred.resolve(response);
+        });
+
+        return deferred.promise;
+    };
 
     return api_gc_templates;
 }]);

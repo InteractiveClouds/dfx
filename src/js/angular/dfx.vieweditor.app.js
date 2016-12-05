@@ -1479,9 +1479,11 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
             prepareAttributes(gc_template, gc_selected);
 
             dfxGcTemplates.create( $scope, gc_template )
-                .then( function() {
-                   dfxMessaging.showMessage( 'The template ' + gc_template.name + ' has been created' );
-                   $scope.gc_templates.push(gc_template);
+                .then(function() {
+                    dfxMessaging.showMessage( 'The template ' + gc_template.name + ' has been created' );
+                    $scope.gc_templates.push(gc_template);
+                }, function(res) {
+                    dfxMessaging.showWarning(res.data.error.message);
                 });
         }, function() {
             // do nothing
