@@ -45,7 +45,7 @@ dfxGCC.directive('dfxGccWebBase', ['$rootScope', '$http', '$compile', '$injector
                     var tenant_id = app_scope.tenant_id || sessionStorage.dfx_tenantid;
 
                     return dfxGcTemplates.getOne( app_scope, application_name, component_template.value, view_platform, tenant_id ).then( function(gc_template) {
-                        if (!gc_template) { return $q.resolve('no more templates'); }
+                        if (!gc_template) { return $q.resolve('template not found'); }
 
                         var template_definition = gc_template.attributes;
                         if (template_definition.template && template_definition.template.value !== 'default') {
