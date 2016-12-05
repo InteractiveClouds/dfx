@@ -1550,21 +1550,21 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
         });
     };
 
+    var makeGcTemplatesDraggable = function(gc_type, gc_cat) {
+        $timeout(function() {
+            $('.dfx-ve-gc-template-draggable-instance').draggable({
+                appendTo:          "body",
+                cursorAt:          {top: 5, left: 17},
+                cursor:            "move",
+                helper: function (event) {
+                    var helper_fragment = '<img style="width:36px;height:34px;" src="/images/vb/icons/' + gc_cat + '_' + gc_type + '_drag.png"/>';
+                    return helper_fragment;
+                },
+                connectToSortable: ".dfx_visual_editor_droppable"
+            });
+        }, 0);
+    };
     $scope.getGcTemplatesToDragDrop = function(gc_type, gc_cat) {
-        var makeGcTemplatesDraggable = function() {
-            $timeout(function() {
-                $('.dfx-ve-gc-template-draggable-instance').draggable({
-                    appendTo:          "body",
-                    cursorAt:          {top: 5, left: 17},
-                    cursor:            "move",
-                    helper: function (event) {
-                        var helper_fragment = '<img style="width:36px;height:34px;" src="/images/vb/icons/' + gc_cat + '_' + gc_type + '_drag.png"/>';
-                        return helper_fragment;
-                    },
-                    connectToSortable: ".dfx_visual_editor_droppable"
-                });
-            }, 0);
-        };
         var addGcTemplatesToFloatingPanel = function() {
             $timeout(function() {
                 $scope.gc_templates_to_drag_drop = [];
@@ -1573,9 +1573,9 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
                         $scope.gc_templates_to_drag_drop.push( $scope.gc_templates[i] );
                     }
                 }
-                $scope.gc_templates_to_drag_drop_filtered = angular.copy($scope.gc_templates_to_drag_drop);
+                $scope.gc_templates_to_drag_drop_filtered = $scope.gc_templates_to_drag_drop;
                 $scope.gc_template_filter = '';
-                makeGcTemplatesDraggable();
+                makeGcTemplatesDraggable(gc_type, gc_cat);
             }, 0);
         };
 
@@ -1683,6 +1683,12 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
                 return gc_template.name.indexOf($scope.gc_template_filter) > -1
                     || gc_template.description.indexOf($scope.gc_template_filter) > -1;
             });
+        }
+        if ($scope.gc_templates_to_drag_drop_filtered.length > 0) {
+            var gc_type = $scope.gc_templates_to_drag_drop_filtered[0].type;
+            var $dfx_ve_gc_template_icon = $('#dfx_ve_gc_template_icon_' + gc_type);
+            var gc_cat = $dfx_ve_gc_template_icon.attr('gc-cat');
+            makeGcTemplatesDraggable(gc_type, gc_cat);
         }
     };
     /*$scope.previewGcTemplate = function(gc_template, $event) {

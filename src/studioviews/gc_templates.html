@@ -2,17 +2,16 @@
     <div ng-hide="assets.hide_areas">
         <div layout="row">
             <md-content class="md-padding flex-100" layout="column">
-                <div layout="row" class="col-md-12" layout-align="end end">
-                    <span class="col-md-4" style="margin-top: 10px;">Platform:</span>
-                    <md-input-container class="col-md-4" style="margin-top: 0px;">
-                        <md-select ng-model="gc_templates_platform">
-                            <md-option value="web" selected>Web</md-option>
-                            <md-option value="mobile">Mobile</md-option>
-                        </md-select>
-                    </md-input-container>
-                    <div class="col-md-4">
+                <div layout="row" class="col-md-12" layout-align="center end">
+                    <span class="col-md-8"></span>
+                    <span class="col-md-1" style="padding:3px;">Platform:</span>
+                    <md-select ng-model="gc_templates_platform" class="col-md-3" style="padding:0;margin:0;">
+                        <md-option value="web" selected>Web</md-option>
+                        <md-option value="mobile">Mobile</md-option>
+                    </md-select>
+                    <!--div class="col-md-4">
                         <input type="text" ng-model="gc_templates_filter" style="width:100%;" placeholder="Search GC Template"/>
-                    </div>
+                    </div-->
                 </div>
                 <md-card style="flex-grow:3;overflow:hidden;">
                     <md-card-content style="padding:0;">
