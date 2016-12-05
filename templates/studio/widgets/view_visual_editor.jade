@@ -271,7 +271,8 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", dfx-ve-ctr
                                     span Layout
                                 ul.dfx-ve-palette-treeview-content(gc-template-cat="layout", style="margin-bottom:5px")
                     div#dfx-ve-gc-template-draggable-instances
-                        input(type="text", ng-model="gc_template_filter", ng-change="filterGcTemplates()", placeholder="Filter GC Template", style="border: 1px solid #6b6a6a;color: #fff;background: 0 0;width: 100%;padding: 0;")
+                        input(ng-if="gc_templates_to_drag_drop_filtered.length > 0", type="text", ng-model="gc_template_filter", ng-change="filterGcTemplates()", placeholder="Filter GC Template", style="border: 1px solid #6b6a6a;color: #fff;background: 0 0;width: 100%;padding: 0;")
+                        div(ng-if="gc_templates_to_drag_drop_filtered.length == 0") This GC does not have created templates.
                         ul
                             li(ng-repeat="gc_template in gc_templates_to_drag_drop_filtered", style="padding: 5px;")
                                 div.dfx-ve-gc-template-draggable-instance.dfx_visual_editor_draggable.dfx_visual_editor_gc_cat_item_draggable(gc-type="{{gc_template.type}}", gc-template-name="{{gc_template.name}}", title="{{gc_template.description ? gc_template.description : gc_template.name}}") {{gc_template.name}}

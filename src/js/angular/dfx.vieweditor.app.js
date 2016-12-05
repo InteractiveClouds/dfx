@@ -1500,10 +1500,13 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     };
 
     $scope.loadGcTemplates = function() {
-        dfxGcTemplates.getAll( $scope, $scope.application_name, $scope.view_platform ).then(function( data ) {
+        dfxGcTemplates.getAllByPlatform( $scope, $scope.application_name, $scope.view_platform ).then(function( data ) {
             $scope.gc_templates = data || [];
 
             $timeout(function() {
+                var icon_type_prefix = 'dfx_ve_gc_template_icon_',
+                    icon_type_prefix_length = icon_type_prefix.length;
+
                 var gc_templates_types = $scope.gc_templates.map(function(item) {
                     return item.type;
                 });
@@ -1511,8 +1514,9 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
                     return gc_templates_types.indexOf(item) == pos;
                 });
 
+                // add event listeners for gc types that have existing gc templates
                 for (var i = 0; i < gc_templates_unique_types.length; i++) {
-                    var $dfx_ve_gc_template_icon = $('#dfx_ve_gc_template_icon_' + gc_templates_unique_types[i]);
+                    var $dfx_ve_gc_template_icon = $('#' + icon_type_prefix + gc_templates_unique_types[i]);
 
                     var gc_type = gc_templates_unique_types[i];
                     var gc_cat = $dfx_ve_gc_template_icon.attr('gc-cat');
@@ -1523,6 +1527,21 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
                         });
                     };
                     createGcTemplateListener(gc_type, gc_cat);
+                }
+
+                // add event listeners if not in gc_templates_unique_types, type "no templates" and hide searching
+                var gc_all_types = $('[id^="' + icon_type_prefix + '"]');
+                for (var i = 0; i < gc_all_types.length; i++) {
+                    var dfx_ve_gc_template_icon_id = $(gc_all_types[i]).attr('id');
+                    var type_name = dfx_ve_gc_template_icon_id.substring(icon_type_prefix_length);
+
+                    if ( gc_templates_unique_types.indexOf(type_name) == -1 ) {
+                        var $dfx_ve_gc_template_icon = $('#' + dfx_ve_gc_template_icon_id);
+
+                        $dfx_ve_gc_template_icon.on('click', function() {
+                            $scope.cleanGcTemplatesToDragDrop();
+                        });
+                    }
                 }
             }, 0);
         });
@@ -1558,6 +1577,14 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
         };
 
         addGcTemplatesToFloatingPanel();
+    };
+
+    $scope.cleanGcTemplatesToDragDrop = function() {
+        $timeout(function() {
+            $scope.gc_templates_to_drag_drop = [];
+            $scope.gc_templates_to_drag_drop_filtered = [];
+            $scope.gc_template_filter = '';
+        }, 0);
     };
 
     $scope.loadGcTemplatesByType = function() {

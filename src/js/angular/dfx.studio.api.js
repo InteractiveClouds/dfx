@@ -1659,7 +1659,7 @@ dfxStudioApi.factory('dfxGcTemplates', [ '$http', '$q', function($http, $q) {
         if (tenant_id) {
             url = url + '/' + tenant_id;
         }
-        
+
         $http({
             method: 'GET',
             url: url
@@ -1670,7 +1670,20 @@ dfxStudioApi.factory('dfxGcTemplates', [ '$http', '$q', function($http, $q) {
         return deferred.promise;
     };
 
-    api_gc_templates.getAll = function( scope, app_name, template_platform ) {
+    api_gc_templates.getAll = function( scope, app_name ) {
+        var deferred = $q.defer();
+
+        $http({
+            method: 'GET',
+            url: '/studio/gctemplates/list/' + app_name
+        }).then(function successCallback(response) {
+            deferred.resolve(response.data.gc_templates);
+        });
+
+        return deferred.promise;
+    };
+
+    api_gc_templates.getAllByPlatform = function( scope, app_name, template_platform ) {
         var deferred = $q.defer();
 
         $http({

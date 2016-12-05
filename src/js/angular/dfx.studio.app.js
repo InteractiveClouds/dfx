@@ -4199,10 +4199,9 @@ dfxStudioApp.controller("dfx_studio_gc_template_controller", [ '$scope', '$route
     if(! $scope.app_name){
         $scope.app_name = $routeParams.appname;
     }
-    $scope.view_platform = $routeParams.platform || 'web';
 
     $scope.getAll = function() {
-        dfxGcTemplates.getAll( $scope, $scope.app_name, $scope.view_platform ).then(function( data ) {
+        dfxGcTemplates.getAll( $scope, $scope.app_name ).then(function( data ) {
             $scope.gc_templates = [];
             for ( var i = 0; i < data.length; i++ ) {
                 $scope.gc_templates.push(data[i]);
@@ -4225,12 +4224,12 @@ dfxStudioApp.controller("dfx_studio_gc_template_controller", [ '$scope', '$route
         });
     };
 
-    $scope.openTemplateDesigner = function() {
+    $scope.openTemplateDesigner = function(gc_template) {
         window.localStorage.removeItem('pagePreviewName');
-        $window.open( '/studio/gctemplates/' + $scope.view_platform + '/' + $scope.app_name + '/' + $scope.gc_name + '/index.html', '_blank' );
+        $window.open( '/studio/gctemplates/' + gc_template.platform + '/' + $scope.app_name + '/' + gc_template.name + '/index.html', '_blank' );
     };
 
-    $scope.confirmDelete = function(ev, gc_template_name) {
+    $scope.confirmDelete = function(ev, gc_template) {
         var confirm = $mdDialog.confirm()
             .title('Are you sure you want to remove this GC Template?')
             .textContent('GC Template will be removed from the repository.')
@@ -4239,9 +4238,9 @@ dfxStudioApp.controller("dfx_studio_gc_template_controller", [ '$scope', '$route
             .cancel('Cancel')
             .ok('OK');
         $mdDialog.show(confirm).then(function() {
-            dfxGcTemplates.remove( $scope, gc_template_name, $scope.app_name, $scope.view_platform ).then(function( data ) {
+            dfxGcTemplates.remove( $scope, gc_template.name, $scope.app_name, gc_template.platform ).then(function( data ) {
                 if ( data.status && data.status === 200 ) {
-                    dfxMessaging.showMessage("Template " + gc_template_name + " was successfully deleted!");
+                    dfxMessaging.showMessage("Template " + gc_template.name + " was successfully deleted!");
                     $scope.getAll();
                 } else {
                     dfxMessaging.showWarning(data.data);
