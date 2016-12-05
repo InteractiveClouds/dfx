@@ -505,6 +505,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
                 }
                 var arr_dependencies = m[3].split(',');
                 for (dependency in arr_dependencies) {
+                    if (isNaN(dependency)) { continue; }
                     if (arr_dependencies[dependency].trim() != '') {
                         var current_dependency =
                             arr_dependencies[dependency].substring(
@@ -4118,6 +4119,13 @@ dfxViewEditorApp.directive('dfxGcToolbarDesign', function($sce, $compile, $timeo
                             }
                             break;
                     }
+                }
+            }
+
+            scope.$parent.checkToolbarMenus = function(toolbar_visible){
+                if(toolbar_visible && toolbar_visible!=='false'){
+                    if(scope.attributes.toolbar.leftMenu.visible && scope.attributes.toolbar.leftMenu.visible!=='false' && scope.attributes.toolbar.leftMenu.type.value !== 'Fab') scope.iconbarBuilder('left');
+                    if(scope.attributes.toolbar.rightMenu.visible && scope.attributes.toolbar.rightMenu.visible!=='false' && scope.attributes.toolbar.rightMenu.type.value !== 'Fab') scope.iconbarBuilder('right');
                 }
             }
 

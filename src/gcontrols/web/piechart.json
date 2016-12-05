@@ -16,6 +16,7 @@
 		"growOnHover": "true"
 	},
 	"dynamicOptions": { "value": "" },
+	"optionsType":    { "value": "static" },
 	"style": 					{ "value": "" },
 	"classes": 				{ "value": "" },
 	"dynamicClasses": { "value": "" },

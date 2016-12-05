@@ -11,7 +11,7 @@ FRAG-IF{{attributes.repeat_in.value != '' && attributes.repeat_title.value === f
         ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}}
         ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
         ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}>
-        <div ng-show="attributes.toolbar.visible.value"><div dfx-gcc-web-toolbar></div></div>
+        <div ng-if="attributes.toolbar.visible.value"><div dfx-gcc-web-toolbar></div></div>
         <md-content id="{{component_id}}_content_{{$index}}" flex="100" ng-repeat="$dfx_item in attributes.repeat_in.value" dfx-repeatable-panel="{{$index}}" ng-hide="attributes.toolbar.collapsed.value" style="attributes.bodyStyle.value" dfx-sidenav-and-bottomsheet="{{component_id}}" layout="column">
 			LAYOUT-RENDERING{{0}}
         </md-content>
@@ -31,7 +31,7 @@ FRAG-IF{{attributes.repeat_in.value != '' && attributes.repeat_title.value === t
       ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}}
       ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
       ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}>
-        <div ng-show="attributes.toolbar.visible.value"><div dfx-gcc-web-toolbar layout="column"></div></div>
+        <div ng-if="attributes.toolbar.visible.value"><div dfx-gcc-web-toolbar layout="column"></div></div>
         <md-content id="{{component_id}}_content_{{$index}}" flex="100" ng-hide="attributes.toolbar.collapsed.value" style="attributes.bodyStyle.value" dfx-sidenav-and-bottomsheet="{{component_id}}" layout="column">
 			LAYOUT-RENDERING{{0}}
         </md-content>
@@ -51,7 +51,7 @@ FRAG-IF{{attributes.repeat_in.value == ''}}
         ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}}
         ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
         ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}>
-        <div ng-show="attributes.toolbar.visible.value"><div dfx-gcc-web-toolbar></div></div>
+        <div ng-if="attributes.toolbar.visible.value"><div dfx-gcc-web-toolbar></div></div>
         <md-content id="{{component_id}}_content" flex="100" ng-hide="attributes.toolbar.collapsed.value" style="attributes.bodyStyle.value" dfx-sidenav-and-bottomsheet="{{component_id}}" layout="column">
 			LAYOUT-RENDERING{{0}}
         </md-content>

@@ -1,6 +1,6 @@
-<div flex ng-show="attributes.display.value" ATTR-IF{{style="attributes.style.value"}} ATTR-IF{{class="attributes.classes.value"}} ATTR-IF{{ng-class="attributes.dynamicClasses.value"}}>
+<div flex ng-show="attributes.display.value" ATTR-IF{{style="attributes.style.value"}} class="dfx-core-gc-chips-container ATTR-NONV{{classes.value}}" ATTR-IF{{ng-class="attributes.dynamicClasses.value"}}>
     FRAG-IF{{attributes.binding.value!=='' && attributes.selectedInput.value==='text'}}
-    <md-chips ng-model="ATTR-EXP{{ (attributes.binding.value.indexOf('.')>-1 || attributes.binding.value.indexOf('$dfx_iten')>-1) ? attributes.binding.value : '$parent_scope.' + attributes.binding.value }}ATTR-ENDEXP"
+    <md-chips class="dfx-core-gc-chips" ng-model="ATTR-EXP{{ (attributes.binding.value.indexOf('.')>-1 || attributes.binding.value.indexOf('$dfx_iten')>-1) ? attributes.binding.value : '$parent_scope.' + attributes.binding.value }}ATTR-ENDEXP"
                 ng-init="dfx_chips_source.value = ATTR-EXP{{ (attributes.binding.value.indexOf('.')>-1 || attributes.binding.value.indexOf('$dfx_iten')>-1) ? attributes.binding.value : '$parent_scope.' + attributes.binding.value }}ATTR-ENDEXP"
               ATTR-IF{{readonly="attributes.disabled.value"}}
               md-on-add="attributes.onAdd.value" md-on-select="attributes.onSelect.value" 
@@ -22,7 +22,7 @@
     </md-chips>
     FRAG-ENDIF
     FRAG-IF{{attributes.binding.value!=='' && attributes.selectedInput.value==='number'}}
-    <md-chips ng-model="ATTR-EXP{{ (attributes.binding.value.indexOf('.')>-1 || attributes.binding.value.indexOf('$dfx_iten')>-1) ? attributes.binding.value : '$parent_scope.' + attributes.binding.value }}ATTR-ENDEXP"
+    <md-chips class="dfx-core-gc-chips" ng-model="ATTR-EXP{{ (attributes.binding.value.indexOf('.')>-1 || attributes.binding.value.indexOf('$dfx_iten')>-1) ? attributes.binding.value : '$parent_scope.' + attributes.binding.value }}ATTR-ENDEXP"
                 ng-init="dfx_chips_source.value = ATTR-EXP{{ (attributes.binding.value.indexOf('.')>-1 || attributes.binding.value.indexOf('$dfx_iten')>-1) ? attributes.binding.value : '$parent_scope.' + attributes.binding.value }}ATTR-ENDEXP"
               ATTR-IF{{readonly="attributes.disabled.value"}}
               md-on-add="attributes.onAdd.value" md-on-select="attributes.onSelect.value" 
@@ -44,7 +44,7 @@
     </md-chips>
     FRAG-ENDIF
     FRAG-IF{{attributes.binding.value==='' && attributes.selectedInput.value==='text'}}
-    <md-chips ng-model="attributes.bindEmptyModel"
+    <md-chips class="dfx-core-gc-chips" ng-model="attributes.bindEmptyModel"
               ng-model-options="{ getterSetter: true }"
               ATTR-IF{{readonly="attributes.disabled.value"}}
               md-on-add="attributes.onAdd.value" md-on-select="attributes.onSelect.value" 
@@ -66,7 +66,7 @@
     </md-chips>
     FRAG-ENDIF
     FRAG-IF{{attributes.binding.value==='' && attributes.selectedInput.value==='number'}}
-    <md-chips ng-model="attributes.bindEmptyModel"
+    <md-chips class="dfx-core-gc-chips" ng-model="attributes.bindEmptyModel"
               ng-model-options="{ getterSetter: true }"
               ATTR-IF{{readonly="attributes.disabled.value"}}
               md-on-add="attributes.onAdd.value" md-on-select="attributes.onSelect.value" 
