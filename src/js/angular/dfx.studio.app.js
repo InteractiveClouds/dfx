@@ -4285,9 +4285,32 @@ dfxStudioApp.controller("dfx_studio_gc_template_controller", [ '$scope', '$route
             .cancel('Cancel')
             .ok('OK');
         $mdDialog.show(confirm).then(function() {
-            dfxGcTemplates.remove( $scope, gc_template.name, $scope.app_name, gc_template.platform ).then(function( data ) {
+            dfxGcTemplates.remove($scope, gc_template.name, $scope.app_name, gc_template.platform).then(function( data ) {
                 if ( data.status && data.status === 200 ) {
                     dfxMessaging.showMessage("Template " + gc_template.name + " was successfully deleted!");
+                    $scope.getAll();
+                } else {
+                    dfxMessaging.showWarning(data.data);
+                }
+            });
+        }, function() {
+        });
+    };
+    $scope.confirmDeleteAll = function(ev) {
+        var confirm = $mdDialog.confirm()
+            .title('Are you sure you want to remove these GC Templates?')
+            .textContent('GC Templates will be removed from the repository.')
+            .ariaLabel('remove service')
+            .targetEvent(ev)
+            .cancel('Cancel')
+            .ok('OK');
+        $mdDialog.show(confirm).then(function() {
+            var gc_templates_selected_names = $scope.gc_templates_selected.map(function(element) {
+                return element.name;
+            });
+            dfxGcTemplates.removeAll($scope, gc_templates_selected_names, $scope.app_name, $scope.gc_templates_selected[0].platform).then(function( data ) {
+                if ( data.status && data.status === 200 ) {
+                    dfxMessaging.showMessage("Templates were successfully deleted!");
                     $scope.getAll();
                 } else {
                     dfxMessaging.showWarning(data.data);
@@ -4301,6 +4324,32 @@ dfxStudioApp.controller("dfx_studio_gc_template_controller", [ '$scope', '$route
         var sideNavInstance = $mdSidenav('side_nav_gc_template');
         sideNavInstance.toggle();
     }
+
+    // Mass operations - START
+    $scope.gc_templates_selected = [];
+    $scope.toggleSelection = function toggleSelection(gc_template) {
+        var idx = $scope.gc_templates_selected.indexOf(gc_template);
+        if (idx > -1) {
+            $scope.gc_templates_selected.splice(idx, 1);
+        } else {
+            $scope.gc_templates_selected.push(gc_template);
+        }
+    };
+    $scope.toggleAll = function() {
+        if ($scope.gc_templates_selected.length === $scope.gc_templates.length) {
+            $scope.gc_templates_selected = [];
+        } else if ($scope.gc_templates_selected.length === 0 || $scope.gc_templates_selected.length > 0) {
+            if ($scope.gc_all_selected) {
+                $scope.gc_templates_selected = [];
+            } else {
+                $scope.gc_templates_selected = $scope.gc_templates.slice(0);
+            }
+        }
+    };
+    $scope.isSelected = function (gc_template) {
+        return $scope.gc_templates_selected.indexOf(gc_template) > -1;
+    };
+    // Mass operations - END
 }]);
 
 dfxStudioApp.controller("dfx_studio_page_controller", [ '$scope', '$routeParams', '$mdDialog', '$location', '$window', 'dfxMessaging', 'dfxPages', function($scope, $routeParams, $mdDialog, $location, $window, dfxMessaging, dfxPages) {

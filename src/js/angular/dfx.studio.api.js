@@ -1757,6 +1757,20 @@ dfxStudioApi.factory('dfxGcTemplates', [ '$http', '$q', function($http, $q) {
         return deferred.promise;
     };
 
+    api_gc_templates.removeAll = function( scope, template_names, app_name, platform ) {
+        var deferred = $q.defer();
+
+        $http({
+            method: 'POST',
+            url: '/studio/gctemplates/deleteall',
+            data: { names: template_names , ownerId: "", application: app_name, platform: platform }
+        }).then(function successCallback(response) {
+            deferred.resolve( response );
+        });
+
+        return deferred.promise;
+    };
+
     api_gc_templates.copy = function( scope, to_copy ) {
         var deferred = $q.defer();
 
