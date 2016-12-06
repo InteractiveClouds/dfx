@@ -1785,6 +1785,20 @@ dfxStudioApi.factory('dfxGcTemplates', [ '$http', '$q', function($http, $q) {
         return deferred.promise;
     };
 
+    api_gc_templates.copyAll = function( scope, to_copy ) {
+        var deferred = $q.defer();
+
+        $http({
+            method: 'POST',
+            url: '/studio/gctemplates/copyall',
+            data: to_copy
+        }).then(function successCallback(response) {
+            deferred.resolve(response);
+        });
+
+        return deferred.promise;
+    };
+
     return api_gc_templates;
 }]);
 

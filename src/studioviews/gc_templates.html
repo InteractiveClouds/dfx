@@ -4,7 +4,7 @@
             <md-content class="md-padding flex-100" layout="column">
                 <div layout="row" class="col-md-12" layout-align="center end">
                     <span class="col-md-8">
-                        <md-button class="md-raised md-primary" ng-if="gc_templates_selected.length > 0">
+                        <md-button ng-if="gc_templates_selected.length > 0" ng-click="copyAll($event)" class="md-raised md-primary">
                             <span class="fa fa-copy"></span>
                             Copy
                         </md-button>
@@ -40,7 +40,6 @@
                         <div id="scope-source-table" style="padding:0;overflow-y:auto;">
                             <table class="datatable" style="width:100%;">
                                 <tbody>
-                                    <!--tr ng-repeat="gc_template in gc_templates | filter:gc_templates_platform track by $index" style="cursor:pointer;"-->
                                     <tr ng-repeat="gc_template in gc_templates | filter:gc_templates_platform track by $index" style="cursor:pointer;">
                                         <td>
                                             <md-checkbox ng-checked="isSelected(gc_template)" ng-click="toggleSelection(gc_template)" style="margin: 0; padding: 0; min-width: 20px"></md-checkbox>

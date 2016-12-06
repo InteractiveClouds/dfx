@@ -4248,13 +4248,52 @@ dfxStudioApp.controller("dfx_studio_gc_template_controller", [ '$scope', '$route
                             dfxMessaging.showWarning( data.data.data.message );
                         } else {
                             dfxMessaging.showMessage('GC Template ' + $scope.toCopy.gcTemplateName + ' has been successfully copied');
-                            $scope.getAll();
                             $mdDialog.hide();
                         }
                     });
                 } else {
                     dfxMessaging.showWarning('Invalid GC Template Name');
                 }
+            }
+
+            $scope.closeDialog = function() {
+                $mdDialog.hide();
+            }
+        }
+    };
+    $scope.copyAll = function($event) {
+        var parentEl = angular.element(document.body);
+
+        $mdDialog.show({
+            parent: parentEl,
+            targetEvent: $event,
+            clickOutsideToClose: true,
+            scope: $scope.$new(),
+            templateUrl: 'studioviews/copy_gc_templates_all_dialog.html',
+            controller: DialogController
+        });
+
+        function DialogController($scope, $mdDialog) {
+            $scope.toCopy = {
+                "applicationName":       $scope.app_name,
+                "applicationNameTarget": $scope.app_name,
+                "platform":              $scope.gc_templates_selected[0].platform
+            }
+            $scope.validPrefix = true;
+
+            $scope.copyAllComponents = function() {
+                var gc_templates_selected_names = $scope.gc_templates_selected.map(function(element) {
+                    return element.name;
+                });
+                $scope.toCopy.gcTemplateNames = gc_templates_selected_names;
+                dfxGcTemplates.copyAll($scope, $scope.toCopy).then(function( data ) {
+                    if ( data.data.data.type === 'error' ) {
+                        dfxMessaging.showWarning('Certain GC Templates already exist in target application');
+                    } else {
+                        dfxMessaging.showMessage('GC Templates were successfully copied');
+                        $mdDialog.hide();
+                    }
+                });
             }
 
             $scope.closeDialog = function() {
