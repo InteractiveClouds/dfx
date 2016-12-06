@@ -73,7 +73,7 @@
             <input class="dfx-ve-property-treeview-button" type="checkbox" id="date-formats" />
             <label for="date-formats">Date Formating</label>
             <ul class="dfx-ve-property-treeview-content">
-                <li class="col-md-12">
+                <!-- <li class="col-md-12">
                     <span class="col-md-4">Notations:</span>
                     <span class="col-md-8">
                         <div style="display: inline-block; margin-right: 10px;">
@@ -99,8 +99,8 @@
                             <md-radio-button class="md-primary" value="dash" aria-label="Direction">Dash</md-radio-button>
                         </md-radio-group>
                     </span>
-                </li>
-                <li class="col-md-12">
+                </li> -->
+                <!-- <li class="col-md-12">
                     <span class="col-md-4" style="padding: 3px 0 0 5px">Order:</span>
                     <md-input-container class="col-md-8" style="padding: 0 0 10px">
                         <md-select ng-model="attributes.dateOrder.value" aria-label="{{attributes.dateOrder.value}}" ng-change="overrideAttribute('dateOrder'); cacheAttributeOldValue({'value':'dateOrder'}); cacheAttributeNewValue('dateOrder'); dfxFormatDate()">                                     
@@ -108,6 +108,27 @@
                             <md-option value="DD/MM/YYYY">Day Month Year</md-option>
                             <md-option value="YYYY/MM/DD">Year Month Day</md-option>
                             <md-option value="YYYY/DD/MM">Year Day Month</md-option>
+                        </md-select>
+                    </md-input-container>
+                </li>    -->  
+                <li class="col-md-12">
+                    <span class="col-md-4">Custom format:</span>
+                    <input class="col-md-8" type="text" ng-model="attributes.customDateFormat.value" ng-model-options="{ debounce: '500'}" ng-change="overrideAttribute('customDateFormat'); dfxFormatDate()" ng-focus="cacheAttributeOldValue({'name':'customDateFormat'})" ng-blur="cacheAttributeNewValue('customDateFormat')"/>
+                </li>           
+                <li class="col-md-12">
+                    <span class="col-md-4" style="padding: 3px 0 0 5px">Standard formats:</span>
+                    <md-input-container class="col-md-8" style="padding: 0 0 10px">
+                        <md-select ng-model="attributes.standardDateFormat.value" aria-label="{{attributes.standardDateFormat.value}}" ng-change="overrideAttribute('standardDateFormat'); cacheAttributeOldValue({'value':'standardDateFormat'}); cacheAttributeNewValue('standardDateFormat'); dfxFormatDate()">                                     
+                            <md-option value="MM/DD/YYYY">MM/DD/YYYY</md-option>
+                            <md-option value="DD.MM.YYYY">DD.MM.YYYY</md-option>
+                            <md-option value="DD.MM.YY">DD.MM.YY</md-option>
+                            <md-option value="D.MM">D.MM</md-option>
+                            <md-option value="kk:mm">kk:mm</md-option>
+                            <md-option value="DD.MM k:mm">DD.MM k:mm</md-option>
+                            <md-option value="dddd, D MMMM YYYY">dddd, D MMMM YYYY</md-option>
+                            <md-option value="D MMMM YYYY">D MMMM YYYY</md-option>
+                            <md-option value="D MMM YYYY">D MMM YYYY</md-option>
+                            <md-option value="kk:mm:ss">kk:mm:ss</md-option>
                         </md-select>
                     </md-input-container>
                 </li>                

@@ -18,6 +18,8 @@
     "requireOptions":     [ "true", "false" ],
     "dateFormating":      { "value": true },
     "dateFormat":         { "value": "MM/DD/YYYY" },
+    "standardDateFormat": { "value": "MM/DD/YYYY" },
+    "customDateFormat":   { "value": "" },
     "dateNotations":      { "year": "true", "month": "true", "day": "true" },
     "dateSeparator":      { "value": "slash" },
     "dateOrder":          { "value": "MM/DD/YYYY" },
