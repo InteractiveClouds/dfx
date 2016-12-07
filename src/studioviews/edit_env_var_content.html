@@ -1,0 +1,21 @@
+<md-dialog aria-label="add-variable-dialog" ng-cloak>
+    <form ng-submit="saveEnvVarContent()">
+        <md-toolbar>
+            <div class="md-toolbar-tools layout-padding">
+                <h2>Set environment variable content</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="closeDialog()" style="margin-right:-6px;" aria-label="Studio button">
+                    <md-icon class="fa fa-lg fa-times dfx-studio-flex-icon" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content style="width:1000px;padding:8px 8px 2px">
+            <div id="env-var-content" class="dfx-studio-dialog-json-editor md-whiteframe-1dp" style="height: 480px;"></div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button class="md-primary" type="submit" aria-label="Studio button">Save</md-button>
+            <md-button class="md-primary" ng-click="closeDialog()" aria-label="Studio button">Cancel</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

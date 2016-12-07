@@ -2370,7 +2370,7 @@ dfxStudioApp.controller("dfx_studio_general_settings_controller", [ '$scope','df
 
 }]);
 
-dfxStudioApp.controller("dfx_studio_devops_controller", [ '$scope', '$q', '$mdDialog', 'dfxApplications', 'dfxMessaging', function($scope, $q, $mdDialog, dfxApplications, dfxMessaging) {
+dfxStudioApp.controller("dfx_studio_devops_controller", [ '$scope', '$q', '$mdDialog', '$timeout', 'dfxApplications', 'dfxMessaging', function($scope, $q, $mdDialog, $timeout, dfxApplications, dfxMessaging) {
     var parentScope = $scope.$parent,
         app_data = { "app_name": $scope.app_name };
     parentScope.devops = $scope;
@@ -2389,6 +2389,9 @@ dfxStudioApp.controller("dfx_studio_devops_controller", [ '$scope', '$q', '$mdDi
     $scope.getAppEnvironments = function(data, envs_init){
         dfxApplications.getEnvironmentsList( data ).then(function(response){
             $scope.environments_list = response.data.data;
+            $timeout(function() {
+                console.log('$scope.environments_list', $scope.environments_list);
+            }, 0);
             if(!envs_init) $scope.generateAppEnvironments();
         });
     }
@@ -2455,8 +2458,12 @@ dfxStudioApp.controller("dfx_studio_devops_controller", [ '$scope', '$q', '$mdDi
         });
     }
 
-    $scope.openEnvironmentDialog = function(index, environment){
-        $scope.environment_mode = environment ? 'Edit' : 'Add';
+    $scope.openEnvironmentDialog = function(index, environment, action){
+        if(!environment){
+            $scope.environment_mode = 'Add';            
+        }else{
+            $scope.environment_mode = (action && action === 'copy') ? 'Copy' : 'Edit';            
+        }
         $scope.not_valid_environment_name = false;
         $scope.environment_data.name = environment ? environment.name : ''
         $mdDialog.show({
@@ -2492,12 +2499,21 @@ dfxStudioApp.controller("dfx_studio_devops_controller", [ '$scope', '$q', '$mdDi
                             data[$scope.env_vars_list[i].name] = '';
                         };
                         if(environment){
-                            var data = {                        
-                                "_id": environment._id,
-                                "name": name,
-                                "data": environment.data
+                            if($scope.environment_mode === 'Edit'){
+                                var data = {                        
+                                    "_id": environment._id,
+                                    "name": name,
+                                    "data": environment.data
+                                }
+                                $scope.editEnvironment(data);
+                            }else if($scope.environment_mode === 'Copy'){
+                                var data = {                        
+                                    "app_name": $scope.app_name,
+                                    "name": name,
+                                    "data": environment.data
+                                }
+                                $scope.addEnvironment(data);
                             }
-                            $scope.editEnvironment(data);
                         }else{
                             var data = {
                                 "app_name": $scope.app_name,
@@ -2544,6 +2560,9 @@ dfxStudioApp.controller("dfx_studio_devops_controller", [ '$scope', '$q', '$mdDi
     $scope.getAppEnvVars = function(data, envs_init){        
         dfxApplications.getEnvironmentVariablesList( data ).then(function(response){
             $scope.env_vars_list = response.data.data;            
+            $timeout(function() {
+                console.log('$scope.env_vars_list', $scope.env_vars_list);
+            }, 0);
             $scope.getAppEnvironments(data, envs_init);
         });
     }
@@ -2697,6 +2716,36 @@ dfxStudioApp.controller("dfx_studio_devops_controller", [ '$scope', '$q', '$mdDi
             });
         });
     };
+
+    $scope.openEnvVarEditor = function(environment_content, var_name){
+        console.log('environment_content, var_name', environment_content, var_name);
+        $scope.envVarJsonEditor = null;
+        $mdDialog.show({
+            scope: $scope,
+            preserveScope: true,
+            parent: angular.element(document.body),
+            clickOutsideToClose: true,
+            ariaLabel: 'edit_env_var_content',
+            templateUrl: 'studioviews/edit_env_var_content.html',
+            onComplete: function() {                
+                var container = document.getElementById('env-var-content'),
+                    options = { mode: 'code', modes: ['tree','form','code','text','view'], history: true },
+                    data = environment_content[var_name];
+                $scope.envVarJsonEditor = new JSONEditor(container, options, data);
+                
+                $scope.saveEnvVarContent = function(){
+                    environment_content[var_name] = $scope.envVarJsonEditor.get();
+                    console.log('environment_content[var_name]', environment_content[var_name]);
+                    $scope.closeDialog();
+                }
+                
+                $scope.closeDialog = function() {
+                    $scope.envVarJsonEditor = null;
+                    $mdDialog.hide();
+                }
+            }
+        });
+    }
 
     $scope.saveCollaboration = function(){
         dfxApplications.saveCollaboration($scope.devops.channel, $scope.app_name).then(function(){
