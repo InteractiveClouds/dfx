@@ -45,6 +45,14 @@
                     <label for="item-11" class="dfx-ve-property-title-level-1"><span>Container Styling</span></label>
                     <ul class="dfx-ve-property-treeview-content">
                         <li class="col-md-12">
+                            <span class="col-md-4">Width:</span>
+                            <input type="text" class="col-md-8" ng-model="attributes.css.width" ng-model-options="{ debounce: 500 }" ng-change="overrideAttribute('css.width'); dfxSetBaseSizes('width', attributes.css.width);" ng-focus="cacheAttributeOldValue({'name':'css.width'})" ng-blur="cacheAttributeNewValue('css.width')"/>
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-4">Height:</span>
+                            <input type="text" class="col-md-8" ng-model="attributes.css.height" ng-model-options="{ debounce: 500 }" ng-change="overrideAttribute('css.height'); dfxSetBaseSizes('height', attributes.css.height);" ng-focus="cacheAttributeOldValue({'name':'css.height'})" ng-blur="cacheAttributeNewValue('css.height')"/>
+                        </li>
+                        <li class="col-md-12">
                             <span class="col-md-4">Style:</span>
                             <div class="col-md-8" layout="row"><input class="col-md-12" type="text" ng-model="attributes.style.value" ng-change="overrideAttribute('style')" ng-focus="cacheAttributeOldValue({'name':'style'})" ng-blur="cacheAttributeNewValue('style')" style="margin-left:-15px;"/><dfx-ve-css-style></dfx-ve-css-style></div>
                         </li>
