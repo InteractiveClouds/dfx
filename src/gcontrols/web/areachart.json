@@ -7,15 +7,26 @@
 	"chartType": 				{ "value": "stackedAreaChart" },
 	"display": 					{ "value": "true" },
 	"options": 					{
-  	"xAxisLabel": "'X Axis'",
+  		"xAxisLabel": "'X Axis'",
 		"yAxisLabel": "'Y Axis'",
 		"xAxisLabelDistance": -5,
-  	"yAxisLabelDistance": 0,
-  	"duration": 500,
-  	"showXAxis": "true",
-  	"showYAxis": "true",
+	  	"yAxisLabelDistance": 0,
+	  	"duration": 500,
+	  	"showXAxis": "true",
+	  	"showYAxis": "true",
 		"showLegend": "true",
-		"useInteractiveGuideline": "true"
+		"useInteractiveGuideline": "true",
+		"zoom": {
+	        "enabled": "true",
+	        "scale": 1,
+	        "minScaleExtent": 1,
+			"maxScaleExtent": 10,
+	        "useFixedDomain": "false",
+	        "useNiceScale": "false",
+	        "horizontalOff": "false",
+	        "verticalOff": "false",
+	        "unzoomEventType": "dblclick.zoom"
+	    }
 	},
 	"dynamicOptions": 	{ "value": "" },
 	"optionsType":    { "value": "static" },

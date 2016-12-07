@@ -2004,6 +2004,21 @@ var DfxGcChartUtil = (function () {
             scope.attributes.options.value.chart.donutRatio = scope.attributes.options.donutRatio;
         }
 
+        if (scope.attributes.options.zoom) {
+            scope.attributes.options.value.chart.zoom.enabled = scope.attributes.options.zoom.enabled == 'true' ? true : false;
+            scope.attributes.options.value.chart.zoom.scale = scope.attributes.options.zoom.scale;
+
+            var minScaleExtent = scope.attributes.options.zoom.minScaleExtent ? parseInt(scope.attributes.options.zoom.minScaleExtent) : 1;
+            var maxScaleExtent = scope.attributes.options.zoom.maxScaleExtent ? parseInt(scope.attributes.options.zoom.maxScaleExtent) : 10;
+            scope.attributes.options.value.chart.zoom.scaleExtent = [minScaleExtent, maxScaleExtent];
+
+            scope.attributes.options.value.chart.zoom.useFixedDomain = scope.attributes.options.zoom.useFixedDomain == 'true' ? true : false;;
+            scope.attributes.options.value.chart.zoom.useNiceScale = scope.attributes.options.zoom.useNiceScale == 'true' ? true : false;;
+            scope.attributes.options.value.chart.zoom.horizontalOff = scope.attributes.options.zoom.horizontalOff == 'true' ? true : false;;
+            scope.attributes.options.value.chart.zoom.verticalOff = scope.attributes.options.zoom.verticalOff == 'true' ? true : false;;
+            scope.attributes.options.value.chart.zoom.unzoomEventType = scope.attributes.options.zoom.unzoomEventType;
+        }
+
         var assignEvent = function(eventName, dispatch) {
             if (scope.attributes[eventName] && scope.attributes[eventName].value) {
                 var normalizedEvent = removeBracketsFromEventListener(scope.attributes[eventName].value);
@@ -2146,6 +2161,24 @@ var DfxGcChartUtil = (function () {
         if (scope.attributes.options.donutRatio) {
             scope.$gcscope.$watch(scope.attributes.options.donutRatio, function (newValue) {
                 scope.attributes.options.value.chart.donutRatio = newValue;
+            });
+        }
+        if (scope.attributes.options.zoom) {
+            scope.$gcscope.$watch(scope.attributes.options.zoom, function (newValue) {
+                if (newValue) {
+                    scope.attributes.options.value.chart.zoom.enabled = newValue.enabled == 'true' ? true : false;
+                    scope.attributes.options.value.chart.zoom.scale = newValue.scale;
+
+                    var minScaleExtent = newValue.minScaleExtent ? parseInt(newValue.minScaleExtent) : 1;
+                    var maxScaleExtent = newValue.maxScaleExtent ? parseInt(newValue.maxScaleExtent) : 10;
+                    scope.attributes.options.value.chart.zoom.scaleExtent = [minScaleExtent, maxScaleExtent];
+
+                    scope.attributes.options.value.chart.zoom.useFixedDomain = newValue.useFixedDomain == 'true' ? true : false;;
+                    scope.attributes.options.value.chart.zoom.useNiceScale = newValue.useNiceScale == 'true' ? true : false;;
+                    scope.attributes.options.value.chart.zoom.horizontalOff = newValue.horizontalOff == 'true' ? true : false;;
+                    scope.attributes.options.value.chart.zoom.verticalOff = newValue.verticalOff == 'true' ? true : false;;
+                    scope.attributes.options.value.chart.zoom.unzoomEventType = newValue.unzoomEventType;
+                }
             });
         }
     };
@@ -2841,6 +2874,16 @@ dfxGCC.directive('dfxGccWebAreachart', ['$timeout', '$filter', function($timeout
                         tickFormat: function(d){
                             return d3.format(',.2f')(d);
                         }
+                    },
+                    zoom: {
+                        enabled: true,
+                        scale: 1,
+                        scaleExtent: [1, 10],
+                        useFixedDomain: false,
+                        useNiceScale: false,
+                        horizontalOff: false,
+                        verticalOff: false,
+                        unzoomEventType: 'dblclick.zoom'
                     }
                 },
                 title: {
