@@ -154,9 +154,6 @@ dfxGCC.directive('dfxGccWebBase', ['$rootScope', '$http', '$compile', '$injector
                 var parent_column_orientation = $('#' + scope.component_id).parent().attr('layout');
                 if (parent_column_orientation == 'column') {
                     component.css('width', scope.attributes.flex.value + '%');
-                } else {
-                    component.removeClass('flex-100');
-                    component.addClass('flex' + '-' + scope.attributes.flex.value);
                 }
             };
 
@@ -184,6 +181,9 @@ dfxGCC.directive('dfxGccWebPanel', ['$timeout', '$compile', function($timeout, $
                 scope.attributes.toolbar.rightMenu.initialClick = { "value": false };
                 scope.attributes.toolbar.rightMenu.dynamicPresent = { "value": false };
                 scope.dfx_rep_panels;
+                if($(element).parent().attr('id') === 'dfx_view_preview_container'){
+                    scope.attributes.isMainPanel.value = true;
+                }
                 var is_rep_title = (scope.attributes.repeat_in.value !=='' && scope.attributes.repeat_title.value) ? true : false,
                     is_rep_panel = scope.attributes.repeat_in.value !=='' ? true : false;
 
@@ -213,13 +213,6 @@ dfxGCC.directive('dfxGccWebPanel', ['$timeout', '$compile', function($timeout, $
                     }
                 }
 
-                if (scope.attributes.repeat_in.value != '' && $(element).parent().attr('layout') == 'row') {
-                    if (scope.attributes.repeat_title.value) {
-                        $(element).addClass('layout-row');
-                        $(element).css('flex-wrap', 'wrap');
-                    }
-                }
-
                 scope.changeWidth = function(){
                     if ( !scope.attributes.repeat_title.value ) {
                         basectrl.changeWidth(scope);
@@ -232,14 +225,35 @@ dfxGCC.directive('dfxGccWebPanel', ['$timeout', '$compile', function($timeout, $
                     if (scope.attributes.repeat_in.value != '') {
                         var parent_orientation = $(element).parent().attr('layout');
 
-                        if (parent_orientation == 'row' && scope.attributes.repeat_title.value) {
-                            $(element).addClass('layout-row');
-                            $(element).css('flex-wrap', 'wrap');
-                        } else if (parent_orientation == 'column' && scope.attributes.repeat_title.value) {
-                            $(element).css('width', scope.attributes.flex.value + '%');
-                            $(element).children('div').removeClass('flex-' + scope.attributes.flex.value);
-                            $(element).children('div').addClass('flex-100');
-                            $(element).children('div').css('width', '100%');
+                        if (parent_orientation == 'row' ) {
+                            var number_of_panels = scope.$parent_scope[scope.attributes.repeat_in.value].length,
+                                total_width = scope.attributes.flex.value * number_of_panels;
+                                min_total_width = total_width > 100 ? 100 : total_width,
+                                each_rep_panel_width = total_width > 100 ? scope.attributes.flex.value : 100/number_of_panels;
+                                if(each_rep_panel_width>30 && each_rep_panel_width<35) each_rep_panel_width = 33;
+                                if(each_rep_panel_width>65 && each_rep_panel_width<70) each_rep_panel_width = 66;
+                            $timeout(function() {
+                                $(element).addClass('layout-row flex-' + min_total_width);
+                                if (scope.attributes.repeat_title.value) {
+                                    $(element).css('flex-wrap', 'wrap');
+                                    $(element).children('div').addClass('flex-'+each_rep_panel_width);
+                                }else{
+                                    $(element).find('#'+component.id+'_panel')
+                                        .css('flex-wrap', 'wrap')
+                                        .removeClass('layout-column')
+                                        .addClass('layout-row');
+                                    for (var i = 0; i < number_of_panels; i++) {
+                                        $(element).find('#'+component.id+'_content_'+i).addClass('flex-'+each_rep_panel_width);
+                                    }
+                                }
+                            }, 0);
+                        } else if (parent_orientation == 'column') {
+                            $timeout(function() {
+                                $(element).css('width', scope.attributes.flex.value + '%');
+                                $(element).children('div').removeClass('flex-' + scope.attributes.flex.value);
+                                $(element).children('div').addClass('flex-100');
+                                $(element).children('div').css('width', '100%');
+                            }, 0);
                         }
                     }
                 };
