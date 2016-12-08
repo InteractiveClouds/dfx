@@ -593,20 +593,20 @@ dfxGCC.directive('dfxGccWebTreeview', [ '$timeout', '$compile', '$q', '$http', '
                     $q.all([ scope.toggleSelectedItem, scope.selectNodeChildrens, scope.isSelectedItem ]).then(function(){
                         scope.selectedArrayClone = [];
                         if(itemsType==='static'){
-                            scope.selectedArrayClone = JSON.parse(JSON.stringify(scope.attributes.static.value));
+                            scope.selectedArrayClone = angular.copy(scope.attributes.static.value);
                             scope.rebuildSelectedArray('static');
                         }else{
-                            scope.selectedArrayClone = JSON.parse(JSON.stringify(scope.$parent_scope[scope.attributes.dynamic.value]));
+                            scope.selectedArrayClone = angular.copy(scope.$parent_scope[scope.attributes.dynamic.value]);
                             scope.rebuildSelectedArray('dynamic');
                         }
                     });
                 }
 
                 if(scope.attributes.treeItemsType.value==='static'){
-                    scope.selectedArrayClone = JSON.parse(JSON.stringify(scope.attributes.static.value));
+                    scope.selectedArrayClone = angular.copy(scope.attributes.static.value);
                     scope.rebuildSelectedArray('static');
                 }else{
-                    scope.selectedArrayClone = JSON.parse(JSON.stringify(scope.$parent_scope[scope.attributes.dynamic.value]));
+                    scope.selectedArrayClone = angular.copy(scope.$parent_scope[scope.attributes.dynamic.value]);
                     scope.rebuildSelectedArray('dynamic');
                 }
 
@@ -4868,7 +4868,7 @@ dfxGCC.directive('dfxGccWebImage', ['$timeout', function($timeout) {
                         switch(side){
                             case 'width': $(element).css('width', value); break;
                             case 'height': $(element).css('height', value); break;
-                        }                        
+                        }
                     }
 
                     if(scope.attributes.css.status === 'overridden') {
