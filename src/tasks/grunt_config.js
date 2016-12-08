@@ -296,6 +296,7 @@ var exports = (function () {
                 src + 'js/angular/dfx.pageeditor.app.js',
                 src + 'js/angular/dfx.studio.api.js',
                 src + 'js/angular/dfx.studio.app.js',
+                src + 'js/angular/dfx.studio.app.util.js',
                 src + 'js/angular/dfx.studio.landing.js',
                 src + 'js/angular/dfx.vieweditor.app.js',
                 src + 'js/angular/dfx.gctemplateeditor.app.js',
@@ -379,6 +380,7 @@ var exports = (function () {
                 src + 'js/angular/dfx.pageeditor.app.js',
                 src + 'js/angular/dfx.studio.api.js',
                 src + 'js/angular/dfx.studio.app.js',
+                src + 'js/angular/dfx.studio.app.util.js',
                 src + 'js/angular/dfx.studio.landing.js',
                 src + 'js/angular/dfx.vieweditor.app.js',
                 src + 'js/angular/dfx.vieweditor.app.settings.js'
@@ -445,6 +447,7 @@ var exports = (function () {
                 src + 'js/angular/dfx.pageeditor.app.js',
                 src + 'js/angular/dfx.studio.api.js',
                 src + 'js/angular/dfx.studio.app.js',
+                src + 'js/angular/dfx.studio.app.util.js',
                 src + 'js/angular/dfx.studio.landing.js',
                 src + 'js/angular/dfx.vieweditor.app.js',
                 src + 'js/angular/dfx.vieweditor.app.settings.js'
@@ -465,6 +468,7 @@ var exports = (function () {
                 src + 'js/angular/dfx.pageeditor.app.js',
                 src + 'js/angular/dfx.studio.api.js',
                 src + 'js/angular/dfx.studio.app.js',
+                src + 'js/angular/dfx.studio.app.util.js',
                 src + 'js/angular/dfx.studio.landing.js',
                 src + 'js/angular/dfx.vieweditor.app.js',
                 src + 'js/angular/dfx.vieweditor.app.settings.js'
@@ -531,6 +535,7 @@ var exports = (function () {
                 src + 'js/angular/dfx.pageeditor.app.js',
                 src + 'js/angular/dfx.studio.api.js',
                 src + 'js/angular/dfx.studio.app.js',
+                src + 'js/angular/dfx.studio.app.util.js',
                 src + 'js/angular/dfx.studio.landing.js',
                 src + 'js/angular/dfx.vieweditor.app.js',
                 src + 'js/angular/dfx.vieweditor.app.settings.js'
@@ -551,6 +556,7 @@ var exports = (function () {
                 src + 'js/angular/dfx.pageeditor.app.js',
                 src + 'js/angular/dfx.studio.api.js',
                 src + 'js/angular/dfx.studio.app.js',
+                src + 'js/angular/dfx.studio.app.util.js',
                 src + 'js/angular/dfx.studio.landing.js',
                 src + 'js/angular/dfx.vieweditor.app.js',
                 src + 'js/angular/dfx.vieweditor.app.settings.js'

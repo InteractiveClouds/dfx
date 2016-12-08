@@ -1,0 +1,55 @@
+                <!--div layout="row" class="col-md-12" layout-align="center end">
+                    <span class="col-md-8">
+                        <md-button ng-if="gc_templates_selected.length > 0" ng-click="copyAll($event)" class="md-raised md-primary">
+                            <span class="fa fa-copy"></span>
+                            Copy
+                        </md-button>
+                        <md-button ng-if="gc_templates_selected.length > 0" ng-click="confirmDeleteAll($event)" class="md-raised md-warn">
+                            <span class="fa fa-trash-o"></span>
+                            Delete
+                        </md-button>
+                    </span>
+                    <span class="col-md-1" style="padding:3px;">Platform:</span>
+                    <md-select ng-model="gc_templates_platform" class="col-md-3" style="padding:0;margin:0;">
+                        <md-option value="web" selected>Web</md-option>
+                        <md-option value="mobile">Mobile</md-option>
+                    </md-select>
+                </div-->
+                        <table class="datatable" style="width:100%;">
+                            <thead>
+                                <tr style="border-bottom:1px solid #C7C7C7;">
+                                    <th>
+                                        <md-checkbox ng-model="assets.is_all_resources_assets_selected" ng-click="assets.toggleAll()" style="margin: 0; padding: 0; min-width: 20px"></md-checkbox>
+                                    </th>
+                                    <th width="20%">Path</th>
+                                    <th width="20%">Type</th>
+                                    <th width="20%">Size</th>
+                                    <th width="20%">Thumbnail</th>
+                                    <th width="20%">Actions</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div id="scope-source-table" style="padding:0;overflow-y:auto;">
+                            <table class="datatable" style="width:100%;">
+                                <tbody>
+                                    <tr ng-repeat="resitem in assets.data.items track by $index" style="cursor:pointer;">
+                                        <td>
+                                            <md-checkbox ng-checked="assets.isSelected(resitem)" ng-click="assets.toggleSelection(resitem)" style="margin: 0; padding: 0; min-width: 20px"></md-checkbox>
+                                        </td>
+                                        <td width="20%">{{resitem.path}}</td>
+                                        <td width="20%">{{resitem.type}}</td>
+                                        <td width="20%">{{resitem.size}} KiB</td>
+                                        <td width="20%">
+                                            <img data-dz-thumbnail="" alt="{{resitem.path}}" title="{{resitem.path}}" style="width:50px;height:50px;"
+                                                ng-src="{{(resitem.type == 'image/jpeg' || resitem.type == 'image/png' || resitem.type == 'image/gif')? '/studio/resources/preview/' + (app_name ? app_name + '/' : '')  + assets.current_resource_type + '/' + resitem.path  : ''}}">
+                                        </td>
+                                        <td width="20%">
+                                            <div layout="row" layout-align="space-between center">
+                                                <!--md-button ng-click="copy($event, gc_template)" ng-disabled="gc_template.name ==='default'" style="margin: 0; padding: 0; min-width: 20px" title="Copy"><md-icon class="fa fa-copy" style="font-size:20px; padding-top: 5px;"></md-icon></md-button-->
+                                                <md-button ng-click="assets.confirmResourceDelete($event, resitem)" style="margin: 0; padding: 0; min-width: 20px" title="Remove"><md-icon class="fa fa-trash" style="font-size:20px; padding-top: 3px;"></md-icon></md-button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
