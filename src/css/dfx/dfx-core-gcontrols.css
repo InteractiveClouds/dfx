@@ -573,7 +573,7 @@ div[dfx-gc-web-panel] > div > section > md-content > div > div {
 /* Chips */
 .dfx-core-gc-chips {}
 .dfx-core-gc-chips md-chips-wrap {
-    padding-top: 8px; 
+    padding-top: 8px;
 }
 .dfx-core-gc-chips-placeholder {
     font-size: 14px;
@@ -626,6 +626,9 @@ md-checkbox.dfx-core-gc-treeview-checkbox {
     width: 20px;
     margin-right: 6px;
     margin-left: 6px;
+}
+.dfx-core-gc-treeview-link {
+    cursor: pointer;
 }
 /* Checkbox */
 .dfx-core-gc-checkbox {
