@@ -725,14 +725,6 @@ dfxGCC.directive('dfxGccWebDatetime', ['$mdpDatePicker', '$mdpTimePicker', '$tim
             basectrl.init(scope, element, component, attrs, 'datetime').then(function() {
                 if(!scope.labelClass) scope.labelClass = 'dp-label-focus-off';
 
-                if(scope.attributes.dateNotations.hasOwnProperty('status')) delete scope.attributes.dateNotations.status;
-                if(scope.attributes.dateNotations.hasOwnProperty('value')) delete scope.attributes.dateNotations.value;
-                if(scope.attributes.timeNotations.hasOwnProperty('status')) delete scope.attributes.timeNotations.status;
-                if(scope.attributes.timeNotations.hasOwnProperty('value')) delete scope.attributes.timeNotations.value;
-                
-                scope.dateNotations = {"value": JSON.stringify(scope.attributes.dateNotations)};
-                scope.timeNotations = {"value": JSON.stringify(scope.attributes.timeNotations)};
-
                 if(scope.attributes.bindingExpression.value === ""){
                     scope.attributes.bindingDate.value = new Date();
                 }else{
@@ -781,15 +773,6 @@ dfxGCC.directive('dfxGccWebDatetime', ['$mdpDatePicker', '$mdpTimePicker', '$tim
 
                 scope.changeWidth = function(){ $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%'); };
                 if(!angular.isDefined(attrs.dfxGcEdit)) scope.changeWidth();
-
-                scope.showDatePicker = function (ev) {
-                    $mdpDatePicker(scope.attributes.bindingDate.value, { targetEvent: ev }).then(function (selectedDate) {
-                        scope.attributes.bindingDate.value = selectedDate;
-                        console.log('scope in mdpDatePicker', scope);
-                    });
-                };
-
-                console.log('scope', scope);
             });
         }
     }

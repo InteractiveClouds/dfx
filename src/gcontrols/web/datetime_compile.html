@@ -7,7 +7,7 @@
 
     FRAG-IF{{attributes.type.value === 'date' && attributes.selectedType.value !== 'ranged' && !attributes.dateFormating.value}}
     <div>
-        <mdp-date-picker class="dfx-core-gc-datetime-picker" name="dateTimeField" mdp-notations="dateNotations.value" ng-model="ATTR-STATIC{{bindingDate.value}}" md-placeholder="Enter date"
+        <mdp-date-picker class="dfx-core-gc-datetime-picker" name="dateTimeField" ng-model="ATTR-STATIC{{bindingDate.value}}"
             ATTR-IF{{ng-required="attributes.isDateRequired.value"}}
             ATTR-IF{{mdp-disabled="attributes.disabled.value"}}
             ATTR-IF{{ng-change="attributes.onchange.value"}}
@@ -36,7 +36,7 @@
 
     FRAG-IF{{attributes.type.value === 'date' && attributes.selectedType.value === 'ranged' && !attributes.dateFormating.value}}
     <div>
-        <mdp-date-picker class="dfx-core-gc-datetime-picker" name="dateTimeField" mdp-notations="dateNotations.value" ng-model="ATTR-STATIC{{bindingDate.value}}" mdp-min-date="minDate" mdp-max-date="maxDate" aria-label="{{minDate}} {{maxDate}}" md-placeholder="Enter date"
+        <mdp-date-picker class="dfx-core-gc-datetime-picker" name="dateTimeField" ng-model="ATTR-STATIC{{bindingDate.value}}" mdp-min-date="minDate" mdp-max-date="maxDate" aria-label="{{minDate}} {{maxDate}}"
             ATTR-IF{{ng-required="attributes.isDateRequired.value"}}
             ATTR-IF{{mdp-disabled="attributes.disabled.value"}}
             ATTR-IF{{ng-change="attributes.onchange.value"}}
@@ -65,7 +65,7 @@
 
     FRAG-IF{{attributes.type.value === 'date' && attributes.selectedType.value !== 'ranged' && attributes.dateFormating.value}}
     <div>
-        <mdp-date-picker class="dfx-core-gc-datetime-picker" name="dateTimeField" mdp-format="ATTR-NONV{{dateFormat.value}}" mdp-notations="dateNotations.value" ng-model="ATTR-STATIC{{bindingDate.value}}" md-placeholder="Enter date"
+        <mdp-date-picker class="dfx-core-gc-datetime-picker" name="dateTimeField" mdp-format="ATTR-NONV{{dateFormat.value}}" ng-model="ATTR-STATIC{{bindingDate.value}}"
             ATTR-IF{{ng-required="attributes.isDateRequired.value"}}
             ATTR-IF{{mdp-disabled="attributes.disabled.value"}}
             ATTR-IF{{ng-change="attributes.onchange.value"}}
@@ -94,7 +94,7 @@
 
     FRAG-IF{{attributes.type.value === 'date' && attributes.selectedType.value === 'ranged' && attributes.dateFormating.value}}
     <div>
-        <mdp-date-picker class="dfx-core-gc-datetime-picker" name="dateTimeField" mdp-format="ATTR-NONV{{dateFormat.value}}" mdp-notations="dateNotations.value" ng-model="ATTR-STATIC{{bindingDate.value}}" mdp-min-date="minDate" mdp-max-date="maxDate" aria-label="{{minDate}} {{maxDate}}" md-placeholder="Enter date"
+        <mdp-date-picker class="dfx-core-gc-datetime-picker" name="dateTimeField" mdp-format="ATTR-NONV{{dateFormat.value}}" ng-model="ATTR-STATIC{{bindingDate.value}}" mdp-min-date="minDate" mdp-max-date="maxDate" aria-label="{{minDate}} {{maxDate}}"
             ATTR-IF{{ng-required="attributes.isDateRequired.value"}}
             ATTR-IF{{mdp-disabled="attributes.disabled.value"}}
             ATTR-IF{{ng-change="attributes.onchange.value"}}
@@ -123,7 +123,7 @@
 
     FRAG-IF{{attributes.type.value === 'time' && !attributes.timeFormating.value}}
     <div>
-        <mdp-time-picker class="dfx-core-gc-datetime-picker" name="dateTimeField" mdp-notations="timeNotations.value" ng-model="ATTR-STATIC{{bindingDate.value}}" md-placeholder="Enter time"
+        <mdp-time-picker class="dfx-core-gc-datetime-picker" name="dateTimeField" ng-model="ATTR-STATIC{{bindingDate.value}}"
             ATTR-IF{{ng-required="attributes.isDateRequired.value"}}
             ATTR-IF{{mdp-disabled="attributes.disabled.value"}}
             ATTR-IF{{ng-change="attributes.onchange.value"}}
@@ -150,7 +150,7 @@
 
     FRAG-IF{{attributes.type.value === 'time' && attributes.timeFormating.value}}
     <div>
-        <mdp-time-picker class="dfx-core-gc-datetime-picker" name="dateTimeField" mdp-format="ATTR-NONV{{timeFormat.value}}" mdp-notations="timeNotations.value" ng-model="ATTR-STATIC{{bindingDate.value}}" md-placeholder="Enter time"
+        <mdp-time-picker class="dfx-core-gc-datetime-picker" name="dateTimeField" mdp-format="ATTR-NONV{{timeFormat.value}}" ng-model="ATTR-STATIC{{bindingDate.value}}"
             ATTR-IF{{ng-required="attributes.isDateRequired.value"}}
             ATTR-IF{{mdp-disabled="attributes.disabled.value"}}
             ATTR-IF{{ng-change="attributes.onchange.value"}}

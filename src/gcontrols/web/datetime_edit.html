@@ -73,44 +73,6 @@
             <input class="dfx-ve-property-treeview-button" type="checkbox" id="date-formats" />
             <label for="date-formats">Date Formating</label>
             <ul class="dfx-ve-property-treeview-content">
-                <!-- <li class="col-md-12">
-                    <span class="col-md-4">Notations:</span>
-                    <span class="col-md-8">
-                        <div style="display: inline-block; margin-right: 10px;">
-                            <md-checkbox style="width:20px;margin:0" class="md-primary" ng-model="attributes.dateNotations.year" ng-true-value="'true'" ng-false-value="'false'" ng-change="overrideAttribute('dateNotations.year'); rebuildDateNotations(); dfxFormatDate()" ng-focus="cacheAttributeOldValue({'name':'dateNotations.year'})" ng-blur="cacheAttributeNewValue('dateNotations.year')" ng-disabled="attributes.dateNotations.day === 'false' && attributes.dateNotations.month === 'false'" aria-label="{{attributes.dateNotations.year}}"></md-checkbox>
-                            <span>Year</span>
-                        </div>
-                        <div style="display: inline-block; margin-right: 10px;">
-                            <md-checkbox style="width:20px;margin:0" class="md-primary" ng-model="attributes.dateNotations.month" ng-true-value="'true'" ng-false-value="'false'" ng-change="overrideAttribute('dateNotations.month'); rebuildDateNotations(); dfxFormatDate()" ng-focus="cacheAttributeOldValue({'name':'dateNotations.month'})" ng-blur="cacheAttributeNewValue('dateNotations.month')" ng-disabled="attributes.dateNotations.year === 'false' && attributes.dateNotations.day === 'false'" aria-label="{{attributes.dateNotations.month}}"></md-checkbox>
-                            <span>Month</span>
-                        </div>
-                        <div style="display: inline-block; margin-right: 10px;">
-                            <md-checkbox style="width:20px;margin:0" class="md-primary" ng-model="attributes.dateNotations.day" ng-true-value="'true'" ng-false-value="'false'" ng-change="overrideAttribute('dateNotations.day'); rebuildDateNotations(); dfxFormatDate()" ng-focus="cacheAttributeOldValue({'name':'dateNotations.day'})" ng-blur="cacheAttributeNewValue('dateNotations.day')" ng-disabled="attributes.dateNotations.year === 'false' && attributes.dateNotations.month === 'false'" aria-label="{{attributes.dateNotations.day}}"></md-checkbox>
-                            <span>Day</span>
-                        </div>
-                    </span>
-                </li>
-                <li class="col-md-12">
-                    <span class="col-md-4">Separator:</span>
-                    <span class="col-md-8" layout="row">
-                        <md-radio-group class="dfx-ve-property-treeview-radiogroup row-radio" ng-model="attributes.dateSeparator.value" ng-change="overrideAttribute('dateSeparator'); dfxFormatDate()" ng-focus="cacheAttributeOldValue({'name':'dateSeparator'})" ng-blur="cacheAttributeNewValue('dateSeparator')">
-                            <md-radio-button class="md-primary" value="slash" aria-label="Direction">Slash</md-radio-button>
-                            <md-radio-button class="md-primary" value="dot" aria-label="Direction">Dot</md-radio-button>
-                            <md-radio-button class="md-primary" value="dash" aria-label="Direction">Dash</md-radio-button>
-                        </md-radio-group>
-                    </span>
-                </li> -->
-                <!-- <li class="col-md-12">
-                    <span class="col-md-4" style="padding: 3px 0 0 5px">Order:</span>
-                    <md-input-container class="col-md-8" style="padding: 0 0 10px">
-                        <md-select ng-model="attributes.dateOrder.value" aria-label="{{attributes.dateOrder.value}}" ng-change="overrideAttribute('dateOrder'); cacheAttributeOldValue({'value':'dateOrder'}); cacheAttributeNewValue('dateOrder'); dfxFormatDate()">                                     
-                            <md-option value="MM/DD/YYYY">Month Day Year</md-option>
-                            <md-option value="DD/MM/YYYY">Day Month Year</md-option>
-                            <md-option value="YYYY/MM/DD">Year Month Day</md-option>
-                            <md-option value="YYYY/DD/MM">Year Day Month</md-option>
-                        </md-select>
-                    </md-input-container>
-                </li>    -->  
                 <li class="col-md-12">
                     <span class="col-md-4">Custom format:</span>
                     <input class="col-md-8" type="text" ng-model="attributes.customDateFormat.value" ng-model-options="{ debounce: '500'}" ng-change="overrideAttribute('customDateFormat'); dfxFormatDate()" ng-focus="cacheAttributeOldValue({'name':'customDateFormat'})" ng-blur="cacheAttributeNewValue('customDateFormat')"/>
@@ -120,15 +82,14 @@
                     <md-input-container class="col-md-8" style="padding: 0 0 10px">
                         <md-select ng-model="attributes.standardDateFormat.value" aria-label="{{attributes.standardDateFormat.value}}" ng-change="overrideAttribute('standardDateFormat'); cacheAttributeOldValue({'value':'standardDateFormat'}); cacheAttributeNewValue('standardDateFormat'); dfxFormatDate()">                                     
                             <md-option value="MM/DD/YYYY">MM/DD/YYYY</md-option>
+                            <md-option value="DD/MM/YYYY">DD/MM/YYYY</md-option>
                             <md-option value="DD.MM.YYYY">DD.MM.YYYY</md-option>
                             <md-option value="DD.MM.YY">DD.MM.YY</md-option>
                             <md-option value="D.MM">D.MM</md-option>
-                            <md-option value="kk:mm">kk:mm</md-option>
-                            <md-option value="DD.MM k:mm">DD.MM k:mm</md-option>
+                            <md-option value="DD.MM">DD.MM</md-option>
                             <md-option value="dddd, D MMMM YYYY">dddd, D MMMM YYYY</md-option>
                             <md-option value="D MMMM YYYY">D MMMM YYYY</md-option>
                             <md-option value="D MMM YYYY">D MMM YYYY</md-option>
-                            <md-option value="kk:mm:ss">kk:mm:ss</md-option>
                         </md-select>
                     </md-input-container>
                 </li>                
@@ -140,44 +101,26 @@
             <input class="dfx-ve-property-treeview-button" type="checkbox" id="time-formats" />
             <label for="time-formats">Time Formating</label>
             <ul class="dfx-ve-property-treeview-content">                
-                <li class="col-md-12" >
-                    <span class="col-md-4">Notations:</span>
-                    <span class="col-md-8">
-                        <div style="display: inline-block; margin-right: 10px;">
-                            <md-checkbox style="width:20px;margin:0" class="md-primary" ng-model="attributes.timeNotations.hours" ng-true-value="'true'" ng-false-value="'false'" ng-change="overrideAttribute('timeNotations.hours'); rebuildtimeNotations(); dfxFormatTime()" ng-focus="cacheAttributeOldValue({'name':'timeNotations.hours'})" ng-blur="cacheAttributeNewValue('timeNotations.hours')" ng-disabled="attributes.timeNotations.ampm === 'false' && attributes.timeNotations.minutes === 'false'" aria-label="{{attributes.timeNotations.hours}}"></md-checkbox>
-                            <span>Hours</span>
-                        </div>
-                        <div style="display: inline-block; margin-right: 10px;">
-                            <md-checkbox style="width:20px;margin:0" class="md-primary" ng-model="attributes.timeNotations.minutes" ng-true-value="'true'" ng-false-value="'false'" ng-change="overrideAttribute('timeNotations.minutes'); rebuildtimeNotations(); dfxFormatTime()" ng-focus="cacheAttributeOldValue({'name':'timeNotations.minutes'})" ng-blur="cacheAttributeNewValue('timeNotations.minutes')" ng-disabled="attributes.timeNotations.hours === 'false' && attributes.timeNotations.ampm === 'false'" aria-label="{{attributes.timeNotations.minutes}}"></md-checkbox>
-                            <span>Minutes</span>
-                        </div>
-                        <div style="display: inline-block; margin-right: 10px;">
-                            <md-checkbox style="width:20px;margin:0" class="md-primary" ng-model="attributes.timeNotations.ampm" ng-true-value="'true'" ng-false-value="'false'" ng-change="overrideAttribute('timeNotations.ampm'); rebuildtimeNotations(); dfxFormatTime()" ng-focus="cacheAttributeOldValue({'name':'timeNotations.ampm'})" ng-blur="cacheAttributeNewValue('timeNotations.ampm')" ng-disabled="attributes.timeNotations.hours === 'false' && attributes.timeNotations.minutes === 'false'" aria-label="{{attributes.timeNotations.ampm}}"></md-checkbox>
-                            <span>AM / PM</span>
-                        </div>
-                    </span>
-                </li>
-                <li class="col-md-12" >
-                    <span class="col-md-4">Separator:</span>
-                    <span class="col-md-8" layout="row">
-                        <md-radio-group class="dfx-ve-property-treeview-radiogroup row-radio" ng-model="attributes.timeSeparator.value" ng-change="overrideAttribute('timeSeparator'); dfxFormatTime()" ng-focus="cacheAttributeOldValue({'name':'timeSeparator'})" ng-blur="cacheAttributeNewValue('timeSeparator')">
-                            <md-radio-button class="md-primary" value="slash" aria-label="Direction">Slash</md-radio-button>
-                            <md-radio-button class="md-primary" value="dots" aria-label="Direction">Dots</md-radio-button>
-                            <md-radio-button class="md-primary" value="dash" aria-label="Direction">Dash</md-radio-button>
-                        </md-radio-group>
-                    </span>
-                </li>
-                <li class="col-md-12" >
-                    <span class="col-md-4" style="padding: 3px 0 0 5px">Order:</span>
+                <li class="col-md-12">
+                    <span class="col-md-4">Custom format:</span>
+                    <input class="col-md-8" type="text" ng-model="attributes.customTimeFormat.value" ng-model-options="{ debounce: '500'}" ng-change="overrideAttribute('customTimeFormat'); dfxFormatTime()" ng-focus="cacheAttributeOldValue({'name':'customTimeFormat'})" ng-blur="cacheAttributeNewValue('customTimeFormat')"/>
+                </li>           
+                <li class="col-md-12">
+                    <span class="col-md-4" style="padding: 3px 0 0 5px">Standard formats:</span>
                     <md-input-container class="col-md-8" style="padding: 0 0 10px">
-                        <md-select ng-model="attributes.timeOrder.value" aria-label="{{attributes.timeOrder.value}}" ng-change="overrideAttribute('timeOrder'); cacheAttributeOldValue({'value':'timeOrder'}); cacheAttributeNewValue('timeOrder'); dfxFormatTime()">                                     
-                            <md-option value="HH:mm A">Hours Minutes AM/PM</md-option>
-                            <md-option value="mm:HH A">Minutes Hours AM/PM</md-option>
-                            <md-option value="A HH:mm">AM/PM Hours Minutes</md-option>
-                            <md-option value="A mm:HH">AM/PM Minutes Hours</md-option>
+                        <md-select ng-model="attributes.standardTimeFormat.value" aria-label="{{attributes.standardTimeFormat.value}}" ng-change="overrideAttribute('standardTimeFormat'); cacheAttributeOldValue({'value':'standardTimeFormat'}); cacheAttributeNewValue('standardTimeFormat'); dfxFormatTime()">                                     
+                            <md-option value="hh:mm">hh:mm</md-option>
+                            <md-option value="HH:mm A">HH:mm A</md-option>
+                            <md-option value="A hh:mm">A hh:mm</md-option>
+                            <md-option value="H">H</md-option>
+                            <md-option value="HH">HH</md-option>
+                            <md-option value="h">h</md-option>
+                            <md-option value="hh">hh</md-option>
+                            <md-option value="m">m</md-option>
+                            <md-option value="mm">mm</md-option>
                         </md-select>
                     </md-input-container>
-                </li>                
+                </li>                              
             </ul>
         </li>
     </ul>
