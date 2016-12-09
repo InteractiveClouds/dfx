@@ -2861,34 +2861,45 @@ dfxStudioApp.directive('dropzone', ['dfxApplications','$timeout', '$mdDialog', '
                     .cancel('Cancel')
                     .ok('OK');
                 $mdDialog.show(confirm).then(function() {
-                    /*var gc_templates_selected_names = $scope.gc_templates_selected.map(function(element) {
-                        return element.name;
-                    });
-                    dfxGcTemplates.removeAll(scope, gc_templates_selected_names, scope.app_name, scope.gc_templates_selected[0].platform).then(function( data ) {
-                        if ( data.status && data.status === 200 ) {
-                            dfxMessaging.showMessage("Templates were successfully deleted!");
-                            scope.getAll();
-                        } else {
-                            dfxMessaging.showWarning(data.data);
-                        }
-                    });*/
+                    scope.deleteItems();
                 }, function() {
                 });
             };
 
-            // Images & assets grid - START
             // Mass grid selection - START
+            scope.resources_javascript_selected = [];
+            scope.toggleSelectionJavascript = function(resitem) {
+                DfxStudioAppUtil.toggleSelection(scope, resitem, 'resources_javascript_selected');
+            };
+            scope.toggleAllJavascript = function() {
+                DfxStudioAppUtil.toggleAll(scope, scope.javascript.data.items, 'resources_javascript_selected', scope.is_all_resources_javascript_selected);
+            };
+            scope.isSelectedJavascript = function(resitem) {
+                return DfxStudioAppUtil.isSelected(scope, resitem, 'resources_javascript_selected');
+            };
+
+            scope.resources_stylesheets_selected = [];
+            scope.toggleSelectionStylesheets = function(resitem) {
+                DfxStudioAppUtil.toggleSelection(scope, resitem, 'resources_stylesheets_selected');
+            };
+            scope.toggleAllStylesheets = function() {
+                DfxStudioAppUtil.toggleAll(scope, scope.stylesheets.data.items, 'resources_stylesheets_selected', scope.is_all_resources_stylesheets_selected);
+            };
+            scope.isSelectedStylesheets = function(resitem) {
+                return DfxStudioAppUtil.isSelected(scope, resitem, 'resources_stylesheets_selected');
+            };
+
             scope.resources_assets_selected = [];
-            scope.toggleSelection = function(resitem) {
+            scope.toggleSelectionAssets = function(resitem) {
                 DfxStudioAppUtil.toggleSelection(scope, resitem, 'resources_assets_selected');
             };
-            scope.toggleAll = function() {
+            scope.toggleAllAssets = function() {
                 DfxStudioAppUtil.toggleAll(scope, scope.assets.data.items, 'resources_assets_selected', scope.is_all_resources_assets_selected);
             };
-            scope.isSelected = function(resitem) {
+            scope.isSelectedAssets = function(resitem) {
                 return DfxStudioAppUtil.isSelected(scope, resitem, 'resources_assets_selected');
             };
-            // Images & assets grid - END
+            // Mass grid selection - END
 
             scope.confirmDictionaryDelete = function(ev, item) {
                 var confirm = $mdDialog.confirm()
@@ -2942,6 +2953,52 @@ dfxStudioApp.directive('dropzone', ['dfxApplications','$timeout', '$mdDialog', '
                             break;
                         }
                     }
+                }
+            };
+
+            scope.deleteItems = function() {
+                if (scope.current_resource_type === "javascript") {
+                    for (var i=0; i < scope.resources_javascript_selected.length; i++) {
+                        var selected_javascript = scope.resources_javascript_selected[i];
+
+                        for (var j=0; j < parentScope.javascript.data.items.length; j++) {
+                            if (parentScope.javascript.data.items[j].path === selected_javascript.path) {
+                                parentScope.javascript.data.items.splice(j, 1);
+                                break;
+                            }
+                        }
+                    }
+                    $timeout(function(){
+                        $('#upload-javascript-resources').trigger('click');
+                    }, 0);
+                } else if (scope.current_resource_type === "stylesheets") {
+                    for (var i=0; i < scope.resources_stylesheets_selected.length; i++) {
+                        var selected_stylesheets = scope.resources_stylesheets_selected[i];
+
+                        for (var j=0; j < parentScope.stylesheets.data.items.length; j++) {
+                            if (parentScope.stylesheets.data.items[j].path === selected_stylesheets.path) {
+                                parentScope.stylesheets.data.items.splice(j, 1);
+                                break;
+                            }
+                        }
+                    }
+                    $timeout(function(){
+                        $('#upload-stylesheets-resources').trigger('click');
+                    }, 0);
+                } else if (scope.current_resource_type === "assets") {
+                    for (var i=0; i < scope.resources_assets_selected.length; i++) {
+                        var selected_asset = scope.resources_assets_selected[i];
+
+                        for (var j=0; j < parentScope.assets.data.items.length; j++) {
+                            if (parentScope.assets.data.items[j].path === selected_asset.path) {
+                                parentScope.assets.data.items.splice(j, 1);
+                                break;
+                            }
+                        }
+                    }
+                    $timeout(function(){
+                        $('#upload-assets-resources').trigger('click');
+                    }, 0);
                 }
             };
 

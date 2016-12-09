@@ -23,7 +23,6 @@ var DfxStudioAppUtil = (function() {
     };
 
     api.isSelected = function($scope, item, items_selected_array_name) {
-        //console.log('item: ', item, ', items_selected_array_name: ', items_selected_array_name);
         return $scope[items_selected_array_name].indexOf(item) > -1;
     };
 

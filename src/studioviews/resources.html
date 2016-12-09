@@ -74,7 +74,7 @@
                                     <div id="dfx_resource_javascript_folder_upload" dropzone="" class="dropzone">
                                     </div>
                                 </div>
-                                <div class="resourses-panel">
+                                <!--div class="resourses-panel">
                                     <div ng-repeat="resitem in javascript.data.items track by $index" data-item-type="{{resitem.type}}" ng-dblclick="javascript.editResource(resitem.path, $index)" class="dz-preview dz-file-preview">
                                         <div class="dz-details">
                                             <div class="dz-filename"><span data-dz-name="">{{resitem.path}}</span>
@@ -87,7 +87,9 @@
                                             <div ng-if="resitem.is_uploaded" style="opacity: 1;" class="dz-success-mark"><span>V</span></div>
                                         </div>
                                     </div>
-                                </div>
+                                </div-->
+
+                                <div ng-include="'studioviews/resources_javascript.html'"></div>
                             </div>
                             <button id="upload-javascript-resources" style="display: none;" type="submit" ng-click="javascript.uploadResources()" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-cloud-upload" style="color: #757575"></span><span style="padding-left:5px">Upload</span>
                             </button>
@@ -124,7 +126,7 @@
                                     <div id="dfx_resource_stylesheets_folder_upload" dropzone="" class="dropzone">
                                     </div>
                                 </div>
-                                <div class="resourses-panel">
+                                <!--div class="resourses-panel">
                                     <div ng-repeat="resitem in stylesheets.data.items track by $index" data-item-type="{{resitem.type}}" ng-dblclick="stylesheets.editResource(resitem.path, $index)" class="dz-preview dz-file-preview">
                                         <div class="dz-details">
                                             <div class="dz-filename"><span data-dz-name="">{{resitem.path}}</span>
@@ -137,7 +139,9 @@
                                             <div ng-if="resitem.is_uploaded" style="opacity: 1;" class="dz-success-mark"><span>V</span></div>
                                         </div>
                                     </div>
-                                </div>
+                                </div-->
+
+                                <div ng-include="'studioviews/resources_stylesheets.html'"></div>
                             </div>
                             <button id="upload-stylesheets-resources" style="display: none;" type="submit" ng-click="stylesheets.uploadResources()" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-cloud-upload" style="color: #757575"></span><span style="padding-left:5px">Upload</span>
                             </button>

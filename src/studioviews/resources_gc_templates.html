@@ -2,7 +2,7 @@
     <div ng-hide="assets.hide_areas">
         <div layout="row">
             <md-content class="md-padding flex-100" layout="column">
-                <div layout="row" class="col-md-12" layout-align="center end">
+                <div layout="row" class="col-md-12" layout-align="center end" style="min-height:48px;">
                     <span class="col-md-8">
                         <md-button ng-if="gc_templates_selected.length > 0" ng-click="copyAll($event)" class="md-raised md-primary">
                             <span class="fa fa-copy"></span>
@@ -48,8 +48,8 @@
                                             <div layout="row" layout-align="space-between center">
                                                 <md-button ng-click="openTemplateDesigner(gc_template)" ng-disabled="gc_template.name ==='default'" style="margin: 0; padding: 0; min-width: 20px" title="Edit"><md-icon class="fa fa-edit" style="font-size:20px; padding-top: 3px;"></md-icon></md-button>
                                                 <md-button ng-click="edit(gc_template)" ng-disabled="gc_template.name ==='default'" style="margin: 0; padding: 0; min-width: 20px" title="Information"><md-icon class="fa fa-info" style="font-size:20px; padding-top: 3px;"></md-icon></md-button>
-                                                <md-button ng-click="copy($event, gc_template)" ng-disabled="gc_template.name ==='default'" style="margin: 0; padding: 0; min-width: 20px" title="Copy"><md-icon class="fa fa-copy" style="font-size:20px; padding-top: 5px;"></md-icon></md-button>
-                                                <md-button ng-click="confirmDelete($event, gc_template)" ng-disabled="gc_template.name ==='default'" style="margin: 0; padding: 0; min-width: 20px" title="Remove"><md-icon class="fa fa-trash" style="font-size:20px; padding-top: 3px;"></md-icon></md-button>
+                                                <md-button ng-click="copy($event, gc_template)" ng-disabled="gc_template.name ==='default'" style="margin: 0; padding: 0; min-width: 20px" title="Copy"><md-icon class="fa fa-copy" style="font-size:20px; padding-top: 2px;"></md-icon></md-button>
+                                                <md-button ng-click="confirmDelete($event, gc_template)" ng-disabled="gc_template.name ==='default'" style="margin: 0; padding: 0; min-width: 20px" title="Remove"><md-icon class="fa fa-trash" style="font-size:20px;"></md-icon></md-button>
                                             </div>
                                         </td>
                                     </tr>
