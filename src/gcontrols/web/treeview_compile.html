@@ -10,7 +10,8 @@
             <ng-md-icon ng-if="$dfx_item.expanded && $dfx_item.ATTR-NONV{{repeatable_property.value}}.length > 0 && attributes.isOpened.type ==='svg-icon'" ng-click="toggleNode($event, $dfx_item)" style="color: {{attributes.color.value}}" class="node-trigger" icon="{{ attributes.isOpened.value || 'expand_more' }}" size="16"></ng-md-icon>
             <ng-md-icon ng-if="!$dfx_item.expanded && $dfx_item.ATTR-NONV{{repeatable_property.value}}.length > 0 && attributes.isClosed.type ==='svg-icon'" ng-click="toggleNode($event, $dfx_item)" style="color: {{attributes.color.value}}" class="node-trigger" icon="{{ attributes.isClosed.value  || 'chevron_right'}}" size="16"></ng-md-icon>
             <md-checkbox ng-if="attributes.selected.value" ng-checked="isSelectedItem($dfx_item)" ng-click="toggleSelectedItem($dfx_item, nodeIndexes, 'dynamic')" class="dfx-core-gc-treeview-checkbox md-altTheme-theme md-primary" aria-label="Tree Item checkbox"></md-checkbox>
-            <a href="#" ATTR-IF{{ng-click="attributes.onclick.value"}}
+            <a class="dfx-core-gc-treeview-link"
+               ATTR-IF{{ng-click="attributes.onclick.value"}}
                ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
                ATTR-IF{{ng-keypress="attributes.onkeypress.value"}}
                ATTR-IF{{ng-keydown="attributes.onkeydown.value"}}
@@ -38,7 +39,8 @@
             <ng-md-icon ng-if="!$dfx_item.expanded && $dfx_item.children.length > 0 && attributes.isClosed.type ==='svg-icon'" ng-click="toggleNode($event, $dfx_item)" style="color: {{attributes.color.value}}" class="node-trigger"
               icon="{{ attributes.isClosed.value  || 'chevron_right'}}" size="16"></ng-md-icon>
             <md-checkbox ng-if="attributes.selected.value" ng-checked="isSelectedItem($dfx_item)" ng-click="toggleSelectedItem($dfx_item, nodeIndexes, 'static')" class="dfx-core-gc-treeview-checkbox md-altTheme-theme md-primary" aria-label="Tree Item checkbox"></md-checkbox>
-            <a href="#" ATTR-IF{{ng-click="attributes.onclick.value"}}
+            <a class="dfx-core-gc-treeview-link"
+               ATTR-IF{{ng-click="attributes.onclick.value"}}
                ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}}
                ATTR-IF{{ng-keypress="attributes.onkeypress.value"}}
                ATTR-IF{{ng-keydown="attributes.onkeydown.value"}}

@@ -42,7 +42,7 @@ var DfxViewEditorSettings = (function() {
         if (panel_id == 'dfx-ve-sidenav-left') {
             panel_info = { 'title': 'Palette', 'name': 'palette' };
         } else if (panel_id == 'dfx-ve-sidenav-right') {
-            panel_info = { 'title': 'Property', 'name': 'property' };
+            panel_info = { 'title': 'Properties', 'name': 'property' };
         }
         return panel_info;
     };
@@ -103,31 +103,6 @@ var DfxViewEditorSettings = (function() {
         });
     };
 
-    /*var createViewSettingsMenu = function($scope, $compile, options) {
-        var snippet = '<md-menu-bar>';
-        snippet += '<div id="dfx-ve-settings-menu" ng-mouseleave="closeViewSettingsMenu()" class="_md md-open-menu-container md-whiteframe-z2 md-altTheme-theme md-active md-clickable" style="left:'+options.x+'px;top:'+options.y+'px;" aria-hidden="false">';
-        snippet += '<md-menu-content width="4" class="md-altTheme-theme">';
-        snippet += '<md-menu-item ng-if="view_platform!==\'mobile\'"><md-button ng-click="changeCanvasSize()"><md-icon class="fa fa-square-o"></md-icon>Change Canvas Size</md-button></md-menu-item>';
-        snippet += '<md-menu-item ng-if="view_platform!==\'mobile\'"><md-button ng-click="toggleRuler()"><md-icon class="fa fa-bars"></md-icon><span id="dfx-ve-settings-menu-show-ruler-label">Show Ruler</span></md-button></md-menu-item>';
-        snippet += '<md-menu-divider></md-menu-divider>';
-
-        snippet += '<md-menu-item>';
-        snippet += '<md-menu id="dfx-ve-settings-panels-menu" md-offset="150 0">';
-        snippet += '<md-menu-item><md-button ng-click="$mdOpenMenu();"><md-icon class="fa fa-columns"></md-icon>Panels</md-button></md-menu-item>';
-        snippet += '<md-menu-content>';
-        snippet += '<md-menu-item><md-button ng-click="togglePanel(\'dfx-ve-sidenav-left\')"><md-icon id="dfx-ve-settings-menu-hide-palette-panel-icon" class="fa fa-compress"></md-icon><span id="dfx-ve-settings-menu-hide-palette-panel-label">Hide Palette Panel</span></md-button></md-menu-item>';
-        snippet += '<md-menu-item><md-button ng-click="togglePanel(\'dfx-ve-sidenav-right\')"><md-icon id="dfx-ve-settings-menu-hide-property-panel-icon" class="fa fa-compress"></md-icon><span id="dfx-ve-settings-menu-hide-property-panel-label">Hide Property Panel</span></md-button></md-menu-item>';
-        snippet += '<md-menu-item><md-button ng-click="detachOrAttachPanel(\'dfx-ve-sidenav-left\')"><md-icon id="dfx-ve-settings-menu-detach-palette-panel-icon" class="fa fa-external-link"></md-icon><span id="dfx-ve-settings-menu-detach-palette-panel-label">Detach Palette Panel</span></md-button></md-menu-item>';
-        snippet += '<md-menu-item><md-button ng-click="detachOrAttachPanel(\'dfx-ve-sidenav-right\')"><md-icon id="dfx-ve-settings-menu-detach-property-panel-icon" class="fa fa-external-link"></md-icon><span id="dfx-ve-settings-menu-detach-property-panel-label">Detach Property Panel</span></md-button></md-menu-item>';
-        snippet += '</md-menu-content>';
-        snippet += '</md-menu>';
-        snippet += '</md-menu-item>';
-
-        snippet += '</md-menu-content>';
-        snippet += '</div>'
-        snippet += '</md-menu-bar>';
-        angular.element(document.getElementById('dfx-view-editor-body')).append($compile(snippet)($scope));
-    };*/
     var createViewSettingsMenu = function($scope, $compile, options) {
         var snippet = '<md-menu-bar>';
         snippet += '<div id="dfx-ve-settings-menu" ng-mouseleave="closeViewSettingsMenu()" class="_md md-open-menu-container md-whiteframe-z2 md-altTheme-theme md-active md-clickable" style="left:'+options.x+'px;top:'+options.y+'px;" aria-hidden="false">';
@@ -135,10 +110,10 @@ var DfxViewEditorSettings = (function() {
         snippet += '<md-menu-item ng-if="view_platform!==\'mobile\'"><md-button ng-click="changeCanvasSize()"><md-icon class="fa fa-square-o"></md-icon>Change Canvas Size</md-button></md-menu-item>';
         snippet += '<md-menu-item ng-if="view_platform!==\'mobile\'"><md-button ng-click="toggleRuler()"><md-icon class="fa fa-bars"></md-icon><span id="dfx-ve-settings-menu-show-ruler-label">Show Ruler</span></md-button></md-menu-item>';
         snippet += '<md-menu-divider ng-if="view_platform!==\'mobile\'"></md-menu-divider>';
-        snippet += '<md-menu-item><md-button ng-click="togglePanel(\'dfx-ve-sidenav-left\')"><md-icon id="dfx-ve-settings-menu-hide-palette-panel-icon" class="fa fa-compress"></md-icon><span id="dfx-ve-settings-menu-hide-palette-panel-label">Hide Palette Panel</span></md-button></md-menu-item>';
-        snippet += '<md-menu-item><md-button ng-click="togglePanel(\'dfx-ve-sidenav-right\')"><md-icon id="dfx-ve-settings-menu-hide-property-panel-icon" class="fa fa-compress"></md-icon><span id="dfx-ve-settings-menu-hide-property-panel-label">Hide Property Panel</span></md-button></md-menu-item>';
-        snippet += '<md-menu-item><md-button ng-click="detachOrAttachPanel(\'dfx-ve-sidenav-left\')"><md-icon id="dfx-ve-settings-menu-detach-palette-panel-icon" class="fa fa-external-link"></md-icon><span id="dfx-ve-settings-menu-detach-palette-panel-label">Detach Palette Panel</span></md-button></md-menu-item>';
-        snippet += '<md-menu-item><md-button ng-click="detachOrAttachPanel(\'dfx-ve-sidenav-right\')"><md-icon id="dfx-ve-settings-menu-detach-property-panel-icon" class="fa fa-external-link"></md-icon><span id="dfx-ve-settings-menu-detach-property-panel-label">Detach Property Panel</span></md-button></md-menu-item>';
+        snippet += '<md-menu-item><md-button ng-click="togglePanel(\'dfx-ve-sidenav-left\')"><md-icon id="dfx-ve-settings-menu-hide-palette-panel-icon" class="fa fa-compress"></md-icon><span id="dfx-ve-settings-menu-hide-palette-panel-label">Hide Palette</span></md-button></md-menu-item>';
+        snippet += '<md-menu-item><md-button ng-click="togglePanel(\'dfx-ve-sidenav-right\')"><md-icon id="dfx-ve-settings-menu-hide-property-panel-icon" class="fa fa-compress"></md-icon><span id="dfx-ve-settings-menu-hide-property-panel-label">Hide Properties</span></md-button></md-menu-item>';
+        snippet += '<md-menu-item><md-button ng-click="detachOrAttachPanel(\'dfx-ve-sidenav-left\')"><md-icon id="dfx-ve-settings-menu-detach-palette-panel-icon" class="fa fa-external-link"></md-icon><span id="dfx-ve-settings-menu-detach-palette-panel-label">Detach Palette</span></md-button></md-menu-item>';
+        snippet += '<md-menu-item><md-button ng-click="detachOrAttachPanel(\'dfx-ve-sidenav-right\')"><md-icon id="dfx-ve-settings-menu-detach-property-panel-icon" class="fa fa-external-link"></md-icon><span id="dfx-ve-settings-menu-detach-property-panel-label">Detach Properties</span></md-button></md-menu-item>';
         snippet += '</md-menu-content>';
         snippet += '</div>'
         snippet += '</md-menu-bar>';
@@ -269,7 +244,7 @@ var DfxViewEditorSettings = (function() {
         // change icons and title in editor settings menu
         menu_icon.removeClass('fa-expand');
         menu_icon.addClass('fa-compress');
-        menu_label.text('Hide ' + panel_title + ' Panel');
+        menu_label.text('Hide ' + panel_title);
     };
     var hidePanel = function(dfx_panel, menu_icon, menu_label, panel_title) {
         dfx_panel.addClass('dfx-ve-hidden-element');
@@ -277,7 +252,7 @@ var DfxViewEditorSettings = (function() {
         // change icons and title in editor settings menu
         menu_icon.removeClass('fa-compress');
         menu_icon.addClass('fa-expand');
-        menu_label.text('Show ' + panel_title + ' Panel');
+        menu_label.text('Show ' + panel_title);
     };
     api.togglePanel = function(panel_id, view_settings) {
         var dfx_panel = $('#' + panel_id),
@@ -448,7 +423,7 @@ var DfxViewEditorSettings = (function() {
         // change icons and title in editor settings menu
         menu_icon.removeClass('fa-external-link');
         menu_icon.addClass('fa-thumb-tack');
-        menu_label.text('Attach ' + panel_info.title + ' Panel');
+        menu_label.text('Attach ' + panel_info.title);
 
         setPanelPosition(panel_id);
     };
@@ -468,7 +443,7 @@ var DfxViewEditorSettings = (function() {
         // change icons and title in editor settings menu
         menu_icon.removeClass('fa-thumb-tack');
         menu_icon.addClass('fa-external-link');
-        menu_label.text('Detach ' + panel_info.title + ' Panel');
+        menu_label.text('Detach ' + panel_info.title);
 
         setPanelPosition(panel_id);
     };
