@@ -91,41 +91,85 @@
             <label for="item-2">Validation Properties</label>
             <ul class="dfx-ve-property-treeview-content">
                 <li class="col-md-12">
-                    <span class="col-md-6" style="margin-top: 5px">Required:</span>
-                    <md-input-container class="col-md-6" style="padding: 0 0 10px">
-                        <md-select aria-label="isRequire" ng-model="attributes.required.value" ng-change="overrideAttribute('required');cacheAttributeOldValue({'value':'{{attributes.required.value}}'});cacheAttributeNewValue('required');">
-                            <md-option ng-repeat="isRequire in [true, false]" value="{{isRequire}}">{{isRequire}}</md-option>
-                        </md-select>
-                    </md-input-container>
-                </li>
-                <li ng-if="attributes.selectedType.value!=='number'" class="col-md-12">
-                    <span class="col-md-6">Min length:</span>
-                    <input class="col-md-6" min="0" type="number" ng-model="attributes.minlength.value" ng-change="overrideAttribute('minlength')" ng-focus="cacheAttributeOldValue({'name':'minlength'})" ng-blur="cacheAttributeNewValue('minlength')"/>
-                </li>
-                <li ng-if="attributes.selectedType.value==='number'" class="col-md-12">
-                    <span class="col-md-6">Min:</span>
-                    <input class="col-md-6" type="number" ng-model="attributes.minNumber.value" ng-change="overrideAttribute('minNumber')" ng-focus="cacheAttributeOldValue({'name':'minNumber'})" ng-blur="cacheAttributeNewValue('minNumber')"/>
-                </li>
-                <li ng-if="attributes.selectedType.value!=='number'" class="col-md-12">
-                    <span class="col-md-6">Max length:</span>
-                    <input class="col-md-6" min="0" type="number" ng-model="attributes.maxlength.value" ng-change="overrideAttribute('maxlength')" ng-focus="cacheAttributeOldValue({'name':'maxlength'})" ng-blur="cacheAttributeNewValue('maxlength')"/>
-                </li>
-                <li ng-if="attributes.selectedType.value==='number'" class="col-md-12">
-                    <span class="col-md-6">Max:</span>
-                    <input class="col-md-6" type="number" ng-model="attributes.maxNumber.value" ng-change="overrideAttribute('maxNumber')" ng-focus="cacheAttributeOldValue({'name':'maxNumber'})" ng-blur="cacheAttributeNewValue('maxNumber')"/>
-                </li>
-                <li class="col-md-12" ng-if="attributes.selectedType.value !=='number'">
-                    <input class="dfx-ve-property-treeview-button" type="checkbox" id="item-6" />
-                    <label for="item-6" class="dfx-ve-property-title-level-1"><span>Regular Expression</span></label>
+                    <input class="dfx-ve-property-treeview-button" type="checkbox" checked id="valid-item-1" />
+                    <label for="valid-item-1" class="dfx-ve-property-title-level-1"><span>Required</span></label>
                     <ul class="dfx-ve-property-treeview-content">
                         <li class="col-md-12">
-                            <span class="col-md-1"></span>
-                            <span class="col-md-5">pattern:</span>
+                            <span class="col-md-6">Is required:</span>
+                            <span class="col-md-6"><md-checkbox style="margin: 0" class="md-primary" ng-true-value="'true'" ng-false-value="'false'" ng-model="attributes.required.value" ng-change="overrideAttribute('required')" ng-focus="cacheAttributeOldValue({'name':'required'})" ng-blur="cacheAttributeNewValue('required')" aria-label="required"></md-checkbox></span>
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-6">Error message:</span>
+                            <input class="col-md-6" type="text" ng-model="attributes.required.errorMessage" ng-change="overrideAttribute('required.errorMessage')" ng-focus="cacheAttributeOldValue({'name':'required.errorMessage'})" ng-blur="cacheAttributeNewValue('required.errorMessage')"/>
+                        </li>
+                    </ul>
+                </li>
+                <li ng-if="attributes.selectedType.value!=='number'" class="col-md-12">
+                    <input class="dfx-ve-property-treeview-button" type="checkbox" checked id="valid-item-2" />
+                    <label for="valid-item-2" class="dfx-ve-property-title-level-1"><span>Min length</span></label>
+                    <ul class="dfx-ve-property-treeview-content">
+                        <li class="col-md-12">
+                            <span class="col-md-6">Min length:</span>
+                            <input class="col-md-6" min="0" type="number" ng-model="attributes.minlength.value" ng-change="overrideAttribute('minlength')" ng-focus="cacheAttributeOldValue({'name':'minlength'})" ng-blur="cacheAttributeNewValue('minlength')"/>
+                        </li>
+                        <li class="col-md-12">                    
+                            <span class="col-md-6">Error message:</span>
+                            <input class="col-md-6" type="text" ng-model="attributes.minlength.errorMessage" ng-change="overrideAttribute('minlength.errorMessage')" ng-focus="cacheAttributeOldValue({'name':'minlength.errorMessage'})" ng-blur="cacheAttributeNewValue('minlength.errorMessage')"/>
+                        </li>                        
+                    </ul>
+                </li>
+                <li ng-if="attributes.selectedType.value==='number'" class="col-md-12">
+                    <input class="dfx-ve-property-treeview-button" type="checkbox" checked id="valid-item-3" />
+                    <label for="valid-item-3" class="dfx-ve-property-title-level-1"><span>Min number</span></label>
+                    <ul class="dfx-ve-property-treeview-content">
+                        <li class="col-md-12">
+                            <span class="col-md-6">Min number:</span>
+                            <input class="col-md-6" type="number" ng-model="attributes.minNumber.value" ng-change="overrideAttribute('minNumber')" ng-focus="cacheAttributeOldValue({'name':'minNumber'})" ng-blur="cacheAttributeNewValue('minNumber')"/>
+                        </li>
+                        <li class="col-md-12">                    
+                            <span class="col-md-6">Error message:</span>
+                            <input class="col-md-6" type="text" ng-model="attributes.minNumber.errorMessage" ng-change="overrideAttribute('minNumber.errorMessage')" ng-focus="cacheAttributeOldValue({'name':'minNumber.errorMessage'})" ng-blur="cacheAttributeNewValue('minNumber.errorMessage')"/>
+                        </li>                                            
+                    </ul>
+                </li>
+                <li ng-if="attributes.selectedType.value!=='number'" class="col-md-12">
+                    <input class="dfx-ve-property-treeview-button" type="checkbox" checked id="valid-item-4" />
+                    <label for="valid-item-4" class="dfx-ve-property-title-level-1"><span>Max length</span></label>
+                    <ul class="dfx-ve-property-treeview-content">
+                        <li class="col-md-12">
+                            <span class="col-md-6">Max length:</span>
+                            <input class="col-md-6" min="0" type="number" ng-model="attributes.maxlength.value" ng-change="overrideAttribute('maxlength')" ng-focus="cacheAttributeOldValue({'name':'maxlength'})" ng-blur="cacheAttributeNewValue('maxlength')"/>
+                        </li>
+                        <li class="col-md-12">                    
+                            <span class="col-md-6">Error message:</span>
+                            <input class="col-md-6" type="text" ng-model="attributes.maxlength.errorMessage" ng-change="overrideAttribute('maxlength.errorMessage')" ng-focus="cacheAttributeOldValue({'name':'maxlength.errorMessage'})" ng-blur="cacheAttributeNewValue('maxlength.errorMessage')"/>
+                        </li>
+                    </ul>
+                </li>
+                <li ng-if="attributes.selectedType.value==='number'" class="col-md-12">
+                    <input class="dfx-ve-property-treeview-button" type="checkbox" checked id="valid-item-5" />
+                    <label for="valid-item-5" class="dfx-ve-property-title-level-1"><span>Max number</span></label>
+                    <ul class="dfx-ve-property-treeview-content">
+                        <li class="col-md-12">
+                            <span class="col-md-6">Max number:</span>
+                            <input class="col-md-6" type="number" ng-model="attributes.maxNumber.value" ng-change="overrideAttribute('maxNumber')" ng-focus="cacheAttributeOldValue({'name':'maxNumber'})" ng-blur="cacheAttributeNewValue('maxNumber')"/>
+                        </li>
+                        <li class="col-md-12">                    
+                            <span class="col-md-6">Error message:</span>
+                            <input class="col-md-6" type="text" ng-model="attributes.maxNumber.errorMessage" ng-change="overrideAttribute('maxNumber.errorMessage')" ng-focus="cacheAttributeOldValue({'name':'maxNumber.errorMessage'})" ng-blur="cacheAttributeNewValue('maxNumber.errorMessage')"/>
+                        </li>
+                    </ul>
+                </li>
+                <li class="col-md-12" ng-if="attributes.selectedType.value !=='number'">
+                    <input class="dfx-ve-property-treeview-button" type="checkbox" checked id="valid-item-6" />
+                    <label for="valid-item-6" class="dfx-ve-property-title-level-1"><span>Pattern</span></label>
+                    <ul class="dfx-ve-property-treeview-content">
+                        <li class="col-md-12">
+                            <span class="col-md-6">Pattern:</span>
                             <input class="col-md-6" type="text" ng-model="attributes.pattern.value" ng-change="overrideAttribute('pattern')" ng-focus="cacheAttributeOldValue({'name':'pattern'})" ng-blur="cacheAttributeNewValue('pattern')"/>
                         </li>
                         <li class="col-md-12">
-                            <span class="col-md-1"></span>
-                            <span class="col-md-5">error message:</span>
+                            <span class="col-md-6">Error message:</span>
                             <input class="col-md-6" type="text" ng-model="attributes.pattern.errorMessage" ng-change="overrideAttribute('pattern.errorMessage')" ng-focus="cacheAttributeOldValue({'name':'pattern.errorMessage'})" ng-blur="cacheAttributeNewValue('pattern.errorMessage')"/>
                         </li>
                     </ul>
