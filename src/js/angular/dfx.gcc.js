@@ -773,6 +773,7 @@ dfxGCC.directive('dfxGccWebDatetime', ['$mdpDatePicker', '$mdpTimePicker', '$tim
 
                 scope.changeWidth = function(){ $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%'); };
                 if(!angular.isDefined(attrs.dfxGcEdit)) scope.changeWidth();
+                console.log('scope', scope);
             });
         }
     }
