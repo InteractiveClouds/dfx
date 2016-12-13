@@ -1,14 +1,11 @@
 <div id="{{component_id}}_design" ng-form style="{{attributes.style.value}}" class="{{attributes.classes.value}} dfx-core-gc-datetime">
-    <label class="dfx-core-gc-datetime-label" ng-class="labelClass" aria-label="{{labelClass}}">
-        {{attributes.label.value | checkExpression}}
-    </label>    
-    <div ng-if="attributes.type.value === 'date' && attributes.selectedType.value !== 'ranged' && attributes.dateFormating.value" style="margin-top:-2px">
+    <div ng-if="attributes.type.value === 'date' && attributes.selectedType.value !== 'ranged' && attributes.dateFormating.value">
         <mdp-date-picker class="dfx-core-gc-datetime-picker" mdp-format="{{attributes.dateFormat.value}}" ng-model="attributes.designDate.value"></mdp-date-picker>
     </div>
-    <div ng-if="attributes.type.value === 'date' && attributes.selectedType.value === 'ranged' && attributes.dateFormating.value" style="margin-top:-2px">
+    <div ng-if="attributes.type.value === 'date' && attributes.selectedType.value === 'ranged' && attributes.dateFormating.value">
         <mdp-date-picker class="dfx-core-gc-datetime-picker" mdp-format="{{attributes.dateFormat.value}}" ng-model="attributes.designDate.value" mdp-min-date="minDate" mdp-max-date="maxDate"></mdp-date-picker>
     </div>    
-    <div ng-if="attributes.type.value === 'time' && attributes.timeFormating.value " style="margin-top:-2px">
+    <div ng-if="attributes.type.value === 'time' && attributes.timeFormating.value">
         <mdp-time-picker class="dfx-core-gc-datetime-picker" mdp-format="{{attributes.timeFormat.value}}" ng-model="attributes.designTime.value"></mdp-time-picker>
     </div>
 </div>

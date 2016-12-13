@@ -714,7 +714,7 @@ dfxGCC.directive('dfxGccWebDatepicker', ['$timeout', function($timeout) {
     }
 }]);
 
-dfxGCC.directive('dfxGccWebDatetime', ['$mdpDatePicker', '$mdpTimePicker', '$timeout', function($mdpDatePicker, $mdpTimePicker, $timeout) {
+dfxGCC.directive('dfxGccWebDatetime', ['$mdpDatePicker', '$mdpTimePicker', '$compile', '$timeout', function($mdpDatePicker, $mdpTimePicker, $compile, $timeout) {
     return {
         restrict: 'A',
         require: '^dfxGccWebBase',
@@ -759,7 +759,7 @@ dfxGCC.directive('dfxGccWebDatetime', ['$mdpDatePicker', '$mdpTimePicker', '$tim
                         $(scope.dp_input).focus(function(){ scope.labelClass = 'dp-label-focus-on'; scope.$apply(function(){}); });
                         $(scope.dp_input).blur(function(){ scope.labelClass = 'dp-label-focus-off'; scope.$apply(function(){}); });
                     }catch(e){}
-                },0);
+                }, 0);
 
                 scope.setAlignment = function(alignment){
                     $timeout(function(){
@@ -769,11 +769,23 @@ dfxGCC.directive('dfxGccWebDatetime', ['$mdpDatePicker', '$mdpTimePicker', '$tim
                         $(dp_input).css('text-align', alignment);
                     },0)
                 }
-                scope.$watch('attributes.alignment.value', function(newValue){ scope.setAlignment(newValue); });                
+                scope.$watch('attributes.alignment.value', function(newValue){ scope.setAlignment(newValue); });  
+
+                scope.addLabel = function(){
+                    var dfxDatetimeLabel = '<label class="dfx-core-gc-datetime-label" ng-class="labelClass">{{' + scope.attributes.label.value + '}}</label>';
+                    $('#' + component.id).find('label.dfx-core-gc-datetime-label').replaceWith(dfxDatetimeLabel).promise().done(function(){
+                        $compile($('#' + component.id + ' label.dfx-core-gc-datetime-label'))(scope);                                
+                    });
+                }
+
+                var interval = setInterval(function() {
+                    if ($('#' + component.id).find('label.dfx-core-gc-datetime-label').length === 0) return;
+                    clearInterval(interval);
+                    scope.addLabel();                    
+                }, 10);              
 
                 scope.changeWidth = function(){ $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%'); };
                 if(!angular.isDefined(attrs.dfxGcEdit)) scope.changeWidth();
-                console.log('scope', scope);
             });
         }
     }

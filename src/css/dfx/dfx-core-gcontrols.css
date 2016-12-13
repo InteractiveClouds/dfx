@@ -859,18 +859,13 @@ button.dfx-core-gc-rating-button {
 
 /* GC Datetime */
 .dfx-core-gc-datetime {
-    padding: 2px 0px 0px 5px;
+    padding: 0px 0px 0px 5px;
 }
 .dfx-core-gc-datetime-label {
-    font-size: 10px;
-    color: rgba(0,0,0,.54);
-    margin: 0 0 4px 27px;
+    margin: 0;
 }
 .dfx-core-gc-datetime md-input-container {
     width: 100%;
-}
-.dfx-core-gc-datetime-label.dp-label-focus-on {
-    color: #2196f3;
 }
 .dfx-core-gc-datetime .md-button.md-icon-button {
     width: 24px;
@@ -878,10 +873,7 @@ button.dfx-core-gc-rating-button {
     padding: 0;
     min-height: 24px;
     height: 24px;
-    margin: 6px 0 0;
-}
-.dfx-core-gc-datetime label[role="button"] {
-    display: none !important;
+    margin: 31px 0 0;
 }
 
 /* Animation */

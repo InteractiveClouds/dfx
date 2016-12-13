@@ -19,7 +19,7 @@
                 <li class="col-md-12">
                     <span class="col-md-4">Type:</span>
                     <div class="col-md-8" layout="row">
-                        <md-radio-group class="dfx-ve-property-treeview-radiogroup row-radio" ng-model="attributes.type.value" ng-change="overrideAttribute('type')" ng-focus="cacheAttributeOldValue({'name':'type'})" ng-blur="cacheAttributeNewValue('type')">
+                        <md-radio-group class="dfx-ve-property-treeview-radiogroup row-radio" ng-model="attributes.type.value" ng-change="overrideAttribute('type'); dfxAddLabel()" ng-focus="cacheAttributeOldValue({'name':'type'})" ng-blur="cacheAttributeNewValue('type')">
                             <md-radio-button class="md-primary" value="date" aria-label="Direction">Date</md-radio-button>
                             <md-radio-button class="md-primary" value="time" aria-label="Direction">Time</md-radio-button>
                         </md-radio-group>
@@ -41,7 +41,7 @@
                 </li>
                 <li class="col-md-12" ng-if="attributes.type.value === 'date'">
                     <span class="col-md-4">Ranged Date:</span>                    
-                    <span class="col-md-8"><md-checkbox style="margin: 0" class="md-primary" ng-model="attributes.selectedType.value" ng-true-value="'ranged'" ng-false-value="'standard'" ng-change="overrideAttribute('selectedType');setAlignment(attributes.alignment.value);" ng-focus="cacheAttributeOldValue({'name':'selectedType'})" ng-blur="cacheAttributeNewValue('selectedType')" aria-label="selectedType"></md-checkbox></span>
+                    <span class="col-md-8"><md-checkbox style="margin: 0" class="md-primary" ng-model="attributes.selectedType.value" ng-true-value="'ranged'" ng-false-value="'standard'" ng-change="overrideAttribute('selectedType');setAlignment(attributes.alignment.value); dfxAddLabel()" ng-focus="cacheAttributeOldValue({'name':'selectedType'})" ng-blur="cacheAttributeNewValue('selectedType')" aria-label="selectedType"></md-checkbox></span>
                 </li>
                 <li class="col-md-12" ng-if="attributes.type.value === 'date' && attributes.selectedType.value === 'ranged'">
                     <span class="col-md-4">Months before:</span>

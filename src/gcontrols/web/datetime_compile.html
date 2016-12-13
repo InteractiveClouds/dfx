@@ -3,8 +3,6 @@
     class="ATTR-NONV{{classes.value}} dfx-core-gc-datetime"
     ATTR-IF{{style="attributes.style.value"}}
     ATTR-IF{{ng-class="attributes.dynamicClasses.value"}}>
-    <label class="dfx-core-gc-datetime-label" ng-class="labelClass" ATTR-IF{{ng-bind="attributes.label.value"}}></label>    
-
     FRAG-IF{{attributes.type.value === 'date' && attributes.selectedType.value !== 'ranged'}}
     <div>
         <mdp-date-picker class="dfx-core-gc-datetime-picker" name="dateTimeField" mdp-format="ATTR-NONV{{dateFormat.value}}" ng-model="ATTR-STATIC{{bindingDate.value}}"
@@ -33,10 +31,9 @@
         </mdp-date-picker>
     </div>
     FRAG-ENDIF
-
     FRAG-IF{{attributes.type.value === 'date' && attributes.selectedType.value === 'ranged'}}
     <div>
-        <mdp-date-picker class="dfx-core-gc-datetime-picker" name="dateTimeField" mdp-format="ATTR-NONV{{dateFormat.value}}" ng-model="ATTR-STATIC{{bindingDate.value}}" mdp-min-date="minDate" mdp-max-date="maxDate" aria-label="{{minDate}} {{maxDate}}"
+        <mdp-date-picker class="dfx-core-gc-datetime-picker" name="dateTimeField" mdp-format="ATTR-NONV{{dateFormat.value}}" ng-model="ATTR-STATIC{{bindingDate.value}}" mdp-min-date="minDate" mdp-max-date="maxDate"
             ATTR-IF{{ng-required="attributes.isDateRequired.value"}}
             ATTR-IF{{mdp-disabled="attributes.disabled.value"}}
             ATTR-IF{{ng-change="attributes.onchange.value"}}
@@ -62,7 +59,6 @@
         </mdp-date-picker>
     </div>
     FRAG-ENDIF
-
     FRAG-IF{{attributes.type.value === 'time'}}
     <div>
         <mdp-time-picker class="dfx-core-gc-datetime-picker" name="dateTimeField" mdp-format="ATTR-NONV{{timeFormat.value}}" ng-model="ATTR-STATIC{{bindingDate.value}}"
