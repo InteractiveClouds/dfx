@@ -154,9 +154,6 @@ dfxGCC.directive('dfxGccWebBase', ['$rootScope', '$http', '$compile', '$injector
                 var parent_column_orientation = $('#' + scope.component_id).parent().attr('layout');
                 if (parent_column_orientation == 'column') {
                     component.css('width', scope.attributes.flex.value + '%');
-                } else {
-                    component.removeClass('flex-100');
-                    component.addClass('flex' + '-' + scope.attributes.flex.value);
                 }
             };
 
@@ -184,6 +181,9 @@ dfxGCC.directive('dfxGccWebPanel', ['$timeout', '$compile', function($timeout, $
                 scope.attributes.toolbar.rightMenu.initialClick = { "value": false };
                 scope.attributes.toolbar.rightMenu.dynamicPresent = { "value": false };
                 scope.dfx_rep_panels;
+                if($(element).parent().attr('id') === 'dfx_view_preview_container'){
+                    scope.attributes.isMainPanel.value = true;
+                }
                 var is_rep_title = (scope.attributes.repeat_in.value !=='' && scope.attributes.repeat_title.value) ? true : false,
                     is_rep_panel = scope.attributes.repeat_in.value !=='' ? true : false;
 
@@ -213,13 +213,6 @@ dfxGCC.directive('dfxGccWebPanel', ['$timeout', '$compile', function($timeout, $
                     }
                 }
 
-                if (scope.attributes.repeat_in.value != '' && $(element).parent().attr('layout') == 'row') {
-                    if (scope.attributes.repeat_title.value) {
-                        $(element).addClass('layout-row');
-                        $(element).css('flex-wrap', 'wrap');
-                    }
-                }
-
                 scope.changeWidth = function(){
                     if ( !scope.attributes.repeat_title.value ) {
                         basectrl.changeWidth(scope);
@@ -232,14 +225,38 @@ dfxGCC.directive('dfxGccWebPanel', ['$timeout', '$compile', function($timeout, $
                     if (scope.attributes.repeat_in.value != '') {
                         var parent_orientation = $(element).parent().attr('layout');
 
-                        if (parent_orientation == 'row' && scope.attributes.repeat_title.value) {
-                            $(element).addClass('layout-row');
-                            $(element).css('flex-wrap', 'wrap');
-                        } else if (parent_orientation == 'column' && scope.attributes.repeat_title.value) {
-                            $(element).css('width', scope.attributes.flex.value + '%');
-                            $(element).children('div').removeClass('flex-' + scope.attributes.flex.value);
-                            $(element).children('div').addClass('flex-100');
-                            $(element).children('div').css('width', '100%');
+                        if (parent_orientation == 'row' ) {
+                            var number_of_panels = scope.$parent_scope[scope.attributes.repeat_in.value].length,
+                                total_width = scope.attributes.flex.value * number_of_panels,
+                                min_total_width = total_width > 100 ? 100 : total_width,
+                                each_rep_panel_width = total_width > 100 ? scope.attributes.flex.value : 100/number_of_panels;
+
+                            if(each_rep_panel_width>30 && each_rep_panel_width<35) each_rep_panel_width = 33;
+                            if(each_rep_panel_width>65 && each_rep_panel_width<70) each_rep_panel_width = 66;
+
+                            $timeout(function() {
+                                $(element).addClass('layout-row flex-' + min_total_width);
+                                if (scope.attributes.repeat_title.value) {
+                                    $(element).css('flex-wrap', 'wrap');
+                                    $(element).children('div').addClass('flex-'+each_rep_panel_width);
+                                }else{
+                                    $(element).find('#'+component.id+'_panel')
+                                        .css('flex-wrap', 'wrap')
+                                        .removeClass('layout-column')
+                                        .addClass('layout-row');
+                                    for (var i = 0; i < number_of_panels; i++) {
+                                        $(element).find('#'+component.id+'_content_'+i).addClass('flex-'+each_rep_panel_width);
+                                    }
+                                }
+                            }, 0);
+                        } else if (parent_orientation == 'column') {
+                            $timeout(function() {
+                                $(element).css('width', scope.attributes.flex.value + '%');
+                                $(element).children('div')
+                                    .removeClass('flex-' + scope.attributes.flex.value)
+                                    .addClass('flex-100')
+                                    .css('width', '100%');
+                            }, 0);
                         }
                     }
                 };
@@ -593,20 +610,20 @@ dfxGCC.directive('dfxGccWebTreeview', [ '$timeout', '$compile', '$q', '$http', '
                     $q.all([ scope.toggleSelectedItem, scope.selectNodeChildrens, scope.isSelectedItem ]).then(function(){
                         scope.selectedArrayClone = [];
                         if(itemsType==='static'){
-                            scope.selectedArrayClone = JSON.parse(JSON.stringify(scope.attributes.static.value));
+                            scope.selectedArrayClone = angular.copy(scope.attributes.static.value);
                             scope.rebuildSelectedArray('static');
                         }else{
-                            scope.selectedArrayClone = JSON.parse(JSON.stringify(scope.$parent_scope[scope.attributes.dynamic.value]));
+                            scope.selectedArrayClone = angular.copy(scope.$parent_scope[scope.attributes.dynamic.value]);
                             scope.rebuildSelectedArray('dynamic');
                         }
                     });
                 }
 
                 if(scope.attributes.treeItemsType.value==='static'){
-                    scope.selectedArrayClone = JSON.parse(JSON.stringify(scope.attributes.static.value));
+                    scope.selectedArrayClone = angular.copy(scope.attributes.static.value);
                     scope.rebuildSelectedArray('static');
                 }else{
-                    scope.selectedArrayClone = JSON.parse(JSON.stringify(scope.$parent_scope[scope.attributes.dynamic.value]));
+                    scope.selectedArrayClone = angular.copy(scope.$parent_scope[scope.attributes.dynamic.value]);
                     scope.rebuildSelectedArray('dynamic');
                 }
 
@@ -1907,11 +1924,21 @@ dfxGCC.directive('dfxGccWebKnob', ['$timeout', '$compile', function($timeout, $c
 var DfxGcChartUtil = (function () {
     var api = {};
 
+    var changeWidth = function(scope) {
+        var component = $('#' + scope.component_id);
+        var parent_column_orientation = component.parent().attr('layout');
+        if (parent_column_orientation == 'column') {
+            component.css('width', scope.attributes.flex.value + '%');
+        } else {
+            component.removeClass('flex-100');
+            component.addClass('flex' + '-' + scope.attributes.flex.value);
+        }
+    };
     var removeBracketsFromEventListener = function(eventListener) {
         return (eventListener) ? eventListener.replace(/\(.*?\)/g, "") : eventListener;
     };
 
-    api.refreshChartToReflectFlexSize = function(scope, basectrl, $timeout, oldFlexValue) {
+    api.refreshChartToReflectFlexSize = function(scope, $timeout, oldFlexValue) {
           $timeout(function() {
               if (scope[scope.attributes.name.value].refresh) {
                   oldFlexValue = oldFlexValue || 100;
@@ -1919,7 +1946,7 @@ var DfxGcChartUtil = (function () {
                   // remove old flex class manually because it's not done automatically after chart dropping
                   if (oldFlexValue) { $('#' + scope.component_id).removeClass('flex' + '-' + oldFlexValue); }
 
-                  basectrl.changeWidth(scope);
+                  changeWidth(scope);
 
                   scope[scope.attributes.name.value].refresh();
               }
@@ -2004,6 +2031,21 @@ var DfxGcChartUtil = (function () {
             scope.attributes.options.value.chart.donutRatio = scope.attributes.options.donutRatio;
         }
 
+        if (scope.attributes.options.zoom) {
+            scope.attributes.options.value.chart.zoom.enabled = scope.attributes.options.zoom.enabled == 'true' ? true : false;
+            scope.attributes.options.value.chart.zoom.scale = scope.attributes.options.zoom.scale;
+
+            var minScaleExtent = scope.attributes.options.zoom.minScaleExtent ? parseInt(scope.attributes.options.zoom.minScaleExtent) : 1;
+            var maxScaleExtent = scope.attributes.options.zoom.maxScaleExtent ? parseInt(scope.attributes.options.zoom.maxScaleExtent) : 10;
+            scope.attributes.options.value.chart.zoom.scaleExtent = [minScaleExtent, maxScaleExtent];
+
+            scope.attributes.options.value.chart.zoom.useFixedDomain = scope.attributes.options.zoom.useFixedDomain == 'true' ? true : false;;
+            scope.attributes.options.value.chart.zoom.useNiceScale = scope.attributes.options.zoom.useNiceScale == 'true' ? true : false;;
+            scope.attributes.options.value.chart.zoom.horizontalOff = scope.attributes.options.zoom.horizontalOff == 'true' ? true : false;;
+            scope.attributes.options.value.chart.zoom.verticalOff = scope.attributes.options.zoom.verticalOff == 'true' ? true : false;;
+            scope.attributes.options.value.chart.zoom.unzoomEventType = scope.attributes.options.zoom.unzoomEventType;
+        }
+
         var assignEvent = function(eventName, dispatch) {
             if (scope.attributes[eventName] && scope.attributes[eventName].value) {
                 var normalizedEvent = removeBracketsFromEventListener(scope.attributes[eventName].value);
@@ -2029,7 +2071,7 @@ var DfxGcChartUtil = (function () {
         assignEvent('onareamouseleave', specificDispatch);
         scope.attributes.options.value.chart[chartTypeDef] = { dispatch: specificDispatch };
 
-        api.refreshChartToReflectFlexSize(scope, basectrl, $timeout);
+        api.refreshChartToReflectFlexSize(scope, $timeout);
     };
     api.setRunTimeChartNameVariable = function (scope, basectrl, component, $timeout) {
         $timeout(function() {
@@ -2072,7 +2114,7 @@ var DfxGcChartUtil = (function () {
         if (scope.attributes.options.showValues) {
             scope.$gcscope.$watch(scope.attributes.options.showValues, function (newValue, oldValue) {
                 scope.attributes.options.value.chart.showValues = newValue;
-                api.refreshChartToReflectFlexSize(scope, basectrl, $timeout, oldValue);
+                api.refreshChartToReflectFlexSize(scope, $timeout, oldValue);
             });
         }
         if (scope.attributes.options.showXAxis) {
@@ -2086,31 +2128,31 @@ var DfxGcChartUtil = (function () {
         if (scope.attributes.options.showControls) {
             scope.$gcscope.$watch(scope.attributes.options.showControls, function (newValue, oldValue) {
                 scope.attributes.options.value.chart.showControls = newValue;
-                api.refreshChartToReflectFlexSize(scope, basectrl, $timeout, oldValue);
+                api.refreshChartToReflectFlexSize(scope, $timeout, oldValue);
             });
         }
         if (scope.attributes.options.showLegend) {
             scope.$gcscope.$watch(scope.attributes.options.showLegend, function (newValue, oldValue) {
                 scope.attributes.options.value.chart.showLegend = newValue;
-                api.refreshChartToReflectFlexSize(scope, basectrl, $timeout, oldValue);
+                api.refreshChartToReflectFlexSize(scope, $timeout, oldValue);
             });
         }
         if (scope.attributes.options.stacked) {
             scope.$gcscope.$watch(scope.attributes.options.stacked, function (newValue, oldValue) {
                 scope.attributes.options.value.chart.stacked = newValue;
-                api.refreshChartToReflectFlexSize(scope, basectrl, $timeout, oldValue);
+                api.refreshChartToReflectFlexSize(scope, $timeout, oldValue);
             });
         }
         if (scope.attributes.options.useInteractiveGuideline) {
             scope.$gcscope.$watch(scope.attributes.options.useInteractiveGuideline, function (newValue, oldValue) {
                 scope.attributes.options.value.chart.useInteractiveGuideline = newValue;
-                api.refreshChartToReflectFlexSize(scope, basectrl, $timeout, oldValue);
+                api.refreshChartToReflectFlexSize(scope, $timeout, oldValue);
             });
         }
         if (scope.attributes.options.rescaleY) {
             scope.$gcscope.$watch(scope.attributes.options.rescaleY, function (newValue, oldValue) {
                 scope.attributes.options.value.chart.rescaleY = newValue;
-                api.refreshChartToReflectFlexSize(scope, basectrl, $timeout, oldValue);
+                api.refreshChartToReflectFlexSize(scope, $timeout, oldValue);
             });
         }
         if (scope.attributes.options.labelSunbeamLayout) {
@@ -2146,6 +2188,24 @@ var DfxGcChartUtil = (function () {
         if (scope.attributes.options.donutRatio) {
             scope.$gcscope.$watch(scope.attributes.options.donutRatio, function (newValue) {
                 scope.attributes.options.value.chart.donutRatio = newValue;
+            });
+        }
+        if (scope.attributes.options.zoom) {
+            scope.$gcscope.$watch(scope.attributes.options.zoom, function (newValue) {
+                if (newValue) {
+                    scope.attributes.options.value.chart.zoom.enabled = newValue.enabled == 'true' ? true : false;
+                    scope.attributes.options.value.chart.zoom.scale = newValue.scale;
+
+                    var minScaleExtent = newValue.minScaleExtent ? parseInt(newValue.minScaleExtent) : 1;
+                    var maxScaleExtent = newValue.maxScaleExtent ? parseInt(newValue.maxScaleExtent) : 10;
+                    scope.attributes.options.value.chart.zoom.scaleExtent = [minScaleExtent, maxScaleExtent];
+
+                    scope.attributes.options.value.chart.zoom.useFixedDomain = newValue.useFixedDomain == 'true' ? true : false;;
+                    scope.attributes.options.value.chart.zoom.useNiceScale = newValue.useNiceScale == 'true' ? true : false;;
+                    scope.attributes.options.value.chart.zoom.horizontalOff = newValue.horizontalOff == 'true' ? true : false;;
+                    scope.attributes.options.value.chart.zoom.verticalOff = newValue.verticalOff == 'true' ? true : false;;
+                    scope.attributes.options.value.chart.zoom.unzoomEventType = newValue.unzoomEventType;
+                }
             });
         }
     };
@@ -2230,7 +2290,7 @@ dfxGCC.directive('dfxGccWebBarchart', ['$timeout', '$filter', function($timeout,
                 if (scope.attributes.optionsType.value == 'dynamic') {
                     scope.attributes.options.value = scope[scope.attributes.dynamicOptions.value];
 
-                    DfxGcChartUtil.refreshChartToReflectFlexSize(scope, basectrl, $timeout);
+                    DfxGcChartUtil.refreshChartToReflectFlexSize(scope, $timeout);
                 } else {
                     scope.attributes.options.value = chartOptions;
 
@@ -2362,7 +2422,7 @@ dfxGCC.directive('dfxGccWebHzbarchart', ['$timeout', '$filter', function($timeou
                 if (scope.attributes.optionsType.value == 'dynamic') {
                     scope.attributes.options.value = scope[scope.attributes.dynamicOptions.value];
 
-                    DfxGcChartUtil.refreshChartToReflectFlexSize(scope, basectrl, $timeout);
+                    DfxGcChartUtil.refreshChartToReflectFlexSize(scope, $timeout);
                 } else {
                     scope.attributes.options.value = chartOptions;
 
@@ -2461,7 +2521,7 @@ dfxGCC.directive('dfxGccWebPiechart', ['$timeout', '$filter', function($timeout,
                 if (scope.attributes.optionsType.value == 'dynamic') {
                     scope.attributes.options.value = scope[scope.attributes.dynamicOptions.value];
 
-                    DfxGcChartUtil.refreshChartToReflectFlexSize(scope, basectrl, $timeout);
+                    DfxGcChartUtil.refreshChartToReflectFlexSize(scope, $timeout);
                 } else {
                     scope.attributes.options.value = chartOptions;
 
@@ -2564,7 +2624,7 @@ dfxGCC.directive('dfxGccWebDonutchart', ['$timeout', '$filter', function($timeou
                 if (scope.attributes.optionsType.value == 'dynamic') {
                     scope.attributes.options.value = scope[scope.attributes.dynamicOptions.value];
 
-                    DfxGcChartUtil.refreshChartToReflectFlexSize(scope, basectrl, $timeout);
+                    DfxGcChartUtil.refreshChartToReflectFlexSize(scope, $timeout);
                 } else {
                     scope.attributes.options.value = chartOptions;
 
@@ -2670,7 +2730,7 @@ dfxGCC.directive('dfxGccWebLinechart', ['$timeout', '$filter', function($timeout
                 if (scope.attributes.optionsType.value == 'dynamic') {
                     scope.attributes.options.value = scope[scope.attributes.dynamicOptions.value];
 
-                    DfxGcChartUtil.refreshChartToReflectFlexSize(scope, basectrl, $timeout);
+                    DfxGcChartUtil.refreshChartToReflectFlexSize(scope, $timeout);
                 } else {
                     scope.attributes.options.value = chartOptions;
 
@@ -2769,7 +2829,7 @@ dfxGCC.directive('dfxGccWebCmlinechart', ['$timeout', '$filter', function($timeo
                 if (scope.attributes.optionsType.value == 'dynamic') {
                     scope.attributes.options.value = scope[scope.attributes.dynamicOptions.value];
 
-                    DfxGcChartUtil.refreshChartToReflectFlexSize(scope, basectrl, $timeout);
+                    DfxGcChartUtil.refreshChartToReflectFlexSize(scope, $timeout);
                 } else {
                     scope.attributes.options.value = chartOptions;
 
@@ -2841,6 +2901,16 @@ dfxGCC.directive('dfxGccWebAreachart', ['$timeout', '$filter', function($timeout
                         tickFormat: function(d){
                             return d3.format(',.2f')(d);
                         }
+                    },
+                    zoom: {
+                        enabled: true,
+                        scale: 1,
+                        scaleExtent: [1, 10],
+                        useFixedDomain: false,
+                        useNiceScale: false,
+                        horizontalOff: false,
+                        verticalOff: false,
+                        unzoomEventType: 'dblclick.zoom'
                     }
                 },
                 title: {
@@ -2862,7 +2932,7 @@ dfxGCC.directive('dfxGccWebAreachart', ['$timeout', '$filter', function($timeout
                 if (scope.attributes.optionsType.value == 'dynamic') {
                     scope.attributes.options.value = scope[scope.attributes.dynamicOptions.value];
 
-                    DfxGcChartUtil.refreshChartToReflectFlexSize(scope, basectrl, $timeout);
+                    DfxGcChartUtil.refreshChartToReflectFlexSize(scope, $timeout);
                 } else {
                     scope.attributes.options.value = chartOptions;
 
@@ -4410,7 +4480,17 @@ dfxGCC.directive('dfxGccWebTabs', ['$timeout', '$compile', function($timeout, $c
                     }
                 });
 
-                basectrl.changeWidth(scope);
+                scope.changeWidth = function() {
+                    var component = $('#' + scope.component_id);
+                    var parent_column_orientation = component.parent().attr('layout');
+                    if (parent_column_orientation == 'column') {
+                        component.css('width', scope.attributes.flex.value + '%');
+                    } else {
+                        component.removeClass('flex-100');
+                        component.addClass('flex' + '-' + scope.attributes.flex.value);
+                    }
+                };
+                scope.changeWidth();
 
                 scope.collapsePanelContent = function(ev, dfxIndex){
                     var toggle_btn_id = ev.target.id,
@@ -4628,7 +4708,17 @@ dfxGCC.directive('dfxGccWebWizard', ['$mdDialog', '$timeout', '$compile', functi
                     collapse_container.slideToggle();
                 }
 
-                basectrl.changeWidth(scope);
+                scope.changeWidth = function() {
+                    var component = $('#' + scope.component_id);
+                    var parent_column_orientation = component.parent().attr('layout');
+                    if (parent_column_orientation == 'column') {
+                        component.css('width', scope.attributes.flex.value + '%');
+                    } else {
+                        component.removeClass('flex-100');
+                        component.addClass('flex' + '-' + scope.attributes.flex.value);
+                    }
+                };
+                scope.changeWidth();
 
                 if (!scope.attributes.autoHeight || scope.attributes.autoHeight.value != true) {
                     $timeout(function () {
@@ -4847,6 +4937,34 @@ dfxGCC.directive('dfxGccWebDatatable', ['$timeout', '$mdDialog', '$filter', '$ht
                         component.css('width', scope.attributes.flex.value + '%');
                     };
                     scope.changeWidth();
+                });
+            }
+        }
+    }
+}]);
+
+dfxGCC.directive('dfxGccWebImage', ['$timeout', function($timeout) {
+    return {
+        restrict: 'A',
+        require: '^dfxGccWebBase',
+        scope: true,
+        link: {
+            pre : function(scope, element, attrs, basectrl) {
+                var component = scope.getComponent(element);
+                scope.component_id = component.id;
+
+                basectrl.init(scope, element, component, attrs, 'image').then(function() {
+                    scope.dfxSetBaseSizes = function (side, value) {
+                        switch(side){
+                            case 'width': $(element).css('width', value); break;
+                            case 'height': $(element).css('height', value); break;
+                        }
+                    }
+
+                    if(scope.attributes.css.status === 'overridden') {
+                        scope.dfxSetBaseSizes('width', scope.attributes.css.width);
+                        scope.dfxSetBaseSizes('height', scope.attributes.css.height);
+                    }
                 });
             }
         }
