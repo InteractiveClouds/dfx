@@ -10,10 +10,10 @@
                         <md-icon class="fa fa-plus dfx-studio-flex-icon"></md-icon>
                         Environment
                     </md-button>
-                    <md-button class="md-raised" ng-click="openDialog()" aria-label="Studio button">
+                    <!-- <md-button class="md-raised" ng-click="openDialog()" aria-label="Studio button">
                         <md-icon class="fa fa-plus dfx-studio-flex-icon"></md-icon>
                         Variable
-                    </md-button>
+                    </md-button> -->
                 </div>
                 <h2 ng-if="environments_list.length===0">You have no Environments yet</h2>
                 <div layout="row" ng-if="environments_list.length>0">
@@ -63,17 +63,17 @@
                                 </div>                            
                             </md-toolbar>
                             <div ng-repeat="env_var in env_vars_list track by $index" style="display: flex; min-height: 32px;">
-                                <div style="display: inline-flex; align-items: center; width: 200px;">
-                                    <div style="display: inline-flex; width: 200px; padding: 0 8px; text-transform: capitalize; background: #383838; justify-content: space-between; color: rgb(33,150,243);">
+                                <div style="display: inline-flex; align-items: center; width: 200px;background: #383838; ">
+                                    <div style="display: inline-flex; width: 200px; padding: 0 8px; text-transform: capitalize; justify-content: space-between; color: rgb(33,150,243);">
                                         <h6>{{env_var.name}}</h6>
-                                        <span>
+                                        <!-- <span>
                                             <md-button ng-click="openDialog(env_var)" class="dfx-studio-table-button" aria-label="Studio button">
                                                 <md-icon class="fa fa-edit dfx-studio-flex-icon" style="font-size: 16px; color: rgb(33,150,243);"></md-icon>
                                             </md-button>
                                             <md-button ng-click="confirmEnvVarRemove($event, env_var)" class="dfx-studio-table-button" aria-label="Studio button">
                                                 <md-icon class="fa fa-trash dfx-studio-flex-icon" style="font-size: 16px; color: rgb(33,150,243);"></md-icon>
                                             </md-button>
-                                        </span>
+                                        </span> -->
                                     </div>
                                 </div>
                                 <div style="display: inline-flex;width:100%;overflow:auto;">
