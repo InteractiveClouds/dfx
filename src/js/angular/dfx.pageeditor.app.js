@@ -135,7 +135,9 @@ dfxPageEditorApp.controller("dfx_page_editor_controller", [ '$scope', '$rootScop
     $scope.loadPageTemplates = function() {
         dfxTemplates.getAll( $scope, $scope.application_name )
         .then( function(templates) {
-            $scope.templates = templates;
+            $scope.templates = templates.filter(function(template){
+                return template.platform == $scope.page_platform
+            });
         });
     };
 

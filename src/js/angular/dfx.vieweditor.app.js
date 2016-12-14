@@ -220,7 +220,7 @@ dfxViewEditorApp.controller("dfx_main_controller", [ '$scope', '$rootScope', '$q
 
 }]);
 
-dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScope', '$compile', '$timeout', '$mdDialog', '$mdToast', '$mdSidenav', '$log', '$mdMedia', '$window', '$http', '$location', 'dfxMessaging', 'dfxViews', 'dfxRendering', function($scope, $rootScope, $compile, $timeout, $mdDialog, $mdToast, $mdSidenav, $log, $mdMedia, $window, $http, $location, dfxMessaging, dfxViews, dfxRendering) {
+dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScope', '$compile', '$timeout', '$mdDialog', '$mdToast', '$mdSidenav', '$log', '$mdMedia', '$window', '$http', '$location', '$interval', 'dfxMessaging', 'dfxViews', 'dfxRendering', function($scope, $rootScope, $compile, $timeout, $mdDialog, $mdToast, $mdSidenav, $log, $mdMedia, $window, $http, $location, $interval, dfxMessaging, dfxViews, dfxRendering) {
 
     $scope.palette_visible = true;
     $scope.property_visible = true;
@@ -506,6 +506,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
                 }
                 var arr_dependencies = m[3].split(',');
                 for (dependency in arr_dependencies) {
+                    if (isNaN(dependency)) { continue; }
                     if (arr_dependencies[dependency].trim() != '') {
                         var current_dependency =
                             arr_dependencies[dependency].substring(
@@ -591,6 +592,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
             $scope.view_cards.push({'name':card.name});
             $timeout(function() {
                 $scope.view_card_select_index = $scope.view_cards.length-1;
+                DfxViewEditorSettings.fitRulerPosition();
             });
         }, function() {
             // do nothing
@@ -952,57 +954,37 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
         });
     }
 
-    // View workspace width - START
-    var workspace_width_path = 'DFX_' + $scope.tenant_id + '_' + $scope.view_name + '_worspace_width';
-    var getWorkspaceWidth = function() {
-        var width = window.localStorage.getItem(workspace_width_path);
-        return width || '';
+    // Facade for view workspace settings - START
+    DfxViewEditorSettings.init($scope, $compile, $interval);
+
+    $scope.loadViewSettingsMenu = function($event) {
+        DfxViewEditorSettings.loadViewSettingsMenu($scope, $compile, $event);
     };
-    var setWorkspaceWidth = function(workspace) {
-        var width = workspace ? workspace.width : getWorkspaceWidth();
-        window.localStorage.setItem(workspace_width_path, width);
-
-        var workspace_container = angular.element(document.querySelectorAll('[md-selected="view_card_select_index"]'));
-
-        if (!width || width == "0") {
-            workspace_container.css('overflow', 'initial');
-            workspace_container.css('width', '');
-        } else {
-            var workspace_width = width.indexOf('px') > 0 ? width : width + 'px';
-            workspace_container.css('overflow', 'auto');
-            workspace_container.css('width', workspace_width);
-        }
+    $scope.closeViewSettingsMenu = function() {
+        DfxViewEditorSettings.closeViewSettingsMenu();
     };
-    setWorkspaceWidth();
-
-    $scope.changeViewWorkspaceWidth = function($event) {
-        $(event.srcElement).animateCss('pulse');
-        $mdDialog.show({
-            controller: DialogController,
-            templateUrl: '/gcontrols/web/workspace_change.html',
-            parent: angular.element(document.body),
-            targetEvent: $event
-        })
-        .then(function(workspace) {
-            setWorkspaceWidth(workspace);
-        }, function() {
-            // do nothing
-        });
-
-        function DialogController(scope, $mdDialog) {
-            var width = getWorkspaceWidth();
-            scope.workspace = width ? {'width': width} : {'width': ''};
-
-            scope.changeWorkspaceConfirm = function(answer) {
-                $mdDialog.hide(scope.workspace);
-            };
-
-            scope.changeWorkspaceCancel = function() {
-                $mdDialog.cancel();
-            };
-        }
+    $scope.setWorkspaceSize = function($event) {
+        DfxViewEditorSettings.setWorkspaceSize();
     };
-    // View workspace width - END
+    $scope.changeCanvasSize = function($event) {
+        DfxViewEditorSettings.changeCanvasSize($scope, $mdDialog, $event);
+    };
+    $scope.toggleRuler = function($event) {
+        DfxViewEditorSettings.toggleRuler();
+    };
+    $scope.togglePanel = function(panel_id) {
+        DfxViewEditorSettings.togglePanel(panel_id);
+    };
+    $scope.detachOrAttachPanel = function(panel_id) {
+        DfxViewEditorSettings.detachOrAttachPanel(panel_id);
+    };
+    $scope.minimizeOrMaximizePanel = function(panel_id) {
+        DfxViewEditorSettings.minimizeOrMaximizePanel(panel_id);
+    };
+    $scope.closePanel = function(panel_id) {
+        DfxViewEditorSettings.closePanel(panel_id);
+    };
+    // Facade for view workspace settings - END
 
     var platform = $('#dfx_visual_editor').attr('platform');
     $('.dfx_visual_editor_gc_cat_item').empty();
@@ -3829,6 +3811,13 @@ dfxViewEditorApp.directive('dfxGcToolbarDesign', function($sce, $compile, $timeo
                             }
                             break;
                     }
+                }
+            }
+
+            scope.$parent.checkToolbarMenus = function(toolbar_visible){
+                if(toolbar_visible && toolbar_visible!=='false'){
+                    if(scope.attributes.toolbar.leftMenu.visible && scope.attributes.toolbar.leftMenu.visible!=='false' && scope.attributes.toolbar.leftMenu.type.value !== 'Fab') scope.iconbarBuilder('left');
+                    if(scope.attributes.toolbar.rightMenu.visible && scope.attributes.toolbar.rightMenu.visible!=='false' && scope.attributes.toolbar.rightMenu.type.value !== 'Fab') scope.iconbarBuilder('right');
                 }
             }
 
