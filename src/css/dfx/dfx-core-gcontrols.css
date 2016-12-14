@@ -546,7 +546,6 @@ div[dfx-gc-web-panel] > section > md-content > div {
 div[dfx-gc-web-panel] > div > section > md-content > div > div {
     overflow: overlay;
 }
-
 /* Editor */
 .dfx-core-gc-richtext .ql-container {
     min-height: 200px;
@@ -864,6 +863,11 @@ button.dfx-core-gc-rating-button {
 }
 .dfx-core-gc-rating-icon {
     text-shadow: .05em .05em #aaa;
+}
+
+/* GC Tabs */
+div[dfx-gcc-web-tabs] > div > md-content > div > md-tabs > md-tabs-content-wrapper {
+    overflow: auto!important;
 }
 
 /* Animation */
