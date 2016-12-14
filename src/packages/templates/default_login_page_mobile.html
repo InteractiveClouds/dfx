@@ -30,13 +30,13 @@
     <img src="img/dfx_login_logo_white.png" style="width:64px;height:64px" />
 	<div style="width:300px;font-family:HelveticaNeue;font-size:20px;color:#ffffff;letter-spacing:0.31px;line-height:23px;text-align:center;">The new face of cloud development</div>
 	<div style="width:300px;">
-		<form id="loginForm" name="loginForm" action="#">
+		<form id="loginForm" name="loginForm" ng-submit="$(this).closest('form').submit()">
 			<div layout="column">
 				<md-input-container style="width:204px"><label>User ID</label><input id="username" type="text"></md-input-container>
 				<md-input-container style="width:204px"><label>Password</label><input id="password" type="password" name="password"></md-input-container>
 			</div>
 			<div layout="row">
-				<md-button style="color:#fff;background:#00bae7" onclick="$(this).closest('form').submit()" class="md-raised">Log in</md-button>
+				<md-button style="color:#fff;background:#00bae7" type="submit" class="md-raised">Log in</md-button>
 			</div>
 		</form>
 	</div>

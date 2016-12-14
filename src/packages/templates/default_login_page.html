@@ -28,13 +28,13 @@
         <md-whiteframe flex="45" layout layout-align="center center" style="width:477px" class="md-whiteframe-0dp">
             <md-card style="width:477px;box-shadow:none">
                 <md-card-content>
-                    <form id="loginForm" name="loginForm" action="#">
+                    <form id="loginForm" name="loginForm" ng-submit="$(this).closest('form').submit()">
                         <div layout="column">
                             <md-input-container flex><label>User ID</label><input id="username" type="text"></md-input-container>
                             <md-input-container flex><label>Password</label><input id="password" type="password" name="password"></md-input-container>
                         </div>
                         <div layout="row">
-                            <md-button style="color:#fff;background:#00bae7;" onclick="$(this).closest('form').submit()" class="md-raised">Log in</md-button>
+                            <md-button type="submit" class="md-raised">Log in</md-button>
                         </div>
                     </form>
                 </md-card-content>
