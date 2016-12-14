@@ -58,7 +58,7 @@
     "graceful-fs": "^3.0.7",
     "jade": "1.9.2",
     "lodash": "*",
-    "mdPickers": "https://github.com/alenaksu/mdPickers.git",
+    "mdPickers": "https://github.com/InteractiveClouds/mdPickers.git",
     "mime": "^1.2.11",
     "mkdirp": "^0.5.1",
     "moment": "https://github.com/moment/moment.git",
