@@ -19,7 +19,7 @@
                 <li class="col-md-12">
                     <span class="col-md-4">Type:</span>
                     <div class="col-md-8" layout="row">
-                        <md-radio-group class="dfx-ve-property-treeview-radiogroup row-radio" ng-model="attributes.type.value" ng-change="overrideAttribute('type'); dfxAddLabel()" ng-focus="cacheAttributeOldValue({'name':'type'})" ng-blur="cacheAttributeNewValue('type')">
+                        <md-radio-group class="dfx-ve-property-treeview-radiogroup row-radio" ng-model="attributes.mode.value" ng-change="overrideAttribute('mode'); dfxAddLabel()" ng-focus="cacheAttributeOldValue({'name':'mode'})" ng-blur="cacheAttributeNewValue('mode')">
                             <md-radio-button class="md-primary" value="date" aria-label="Direction">Date</md-radio-button>
                             <md-radio-button class="md-primary" value="time" aria-label="Direction">Time</md-radio-button>
                         </md-radio-group>
@@ -39,15 +39,15 @@
                         <dfx-ve-expression-editor></dfx-ve-expression-editor>
                     </div>
                 </li>
-                <li class="col-md-12" ng-if="attributes.type.value === 'date'">
+                <li class="col-md-12" ng-if="attributes.mode.value === 'date'">
                     <span class="col-md-4">Ranged Date:</span>                    
                     <span class="col-md-8"><md-checkbox style="margin: 0" class="md-primary" ng-model="attributes.selectedType.value" ng-true-value="'ranged'" ng-false-value="'standard'" ng-change="overrideAttribute('selectedType');setAlignment(attributes.alignment.value); dfxAddLabel()" ng-focus="cacheAttributeOldValue({'name':'selectedType'})" ng-blur="cacheAttributeNewValue('selectedType')" aria-label="selectedType"></md-checkbox></span>
                 </li>
-                <li class="col-md-12" ng-if="attributes.type.value === 'date' && attributes.selectedType.value === 'ranged'">
+                <li class="col-md-12" ng-if="attributes.mode.value === 'date' && attributes.selectedType.value === 'ranged'">
                     <span class="col-md-4">Months before:</span>
                     <input type="number" min="1" class="col-md-8" ng-model="attributes.ranged.monthsBefore" ng-change="overrideAttribute('ranged.monthsBefore');setMinDate(attributes.ranged.monthsBefore);" ng-focus="cacheAttributeOldValue({'name':'ranged.monthsBefore'})" ng-blur="cacheAttributeNewValue('ranged.monthsBefore')"/>
                 </li>
-                <li class="col-md-12" ng-if="attributes.type.value === 'date' && attributes.selectedType.value === 'ranged'">
+                <li class="col-md-12" ng-if="attributes.mode.value === 'date' && attributes.selectedType.value === 'ranged'">
                     <span class="col-md-4">Months after:</span>
                     <input type="number" min="1" class="col-md-8" ng-model="attributes.ranged.monthsAfter" ng-change="overrideAttribute('ranged.monthsAfter');setMaxDate(attributes.ranged.monthsAfter);" ng-focus="cacheAttributeOldValue({'name':'ranged.monthsAfter'})" ng-blur="cacheAttributeNewValue('ranged.monthsAfter')"/>
                 </li>                
@@ -69,7 +69,7 @@
         </li>
     </ul>
     <ul>
-        <li ng-if="attributes.type.value === 'date'">
+        <li ng-if="attributes.mode.value === 'date'">
             <input class="dfx-ve-property-treeview-button" type="checkbox" id="date-formats" />
             <label for="date-formats">Date Formating</label>
             <ul class="dfx-ve-property-treeview-content">
@@ -98,7 +98,7 @@
         </li>
     </ul>
     <ul >
-        <li ng-if="attributes.type.value === 'time'">
+        <li ng-if="attributes.mode.value === 'time'">
             <input class="dfx-ve-property-treeview-button" type="checkbox" id="time-formats" />
             <label for="time-formats">Time Formating</label>
             <ul class="dfx-ve-property-treeview-content">                
@@ -145,7 +145,7 @@
                         </li>
                     </ul>
                 </li>
-                <li ng-if="attributes.type.value === 'date' && attributes.selectedType.value ==='ranged'" class="col-md-12">
+                <li ng-if="attributes.mode.value === 'date' && attributes.selectedType.value ==='ranged'" class="col-md-12">
                     <input class="dfx-ve-property-treeview-button" type="checkbox" checked id="valid-item-2" />
                     <label for="valid-item-2" class="dfx-ve-property-title-level-1"><span>Range messages</span></label>
                     <ul class="dfx-ve-property-treeview-content">

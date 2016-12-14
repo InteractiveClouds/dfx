@@ -666,8 +666,9 @@ dfxGCC.directive('dfxGccWebDatepicker', ['$mdpDatePicker', '$mdpTimePicker', '$c
 
                 $timeout(function () {
                     try{
-                        if(scope.attributes.type.value === 'date') scope.dp_input = '#' + scope.component_id + '_preview > div > mdp-date-picker > div > md-input-container > input';
-                        if(scope.attributes.type.value === 'time') scope.dp_input = '#' + scope.component_id + '_preview > div > mdp-time-picker > div > md-input-container > input';
+                        console.log('scope.attributes.mode', scope.attributes.mode);
+                        if(scope.attributes.mode.value === 'date') scope.dp_input = '#' + scope.component_id + '_preview > div > mdp-date-picker > div > md-input-container > input';
+                        if(scope.attributes.mode.value === 'time') scope.dp_input = '#' + scope.component_id + '_preview > div > mdp-time-picker > div > md-input-container > input';
                         $(scope.dp_input).focus(function(){ scope.labelClass = 'dp-label-focus-on'; scope.$apply(function(){}); });
                         $(scope.dp_input).blur(function(){ scope.labelClass = 'dp-label-focus-off'; scope.$apply(function(){}); });
                     }catch(e){}
@@ -676,8 +677,8 @@ dfxGCC.directive('dfxGccWebDatepicker', ['$mdpDatePicker', '$mdpTimePicker', '$c
                 scope.setAlignment = function(alignment){
                     $timeout(function(){
                         var dp_input;
-                        if(scope.attributes.type.value === 'date') dp_input = '#' + scope.component_id + '_preview > div > mdp-date-picker > div > md-input-container > input';
-                        if(scope.attributes.type.value === 'time') dp_input = '#' + scope.component_id + '_preview > div > mdp-time-picker > div > md-input-container > input';
+                        if(scope.attributes.mode.value === 'date') dp_input = '#' + scope.component_id + '_preview > div > mdp-date-picker > div > md-input-container > input';
+                        if(scope.attributes.mode.value === 'time') dp_input = '#' + scope.component_id + '_preview > div > mdp-time-picker > div > md-input-container > input';
                         $(dp_input).css('text-align', alignment);
                     },0)
                 }

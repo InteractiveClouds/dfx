@@ -2,7 +2,7 @@
     "template":           { "value": "default" },
     "formName":           { "value": "" },
     "name":               { "value": "mdpDatetime1" },
-    "type":               { "value": "date" },
+    "mode":               { "value": "date" },
     "bindingExpression":  { "value": "new Date()" },
     "bindingDate":        { "value": "" },
     "designDate":         { "value": "" },
