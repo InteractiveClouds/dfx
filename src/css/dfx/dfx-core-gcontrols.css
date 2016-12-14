@@ -873,6 +873,15 @@ button.dfx-core-gc-rating-button {
 .dfx-core-gc-datetime-label {
     margin: 0;
 }
+.dfx-core-gc-datetime-picker.align-value-left input {
+    text-align: left;
+}
+.dfx-core-gc-datetime-picker.align-value-center input {
+    text-align: center;
+}
+.dfx-core-gc-datetime-picker.align-value-right input {
+    text-align: right;
+}
 .dfx-core-gc-datetime md-input-container {
     width: 100%;
 }

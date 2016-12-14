@@ -28,7 +28,7 @@
                 <li class="col-md-12">
                     <span class="col-md-4">Binding:</span>
                     <div class="col-md-8" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.bindingExpression.value" style="margin-left:-15px;" ng-change="overrideAttribute('bindingExpression')" ng-focus="cacheAttributeOldValue({'name':'bindingExpression'})" ng-blur="cacheAttributeNewValue('bindingExpression')"/>
+                        <input class="col-md-12" type="text" ng-model="attributes.bindingExpression.value" style="margin-left:-15px;" ng-change="overrideAttribute('bindingExpression'); dfxCreateBindingName();" ng-focus="cacheAttributeOldValue({'name':'bindingExpression'})" ng-blur="cacheAttributeNewValue('bindingExpression')"/>
                         <dfx-ve-expression-editor></dfx-ve-expression-editor>
                     </div>
                 </li>
@@ -71,7 +71,7 @@
     <ul>
         <li ng-if="attributes.mode.value === 'date'">
             <input class="dfx-ve-property-treeview-button" type="checkbox" id="date-formats" />
-            <label for="date-formats">Date Formating</label>
+            <label for="date-formats">Date Formatting</label>
             <ul class="dfx-ve-property-treeview-content">
                 <li class="col-md-12">
                     <span class="col-md-4" style="padding: 3px 0 0 5px">Format:</span>
@@ -100,7 +100,7 @@
     <ul >
         <li ng-if="attributes.mode.value === 'time'">
             <input class="dfx-ve-property-treeview-button" type="checkbox" id="time-formats" />
-            <label for="time-formats">Time Formating</label>
+            <label for="time-formats">Time Formatting</label>
             <ul class="dfx-ve-property-treeview-content">                
                 <li class="col-md-12">
                     <span class="col-md-4" style="padding: 3px 0 0 5px">Format:</span>
@@ -108,6 +108,7 @@
                         <md-select ng-model="attributes.standardTimeFormat.value" ng-change="overrideAttribute('standardTimeFormat'); cacheAttributeOldValue({'value':'standardTimeFormat'}); cacheAttributeNewValue('standardTimeFormat'); dfxFormatTime()" aria-label="Select format">
                             <md-option value="HH:mm A">HH:mm A</md-option>
                             <md-option value="A hh:mm">A hh:mm</md-option>
+                            <md-option value="HH:mm">HH:mm</md-option>
                             <md-option value="hh:mm">hh:mm</md-option>
                             <md-option value="H">H</md-option>
                             <md-option value="HH">HH</md-option>
@@ -151,11 +152,11 @@
                     <ul class="dfx-ve-property-treeview-content">
                         <li class="col-md-12">                    
                             <span class="col-md-4">Min date:</span>
-                            <input class="col-md-8" type="text" ng-model="attributes.minDateMessage.value" ng-change="overrideAttribute('minDateMessage')" ng-focus="cacheAttributeOldValue({'name':'minDateMessage'})" ng-blur="cacheAttributeNewValue('minDateMessage')"/>
+                            <input class="col-md-8" type="text" ng-model="attributes.minDateMessage.value" ng-change="overrideAttribute('minDateMessage'); setMinDate(attributes.minDateMessage.value)" ng-focus="cacheAttributeOldValue({'name':'minDateMessage'})" ng-blur="cacheAttributeNewValue('minDateMessage')"/>
                         </li>                        
                         <li class="col-md-12">                    
                             <span class="col-md-4">Max date:</span>
-                            <input class="col-md-8" type="text" ng-model="attributes.maxDateMessage.value" ng-change="overrideAttribute('maxDateMessage')" ng-focus="cacheAttributeOldValue({'name':'maxDateMessage'})" ng-blur="cacheAttributeNewValue('maxDateMessage')"/>
+                            <input class="col-md-8" type="text" ng-model="attributes.maxDateMessage.value" ng-change="overrideAttribute('maxDateMessage'); setMaxDate(attributes.ranged.monthsAfter)" ng-focus="cacheAttributeOldValue({'name':'maxDateMessage'})" ng-blur="cacheAttributeNewValue('maxDateMessage')"/>
                         </li>                                            
                     </ul>
                 </li>  

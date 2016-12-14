@@ -650,10 +650,10 @@ dfxGCC.directive('dfxGccWebDatepicker', ['$mdpDatePicker', '$mdpTimePicker', '$c
         scope: true,
         link: function(scope, element, attrs, basectrl) {
             var component = scope.$parent.getComponent(element);
-            scope.dp_input;
             basectrl.init(scope, element, component, attrs, 'datepicker').then(function() {
-                if(!scope.labelClass) scope.labelClass = 'dp-label-focus-off';
-
+                scope.dfx_empty_binding_date = {'value': ''};
+                if(scope.attributes.bindingExpression.value === "") scope.dfx_empty_binding_date.value = new Date();
+                if(typeof scope.attributes.bindingDate.value === 'string' && scope.attributes.bindingDate.value.indexOf('$parent_scope.') > -1) scope.attributes.bindingDate.value = scope.attributes.bindingDate.value.replace('$parent_scope.', '');
                 if(scope.attributes.bindingExpression.value === ""){
                     scope.attributes.bindingDate.value = new Date();
                 }else{
@@ -681,40 +681,20 @@ dfxGCC.directive('dfxGccWebDatepicker', ['$mdpDatePicker', '$mdpTimePicker', '$c
                 }
                 scope.setMaxDate(scope.attributes.ranged.monthsAfter);
 
-                $timeout(function () {
-                    try{
-                        if(scope.attributes.mode.value === 'date') scope.dp_input = '#' + scope.component_id + '_preview > div > mdp-date-picker > div > md-input-container > input';
-                        if(scope.attributes.mode.value === 'time') scope.dp_input = '#' + scope.component_id + '_preview > div > mdp-time-picker > div > md-input-container > input';
-                        $(scope.dp_input).focus(function(){ scope.labelClass = 'dp-label-focus-on'; scope.$apply(function(){}); });
-                        $(scope.dp_input).blur(function(){ scope.labelClass = 'dp-label-focus-off'; scope.$apply(function(){}); });
-                    }catch(e){}
-                }, 0);
-
-                scope.setAlignment = function(alignment){
-                    $timeout(function(){
-                        var dp_input;
-                        if(scope.attributes.mode.value === 'date') dp_input = '#' + scope.component_id + '_preview > div > mdp-date-picker > div > md-input-container > input';
-                        if(scope.attributes.mode.value === 'time') dp_input = '#' + scope.component_id + '_preview > div > mdp-time-picker > div > md-input-container > input';
-                        $(dp_input).css('text-align', alignment);
-                    },0)
-                }
-                scope.$watch('attributes.alignment.value', function(newValue){ scope.setAlignment(newValue); });  
-
-                scope.addLabel = function(){
-                    var dfxDatetimeLabel = '<label class="dfx-core-gc-datetime-label" ng-class="labelClass">{{' + scope.attributes.label.value + '}}</label>';
-                    $('#' + component.id).find('label.dfx-core-gc-datetime-label').replaceWith(dfxDatetimeLabel).promise().done(function(){
-                        $compile($('#' + component.id + ' label.dfx-core-gc-datetime-label'))(scope);                                
+                scope.dfxAddLabel = function(){
+                    var dfxDatetimeLabel = '<label class="dfx-core-gc-datetime-label">{{' + scope.attributes.label.value + '}}</label>';
+                    $(element).find('label.dfx-core-gc-datetime-label').replaceWith(dfxDatetimeLabel).promise().done(function(){
+                        $compile($(element).find('label.dfx-core-gc-datetime-label'))(scope);                                
                     });
                 }
 
-                var interval = setInterval(function() {
+                var findLabelinterval = setInterval(function() {
                     if ($('#' + component.id).find('label.dfx-core-gc-datetime-label').length === 0) return;
-                    clearInterval(interval);
-                    scope.addLabel();                    
+                    clearInterval(findLabelinterval);
+                    scope.dfxAddLabel();                    
                 }, 10);              
 
-                scope.changeWidth = function(){ $('#' + scope.component_id).css('width', scope.attributes.flex.value + '%'); };
-                if(!angular.isDefined(attrs.dfxGcEdit)) scope.changeWidth();
+                $(element).css('width', scope.attributes.flex.value + '%');
             });
         }
     }

@@ -5,7 +5,7 @@
     ATTR-IF{{ng-class="attributes.dynamicClasses.value"}}>
     FRAG-IF{{attributes.mode.value === 'date' && attributes.selectedType.value !== 'ranged'}}
     <div>
-        <mdp-date-picker class="dfx-core-gc-datetime-picker" name="dateTimeField" mdp-format="ATTR-NONV{{dateFormat.value}}" ng-model="ATTR-STATIC{{bindingDate.value}}"
+        <mdp-date-picker class="dfx-core-gc-datetime-picker align-value-ATTR-NONV{{alignment.value}}" name="dateTimeField" mdp-format="ATTR-NONV{{dateFormat.value}}" ng-model="ATTR-NONV{{bindingDate.value}}"
             ATTR-IF{{ng-required="attributes.isDateRequired.value"}}
             ATTR-IF{{mdp-disabled="attributes.disabled.value"}}
             ATTR-IF{{ng-change="attributes.onchange.value"}}
@@ -33,7 +33,7 @@
     FRAG-ENDIF
     FRAG-IF{{attributes.mode.value === 'date' && attributes.selectedType.value === 'ranged'}}
     <div>
-        <mdp-date-picker class="dfx-core-gc-datetime-picker" name="dateTimeField" mdp-format="ATTR-NONV{{dateFormat.value}}" ng-model="ATTR-STATIC{{bindingDate.value}}" mdp-min-date="minDate" mdp-max-date="maxDate"
+        <mdp-date-picker class="dfx-core-gc-datetime-picker align-value-ATTR-NONV{{alignment.value}}" name="dateTimeField" mdp-format="ATTR-NONV{{dateFormat.value}}" ng-model="ATTR-NONV{{bindingDate.value}}" mdp-min-date="minDate" mdp-max-date="maxDate"
             ATTR-IF{{ng-required="attributes.isDateRequired.value"}}
             ATTR-IF{{mdp-disabled="attributes.disabled.value"}}
             ATTR-IF{{ng-change="attributes.onchange.value"}}
@@ -61,7 +61,7 @@
     FRAG-ENDIF
     FRAG-IF{{attributes.mode.value === 'time'}}
     <div>
-        <mdp-time-picker class="dfx-core-gc-datetime-picker" name="dateTimeField" mdp-format="ATTR-NONV{{timeFormat.value}}" ng-model="ATTR-STATIC{{bindingDate.value}}"
+        <mdp-time-picker class="dfx-core-gc-datetime-picker align-value-ATTR-NONV{{alignment.value}}" name="dateTimeField" mdp-format="ATTR-NONV{{timeFormat.value}}" ng-model="ATTR-NONV{{bindingDate.value}}"
             ATTR-IF{{ng-required="attributes.isDateRequired.value"}}
             ATTR-IF{{mdp-disabled="attributes.disabled.value"}}
             ATTR-IF{{ng-change="attributes.onchange.value"}}
