@@ -74,13 +74,9 @@
             <label for="date-formats">Date Formating</label>
             <ul class="dfx-ve-property-treeview-content">
                 <li class="col-md-12">
-                    <span class="col-md-4">Custom format:</span>
-                    <input class="col-md-8" type="text" ng-model="attributes.customDateFormat.value" ng-model-options="{ debounce: '500'}" ng-change="overrideAttribute('customDateFormat'); dfxFormatDate()" ng-focus="cacheAttributeOldValue({'name':'customDateFormat'})" ng-blur="cacheAttributeNewValue('customDateFormat')"/>
-                </li>           
-                <li class="col-md-12">
-                    <span class="col-md-4" style="padding: 3px 0 0 5px">Standard formats:</span>
+                    <span class="col-md-4" style="padding: 3px 0 0 5px">Format:</span>
                     <md-input-container class="col-md-8" style="padding: 0 0 10px">
-                        <md-select ng-model="attributes.standardDateFormat.value" aria-label="{{attributes.standardDateFormat.value}}" ng-change="overrideAttribute('standardDateFormat'); cacheAttributeOldValue({'value':'standardDateFormat'}); cacheAttributeNewValue('standardDateFormat'); dfxFormatDate()">                                     
+                        <md-select ng-model="attributes.standardDateFormat.value" ng-change="overrideAttribute('standardDateFormat'); cacheAttributeOldValue({'value':'standardDateFormat'}); cacheAttributeNewValue('standardDateFormat'); dfxFormatDate()" aria-label="Select format">
                             <md-option value="MM/DD/YYYY">MM/DD/YYYY</md-option>
                             <md-option value="DD/MM/YYYY">DD/MM/YYYY</md-option>
                             <md-option value="DD.MM.YYYY">DD.MM.YYYY</md-option>
@@ -90,9 +86,14 @@
                             <md-option value="dddd, D MMMM YYYY">dddd, D MMMM YYYY</md-option>
                             <md-option value="D MMMM YYYY">D MMMM YYYY</md-option>
                             <md-option value="D MMM YYYY">D MMM YYYY</md-option>
+                            <md-option value="custom">Custom</md-option>
                         </md-select>
                     </md-input-container>
                 </li>                
+                <li class="col-md-12" ng-if="attributes.standardDateFormat.value === 'custom'">
+                    <span class="col-md-4">Custom format:</span>
+                    <input class="col-md-8" type="text" ng-model="attributes.customDateFormat.value" ng-model-options="{ debounce: '500'}" ng-change="overrideAttribute('customDateFormat'); dfxFormatDate()" ng-focus="cacheAttributeOldValue({'name':'customDateFormat'})" ng-blur="cacheAttributeNewValue('customDateFormat')"/>
+                </li>           
             </ul>
         </li>
     </ul>
@@ -102,25 +103,26 @@
             <label for="time-formats">Time Formating</label>
             <ul class="dfx-ve-property-treeview-content">                
                 <li class="col-md-12">
-                    <span class="col-md-4">Custom format:</span>
-                    <input class="col-md-8" type="text" ng-model="attributes.customTimeFormat.value" ng-model-options="{ debounce: '500'}" ng-change="overrideAttribute('customTimeFormat'); dfxFormatTime()" ng-focus="cacheAttributeOldValue({'name':'customTimeFormat'})" ng-blur="cacheAttributeNewValue('customTimeFormat')"/>
-                </li>           
-                <li class="col-md-12">
-                    <span class="col-md-4" style="padding: 3px 0 0 5px">Standard formats:</span>
+                    <span class="col-md-4" style="padding: 3px 0 0 5px">Format:</span>
                     <md-input-container class="col-md-8" style="padding: 0 0 10px">
-                        <md-select ng-model="attributes.standardTimeFormat.value" aria-label="{{attributes.standardTimeFormat.value}}" ng-change="overrideAttribute('standardTimeFormat'); cacheAttributeOldValue({'value':'standardTimeFormat'}); cacheAttributeNewValue('standardTimeFormat'); dfxFormatTime()">                                     
-                            <md-option value="hh:mm">hh:mm</md-option>
+                        <md-select ng-model="attributes.standardTimeFormat.value" ng-change="overrideAttribute('standardTimeFormat'); cacheAttributeOldValue({'value':'standardTimeFormat'}); cacheAttributeNewValue('standardTimeFormat'); dfxFormatTime()" aria-label="Select format">
                             <md-option value="HH:mm A">HH:mm A</md-option>
                             <md-option value="A hh:mm">A hh:mm</md-option>
+                            <md-option value="hh:mm">hh:mm</md-option>
                             <md-option value="H">H</md-option>
                             <md-option value="HH">HH</md-option>
                             <md-option value="h">h</md-option>
                             <md-option value="hh">hh</md-option>
                             <md-option value="m">m</md-option>
                             <md-option value="mm">mm</md-option>
+                            <md-option value="custom">Custom</md-option>
                         </md-select>
                     </md-input-container>
                 </li>                              
+                <li class="col-md-12" ng-if="attributes.standardTimeFormat.value === 'custom'">
+                    <span class="col-md-4">Custom format:</span>
+                    <input class="col-md-8" type="text" ng-model="attributes.customTimeFormat.value" ng-model-options="{ debounce: '500'}" ng-change="overrideAttribute('customTimeFormat'); dfxFormatTime()" ng-focus="cacheAttributeOldValue({'name':'customTimeFormat'})" ng-blur="cacheAttributeNewValue('customTimeFormat')"/>
+                </li>           
             </ul>
         </li>
     </ul>
@@ -137,7 +139,7 @@
                             <span class="col-md-4">Is required:</span>
                             <span class="col-md-8"><md-checkbox style="margin: 0" class="md-primary" ng-true-value="'true'" ng-false-value="'false'" ng-model="attributes.isDateRequired.value" ng-change="overrideAttribute('isDateRequired')" ng-focus="cacheAttributeOldValue({'name':'isDateRequired'})" ng-blur="cacheAttributeNewValue('isDateRequired')" aria-label="isDateRequired"></md-checkbox></span>
                         </li>
-                        <li class="col-md-12">
+                        <li class="col-md-12" ng-if="attributes.isDateRequired.value === 'true'">
                             <span class="col-md-4">Error message:</span>
                             <input class="col-md-8" type="text" ng-model="attributes.isDateRequired.errorMessage" ng-change="overrideAttribute('isDateRequired.errorMessage')" ng-focus="cacheAttributeOldValue({'name':'isDateRequired.errorMessage'})" ng-blur="cacheAttributeNewValue('isDateRequired.errorMessage')"/>
                         </li>
@@ -159,10 +161,10 @@
                 </li>  
                 <li class="col-md-12">
                     <input class="dfx-ve-property-treeview-button" type="checkbox" checked id="valid-item-3" />
-                    <label for="valid-item-3" class="dfx-ve-property-title-level-1"><span>Format</span></label>
+                    <label for="valid-item-3" class="dfx-ve-property-title-level-1"><span>Pattern</span></label>
                     <ul class="dfx-ve-property-treeview-content">
                         <li class="col-md-12">                    
-                            <span class="col-md-4">Message:</span>
+                            <span class="col-md-4">Error message:</span>
                             <input class="col-md-8" type="text" ng-model="attributes.formatMessage.value" ng-change="overrideAttribute('formatMessage')" ng-focus="cacheAttributeOldValue({'name':'formatMessage'})" ng-blur="cacheAttributeNewValue('formatMessage')"/>
                         </li>                                                                                         
                     </ul>
