@@ -1483,6 +1483,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
                 .then(function() {
                     dfxMessaging.showMessage( 'The template ' + gc_template.name + ' has been created' );
                     $scope.gc_templates.push(gc_template);
+                    $scope.loadGcTemplatesByType();
                 }, function(res) {
                     dfxMessaging.showWarning(res.data.error.message);
                 });
@@ -1657,47 +1658,6 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
             makeGcTemplatesDraggable(gc_type, gc_cat);
         }
     };
-    /*$scope.previewGcTemplate = function(gc_template, $event) {
-        var fillPreviewContainer = function(container_id) {
-            var gc_id = Math.floor(Math.random() * 100000),
-                view_editor = document.querySelector('#dfx_src_widget_editor'),
-                view_editor_scope = angular.element(view_editor).scope(),
-                is_rendering_gc_template = true;
-
-            var gc = view_editor_scope.renderGraphicalControl({id: gc_id, type: gc_template.type}, null, is_rendering_gc_template);
-            $('#' + container_id).html(gc.fragment);
-
-            $timeout(function() {
-                var gc_component_definition = {
-                    'id': gc_id,
-                    'type': gc_template.type,
-                    'attributes': {
-                        'template': {'value': gc_template.name, 'status': 'overridden'}
-                    }
-                };
-
-                var reload_property_panel = false;
-                var gc_element = $('#' + gc_id);
-                var gc_element_scope = angular.element(gc_element).scope();
-                gc_element_scope.reinitAttributes(gc_component_definition, reload_property_panel, is_rendering_gc_template);
-            }, 0);
-        };
-
-        $mdDialog.show({
-            targetEvent: $event,
-            hasBackdrop: false,
-            template: '<md-dialog style="left:'+($event.x-250)+'px;top:'+($event.y-5)+'px;position:absolute;">' +
-                //'  <md-dialog-content><div id="gc_preview_container"></div></md-dialog-content>' +
-                '  <md-dialog-content><div id="gc_preview_container" style="width:100%;"></div></md-dialog-content>' +
-                '</md-dialog>',
-            controller: function($scope, $mdDialog) {
-                $timeout(function() {
-                    fillPreviewContainer('gc_preview_container');
-                }, 0);
-            }
-        });
-        //save as in gc_templates editor & verification if this template name already exists - in both editors
-    };*/
     // Functions to work with GC Templates - END
 
     DfxVisualBuilder.init();
