@@ -285,6 +285,12 @@ button[disabled="disabled"].dfx-core-gc-button.md-button md-icon, button[disable
 }
 
 /* Image */
+.dfx-core-gc-image {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+}
 .dfx-core-gc-image img {
     width: 150px;
     height: 150px;
@@ -405,7 +411,7 @@ div[dfx-gcc-web-treemenu] {
 .dfx-core-gc-treemenu button .tree-menu-label {
     -webkit-flex-grow: 1;
     flex-grow: 1;
-    -ms-text-overflow: ellipsis; 
+    -ms-text-overflow: ellipsis;
     -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -558,6 +564,26 @@ div[dfx-gc-web-panel] > div > section > md-content > div > div {
 .dfx-core-gc-progressbar {
     padding-bottom: 35px;
 }
+.dfx-core-gc-progressbar-label {
+    font-size: 10px;
+    margin: 7px 0 5px;
+    padding-left: 3px;
+    color: rgba(0,0,0,0.54);
+}
+/* Chips */
+.dfx-core-gc-chips {}
+.dfx-core-gc-chips md-chips-wrap {
+    padding-top: 8px;
+}
+.dfx-core-gc-chips-placeholder {
+    font-size: 14px;
+    color: rgb(186, 186, 186);
+    position: absolute;
+    z-index: 1;
+}
+md-chips-wrap.md-readonly {
+    min-height: 56px;
+}
 /* Google Map */
 .dfx-core-gc-google-map {
     width: 100%;
@@ -600,6 +626,9 @@ md-checkbox.dfx-core-gc-treeview-checkbox {
     width: 20px;
     margin-right: 6px;
     margin-left: 6px;
+}
+.dfx-core-gc-treeview-link {
+    cursor: pointer;
 }
 /* Checkbox */
 .dfx-core-gc-checkbox {
@@ -657,10 +686,10 @@ div.dfx-core-gc-switch md-switch[disabled].dfx-core-gc-switch-button .md-thumb:b
 
 /* Radio */
 .dfx-core-gc-radio-label {
-    font-size: 10px !important;
-    margin: 7px 0!important;
-    padding-left: 3px !important;
-    color: rgba(0,0,0,0.54) !important;
+    font-size: 10px;
+    margin: 7px 0;
+    padding-left: 3px;
+    color: rgba(0,0,0,0.54);
 }
 .dfx-core-gc-radio-group {
     display: -webkit-flex;
@@ -668,7 +697,7 @@ div.dfx-core-gc-switch md-switch[disabled].dfx-core-gc-switch-button .md-thumb:b
 }
 .dfx-core-gc-radio-button {
     height: 26px;
-    margin: 0 0 0 5px;
+    margin: 0 0 19px 3px;
     display: -webkit-flex;
     -webkit-flex-direction: row;
     display: flex;
@@ -807,7 +836,8 @@ md-list .md-subheader.dfx-core-gc-list-subheader {
 }
 
 /* GC Rating */
-.dfx-core-gc-rating {
+.dfx-core-gc-rating {}
+.dfx-core-gc-rating-buttons {
     padding: 0;
     line-height: 100%;
     display: -webkit-flex;
@@ -817,6 +847,9 @@ md-list .md-subheader.dfx-core-gc-list-subheader {
     -ms-flex-order: 2;
     order: 2;
     margin: 3px 0 0 0;
+}
+.dfx-core-gc-rating-label {
+
 }
 .dfx-core-gc-rating .dfx-core-gc-rating-item {
     list-style: none;
@@ -4258,4 +4291,62 @@ button.dfx-core-gc-rating-button {
 	font-family:HelveticaNeue;
 	font-size:12px;
 	margin-left: 5px;
+}
+
+.dfx-core-error-page {
+	text-align: center;
+	padding: 0;
+	width: 800px;
+	margin:0 auto;
+	border: 0;
+	outline: 0;
+	font: 13pt/1.4 arial,'Hiragino Sans GB',sans-serif;
+	text-decoration: none;
+	color: rgb(67, 74, 84);
+}
+.dfx-core-error-msg {
+    min-height: 222px;
+    margin: 150px auto 0 auto;
+    text-align: left;
+    background: #fff url(images/df_logo_browser_warning.png) no-repeat 75px center;
+    position: relative;
+    box-shadow: 1px 1px 1px 1px rgb(200, 200, 200);
+}
+.dfx-core-error-msg-content {
+    padding: 65px;
+    padding-left: 20px;
+	vertical-align: middle;
+}
+.dfx-core-error-msg-content div {
+    padding-top: 0px;
+	padding-left: 50px;
+	vertical-align: top;
+}
+.dfx-core-error-msg-content img {
+	vertical-align: top;
+}
+.dfx-core-error-msg-content a {
+    color: rgb(27, 194, 232);
+    font-style: italic;
+}
+.dfx-core-error-msg-content h1 {
+    color: rgb(97, 108, 123);
+    font-weight: bold;
+    font-size: 18pt;
+}
+.dfx-core-error-msg-content p {
+    padding-top: 10px;
+}
+.dfx-core-error-msg-content p.download {
+    padding-top: 20px;
+}
+.dfx-core-error-copyright {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 50px;
+}
+.dfx-core-error-copyright p, #dfx-error-copyright p a {
+    line-height: 1.8;
+    font-size: 10pt;
 }

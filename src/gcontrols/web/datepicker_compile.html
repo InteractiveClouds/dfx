@@ -50,9 +50,9 @@
                        ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}></md-datepicker>
         FRAG-ENDIF
         <div class="validation-messages" ng-messages="dateForm.dateField.$error">
-            <div ng-message="required">This date is required!</div>
-            <div ng-message="mindate">Date is too early!</div>
-            <div ng-message="maxdate">Date is too late!</div>
+            <div ng-message="required" ng-bind="ATTR-NONV{{isDateRequired.errorMessage}}"></div>
+            <div ng-message="mindate" ng-bind="ATTR-NONV{{minDateMessage.value}}"></div>
+            <div ng-message="maxdate" ng-bind="ATTR-NONV{{maxDateMessage.value}}"></div>
         </div>
     </div>
 </div>

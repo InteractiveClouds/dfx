@@ -112,12 +112,18 @@ dfxPageEditorApp.controller("dfx_page_editor_controller", [ '$scope', '$rootScop
                 {
                     lineNumbers: true,
                     value: $('#dfx_pe_script_editor').text(),
-                    mode: {name: 'application/json', globalVars: true},
-                    matchBrackets: true,
-                    highlightSelectionMatches: {showToken: /\w/},
-                    styleActiveLine: true,
-                    viewportMargin : Infinity,
-                    extraKeys: {"Alt-F": "findPersistent", "Ctrl-Space": "autocomplete"}
+					mode: {name: 'javascript', globalVars: true},
+		            theme: $scope.script_theme,
+		            matchBrackets: true,
+		            highlightSelectionMatches: {showToken: /\w/},
+		            styleActiveLine: true,
+		            viewportMargin : Infinity,
+		            extraKeys: {
+						"Alt-F": "findPersistent",
+						"Ctrl-Space": "autocomplete"
+					},
+		            foldGutter: true,
+		            gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
                 });
             $(src_editor.getWrapperElement()).attr('id', 'dfx_pe_script_editor');
             src_editor.setValue(page.script);
@@ -129,7 +135,9 @@ dfxPageEditorApp.controller("dfx_page_editor_controller", [ '$scope', '$rootScop
     $scope.loadPageTemplates = function() {
         dfxTemplates.getAll( $scope, $scope.application_name )
         .then( function(templates) {
-            $scope.templates = templates;
+            $scope.templates = templates.filter(function(template){
+                return template.platform == $scope.page_platform
+            });
         });
     };
 
@@ -158,11 +166,13 @@ dfxPageEditorApp.controller("dfx_page_editor_controller", [ '$scope', '$rootScop
     };
 
     $scope.showDesign = function() {
-        $scope.design_visible = true;
+		$scope.property_visible = true;
+		$scope.design_visible = true;
         $scope.script_visible = false;
         $('#dfx_pe_script_editor').css('display', 'none');
     };
     $scope.showScript = function() {
+		$scope.property_visible = false;
         $scope.design_visible = false;
         $scope.script_visible = true;
         $('#dfx_pe_script_editor').css('display', 'block');
@@ -397,17 +407,20 @@ dfxPageEditorApp.directive('dfxPageTemplate', ['$compile', '$mdSidenav', functio
             tpl_snippet = '<div layout="row" ng-show="selected_template.layout.header.display==\'true\'"><div layout-align="{{selected_template.layout.header.halignment}} {{selected_template.layout.header.valignment}}" flex="100" style="height:{{selected_template.layout.header.height}};{{selected_template.layout.header.style}}" dfx-page-include-template="header"></div></div>';
 
             // Middle Section Start
-            tpl_snippet += '<div layout="row" style="position:relative;{{selected_template.layout.body.style}}" flex>';
+            tpl_snippet += '<div layout="row" style="position:relative;" flex>';
 
             // Left
             tpl_snippet += '<div id="dfxpageleft" ng-show="selected_template.layout.left.display==\'true\'" style="width:{{selected_template.layout.left.width}};{{selected_template.layout.left.style}};z-index:50;" class="{{selected_template.layout.left.whiteframe}}"><md-content layout="column" layout-align="{{selected_template.layout.left.halignment}} {{selected_template.layout.left.valignment}}" style="background:inherit" dfx-page-include-template="left"></md-content></div>';
 
             // Body
-            tpl_snippet += '<div layout="column" style="background:inherit;z-index: 51;overflow:auto;" class="content-wrapper" flex id="pagebody">';
+            tpl_snippet += '<div layout="column" style="background:inherit;z-index: 51;overflow:auto;{{selected_template.layout.body.style}}" class="content-wrapper" flex id="pagebody">';
 
             tpl_snippet += '<div layout="row" style="" flex="{{selected_page.autoHeight != true ? row.height : \'\'}}" ng-repeat="row in selected_page.layout.rows">';
             tpl_snippet += '<div layout="column" flex="{{col.width}}" class="dfx-page-droppable-column" dfx-page-droppable-column data-row="{{$parent.$index}}" data-column="{{$index}}" ng-repeat="col in row.columns" style="border:1px #999 solid;">';
-            tpl_snippet += '<div ng-repeat="view in col.views" dfx-page-sortable-view class="{{(view.fit==\'content\') ? \'\' : \'flex\'}} md-whiteframe-3dp" style="letter-spacing:0.2em;background:#4cd5f3;color:#383838;cursor:pointer;" layout="row" layout-align="center center" data-view-id="{{view.id}}" data-view="{{view.name}}"><div class= "dfx-pe-view-menu"><span>{{view.name}}</span><a ng-click="loadViewMenu($event, $parent.$parent.$index, $parent.$index, view.id)" class="dfx-pe-view-menu-item"><i class="fa fa-gear"></i></a></div></div>';
+            tpl_snippet += '<div ng-repeat="view in col.views" dfx-page-sortable-view class="{{(view.fit==\'content\') ? \'\' : \'flex\'}} md-whiteframe-3dp" style="letter-spacing:0.2em;background:#4cd5f3;color:#383838;cursor:pointer;" layout="row" layout-align="center center" data-view-id="{{view.id}}" data-view="{{view.name}}"><div class= "dfx-pe-view-menu">'
+				+ '<span>{{view.name}}</span>'
+				+ '<a class="dfx-pe-view-menu-item"><ng-md-icon size="24" ng-click="removeView($parent.$parent.$index, $parent.$index, view.id)" icon="delete_forever"></ng-md-icon></a>'
+				+ '</div></div>';
             tpl_snippet += '</div>';
             tpl_snippet += '</div>';
 
@@ -436,7 +449,7 @@ dfxPageEditorApp.directive('dfxPageDraggableView', [function() {
                 cursorAt:          {top: 5, left: 20},
                 cursor:            "move",
                 helper: function(event) {
-                    var helper_snippet = '<div class="md-whiteframe-z2" style="width:120px;height:50px;letter-spacing: 0.2em;color:#383838;background:#4cd5f3;line-height:50px;text-align:center;vertical-align:middle;white-space: nowrap;text-overflow: ellipsis; overflow: hidden; padding: 0 5px;">' + $element.text() + '</div>';
+                    var helper_snippet = '<div class="md-whiteframe-z2 dfx-pe-draggable-helper">' + $element.text() + '</div>';
                     return helper_snippet;
                 },
                 zIndex: 2000,

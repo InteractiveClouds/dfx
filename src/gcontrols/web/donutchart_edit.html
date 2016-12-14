@@ -30,6 +30,10 @@
 						<dfx-ve-expression-editor></dfx-ve-expression-editor>
 					</div>
 				</li>
+				<li class="col-md-12">
+                    <span class="col-md-5">Options:</span>
+                    <a ng-click="showOptionsEditor($event)" style="font-size:12px;color:#97CFFF;text-decoration:none;cursor:pointer;"><span style="padding-left:0"><md-icon class="fa fa-edit" style="font-size:14px;height:16px;min-height: 14px;"></md-icon>Edit</span></a>
+                </li>
 				<li class="col-md-12" dfx-gc-property="display">
 					<span class="col-md-5">Display:</span>
 					<div class="col-md-7" layout="row">
@@ -37,92 +41,6 @@
 						<dfx-ve-expression-editor></dfx-ve-expression-editor>
 					</div>
 				</li>
-			</ul>
-		</li>
-	</ul>
-	<ul>
-		<li>
-			<input class="dfx-ve-property-treeview-button" type="checkbox" id="item-3" />
-			<label for="item-3">Options</label>
-			<ul class="dfx-ve-property-treeview-content">
-				<li class="col-md-12">
-					<span class="col-md-5">Dynamic:</span>
-					<div class="col-md-7" layout="row">
-						<input class="col-md-12" type="text" ng-model="attributes.dynamicOptions.value" ng-change="overrideAttribute('dynamicOptions')" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue({'name':'dynamicOptions'})" ng-blur="cacheAttributeNewValue('dynamicOptions')"/>
-						<dfx-ve-expression-editor></dfx-ve-expression-editor>
-					</div>
-				</li>
-
-				<ul class="dfx-ve-property-treeview-content">
-					<li class="col-md-12">
-						<ul>
-							<li>
-								<input class="dfx-ve-property-treeview-button" type="checkbox" id="item-4" />
-								<label for="item-4">Static:</label>
-								<ul class="dfx-ve-property-treeview-content">
-									<ul class="dfx-ve-property-treeview-content">
-										<li class="col-md-12">
-											<span class="col-md-5">Sunbeam Labels:</span>
-											<div class="col-md-7" layout="row">
-												<input class="col-md-12" type="text" ng-model="attributes.options.labelSunbeamLayout" ng-change="overrideAttribute('options.labelSunbeamLayout')" ng-focus="cacheAttributeOldValue({'name':'options.labelSunbeamLayout'})" ng-blur="cacheAttributeNewValue('options.labelSunbeamLayout')" style="margin-left:-15px;"/>
-												<dfx-ve-expression-editor></dfx-ve-expression-editor>
-											</div>
-										</li>
-										<li class="col-md-12">
-											<span class="col-md-5">Label Threshold:</span>
-											<div class="col-md-7" layout="row">
-												<input class="col-md-12" type="text" ng-model="attributes.options.labelThreshold" ng-change="overrideAttribute('options.labelThreshold')" ng-focus="cacheAttributeOldValue({'name':'options.labelThreshold'})" ng-blur="cacheAttributeNewValue('options.labelThreshold')" style="margin-left:-15px;"/>
-												<dfx-ve-expression-editor></dfx-ve-expression-editor>
-											</div>
-										</li>
-										<li class="col-md-12">
-											<span class="col-md-5">Labels Outside:</span>
-											<div class="col-md-7" layout="row">
-												<input class="col-md-12" type="text" ng-model="attributes.options.donutLabelsOutside" ng-change="overrideAttribute('options.donutLabelsOutside')" ng-focus="cacheAttributeOldValue({'name':'options.donutLabelsOutside'})" ng-blur="cacheAttributeNewValue('options.donutLabelsOutside')" style="margin-left:-15px;"/>
-												<dfx-ve-expression-editor></dfx-ve-expression-editor>
-											</div>
-										</li>
-										<li class="col-md-12">
-											<span class="col-md-5">Show Labels:</span>
-											<div class="col-md-7" layout="row">
-												<input class="col-md-12" type="text" ng-model="attributes.options.showLabels" ng-change="overrideAttribute('options.showLabels')" ng-focus="cacheAttributeOldValue({'name':'options.showLabels'})" ng-blur="cacheAttributeNewValue('options.showLabels')" style="margin-left:-15px;"/>
-												<dfx-ve-expression-editor></dfx-ve-expression-editor>
-											</div>
-										</li>
-										<li class="col-md-12">
-											<span class="col-md-5">Show Legend:</span>
-											<div class="col-md-7" layout="row">
-												<input class="col-md-12" type="text" ng-model="attributes.options.showLegend" ng-change="overrideAttribute('options.showLegend')" ng-focus="cacheAttributeOldValue({'name':'options.showLegend'})" ng-blur="cacheAttributeNewValue('options.showLegend')" style="margin-left:-15px;"/>
-												<dfx-ve-expression-editor></dfx-ve-expression-editor>
-											</div>
-										</li>
-										<li class="col-md-12">
-											<span class="col-md-5">Donut Ratio:</span>
-											<div class="col-md-7" layout="row">
-												<input class="col-md-12" type="text" ng-model="attributes.options.donutRatio" ng-change="overrideAttribute('options.donutRatio')" ng-focus="cacheAttributeOldValue({'name':'options.donutRatio'})" ng-blur="cacheAttributeNewValue('options.donutRatio')" style="margin-left:-15px;"/>
-												<dfx-ve-expression-editor></dfx-ve-expression-editor>
-											</div>
-										</li>
-										<li class="col-md-12">
-											<span class="col-md-5">Corner Radius:</span>
-											<div class="col-md-7" layout="row">
-												<input class="col-md-12" type="text" ng-model="attributes.options.cornerRadius" ng-change="overrideAttribute('options.cornerRadius')" ng-focus="cacheAttributeOldValue({'name':'options.cornerRadius'})" ng-blur="cacheAttributeNewValue('options.cornerRadius')" style="margin-left:-15px;"/>
-												<dfx-ve-expression-editor></dfx-ve-expression-editor>
-											</div>
-										</li>
-										<li class="col-md-12">
-											<span class="col-md-5">Grow On Hover:</span>
-											<div class="col-md-7" layout="row">
-												<input class="col-md-12" type="text" ng-model="attributes.options.growOnHover" ng-change="overrideAttribute('options.growOnHover')" ng-focus="cacheAttributeOldValue({'name':'options.growOnHover'})" ng-blur="cacheAttributeNewValue('options.growOnHover')" style="margin-left:-15px;"/>
-												<dfx-ve-expression-editor></dfx-ve-expression-editor>
-											</div>
-										</li>
-									</ul>
-								</ul>
-							</li>
-						</ul>
-					</li>
-				</ul>
 			</ul>
 		</li>
 	</ul>

@@ -27,6 +27,9 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", dfx-ve-ctr
                                 md-button(ng-click="changeViewMode('source')")
                                     ng-md-icon(icon="developer_mode")
                                     span(style="padding-left:10px") Source
+                span(style="font-size: 12px;margin-left: 1px;background: #4a4a4a;line-height: 48px;color: #fff;padding: 0 8px;border-left: 1px #6b6a6a solid;border-right: 1px #6b6a6a solid;", ng-show="design_visible")
+                    span(style="margin-right:5px") Settings:
+                    img#dfx-ve-workspace-menu-icon(src="/images/vb/icons/preview_global.png", ng-show="design_visible", class="dfx-ve-toolbar-icon", ng-click="loadViewSettingsMenu($event)", title="View Settings")
                 span(style="font-size: 12px;background: #4a4a4a;line-height: 48px;color: #fff;padding: 0 8px;border-left: 1px #6b6a6a solid;border-right: 1px #6b6a6a solid;", ng-show="design_visible")
                     span(style="margin-right:5px") Edit:
                     img(src="/images/vb/icons/edit_cut.png", ng-show="design_visible", class="dfx-ve-toolbar-icon animated", ng-click="viewEditorCut($event)", title="cut")
@@ -102,9 +105,9 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", dfx-ve-ctr
                         div(style="color:#fff;display: inline-block;margin-left: 10px;", ng-if="preview_wait_icon_visible === true")
                             md-icon.fa.fa-spinner.fa-pulse(style="font-size: 24px;")
                             span(style="padding-left:10px") compiling
-                    label.pull-right(style="font-size:12px;background:#8731AB;padding: 2px 4px;color:#fff;margin-top:4px;margin-right:10px;border-radius:8px;cursor:pointer", ng-if="view_platform=='mobile'", ng-click="changeDeviceOrientation()") {{design_device_orientation}}
-                    md-menu.pull-right(style="margin-top:-3px", ng-if="view_platform=='mobile'")
-                        label(md-menu-origin, style="font-size:12px;background:#14BD39;padding: 2px 4px;color:#fff;margin-top:4px;margin-right:10px;border-radius:8px;cursor:pointer", ng-click="$mdOpenMenu($event)") {{design_selected_device.label}}
+                    label.pull-right(style="font-size:12px;background:#8731AB;padding: 2px 4px;color:#fff;margin-top:14px;margin-right:10px;border-radius:8px;cursor:pointer", ng-if="view_platform=='mobile'", ng-click="changeDeviceOrientation()") {{design_device_orientation}}
+                    md-menu.pull-right(style="margin-top:-3px", md-offset="0 32", ng-if="view_platform=='mobile'")
+                        label(md-menu-origin, style="font-size:12px;background:#14BD39;padding: 2px 4px;color:#fff;margin-top:16px;margin-right:10px;border-radius:8px;cursor:pointer", ng-click="$mdOpenMenu($event)") {{design_selected_device.label}}
                         md-menu-content(width="6")
                             md-menu-item(ng-repeat="device in design_devices")
                                 md-button(ng-click="changeDevice($index)") {{device.name}}
@@ -121,7 +124,14 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", dfx-ve-ctr
                             a#dfx-ve-property-title-selected-renderer-text(href="#") Renderer
     div(layout="column", flex, ng-show="!script_visible && !style_visible && !source_visible", style="height:100%")
         section(layout="row", flex="100")
-            md-sidenav#dfx-ve-sidenav-left.md-sidenav-left.md-whiteframe-z2(md-component-id="left", md-is-locked-open="$mdMedia('gt-md')", ng-show="palette_visible")
+            md-sidenav#dfx-ve-sidenav-left.md-sidenav-left.md-whiteframe-z2(md-component-id="left", md-is-locked-open="$mdMedia('gt-md')", style="overflow-y: hidden;", ng-show="palette_visible")
+                div#dfx-ve-sidenav-left-header(class = "dfx-ve-floating-panel-header dfx-ve-hidden-element") &nbsp;
+                div.dfx-ve-floating-panel-detacher(ng-click="detachOrAttachPanel('dfx-ve-sidenav-left')")
+                    md-icon(class="fa fa-thumb-tack", style="color: #fff;")
+                div.dfx-ve-floating-panel-collapser(ng-click="minimizeOrMaximizePanel('dfx-ve-sidenav-left')")
+                    md-icon#dfx-ve-sidenav-left-collapser(class="fa fa-minus-square-o", style="color: #fff;")
+                div.dfx-ve-floating-panel-closer(ng-click="closePanel('dfx-ve-sidenav-left')")
+                    md-icon(class="fa fa-close", style="color: #fff;", aria-label="Close Panel")
                 md-content#dfx-ve-sidenav-left-content(layout-padding show-gt-md)
                     div#dfx_visual_editor_gc_palette_content.dfx-ve-palette-treeview.hover
                         ul(style="border-top: 1px #6b6a6a solid")
@@ -167,11 +177,20 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", dfx-ve-ctr
                                 ul.dfx-ve-palette-treeview-content(gc-cat="custom", style="margin-bottom:5px")
             md-content#dfx-ve-main-content(flex="100", ng-click="unselectComponent()")
                 md-tabs.md-dynamic-height(layout="column", md-selected="view_card_select_index")
-                    md-tab(ng-repeat="card in view_cards", label="{{card.name}}")
-                        md-content(style="padding:10px;background-color:#efefef", layout="row", layout-align="center start")
+                    md-tab(ng-repeat="card in view_cards", md-on-select="setWorkspaceSize()", label="{{card.name}}")
+                        md-content.dfx-ve-main-content-tab-content(style="padding:10px;background-color:#efefef;", layout="row", layout-align="center start")
                             div#dfx-ve-platform(layout="column", style="height:100%;", dfx-ve-platform)
                                 div(id="dfx_visual_editor_workspace_{{card.name}}", dfx-card="{{card.name}}", dfx-ve-workspace, style="overflow:auto", flex="100", layout="column")
-            md-sidenav#dfx-ve-sidenav-right.md-sidenav-right.md-whiteframe-z2(md-component-id="right", md-is-locked-open="$mdMedia('gt-md')", ng-show="property_visible")
+                div.dfx-ve-ruler-vertical.dfx-ve-ruler.dfx-ve-hidden-element
+                div.dfx-ve-ruler-horizontal.dfx-ve-ruler.dfx-ve-hidden-element
+            md-sidenav#dfx-ve-sidenav-right.md-sidenav-right.md-whiteframe-z2(md-component-id="right", md-is-locked-open="$mdMedia('gt-md')", style="overflow-y: hidden;", ng-show="property_visible")
+                div#dfx-ve-sidenav-right-header(class = "dfx-ve-floating-panel-header dfx-ve-hidden-element") Properties
+                div.dfx-ve-floating-panel-detacher(ng-click="detachOrAttachPanel('dfx-ve-sidenav-right')")
+                    md-icon(class="fa fa-thumb-tack", style="color: #fff;")
+                div.dfx-ve-floating-panel-collapser(ng-click="minimizeOrMaximizePanel('dfx-ve-sidenav-right')")
+                    md-icon#dfx-ve-sidenav-right-collapser(class="fa fa-minus-square-o", style="color: #fff;")
+                div.dfx-ve-floating-panel-closer(ng-click="closePanel('dfx-ve-sidenav-right')")
+                    md-icon(class="fa fa-close", style="color: #fff;")
                 md-content#dfx-ve-sidenav-right-content(show-gt-md)
                     div(ng-show="gc_selected==null")
                       div.dfx-ve-property-treeview.hover
@@ -181,7 +200,6 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", dfx-ve-ctr
                                 label(for="view-properties") View Properties
                                 ul.dfx-ve-property-treeview-content
                                     li.col-md-12
-                                        span.col-md-4(style="margin-top: 3px")
                                         a(href="#", ng-click="exportView()", style="text-decoration: none!important; color: white") 
                                             span
                                                 ng-md-icon(icon="archive", size="18", style="margin-top: -3px")

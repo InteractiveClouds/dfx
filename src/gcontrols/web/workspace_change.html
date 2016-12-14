@@ -1,0 +1,30 @@
+<md-dialog aria-label="Change Workspace Width"  ng-cloak>
+	<form name="frmChangeWorkspace" ng-submit="changeWorkspaceConfirm('ok')">
+		<md-toolbar>
+			<div class="md-toolbar-tools">
+				<h2>Change Canvas Size</h2>
+			</div>
+	    </md-toolbar>
+	    <md-dialog-content>
+			<div class="md-dialog-content">
+				<div layout-gt-sm="row">
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Canvas width</label>
+						<input ng-model="workspace.width" md-autofocus>
+					</md-input-container>
+				</div>
+				<div layout-gt-sm="row">
+					<md-input-container class="md-block" flex-gt-sm>
+						<label>Canvas height</label>
+						<input ng-model="workspace.height">
+					</md-input-container>
+				</div>
+			</div>
+		</md-dialog-content>
+		<md-dialog-actions layout="row">
+			<span flex></span>
+			<md-button type="submit">OK</md-button>
+			<md-button ng-click="changeWorkspaceCancel()" style="margin-right:20px;">Cancel</md-button>
+		</md-dialog-actions>
+	</form>
+</md-dialog>
