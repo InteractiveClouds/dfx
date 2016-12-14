@@ -4523,6 +4523,12 @@ dfxGCC.directive('dfxGccWebTabs', ['$timeout', '$compile', function($timeout, $c
                     }
                 };
                 flexTabInRunTime();
+
+                var addContentScrolling = function() {
+                    var $md_tab_content_wrapper = $('#' + scope.component_id + ' > div > md-content > div > md-tabs > md-tabs-content-wrapper');
+                    $md_tab_content_wrapper.css('overflow', 'auto');
+                };
+                addContentScrolling();
             });
         }
     }
