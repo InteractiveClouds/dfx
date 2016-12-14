@@ -652,7 +652,7 @@ dfxGCC.directive('dfxGccWebDatepicker', ['$mdpDatePicker', '$mdpTimePicker', '$c
             var component = scope.$parent.getComponent(element);
             basectrl.init(scope, element, component, attrs, 'datepicker').then(function() {
                 scope.dfx_empty_binding_date = {'value': ''};
-                if(scope.attributes.bindingExpression.value === "") scope.dfx_empty_binding_date.value = new Date();
+                if(scope.attributes.bindingExpression.value === "" || scope.attributes.bindingExpression.value === 'new Date()') scope.dfx_empty_binding_date.value = new Date();
                 if(typeof scope.attributes.bindingDate.value === 'string' && scope.attributes.bindingDate.value.indexOf('$parent_scope.') > -1) scope.attributes.bindingDate.value = scope.attributes.bindingDate.value.replace('$parent_scope.', '');
                 if(scope.attributes.bindingExpression.value === ""){
                     scope.attributes.bindingDate.value = new Date();

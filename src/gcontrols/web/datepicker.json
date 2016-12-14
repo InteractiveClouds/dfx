@@ -3,7 +3,7 @@
     "formName":           { "value": "" },
     "name":               { "value": "mdpDatetime1" },
     "mode":               { "value": "date" },
-    "bindingExpression":  { "value": "new Date()" },
+    "bindingExpression":  { "value": "" },
     "bindingDate":        { "value": "" },
     "designDate":         { "value": "" },
     "designTime":         { "value": "" },
