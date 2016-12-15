@@ -1604,6 +1604,9 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     $scope.reinitComponentWithTemplate = function(template_name, gc_id) {
         var component_id = gc_id || $scope.gc_selected.id;
         var view_definition = DfxVisualBuilder.movingComponentHelper.getViewDefinition();
+        if (view_definition.definition[$scope.view_card_selected][0].children == 0) {
+            view_definition = DfxVisualBuilder.movingComponentHelper.getViewDefinition();
+        }
         var gc_component_definition = DfxVisualBuilder.getComponentDefinition(component_id, view_definition.definition);
         gc_component_definition.attributes.template = {'value': template_name, 'status': 'overridden'};
 
