@@ -1604,16 +1604,16 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     $scope.reinitComponentWithTemplate = function(template_name, gc_id) {
         var component_id = gc_id || $scope.gc_selected.id;
         var view_definition = DfxVisualBuilder.movingComponentHelper.getViewDefinition();
-        if (view_definition.definition[$scope.view_card_selected][0].children == 0) {
-            view_definition = DfxVisualBuilder.movingComponentHelper.getViewDefinition();
-        }
-        var gc_component_definition = DfxVisualBuilder.getComponentDefinition(component_id, view_definition.definition);
-        gc_component_definition.attributes.template = {'value': template_name, 'status': 'overridden'};
+        //TODO: refactor ASAP!
+        $timeout(function () {
+            var gc_component_definition = DfxVisualBuilder.getComponentDefinition(component_id, view_definition.definition);
+            gc_component_definition.attributes.template = {'value': template_name, 'status': 'overridden'};
 
-        var reload_property_panel = gc_id ? false : true;
-        var gc_element = $('#' + component_id);
-        var gc_element_scope = angular.element(gc_element).scope();
-        gc_element_scope.reinitAttributes(gc_component_definition, reload_property_panel);
+            var reload_property_panel = gc_id ? false : true;
+            var gc_element = $('#' + component_id);
+            var gc_element_scope = angular.element(gc_element).scope();
+            gc_element_scope.reinitAttributes(gc_component_definition, reload_property_panel);
+        }, 10);
     };
 
     $scope.loadGcTemplateLockingMenu = function($event) {
