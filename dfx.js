@@ -280,6 +280,7 @@ out.start = function () {
 
                         require('./lib/authRequest_mod').oAuth2AccessTokens.init({ storage: _storage });
                         require('./lib/dfx_resources').api.init({ storage: _storage });
+                        require('./lib/dfx_deploy').init({ storage: _storage });
 
                         var userLib = tenants.user;
                         require('./lib/dfx_user_definition').api.init({ storage: _storage, userLib: userLib });
