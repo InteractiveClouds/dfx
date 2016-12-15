@@ -865,6 +865,34 @@ button.dfx-core-gc-rating-button {
     text-shadow: .05em .05em #aaa;
 }
 
+/* GC Datetime */
+.dfx-core-gc-datetime {
+    padding: 0px 0px 0px 5px;
+}
+.dfx-core-gc-datetime-label {
+    margin: 0;
+}
+.dfx-core-gc-datetime-picker.align-value-left input {
+    text-align: left;
+}
+.dfx-core-gc-datetime-picker.align-value-center input {
+    text-align: center;
+}
+.dfx-core-gc-datetime-picker.align-value-right input {
+    text-align: right;
+}
+.dfx-core-gc-datetime md-input-container {
+    width: 100%;
+}
+.dfx-core-gc-datetime .md-button.md-icon-button {
+    width: 24px;
+    min-width: 24px;
+    padding: 0;
+    min-height: 24px;
+    height: 24px;
+    margin: 31px 0 0;
+}
+
 /* GC Tabs */
 div[dfx-gcc-web-tabs] > div > md-content > div > md-tabs > md-tabs-content-wrapper {
     overflow: auto!important;
