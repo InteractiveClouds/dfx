@@ -1604,16 +1604,13 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     $scope.reinitComponentWithTemplate = function(template_name, gc_id) {
         var component_id = gc_id || $scope.gc_selected.id;
         var view_definition = DfxVisualBuilder.movingComponentHelper.getViewDefinition();
-        //TODO: refactor ASAP!
-        $timeout(function () {
-            var gc_component_definition = DfxVisualBuilder.getComponentDefinition(component_id, view_definition.definition);
-            gc_component_definition.attributes.template = {'value': template_name, 'status': 'overridden'};
+        var gc_component_definition = DfxVisualBuilder.getComponentDefinition(component_id, view_definition.definition);
+        gc_component_definition.attributes.template = {'value': template_name, 'status': 'overridden'};
 
-            var reload_property_panel = gc_id ? false : true;
-            var gc_element = $('#' + component_id);
-            var gc_element_scope = angular.element(gc_element).scope();
-            gc_element_scope.reinitAttributes(gc_component_definition, reload_property_panel);
-        }, 100);
+        var reload_property_panel = gc_id ? false : true;
+        var gc_element = $('#' + component_id);
+        var gc_element_scope = angular.element(gc_element).scope();
+        gc_element_scope.reinitAttributes(gc_component_definition, reload_property_panel);
     };
 
     $scope.loadGcTemplateLockingMenu = function($event) {
@@ -1667,7 +1664,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     $scope.loadGcTemplates();
 }]);
 
-dfxViewEditorApp.directive('dfxGcWebDroppable', [ '$timeout', function($timeout) {
+dfxViewEditorApp.directive('dfxGcWebDroppable', [ '$timeout', '$rootScope', function($timeout, $rootScope) {
     return {
         restrict: 'A',
         controller: function($scope, $element, $attrs) {
@@ -1696,9 +1693,11 @@ dfxViewEditorApp.directive('dfxGcWebDroppable', [ '$timeout', function($timeout)
                             $(ui.item).replaceWith(gc.fragment);
 
                             if (gc_template_name) {
-                                $timeout(function() {
+                                // Wait until dfxGcWebBase.initAttributes() completes its reading from DB in getGCDefaultAttributes()
+                                var unregister = $rootScope.$on(gc_id + '_attributes_loaded', function(event, attributes) {
                                     view_editor_scope.reinitComponentWithTemplate(gc_template_name, gc_id);
-                                }, 100);//wait until dfxGcWebBase.initAttributes() completes that reads getGCDefaultAttributes() from DB
+                                    unregister();
+                                });
                             }
                         } else {
                             // Move component
