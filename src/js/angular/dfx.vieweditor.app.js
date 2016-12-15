@@ -1613,7 +1613,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
             var gc_element = $('#' + component_id);
             var gc_element_scope = angular.element(gc_element).scope();
             gc_element_scope.reinitAttributes(gc_component_definition, reload_property_panel);
-        }, 10);
+        }, 100);
     };
 
     $scope.loadGcTemplateLockingMenu = function($event) {
