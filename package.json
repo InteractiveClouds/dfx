@@ -57,6 +57,7 @@
     "graceful-fs": "^3.0.7",
     "jade": "1.9.2",
     "lodash": "*",
+    "dfx_mdPickers": "https://github.com/InteractiveClouds/mdPickers.git",
     "mime": "^1.2.11",
     "mkdirp": "^0.5.1",
     "mongodb": "2.2.10",
