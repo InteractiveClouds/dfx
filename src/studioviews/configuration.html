@@ -550,6 +550,11 @@
             <div ng-include="'studioviews/users_and_roles.html'"></div>
         </md-content>
     </md-tab>
+    <md-tab label="Data Dictionary" md-on-select="defineSettings('data_dictionary')">
+        <md-content class="md-padding" ng-controller="dfx_studio_data_dictionary_controller">
+            <div ng-include="'studioviews/data_dictionary.html'"></div>
+        </md-content>
+    </md-tab>
     <md-tab label="Personalization" md-on-select="configFunction('personalization')">
         <md-content class="md-padding">
             <h1 class="md-display-2">Personalization</h1>

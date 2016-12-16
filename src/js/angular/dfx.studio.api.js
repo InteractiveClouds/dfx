@@ -706,6 +706,17 @@ dfxStudioApi.factory('dfxApplications', [ '$http', '$q', function($http, $q) {
         return deferred.promise;
     }
 
+    api_applications.getDataDictionary = function(name, appname){
+        var deferred = $q.defer();
+        $http({
+            url: '/studio/data_dictionary/get/' + name + '/' + appname,
+            method: "GET"
+        }).then(function successCallback(response) {
+            deferred.resolve(response);
+        });
+        return deferred.promise;
+    }
+
     api_applications.getResources = function(appname){
         var deferred = $q.defer();
         $http({
