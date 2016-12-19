@@ -25,9 +25,9 @@
   },
   "dependencies": {
     "adm-zip": "^0.4.7",
-    "angular": "^1.4.7",
-    "angular-animate": "^1.4.7",
-    "angular-aria": "^1.4.7",
+    "angular": "1.5.9",
+    "angular-animate": "1.5.8",
+    "angular-aria": "1.5.8",
     "angular-jk-carousel": "^0.1.6",
     "angular-material": "^1.1.0",
     "angular-material-icons": "^0.7.0",
