@@ -1,6 +1,6 @@
 <md-tabs md-dynamic-height md-border-bottom>
     <md-tab label="Environments">
-        <form ng-submit="saveAppEnvironments()">
+        <form ng-submit="saveDataDictionary()">
             <md-content class="md-padding">                
                 <div layout="row" class="layout-align-end">
                     <md-button class="md-raised" ng-click="openEnvironmentDialog()" aria-label="Studio button">
@@ -51,15 +51,34 @@
                                     </div>
                                 </div>                            
                             </md-toolbar>
-                            <div ng-repeat="env_var in env_vars_list track by $index" style="display: flex; min-height: 32px;">
+                            <div ng-repeat="env_var in env_vars_list track by $index" ng-init="env_var_index = 'row' + $index" style="display: flex; min-height: 32px;">
                                 <div style="display: inline-flex; align-items: center; width: 200px;background: #383838; ">
-                                    <div style="display: inline-flex; width: 200px; padding: 0 8px; text-transform: capitalize; justify-content: space-between; color: rgb(33,150,243);">
-                                        <h6>{{env_var.name}}</h6>                                        
+                                    <div style="display: inline-flex; width: 200px; padding: 0 8px; justify-content: space-between; color: rgb(33,150,243);">
+                                        <span ng-if="!hasChildren(env_var.data)" style="padding-left: 14px;position: relative">
+                                            <div>{{env_var.name}}</div>
+                                        </span>
+                                        <span ng-if="hasChildren(env_var.data)" style="padding-left: 14px;position: relative">
+                                            <i class="fa fa-minus" ng-click="toggleRow($event, env_var_index)" style="position: absolute; left: 0px; top: 5px; font-size: 12px; outline: none; cursor:pointer"></i>
+                                            <div style="padding: 0 0 5px 0">{{env_var.name}}</div>
+                                            <div style="padding: 0 0 0 14px" id="{{env_var_index}}">
+                                                <div style="padding: 0 0 5px 0" ng-repeat="(key, value) in env_var.data">{{key}}</div> 
+                                            </div>
+                                        </span>
                                     </div>
                                 </div>
                                 <div style="display: inline-flex;width:100%;overflow:auto;">
                                     <div ng-repeat="environment in environments_list track by $index" style="display: inline-flex; align-items: center; flex-grow: 1; flex-basis: 0; padding: 0 8px;max-width: 200px;" ng-style="{background: $even ? 'rgba(0,0,0,0.07)' : '', width:100/environments_list.length+'%' }">
-                                        <span>{{environment.data[env_var.name]}}</span>                                       
+                                        <!-- <span>{{environment.data[env_var.name].description ? environment.data[env_var.name].description : environment.data[env_var.name]}}</span>                                -->
+
+                                        <span ng-if="!environment.data[env_var.name].description">
+                                            <span>{{environment.data[env_var.name]}}</span>
+                                        </span>
+                                        <div ng-if="environment.data[env_var.name].description">
+                                            <div style="padding: 0 0 5px 0">{{environment.data[env_var.name].description}}</div>
+                                            <span class="{{env_var_index}}">
+                                                <div style="padding: 0 0 5px 0" ng-if="key !== 'description'" ng-repeat="(key, value) in environment.data[env_var.name]">{{value}}</div> 
+                                            </span>
+                                        </div>        
                                     </div>
                                 </div>
                             </div>

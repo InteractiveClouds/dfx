@@ -2057,9 +2057,8 @@ dfxStudioApp.controller("dfx_studio_configuration_controller", [ '$rootScope', '
     $scope.api_sources = {};
     $scope.isSidenavOpen = false;
     $scope.configurations = ['general','devops', 'api_sources', 'resources','users','data_dictionary','personalization','deployment'];
-    if(!$scope.app_name){
-        $scope.app_name = $routeParams.appname;
-    }
+    if(!$scope.app_name) $scope.app_name = $routeParams.appname;
+    $scope.app_data = {"app_name": $scope.app_name };
 
     $scope.$watch('$parent.settings', function(newVal){
         if($scope.configurations.indexOf(newVal) !== -1){
@@ -2108,14 +2107,10 @@ dfxStudioApp.controller("dfx_studio_configuration_controller", [ '$rootScope', '
             }
         }
         if(tab==='data_dictionary'){
-            var bodyHeight = parseFloat($("body").css('height'));
-            $timeout(function() {                
-                $('#dfx-app-data-dictionary-json').css('height', bodyHeight-220);
-                // $('#dfx-app-data-dictionary-json').css('height', bodyHeight-338);
-                // $('#dfx-app-data-dictionary-json').css('height', bodyHeight-338);
-                // $('#data-dictionary-structure').css('max-height', bodyHeight-275);
-                $scope.initAppDataDictionary();
-            }, 0);
+            $scope.dictionary_scope.initAppDataDictionary();            
+        }
+        if(tab==='devops'){
+            $scope.devops.getAppEnvironments($scope.app_data, 'envs_init');
         }
     };
 
@@ -2401,9 +2396,9 @@ dfxStudioApp.controller("dfx_studio_devops_controller", [ '$scope', '$q', '$mdDi
     $scope.getAppEnvironments = function(data, envs_init){
         dfxApplications.getEnvironmentsList( data ).then(function(response){
             $scope.environments_list = response.data.data;
-            $timeout(function() {
-                console.log('$scope.environments_list', $scope.environments_list);
-            }, 0);
+
+            console.log('------------$scope.environments_list', $scope.environments_list);
+            console.log('------------envs_init', envs_init);
             if(!envs_init) $scope.generateAppEnvironments();
         });
     }
@@ -2419,7 +2414,8 @@ dfxStudioApp.controller("dfx_studio_devops_controller", [ '$scope', '$q', '$mdDi
             delete to_generation[i]._id;
             delete to_generation[i].app_name;
         }
-        app_environments.content = $scope.environments_list;
+        // app_environments.content = $scope.environments_list;
+        app_environments.content = to_generation;
 
         dfxApplications.generateEnvironments(app_environments).then(function(){
             if($scope.environments_list.length > 0) {
@@ -2452,7 +2448,7 @@ dfxStudioApp.controller("dfx_studio_devops_controller", [ '$scope', '$q', '$mdDi
 
     $scope.saveAppEnvironments = function(){
         $scope.saveAllEnvironments().then(function(){
-            $scope.getAppEnvVars(app_data);
+            $scope.getAppEnvVars(app_data, 'envs_init');
         });
     }
 
@@ -2471,6 +2467,7 @@ dfxStudioApp.controller("dfx_studio_devops_controller", [ '$scope', '$q', '$mdDi
     }
 
     $scope.openEnvironmentDialog = function(index, environment, action){
+        console.log('environment', environment);
         if(!environment){
             $scope.environment_mode = 'Add';            
         }else{
@@ -2508,8 +2505,15 @@ dfxStudioApp.controller("dfx_studio_devops_controller", [ '$scope', '$q', '$mdDi
                     if(!$scope.not_valid_environment_name){
                         var data = {};
                         for (var i = 0; i < $scope.env_vars_list.length; i++) {
-                            data[$scope.env_vars_list[i].name] = '';
+                            // console.log('$scope.env_vars_list[i]', $scope.env_vars_list[i]);
+                            if(angular.equals({}, $scope.env_vars_list[i].data) || $scope.env_vars_list[i].data === []) {
+                                data[$scope.env_vars_list[i].name] = '';
+                            } else {
+                                data[$scope.env_vars_list[i].name] = $scope.env_vars_list[i].data;
+                                if(!data[$scope.env_vars_list[i].name].description) data[$scope.env_vars_list[i].name].description = 'Item description';
+                            }
                         };
+                        // console.log('data', data);
                         if(environment){
                             if($scope.environment_mode === 'Edit'){
                                 var data = {                        
@@ -2569,12 +2573,28 @@ dfxStudioApp.controller("dfx_studio_devops_controller", [ '$scope', '$q', '$mdDi
     };
 
     /* env vars functions */
+
+    $scope.hasChildren = function(tree_data){
+        return (angular.equals({}, tree_data) || tree_data === []) ? false : true;
+    }
+
+    $scope.toggleRow = function(ev, index){
+        console.log('index', index);
+        var trigger = $(ev.target);
+        if(trigger.hasClass('fa-minus')){
+            trigger.removeClass('fa-minus').addClass('fa-plus');
+            $('#' + index + ', ' + '.' + index).slideUp(0);
+        }else{
+            trigger.removeClass('fa-plus').addClass('fa-minus');
+            $('#' + index + ', ' + '.' + index).slideDown(0);
+        }
+    }
+
     $scope.getAppEnvVars = function(data, envs_init){        
         dfxApplications.getEnvironmentVariablesList( data ).then(function(response){
             $scope.env_vars_list = response.data.data;            
-            $timeout(function() {
-                console.log('$scope.env_vars_list', $scope.env_vars_list);
-            }, 0);
+            console.log('$scope.env_vars_list', $scope.env_vars_list);
+
             $scope.getAppEnvironments(data, envs_init);
         });
     }
@@ -2718,19 +2738,10 @@ dfxStudioApp.controller("dfx_studio_devops_controller", [ '$scope', '$q', '$mdDi
         return $q.all(promises);
     }
 
-    $scope.deleteVariable = function(env_var){
-        var data = { "_id": env_var._id };
-        
-        $scope.deleteVarFromEnvironments(env_var.name).then(function(){
-            dfxApplications.deleteEnvironmentVariable(data).then(function(){
-                dfxMessaging.showMessage('Environment variable has been successfully deleted');
-                $scope.getAppEnvVars(app_data);
-            });
-        });
-    };
+    
 
     $scope.openEnvVarEditor = function(index, environment_data){
-        console.log('environment_data', environment_data);
+        console.log('environment_data', environment_data, index);
         $scope.envVarJsonEditor = null;
         $mdDialog.show({
             scope: $scope,
@@ -2744,10 +2755,11 @@ dfxStudioApp.controller("dfx_studio_devops_controller", [ '$scope', '$q', '$mdDi
                     options = { mode: 'form', history: true },
                     data = environment_data;
                 $scope.envVarJsonEditor = new JSONEditor(container, options, data);
+                $scope.envVarJsonEditor.expandAll();
                 
                 $scope.saveEnvVarContent = function(){
                     environment_data = $scope.envVarJsonEditor.get();
-                    console.log('environment_data', environment_data);
+                    $scope.environments_list[index].data = environment_data;
                     $scope.closeDialog();
                 }
                 
@@ -6915,59 +6927,348 @@ dfxStudioApp.controller("dfx_studio_api_so_category_controller", [ '$scope', '$r
     }
 }]);
 
-dfxStudioApp.controller("dfx_studio_data_dictionary_controller", [ '$scope', '$timeout', 'dfxApplications', 'dfxMessaging', function($scope, $timeout, dfxApplications, dfxMessaging) {
-    $scope = $scope.$parent;
+dfxStudioApp.controller("dfx_studio_data_dictionary_controller", [ '$scope', '$q', '$timeout', 'dfxApplications', 'dfxMessaging', function($scope, $q, $timeout, dfxApplications, dfxMessaging) {
+    var parentScope = $scope.$parent,
+        app_data = { "app_name": $scope.app_name };
+    parentScope.dictionary_scope = $scope;
     $scope.data_dictionary_content = {};
     $scope.data_dictionary_name = 'app_data_dictionary';
-    $scope.invalid_data_dictionary = false;
+    $scope.disable_data_dictionary = false;
+    $scope.dictionary_env_vars = [];
+    $scope.dictionary_environments = [];
+    $scope.environment_variables = [];
+    $scope.env_vars_to_remove = [];
     
     $scope.initAppDataDictionary = function(){
         dfxApplications.getDataDictionary($scope.data_dictionary_name, $scope.app_name).then(function(response){
 
-            $scope.data_dictionary_content = JSON.parse(response.data.data.content);
-            if(!$scope.data_dictionary_content.hasOwnProperty('ENV')) $scope.data_dictionary_content.ENV = {};   
+            $scope.data_dictionary_content = response.data.data.content ? JSON.parse(response.data.data.content) : {};
+            if(!$scope.data_dictionary_content.hasOwnProperty('ENV')) $scope.data_dictionary_content.ENV = {};  
 
-            console.log('DD content', $scope.data_dictionary_content);
+            for(var env in $scope.data_dictionary_content.ENV){
+                console.log('env', env);
+                if(typeof $scope.data_dictionary_content.ENV[env] !== 'object') $scope.data_dictionary_content.ENV[env] = {};
+            }
 
-            var container = document.getElementById('dfx-app-data-dictionary-json'),
-                options = { 
-                    mode: 'tree', 
-                    modes: ['tree','form','code','text','view'], 
-                    history: true,
-                    onChange: function(){
-                        $scope.validateDataDictionary();
-                    },
-                    onError: function(err){
-                        // console.log('err', err);
-                    }
-                };
+            dfxApplications.getEnvironmentVariablesList( app_data ).then(function(response){
+                $scope.environment_variables = response.data.data;            
+                console.log('init dictionary $scope.environment_variables', $scope.environment_variables);
+                angular.forEach($scope.environment_variables, function (obj, index) {                    
+                    $scope.data_dictionary_content.ENV[obj.name]._id = obj._id;
+                    if(obj.description) $scope.data_dictionary_content.ENV[obj.name].description = obj.description;
+                });
+                console.log('$scope.dictionary_env_vars', $scope.dictionary_env_vars);
+                
+                console.log('DD content', $scope.data_dictionary_content);
 
-            if(!$scope.dfx_data_dictionary_json) $scope.dfx_data_dictionary_json = new JSONEditor(container, options, $scope.data_dictionary_content);
-            
-        }, function(){
-            dfxMessaging.showWarning("Can\'t get app data dictionary");
-        });        
+                var bodyHeight = parseFloat($("body").css('height')),
+                    container = document.getElementById('dfx-app-data-dictionary-json'),
+                    options = { 
+                        mode: 'tree', 
+                        // modes: ['tree','form','code','text','view'], 
+                        history: true,
+                        onEditable: function (node) {
+                            switch (node.field) {
+                                case 'ENV': 
+                                    return false;
+                                case '_id': 
+                                    return false;                                
+                                default:
+                                    return true;
+                            }
+                        },
+                        onChange: function(){
+                            $scope.validateDataDictionary();
+                        },
+                        // onModeChange: function(n, o){
+                        //     if(n !== 'code' && n !== 'text') $scope.dfx_data_dictionary_json.expandAll();
+                        // },
+                        onError: function(err){}
+                    };
+
+                if(!$scope.dfx_data_dictionary_json){
+                    $scope.dfx_data_dictionary_json = new JSONEditor(container, options, $scope.data_dictionary_content);    
+                } else{
+                    $scope.dfx_data_dictionary_json.set($scope.data_dictionary_content);
+                }
+
+                $scope.dfx_data_dictionary_json.expandAll();
+                $scope.disable_data_dictionary = false;
+                $('#dfx-app-data-dictionary-json').css('height', bodyHeight-220);
+            }, function(){
+                dfxMessaging.showWarning("Can\'t get app data dictionary");
+            });        
+        });
     }
 
-    $scope.validateDataDictionary = function(){
-        var dictionary_editor_data = $scope.dfx_data_dictionary_json.get();
+    $scope.getDictionaryEnvVars = function(){
+        $scope.data_dictionary_content = $scope.dfx_data_dictionary_json.get();
+        $scope.dictionary_env_vars = [];
 
-        if(!dictionary_editor_data.hasOwnProperty('ENV')) {
-            $scope.invalid_data_dictionary = true;
-            dfxMessaging.showWarning("Data Dictionary property ENV can't be renamed or removed");
-        }else{
-            $scope.invalid_data_dictionary = false;
+        if(!$scope.disable_data_dictionary){
+            for (var env_var in $scope.data_dictionary_content.ENV ) {
+                $scope.dictionary_env_vars.push(env_var);
+            }
         }
     }
 
-    $scope.saveDataDictionary = function(){        
-        var data = {
-            name      : $scope.data_dictionary_name,
-            content   : JSON.stringify($scope.dfx_data_dictionary_json.get())
+    $scope.deleteVariable = function(env_var){
+        var data = { "_id": env_var._id };
+        
+        dfxApplications.deleteEnvironmentVariable(data).then(function(){
+            dfxMessaging.showMessage('Environment variable has been successfully deleted');
+        });
+    };
+
+    $scope.validateDataDictionary = function(){
+        var dictionary = $scope.dfx_data_dictionary_json.get();
+
+        if(!dictionary.hasOwnProperty('ENV') ) {
+            $scope.disable_data_dictionary = true;
+            dfxMessaging.showWarning("Data Dictionary property ENV can't be renamed or removed");
+        }else{
+            if(typeof dictionary.ENV === 'object') {
+                if(Array.isArray(dictionary.ENV)) {
+                    $scope.disable_data_dictionary = true;
+                    dfxMessaging.showWarning("Data Dictionary property ENV type must be an object");    
+                }else{
+                    $scope.disable_data_dictionary = false;                
+                }
+            }else{
+                $scope.disable_data_dictionary = true;
+                dfxMessaging.showWarning("Data Dictionary property ENV type must be an object");
+            }
+        }
+    }
+
+    $scope.mergeEnvironmentVariables = function(){
+        $scope.getDictionaryEnvVars();
+
+        var promises = [],            
+            vars = $scope.dictionary_env_vars.length,
+            getPromise = function(i, var_name) {
+                var deferred = $q.defer(),
+                    env_var_obj = $scope.data_dictionary_content.ENV[var_name];
+                    // console.log('env_var_obj, var_name', env_var_obj, var_name);
+
+                    if (env_var_obj.hasOwnProperty('_id')) {                        
+                        angular.forEach($scope.environment_variables, function (obj, index) {
+                            if(env_var_obj._id && obj._id === env_var_obj._id){
+                                var data = {                        
+                                    "_id": obj._id,
+                                    "name": var_name,
+                                    "description": obj.description ? obj.description : '',
+                                    "data": !env_var_obj.data ? {} : env_var_obj.data
+                                }
+
+                                for (var env_prop in env_var_obj ) {
+                                    if(env_prop !== '_id') data.data[env_prop] = env_var_obj[env_prop];
+                                }
+
+                                dfxApplications.editEnvironmentVariable(data).then(function(){
+                                    deferred.resolve();
+                                });
+                            }
+                        });
+                    }else{
+                        var data = {
+                            "app_name": $scope.app_name,
+                            "name": var_name,
+                            "description": !env_var_obj.description ? '' : env_var_obj.description,
+                            "data": !env_var_obj.data ? {} : env_var_obj.data
+                        }
+
+                        for (var env_prop in env_var_obj ) {
+                            if(env_prop !== '_id') data.data[env_prop] = env_var_obj[env_prop];
+                        }
+
+                        dfxApplications.addEnvironmentVariable(data).then(function(){
+                            deferred.resolve();
+                        });
+                    }
+                    
+                return deferred.promise;
+            };
+
+        for (var i = 0; i < vars; i++) {
+            promises.push(getPromise(i, $scope.dictionary_env_vars[i]));
         };
 
-        dfxApplications.saveDictionary($scope.app_name, data).then(function(res){
-            dfxMessaging.showMessage("Data dictionary has been successfully saved");
-        });
+        return $q.all(promises);
+    }
+
+    $scope.removeEnvironmentVariables = function(){
+        var promises = [],            
+            vars = $scope.environment_variables.length,
+            getPromise = function(i) {
+                var deferred = $q.defer(),
+                    env_var_obj = $scope.environment_variables[i];
+                    // console.log('env_var_obj', env_var_obj);
+                    
+                    if($scope.dictionary_env_vars.indexOf(env_var_obj.name) === - 1){
+                        var data = { "_id": env_var_obj._id };
+                        $scope.env_vars_to_remove.push(env_var_obj.name);
+                        dfxApplications.deleteEnvironmentVariable(data).then(function(){
+                            deferred.resolve();
+                        });                            
+                    }else{
+                        deferred.resolve();                        
+                    }
+                    
+                return deferred.promise;
+            };
+        $scope.env_vars_to_remove = [];
+        // console.log('$scope.dictionary_env_vars', $scope.dictionary_env_vars);
+
+        for (var i = 0; i < vars; i++) {
+            promises.push(getPromise(i));
+        };
+
+        return vars > 0 ? $q.all(promises) : $q.all();
+    }
+
+    $scope.mergeEnvironmentProperties = function(env_props){
+        console.log('mergeEnvironmentProperties env_props', env_props)
+        if(!angular.equals({}, env_props)){           
+            console.log('env_props !== {}');
+
+            angular.forEach(env_props, function (env_prop, index){
+                var var_exists = false,
+                    var_name = '',
+                    temp_data = {};
+
+                for (var i = 0; i < $scope.environment_variables.length; i++) {
+                    if(env_prop._id === $scope.environment_variables[i]._id ) {
+                        var_exists = true;
+                        var_name = $scope.environment_variables[i].name;
+                    } 
+                }
+
+                if(!var_exists){
+                    delete env_props[env_prop];
+                }else{
+                    if(var_name !== env_props[env_prop]) {
+                        temp_data = env_props[env_prop].data;
+                        delete env_props[env_prop];
+                        env_props[var_name].data = temp_data;
+                    }
+                }
+                console.log('forEach env_props env_prop', env_prop);
+            });
+
+            angular.forEach($scope.environment_variables, function (env_var, index){
+                var prop_exists = false,
+                    prop_name = '',
+                    temp_var = {};
+
+                for (var prop in env_props) {
+                    if(env_var._id === env_props[prop]._id ) {
+                        prop_exists = true;
+                        prop_name = env_var.name;
+                    } 
+                }
+
+                if(!prop_exists){
+                    temp_var = angular.copy(env_var);
+                    delete temp_var.name;
+                    delete temp_var.app_name;
+                    env_props[env_var.name] = temp_var;
+                }
+
+                console.log('forEach environment_variables env_var', env_var);
+            });
+        }else{
+            console.log('env_props === {}');
+            for (var i = 0; i < $scope.environment_variables.length; i++) {
+                var temp_name = $scope.environment_variables[i].name,
+                    temp_prop = angular.copy($scope.environment_variables[i]);
+
+                delete temp_prop.name;
+                delete temp_prop.app_name;
+
+                env_props[temp_name] = temp_prop;                
+            }
+        }
+        console.log('finish mergeEnvironmentProperties env_props', env_props)
+
+        return $q.when(env_props);
+    }
+
+    $scope.mergeEnvironmentsWithVariables = function(){
+        var all_envs = $scope.dictionary_environments.length,
+            promises = [],
+            getPromise = function(i) {
+                var deferred = $q.defer();
+                
+                $scope.mergeEnvironmentProperties($scope.dictionary_environments[i].data).then(function(env_props) {
+                    // console.log('env_props', env_props);
+                    
+                    $scope.dictionary_environments[i].data = env_props;
+                    
+                    // console.log('$scope.dictionary_environments[i]', $scope.dictionary_environments[i]);
+                    dfxApplications.editEnvironment($scope.dictionary_environments[i]).then(function() {
+                        deferred.resolve();
+                    });
+                });
+
+                return deferred.promise;
+            };
+
+        for (var i = 0; i < all_envs; i++) {
+            promises.push(getPromise(i));
+        };
+
+        return $q.all(promises);
+    }
+
+    $scope.saveDataDictionary = function(){        
+        $scope.getDictionaryEnvVars();
+        // for (var i = 0; i < $scope.environment_variables.length; i++) {
+        //     $scope.deleteVariable($scope.environment_variables[i]);
+        // };
+
+        $scope.mergeEnvironmentVariables().then(function(){
+            var data = {
+                    name      : $scope.data_dictionary_name,
+                    content   : JSON.stringify($scope.dfx_data_dictionary_json.get())
+                };        
+            
+            $scope.disable_data_dictionary = true;
+
+            $scope.removeEnvironmentVariables().then(function(){
+                console.log('removed if was $scope.env_vars_to_remove', $scope.env_vars_to_remove);
+
+                dfxApplications.saveDictionary($scope.app_name, data).then(function(res){
+                    dfxApplications.getEnvironmentsList(app_data).then(function(response){
+                        $scope.dictionary_environments = response.data.data;
+
+                        console.log('$scope.dictionary_environments', $scope.dictionary_environments);
+                        
+                        dfxApplications.getEnvironmentVariablesList( app_data ).then(function(response){
+                            $scope.environment_variables = response.data.data;            
+                            
+                            console.log('$scope.environment_variables', $scope.environment_variables);
+
+                            $scope.mergeEnvironmentsWithVariables().then(function(){
+
+                            });
+                        });
+
+                        // if($scope.env_vars_to_remove.length > 0){
+                        //     angular.forEach($scope.env_vars_to_remove, function (obj, index){
+                        //         for (var i = 0; i < $scope.dictionary_environments.length; i++) {
+                        //             console.log('obj $scope.dictionary_environments[i][obj]', obj, $scope.dictionary_environments[i][obj]);
+                        //             // delete $scope.dictionary_environments[i][obj];
+                        //         };
+                        //     });
+                        // }
+                        // dfxMessaging.showMessage("Data dictionary has been successfully saved");
+                        // $scope.initAppDataDictionary();
+                    });
+                    // parentScope.devops.getAppEnvVars(app_data, 'envs_init');
+                    // parentScope.devops.saveAppEnvironments();
+                });
+            });
+        });       
     }
 }]);
