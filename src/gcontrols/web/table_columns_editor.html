@@ -89,6 +89,38 @@
                                         </md-select>
                                     </md-input-container>
                                 </li>
+                                <li class="col-md-12">
+                                    <span class="col-md-4">Header alignment:</span>
+                                    <div class="col-md-8" layout="row">
+                                        <md-radio-group class="dfx-ve-property-treeview-radiogroup row-radio" ng-model="attributes.currentColumn.headerAlign" ng-change="dfxAddLabel()">
+                                            <md-radio-button class="md-primary" value="start" aria-label="Direction">
+                                                Left
+                                            </md-radio-button>
+                                            <md-radio-button class="md-primary" value="center" aria-label="Direction">
+                                                Center
+                                            </md-radio-button>
+                                            <md-radio-button class="md-primary" value="end" aria-label="Direction">
+                                                Right
+                                            </md-radio-button>
+                                        </md-radio-group>
+                                    </div>
+                                </li>
+                                <li class="col-md-12">
+                                    <span class="col-md-4">Column alignment:</span>
+                                    <div class="col-md-8" layout="row">
+                                        <md-radio-group class="dfx-ve-property-treeview-radiogroup row-radio" ng-model="attributes.currentColumn.columnAlign" ng-change="dfxAddLabel()">
+                                            <md-radio-button class="md-primary" value="start" aria-label="Direction">
+                                                Left
+                                            </md-radio-button>
+                                            <md-radio-button class="md-primary" value="center" aria-label="Direction">
+                                                Center
+                                            </md-radio-button>
+                                            <md-radio-button class="md-primary" value="end" aria-label="Direction">
+                                                Right
+                                            </md-radio-button>
+                                        </md-radio-group>
+                                    </div>
+                                </li>
                             </ul>
                         </div>
                     </md-content>
