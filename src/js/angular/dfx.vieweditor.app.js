@@ -3978,6 +3978,7 @@ dfxViewEditorApp.directive('dfxVeListEditor', ['$mdDialog', '$timeout', '$http',
                 dfxSampleJsonEditor = null,
                 scriptSampleNameValid = {"value": false};
                 optionData = "<img src='https://material.angularjs.org/latest/img/list/60.jpeg?0' class='md-avatar' alt='Janet Perkins' /><div class='md-list-item-text' layout='column'><h3>Min Li Chan</h3><h4>Brunch this weekend?</h4><p>I'll be in your neighborhood doing errands</p></div>";
+                scope.htmlType = '';
                 scope.currentItem = {};
                 scope.gcSamplesArray = [];
                 scope.scriptSampleName = '';
@@ -4054,7 +4055,8 @@ dfxViewEditorApp.directive('dfxVeListEditor', ['$mdDialog', '$timeout', '$http',
                 else{scope.attributes.static.value.splice(itemIndex, 1);if(itemIndex > 0) --itemIndex;}
                 scope.activeOption(itemIndex);
             };
-            scope.showHtmlEditor = function(ev, htmlValue) {
+            scope.showHtmlEditor = function(ev, htmlValue, type) {
+                scope.htmlType = type;
                 $('#' + scope.component_id + '_md_dialog .second-dialog-box').load('/gcontrols/web/html_editor_dialog.html', function(){
                     $compile($('.second-dialog-box').contents())(scope);
                     var myTextArea = document.getElementById('dfx_html_editor');
@@ -4090,7 +4092,13 @@ dfxViewEditorApp.directive('dfxVeListEditor', ['$mdDialog', '$timeout', '$http',
                 });
             }
             scope.setHtmlValue = function() {
-                scope.currentItem.data = scope.htmlEditor.getValue();
+                switch(scope.htmlType){
+                    case 'custom_dynamic_item_template': 
+                        scope.attributes.customTemplate.value.template = scope.htmlEditor.getValue();
+                        break;
+                    default:
+                        scope.currentItem.data = scope.htmlEditor.getValue();
+                }
                 scope.hideHtmlEditor();
             }
             scope.hideHtmlEditor = function() {
@@ -4103,8 +4111,11 @@ dfxViewEditorApp.directive('dfxVeListEditor', ['$mdDialog', '$timeout', '$http',
             scope.runJsonEditor = function(model){
                 dfxSampleJsonEditor = null;
                 container = document.getElementById('dfx-ve-sample-json');
-                options = {mode: 'code', modes: ['tree','form','code','text','view'], history: true};
-                $timeout(function(){dfxSampleJsonEditor = new JSONEditor(container, options, model);}, 0);
+                options = {mode: 'form', history: true};
+                $timeout(function(){
+                    dfxSampleJsonEditor = new JSONEditor(container, options, model);
+                    dfxSampleJsonEditor.expandAll();
+                }, 0);
             }
             scope.checkItemNames = function(item){
                 if(item.hasOwnProperty('data')){scope.attributes.optionItemNames.value.data = 'data';}
@@ -4139,14 +4150,23 @@ dfxViewEditorApp.directive('dfxVeListEditor', ['$mdDialog', '$timeout', '$http',
                 });
             }
             scope.selectSample = function(ev, sample){
+                scope.attributes.customTemplate.value.template = sample.hasOwnProperty('template') ? sample.template : '';
                 gcJsonSample = sample;
                 dfxSampleJsonEditor ? dfxSampleJsonEditor.set(sample.value) : scope.runJsonEditor(sample.value);
+                dfxSampleJsonEditor.expandAll();
                 $(".dfx-ve-content-categories span").removeClass('active');
                 $(ev.target).addClass('active');
                 scope.scriptSampleName!=='' ? $("#dfx-copy-sample-btn").focus() : $("#dfx-json-sample-name").focus();
             }
             scope.addSampleToScript = function(){
-                scope.fillPropertiesNames(gcJsonSample.value);
+                if(gcJsonSample.hasOwnProperty('template')) {
+                    scope.attributes.customTemplate.value.template = gcJsonSample.template;
+                    scope.attributes.customTemplate.value.anabled = true;
+                } else {
+                    scope.attributes.customTemplate.value.template = '';
+                    scope.attributes.customTemplate.value.anabled = false;
+                    scope.fillPropertiesNames(gcJsonSample.value);    
+                }
                 sampleGet = dfxSampleJsonEditor.get();
                 sampleStringified = JSON.stringify(sampleGet, null, '\t');
                 sampleStringified = sampleStringified.split("\n").join("\n\t");
