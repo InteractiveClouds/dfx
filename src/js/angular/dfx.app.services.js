@@ -288,75 +288,119 @@ dfxAppServices.factory('dfxBottomSheet', [ '$mdBottomSheet', function($mdBottomS
     return bottomSheet;
 }]);
 
-// Deprecated, replaced by dfxApiServices
-dfxAppServices.factory('dfxApiRoutes', [ 'dfxUtil', function(dfxUtil) {
-
-    var api_route = {};
-
-    api_route.get = function( scope, route, req_data, callback, object_path, assigned_variable ) {
-        requestAPIRoute({
-            url:route,
-            type:'get',
-            data:req_data || {}
-        })
-            .then(function(res){
-                if (object_path!=null) {
-                    var arr_props = (object_path=='') ? [] : object_path.split('.');
-                    var ref_prop = res.data;
-                    for (var i=0; i<arr_props.length; i++) {
-                        ref_prop = ref_prop[arr_props[i]];
-                    }
-                    try {
-                        scope.$apply( function() {
-                            dfxUtil.arrayAppend( assigned_variable, ref_prop );
-                        });
-                    } catch(err) {
-                        console.log( 'API Route Call: Bad assigned variable or object path');
-                    }
-                }
-                callback(res.data);
-            })
-    };
-
-    api_route.post = function( scope, route, req_params, req_body, callback ) {
-        requestAPIRoute({
-            url:route,
-            type:'post',
-            data:{
-                params : req_params || {},
-                body : req_body || {}
-            }
-        })
-            .then(function(res){
-                callback(res.data);
-            })
-    };
-    return api_route;
-}]);
+//// Deprecated, replaced by dfxApiServices
+//dfxAppServices.factory('dfxApiRoutes', [ 'dfxUtil', function(dfxUtil) {
+//
+//    var api_route = {};
+//
+//    api_route.get = function( scope, route, req_data, callback, object_path, assigned_variable ) {
+//        requestAPIRoute({
+//            url:route,
+//            type:'get',
+//            data:req_data || {}
+//        })
+//            .then(function(res){
+//                if (object_path!=null) {
+//                    var arr_props = (object_path=='') ? [] : object_path.split('.');
+//                    var ref_prop = res.data;
+//                    for (var i=0; i<arr_props.length; i++) {
+//                        ref_prop = ref_prop[arr_props[i]];
+//                    }
+//                    try {
+//                        scope.$apply( function() {
+//                            dfxUtil.arrayAppend( assigned_variable, ref_prop );
+//                        });
+//                    } catch(err) {
+//                        console.log( 'API Route Call: Bad assigned variable or object path');
+//                    }
+//                }
+//                callback(res.data);
+//            })
+//    };
+//
+//    api_route.post = function( scope, route, req_params, req_body, callback ) {
+//        requestAPIRoute({
+//            url:route,
+//            type:'post',
+//            data:{
+//                params : req_params || {},
+//                body : req_body || {}
+//            }
+//        })
+//            .then(function(res){
+//                callback(res.data);
+//            })
+//    };
+//    return api_route;
+//}]);
 
 dfxAppServices.factory('dfxApiServices', [ 'dfxApiServiceObjects',  function( dfxApiServiceObjects ) {
 
     var api_services = {};
 
+    function getCookie(c_name)
+    {
+        var i,x,y,ARRcookies=document.cookie.split(";");
+        for (i=0;i<ARRcookies.length;i++)
+        {
+            x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
+            y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
+            x=x.replace(/^\s+|\s+$/g,"");
+            if (x==c_name)
+            {
+                return unescape(y);
+            }
+        }
+    }
+
+
+
     api_services.get = function( scope, route, req_data, cache) {
+
+        // Parse tenantId from URL (we need to add it to scope)
+        const RGX_PARSE_REFERER = /\/deploy\/([^\/]+)\/([^\/]+)\/([^\/]+)\/([^\/]+)\//;
+        var parse = RGX_PARSE_REFERER.exec(window.location.href);
+        var tenantId = parse ? parse[1] : window.localStorage.getItem('dfx_tenantid') || getCookie('X_DREAMFACE-TENANT') || window.sessionStorage.getItem('dfx_tenantid') ;
+        var appname  = parse ? parse[2] : window.localStorage.getItem('dfx_appname') || getCookie('app_name') || window.sessionStorage.getItem('dfx_appname');
+        var token = getCookie('dfx_app_token');
+        var url = '/app/' + appname +'/apiRoute/' + tenantId;
+
         if (cache) req_data.cache = cache;
         return requestAPIRoute({
-            url:route,
+            url:url,
             type:'get',
             data: {
                 data  : req_data || {},
-                cache : cache ? cache : null
+                cache : cache ? cache : null,
+                appname: appname,
+                tenantId: tenantId,
+                token : token,
+                url: route
+
             }
         });
     };
 
     api_services.post = function( scope, route, req_params, req_body, cache) {
+
+        // Parse tenantId from URL (we need to add it to scope)
+        const RGX_PARSE_REFERER = /\/deploy\/([^\/]+)\/([^\/]+)\/([^\/]+)\/([^\/]+)\//;
+        var parse = RGX_PARSE_REFERER.exec(window.location.href);
+        var tenantId = parse ? parse[1] : window.localStorage.getItem('dfx_tenantid') || getCookie('X_DREAMFACE-TENANT') || window.sessionStorage.getItem('dfx_tenantid') ;
+        var appname  = parse ? parse[2] : window.localStorage.getItem('dfx_appname') || getCookie('app_name') || window.sessionStorage.getItem('dfx_appname');
+        var token = getCookie('dfx_app_token');
+        var url = '/app/' + appname +'/apiRoute/' + tenantId;
+
         return requestAPIRoute({
-            url:route,
+            url:url,
             type:'post',
             data:{
                 params : req_params || {},
                 body : req_body || {},
+                appname: appname,
+                tenantId: tenantId,
+                url: route,
+                token : token,
                 cache : cache ? cache : null
             }
         });

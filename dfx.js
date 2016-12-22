@@ -550,7 +550,8 @@ function _start () {
             watcher.getInactiveTenants().then(function(inactiveTenants) {
                 activator.getAll().then(function (tenants) {
                     if (((inactiveTenants.indexOf(tenantId) != -1) || (tenants.indexOf(tenantId) == -1)) && watcher.verifyAuthRequest(req.url)) {
-                        res.status(200).send("Your tenant has been put in retired mode. Please remove and add again the DreamFace Service");
+                        //res.status(200).send("You are unauthorized or your tenant has been put in retired mode. Please relogin or remove and add again the DreamFace Service");
+                        next();
                     } else {
                         watcher.setRequestRun(tenantId);
                         res.on('finish', function () {

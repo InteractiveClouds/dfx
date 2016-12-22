@@ -2217,10 +2217,12 @@ dfxStudioApp.controller("dfx_studio_general_settings_controller", [ '$scope','df
     $scope.isCreate = false;
     $scope.selected_logo_image_input = {value: ""} ;
     $scope.isLogo = true;
+    $scope.type = 0;
 
     $scope.getGeneral = function(){
         dfxApplications.getGeneral($scope.app_name).then(function(general){
             $scope.general.creationDate = general.creationDate;
+            $scope.type = general.type || $scope.type;
         });
     };
 
@@ -2277,7 +2279,7 @@ dfxStudioApp.controller("dfx_studio_general_settings_controller", [ '$scope','df
     $scope.getGeneral();
 
     $scope.saveGeneral = function(){
-        dfxApplications.saveGeneral($scope.general.title, $scope.app_name, $scope.selected_logo_image_input.value).then(function(){
+        dfxApplications.saveGeneral($scope.general.title, $scope.app_name, $scope.selected_logo_image_input.value, $scope.general.type).then(function(){
            // $scope.initApps();
             dfxMessaging.showMessage("General application settings has been successfully updated");
         }, function(){
@@ -3656,7 +3658,8 @@ dfxStudioApp.controller("dfx_studio_deployment_controller", [ '$scope', '$mdDial
                     for(var i =0; i < $scope.builds[platform].length; i++){
                         if(($scope.builds[platform][i].app_version + '.' + $scope.builds[platform][i].build_number) === key){
                             $scope.builds[platform][i].is_deployed = true;
-                            $scope.builds[platform][i].link = $scope.host_port + "/deploy/" + $scope.tenant_id + '/' + $scope.app_name + '/' + platform + '/' + key + "/login.html" ;
+                            var endpoint = $("md-select[ng-model='general.type']").find('span div').text();
+                            $scope.builds[platform][i].link = $scope.host_port + "/deploy/" + $scope.tenant_id + '/' + $scope.app_name + '/' + platform + '/' + key + "/" + endpoint ;
                         }
                     }
                 }
