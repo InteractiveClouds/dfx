@@ -878,6 +878,7 @@ md-list .md-subheader.dfx-core-gc-list-subheader {
     margin: 3px 0 0 0;
 }
 .dfx-core-gc-rating-label {
+    font-size: 14px;
     text-align: left;
 }
 .dfx-core-gc-rating .dfx-core-gc-rating-item {
