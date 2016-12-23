@@ -4838,8 +4838,6 @@ dfxGCC.directive('dfxGccWebDatatable', ['$timeout', '$mdDialog', '$filter', '$ht
                         originalBindingClone = orderBy(originalBindingClone, scope.attributes.sortedBy.value, scope.attributes.columns.value[index].isAscending === "true");
                         scope.attributes.bindingClone.value = originalBindingClone;
                         if(scope.attributes.filterBy.value !== '') scope.filterTableData(scope.attributes.filterBy.value);
-                        // scope.attributes.bindingClone.value = orderBy(scope.attributes.bindingClone.value, scope.attributes.sortedBy.value, scope.attributes.columns.value[index].isAscending === "true");
-                        // originalBindingClone = scope.attributes.bindingClone.value;
                     }
 
                     scope.isSelectedRows = function() {
@@ -4905,7 +4903,6 @@ dfxGCC.directive('dfxGccWebDatatable', ['$timeout', '$mdDialog', '$filter', '$ht
                         component.css('width', scope.attributes.flex.value + '%');
                     };
                     scope.changeWidth();
-                    console.log('scope', scope);
                 });
             }
         }
