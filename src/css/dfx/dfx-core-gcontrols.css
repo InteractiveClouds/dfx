@@ -365,6 +365,7 @@ button[disabled="disabled"].dfx-core-gc-button.md-button md-icon, button[disable
     display: flex;
     -webkit-align-items: center;
     align-items: center;
+    cursor: pointer;
     text-decoration: none !important;
 }
 .dfx-core-gc-table-header md-icon {

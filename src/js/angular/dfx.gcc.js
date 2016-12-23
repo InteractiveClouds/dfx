@@ -909,18 +909,18 @@ dfxGCC.directive('dfxGccWebButton', ['$timeout', '$compile', '$filter', function
                             });
                             scope.attributes.flex.value = 'none';
                         } else {
-                            $('#' + scope.component_id).css({
+                            $(element).css({
                                 'width': scope.attributes.flex.value + '%',
                                 'max-width': scope.attributes.flex.value + '%'
                             });
 
                             // flex with values cannot be used in css, because if parent layout is column,
                             // it overides the flex classes and used for button height instead of width
-                            var flex_style = $('#' + scope.component_id).css('flex');
+                            var flex_style = $(element).css('flex');
                             if (flex_style) {
-                                var button_style = $('#' + scope.component_id).attr('style');
+                                var button_style = $(element).attr('style');
                                 var button_style_no_flex = button_style.replace('flex: ' + flex_style + ';', '');
-                                $('#' + scope.component_id).attr('style', button_style_no_flex);
+                                $(element).attr('style', button_style_no_flex);
                             }
                         }
                     };
@@ -4764,10 +4764,6 @@ dfxGCC.directive('dfxGccWebDatatable', ['$timeout', '$mdDialog', '$filter', '$ht
                     scope.attributes.rangeStart.value = 1;
                     scope.attributes.modulo.value = 0;
                     var originalBindingClone = [];
-
-                    if ( !scope.attributes.hasOwnProperty('filterable') ) { scope.attributes.filterable = { "value": false } }
-                    if ( !scope.attributes.hasOwnProperty('filterBy') ) { scope.attributes.filterBy = { "value": "" } }
-                    if ( !scope.attributes.hasOwnProperty('headerVisible') ) { scope.attributes.filterBy = { "headerVisible": true } }
 
                     if (scope.attributes.checkBinding.value!='') {
                         scope.dynamicPresent = true;

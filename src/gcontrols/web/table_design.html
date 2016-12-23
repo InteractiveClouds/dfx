@@ -17,14 +17,8 @@
                     <th ng-if="attributes.checkOption.value !== 'none'" class="dt_checkbox"><md-checkbox class="md-primary" aria-label="Select Row" ng-click="toggleSelectRows()" ng-checked="isSelectedRows()"></md-checkbox></th>
                     <th ng-repeat="col in attributes.columns.value track by $index">
                         <a ng-click="changeIndexAndSortDir($index)" href="#"  class="dfx-core-gc-table-header {{col.headerAlign}}">
-                            <span ng-if="attributes.sortedBy.value === col.value && col.isNumeric ==='true'">
-                                <md-icon ng-if="attributes.columns.value[$index].isAscending === 'false'" class="fa fa-arrow-down">
-                                </md-icon>
-                                <md-icon ng-if="attributes.columns.value[$index].isAscending === 'true'" class="fa fa-arrow-up">
-                                </md-icon>
-                            </span>
                             <span>{{col.header | checkExpression}}</span>
-                            <span ng-if="attributes.sortedBy.value === col.value && col.isNumeric ==='false'">
+                            <span ng-if="attributes.sortedBy.value === col.value">
                                 <md-icon ng-if="attributes.columns.value[$index].isAscending === 'false'" class="fa fa-arrow-down">
                                 </md-icon>
                                 <md-icon ng-if="attributes.columns.value[$index].isAscending === 'true'" class="fa fa-arrow-up">
