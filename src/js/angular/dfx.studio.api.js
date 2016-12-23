@@ -540,7 +540,7 @@ dfxStudioApi.factory('dfxApplications', [ '$http', '$q', function($http, $q) {
         return deferred.promise;
     }
 
-    api_applications.saveGeneral = function (title, appname, logo, type){
+    api_applications.saveGeneral = function (title, appname, logo, security){
         var deferred = $q.defer();
         $http({
             url: '/studio/application/update/'+ appname,
@@ -548,7 +548,7 @@ dfxStudioApi.factory('dfxApplications', [ '$http', '$q', function($http, $q) {
             data: {
                     "title": title,
                     "logo": logo,
-                    "type": type
+                    "security": security
             }
         }).then(function successCallback(response) {
             deferred.resolve( response );
