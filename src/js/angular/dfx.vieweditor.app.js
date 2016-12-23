@@ -4111,7 +4111,7 @@ dfxViewEditorApp.directive('dfxVeListEditor', ['$mdDialog', '$timeout', '$http',
             scope.runJsonEditor = function(model){
                 dfxSampleJsonEditor = null;
                 container = document.getElementById('dfx-ve-sample-json');
-                options = {mode: 'form', history: true};
+                options = {mode: 'code', modes: ['tree','form','code','text','view'], history: true};
                 $timeout(function(){
                     dfxSampleJsonEditor = new JSONEditor(container, options, model);
                     dfxSampleJsonEditor.expandAll();

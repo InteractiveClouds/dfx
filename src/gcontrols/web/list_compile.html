@@ -19,10 +19,10 @@ FRAG-IF{{attributes.optionsType.value === 'dynamic'}}
     <md-list flex ng-if="!$eval(ATTR-STATIC{{disabled.value}})">
         <md-subheader ng-if="ATTR-EXP{{attributes.labelVisible.value ? 'true' : 'false'}}ATTR-ENDEXP" ATTR-IF{{style="attributes.labelStyle.style"}} class="dfx-core-gc-list-subheader ATTR-NONV{{labelStyle.class}} md-no-sticky"><span ATTR-IF{{ng-bind="attributes.label.value"}}></span></md-subheader>
         <md-list-item class="dfx-core-gc-list-item md-3-line" ATTR-IF{{ng-class="attributes.itemStyle.class"}} ng-repeat="$dfx_item in ATTR-NONV{{optionItemNames.value.source}} track by $index" ng-click="toggleItem($event, $dfx_item, $index); attributes.onclick.value" style="ATTR-NONV{{itemStyle.style}}; background-color: {{itemSelected($dfx_item) ? attributes.itemStyle.bgSelected : attributes.itemStyle.bgDefault}}" ATTR-IF{{ng-dblclick="attributes.ondblclick.value"}} ATTR-IF{{ng-keypress="attributes.onkeypress.value"}} ATTR-IF{{ng-keydown="attributes.onkeydown.value"}} ATTR-IF{{ng-keyup="attributes.onkeyup.value"}} ATTR-IF{{ng-mouseover="attributes.onmouseover.value"}} ATTR-IF{{ng-mouseenter="attributes.onmouseenter.value"}} ATTR-IF{{ng-mousemove="attributes.onmousemove.value"}} ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}} ATTR-IF{{ng-mousedown="attributes.onmousedown.value"}} ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}} aria-label="List Item">
-            <div ng-if="ATTR-EXP{{!attributes.customTemplate.value.anabled ? 'true' : 'false'}}ATTR-ENDEXP" class="dfx-core-gc-list-item-inner md-list-item-inner" 
+            <div ng-if="ATTR-EXP{{!attributes.customTemplate.value.enabled ? 'true' : 'false'}}ATTR-ENDEXP" class="dfx-core-gc-list-item-inner md-list-item-inner" 
                 ng-bind-html="$dfx_item.ATTR-NONV{{optionItemNames.value.data}}">
             </div>
-            <div ng-if="ATTR-EXP{{attributes.customTemplate.value.anabled ? 'true' : 'false'}}ATTR-ENDEXP" class="dfx-core-gc-list-item-inner md-list-item-inner">
+            <div ng-if="ATTR-EXP{{attributes.customTemplate.value.enabled ? 'true' : 'false'}}ATTR-ENDEXP" class="dfx-core-gc-list-item-inner md-list-item-inner">
                 ATTR-NONV{{customTemplate.value.template}}
             </div>
         </md-list-item>        
@@ -30,10 +30,10 @@ FRAG-IF{{attributes.optionsType.value === 'dynamic'}}
     <md-list flex ng-if="$eval(ATTR-STATIC{{disabled.value}})" class="md-dense">
         <md-subheader ng-if="ATTR-EXP{{attributes.labelVisible.value ? 'true' : 'false'}}ATTR-ENDEXP" ATTR-IF{{style="attributes.labelStyle.style" class="dfx-core-gc-list-subheader ATTR-NONV{{labelStyle.class}} md-no-sticky"><span ATTR-IF{{ng-bind="attributes.label.value"}}></span></md-subheader>
         <md-list-item class="dfx-core-gc-list-item md-3-line" ATTR-IF{{ng-class="attributes.itemStyle.class"}} ng-repeat="$dfx_item in ATTR-NONV{{optionItemNames.value.source}} track by $index" style="ATTR-NONV{{itemStyle.style}}; background-color: ATTR-NONV{{itemStyle.bgDefault}}" aria-label="List Item">
-            <div ng-if="ATTR-EXP{{!attributes.customTemplate.value.anabled ? 'true' : 'false'}}ATTR-ENDEXP" class="dfx-core-gc-list-item-text md-list-item-text" 
+            <div ng-if="ATTR-EXP{{!attributes.customTemplate.value.enabled ? 'true' : 'false'}}ATTR-ENDEXP" class="dfx-core-gc-list-item-text md-list-item-text" 
                 ng-bind-html="$dfx_item.ATTR-NONV{{optionItemNames.value.data}}">
             </div>
-            <div ng-if="ATTR-EXP{{attributes.customTemplate.value.anabled ? 'true' : 'false'}}ATTR-ENDEXP" class="dfx-core-gc-list-item-text md-list-item-text">
+            <div ng-if="ATTR-EXP{{attributes.customTemplate.value.enabled ? 'true' : 'false'}}ATTR-ENDEXP" class="dfx-core-gc-list-item-text md-list-item-text">
                 ATTR-NONV{{customTemplate.value.template}}
             </div>
         </md-list-item>        
