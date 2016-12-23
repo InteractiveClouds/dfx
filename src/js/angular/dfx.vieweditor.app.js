@@ -4114,7 +4114,7 @@ dfxViewEditorApp.directive('dfxVeListEditor', ['$mdDialog', '$timeout', '$http',
                 options = {mode: 'code', modes: ['tree','form','code','text','view'], history: true};
                 $timeout(function(){
                     dfxSampleJsonEditor = new JSONEditor(container, options, model);
-                    dfxSampleJsonEditor.expandAll();
+                    // dfxSampleJsonEditor.expandAll();
                 }, 0);
             }
             scope.checkItemNames = function(item){
@@ -4153,7 +4153,7 @@ dfxViewEditorApp.directive('dfxVeListEditor', ['$mdDialog', '$timeout', '$http',
                 scope.attributes.customTemplate.value.template = sample.hasOwnProperty('template') ? sample.template : '';
                 gcJsonSample = sample;
                 dfxSampleJsonEditor ? dfxSampleJsonEditor.set(sample.value) : scope.runJsonEditor(sample.value);
-                dfxSampleJsonEditor.expandAll();
+                // dfxSampleJsonEditor.expandAll();
                 $(".dfx-ve-content-categories span").removeClass('active');
                 $(ev.target).addClass('active');
                 scope.scriptSampleName!=='' ? $("#dfx-copy-sample-btn").focus() : $("#dfx-json-sample-name").focus();
@@ -4161,11 +4161,13 @@ dfxViewEditorApp.directive('dfxVeListEditor', ['$mdDialog', '$timeout', '$http',
             scope.addSampleToScript = function(){
                 if(gcJsonSample.hasOwnProperty('template')) {
                     scope.attributes.customTemplate.value.template = gcJsonSample.template;
-                    scope.attributes.customTemplate.value.anabled = true;
+                    scope.attributes.customTemplate.value.enabled = true;
+                    scope.attributes.customTemplate.status = 'overridden';
                 } else {
                     scope.attributes.customTemplate.value.template = '';
-                    scope.attributes.customTemplate.value.anabled = false;
+                    scope.attributes.customTemplate.value.enabled = false;
                     scope.fillPropertiesNames(gcJsonSample.value);    
+                    delete scope.attributes.customTemplate.status;
                 }
                 sampleGet = dfxSampleJsonEditor.get();
                 sampleStringified = JSON.stringify(sampleGet, null, '\t');
