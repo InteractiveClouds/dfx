@@ -4763,6 +4763,7 @@ dfxGCC.directive('dfxGccWebDatatable', ['$timeout', '$mdDialog', '$filter', '$ht
                     scope.attributes.rangeEnd.value = parseInt(scope.attributes.rowCount.value);
                     scope.attributes.rangeStart.value = 1;
                     scope.attributes.modulo.value = 0;
+                    scope.sortedBy = {"value": ''};
                     var originalBindingClone = [];
 
                     if (scope.attributes.checkBinding.value!='') {
@@ -4825,19 +4826,14 @@ dfxGCC.directive('dfxGccWebDatatable', ['$timeout', '$mdDialog', '$filter', '$ht
                         }
                     }
 
-                    scope.changeIndexAndSortDir = function(index){
-                        scope.attributes.sortedBy.value = scope.attributes.columns.value[index].value;
-                        if(scope.attributes.columns.value[index].value === scope.attributes.sortedBy.value){
-                            if(scope.attributes.columns.value[index].isAscending === "true"){
-                                scope.attributes.columns.value[index].isAscending = "false";
-                            } else{
-                                scope.attributes.columns.value[index].isAscending = "true";
-                            }
+                    scope.dfxSortDatatable = function(col){
+                        if(col.isAscending === 'true') {
+                            col.isAscending = 'false';
+                            scope.sortedBy.value = '-' + col.value;                            
+                        }else{
+                            col.isAscending = 'true';
+                            scope.sortedBy.value = col.value;                            
                         }
-                        scope.attributes.columnIndex.value = index;
-                        originalBindingClone = orderBy(originalBindingClone, scope.attributes.sortedBy.value, scope.attributes.columns.value[index].isAscending === "true");
-                        scope.attributes.bindingClone.value = originalBindingClone;
-                        if(scope.attributes.filterBy.value !== '') scope.filterTableData(scope.attributes.filterBy.value);
                     }
 
                     scope.isSelectedRows = function() {
@@ -4884,19 +4880,6 @@ dfxGCC.directive('dfxGccWebDatatable', ['$timeout', '$mdDialog', '$filter', '$ht
                             // }
                         }
                     });
-
-                    scope.filterTableData = function( filterQuery ) {
-                        if ( filterQuery !== '' ) {
-                            scope.attributes.bindingClone.value = filterBy(originalBindingClone, filterQuery, 'strict');
-                        } else {
-                            scope.attributes.bindingClone.value = originalBindingClone;
-                        }
-                        $timeout(function(){
-                            scope.attributes.rangeStart.value = 1;
-                            scope.attributes.stepCounter.value = 1;
-                            scope.attributes.rangeEnd.value = parseInt(scope.attributes.rowCount.value);
-                        }, 0);
-                    }
 
                     scope.changeWidth = function(){
                         var component = angular.element(document.querySelectorAll('[id="' + scope.component_id + '"]'));//for repeatable panels
