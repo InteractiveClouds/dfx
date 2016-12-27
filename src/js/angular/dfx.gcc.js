@@ -3344,7 +3344,6 @@ dfxGCC.directive('dfxGccWebList', ['$timeout', '$compile', function($timeout, $c
                 scope.togglingArray = [];
                 scope.selected_items = [];
                 scope.selected_indexes = [];
-                scope.sourceList = {"value": []};
                 scope.itemSelected = function(it){
                     return scope.selected_items.indexOf(it) > -1;
                 }
