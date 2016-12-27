@@ -909,18 +909,18 @@ dfxGCC.directive('dfxGccWebButton', ['$timeout', '$compile', '$filter', function
                             });
                             scope.attributes.flex.value = 'none';
                         } else {
-                            $('#' + scope.component_id).css({
+                            $(element).css({
                                 'width': scope.attributes.flex.value + '%',
                                 'max-width': scope.attributes.flex.value + '%'
                             });
 
                             // flex with values cannot be used in css, because if parent layout is column,
                             // it overides the flex classes and used for button height instead of width
-                            var flex_style = $('#' + scope.component_id).css('flex');
+                            var flex_style = $(element).css('flex');
                             if (flex_style) {
-                                var button_style = $('#' + scope.component_id).attr('style');
+                                var button_style = $(element).attr('style');
                                 var button_style_no_flex = button_style.replace('flex: ' + flex_style + ';', '');
-                                $('#' + scope.component_id).attr('style', button_style_no_flex);
+                                $(element).attr('style', button_style_no_flex);
                             }
                         }
                     };
@@ -4762,11 +4762,8 @@ dfxGCC.directive('dfxGccWebDatatable', ['$timeout', '$mdDialog', '$filter', '$ht
                     scope.attributes.rangeEnd.value = parseInt(scope.attributes.rowCount.value);
                     scope.attributes.rangeStart.value = 1;
                     scope.attributes.modulo.value = 0;
+                    scope.sortedBy = {"value": ''};
                     var originalBindingClone = [];
-
-                    if ( !scope.attributes.hasOwnProperty('filterable') ) { scope.attributes.filterable = { "value": false } }
-                    if ( !scope.attributes.hasOwnProperty('filterBy') ) { scope.attributes.filterBy = { "value": "" } }
-                    if ( !scope.attributes.hasOwnProperty('headerVisible') ) { scope.attributes.filterBy = { "headerVisible": true } }
 
                     if (scope.attributes.checkBinding.value!='') {
                         scope.dynamicPresent = true;
@@ -4828,18 +4825,14 @@ dfxGCC.directive('dfxGccWebDatatable', ['$timeout', '$mdDialog', '$filter', '$ht
                         }
                     }
 
-                    scope.changeIndexAndSortDir = function(index){
-                        scope.attributes.sortedBy.value = scope.attributes.columns.value[index].value;
-                        if(scope.attributes.columns.value[index].value === scope.attributes.sortedBy.value){
-                            if(scope.attributes.columns.value[index].isAscending === "true"){
-                                scope.attributes.columns.value[index].isAscending = "false";
-                            } else{
-                                scope.attributes.columns.value[index].isAscending = "true";
-                            }
+                    scope.dfxSortDatatable = function(col){
+                        if(col.isAscending === 'true') {
+                            col.isAscending = 'false';
+                            scope.sortedBy.value = '-' + col.value;                            
+                        }else{
+                            col.isAscending = 'true';
+                            scope.sortedBy.value = col.value;                            
                         }
-                        scope.attributes.columnIndex.value = index;
-                        scope.attributes.bindingClone.value = orderBy(scope.attributes.bindingClone.value, scope.attributes.sortedBy.value, scope.attributes.columns.value[index].isAscending === "true");
-                        originalBindingClone = scope.attributes.bindingClone.value;
                     }
 
                     scope.isSelectedRows = function() {
@@ -4886,19 +4879,6 @@ dfxGCC.directive('dfxGccWebDatatable', ['$timeout', '$mdDialog', '$filter', '$ht
                             // }
                         }
                     });
-
-                    scope.filterTableData = function( filterQuery ) {
-                        if ( filterQuery !== '' ) {
-                            scope.attributes.bindingClone.value = filterBy(originalBindingClone, filterQuery, 'strict');
-                        } else {
-                            scope.attributes.bindingClone.value = originalBindingClone;
-                        }
-                        $timeout(function(){
-                            scope.attributes.rangeStart.value = 1;
-                            scope.attributes.stepCounter.value = 1;
-                            scope.attributes.rangeEnd.value = parseInt(scope.attributes.rowCount.value);
-                        }, 0);
-                    }
 
                     scope.changeWidth = function(){
                         var component = angular.element(document.querySelectorAll('[id="' + scope.component_id + '"]'));//for repeatable panels

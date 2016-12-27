@@ -45,6 +45,7 @@
     "db-patch-manager": "https://github.com/surr-name/db-patch-manager.git",
     "decompress-zip": "^0.2.0",
     "dfx_jsoneditor": "https://github.com/InteractiveClouds/jsoneditor.git",
+    "dfx_mdPickers": "https://github.com/InteractiveClouds/mdPickers.git",
     "dockerode": "*",
     "easy-zip": "*",
     "errorhandler": "*",
@@ -56,8 +57,8 @@
     "github-api": "*",
     "graceful-fs": "^3.0.7",
     "jade": "1.9.2",
+    "jsonwebtoken": "^7.2.1",
     "lodash": "*",
-    "dfx_mdPickers": "https://github.com/InteractiveClouds/mdPickers.git",
     "mime": "^1.2.11",
     "mkdirp": "^0.5.1",
     "moment": "https://github.com/moment/moment.git",
@@ -89,8 +90,8 @@
     "socket.io": "*",
     "svg-morpheus": "https://github.com/alexk111/SVG-Morpheus.git#v0.3.2",
     "tar-fs": "*",
-    "underscore": "*",
     "ua-parser-js": "0.7.10",
+    "underscore": "*",
     "xml2js": "*"
   },
   "devDependencies": {
