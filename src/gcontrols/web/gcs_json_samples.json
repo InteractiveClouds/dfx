@@ -230,12 +230,21 @@
 	],
 	"list": [
 		{
-			"name": "Example 1",
+			"name": "Html data",
 			"value": [
-				{"data": "<img src='https://material.angularjs.org/latest/img/100-0.jpeg' class='md-avatar' alt='Janet Perkins' /><div class='md-list-item-text' layout='column'><h3>Janet Perkins</h3></div>"},
-				{"data": "<img src='https://material.angularjs.org/latest/img/100-1.jpeg' class='md-avatar' alt='Mary Johnson' /><div class='md-list-item-text' layout='column'><h3>Mary Johnson</h3></div>"},
-				{"data": "<img src='https://material.angularjs.org/latest/img/100-2.jpeg' class='md-avatar' alt='Peter Carlsson' /><div class='md-list-item-text' layout='column'><h3>Peter Carlsson</h3></div>"}
+				{"data": "<img ng-src='https://material.angularjs.org/latest/img/100-0.jpeg' class='md-avatar' alt='Janet Perkins' /><div class='md-list-item-text' layout='column'><h3>Janet Perkins</h3></div>"},
+				{"data": "<img ng-src='https://material.angularjs.org/latest/img/100-1.jpeg' class='md-avatar' alt='Mary Johnson' /><div class='md-list-item-text' layout='column'><h3>Mary Johnson</h3></div>"},
+				{"data": "<img ng-src='https://material.angularjs.org/latest/img/100-2.jpeg' class='md-avatar' alt='Peter Carlsson' /><div class='md-list-item-text' layout='column'><h3>Peter Carlsson</h3></div>"}
 			]
+		},
+		{
+			"name": "Custom template",
+			"value": [
+				{"name": "Janet Perkins", "photo": "https://material.angularjs.org/latest/img/100-0.jpeg"},
+				{"name": "Mary Johnson", "photo": "https://material.angularjs.org/latest/img/100-1.jpeg"},
+				{"name": "Peter Carlsson", "photo": "https://material.angularjs.org/latest/img/100-2.jpeg"}			
+			],
+			"template": "<img ng-src='{{$dfx_item.photo}}' class='md-avatar' alt='{{$dfx_item.name}}'/><div class='md-list-item-text' layout='column'><h3>{{$dfx_item.name}}</h3></div>"
 		}
     ],
 	"radio": [
