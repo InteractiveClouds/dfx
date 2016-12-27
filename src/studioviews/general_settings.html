@@ -26,6 +26,15 @@
                         <input ng-model="general.creationDate" disabled>
                     </md-input-container>
                 </div>
+                <div layout="row" class="layout-padding" style="padding-bottom: 0">
+                    <md-input-container class="input-select-aligned margin-select" style="width:15%;margin-right:14px;">
+                        <label>Application endpoint:</label>
+                        <md-select ng-model="general.security" aria-label="{{general.security}}">
+                            <md-option value="public">index.html</md-option>
+                            <md-option value="protected">login.html</md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
                 <div layout="row" class="layout-padding" style="padding-top: 0">
                     <img ng-src="{{selected_logo_image}}" style="height: 150px; width: auto;">
                 </div>

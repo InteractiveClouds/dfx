@@ -70,14 +70,23 @@
 								<li class="col-md-12">
 									<span class="col-md-4">Source:</span>
 									<div class="col-md-8" layout="row">
-										<input class="col-md-12" type="text" ng-model="attributes.optionItemNames.value.source" style="margin-left:-15px;" ng-change="overrideAttribute('source')"/>
+										<input class="col-md-12" type="text" ng-model="attributes.optionItemNames.value.source" style="margin-left:-15px;" ng-change="overrideAttribute('optionItemNames')"/>
                     					<dfx-ve-menu-expression></dfx-ve-menu-expression>
 									</div>
 								</li>
 								<li class="col-md-12">
-									<span class="col-md-4" style="padding-left:16px;">Data:</span>
+									<span class="col-md-4" style="padding-left:16px;">Use a custom template:</span>
+									<div class="col-md-8 dfx-ve-multiple-options-container">
+										<md-checkbox class="md-primary" ng-model="attributes.customTemplate.value.enabled" ng-change="overrideAttribute('customTemplate')" ng-focus="cacheAttributeOldValue({'name':'customTemplate'})" ng-blur="cacheAttributeNewValue('customTemplate')" aria-label="Enable template editor"></md-checkbox>
+										<a ng-if="attributes.customTemplate.value.enabled" href="javascript:void(0)" ng-click="showHtmlEditor($event, attributes.customTemplate.value.template, 'custom_dynamic_item_template')" class="dfx-ve-content-edit-button">
+	                                        <span><md-icon class="fa fa-edit"></md-icon>Edit template</span>
+	                                    </a>
+									</div>
+								</li>
+								<li ng-if="!attributes.customTemplate.value.enabled" class="col-md-12">
+									<span class="col-md-4" style="padding-left:16px;">Item data:</span>
 									<div class="col-md-8" layout="row">
-										<input class="col-md-12" type="text" ng-model="attributes.optionItemNames.value.data" ng-change="overrideAttribute('displayValue')" style="margin-left:-15px;"/>
+										<input class="col-md-12" type="text" ng-model="attributes.optionItemNames.value.data" ng-change="overrideAttribute('optionItemNames')" style="margin-left:-15px;"/>
 										<dfx-ve-menu-expression></dfx-ve-menu-expression>
 									</div>
 								</li>
