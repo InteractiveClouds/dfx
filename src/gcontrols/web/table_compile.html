@@ -38,7 +38,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="$dfx_item in ATTR-STATIC{{bindingClone.value}} | filter:ATTR-STATIC{{filterBy.value}} | orderBy:sortedBy.value track by $index" dfx-datatable ng-if="(ATTR-STATIC{{paging.value}}==false) || (ATTR-STATIC{{paging.value}}==true && $index >= (ATTR-STATIC{{rangeStart.value}}-1)) && ($index < ATTR-STATIC{{rangeEnd.value}})" class="animate-repeat">
+                    <tr ng-repeat="$dfx_item in ATTR-STATIC{{bindingClone.value}} | filter:ATTR-STATIC{{filterBy.value}} | orderBy:sortedBy.value track by $index" dfx-datatable ng-if="(ATTR-STATIC{{paging.value}}==false) || (ATTR-STATIC{{paging.value}}==true && $index >= (ATTR-STATIC{{rangeStart.value}}-1)) && ($index < ATTR-STATIC{{rangeEnd.value}})">
 						FRAG-IF{{attributes.checkOption.value !== 'none'}}
                         <td class="dt_checkbox"><md-checkbox class="md-primary" ng-disabled="attributes.disabled.value" aria-label="Select Row" ng-checked="isSelectedRows() || isSelectedRow($dfx_item)" ng-click="toggleSelectRow($dfx_item)"></md-checkbox></td>
 						FRAG-ENDIF
