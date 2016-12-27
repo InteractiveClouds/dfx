@@ -170,6 +170,12 @@ html
                                                                 label(for="root-components-{{$index}}") Develop
                                                                 ul.dfx-studio-explorer-treeview-content
                                                                     li
+                                                                        input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="app-scripts-{{$index}}")
+                                                                        label(for="app-scripts-{{$index}}") Application
+                                                                        ul.dfx-studio-explorer-treeview-content
+                                                                            li
+                                                                                a(href="", ng-click="loadStudioView(application.name + '/scripts/controller')") Controller
+                                                                    li
                                                                         input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="root-pages-{{$index}}")
                                                                         label.dfx-studio-explorer-treeview-menuicon-label(for="root-pages-{{$index}}") Pages
                                                                             //a.pull-right.dfx-studio-explorer-treeview-menuicon(ng-click="loadExplorerMenu($event, 'page', application.name)")

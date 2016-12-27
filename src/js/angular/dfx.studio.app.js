@@ -43,6 +43,10 @@ dfxStudioApp.config([ '$routeProvider', '$mdThemingProvider', function($routePro
             controller: 'dfx_studio_configuration_controller',
             templateUrl: 'studioviews/configuration.html'
         })
+        .when('/:appname/scripts/controller', {
+            controller: 'dfx_studio_app_scripts_controller_controller',
+            templateUrl: 'studioviews/app_scripts_controller.html'
+        })
         .when('/page/create/:appname/:platform', {
             controller: 'dfx_studio_page_create_controller',
             templateUrl: 'studioviews/page_create.html'
@@ -3933,6 +3937,54 @@ dfxStudioApp.controller("dfx_studio_deployment_controller", [ '$scope', '$mdDial
     };
 }]);
 
+/* Application Scripts: Controller */
+dfxStudioApp.controller('dfx_studio_app_scripts_controller_controller', [ '$rootScope', '$scope', '$routeParams', 'dfxApplications', 'dfxMessaging', function($rootScope, $scope, $routeParams, dfxApplications, dfxMessaging) {
+    $scope.app_name = $routeParams.appname;
+    $scope.app = {};
+    $scope.script_theme = (localStorage.getItem('DFX_script_theme')!=null) ? localStorage.getItem('DFX_script_theme') : 'monokai';
+
+    dfxApplications.getGeneral($scope.app_name).then(function(application_document) {
+        $scope.app = application_document;
+        var html_pre_component = document.getElementById('dfx_as_script_editor');
+        var src_editor = CodeMirror( function (elt) {
+            html_pre_component.parentNode.replaceChild(elt, html_pre_component);
+        },
+        {
+            lineNumbers: true,
+            value: $('#dfx_as_script_editor').text(),
+            mode: {name: 'javascript', globalVars: true},
+            theme: $scope.script_theme,
+            matchBrackets: true,
+            highlightSelectionMatches: {showToken: /\w/},
+            styleActiveLine: true,
+            viewportMargin : Infinity,
+            extraKeys: {
+                "Alt-F": "findPersistent",
+                "Ctrl-Space": "autocomplete"
+            },
+            foldGutter: true,
+            gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
+        });
+        $(src_editor.getWrapperElement()).attr('id', 'dfx_as_script_editor');
+        if (application_document.script!=null) {
+            src_editor.setValue(application_document.script);
+        } else {
+            src_editor.setValue('');
+        }
+        src_editor.setSize(null, window.innerHeight - 59);
+        src_editor.refresh();
+    });
+
+    $scope.saveScript = function() {
+        var editor = $('#dfx_as_script_editor')[0].CodeMirror;
+        $scope.app.script = editor.getValue();
+        dfxApplications.saveScript( $scope.app ).then( function() {
+            dfxMessaging.showMessage( 'The application controller script has been saved' );
+        });
+    };
+
+}]);
+
 dfxStudioApp.controller("dfx_studio_view_controller", [ '$scope', '$routeParams', '$mdDialog', '$location', '$window', 'dfxMessaging', 'dfxViews', function($scope, $routeParams, $mdDialog, $location, $window, dfxMessaging, dfxViews) {
     $scope.app_name = $routeParams.appname;
     $scope.view_name = $routeParams.viewname;
@@ -6524,4 +6576,21 @@ dfxStudioApp.controller("dfx_studio_api_so_category_controller", [ '$scope', '$r
         var sideNavInstance = $mdSidenav('side_nav_api_category');
         sideNavInstance.toggle();
     }
+}]);
+
+dfxStudioApp.directive('dfxStudioCtrlS', [ '$document', function ($document) {
+	return {
+      restrict: 'A',
+      link: function(scope, element, attrs) {
+        $document.bind('keydown', function(e) {
+            if ((e.which == '115' || e.which == '83' ) && (e.ctrlKey || e.metaKey)) {
+                e.preventDefault();
+                var fct_ctrl_s = new Function('scope', 'scope.' + attrs.dfxStudioCtrlS);
+                fct_ctrl_s(scope);
+                return false;
+            }
+            return true;
+        });
+      }
+    };
 }]);

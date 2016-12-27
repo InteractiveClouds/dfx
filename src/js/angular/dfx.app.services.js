@@ -13,6 +13,41 @@ dfxAppServices.factory('dfxAuthRequest', function() {
     return aut_request;
 });
 
+dfxAppServices.factory('dfxPubSub', [ '$rootScope', function($rootScope) {
+
+	var pubsub = {};
+
+	pubsub.appEmit = function( event, parameters ) {
+        $rootScope.$emit( event, parameters );
+	}
+
+    pubsub.appBroadcast = function( event, parameters ) {
+        $rootScope.$broadcast( event, parameters );
+	}
+
+    pubsub.appSubscribe = function( event, callback ) {
+		$rootScope.$on( event, callback )
+	}
+
+    // emit an event up to the view
+    pubsub.viewEmit = function(scope, event, parameters) {
+		scope.$emit( event, parameters );
+	}
+
+    // broadcast an event down the view
+    pubsub.viewBroadcast = function(scope, event, parameters) {
+		scope.$broadcast( event, parameters );
+	}
+
+    // Subscribe a view to an event
+    pubsub.viewSubscribe = function(scope, event, callback) {
+        scope.$on( event, callback );
+	}
+
+	return pubsub;
+
+}]);
+
 dfxAppServices.factory('dfxPages', [ '$q', function($q) {
 
 	var pages = {};

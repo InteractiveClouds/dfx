@@ -556,6 +556,23 @@ dfxStudioApi.factory('dfxApplications', [ '$http', '$q', function($http, $q) {
         return deferred.promise;
     }
 
+    api_applications.saveScript = function (app){
+        var deferred = $q.defer();
+        $http({
+            url: '/studio/application/update/'+ app.name,
+            method: "POST",
+            data: {
+                "title": app.title,
+                "logo": app.logo,
+                "script": app.script
+            }
+        }).then(function successCallback(response) {
+            deferred.resolve( response );
+        });
+
+        return deferred.promise;
+    }
+
     api_applications.saveLoginPage = function (obj){
         var deferred = $q.defer();
         $http({
@@ -1422,7 +1439,7 @@ dfxStudioApi.factory('dfxViews', [ '$http', '$q', function($http, $q) {
 
     api_views.getViewZip = function( scope, app_name, view_name, platform ) {
         var deferred = $q.defer();
-        
+
         $http({
             url: '/studio/widget/exportView/' + app_name + '/' + view_name + '/' + platform,
             method: 'GET'
