@@ -1,16 +1,11 @@
-<form style="{{attributes.style.value}}" class="{{attributes.classes.value}} gc-datepicker">
-    <div ng-if="attributes.selectedType.value !== 'ranged'">
-        <label ng-class="labelClass" style="font-size: 10px;">{{attributes.label.value | checkExpression}}</label>
-        <div style="margin-top:-2px">
-            <md-datepicker ng-model="attributes.designDate.value" md-placeholder="Enter date">
-            </md-datepicker>
-        </div>
+<div id="{{component_id}}_design" ng-form style="{{attributes.style.value}}" class="{{attributes.classes.value}} dfx-core-gc-datetime">
+    <div ng-if="attributes.mode.value === 'date' && attributes.selectedType.value !== 'ranged' && attributes.dateFormating.value">
+        <mdp-date-picker class="dfx-core-gc-datetime-picker align-value-{{attributes.alignment.value}}" mdp-format="{{attributes.dateFormat.value}}" ng-model="attributes.designDate.value"></mdp-date-picker>
     </div>
-    <div ng-if="attributes.selectedType.value === 'ranged'">
-        <label ng-class="labelClass" style="font-size: 10px">{{attributes.label.value | checkExpression}}</label>
-        <div style="margin-top:-2px">
-            <md-datepicker ng-model="attributes.designDate.value" md-placeholder="Enter date" md-min-date="minDate" md-max-date="maxDate">
-            </md-datepicker>
-        </div>
+    <div ng-if="attributes.mode.value === 'date' && attributes.selectedType.value === 'ranged' && attributes.dateFormating.value">
+        <mdp-date-picker class="dfx-core-gc-datetime-picker align-value-{{attributes.alignment.value}}" mdp-format="{{attributes.dateFormat.value}}" ng-model="attributes.designDate.value" mdp-min-date="minDate" mdp-max-date="maxDate"></mdp-date-picker>
+    </div>    
+    <div ng-if="attributes.mode.value === 'time' && attributes.timeFormating.value">
+        <mdp-time-picker class="dfx-core-gc-datetime-picker align-value-{{attributes.alignment.value}}" mdp-format="{{attributes.timeFormat.value}}" ng-model="attributes.designTime.value"></mdp-time-picker>
     </div>
-</form>
+</div>

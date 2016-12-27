@@ -280,6 +280,7 @@ out.start = function () {
 
                         require('./lib/authRequest_mod').oAuth2AccessTokens.init({ storage: _storage });
                         require('./lib/dfx_resources').api.init({ storage: _storage });
+                        require('./lib/dfx_deploy').init({ storage: _storage });
 
                         var userLib = tenants.user;
                         require('./lib/dfx_user_definition').api.init({ storage: _storage, userLib: userLib });
@@ -549,7 +550,8 @@ function _start () {
             watcher.getInactiveTenants().then(function(inactiveTenants) {
                 activator.getAll().then(function (tenants) {
                     if (((inactiveTenants.indexOf(tenantId) != -1) || (tenants.indexOf(tenantId) == -1)) && watcher.verifyAuthRequest(req.url)) {
-                        res.status(200).send("Your tenant has been put in retired mode. Please remove and add again the DreamFace Service");
+                        //res.status(200).send("You are unauthorized or your tenant has been put in retired mode. Please relogin or remove and add again the DreamFace Service");
+                        next();
                     } else {
                         watcher.setRequestRun(tenantId);
                         res.on('finish', function () {
