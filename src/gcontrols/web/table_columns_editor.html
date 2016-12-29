@@ -5,20 +5,23 @@
                 <h2>Columns editor</h2>
             </div>
         </md-toolbar>
-        <md-dialog-content id="{{component_id}}_md_dialog" layout="column" style="max-width:880px;max-height:810px;width:880px;height:400px;margin:0px;">
-            <div style="display:flex;flex-direction:row;flex-wrap:wrap;justify-content:space-between;padding:8px;">
-                <section id="{{component_id}}_menu_structure" class="md-whiteframe-1dp" style="display: flex;
-    flex-direction: column; width:49.5%;border-radius:4px;overflow:hidden;">
-                    <md-toolbar style="min-height:36px;background:rgba(128,128,128,0.46);">
-                        <div class="md-toolbar-tools" style="height:36px;max-height:36px">
-                            <h3 style="font-size:16px;">Columns list</h3>
+        <md-dialog-content id="{{component_id}}_md_dialog" layout="column" style="max-width:880px;max-height:810px;width:880px;height:400px;margin:0px;padding:8px 8px 2px 8px;">
+            <div class="dfx-studio-tree-editor dfx-ve-menu-editor">
+                <section id="{{component_id}}_menu_structure" class="md-whiteframe-1dp dfx-tree-editor-two-sections">
+                    <md-toolbar class="dfx-studio-toolbar-title">
+                        <div class="md-toolbar-tools">
+                            <h3>Columns list</h3>
                         </div>
                     </md-toolbar>
-                    <md-toolbar style="min-height:30px;background:#ECECEC;font-size:14px;display:flex;flex-direction:row;align-items:center;padding:0 9px;">
-                        <a href="#" class="fa fa-plus" ng-click="insertColumn()" style="color:#676B6E;text-decoration:none;margin:auto 7px;" title="Add item"></a>
-                        <a href="#" class="fa fa-minus" ng-click="removeColumn()" style="color:#676B6E;text-decoration:none;margin:auto 7px;" title="Remove item"></a>
-                        <a href="#" class="fa fa-arrow-up" ng-click="moveColumnUp()" style="color:#676B6E;text-decoration:none;margin:auto 7px;" title="Move up item"></a>
-                        <a href="#" class="fa fa-arrow-down" ng-click="moveColumnDown()" style="color:#676B6E;text-decoration:none;margin:auto 7px;" title="Move down item"></a>
+                    <md-toolbar class="dfx-studio-toolbar-buttons">
+                        <div class="layout-row flex-100"  layout-align="space-between center">
+                            <div>
+                                <md-button aria-label="Studio button" class="fa dfx-studio-toolbar-button fa-plus" ng-click="insertColumn()"></md-button>
+                                <md-button aria-label="Studio button" class="fa dfx-studio-toolbar-button fa-minus" ng-click="removeColumn()"></md-button>
+                                <md-button aria-label="Studio button" class="fa dfx-studio-toolbar-button fa-arrow-up" ng-click="moveColumnUp()"></md-button>
+                                <md-button aria-label="Studio button" class="fa dfx-studio-toolbar-button fa-arrow-down" ng-click="moveColumnDown()"></md-button>
+                            </div>
+                        </div>
                     </md-toolbar>
                     <md-content class="menu-structure" layout-padding flex>
                         <ul>
@@ -28,11 +31,10 @@
                         </ul>
                     </md-content>
                 </section>
-                <section id="{{component_id}}_column_properties" class="md-whiteframe-1dp" style="display: flex;
-    flex-direction: column; width:49.5%;border-radius:4px;overflow:hidden;">
-                    <md-toolbar style="min-height:36px;background:rgba(128,128,128,0.46);">
-                        <div class="md-toolbar-tools" style="height:36px;max-height:36px">
-                            <h3 style="font-size:16px;">Column properties</h3>
+                <section id="{{component_id}}_column_properties" class="md-whiteframe-1dp dfx-tree-editor-two-sections">
+                    <md-toolbar class="dfx-studio-toolbar-title">
+                        <div class="md-toolbar-tools">
+                            <h3>Column properties</h3>
                         </div>
                     </md-toolbar>
                     <md-content layout-padding flex>

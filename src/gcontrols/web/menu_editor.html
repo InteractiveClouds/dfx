@@ -22,15 +22,15 @@
         				<md-button aria-label="Studio button" class="fa dfx-studio-toolbar-button fa-minus" ng-click="deleteMenuItem()"></md-button>
         				<md-button aria-label="Studio button" class="fa dfx-studio-toolbar-button fa-arrow-up" ng-click="moveUpMenuItem()"></md-button>
         				<md-button aria-label="Studio button" class="fa dfx-studio-toolbar-button fa-arrow-down" ng-click="moveDownMenuItem()"></md-button>
-        				<md-button aria-label="Studio button" class="fa dfx-studio-toolbar-button fa-indent" ng-click="indentMenuItem()"></md-button>
-        				<md-button aria-label="Studio button" class="fa dfx-studio-toolbar-button fa-outdent" ng-click="outdentMenuItem()"></md-button>
+        				<md-button ng-hide="gc_selected.type === 'fab' || isFabToolbar.value" aria-label="Studio button" class="fa dfx-studio-toolbar-button fa-indent" ng-click="indentMenuItem()"></md-button>
+        				<md-button ng-hide="gc_selected.type === 'fab' || isFabToolbar.value" aria-label="Studio button" class="fa dfx-studio-toolbar-button fa-outdent" ng-click="outdentMenuItem()"></md-button>
                     </div>
                 </div>
 			</md-toolbar>
             <md-content class="menu-structure" layout-padding flex style="">
                 <script type="text/ng-template" id="menuTree">
                     <span ng-if="menuItem.menuItems.value.length>0">
-                        <i class="fa fa-angle-down dfx-menu-structure-trigger" ng-click="toggleEntity($event)"></i>
+                        <i class="fa fa-angle-down dfx-menu-structure-trigger" ng-click="toggleMenuItem($event)"></i>
                     </span>
                     <a href="#" ng-click="selectMenuItem($event, menuItem)">{{(menuItem.label | checkExpression)||'no-label'}}</a>
                     <ul ng-if="menuItem.menuItems.value">
@@ -58,7 +58,7 @@
                                         <dfx-ve-menu-expression></dfx-ve-menu-expression>
                                     </div>
                                 </li>
-                                <li class="col-md-12" ng-if="!isFabToolbar.value">
+                                <li class="col-md-12" ng-hide="gc_selected.type === 'fab' || isFabToolbar.value">
                                     <span class="col-md-4">Type:</span>
                                     <md-input-container class="col-md-8" style="padding: 0 0 4px 0">
                                         <md-select ng-model="menuEditorItem.type" ng-change="setMenuItemType(menuEditorItem.type)" aria-label="Menu item type">
@@ -85,11 +85,11 @@
                                         </md-radio-group>
                                     </div>
                                 </li>
-                                <li class="col-md-12" ng-if="!isFabToolbar.value" ng-hide="menu.divider || menu.title">
+                                <li class="col-md-12" ng-hide="gc_selected.type === 'fab' || isFabToolbar.value || menu.divider || menu.title">
                                     <span class="col-md-4">Shortcut:</span>
                                     <input class="col-md-8" type="text" ng-model="menu.shortcut" />
                                 </li>                                
-                                <li class="col-md-12" ng-if="!isFabToolbar.value" ng-hide="menu.divider || menu.title">
+                                <li class="col-md-12" ng-hide="gc_selected.type === 'fab' || isFabToolbar.value || menu.divider || menu.title">
                                     <span class="col-md-4">Notification:</span>
                                     <div class="col-md-8" layout="row">
                                         <input class="col-md-12" type="text" ng-model="menu.notification" style="margin-left:-15px;"/>
@@ -338,23 +338,26 @@
 			</md-content>
 		</section>
         <section ng-show="actionsMode.value" id="{{component_id}}_actions_items" class="md-whiteframe-1dp dfx-tree-editor-two-sections">
-            <md-toolbar style="min-height:36px;background:rgba(128,128,128,0.46);">
-                <div class="md-toolbar-tools" style="height:36px;max-height:36px">
-                    <h3 style="font-size:16px;width: 395px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
-                        Action Menu List for: <b>{{menu.label}}</b>
-                    </h3>
+            <md-toolbar class="dfx-studio-toolbar-title">
+                <div class="md-toolbar-tools">
+                    <h3>Action Menu List for: <b>{{menu.label}}</b></h3>
                 </div>
             </md-toolbar>
-            <md-toolbar style="min-height:30px;background:#ECECEC;font-size:14px;display:flex;flex-direction:row;align-items:center;padding:0 9px;">
-                <a href="#" class="fa fa-plus" ng-click="addActionItem()" style="color:#676B6E;text-decoration:none;margin:auto 7px;" title="Add Action Item"></a>
-                <a href="#" class="fa fa-minus" ng-click="deleteActionItem()" style="color:#676B6E;text-decoration:none;margin:auto 7px;" title="Remove Action Item"></a>
-                <a href="#" class="fa fa-arrow-up" ng-click="moveUpActionItem()" style="color:#676B6E;text-decoration:none;margin:auto 7px;" title="Move up Action Item"></a>
-                <a href="#" class="fa fa-arrow-down" ng-click="moveDownActionItem()" style="color:#676B6E;text-decoration:none;margin:auto 7px;" title="Move down Action Item"></a>
-                <!-- <a href="#" class="fa fa-indent" ng-click="indentActionItem()" style="color:#676B6E;text-decoration:none;margin:auto 7px;" title="Indent menu item"></a> -->
-                <!-- <a href="#" class="fa fa-outdent" ng-click="outdentActionItem()" style="color:#676B6E;text-decoration:none;margin:auto 7px;" title="Outdent menu item"></a> -->
+            <md-toolbar class="dfx-studio-toolbar-buttons">
+                <div class="layout-row flex-100"  layout-align="space-between center">
+                    <div>
+                        <md-button aria-label="Studio button" class="fa dfx-studio-toolbar-button fa-plus" ng-click="addActionItem()"></md-button>
+                        <md-button aria-label="Studio button" class="fa dfx-studio-toolbar-button fa-minus" ng-click="deleteActionItem()"></md-button>
+                        <md-button aria-label="Studio button" class="fa dfx-studio-toolbar-button fa-arrow-up" ng-click="moveUpActionItem()"></md-button>
+                        <md-button aria-label="Studio button" class="fa dfx-studio-toolbar-button fa-arrow-down" ng-click="moveDownActionItem()"></md-button>
+                    </div>
+                </div>
             </md-toolbar>
-            <md-content class="actions-structure" layout-padding flex style="max-height:382px;height:382px;">
+            <md-content class="actions-structure menu-structure" layout-padding flex>
                 <script type="text/ng-template" id="actionsTree">
+                    <span ng-if="actionObj.actionItems.length>0">
+                        <i class="fa fa-angle-down dfx-menu-structure-trigger" ng-click="toggleActionItem($event)"></i>
+                    </span>
                     <a href="#" ng-click="setActiveActionItem($index)">{{ (actionObj.label | checkExpression) || 'no-label' }}</a>
                     <ul ng-if="actionObj.actionItems">
                     <li ng-repeat="actionObj in menu.actions.actionItems track by $index" class="action-tree-item" ng-include="'actionsTree'"></li>

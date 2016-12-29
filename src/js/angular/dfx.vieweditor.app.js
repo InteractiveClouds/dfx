@@ -2455,6 +2455,13 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                                 scope.ifShowMenuIconTypes( scope.menu.waiting.icon.value, 'waiting' );
                             }
                         }
+                        scope.toggleMenuItem = function(ev){
+                            var entity_trigger = $(ev.target),
+                                entity_container = entity_trigger.parent().siblings('ul');
+
+                            entity_trigger.hasClass('collapsed') ? entity_trigger.removeClass('collapsed') : entity_trigger.addClass('collapsed');
+                            entity_container.slideToggle();
+                        }
                         scope.addMenuItem = function() {
                             var menuItemTemplate = {
                                 "label": "'New item'",
@@ -3230,6 +3237,13 @@ dfxViewEditorApp.directive('dfxVeTreeEditor', [ '$mdDialog', '$mdToast', '$http'
                             })
                             scope.arrayElement = eval('scope' + scope.arrayElement);
                             scope.outdentPath = eval('scope' + scope.outdentPath);
+                        }
+                        scope.toggleTreeItem = function(ev){
+                            var entity_trigger = $(ev.target),
+                                entity_container = entity_trigger.parent().siblings('ul');
+
+                            entity_trigger.hasClass('collapsed') ? entity_trigger.removeClass('collapsed') : entity_trigger.addClass('collapsed');
+                            entity_container.slideToggle();
                         }
                         scope.addTreeItem = function() {
                             var treeItemTemplate = {
