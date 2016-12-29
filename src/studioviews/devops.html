@@ -3,7 +3,7 @@
         <form ng-submit="saveDataDictionary()">
             <md-content class="md-padding">                
                 <div layout="row" class="layout-align-end">
-                    <md-button class="md-raised" ng-click="openEnvironmentDialog()" aria-label="Studio button">
+                    <md-button aria-label="Studio button" class="md-raised" ng-click="openEnvironmentDialog()" aria-label="Studio button">
                         <md-icon class="fa fa-plus dfx-studio-flex-icon"></md-icon>
                         Environment
                     </md-button>                    
@@ -20,7 +20,7 @@
                                         <div style="display:flex">                                            
                                             <md-menu-bar style="padding:0px">
                                                 <md-menu>
-                                                    <button ng-click="$mdOpenMenu()" style="height:auto;padding:0;background:transparent">
+                                                    <button aria-label="Studio button" ng-click="$mdOpenMenu()" style="height:auto;padding:0;background:transparent">
                                                         <md-icon class="fa fa-gear dfx-studio-flex-icon" style="font-size: 16px"></md-icon>
                                                     </button>
                                                     <md-menu-content width="2">
@@ -86,8 +86,8 @@
                     </md-card>
                 </div>
                 <div style="display:flex; justify-content: flex-end;">
-                    <md-button class="md-primary" type="submit">Save</md-button>
-                    <md-button class="md-primary" ng-click="">Cancel</md-button>
+                    <md-button aria-label="Studio button" class="md-primary" type="submit">Save</md-button>
+                    <md-button aria-label="Studio button" class="md-primary" ng-click="">Cancel</md-button>
                 </div>
             </md-content>
         </form>
@@ -103,7 +103,7 @@
                     </md-input-container>
                 </div>
                 <div layout="row" layout-align ="start">
-                    <button type="submit" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-floppy-o" style="color: #757575"></span><span style="padding-left:5px">Save</span></button>
+                    <button aria-label="Studio button" aria-label="Studio button" type="submit" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-floppy-o" style="color: #757575"></span><span style="padding-left:5px">Save</span></button>
                 </div>
             </form>
         </md-content>
@@ -130,12 +130,12 @@
                 </div>
                 <div layout="row" layout-align="space-between center">
                     <div>
-                        <button type="submit" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-floppy-o" style="color: #757575"></span><span style="padding-left:5px">Save</span></button>
-                        <button ng-click="" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-cloud-download" style="color: #757575"></span><span style="padding-left:5px">Git Pull</span></button>
-                        <button ng-click="" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-cloud-upload" style="color: #757575"></span><span style="padding-left:5px">Git Push</span></button>
-                        <button ng-click="" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-info" style="color: #757575"></span><span style="padding-left:5px">Git Status</span></button>
+                        <button aria-label="Studio button" type="submit" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-floppy-o" style="color: #757575"></span><span style="padding-left:5px">Save</span></button>
+                        <button aria-label="Studio button" ng-click="" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-cloud-download" style="color: #757575"></span><span style="padding-left:5px">Git Pull</span></button>
+                        <button aria-label="Studio button" ng-click="" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-cloud-upload" style="color: #757575"></span><span style="padding-left:5px">Git Push</span></button>
+                        <button aria-label="Studio button" ng-click="" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-info" style="color: #757575"></span><span style="padding-left:5px">Git Status</span></button>
                     </div>
-                    <button ng-click="" class="md-raised md-warn md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-trash-o" style="color: #ffffff"></span><span style="padding-left:5px">Empty Remote Repository</span></button>
+                    <button aria-label="Studio button" ng-click="" class="md-raised md-warn md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-trash-o" style="color: #ffffff"></span><span style="padding-left:5px">Empty Remote Repository</span></button>
                 </div>
             </form>
         </md-content>

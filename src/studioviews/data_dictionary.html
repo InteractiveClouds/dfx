@@ -13,26 +13,26 @@
             <md-toolbar class="dfx-studio-toolbar-buttons">
                 <div class="layout-row flex-100"  layout-align="space-between center">
                     <div>
-                        <md-button class="fa fa-plus dfx-studio-toolbar-button" ng-click="addEntity()" title="Add Entity"></md-button>
-                        <md-button class="fa fa-minus dfx-studio-toolbar-button" ng-click="deleteEntity()" ng-disabled="scope_entity.protected" title="Remove Entity"></md-button>
-                        <md-button class="fa fa-arrow-up dfx-studio-toolbar-button" ng-click="moveUpEntity()" title="Move up Entity"></md-button>
-                        <md-button class="fa fa-arrow-down dfx-studio-toolbar-button" ng-click="moveDownEntity()" title="Move down Entity"></md-button>
-                        <md-button class="fa fa-indent dfx-studio-toolbar-button" ng-click="indentEntity()" ng-disabled="scope_entity.protected" title="Indent Entity"></md-button>
-                        <md-button class="fa fa-outdent dfx-studio-toolbar-button" ng-click="outdentEntity()" ng-disabled="scope_entity.protected" title="Outdent Entity"></md-button>
+                        <md-button aria-label="Studio button" class="fa fa-plus dfx-studio-toolbar-button" ng-click="addEntity()" title="Add Entity"></md-button>
+                        <md-button aria-label="Studio button" class="fa fa-minus dfx-studio-toolbar-button" ng-click="deleteEntity()" ng-disabled="dd_entity.protected" title="Remove Entity"></md-button>
+                        <md-button aria-label="Studio button" class="fa fa-arrow-up dfx-studio-toolbar-button" ng-click="moveUpEntity()" title="Move up Entity"></md-button>
+                        <md-button aria-label="Studio button" class="fa fa-arrow-down dfx-studio-toolbar-button" ng-click="moveDownEntity()" title="Move down Entity"></md-button>
+                        <md-button aria-label="Studio button" class="fa fa-indent dfx-studio-toolbar-button" ng-click="indentEntity()" ng-disabled="dd_entity.protected" title="Indent Entity"></md-button>
+                        <md-button aria-label="Studio button" class="fa fa-outdent dfx-studio-toolbar-button" ng-click="outdentEntity()" ng-disabled="dd_entity.protected" title="Outdent Entity"></md-button>
                     </div>
                 </div>
             </md-toolbar>
             <md-content id="data-dictionary-structure" class="menu-structure collapsible" layout-padding flex>
                 <script type="text/ng-template" id="dataDictionaryTree">
-                    <span ng-if="entity.entities && entity.entities.length>0">
+                    <span ng-if="tree_entity.entities && tree_entity.entities.length>0">
                         <i class="fa fa-angle-down dfx-menu-structure-trigger" ng-click="toggleEntity($event)"></i>
                     </span>
-                    <a ng-click="selectEntity($event, entity)">{{ entity.name || 'no-name' }}</a>
-                    <ul ng-if="entity.entities && entity.entities.length>0">
-                        <li ng-repeat="entity in entity.entities track by $index" class="tree-item" parent-index="{{$parent.$parent.$index}}" self-index="{{$index}}" ng-include="'dataDictionaryTree'"></li>
+                    <a ng-click="selectEntity($event, tree_entity)">{{ tree_entity.name || 'no-name' }}</a>
+                    <ul ng-if="tree_entity.entities && tree_entity.entities.length>0">
+                        <li ng-repeat="tree_entity in tree_entity.entities track by $index" class="tree-item" parent-index="{{$parent.$parent.$index}}" self-index="{{$index}}" ng-include="'dataDictionaryTree'"></li>
                     </ul>
                 </script>
-                <ul><li ng-repeat="entity in data_dictionary_content"  class="tree-item" parent-index="{{$parent.$parent.$index}}" self-index="{{$parent.$index}}" ng-include="'dataDictionaryTree'"></li></ul>
+                <ul><li ng-repeat="tree_entity in dd_content"  class="tree-item" parent-index="{{$parent.$parent.$index}}" self-index="{{$parent.$index}}" ng-include="'dataDictionaryTree'"></li></ul>
             </md-content>
         </section>
         <section id="data_dictionary_json_item_properties" class="md-whiteframe-1dp">
@@ -43,27 +43,27 @@
             </md-toolbar>
             <md-content flex>
                 <div class="dfx-ve-property-treeview hover">
-                    <ul ng-show="scope_entity" class="dfx-ve-property-picker-content clearfix" style="padding: 12px 0 0;">
-                        <li ng-if="dictionary.selectedItem !== null" class="col-md-12">
-                            <span class="col-md-4" style="color: #676B6E;">Name:</span>
+                    <ul ng-show="dd_entity" class="dfx-ve-property-picker-content clearfix" style="padding: 12px 0 0;">
+                        <li class="col-md-12">
+                            <span class="col-md-4" style="color: #676B6E;">Entity name:</span>
                             <div class="col-md-8" layout="row">
-                                <input class="col-md-12" type="text" ng-model="scope_entity.name" ng-disabled="scope_entity.protected"/>
+                                <input class="col-md-12" type="text" ng-model="dd_entity.name" ng-disabled="dd_entity.protected" ng-change="validateEntityName()"/>
                             </div>
                         </li>
-                        <!-- <li class="col-md-12" style="margin-top: 10px;">
-                            <span class="col-md-4" style="color: #676B6E;">Description:</span>
+                        <li ng-show="dd_entity_is_category" class="col-md-12" style="margin-top: 10px;">
+                            <span class="col-md-4" style="color: #676B6E;">Entity description:</span>
                             <div class="col-md-8" layout="row">
-                                <input class="col-md-12" ng-model="scope_entity.description" type="text" />
+                                <input class="col-md-12" ng-model="dd_entity.description" type="text" />
                             </div>
-                        </li> -->
+                        </li>
                     </ul>
-                    <div id="dfx-app-data-dictionary-json" ng-blur="setScopeEntityData()"></div>
+                    <div id="dfx-app-data-dictionary-json" ng-hide="dd_entity_is_category" ng-blur="setScopeEntityDefinition()"></div>
                 </div>
             </md-content>
         </section>
     </div>
     <div style="display:flex; justify-content: flex-end; margin-top: 10px;">
-        <md-button class="md-primary" ng-click="saveDataDictionary()" ng-disabled="invalid_data_dictionary" aria-label="Studio button">Save</md-button>
+        <md-button class="md-primary" ng-click="saveDataDictionary()" ng-disabled="dd_disabled" aria-label="Studio button">Save</md-button>
         <md-button class="md-primary" ng-click="exitDataDictionary()" aria-label="Studio button">Cancel</md-button>
     </div>
 </div>

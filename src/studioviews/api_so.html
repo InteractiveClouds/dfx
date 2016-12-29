@@ -7,9 +7,9 @@
 			Update an API Service Object
 		</h4>
 		<div layout="row">
-			<md-button ng-if="serviceMode === 'serviceAdd'" ng-click="saveApiSo()" class="md-primary" ng-disabled="validNameResult === 'failed' || validUrlResult === 'failed'">Save</md-button>
-			<md-button ng-if="serviceMode === 'serviceEdit'" ng-click="updateApiSo()" class="md-primary" ng-disabled="validNameResult === 'failed' || validUrlResult === 'failed'">Save</md-button>
-			<md-button ng-click="leaveApiSoEditor()" class="md-primary">Cancel</md-button>
+			<md-button aria-label="Studio button" ng-if="serviceMode === 'serviceAdd'" ng-click="saveApiSo()" class="md-primary" ng-disabled="validNameResult === 'failed' || validUrlResult === 'failed'">Save</md-button>
+			<md-button aria-label="Studio button" ng-if="serviceMode === 'serviceEdit'" ng-click="updateApiSo()" class="md-primary" ng-disabled="validNameResult === 'failed' || validUrlResult === 'failed'">Save</md-button>
+			<md-button aria-label="Studio button" ng-click="leaveApiSoEditor()" class="md-primary">Cancel</md-button>
 		</div>	
 	</div>
 
@@ -26,7 +26,7 @@
 	    </md-input-container>
 	    <div style="display:flex; justify-content: flex-end; margin-top: -30px;">
 	        <span id='curl_content_span' style="color: white; margin: 15px 420px 15px 15px; background: #2AB52A; padding: 2px 5px; border-radius: 3px; display:none;" class='md-flex'>Copied!</span>
-	        <md-button class="md-raised md-primary" ng-click="copyToClipboard('curl_content')">Copy to clipboard</md-button>
+	        <md-button aria-label="Studio button" class="md-raised md-primary" ng-click="copyToClipboard('curl_content')">Copy to clipboard</md-button>
 	    </div>
 	    <h3 style="margin: 10px 0 0 10px;border-top: 2px #E0E0E0 solid; padding-top: 10px" >CURL command with parameters and body</h3>
 	    <md-input-container class="md-block">
@@ -34,7 +34,7 @@
 	    </md-input-container>
 	    <div style="display:flex; justify-content: flex-end; margin-top: -30px;">
 	        <span id='curl_content_with_parameters_span' style="color: white; margin: 15px 420px 15px 15px; background: #2AB52A; padding: 2px 5px; border-radius: 3px; display:none;" class='md-flex'>Copied!</span>
-	        <md-button class="md-raised md-primary" ng-click="copyToClipboard('curl_content_with_parameters')">Copy to clipboard</md-button>
+	        <md-button aria-label="Studio button" class="md-raised md-primary" ng-click="copyToClipboard('curl_content_with_parameters')">Copy to clipboard</md-button>
 	    </div>
 	    <h3 style="margin: 10px 0 0 10px;border-top: 2px #E0E0E0 solid; padding-top: 10px" >Postman properties</h3>
 	    <md-input-container class="md-block">
@@ -78,7 +78,7 @@
 	        </tbody>
 	    </table>
 	    <div style="display:flex; justify-content: flex-end;">
-	        <md-button class="md-primary" ng-click="closeCurlSideNav()">Close</md-button>
+	        <md-button aria-label="Studio button" class="md-primary" ng-click="closeCurlSideNav()">Close</md-button>
 	    </div>
 	</md-sidenav>
 	<!-- sidenav for curl end -->
@@ -157,10 +157,10 @@
 		                </md-input-container>
 
 		                <md-input-container ng-if="scopeService.data.settings.cache == 'user'">
-		                    <md-button class="md-raised md-warn" ng-click="clearCache('user')">clear</md-button>
+		                    <md-button aria-label="Studio button" class="md-raised md-warn" ng-click="clearCache('user')">clear</md-button>
 		                </md-input-container>
 		                <md-input-container ng-if="scopeService.data.settings.cache == 'tenant'">
-		                    <md-button class="md-raised md-warn" ng-click="clearCache('tenant')">clear</md-button>
+		                    <md-button aria-label="Studio button" class="md-raised md-warn" ng-click="clearCache('tenant')">clear</md-button>
 		                </md-input-container>
 					</md-content>
 				</md-tab>
@@ -217,7 +217,7 @@
 								</tr>
 							</tbody>
 						</table>	
-						<md-button ng-click="addRow( scopeService.data.parameters, 'parameters' )" class="md-raised">
+						<md-button ng-click="addRow( scopeService.data.parameters, 'parameters' )" class="md-raised" aria-label="Studio button">
 							<md-icon class="fa fa-plus" style="width:14px;height:14px;"></md-icon>
 							Parameter
 						</md-button>
@@ -229,17 +229,17 @@
 						<div id="dfx_filter_src_query_editor_panel" ng-show="editorOpened">
 			        <md-menu-bar>
 								<md-menu>
-									<button ng-click="$mdOpenMenu();">
+									<button ng-click="$mdOpenMenu();" aria-label="Studio button">
 										<md-icon class="fa fa-bars dfx-studio-flex-icon" style="font-size:18px;width:auto;height:18px"></md-icon>
 										<span style="margin:0 5px;">Actions</span>
 										<md-icon class="fa fa-caret-down dfx-studio-flex-icon" style="font-size:18px;width:auto;height:18px"></md-icon>
 									</button>
 									<md-menu-content>
-										<md-menu-item><md-button ng-click="setCodemirrorValue(executeDataQuery)" style="line-height:32px;">Execute service with parameters</md-button></md-menu-item>
-										<md-menu-item><md-button ng-click="setCodemirrorValue(executeDataQueryParams)" style="line-height:32px;">Execute service with parameters and body</md-button></md-menu-item>
+										<md-menu-item><md-button aria-label="Studio button" ng-click="setCodemirrorValue(executeDataQuery)" style="line-height:32px;">Execute service with parameters</md-button></md-menu-item>
+										<md-menu-item><md-button aria-label="Studio button" ng-click="setCodemirrorValue(executeDataQueryParams)" style="line-height:32px;">Execute service with parameters and body</md-button></md-menu-item>
                                         <md-menu-item ng-show="!editFilterParameters">
                                             <md-menu>
-                                                <md-button ng-click="$mdOpenMenu()" style="line-height:32px;">Parameters</md-button>
+                                                <md-button ng-click="$mdOpenMenu()" style="line-height:32px;" aria-label="Studio button">Parameters</md-button>
                                                 <md-menu-content>
                                                     <md-menu-item><md-button ng-click="setCodemirrorValue(getParameter)" style="line-height:32px;">Get Parameter Value</md-button></md-menu-item>
                                                 </md-menu-content>
@@ -249,15 +249,15 @@
 		                                    <md-menu>
 		                                      <md-button ng-click="$mdOpenMenu()" style="line-height:32px;">Parameters</md-button>
 		                                      <md-menu-content>
-		                                        <md-menu-item><md-button ng-click="setCodemirrorValue(getParameter)" style="line-height:32px;">Get Parameter Value</md-button></md-menu-item>
-		                                        <md-menu-item><md-button ng-click="setCodemirrorValue(editParameter)" style="line-height:32px;">Set Parameter Value</md-button></md-menu-item>
-		                                        <md-menu-item><md-button ng-click="setCodemirrorValue(addParameter)" style="line-height:32px;">Add a new Parameter</md-button></md-menu-item>
+		                                        <md-menu-item><md-button aria-label="Studio button" ng-click="setCodemirrorValue(getParameter)" style="line-height:32px;">Get Parameter Value</md-button></md-menu-item>
+		                                        <md-menu-item><md-button aria-label="Studio button" ng-click="setCodemirrorValue(editParameter)" style="line-height:32px;">Set Parameter Value</md-button></md-menu-item>
+		                                        <md-menu-item><md-button aria-label="Studio button" ng-click="setCodemirrorValue(addParameter)" style="line-height:32px;">Add a new Parameter</md-button></md-menu-item>
 		                                    </md-menu-content>
 		                                    </md-menu>
 		                                </md-menu-item>
 		                                <md-menu-item ng-show="editFilterParameters">
 		                                    <md-menu>
-		                                        <md-button ng-click="$mdOpenMenu()" style="line-height:32px;">Body</md-button>
+		                                        <md-button aria-label="Studio button" ng-click="$mdOpenMenu()" style="line-height:32px;">Body</md-button>
 		                                        <md-menu-content>
 		                                            <md-menu-item><md-button ng-click="setCodemirrorValue(setBody)" style="line-height:32px;">Set Body</md-button></md-menu-item>
 		                                        </md-menu-content>
@@ -323,7 +323,7 @@
 									</tr>
 								</tbody>
 							</table>	
-							<md-button ng-click="addRow( scopeService.data.precode, 'pre_code' )" class="md-raised">
+							<md-button ng-click="addRow( scopeService.data.precode, 'pre_code' )" class="md-raised" aria-label="Studio button">
 								<md-icon class="fa fa-plus" style="width:14px;height:14px;"></md-icon>
 								Pre code execution
 							</md-button>
@@ -365,7 +365,7 @@
 									</tr>
 								</tbody>
 							</table>	
-							<md-button ng-click="addRow( scopeService.data.postcode, 'post_code' )" class="md-raised">
+							<md-button ng-click="addRow( scopeService.data.postcode, 'post_code' )" class="md-raised" aria-label="Studio button">
 								<md-icon class="fa fa-plus" style="width:14px;height:14px;"></md-icon>
 								Post code execution
 							</md-button>
@@ -399,7 +399,7 @@
 									</tr>
 								</tbody>
 							</table>	
-							<md-button ng-click="addRow( scopeService.data.appexpr, 'appexpr' )" class="md-raised">
+							<md-button ng-click="addRow( scopeService.data.appexpr, 'appexpr' )" class="md-raised" aria-label="Studio button">
 								<md-icon class="fa fa-plus" style="width:14px;height:14px;"></md-icon>
 								Application Exception
 							</md-button>
@@ -408,13 +408,13 @@
 				</md-tab>
 				<md-tab label="Test" md-on-select="closeActionsEditor()">
 					<md-content class="md-padding sidenav-service">
-						<md-button ng-click="execute( $event )" class="md-raised">
+						<md-button aria-label="Studio button" ng-click="execute( $event )" class="md-raised">
 							<md-icon class="fa fa-play" style="width:14px;height:14px;"></md-icon>
 							Execute
 						</md-button>
-						<md-button ng-click="viewResult()" ng-show="isExecuted" class="md-raised">View Result</md-button>
-						<md-button ng-click="viewMetaData()" ng-show="isExecuted" class="md-raised">View MetaData</md-button>
-						<md-button ng-click="viewRequest()" ng-show="isExecuted" class="md-raised">View Request</md-button>
+						<md-button aria-label="Studio button" ng-click="viewResult()" ng-show="isExecuted" class="md-raised">View Result</md-button>
+						<md-button aria-label="Studio button" ng-click="viewMetaData()" ng-show="isExecuted" class="md-raised">View MetaData</md-button>
+						<md-button aria-label="Studio button" ng-click="viewRequest()" ng-show="isExecuted" class="md-raised">View Request</md-button>
 						<div id="showResults" style="padding-top:16px;opacity:0;">
 		                    <!-- <p ng-show="showFullResult" style="color:red">The response was cut by {{numberOfCutedChars}} characters click <b><a ng-click="showFullResultAction()" style="cursor:pointer;">here</a></b> to see full response</p> -->
 								<div style="border:1px solid #dddddd;">
@@ -428,11 +428,11 @@
 			<md-button type="submit" style="display: none !important;" ng-disabled="validUrlResult === 'failed' || existUrl === true" aria-label="submit"></md-button>
 		</form>
 	  <div style="display:flex; justify-content: flex-end;">
-	      <md-button ng-if="editorOpened" class="md-primary" ng-click="closeActionsEditor()">Back</md-button>
-		  <md-button ng-if="!editorOpened" class="md-primary" ng-click="validateServiceUrl(serviceModeBtn)" ng-disabled="validUrlResult === 'failed' || existUrl === true">Save</md-button>
-	      <md-button ng-if="editorOpened" class="md-primary" ng-click="saveActions()">Save</md-button>
-	      <md-button ng-if="serviceModeBtn === 'serviceAdd'" class="md-primary" ng-click="closeServiceSidenav()">Cancel</md-button>
-		  <md-button ng-if="serviceModeBtn === 'serviceEdit' && !editorOpened" class="md-primary" ng-click="closeServiceSidenav()">Close</md-button>
+	      <md-button aria-label="Studio button" ng-if="editorOpened" class="md-primary" ng-click="closeActionsEditor()">Back</md-button>
+		  <md-button aria-label="Studio button" ng-if="!editorOpened" class="md-primary" ng-click="validateServiceUrl(serviceModeBtn)" ng-disabled="validUrlResult === 'failed' || existUrl === true">Save</md-button>
+	      <md-button aria-label="Studio button" ng-if="editorOpened" class="md-primary" ng-click="saveActions()">Save</md-button>
+	      <md-button aria-label="Studio button" ng-if="serviceModeBtn === 'serviceAdd'" class="md-primary" ng-click="closeServiceSidenav()">Cancel</md-button>
+		  <md-button aria-label="Studio button" ng-if="serviceModeBtn === 'serviceEdit' && !editorOpened" class="md-primary" ng-click="closeServiceSidenav()">Close</md-button>
 		</div>
 	</md-sidenav>
 	<!-- sidenav side_nav_add_service end -->
@@ -458,7 +458,7 @@
 			</md-input-container>
 		</div>
 		<div layout="row" layout-align="end center">
-	    <md-button class="md-primary" ng-click="closeSources()">Close</md-button>
+	    <md-button class="md-primary" ng-click="closeSources()" aria-label="Studio button">Close</md-button>
 		</div>
 	</div>
 	<div id="add-services-backdrop"></div>
@@ -498,17 +498,17 @@
 							</form>						
 						</md-content>
 						<div ng-if="serviceMode === 'serviceEdit'" layout="row" layout-align ="end center">
-					    <button ng-click="confirmApiSoDelete($event)" class="md-raised md-warn md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-trash-o" style="color: #ffffff"></span><span style="padding-left:5px">Delete the API Service Object</span></button>
+					    <button aria-label="Studio button" ng-click="confirmApiSoDelete($event)" class="md-raised md-warn md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-trash-o" style="color: #ffffff"></span><span style="padding-left:5px">Delete the API Service Object</span></button>
 						</div>
 					</md-tab>
 					<md-tab ng-if="serviceMode === 'serviceEdit'" label="Services">
 						<md-content class="md-padding" layout="column">
 							<div layout="row" layout-align="end center">							
-								<md-button class="md-raised" ng-click="addService()">
+								<md-button aria-label="Studio button" class="md-raised" ng-click="addService()">
 									<md-icon class="fa fa-plus" style="width:14px;height:14px;"></md-icon>
 									Service
 								</md-button>
-								<md-button class="md-raised" ng-click="addServices()">
+								<md-button aria-label="Studio button" class="md-raised" ng-click="addServices()">
 									<md-icon class="fa fa-plus" style="width:14px;height:14px;"></md-icon>
 									Services
 								</md-button>
