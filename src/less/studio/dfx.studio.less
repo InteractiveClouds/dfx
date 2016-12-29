@@ -663,31 +663,123 @@ md-input-container.input-select-aligned {
 }
 
 md-content.menu-structure {
-  max-height: 300px;
   overflow-y: auto;
-  &.options-editor {
-    max-height: 268px;
-  }
 }
 
 md-content.menu-structure ul {
-  padding: 0px;
   list-style: none;
+  padding: 0px;
+  margin: 0;  
 }
-md-content.menu-structure ul ul {
-  padding-left: 20px;
+md-content.menu-structure ul {
+  padding-left: 16px;
+  padding-right: 16px;
+  ul {
+    padding-left: 16px;
+    padding-right: 0px;
+  }
+  li {
+    position: relative;
+    z-index: 0;
+    &>span{
+      position: absolute;
+      z-index: 1;
+      top: 0px;
+      left: -16px;
+      i.dfx-menu-structure-trigger {
+        font-size: 18px;
+        color: #3b7fba;
+        transition: all .5s;
+        outline: none;
+        cursor: pointer;
+        &.collapsed {
+          -webkit-transform: rotate(-90deg);
+          transform: rotate(-90deg);
+        }
+      }
+    };
+    a {
+      padding: 0px 2px;
+      text-decoration: none;
+      display: block;
+      cursor: pointer;
+      &:hover {
+        background:rgba(236,236,236,0.5);      
+      };
+    };
+    &.active > a {
+      font-weight: 700;
+      background:#ECECEC;
+    }
+  }
 }
-md-content.menu-structure ul li a {
-  padding: 0px 10px;
-  text-decoration: none;
-  display: block;
-}
-md-content.menu-structure ul li a:hover {
-  background:rgba(236,236,236,0.5);
-}
-md-content.menu-structure ul li.active > a {
-  font-weight: 700;
-  background:#ECECEC;
+
+/*Tree editor*/
+.dfx-studio-tree-editor {
+  display:flex;
+  flex-direction:row;
+  flex-wrap:wrap;
+  justify-content:space-between;
+  &>section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius:4px;
+    overflow:hidden;
+    md-content.menu-structure {
+      max-height: 100%;
+    }
+    .dfx-studio-toolbar-title {
+      min-height:36px;
+      background:rgba(128,128,128,0.46);
+      .md-toolbar-tools {
+        height:36px;
+        max-height:36px;
+        h3 {
+          font-size:16px;
+        }
+      }
+    }
+    input {
+      outline: none;
+    }
+    .dfx-studio-toolbar-buttons {
+      font-size:14px;
+      padding:0 9px;
+      display:flex;
+      flex-direction:row;
+      align-items:center;
+      min-height:30px;
+      background:#ECECEC;
+      .dfx-studio-toolbar-button {
+        float: left;
+        color:#676B6E;
+        text-decoration:none;
+        padding: 0px;
+        width: auto;
+        min-width: 0px;
+        margin:auto 7px;
+        cursor:pointer;
+        outline: none;
+        background-color: transparent !important;
+        .md-ripple-container {
+          background-color: transparent !important;
+          .md-ripple {
+            background: transparent !important;
+          }
+        }
+        &[disabled] {
+          color: #c3c3c3;
+        }
+      }
+    }
+    &.dfx-tree-editor-two-sections {
+      width:49.5%;
+    }
+  }
+  &.dfx-ve-menu-editor {
+    height: 450px;
+  }
 }
 
 /*login landing page*/

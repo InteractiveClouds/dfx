@@ -881,7 +881,7 @@ md-menu button small {
     border-radius: 50%;
     text-align: center;
 }
-md-content.menu-structure.options-editor, md-content.tree-structure.options-editor, md-content.tree-structure {
+/*md-content.menu-structure.options-editor, md-content.tree-structure.options-editor, md-content.tree-structure {
     max-height: 260px;
     overflow-y: auto;
 }
@@ -906,7 +906,7 @@ md-content.menu-structure ul li a:hover, md-content.tree-structure ul li a:hover
 md-content.menu-structure ul li.active > a, md-content.tree-structure ul li.active > a, md-content.actions-structure ul li.active > a {
     font-weight: 700;
     background:#ECECEC;
-}
+}*/
 
 /* Toolbar */
 .gc-icon-bar {
