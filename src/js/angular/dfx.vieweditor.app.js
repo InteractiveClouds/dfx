@@ -2354,11 +2354,12 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                             scope.arrayElement = scope.menuItems.value;
                             scope.gcMenuItems = $("md-content.menu-structure").find('li');
                             $("md-content.menu-structure > ul > li:first-child").addClass('active');
-                            scope.parentMenuItem = $("md-content.menu-structure").find('li.active');
+                            scope.parentMenuItem = $("md-content.menu-structure").find('li.active');                            
                         }, 0);
                     },
                     controller: function(){
                         scope.menuEditorItem = {};
+                        scope.bridge = '.menuItems.value';
                         scope.setMenuItemsType = function( type ){
                             if(scope.toolbarSide === 'left'){
                                 if (type == 'static') {
@@ -2401,6 +2402,14 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                                 scope.ifShowMenuIconTypes( scope.menu.waiting.icon.value, 'waiting' );
                             }
                         }
+                        scope.checkMenuRootPadding = function() {
+                            $timeout(function() {
+                                var root_togglers = $('.menu-structure > ul > li > span').length;
+                                
+                                root_togglers>0 ? $('.menu-structure > ul').css('padding-left', '16px') : $('.menu-structure > ul').css('padding-left', '0px');
+                            }, 0);
+                        }
+                        scope.checkMenuRootPadding();
                         scope.selectMenuItem = function(ev, menuItem) {
                             scope.menu = menuItem;
                             scope.selectedMenuItem = ev.target,
@@ -2411,7 +2420,6 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                             scope.indexParentMenuItem = '';
                             scope.gcMenuItems = $("md-content.menu-structure").find('li');
                             scope.arrayElement = '';
-                            scope.bridge = '.menuItems.value';
                             scope.indentPath = '';
                             scope.outdentPath = '';
                             scope.gcMenuItems.removeClass('active');
@@ -2454,6 +2462,7 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                             if ( scope.waitable.value && scope.menu.waiting && scope.menu.waiting.value ) {
                                 scope.ifShowMenuIconTypes( scope.menu.waiting.icon.value, 'waiting' );
                             }
+                            scope.checkMenuRootPadding();
                         }
                         scope.toggleMenuItem = function(ev){
                             var entity_trigger = $(ev.target),
@@ -2503,6 +2512,7 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                             $timeout(function() {
                                 scope.waitableItem.value = scope.menu.hasOwnProperty('waiting') ? true : false;
                             }, 250);
+                            scope.checkMenuRootPadding();
                         }
                         scope.deleteMenuItem = function() {
                             if ( scope.menuItems.value.length > 0 ) {
@@ -2546,6 +2556,7 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                                     scope.waitableItem.value = scope.menu.hasOwnProperty('waiting') ? true : false;
                                 }
                             }, 250);
+                            scope.checkMenuRootPadding();
                         }
                         Array.prototype.move = function(from,to){
                             scope.gcMenuItems.removeClass('active');
@@ -2563,6 +2574,7 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                                     scope.setMenuItemType();
                                 }, 0);
                             }
+                            scope.checkMenuRootPadding();
                         }
                         scope.moveDownMenuItem = function() {
                             if ( scope.indexMenuItem !== scope.arrayElement.length-1 && angular.isNumber(scope.indexMenuItem) === true ) {
@@ -2573,6 +2585,7 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                                 scope.parentMenuItem.addClass('active');
                                 scope.setMenuItemType();
                             }
+                            scope.checkMenuRootPadding();
                         }
                         scope.indentMenuItem = function() {
                             if ( scope.gc_selected.type !== 'fab' && !scope.isFabToolbar.value ) {
@@ -2602,6 +2615,7 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                                         .hideDelay(3000)
                                 );
                             }
+                            scope.checkMenuRootPadding();
                         }
                         scope.outdentMenuItem = function() {
                             if ( scope.gc_selected.type !== 'fab' && !scope.isFabToolbar.value ) {
@@ -2610,7 +2624,6 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                                     scope.outdentElement = scope.arrayElement[scope.indexMenuItem];
                                     scope.arrayElement.splice(scope.indexMenuItem, 1);
                                     scope.arrayElement = '';
-                                    scope.bridge = '.menuItems.value';
                                     scope.parents.each(function(index, element){
                                         if ( index === 0 ) {
                                             scope.arrayElement = scope.bridge;
@@ -2641,6 +2654,7 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                                         .hideDelay(3000)
                                 );
                             }
+                            scope.checkMenuRootPadding();
                         }
                         scope.ifShowMenuIconTypes = function( icon, type ) {
                             var regexp = /(^\')(.*)(\'$)/gm, filtered = regexp.exec( icon );
@@ -2737,6 +2751,7 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                                 scope.menu.actions.actionItems.push(actionItemTemplate);
                             }
                             scope.setActiveActionItem(scope.actionActiveIndex);
+                            scope.checkMenuRootPadding();
                         }
                         scope.deleteActionItem = function(){
                             if(scope.menu.actions.actionItems.length>0){
@@ -2744,6 +2759,7 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                                 if(scope.actionActiveIndex===scope.menu.actions.actionItems.length && scope.actionActiveIndex>0) --scope.actionActiveIndex;
                                 scope.setActiveActionItem(scope.actionActiveIndex);
                             }
+                            scope.checkMenuRootPadding();
                         }
                         scope.moveUpActionItem = function(){
                             if(scope.menu.actions.actionItems.length>1 && scope.actionActiveIndex>0){
@@ -2753,6 +2769,7 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                                 scope.menu.actions.actionItems.splice(scope.actionActiveIndex, 0, tempActiveItem);
                                 scope.setActiveActionItem(scope.actionActiveIndex);
                             }
+                            scope.checkMenuRootPadding();
                         }
                         scope.moveDownActionItem = function(){
                             if(scope.menu.actions.actionItems.length>0 && scope.actionActiveIndex<scope.menu.actions.actionItems.length-1){
@@ -2762,6 +2779,7 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                                 scope.menu.actions.actionItems.splice(scope.actionActiveIndex, 0, tempActiveItem);
                                 scope.setActiveActionItem(scope.actionActiveIndex);
                             }
+                            scope.checkMenuRootPadding();
                         }
                         scope.setActionsMode = function(){
                             scope.actionsMode.value=true;
@@ -3194,6 +3212,7 @@ dfxViewEditorApp.directive('dfxVeTreeEditor', [ '$mdDialog', '$mdToast', '$http'
                         }, 0);
                     },
                     controller: function(){
+                        scope.bridge = '.children';
                         if (scope.attributes.treeItemsType.value == 'static') {
                             scope.attributes.static.status = "overridden";
                         }
@@ -3208,7 +3227,6 @@ dfxViewEditorApp.directive('dfxVeTreeEditor', [ '$mdDialog', '$mdToast', '$http'
                             scope.indexParentTreeItem = '';
                             scope.gcTreeItems = $("md-content.tree-structure").find('li');
                             scope.arrayElement = '';
-                            scope.bridge = '.children';
                             scope.indentPath = '';
                             scope.outdentPath = '';
                             scope.gcTreeItems.removeClass('active');
@@ -3237,6 +3255,7 @@ dfxViewEditorApp.directive('dfxVeTreeEditor', [ '$mdDialog', '$mdToast', '$http'
                             })
                             scope.arrayElement = eval('scope' + scope.arrayElement);
                             scope.outdentPath = eval('scope' + scope.outdentPath);
+                            scope.checkMenuRootPadding();
                         }
                         scope.toggleTreeItem = function(ev){
                             var entity_trigger = $(ev.target),
@@ -3245,6 +3264,15 @@ dfxViewEditorApp.directive('dfxVeTreeEditor', [ '$mdDialog', '$mdToast', '$http'
                             entity_trigger.hasClass('collapsed') ? entity_trigger.removeClass('collapsed') : entity_trigger.addClass('collapsed');
                             entity_container.slideToggle();
                         }
+                        scope.checkMenuRootPadding = function() {
+                            $timeout(function() {
+                                var root_togglers = $('.menu-structure > ul > li > span').length;
+                                
+                                root_togglers>0 ? $('.menu-structure > ul').css('padding-left', '16px') : $('.menu-structure > ul').css('padding-left', '0px');
+                            }, 0);
+                        }
+                        scope.checkMenuRootPadding();
+
                         scope.addTreeItem = function() {
                             var treeItemTemplate = {
                                 "name": "'New item'",
@@ -3275,6 +3303,7 @@ dfxViewEditorApp.directive('dfxVeTreeEditor', [ '$mdDialog', '$mdToast', '$http'
                                     scope.tree = scope.children[0];
                                 }, 0);
                             }
+                            scope.checkMenuRootPadding();
                         }
                         scope.deleteTreeItem = function() {
                             if ( scope.children.length > 0 ) {
@@ -3311,6 +3340,7 @@ dfxViewEditorApp.directive('dfxVeTreeEditor', [ '$mdDialog', '$mdToast', '$http'
                                     scope.tree = scope.arrayElement[scope.indexTreeItem];
                                 }
                             }
+                            scope.checkMenuRootPadding();
                         }
                         Array.prototype.move = function(from,to){
                             scope.gcTreeItems.removeClass('active');
@@ -3327,6 +3357,7 @@ dfxViewEditorApp.directive('dfxVeTreeEditor', [ '$mdDialog', '$mdToast', '$http'
                                     scope.parentTreeItem.addClass('active');
                                 }, 0);
                             }
+                            scope.checkMenuRootPadding();
                         }
                         scope.moveDownTreeItem = function() {
                             if ( scope.indexTreeItem !== scope.arrayElement.length-1 && angular.isNumber(scope.indexTreeItem) === true ) {
@@ -3336,6 +3367,7 @@ dfxViewEditorApp.directive('dfxVeTreeEditor', [ '$mdDialog', '$mdToast', '$http'
                                 scope.parentTreeItem = scope.parentTreeItem.next();
                                 scope.parentTreeItem.addClass('active');
                             }
+                            scope.checkMenuRootPadding();
                         }
                         scope.indentTreeItem = function() {
                             if ( scope.parentTreeItem.index() > 0 ) {
@@ -3351,6 +3383,7 @@ dfxViewEditorApp.directive('dfxVeTreeEditor', [ '$mdDialog', '$mdToast', '$http'
                                     scope.parentTreeItem = $("md-content.tree-structure").find('li.active');
                                 }, 0);
                             }
+                            scope.checkMenuRootPadding();
                         }
                         scope.outdentTreeItem = function() {
                             scope.parents = $(scope.parentTreeItem).parents('li.tree-view-item');
@@ -3358,7 +3391,6 @@ dfxViewEditorApp.directive('dfxVeTreeEditor', [ '$mdDialog', '$mdToast', '$http'
                                 scope.outdentElement = scope.arrayElement[scope.indexTreeItem];
                                 scope.arrayElement.splice(scope.indexTreeItem, 1);
                                 scope.arrayElement = '';
-                                scope.bridge = '.children';
                                 scope.parents.each(function(index, element){
                                     if ( index === 0 ) {
                                         scope.arrayElement = scope.bridge;
@@ -3376,6 +3408,7 @@ dfxViewEditorApp.directive('dfxVeTreeEditor', [ '$mdDialog', '$mdToast', '$http'
                                     $(scope.parentTreeItem).addClass('active');
                                 }, 0);
                             }
+                            scope.checkMenuRootPadding();
                         }
                         scope.closeDialog = function() {
                             $mdDialog.hide();
