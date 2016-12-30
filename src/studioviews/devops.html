@@ -1,7 +1,7 @@
 <md-tabs md-dynamic-height md-border-bottom>
     <md-tab label="Environments">
         <form ng-submit="saveDataDictionary()">
-            <md-content class="md-padding">                
+            <md-content class="md-padding" style="padding-bottom:0px">                
                 <div layout="row" class="layout-align-end">
                     <md-button aria-label="Studio button" class="md-raised" ng-click="openEnvironmentDialog()" aria-label="Studio button">
                         <md-icon class="fa fa-plus dfx-studio-flex-icon"></md-icon>
@@ -9,85 +9,93 @@
                     </md-button>                    
                 </div>
                 <h2 ng-if="environments_list.length===0">You have no Environments yet</h2>
-                <div layout="row" ng-if="environments_list.length>0">
-                    <md-card class="md-altTheme-theme" style="margin: 16px 0;width:100%;overflow:hidden;">
-                        <md-card-content style="padding:0;">
-                            <md-toolbar class="md-altTheme-theme" style="min-height: 48px; flex-direction: row; font-size: 14px;">
-                                <div style="display: inline-flex; width: 200px;"><div style="width: 200px;"></div></div>
-                                <div style="display: inline-flex;width:100%;overflow:auto;">
-                                    <div ng-repeat="environment in environments_list track by $index" style="display: inline-flex; align-items: center; justify-content: space-between; text-transform: capitalize; padding: 0 8px;max-width: 200px;" ng-style="{background: $even ? 'rgba(0,0,0,0.07)' : '', width:100/environments_list.length+'%' }">
-                                        <b style="display:inline-block;white-space:nowrap;text-overflow: ellipsis;overflow: hidden;">{{environment.name}}</b>
-                                        <div style="display:flex">                                            
-                                            <md-menu-bar style="padding:0px">
-                                                <md-menu>
-                                                    <button aria-label="Studio button" ng-click="$mdOpenMenu()" style="height:auto;padding:0;background:transparent">
-                                                        <md-icon class="fa fa-gear dfx-studio-flex-icon" style="font-size: 16px"></md-icon>
-                                                    </button>
-                                                    <md-menu-content width="2">
-                                                        <md-menu-item>
-                                                            <md-button style="font-size: 12px;line-height:0px" ng-click="openEnvVarEditor($index, environment.data)" class="dfx-studio-table-button" aria-label="Studio button">
-                                                                <md-icon class="fa fa-edit dfx-studio-flex-icon" style="font-size: 16px; margin-right:8px"></md-icon>Edit
-                                                            </md-button>
-                                                        </md-menu-item>
-                                                        <md-menu-item>
-                                                            <md-button style="font-size: 12px;line-height:0px" ng-click="openEnvironmentDialog($index, environment, 'copy')" class="dfx-studio-table-button" aria-label="Studio button">
-                                                                <md-icon class="fa fa-copy dfx-studio-flex-icon" style="font-size: 16px; margin-right:8px"></md-icon>Copy
-                                                            </md-button>
-                                                        </md-menu-item>
-                                                        <md-menu-item>
-                                                            <md-button style="font-size: 12px;line-height:0px" ng-click="openEnvironmentDialog($index, environment)" class="dfx-studio-table-button" aria-label="Studio button">
-                                                                <md-icon class="fa fa-retweet dfx-studio-flex-icon" style="font-size: 16px; margin-right:8px"></md-icon>Rename
-                                                            </md-button>
-                                                        </md-menu-item>
-                                                        <md-menu-item>
-                                                            <md-button style="font-size: 12px;line-height:0px" ng-click="confirmEnvironmentRemove($event, environment._id)" class="dfx-studio-table-button" aria-label="Studio button">
-                                                                <md-icon class="fa fa-trash dfx-studio-flex-icon" style="font-size: 16px; margin-right:8px"></md-icon>Delete
-                                                            </md-button>
-                                                        </md-menu-item>              
-                                                    </md-menu-content>
-                                                </md-menu>
-                                            </md-menu-bar>
-                                        </div>
+                <div layout="row" class="dfx-studio-tree-editor" ng-if="environments_list.length>0" style="padding-top:16px;background: rgb(250,250,250);">
+                    <section class="md-whiteframe-1dp" style="width:100%;">
+                        <md-toolbar class="md-altTheme-theme" style="min-height: 36px; flex-direction: row; font-size: 14px;background:rgba(128,128,128,0.46);">
+                            <div style="display: inline-flex; width: 200px;align-items: center;"><div style="width: 200px;"><h3 style="font-size: 16px;margin: auto 8px;">Variables</h3></div></div>
+                            <div style="display: inline-flex;width:100%;overflow:auto;">
+                                <div ng-repeat="environment in environments_list track by $index" style="display: inline-flex; align-items: center; justify-content: space-between; text-transform: capitalize; padding: 0 8px;max-width: 200px;" ng-style="{background: $even ? 'rgba(0,0,0,0.07)' : '', width:100/environments_list.length+'%' }">
+                                    <h3 style="display:inline-block;white-space:nowrap;text-overflow: ellipsis;overflow: hidden;font-size: 16px; margin: 0;">{{environment.name}}</h3>
+                                    <div style="display:flex">                                            
+                                        <md-menu-bar style="padding:0px">
+                                            <md-menu>
+                                                <button aria-label="Studio button" ng-click="$mdOpenMenu()" style="height:auto;padding:0;background:transparent">
+                                                    <md-icon class="fa fa-gear dfx-studio-flex-icon" style="font-size: 16px"></md-icon>
+                                                </button>
+                                                <md-menu-content width="3">
+                                                    <!-- <md-menu-item>
+                                                        <md-button style="font-size: 12px;line-height:0px" ng-click="openEnvVarEditor($index, environment.data)" class="dfx-studio-table-button" aria-label="Studio button">
+                                                            <md-icon class="fa fa-edit dfx-studio-flex-icon" style="font-size: 16px; margin-right:8px"></md-icon>Edit
+                                                        </md-button>
+                                                    </md-menu-item> -->
+                                                    <md-menu-item>
+                                                        <md-button style="font-size: 12px;line-height:0px" ng-click="openEnvironmentDialog($index, environment, 'copy')" class="dfx-studio-table-button" aria-label="Studio button">
+                                                            <md-icon class="fa fa-copy dfx-studio-flex-icon" style="font-size: 16px; margin-right:8px"></md-icon>Copy
+                                                        </md-button>
+                                                    </md-menu-item>
+                                                    <md-menu-item>
+                                                        <md-button style="font-size: 12px;line-height:0px" ng-click="openEnvironmentDialog($index, environment)" class="dfx-studio-table-button" aria-label="Studio button">
+                                                            <md-icon class="fa fa-retweet dfx-studio-flex-icon" style="font-size: 16px; margin-right:8px"></md-icon>Rename
+                                                        </md-button>
+                                                    </md-menu-item>
+                                                    <md-menu-item>
+                                                        <md-button style="font-size: 12px;line-height:0px" ng-click="confirmEnvironmentRemove($event, environment._id)" class="dfx-studio-table-button" aria-label="Studio button">
+                                                            <md-icon class="fa fa-trash dfx-studio-flex-icon" style="font-size: 16px; margin-right:8px"></md-icon>Delete
+                                                        </md-button>
+                                                    </md-menu-item>              
+                                                </md-menu-content>
+                                            </md-menu>
+                                        </md-menu-bar>
                                     </div>
-                                </div>                            
-                            </md-toolbar>
-                            <div ng-repeat="env_var in env_vars_list track by $index" ng-init="env_var_index = 'row' + $index" style="display: flex; min-height: 32px;">
-                                <div style="display: inline-flex; align-items: center; width: 200px;background: #383838; ">
-                                    <div style="display: inline-flex; width: 200px; padding: 0 8px; justify-content: space-between; color: rgb(33,150,243);">
-                                        <span ng-if="!hasChildren(env_var.data)" style="padding-left: 14px;position: relative">
-                                            <div>{{env_var.name}}</div>
+                                </div>
+                            </div>                            
+                        </md-toolbar>
+                        <md-content id="dfx-studio-environments-definition" flex style="padding-bottom:0px">
+                            <div ng-repeat="(key, value) in env_vars_list track by $index" ng-init="env_var_index = 'row' + $index" style="display: flex; min-height: 32px;">
+                                <div style="display: inline-flex; align-items: center; width: 200px; ">
+                                    <div style="display: inline-flex; width: 200px; padding: 0 8px; justify-content: space-between; color: #337ab7;">                                        
+                                        <span ng-if="!hasChildren(value)" style="padding-left: 14px;position: relative">
+                                            <div>{{key}}</div>
                                         </span>
-                                        <span ng-if="hasChildren(env_var.data)" style="padding-left: 14px;position: relative">
-                                            <i class="fa fa-minus" ng-click="toggleRow($event, env_var_index)" style="position: absolute; left: 0px; top: 5px; font-size: 12px; outline: none; cursor:pointer"></i>
-                                            <div style="padding: 0 0 5px 0">{{env_var.name}}</div>
-                                            <div style="padding: 0 0 0 14px" id="{{env_var_index}}">
-                                                <div style="padding: 0 0 5px 0" ng-repeat="(key, value) in env_var.data">{{key}}</div> 
+                                        <span ng-if="hasChildren(value)" style="padding-left: 14px;position: relative">
+                                            <i class="fa fa-angle-down dfx-envs-structure-trigger" ng-click="toggleEntity($event, key)" style="position: absolute; left: -2px; top: 6px; font-size: 18px;color: #3b7fba;transition: all .5s;cursor: pointer;"></i>                                            
+                                            <div style="height:30px;display:flex;align-items:center">{{key}}</div>
+                                            <div style="padding: 0 0 0 14px" id="{{key}}_box">
+                                                <div style="height:30px;display:flex;align-items:center" ng-repeat="(key, value) in value">{{key}}</div> 
                                             </div>
                                         </span>
                                     </div>
                                 </div>
                                 <div style="display: inline-flex;width:100%;overflow:auto;">
-                                    <div ng-repeat="environment in environments_list track by $index" style="display: inline-flex; align-items: center; flex-grow: 1; flex-basis: 0; padding: 0 8px;max-width: 200px;" ng-style="{background: $even ? 'rgba(0,0,0,0.07)' : '', width:100/environments_list.length+'%' }">
-                                        <!-- <span>{{environment.data[env_var.name].description ? environment.data[env_var.name].description : environment.data[env_var.name]}}</span>                                -->
-
-                                        <span ng-if="!environment.data[env_var.name].description">
-                                            <span>{{environment.data[env_var.name]}}</span>
+                                    <div ng-init="p_key = key; p_value = value" ng-repeat="environment in environments_list track by $index" style="display: inline-flex; align-items: center; flex-grow: 1; flex-basis: 0; padding: 0 8px;max-width: 200px;" ng-style="{background: $even ? 'rgba(0,0,0,0.07)' : '', width:100/environments_list.length+'%' }">                                        
+                                        <span ng-if="!value"ng-form ng-submit="saveEntityVal()">
+                                            <span ng-click="editEntityVal($event, environment.data[key])">{{environment.data[key] || 'enter value'}}</span>
+                                            <md-input-container style="margin:0px;display:none;padding:0">
+                                                <input type="text" ng-blur="hideEntityVal($event)">
+                                            </md-input-container>
+                                            <button type='submit' style="display: none"></button>
                                         </span>
-                                        <div ng-if="environment.data[env_var.name].description">
-                                            <div style="padding: 0 0 5px 0">{{environment.data[env_var.name].description}}</div>
+                                        <div ng-if="value" class="{{key}}_row"ng-form ng-submit="saveEntityVal()">
+                                            <span style="height:30px;display:flex;align-items:center">{{environment.data[key].description}}</span>
                                             <span class="{{env_var_index}}">
-                                                <div style="padding: 0 0 5px 0" ng-if="key !== 'description'" ng-repeat="(key, value) in environment.data[env_var.name]">{{value}}</div> 
+                                                <div style="height:30px;display:flex;align-items:center"  ng-repeat="(key, value) in value">
+                                                    <span ng-click="editEntityVal($event, environment.data[p_key][key])">{{environment.data[p_key][key] || 'enter value'}}</span>
+                                                    <md-input-container style="margin:0px;display:none;padding:0">
+                                                        <input type="text" ng-blur="hideEntityVal($event)">
+                                                    </md-input-container>
+                                                </div> 
                                             </span>
+                                            <button type='submit' style="display: none"></button>
                                         </div>        
                                     </div>
                                 </div>
                             </div>
-                        </md-card-content>
-                    </md-card>
-                </div>
-                <div style="display:flex; justify-content: flex-end;">
-                    <md-button aria-label="Studio button" class="md-primary" type="submit">Save</md-button>
-                    <md-button aria-label="Studio button" class="md-primary" ng-click="">Cancel</md-button>
+                        </md-content>
+                    </section>
+                    <div style="display:flex; justify-content: flex-end;width:100%;padding-top: 16px">
+                        <md-button aria-label="Studio button" class="md-primary" type="submit">Save</md-button>
+                        <md-button aria-label="Studio button" class="md-primary" ng-click="">Cancel</md-button>
+                    </div>
                 </div>
             </md-content>
         </form>

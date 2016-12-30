@@ -2404,6 +2404,9 @@ dfxStudioApp.controller("dfx_studio_devops_controller", [ '$scope', '$q', '$mdDi
             console.log('------------$scope.environments_list', $scope.environments_list);
             console.log('------------envs_init', envs_init);
             if(!envs_init) $scope.generateAppEnvironments();
+
+            // var bodyHeight = parseFloat($("body").css('height'));
+            // $('#dfx-studio-environments-definition').height(bodyHeight - 390);
         });
     }
 
@@ -2462,6 +2465,31 @@ dfxStudioApp.controller("dfx_studio_devops_controller", [ '$scope', '$q', '$mdDi
             $scope.getAppEnvironments(app_data);
         });
     }
+    // var data1 = {
+    //         "app_name": $scope.app_name,
+    //         "name": 'dev',
+    //         "data": {
+    //             "IP": {
+    //                 'HOST': "111.222.333.444",
+    //                 "PORT": "80"
+    //             },
+    //             'MEMORY_LIMIT': '50mb'
+    //         }
+    //     },
+    //     data2 = {
+    //         "app_name": $scope.app_name,
+    //         "name": 'prod',
+    //         "data": {
+    //             "IP": {
+    //                 'HOST': "444.333.222.111",
+    //                 "PORT": "81"
+    //             },
+    //             'MEMORY_LIMIT': '150mb'
+    //         }
+    //     };
+        
+        // dfxApplications.addEnvironment(data1);
+        // dfxApplications.addEnvironment(data2);
     
     $scope.editEnvironment = function(data){
         dfxApplications.editEnvironment(data).then(function(){
@@ -2469,6 +2497,7 @@ dfxStudioApp.controller("dfx_studio_devops_controller", [ '$scope', '$q', '$mdDi
             $scope.getAppEnvironments(app_data);
         });
     }
+
 
     $scope.openEnvironmentDialog = function(index, environment, action){
         console.log('environment', environment);
@@ -2579,30 +2608,52 @@ dfxStudioApp.controller("dfx_studio_devops_controller", [ '$scope', '$q', '$mdDi
     /* env vars functions */
 
     $scope.hasChildren = function(tree_data){
-        return (angular.equals({}, tree_data) || tree_data === []) ? false : true;
+        // console.log('tree_data', tree_data);
+        return typeof tree_data === 'object' ? true : false;
     }
 
-    $scope.toggleRow = function(ev, index){
-        console.log('index', index);
+    $scope.editEntityVal = function(ev, val){
+        $(ev.target).hide();
+        $(ev.target).siblings().show().find('input').focus().val(val);
+
+    }
+
+    $scope.saveEntityVal = function(ev){
+        var env_val = $(ev.target).find('input').val().hide();
+        $(ev.target).find('span').text(env_val).show();        
+    }
+
+    $scope.toggleEntity = function(ev, key){
+        console.log('ev, key', ev, key);
         var trigger = $(ev.target);
-        if(trigger.hasClass('fa-minus')){
-            trigger.removeClass('fa-minus').addClass('fa-plus');
-            $('#' + index + ', ' + '.' + index).slideUp(0);
+        if(trigger.hasClass('collapsed')){
+            trigger.removeClass('collapsed');
+            $('#' + key + '_box').slideDown();
+            $('.' + key + '_row').slideDown();
         }else{
-            trigger.removeClass('fa-plus').addClass('fa-minus');
-            $('#' + index + ', ' + '.' + index).slideDown(0);
+            trigger.addClass('collapsed');
+            $('#' + key + '_box').slideUp();
+            $('.' + key + '_row').slideUp();
         }
     }
 
     $scope.getAppEnvVars = function(data, envs_init){        
         dfxApplications.getEnvironmentVariablesList( data ).then(function(response){
-            $scope.env_vars_list = response.data.data;            
+            // $scope.env_vars_list = response.data.data;            
             console.log('$scope.env_vars_list', $scope.env_vars_list);
 
             $scope.getAppEnvironments(data, envs_init);
         });
     }
     $scope.getAppEnvVars(app_data, 'envs_init');
+
+    $scope.env_vars_list = {
+        'IP': {
+            'HOST': '',
+            'PORT': ''
+        },
+        'MEMORY_LIMIT': ''
+    }
 
     $scope.addVariable = function(data){
         dfxApplications.addEnvironmentVariable(data).then(function(){
