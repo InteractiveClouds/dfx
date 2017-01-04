@@ -43,7 +43,7 @@ dfxStudioApp.config([ '$routeProvider', '$mdThemingProvider', function($routePro
             controller: 'dfx_studio_configuration_controller',
             templateUrl: 'studioviews/configuration.html'
         })
-        .when('/:appname/scripts/controller', {
+        .when('/:appname/scripts/:platform/controller', {
             controller: 'dfx_studio_app_scripts_controller_controller',
             templateUrl: 'studioviews/app_scripts_controller.html'
         })
@@ -3946,6 +3946,7 @@ dfxStudioApp.controller("dfx_studio_deployment_controller", [ '$scope', '$mdDial
 dfxStudioApp.controller('dfx_studio_app_scripts_controller_controller', [ '$rootScope', '$scope', '$routeParams', 'dfxApplications', 'dfxMessaging', function($rootScope, $scope, $routeParams, dfxApplications, dfxMessaging) {
     $scope.app_name = $routeParams.appname;
     $scope.app = {};
+    $scope.platform = $routeParams.platform;
     $scope.script_theme = (localStorage.getItem('DFX_script_theme')!=null) ? localStorage.getItem('DFX_script_theme') : 'monokai';
 
     dfxApplications.getGeneral($scope.app_name).then(function(application_document) {
@@ -3971,8 +3972,10 @@ dfxStudioApp.controller('dfx_studio_app_scripts_controller_controller', [ '$root
             gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
         });
         $(src_editor.getWrapperElement()).attr('id', 'dfx_as_script_editor');
-        if (application_document.script!=null) {
+        if (application_document.script!=null && $scope.platform=='web') {
             src_editor.setValue(application_document.script);
+        } else if (application_document.scriptMobile!=null && $scope.platform=='mobile') {
+            src_editor.setValue(application_document.scriptMobile);
         } else {
             src_editor.setValue('');
         }
@@ -3982,8 +3985,12 @@ dfxStudioApp.controller('dfx_studio_app_scripts_controller_controller', [ '$root
 
     $scope.saveScript = function() {
         var editor = $('#dfx_as_script_editor')[0].CodeMirror;
-        $scope.app.script = editor.getValue();
-        dfxApplications.saveScript( $scope.app ).then( function() {
+        if ($scope.platform=='web') {
+            $scope.app.script = editor.getValue();
+        } else {
+            $scope.app.scriptMobile = editor.getValue();
+        }
+        dfxApplications.saveScript( $scope.app, $scope.platform ).then( function() {
             dfxMessaging.showMessage( 'The application controller script has been saved' );
         });
     };
@@ -6587,6 +6594,7 @@ dfxStudioApp.directive('dfxStudioCtrlS', [ '$document', function ($document) {
 	return {
       restrict: 'A',
       link: function(scope, element, attrs) {
+        $document.unbind('keydown');
         $document.bind('keydown', function(e) {
             if ((e.which == '115' || e.which == '83' ) && (e.ctrlKey || e.metaKey)) {
                 e.preventDefault();
