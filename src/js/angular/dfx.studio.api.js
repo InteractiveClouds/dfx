@@ -949,6 +949,29 @@ dfxStudioApi.factory('dfxDeployment', [ '$http', '$q', function($http, $q) {
         return deferred.promise;
     }
 
+    api_build.getMobileAppInfo = function(build) {
+        var deferred = $q.defer();
+        $http({
+            method: 'GET',
+            url: '/studio/phonegap/getApp',
+            params: { appId: build.application }
+        }).then(function successCallback(response) {
+            deferred.resolve( response.data );
+        });
+        return deferred.promise;
+    }
+
+    api_build.getGeneratedEnvironment = function(o){
+        var deferred = $q.defer();
+        $http({
+            method: 'GET',
+            url: '/studio/application/getEnv/' + o.app
+        }).then(function successCallback(response) {
+            deferred.resolve( response.data.data );
+        });
+        return deferred.promise;
+    }
+
     return api_build;
 }]);
 

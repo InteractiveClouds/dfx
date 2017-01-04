@@ -43,3 +43,5 @@ localSettings.
 /Users
 
 dfx_dep_starter.js
+run_dep.js
+run_dev.js
