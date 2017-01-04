@@ -772,7 +772,7 @@ function isBrowserSupported(req, res) {
     var browser_name = parser.setUA(ua).getBrowser().name;
     var full_browser_version = parser.setUA(ua).getBrowser().version;
 
-    if (browser_name == 'IE' || browser_name == 'Firefox' || browser_name == 'Opera') {
+    if (browser_name == 'IE' || browser_name == 'Firefox' || browser_name == 'Opera' || browser_name == 'Safari') {
         fs.readFile(path.join(__dirname, 'templates/studio/errors/browser-support.jade'), 'utf8', function(err, data) {
 			if (err) throw err;
 			var fn = jade.compile(data);
