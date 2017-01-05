@@ -162,7 +162,7 @@ md-toast.md-error-toast-theme div {
   a {
   	color: #8DCEFF;
   }
-  
+
   ul {
     .transition-duration;
     list-style: none;
@@ -175,7 +175,7 @@ md-toast.md-error-toast-theme div {
       span{
         .transition-property(color);
         .transition-duration;
-      
+
         //Highlight on hover
         &:hover {
           color: @hoverColor;
@@ -184,22 +184,22 @@ md-toast.md-error-toast-theme div {
       }
     }
   }
-  
+
   //Hide checkboxes
   input.dfx-studio-explorer-treeview-button {
     display: none;
-    
+
     //Hide collapsed branches
     &:checked ~ ul {
       display: none;
     }
-     
+
     //Show pointer on collapsible rows
     & ~ label {
       cursor: pointer;
       font-weight: 700;
     }
-    
+
     //Expanded branch
     & ~ label:before {
       content: '';
@@ -279,7 +279,7 @@ label.dfx-studio-explorer-treeview-menuicon-label {
     background: #ffffff;
     a, button {
       color: #323232;
-      line-height: 16px; 
+      line-height: 16px;
       padding-top: 0px!important;
     }
     md-icon {
@@ -402,7 +402,7 @@ table.sidenavtable {
         padding: 0 0px;
         font-family: RobotoDraft,Roboto,'Helvetica Neue',sans-serif !important;
         md-checkbox {
-          margin: 0;        
+          margin: 0;
         }
       }
     }
@@ -421,12 +421,12 @@ table.sidenavtable {
         font-family: RobotoDraft,Roboto,'Helvetica Neue',sans-serif !important;
         md-input-container {
           margin: 0;
-        } 
+        }
         .md-errors-spacer {
           min-height: 0px;
         }
         md-checkbox {
-          margin: 0;        
+          margin: 0;
         }
       }
       &:hover {
@@ -473,7 +473,7 @@ md-input-container.dfx-input-container-simple {
       text-decoration: none;
       &.opened {
         -webkit-transform: rotate(90deg);
-        transform: rotate(90deg);      
+        transform: rotate(90deg);
       }
     }
     &.restdata {
@@ -569,7 +569,7 @@ md-input-container.dfx-input-container-simple {
               font-size: 12px;
               font-weight: 600;
               padding: 8px 28px;
-            }            
+            }
           }
         }
         tbody {
@@ -622,7 +622,7 @@ md-input-container.dfx-input-container-simple {
   }
   &.opened:before {
     -webkit-transform: rotate(90deg);
-    transform: rotate(90deg);      
+    transform: rotate(90deg);
   }
 }
 .trigger-source-container {
@@ -653,7 +653,7 @@ md-input-container.dfx-input-container-simple {
   right:0;
   bottom:0;
   left:0;
-  background-color: rgba(33,33,33,0.3); 
+  background-color: rgba(33,33,33,0.3);
 }
 
 /*data dictionary*/
@@ -824,7 +824,7 @@ button.dfx-studio-toolbat-options-button {
   font-size: 12px;
   line-height:0px;
   md-icon {
-    font-size: 16px; 
+    font-size: 16px;
     margin-right:8px;
   }
 }
@@ -869,13 +869,13 @@ button.dfx-studio-toolbat-options-button {
             &.empty-var {
               color: grey;
               font-style: italic;
-            }  
+            }
           }
           md-input-container {
             padding: 0px;
             margin: 0;
             input {
-              height: 20px;      
+              height: 20px;
             }
             &.md-input-focused {
               .md-input {
@@ -1055,6 +1055,33 @@ button.md-button md-icon.fa.dfx-studio-flex-icon {
     display: -webkit-inline-flex;
     display: inline-flex;
 }
+
+/* Application Scripts Toolbar */
+.dfx-as-toolbar {
+  background-color: #383838 !important;
+  color: #fff !important;
+  min-height: 48px !important;
+  border-top: 1px #6b6a6a solid;
+}
+.dfx-as-toolbar-tools {
+  padding: 0;
+  height: 48px !important;
+  max-height: 48px !important;
+}
+.dfx-as-toolbar-button {
+  width: 30px;
+  min-width: 30px;
+  height: 24px;
+  min-height: 24px;
+  line-height: 24px;
+  margin: 2px;
+  margin-top: 3px !important;
+}
+.dfx-as-toolbar-icon {
+  width: 32px;
+  cursor: pointer;
+}
+
 * {
   outline: none !important;
 }
