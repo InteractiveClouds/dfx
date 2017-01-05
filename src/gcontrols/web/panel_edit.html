@@ -20,6 +20,10 @@
 					<span class="col-md-6">Name:</span>
 					<input class="col-md-6" type="text" ng-model="attributes.name.value" ng-change="overrideAttribute('name')" ng-focus="cacheAttributeOldValue({'name':'name'})" ng-blur="cacheAttributeNewValue('name')"/>
 				</li>
+                <li class="col-md-12">
+					<span class="col-md-6">Form Name:</span>
+					<input class="col-md-6" type="text" ng-model="attributes.form.value" ng-change="overrideAttribute('form')" ng-focus="cacheAttributeOldValue({'name':'form'})" ng-blur="cacheAttributeNewValue('form')"/>
+				</li>
 				<li class="col-md-12" dfx-gc-property="whiteframe">
 					<span class="col-md-6">Whiteframe:<dfx-gc-template-locking attr_name="whiteframe"></dfx-gc-template-locking></span>
 					<md-input-container class="col-md-6" style="padding: 0 0 10px">
