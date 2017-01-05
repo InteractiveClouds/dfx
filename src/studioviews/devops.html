@@ -1,11 +1,101 @@
 <md-tabs md-dynamic-height md-border-bottom>
     <md-tab label="Environments">
-        <md-content class="md-padding">
-            <h1 class="md-display-2">Environments</h1>
-            <p>Coming soon. This feature will be available in a future release. To know more about managing environments in DreamFace, contact our support:</p>
-            <md-button class="md-raised md-primary" ng-href="#contactus">DreamFace Support</md-button>
-        </md-content>
-    </md-tab>
+        <form>
+            <md-content class="md-padding" style="padding-bottom:0px">                
+                <div layout="row" class="layout-align-end">
+                    <md-button aria-label="Studio button" class="md-raised" ng-click="openEnvironmentDialog()" aria-label="Studio button">
+                        <md-icon class="fa fa-plus dfx-studio-flex-icon"></md-icon>
+                        Environment
+                    </md-button>                    
+                </div>
+                <h2 ng-if="environments_list.length===0">You have no Environments yet</h2>
+                <div layout="row" class="dfx-studio-tree-editor environments-tree" ng-if="environments_list.length>0" style="padding-top:16px;background: rgb(250,250,250);">
+                    <section class="md-whiteframe-1dp" style="width:100%;">
+                        <div class="dfx-studio-grid-table" ng-if="dd_variables_loaded">
+                            <div class="dfx-studio-grid-table-names">
+                                <md-toolbar class="dfx-studio-toolbar-title">
+                                    <div class="md-toolbar-tools">
+                                        <h3>Variables</h3>
+                                    </div>
+                                </md-toolbar>
+                                <md-content id="dfx-studio-environments-definition" class="menu-structure layout-padding" flex>
+                                    <script type="text/ng-template" id="envVarsTree">
+                                        <span ng-if="checkValueType(value)" class="dfx-menu-structure-trigger-box">
+                                            <i class="fa fa-angle-down dfx-menu-structure-trigger" ng-click="toggleEntity($event, key)"></i>
+                                        </span>
+                                        <span>{{ key }}</span>
+                                        <ul ng-if="checkValueType(value)" id="{{ key + '_box'}}">
+                                            <li ng-repeat="(key, value) in value track by $index" class="tree-item" parent-index="{{$parent.$parent.$index}}" self-index="{{$index}}" ng-include="'envVarsTree'"></li>
+                                        </ul>
+                                    </script>
+                                    <ul><li ng-repeat="(key, value) in env_vars_list" ng-init="checkMenuRootPadding()" class="tree-item" ng-include="'envVarsTree'"></li></ul>
+                                </md-content>
+                            </div>
+                            <div class="dfx-studio-grid-table-columns">
+                                <div class="dfx-studio-grid-table-column" ng-repeat="environment in environments_list track by $index" ng-init="evn_index = $index; root_key = environment.data; entity_path = '[' + evn_index + '].data.'" aria-label="{{evn_index}}">
+                                    <md-toolbar class="dfx-studio-toolbar-title">
+                                        <div class="md-toolbar-tools">
+                                            <h3>{{environment.name}}</h3>
+                                            <md-menu-bar>
+                                                <md-menu>
+                                                    <button aria-label="Studio button" ng-click="$mdOpenMenu()">
+                                                        <md-icon class="fa fa-gear dfx-studio-flex-icon"></md-icon>
+                                                    </button>
+                                                    <md-menu-content width="3">                        
+                                                        <md-menu-item>
+                                                            <md-button ng-click="openEnvironmentDialog($index, environment, 'copy')" class="dfx-studio-toolbat-options-button" aria-label="Studio button">
+                                                                <md-icon class="fa fa-copy dfx-studio-flex-icon"></md-icon>
+                                                                Copy
+                                                            </md-button>
+                                                        </md-menu-item>
+                                                        <md-menu-item>
+                                                            <md-button ng-click="openEnvironmentDialog($index, environment)" class="dfx-studio-toolbat-options-button" aria-label="Studio button">
+                                                                <md-icon class="fa fa-retweet dfx-studio-flex-icon"></md-icon>
+                                                                Rename
+                                                            </md-button>
+                                                        </md-menu-item>
+                                                        <md-menu-item>
+                                                            <md-button ng-click="confirmEnvironmentRemove($event, environment._id)" class="dfx-studio-toolbat-options-button" aria-label="Studio button">
+                                                                <md-icon class="fa fa-trash dfx-studio-flex-icon"></md-icon>
+                                                                Delete
+                                                            </md-button>
+                                                        </md-menu-item>              
+                                                    </md-menu-content>
+                                                </md-menu>
+                                            </md-menu-bar>
+                                        </div>
+                                    </md-toolbar>
+                                    <div class="dfx-studio-grid-table-column-data">
+                                        <script type="text/ng-template" id="environment-content-{{evn_index}}">
+                                            <div ng-if="checkValueType(value, 'simple')" class="dfx-studio-grid-table-column-data-item">
+                                                <span ng-click="editEntityVal($event, root_key)" class="dfx-studio-grid-table-column-data-item-value" ng-class="{'empty-var': !root_key}">{{ root_key || 'enter value' }}</span>
+                                                <md-input-container style="display: none">
+                                                    <input ng-keyup="saveEntityVal($event, entity_path)" ng-blur="blurEntityVal($event)" aria-label="Environment value">
+                                                </md-input-container>
+                                                <input type="text" ng-model="root_key" class="ng-hide" aria-label="root key">
+                                            </div>
+                                            
+                                            <div ng-if="checkValueType(value)" class="dfx-studio-grid-table-column-data-item">
+                                                <span style="display:block;height:20px"></span>
+                                            </div>
+                                            
+                                            <ul ng-if="checkValueType(value)" class="{{key + '_row'}}">
+                                                <li ng-repeat="(key, value) in value track by $index" ng-init="root_key = root_key[key]; entity_path = createEntityPath(entity_path, key)" ng-include="'environment-content-{{evn_index}}'" aria-label="{{root_key}} {{entity_path}}"></li></ul>
+                                        </script>
+                                        <ul><li ng-repeat="(key, value) in env_vars_list" ng-init="root_key = root_key[key]; entity_path = entity_path + key" ng-include="'environment-content-{{evn_index}}'" aria-label="{{root_key}} {{entity_path}}"></li></ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <div style="display:flex; justify-content: flex-end;width:100%;padding-top: 16px">
+                        <md-button aria-label="Studio button" class="md-primary" ng-click="saveAppEnvironments()">Save</md-button>
+                        <md-button aria-label="Studio button" class="md-primary" ng-click="">Cancel</md-button>
+                    </div>
+                </div>
+            </md-content>
+        </form>
+    </md-tab>    
     <md-tab label="Collaboration">
         <md-content class="md-padding">
             <form ng-submit="saveCollaboration()">
@@ -17,7 +107,7 @@
                     </md-input-container>
                 </div>
                 <div layout="row" layout-align ="start">
-                    <button type="submit" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-floppy-o" style="color: #757575"></span><span style="padding-left:5px">Save</span></button>
+                    <button aria-label="Studio button" aria-label="Studio button" type="submit" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-floppy-o" style="color: #757575"></span><span style="padding-left:5px">Save</span></button>
                 </div>
             </form>
         </md-content>
@@ -44,12 +134,12 @@
                 </div>
                 <div layout="row" layout-align="space-between center">
                     <div>
-                        <button type="submit" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-floppy-o" style="color: #757575"></span><span style="padding-left:5px">Save</span></button>
-                        <button ng-click="" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-cloud-download" style="color: #757575"></span><span style="padding-left:5px">Git Pull</span></button>
-                        <button ng-click="" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-cloud-upload" style="color: #757575"></span><span style="padding-left:5px">Git Push</span></button>
-                        <button ng-click="" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-info" style="color: #757575"></span><span style="padding-left:5px">Git Status</span></button>
+                        <button aria-label="Studio button" type="submit" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-floppy-o" style="color: #757575"></span><span style="padding-left:5px">Save</span></button>
+                        <button aria-label="Studio button" ng-click="" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-cloud-download" style="color: #757575"></span><span style="padding-left:5px">Git Pull</span></button>
+                        <button aria-label="Studio button" ng-click="" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-cloud-upload" style="color: #757575"></span><span style="padding-left:5px">Git Push</span></button>
+                        <button aria-label="Studio button" ng-click="" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-info" style="color: #757575"></span><span style="padding-left:5px">Git Status</span></button>
                     </div>
-                    <button ng-click="" class="md-raised md-warn md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-trash-o" style="color: #ffffff"></span><span style="padding-left:5px">Empty Remote Repository</span></button>
+                    <button aria-label="Studio button" ng-click="" class="md-raised md-warn md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-trash-o" style="color: #ffffff"></span><span style="padding-left:5px">Empty Remote Repository</span></button>
                 </div>
             </form>
         </md-content>

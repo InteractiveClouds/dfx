@@ -70,8 +70,8 @@
             </div>
 
             <div style="display:flex; justify-content: flex-end; margin-top: 15px;">
-                <md-button class="md-primary" ng-click="updateUserDefinition()">Save</md-button>
-                <md-button class="md-primary" ng-click="unselectUserDefinitionNode()">Cancel</md-button>
+                <md-button aria-label="Studio button" class="md-primary" ng-click="updateUserDefinition()">Save</md-button>
+                <md-button aria-label="Studio button" class="md-primary" ng-click="unselectUserDefinitionNode()">Cancel</md-button>
             </div>
         </md-content>
     </md-tab>
@@ -79,7 +79,7 @@
     <md-tab label="Roles">
         <md-content class="md-padding" ng-controller="dfx_studio_app_roles_controller">
             <div layout="row" class="layout-align-end">
-                <md-button class="md-raised" ng-click="initNewRole()">
+                <md-button aria-label="Studio button" class="md-raised" ng-click="initNewRole()">
                     <md-icon class="fa fa-plus" style="width:14px;height:14px;"></md-icon>
                     Role
                 </md-button>
@@ -100,8 +100,8 @@
                                 <td>{{role.name}}</td>
                                 <td>{{role.description}}</td>
                                 <td>
-                                    <md-button ng-click="edit(role.name)" class="dfx-studio-table-button"><md-icon class="fa fa-edit"></md-icon></md-button>
-                                    <md-button class="dfx-studio-table-button" ng-click="confirmDelete($event, role)" ng-disabled="role.unremovable"><md-icon class="fa fa-trash"></md-icon></md-button>
+                                    <md-button aria-label="Studio button" ng-click="edit(role.name)" class="dfx-studio-table-button"><md-icon class="fa fa-edit"></md-icon></md-button>
+                                    <md-button aria-label="Studio button" class="dfx-studio-table-button" ng-click="confirmDelete($event, role)" ng-disabled="role.unremovable"><md-icon class="fa fa-trash"></md-icon></md-button>
                                 </td>
                             </tr>
                             </tbody>
@@ -115,7 +115,7 @@
     <md-tab label="Application Users">
         <md-content class="md-padding" ng-controller="dfx_studio_app_users_controller">
             <div layout="row" class="layout-align-end">
-                <md-button class="md-raised" ng-click="initNewUser()">
+                <md-button aria-label="Studio button" class="md-raised" ng-click="initNewUser()">
                     <md-icon class="fa fa-plus" style="width:14px;height:14px;"></md-icon>
                     User
                 </md-button>
@@ -138,8 +138,8 @@
                                 <td>{{user.name.first}}</td>
                                 <td>{{user.name.last}}</td>
                                 <td>
-                                    <md-button ng-click="edit(user.credentials.login)" class="dfx-studio-table-button"><md-icon class="fa fa-edit"></md-icon></md-button>
-                                    <md-button ng-click="confirmDelete($event, user.credentials.login)" class="dfx-studio-table-button"><md-icon class="fa fa-trash"></md-icon></md-button>
+                                    <md-button aria-label="Studio button" ng-click="edit(user.credentials.login)" class="dfx-studio-table-button"><md-icon class="fa fa-edit"></md-icon></md-button>
+                                    <md-button aria-label="Studio button" ng-click="confirmDelete($event, user.credentials.login)" class="dfx-studio-table-button"><md-icon class="fa fa-trash"></md-icon></md-button>
                                 </td>
                             </tr>
                             </tbody>

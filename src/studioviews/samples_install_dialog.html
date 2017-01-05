@@ -5,7 +5,7 @@
                 <img src="/images/github_logo.png" style="width: 32px; margin-right: 5px;"/>
                 <h5 style="padding-top: 2px;">Install {{selected_sample.content.title}}</h5>
                 <span flex></span>
-                <md-button class="md-icon-button" ng-click="cancel()">
+                <md-button aria-label="Studio button" class="md-icon-button" ng-click="cancel()">
                     <md-icon class="fa fa-lg fa-times dfx-studio-flex-icon" aria-label="Close dialog"></md-icon>
                 </md-button>
             </div>
@@ -25,10 +25,10 @@
         </md-dialog-content>
         <md-dialog-actions layout="row">
             <span flex></span>
-            <md-button ng-disabled="selected_application==null" class="md-primary" ng-click="install()">
+            <md-button aria-label="Studio button" ng-disabled="selected_application==null" class="md-primary" ng-click="install()">
                 Install
             </md-button>
-            <md-button class="md-primary" ng-click="cancel()">
+            <md-button aria-label="Studio button" class="md-primary" ng-click="cancel()">
                 Cancel
             </md-button>
         </md-dialog-actions>
