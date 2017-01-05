@@ -7,7 +7,7 @@
 	"chartType":			{ "value": "pieChart" },
 	"display": 				{ "value": "true" },
 	"options": {
-  	"labelSunbeamLayout": "true",
+  		"labelSunbeamLayout": "true",
 		"labelThreshold": 0.01,
 		"donutLabelsOutside": "false",
 		"showLabels": "true",

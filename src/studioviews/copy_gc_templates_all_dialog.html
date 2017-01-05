@@ -1,0 +1,29 @@
+<md-dialog aria-label="copy-component" ng-cloak>
+    <form ng-submit="copyAllComponents()">
+        <md-toolbar>
+            <div class="md-toolbar-tools layout-padding">
+                <h5>Copy GC Templates to...
+                </h5>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="closeDialog()" style="margin-right:-6px;">
+                    <md-icon class="fa fa-lg fa-times dfx-studio-flex-icon" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content style="width:400px;">
+            <div class="md-dialog-content layout-column">
+                <md-input-container class="input-select-aligned margin-select">
+                    <label>Application:</label>
+                    <md-select ng-model="toCopy.applicationNameTarget" aria-label="component.application">
+                        <md-option ng-value="application.name" ng-repeat="application in applications track by $index">{{ application.name }}</md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button class="md-primary" type="submit">OK</md-button>
+            <md-button class="md-primary" ng-click="closeDialog()">Cancel</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

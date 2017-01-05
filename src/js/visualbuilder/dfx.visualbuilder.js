@@ -916,6 +916,32 @@ DfxVisualBuilder.movingComponentHelper = (function () {
         editor.setValue(JSON.stringify(wgt_definition, null, '\t'));
     };
 
+    api.replaceComponentInDefinition = function (component_new_definition, card) {
+        var component_id = component_new_definition.id,
+            found_it = false;
+
+        var doReplace = function (parent_definition, card) {
+            var ref_definition = (card !== null) ? parent_definition[card] : parent_definition;
+
+            for (var idx = 0; idx < ref_definition.length; idx++) {
+                if (found_it) break;
+
+                if (ref_definition[idx].id == component_id) {
+                    ref_definition[idx] = component_new_definition;
+                    found_it = true;
+                } else {
+                    doReplace(ref_definition[idx].children, null);
+                }
+            }
+        };
+
+        var editor = $('#dfx_src_editor.CodeMirror')[0].CodeMirror;
+        var view_definition = JSON.parse(editor.getValue());
+
+        doReplace(view_definition.definition, card);
+        editor.setValue(JSON.stringify(view_definition, null, '\t'));
+    };
+
     api.addComponentToScope = function(component_definition, container_definition, card) {
         var ve_scope = angular.element(document.getElementById('dfx_src_widget_editor')).scope();
         ve_scope.addComponent(component_definition, container_definition, card);
@@ -1309,7 +1335,7 @@ DfxVisualBuilder.findComponentAndUpdateAttributes = function (component_id, pare
  * Removes not overridden attributes
  */
 DfxVisualBuilder.removeNotOverriddenAttributes = function (updated_attributes, gc_type, attr_full_path) {
-    var getGcTemplate = function (gc_type, callback) {
+    var getGcDefaultTemplate = function (gc_type, callback) {
         gc_type = (gc_type == 'datatable') ? 'table' : gc_type;
         gc_type = (gc_type == 'json') ? 'gc_json' : gc_type;
 
@@ -1415,7 +1441,7 @@ DfxVisualBuilder.removeNotOverriddenAttributes = function (updated_attributes, g
         }
     };
 
-    getGcTemplate(gc_type, function(template) {
+    getGcDefaultTemplate(gc_type, function(template) {
         removeNotOverridden(updated_attributes, attr_full_path, template);
     });
 };
@@ -1582,6 +1608,22 @@ DfxVisualBuilder.loadStylesPalette = function (componentPalette) {
 
         StylesPaletteModal.fillModal('styles-palette-modal-window');
     });
+};
+
+/**
+ * Saves GC template in database
+ */
+DfxVisualBuilder.saveComponentAsTemplate = function(event) {
+    var ve_scope = angular.element(document.getElementById('dfx_src_widget_editor')).scope();
+    ve_scope.saveComponentAsTemplate(event);
+};
+
+/**
+ * Gets GC templates by type to show in Drag & Drop toolbar
+ */
+DfxVisualBuilder.getGcTemplatesToDragDrop = function(gc_type, gc_cat) {
+    var ve_scope = angular.element(document.getElementById('dfx_src_widget_editor')).scope();
+    ve_scope.getGcTemplatesToDragDrop(gc_type, gc_cat);
 };
 
 /**
