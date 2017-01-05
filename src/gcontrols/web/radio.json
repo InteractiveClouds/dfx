@@ -8,7 +8,6 @@
     "bindingProperty":      { "value": "" },
     "propToDisplay":        { "value": "" },
     "source":               { "value": "" },
-    "currentItem":          { "value": "", "display": "" },  
     "radioItems":           { "value": [{"display":"'yes'", "value":"true"}, {"display":"'no'", "value": "false"}] },
     "optionsType":          { "value": "static" },
     "direction":            { "value": "column" },

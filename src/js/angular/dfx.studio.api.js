@@ -540,14 +540,15 @@ dfxStudioApi.factory('dfxApplications', [ '$http', '$q', function($http, $q) {
         return deferred.promise;
     }
 
-    api_applications.saveGeneral = function (title, appname, logo){
+    api_applications.saveGeneral = function (title, appname, logo, security){
         var deferred = $q.defer();
         $http({
             url: '/studio/application/update/'+ appname,
             method: "POST",
             data: {
                     "title": title,
-                    "logo": logo
+                    "logo": logo,
+                    "security": security
             }
         }).then(function successCallback(response) {
             deferred.resolve( response );
@@ -1444,6 +1445,19 @@ dfxStudioApi.factory('dfxViews', [ '$http', '$q', function($http, $q) {
         return deferred.promise;
     }
 
+    api_views.getViewZip = function( scope, app_name, view_name, platform ) {
+        var deferred = $q.defer();
+
+        $http({
+            url: '/studio/widget/exportView/' + app_name + '/' + view_name + '/' + platform,
+            method: 'GET'
+        }).then(function successCallback(response) {
+            deferred.resolve( response );
+        });
+
+        return deferred.promise;
+    }
+
     return api_views;
 }]);
 
@@ -1657,6 +1671,160 @@ dfxStudioApi.factory('dfxTemplates', [ '$http', '$q', function($http, $q) {
     }
 
     return api_templates;
+}]);
+
+dfxStudioApi.factory('dfxGcTemplates', [ '$http', '$q', function($http, $q) {
+
+    var api_gc_templates = {};
+
+    api_gc_templates.getOne = function( scope, app_name, template_name, template_platform, tenant_id ) {
+        var deferred = $q.defer();
+
+        var url = '/studio/gctemplates/item/' + template_name + '/' + app_name + '/' + template_platform;
+        if (tenant_id) {
+            url = url + '/' + tenant_id;
+        }
+
+        $http({
+            method: 'GET',
+            url: url
+        }).then(function successCallback(response) {
+            deferred.resolve(response.data.gc_template);
+        });
+
+        return deferred.promise;
+    };
+
+    api_gc_templates.getAll = function( scope, app_name ) {
+        var deferred = $q.defer();
+
+        $http({
+            method: 'GET',
+            url: '/studio/gctemplates/list/' + app_name
+        }).then(function successCallback(response) {
+            deferred.resolve(response.data.gc_templates);
+        });
+
+        return deferred.promise;
+    };
+
+    api_gc_templates.getAllByPlatform = function( scope, app_name, template_platform ) {
+        var deferred = $q.defer();
+
+        $http({
+            method: 'GET',
+            url: '/studio/gctemplates/list/' + app_name + '/' + template_platform
+        }).then(function successCallback(response) {
+            deferred.resolve(response.data.gc_templates);
+        });
+
+        return deferred.promise;
+    };
+
+    api_gc_templates.getByType = function( scope, app_name, type, template_platform ) {
+        var deferred = $q.defer();
+
+        $http({
+            method: 'GET',
+            url: '/studio/gctemplates/type/' + type + '/' + app_name + '/' + template_platform
+        }).then(function successCallback(response) {
+            deferred.resolve(response.data.gc_templates);
+        });
+
+        return deferred.promise;
+    };
+
+    api_gc_templates.create = function( scope, template ) {
+        var deferred = $q.defer();
+
+        delete template._id;
+
+        $http({
+            url: '/studio/gctemplates/create/',
+            method: 'POST',
+            data: template
+        }).then(function successCallback(response) {
+            deferred.resolve( response );
+        }, function failCallback(response) {
+            deferred.reject( response );
+        });
+
+        return deferred.promise;
+    };
+
+    api_gc_templates.update = function( scope, template ) {
+        var deferred = $q.defer();
+
+        delete template._id;
+
+        $http({
+            url: '/studio/gctemplates/update/',
+            method: 'POST',
+            data: {"change":template}
+        }).then(function successCallback(response) {
+            deferred.resolve( response.data );
+        });
+
+        return deferred.promise;
+    };
+
+    api_gc_templates.remove = function( scope, template_name, app_name, platform ) {
+        var deferred = $q.defer();
+
+        $http({
+            method: 'POST',
+            url: '/studio/gctemplates/delete',
+            data: { name: template_name , ownerId: "", application: app_name, platform: platform }
+        }).then(function successCallback(response) {
+            deferred.resolve( response );
+        });
+
+        return deferred.promise;
+    };
+
+    api_gc_templates.removeAll = function( scope, template_names, app_name, platform ) {
+        var deferred = $q.defer();
+
+        $http({
+            method: 'POST',
+            url: '/studio/gctemplates/deleteall',
+            data: { names: template_names , ownerId: "", application: app_name, platform: platform }
+        }).then(function successCallback(response) {
+            deferred.resolve( response );
+        });
+
+        return deferred.promise;
+    };
+
+    api_gc_templates.copy = function( scope, to_copy ) {
+        var deferred = $q.defer();
+
+        $http({
+            method: 'POST',
+            url: '/studio/gctemplates/copy',
+            data: to_copy
+        }).then(function successCallback(response) {
+            deferred.resolve(response);
+        });
+
+        return deferred.promise;
+    };
+
+    api_gc_templates.copyAll = function( scope, to_copy ) {
+        var deferred = $q.defer();
+
+        $http({
+            method: 'POST',
+            url: '/studio/gctemplates/copyall',
+            data: to_copy
+        }).then(function successCallback(response) {
+            deferred.resolve(response);
+        });
+
+        return deferred.promise;
+    };
+
+    return api_gc_templates;
 }]);
 
 dfxStudioApi.factory('dfxAppRoles', [ '$http', '$q', function($http, $q) {
@@ -2292,7 +2460,10 @@ dfxStudioApi.factory('dfxRendering', [ '$http', '$q', function($http, $q) {
             method: 'POST',
             url: '/studio/view/render',
 			data: {
-				view_source: JSON.parse(view_definition)
+				view_source: JSON.parse(view_definition),
+                application: scope.application_name,
+                platform: scope.view_platform,
+                tenant_id: DfxStudio.tenantId
 			}
         }).then(function successCallback(response) {
             deferred.resolve( response.data );

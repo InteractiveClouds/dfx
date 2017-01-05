@@ -13,10 +13,7 @@
      ATTR-IF{{ng-show="attributes.display.value"}}
      ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}>
 
-    <div class="gc-checkbox-label-preview">{{attributes.label.value}}</div>
+    <label ATTR-IF{{style="attributes.labelStyle.style"}} class="dfx-core-gc-progressbar-label ATTR-NONV{{labelStyle.class}}">{{attributes.label.value}}</label>
 
-    <md-progress-linear class="md-altTheme-theme"
-      ATTR-IF{{md-mode="attributes.selectedType.value"}}
-      value="{{attributes.binding.value}}">
-    </md-progress-linear>
+    <md-progress-linear ATTR-IF{{style="attributes.itemStyle.style"}} class="md-altTheme-theme ATTR-NONV{{itemStyle.class}}" ATTR-IF{{md-mode="attributes.selectedType.value"}} value="{{attributes.binding.value}}"></md-progress-linear>
 </div>

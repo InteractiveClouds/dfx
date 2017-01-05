@@ -2,22 +2,26 @@
 	<ul>
 		<li>
 			<input class="dfx-pe-property-treeview-button" type="checkbox" id="item-props" />
-			<label for="item-props">Page Properties</label>
-			<span class="pull-right"><a href="#" ng-click="addLayoutRow()" title="Add a row"><i class="fa fa-plus"></i></a></span>
-			<ul class="dfx-pe-property-treeview-content" style="margin-left:10px">
-				<li class="col-md-12">
+			<label for="item-props">
+				<span>Page Properties</span>
+				<span class="pull-right"><a href="#" ng-click="addLayoutRow()" title="Add a row">Add Row</a></span>
+			</label>
+			<ul class="dfx-pe-property-treeview-content">
+				<li class="col-md-12" style="padding:10px">
 					<span class="col-md-6">Auto height:</span>
 					<div class="col-md-6" layout="row">
 						<md-checkbox ng-model="selected_page.autoHeight" class="md-primary" aria-label="Auto height"/>
 					</div>
 				</li>
 				<li class="col-md-12" ng-repeat="row in selected_page.layout.rows">
-					<ul>
+					<ul class="dfx-pe-property-treeview-content-level-1">
 						<li>
-							<input class="dfx-pe-property-treeview-button" type="checkbox" id="item-layout-row-{{$index}}" />
-							<label for="item-layout-row-{{$index}}">Row {{$index}}</label>
-							<span class="pull-right"><a href="#" ng-click="deleteLayoutRow($index)" title="Remove the row"><i class="fa fa-minus"></i></a></span>
-							<span class="pull-right"><a href="#" ng-click="addLayoutColumn($index)" title="Add a new column"><i class="fa fa-plus"></i></a></span>
+							<input class="dfx-pe-property-treeview-button" type="checkbox" checked id="item-layout-row-{{$index}}" />
+							<label class="dfx-ve-property-title-level-1" for="item-layout-row-{{$index}}">
+								<span>Row {{$index}}</span>
+								<span class="pull-right"><a href="#" ng-click="deleteLayoutRow($index)" title="Remove the row">Remove Row</a></span>
+								<span class="pull-right"><a href="#" ng-click="addLayoutColumn($index)" title="Add a new column">Add Column</a></span>
+							</label>
 							<ul class="dfx-pe-property-treeview-content">
 								<li class="col-md-12">
 									<div layout>
@@ -31,13 +35,13 @@
 							</ul>
 							<ul class="dfx-pe-property-treeview-content">
 								<li ng-repeat="column in row.columns">
-									<ul>
+									<ul class="dfx-pe-property-treeview-content-level-2">
 										<li>
-											<input class="dfx-pe-property-treeview-button" type="checkbox" id="item-layout-row-{{$parent.$index}}-{{$index}}" />
-											<label for="item-layout-row-{{$parent.$index}}-{{$index}}">
-												Column {{$index}}
+											<input class="dfx-pe-property-treeview-button" type="checkbox" checked id="item-layout-row-{{$parent.$index}}-{{$index}}" />
+											<label class="dfx-pe-property-title-level-2" for="item-layout-row-{{$parent.$index}}-{{$index}}">
+												<span>Column {{$index}}</span>
+												<span class="pull-right"><a href="#" ng-click="deleteLayoutColumn($parent.$index, $index)" title="Delete the column">Remove Column</a></span>
 											</label>
-											<span class="pull-right"><a href="#" ng-click="deleteLayoutColumn($parent.$index, $index)" title="Delete the column"><i class="fa fa-minus"></i></a></span>
 											<ul class="dfx-pe-property-treeview-content">
 												<li class="col-md-12">
 													<div layout>
@@ -59,9 +63,10 @@
 			</ul>
 		</li>
 		<li>
-			<input class="dfx-pe-property-treeview-button" type="checkbox" id="item-1" />
+			<input class="dfx-pe-property-treeview-button" checked type="checkbox" id="item-1" />
+			<div class="dfx-pe-property-separator"></div>
 			<label for="item-1">Template Properties</label>
-			<ul class="dfx-pe-property-treeview-content" style="margin-left:10px">
+			<ul class="dfx-pe-property-treeview-content">
 				<li class="col-md-12">
 					<span class="col-md-4">Name:</span>
 					<md-input-container class="col-md-8" style="padding: 0 0 10px">

@@ -10,14 +10,18 @@
                 </li>
 				<li class="col-md-12" dfx-gc-property="template">
 					<span class="col-md-4">Template:</span>
-					<input class="col-md-8" type="text" ng-model="attributes.template.value" ng-change="overrideAttribute('template')" disabled/>
+					<md-input-container class="col-md-8" style="padding: 0 0 4px 0">
+						<md-select aria-label="rating-range" ng-model="attributes.template.value" ng-change="overrideAttribute('template');reinitComponentWithTemplate(attributes.template.value);">
+							<md-option ng-repeat="gc_template in gc_templates_by_type" value="{{gc_template.name}}">{{gc_template.name}}</md-option>
+						</md-select>
+					</md-input-container>
 				</li>
 				<li class="col-md-12" dfx-gc-property="name">
 					<span class="col-md-4">Name:</span>
 					<input class="col-md-8" type="text" ng-model="attributes.name.value"  ng-change="overrideAttribute('name')" ng-focus="cacheAttributeOldValue({'name':'name'})" ng-blur="cacheAttributeNewValue('name')"/>
 				</li>
 				<li class="col-md-12" dfx-gc-property="src">
-					<span class="col-md-4">Source:</span>
+					<span class="col-md-4">Source:<dfx-gc-template-locking attr_name="src"></dfx-gc-template-locking></span>
 					<!-- <input class="col-md-8" type="text" ng-model="attributes.src.value" /> -->
 					<div class="col-md-8" layout="row">
 						<input class="col-md-12" type="text" ng-model="attributes.src.value" style="margin-left:-15px;" ng-change="overrideAttribute('src')" ng-focus="cacheAttributeOldValue({'name':'src'})" ng-blur="cacheAttributeNewValue('src')"/>
@@ -26,7 +30,7 @@
 				</li>
 
 				<li class="col-md-12" dfx-gc-property="display">
-					<span class="col-md-4">Display:</span>
+					<span class="col-md-4">Display:<dfx-gc-template-locking attr_name="display"></dfx-gc-template-locking></span>
 					<div class="col-md-8" layout="row">
 						<input class="col-md-12" type="text" ng-model="attributes.display.value" style="margin-left:-15px;" ng-change="overrideAttribute('display')" ng-focus="cacheAttributeOldValue({'name':'display'})" ng-blur="cacheAttributeNewValue('display')"/>
 						<dfx-ve-expression-editor></dfx-ve-expression-editor>
@@ -42,8 +46,16 @@
 			<ul class="dfx-ve-property-treeview-content">
                 <li class="col-md-12">
                     <input class="dfx-ve-property-treeview-button" type="checkbox" checked aria-label="item-11" id="item-11" />
-                    <label for="item-11" class="dfx-ve-property-title-level-1"><span>Container Styling</span></label>
+                    <label for="item-11" class="dfx-ve-property-title-level-1"><span>Container Styling<dfx-gc-template-locking attr_name="css,style,classes,dynamicClasses"></dfx-gc-template-locking></span></label>
                     <ul class="dfx-ve-property-treeview-content">
+                        <li class="col-md-12">
+                            <span class="col-md-4">Width:</span>
+                            <input type="text" class="col-md-8" ng-model="attributes.css.width" ng-model-options="{ debounce: 500 }" ng-change="overrideAttribute('css.width'); dfxSetBaseSizes('width', attributes.css.width);" ng-focus="cacheAttributeOldValue({'name':'css.width'})" ng-blur="cacheAttributeNewValue('css.width')"/>
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-4">Height:</span>
+                            <input type="text" class="col-md-8" ng-model="attributes.css.height" ng-model-options="{ debounce: 500 }" ng-change="overrideAttribute('css.height'); dfxSetBaseSizes('height', attributes.css.height);" ng-focus="cacheAttributeOldValue({'name':'css.height'})" ng-blur="cacheAttributeNewValue('css.height')"/>
+                        </li>
                         <li class="col-md-12">
                             <span class="col-md-4">Style:</span>
                             <div class="col-md-8" layout="row"><input class="col-md-12" type="text" ng-model="attributes.style.value" ng-change="overrideAttribute('style')" ng-focus="cacheAttributeOldValue({'name':'style'})" ng-blur="cacheAttributeNewValue('style')" style="margin-left:-15px;"/><dfx-ve-css-style></dfx-ve-css-style></div>
@@ -54,13 +66,13 @@
                         </li>
                         <li class="col-md-12">
                             <span class="col-md-4">Dynamic Class:</span>
-                            <input class="col-md-8" type="text" ng-model="attributes.dynamicClasses.value"  ng-change="overrideAttribute('dynamicClasses')" ng-focus="cacheAttributeOldValue({'name':'dynamicClasses'})" ng-blur="cacheAttributeNewValue('dynamicClasses')"/>
+                            <input class="col-md-8" type="text" ng-model="attributes.dynamicClasses.value" ng-change="overrideAttribute('dynamicClasses')" ng-focus="cacheAttributeOldValue({'name':'dynamicClasses'})" ng-blur="cacheAttributeNewValue('dynamicClasses')"/>
                         </li>
                     </ul>
                 </li>
                 <li class="col-md-12">
                     <input class="dfx-ve-property-treeview-button" type="checkbox" checked aria-label="item-12" id="item-12" />
-                    <label for="item-12" class="dfx-ve-property-title-level-1"><span>Image Styling</span></label>
+                    <label for="item-12" class="dfx-ve-property-title-level-1"><span>Image Styling<dfx-gc-template-locking attr_name="imageStyle,imageClasses,imageDynamicClasses"></dfx-gc-template-locking></span></label>
                     <ul class="dfx-ve-property-treeview-content">
                         <li class="col-md-12">
 							<span class="col-md-4">style:</span>
@@ -87,48 +99,48 @@
 			<input class="dfx-ve-property-treeview-button" type="checkbox" checked id="item-4" />
 			<label for="item-4">Events</label>
 			<ul class="dfx-ve-property-treeview-content">
-                <li class="col-md-12">
-                    <span class="col-md-4">On Click:</span>
+                <li class="col-md-12" dfx-gc-property="onclick">
+                    <span class="col-md-4">On Click:<dfx-gc-template-locking attr_name="onclick"></dfx-gc-template-locking></span>
                     <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onclick.value" ng-change="overrideAttribute('onclick')" class="col-md-12" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue({'name':'onclick'})" ng-blur="cacheAttributeNewValue('onclick')"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
                 </li>
-                <li class="col-md-12">
-                    <span class="col-md-4">On Double Click:</span>
+                <li class="col-md-12" dfx-gc-property="ondblclick">
+                    <span class="col-md-4">On Double Click:<dfx-gc-template-locking attr_name="ondblclick"></dfx-gc-template-locking></span>
                     <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.ondblclick.value" ng-change="overrideAttribute('ondblclick')" class="col-md-12" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue({'name':'ondblclick'})" ng-blur="cacheAttributeNewValue('ondblclick')"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
                 </li>
-                <li class="col-md-12">
-                    <span class="col-md-4">On Key Press:</span>
+                <li class="col-md-12" dfx-gc-property="onkeypress">
+                    <span class="col-md-4">On Key Press:<dfx-gc-template-locking attr_name="onkeypress"></dfx-gc-template-locking></span>
                     <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onkeypress.value" ng-change="overrideAttribute('onkeypress')" class="col-md-12" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue({'name':'onkeypress'})" ng-blur="cacheAttributeNewValue('onkeypress')"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
                 </li>
-                <li class="col-md-12">
-                    <span class="col-md-4">On Key Down:</span>
+                <li class="col-md-12" dfx-gc-property="onkeydown">
+                    <span class="col-md-4">On Key Down:<dfx-gc-template-locking attr_name="onkeydown"></dfx-gc-template-locking></span>
                     <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onkeydown.value" ng-change="overrideAttribute('onkeydown')" class="col-md-12" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue({'name':'onkeydown'})" ng-blur="cacheAttributeNewValue('onkeydown')"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
                 </li>
-                <li class="col-md-12">
-                    <span class="col-md-4">On Key Up:</span>
+                <li class="col-md-12" dfx-gc-property="onkeyup">
+                    <span class="col-md-4">On Key Up:<dfx-gc-template-locking attr_name="onkeyup"></dfx-gc-template-locking></span>
                     <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onkeyup.value" ng-change="overrideAttribute('onkeyup')" class="col-md-12" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue({'name':'onkeyup'})" ng-blur="cacheAttributeNewValue('onkeyup')"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
                 </li>
-                <li class="col-md-12">
-                    <span class="col-md-4">On Mouse Over:</span>
+                <li class="col-md-12" dfx-gc-property="onmouseover">
+                    <span class="col-md-4">On Mouse Over:<dfx-gc-template-locking attr_name="onmouseover"></dfx-gc-template-locking></span>
                     <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onmouseover.value" ng-change="overrideAttribute('onmouseover')" class="col-md-12" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue({'name':'onmouseover'})" ng-blur="cacheAttributeNewValue('onmouseover')"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
                 </li>
-                <li class="col-md-12">
-                    <span class="col-md-4">On Mouse Enter:</span>
+                <li class="col-md-12" dfx-gc-property="onmouseenter">
+                    <span class="col-md-4">On Mouse Enter:<dfx-gc-template-locking attr_name="onmouseenter"></dfx-gc-template-locking></span>
                     <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onmouseenter.value" ng-change="overrideAttribute('onmouseenter')" class="col-md-12" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue({'name':'onmouseenter'})" ng-blur="cacheAttributeNewValue('onmouseenter')"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
                 </li>
-                <li class="col-md-12">
-                    <span class="col-md-4">On Mouse Move:</span>
+                <li class="col-md-12" dfx-gc-property="onmousemove">
+                    <span class="col-md-4">On Mouse Move:<dfx-gc-template-locking attr_name="onmousemove"></dfx-gc-template-locking></span>
                     <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onmousemove.value" ng-change="overrideAttribute('onmousemove')" class="col-md-12" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue({'name':'onmousemove'})" ng-blur="cacheAttributeNewValue('onmousemove')"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
                 </li>
-                <li class="col-md-12">
-                    <span class="col-md-4">On Mouse Leave:</span>
+                <li class="col-md-12" dfx-gc-property="onmouseleave">
+                    <span class="col-md-4">On Mouse Leave:<dfx-gc-template-locking attr_name="onmouseleave"></dfx-gc-template-locking></span>
                     <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onmouseleave.value" ng-change="overrideAttribute('onmouseleave')" class="col-md-12" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue({'name':'onmouseleave'})" ng-blur="cacheAttributeNewValue('onmouseleave')"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
                 </li>
-                <li class="col-md-12">
-                    <span class="col-md-4">On Mouse Down:</span>
+                <li class="col-md-12" dfx-gc-property="onmousedown">
+                    <span class="col-md-4">On Mouse Down:<dfx-gc-template-locking attr_name="onmousedown"></dfx-gc-template-locking></span>
                     <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onmousedown.value" ng-change="overrideAttribute('onmousedown')" class="col-md-12" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue({'name':'onmousedown'})" ng-blur="cacheAttributeNewValue('onmousedown')"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
                 </li>
-                <li class="col-md-12">
-                    <span class="col-md-4">On Mouse Up:</span>
+                <li class="col-md-12" dfx-gc-property="onmouseup">
+                    <span class="col-md-4">On Mouse Up:<dfx-gc-template-locking attr_name="onmouseup"></dfx-gc-template-locking></span>
                     <div class="col-md-8" layout="row"><input type="text" ng-model="attributes.onmouseup.value" ng-change="overrideAttribute('onmouseup')" class="col-md-12" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue({'name':'onmouseup'})" ng-blur="cacheAttributeNewValue('onmouseup')"/><dfx-ve-expression-editor></dfx-ve-expression-editor></div>
                 </li>
 			</ul>
