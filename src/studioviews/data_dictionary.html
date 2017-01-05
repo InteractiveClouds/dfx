@@ -1,0 +1,50 @@
+<div layout="column">   
+    <div id="dfx-app-data-dictionary" class="dfx-studio-tree-editor dfx-studio-tree-panels-one-tree">
+        <section id="data_dictionary_json_structure" class="md-whiteframe-1dp">
+            <md-toolbar class="dfx-studio-toolbar-title">
+                <div class="md-toolbar-tools">
+                    <h3>List of Entities</h3>
+                </div>
+            </md-toolbar>
+            <md-toolbar class="dfx-studio-toolbar-buttons">
+                <div class="layout-row flex-100"  layout-align="space-between center">
+                    <div>
+                        <md-button aria-label="Studio button" class="fa fa-plus dfx-studio-toolbar-button" ng-click="addEntity()" title="Add Entity"></md-button>
+                        <md-button aria-label="Studio button" class="fa fa-minus dfx-studio-toolbar-button" ng-click="deleteEntity()" ng-disabled="dd_entity.name === 'ENV'" title="Remove Entity"></md-button>
+                    </div>
+                </div>
+            </md-toolbar>
+            <md-content id="data-dictionary-structure" class="menu-structure collapsible" layout-padding flex>
+                <ul>
+                    <li ng-repeat="(key, value) in dd_content track by $index" class="tree-item">
+                        <a ng-click="selectEntity($event, key, value, $index)">{{ key || 'no-name' }}</a>
+                    </li>
+                </ul>
+            </md-content>
+        </section>
+        <section id="data_dictionary_json_item_properties" class="md-whiteframe-1dp">
+            <md-toolbar class="dfx-studio-toolbar-title">
+                <div class="md-toolbar-tools">
+                    <h3>Definition</h3>
+                </div>
+            </md-toolbar>
+            <md-content flex>
+                <div class="dfx-ve-property-treeview hover">
+                    <ul ng-show="dd_entity" class="dfx-ve-property-picker-content clearfix" style="padding: 12px 0 0;">
+                        <li class="col-md-12">
+                            <span class="col-md-4" style="color: #676B6E;">Entity name:</span>
+                            <div class="col-md-8" layout="row">
+                                <input class="col-md-12" type="text" ng-model="dd_entity_name.val" ng-disabled="dd_entity_name.val === 'ENV'" ng-change="validateEntityName()"/>
+                            </div>
+                        </li>
+                    </ul>
+                    <div id="dfx-app-data-dictionary-json"></div>
+                </div>
+            </md-content>
+        </section>
+    </div>
+    <div style="display:flex; justify-content: flex-end; margin-top: 10px;">
+        <md-button class="md-primary" ng-click="saveDataDictionary()" ng-disabled="dd_disabled" aria-label="Studio button">Save</md-button>
+        <md-button class="md-primary" ng-click="exitDataDictionary()" aria-label="Studio button">Cancel</md-button>
+    </div>
+</div>

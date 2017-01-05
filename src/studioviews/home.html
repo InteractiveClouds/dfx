@@ -1,14 +1,14 @@
 <div id="home-page-apps" layout="column" layout-padding style="overflow-y: scroll;">
 	<div layout="row" layout-align="space-between">
 		<h2 class="md-title">Your Application Platform's Statistics</h2>
-		<md-button ng-if="platform_stats.apps!=null" class="md-raised md-primary" ng-href="#/application/create" style="height: 25px; margin-top:14px;">
+		<md-button aria-label="Studio button" ng-if="platform_stats.apps!=null" class="md-raised md-primary" ng-href="#/application/create" style="height: 25px; margin-top:14px;">
 			<md-icon class="fa fa-plus" style="width:14px;height:14px;"></md-icon>
         	Create Application
         </md-button>
 	</div>
 	<div ng-if="platform_stats.apps==null" layout="column" layout-spacing>
 		<h2 class="md-subhead">You don't have any application in your environment.</h2>
-		<md-button class="md-raised md-primary" ng-href="#/application/create" style="height: 25px; width: 200px; margin-top:14px;">
+		<md-button aria-label="Studio button" class="md-raised md-primary" ng-href="#/application/create" style="height: 25px; width: 200px; margin-top:14px;">
 			<md-icon class="fa fa-plus" style="width:14px;height:14px;"></md-icon>
         	Create Application
         </md-button>

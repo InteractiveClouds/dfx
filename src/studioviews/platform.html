@@ -126,9 +126,9 @@
                 </md-tab>
             </md-tabs>
             <div style="display:flex; justify-content: flex-end; margin-top: 15px;">
-                <md-button class="md-primary" ng-if="developers.operation==='create'" type="submit" ng-disabled="!developers.new_user.pass_matching">Save</md-button>
-                <md-button class="md-primary" ng-if="developers.operation==='update'" type="submit" ng-disabled="(!developers.current_user.pass_matching && developers.current_user.pass_changed) || developers.current_user.type=='openid'">Save</md-button>
-                <md-button class="md-primary" ng-click="developers.closeSidenav()">Cancel</md-button>
+                <md-button aria-label="Studio button" class="md-primary" ng-if="developers.operation==='create'" type="submit" ng-disabled="!developers.new_user.pass_matching">Save</md-button>
+                <md-button aria-label="Studio button" class="md-primary" ng-if="developers.operation==='update'" type="submit" ng-disabled="(!developers.current_user.pass_matching && developers.current_user.pass_changed) || developers.current_user.type=='openid'">Save</md-button>
+                <md-button aria-label="Studio button" class="md-primary" ng-click="developers.closeSidenav()">Cancel</md-button>
             </div>            
         </form>
     </div>
@@ -171,8 +171,8 @@
             </md-tab>
         </md-tabs>
         <div style="display:flex; justify-content: flex-end; margin-top: 20px;">
-            <md-button class="md-primary" ng-click="cloud.bluemix.saveImage()" ng-disabled="cloud.bluemix.disabled_button === true">Save</md-button>
-            <md-button class="md-primary" ng-click="cloud.bluemix.closeSidenav()" ng-disabled="cloud.bluemix.disabled_button === true">Cancel</md-button>
+            <md-button aria-label="Studio button" class="md-primary" ng-click="cloud.bluemix.saveImage()" ng-disabled="cloud.bluemix.disabled_button === true">Save</md-button>
+            <md-button aria-label="Studio button" class="md-primary" ng-click="cloud.bluemix.closeSidenav()" ng-disabled="cloud.bluemix.disabled_button === true">Cancel</md-button>
         </div>
         <md-progress-linear class="md-altTheme-theme" ng-if="cloud.bluemix.disabled_button === true" md-mode="indeterminate"></md-progress-linear>
     </div>
