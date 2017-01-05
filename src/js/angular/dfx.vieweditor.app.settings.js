@@ -12,20 +12,25 @@ var DfxViewEditorSettings = (function() {
 
             'show_dfx-ve-sidenav-left': true,
             'show_dfx-ve-sidenav-right': true,
+            'show_dfx-ve-sidenav-gc-templates': false,
 
             'detach_dfx-ve-sidenav-left': false,
             'detach_dfx-ve-sidenav-right': false,
 
             'minimize_dfx-ve-sidenav-left': false,
             'minimize_dfx-ve-sidenav-right': false,
+            'minimize_dfx-ve-sidenav-gc-templates': false,
 
             'left_dfx-ve-sidenav-left': -1,
             'top_dfx-ve-sidenav-left': -1,
             'left_dfx-ve-sidenav-right': -1,
             'top_dfx-ve-sidenav-right': -1,
+            'left_dfx-ve-sidenav-gc-templates': -1,
+            'top_dfx-ve-sidenav-gc-templates': -1,
 
             'height_dfx-ve-sidenav-left': -1,
-            'height_dfx-ve-sidenav-right': -1
+            'height_dfx-ve-sidenav-right': -1,
+            'height_dfx-ve-sidenav-gc-templates': -1
         };
 
         return view_settings ? JSON.parse(view_settings) : default_settings;
@@ -43,6 +48,8 @@ var DfxViewEditorSettings = (function() {
             panel_info = { 'title': 'Palette', 'name': 'palette' };
         } else if (panel_id == 'dfx-ve-sidenav-right') {
             panel_info = { 'title': 'Properties', 'name': 'property' };
+        } else if (panel_id == 'dfx-ve-sidenav-gc-templates') {
+            panel_info = { 'title': 'GC Templates', 'name': 'gc-templates' };
         }
         return panel_info;
     };
@@ -79,6 +86,16 @@ var DfxViewEditorSettings = (function() {
 
             api.minimizeOrMaximizePanel('dfx-ve-sidenav-left', view_settings);
             api.minimizeOrMaximizePanel('dfx-ve-sidenav-right', view_settings);
+
+            // GC Templates panel init
+            api.showGcTemplatesPanel(view_settings);
+            detachPanel('dfx-ve-sidenav-gc-templates');
+            makePanelDraggable('dfx-ve-sidenav-gc-templates');
+            setPanelPosition('dfx-ve-sidenav-gc-templates');
+            makePanelResizable('dfx-ve-sidenav-gc-templates');
+            setResizablePanelHeight('dfx-ve-sidenav-gc-templates', view_settings);
+            api.closePanel('dfx-ve-sidenav-gc-templates', view_settings);
+            api.minimizeOrMaximizePanel('dfx-ve-sidenav-gc-templates', view_settings);
         };
 
         var cards_ready = $interval(function() {
@@ -106,7 +123,7 @@ var DfxViewEditorSettings = (function() {
     var createViewSettingsMenu = function($scope, $compile, options) {
         var snippet = '<md-menu-bar>';
         snippet += '<div id="dfx-ve-settings-menu" ng-mouseleave="closeViewSettingsMenu()" class="_md md-open-menu-container md-whiteframe-z2 md-altTheme-theme md-active md-clickable" style="left:'+options.x+'px;top:'+options.y+'px;" aria-hidden="false">';
-        snippet += '<md-menu-content width="4" class="md-altTheme-theme">';
+        snippet += '<md-menu-content width="5" class="md-altTheme-theme">';
         snippet += '<md-menu-item ng-if="view_platform!==\'mobile\'"><md-button ng-click="changeCanvasSize()"><md-icon class="fa fa-square-o"></md-icon>Change Canvas Size</md-button></md-menu-item>';
         snippet += '<md-menu-item ng-if="view_platform!==\'mobile\'"><md-button ng-click="toggleRuler()"><md-icon class="fa fa-bars"></md-icon><span id="dfx-ve-settings-menu-show-ruler-label">Show Ruler</span></md-button></md-menu-item>';
         snippet += '<md-menu-divider ng-if="view_platform!==\'mobile\'"></md-menu-divider>';
@@ -242,17 +259,21 @@ var DfxViewEditorSettings = (function() {
         dfx_panel.removeClass('dfx-ve-hidden-element');
 
         // change icons and title in editor settings menu
-        menu_icon.removeClass('fa-expand');
-        menu_icon.addClass('fa-compress');
-        menu_label.text('Hide ' + panel_title);
+        if (menu_icon) {
+            menu_icon.removeClass('fa-expand');
+            menu_icon.addClass('fa-compress');
+            menu_label.text('Hide ' + panel_title);
+        }
     };
     var hidePanel = function(dfx_panel, menu_icon, menu_label, panel_title) {
         dfx_panel.addClass('dfx-ve-hidden-element');
 
         // change icons and title in editor settings menu
-        menu_icon.removeClass('fa-compress');
-        menu_icon.addClass('fa-expand');
-        menu_label.text('Show ' + panel_title);
+        if (menu_icon) {
+            menu_icon.removeClass('fa-compress');
+            menu_icon.addClass('fa-expand');
+            menu_label.text('Show ' + panel_title);
+        }
     };
     api.togglePanel = function(panel_id, view_settings) {
         var dfx_panel = $('#' + panel_id),
@@ -278,6 +299,26 @@ var DfxViewEditorSettings = (function() {
             } else {
                 hidePanel(dfx_panel, menu_icon, menu_label, panel_info.title);
             }
+            setViewSettings(view_settings);
+        }
+    };
+
+    api.showGcTemplatesPanel = function(view_settings) {
+        var panel_id = 'dfx-ve-sidenav-gc-templates',
+            dfx_panel = $('#' + panel_id),
+            show_panel_key = 'show_' + panel_id;
+
+        if (view_settings) {
+            if ( view_settings[show_panel_key] ) {
+                showPanel(dfx_panel);
+            } else {
+                hidePanel(dfx_panel);
+            }
+        } else {
+            var view_settings = {};
+            view_settings[show_panel_key] = true;
+            showPanel(dfx_panel);
+
             setViewSettings(view_settings);
         }
     };
@@ -328,6 +369,8 @@ var DfxViewEditorSettings = (function() {
                 panel_left = '20px';
             } else if (panel_info.name == 'property') {
                 panel_right = '20px';
+            } else if (panel_info.name == 'gc-templates') {
+                panel_right = '450px';
             }
             dfx_panel.css('left', panel_left);
             dfx_panel.css('right', panel_right);
@@ -421,10 +464,11 @@ var DfxViewEditorSettings = (function() {
         dfx_floating_panel_header.removeClass('dfx-ve-hidden-element');
 
         // change icons and title in editor settings menu
-        menu_icon.removeClass('fa-external-link');
-        menu_icon.addClass('fa-thumb-tack');
-        menu_label.text('Attach ' + panel_info.title);
-
+        if (menu_icon) {
+            menu_icon.removeClass('fa-external-link');
+            menu_icon.addClass('fa-thumb-tack');
+            menu_label.text('Attach ' + panel_info.title);
+        }
         setPanelPosition(panel_id);
     };
     var attachPanel = function(panel_id, menu_icon, menu_label) {
@@ -441,10 +485,11 @@ var DfxViewEditorSettings = (function() {
         dfx_floating_panel_header.addClass('dfx-ve-hidden-element');
 
         // change icons and title in editor settings menu
-        menu_icon.removeClass('fa-thumb-tack');
-        menu_icon.addClass('fa-external-link');
-        menu_label.text('Detach ' + panel_info.title);
-
+        if (menu_icon) {
+            menu_icon.removeClass('fa-thumb-tack');
+            menu_icon.addClass('fa-external-link');
+            menu_label.text('Detach ' + panel_info.title);
+        }
         setPanelPosition(panel_id);
     };
     api.detachOrAttachPanel = function(panel_id, view_settings) {

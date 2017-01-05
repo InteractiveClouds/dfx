@@ -30,7 +30,7 @@
   "dynamicClasses": { "value": "" },
   "notFlex":        { "value": true },
   "flex":           { "value": 15 },
-	"style": 					{ "value": "" },
+  "style": 					{ "value": "" },
   "singleMenu":     { "button": { "style": "", "class": "" }, "icon": { "size": 16, "style": "", "class": "" } },
   "onclick": 				{ "value": "" },
   "ondblclick": 		{ "value": "" },
@@ -41,5 +41,6 @@
   "onmouseenter": 	{ "value": "" },
   "onmousemove": 		{ "value": "" },
   "onmouseleave": 	{ "value": "" },
-  "onmouseup": 			{ "value": "" }
+  "onmouseup": 			{ "value": "" },
+  "onmousedown": 		{ "value": "" }
 }

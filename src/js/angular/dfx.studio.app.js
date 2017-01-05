@@ -2046,7 +2046,7 @@ dfxStudioApp.controller("dfx_studio_contactus_controller", [ '$scope', 'dfxEmail
     };
 }]);
 
-dfxStudioApp.controller("dfx_studio_configuration_controller", [ '$rootScope', '$scope','dfxApplications', '$timeout', '$routeParams', function($rootScope, $scope, dfxApplications, $timeout, $routeParams) {
+dfxStudioApp.controller("dfx_studio_configuration_controller", [ '$rootScope', '$scope','dfxApplications', '$timeout', '$routeParams', 'dfxGcTemplates', function($rootScope, $scope, dfxApplications, $timeout, $routeParams, dfxGcTemplates) {
     $scope.general = {};
     $scope.devops = {};
     $scope.resources = {};
@@ -2856,6 +2856,55 @@ dfxStudioApp.directive('dropzone', ['dfxApplications','$timeout', '$mdDialog', '
                 });
             };
 
+            scope.confirmResourceDeleteAll = function(ev) {
+                var confirm = $mdDialog.confirm()
+                    .title('Are you sure you want to remove these files?')
+                    .textContent('The files will be removed from the repository.')
+                    .ariaLabel('remove file')
+                    .targetEvent(ev)
+                    .cancel('Cancel')
+                    .ok('OK');
+                $mdDialog.show(confirm).then(function() {
+                    scope.deleteItems();
+                }, function() {
+                });
+            };
+
+            // Mass grid selection - START
+            scope.resources_javascript_selected = [];
+            scope.toggleSelectionJavascript = function(resitem) {
+                DfxStudioAppUtil.toggleSelection(scope, resitem, 'resources_javascript_selected');
+            };
+            scope.toggleAllJavascript = function() {
+                DfxStudioAppUtil.toggleAll(scope, scope.javascript.data.items, 'resources_javascript_selected', scope.is_all_resources_javascript_selected);
+            };
+            scope.isSelectedJavascript = function(resitem) {
+                return DfxStudioAppUtil.isSelected(scope, resitem, 'resources_javascript_selected');
+            };
+
+            scope.resources_stylesheets_selected = [];
+            scope.toggleSelectionStylesheets = function(resitem) {
+                DfxStudioAppUtil.toggleSelection(scope, resitem, 'resources_stylesheets_selected');
+            };
+            scope.toggleAllStylesheets = function() {
+                DfxStudioAppUtil.toggleAll(scope, scope.stylesheets.data.items, 'resources_stylesheets_selected', scope.is_all_resources_stylesheets_selected);
+            };
+            scope.isSelectedStylesheets = function(resitem) {
+                return DfxStudioAppUtil.isSelected(scope, resitem, 'resources_stylesheets_selected');
+            };
+
+            scope.resources_assets_selected = [];
+            scope.toggleSelectionAssets = function(resitem) {
+                DfxStudioAppUtil.toggleSelection(scope, resitem, 'resources_assets_selected');
+            };
+            scope.toggleAllAssets = function() {
+                DfxStudioAppUtil.toggleAll(scope, scope.assets.data.items, 'resources_assets_selected', scope.is_all_resources_assets_selected);
+            };
+            scope.isSelectedAssets = function(resitem) {
+                return DfxStudioAppUtil.isSelected(scope, resitem, 'resources_assets_selected');
+            };
+            // Mass grid selection - END
+
             scope.confirmDictionaryDelete = function(ev, item) {
                 var confirm = $mdDialog.confirm()
                     .title('Are you sure you want to delete this item?')
@@ -2877,7 +2926,7 @@ dfxStudioApp.directive('dropzone', ['dfxApplications','$timeout', '$mdDialog', '
                 });
             };
 
-                scope.deleteItem = function(item){
+            scope.deleteItem = function(item){
                 if(scope.current_resource_type === "javascript"){
                     for(var i=0; i < parentScope.javascript.data.items.length; i++){
                         if(parentScope.javascript.data.items[i].path === item.path){
@@ -2908,6 +2957,52 @@ dfxStudioApp.directive('dropzone', ['dfxApplications','$timeout', '$mdDialog', '
                             break;
                         }
                     }
+                }
+            };
+
+            scope.deleteItems = function() {
+                if (scope.current_resource_type === "javascript") {
+                    for (var i=0; i < scope.resources_javascript_selected.length; i++) {
+                        var selected_javascript = scope.resources_javascript_selected[i];
+
+                        for (var j=0; j < parentScope.javascript.data.items.length; j++) {
+                            if (parentScope.javascript.data.items[j].path === selected_javascript.path) {
+                                parentScope.javascript.data.items.splice(j, 1);
+                                break;
+                            }
+                        }
+                    }
+                    $timeout(function(){
+                        $('#upload-javascript-resources').trigger('click');
+                    }, 0);
+                } else if (scope.current_resource_type === "stylesheets") {
+                    for (var i=0; i < scope.resources_stylesheets_selected.length; i++) {
+                        var selected_stylesheets = scope.resources_stylesheets_selected[i];
+
+                        for (var j=0; j < parentScope.stylesheets.data.items.length; j++) {
+                            if (parentScope.stylesheets.data.items[j].path === selected_stylesheets.path) {
+                                parentScope.stylesheets.data.items.splice(j, 1);
+                                break;
+                            }
+                        }
+                    }
+                    $timeout(function(){
+                        $('#upload-stylesheets-resources').trigger('click');
+                    }, 0);
+                } else if (scope.current_resource_type === "assets") {
+                    for (var i=0; i < scope.resources_assets_selected.length; i++) {
+                        var selected_asset = scope.resources_assets_selected[i];
+
+                        for (var j=0; j < parentScope.assets.data.items.length; j++) {
+                            if (parentScope.assets.data.items[j].path === selected_asset.path) {
+                                parentScope.assets.data.items.splice(j, 1);
+                                break;
+                            }
+                        }
+                    }
+                    $timeout(function(){
+                        $('#upload-assets-resources').trigger('click');
+                    }, 0);
                 }
             };
 
@@ -4155,7 +4250,6 @@ dfxStudioApp.controller("dfx_studio_view_category_controller", [ '$scope', '$rou
             });
         } else if ( newName === $scope.scopeCategory.name ) {
             dfxMessaging.showWarning('Category with such name already exists');
-
         } else {
             dfxMessaging.showWarning('Not valid category name');
         }
@@ -4196,6 +4290,194 @@ dfxStudioApp.controller("dfx_studio_view_category_controller", [ '$scope', '$rou
         var sideNavInstance = $mdSidenav('side_nav_view_category');
         sideNavInstance.toggle();
     }
+}]);
+
+dfxStudioApp.controller("dfx_studio_gc_template_controller", [ '$scope', '$routeParams', '$window', '$mdSidenav', '$mdDialog', '$timeout', 'dfxMessaging', 'dfxGcTemplates', function( $scope, $routeParams, $window, $mdSidenav, $mdDialog, $timeout, dfxMessaging, dfxGcTemplates) {
+    var parentScope = $scope.$parent.$parent.$parent;
+    parentScope.app_gc_templates = $scope;
+
+    if(! $scope.app_name){
+        $scope.app_name = $routeParams.appname;
+    }
+
+    $scope.getAll = function() {
+        dfxGcTemplates.getAll( $scope, $scope.app_name ).then(function( data ) {
+            $scope.gc_templates = [];
+            for ( var i = 0; i < data.length; i++ ) {
+                $scope.gc_templates.push(data[i]);
+            }
+        });
+    };
+    $scope.getAll();
+
+    $scope.edit = function( gc_template ) {
+        $scope.current_gc_template = gc_template;
+        var sideNavInstance = $mdSidenav('side_nav_gc_template');
+        sideNavInstance.toggle();
+    };
+
+    $scope.copy = function($event, gc_template) {
+        var parentEl = angular.element(document.body);
+
+        $mdDialog.show({
+            parent: parentEl,
+            targetEvent: $event,
+            clickOutsideToClose: true,
+            scope: $scope.$new(),
+            templateUrl: 'studioviews/copy_gc_template_dialog.html',
+            controller: DialogController
+        });
+
+        function DialogController($scope, $mdDialog) {
+            $scope.toCopy = {
+                "gcTemplateName":        gc_template.name,
+                "gcTemplateNameTarget":  gc_template.name,
+                "applicationName":       $scope.app_name,
+                "applicationNameTarget": $scope.app_name,
+                "platform":              gc_template.platform
+            }
+            $scope.validPrefix = true;
+
+            $scope.copyComponent = function() {
+                var nameExp = /([\\/\-+(){}[\]=<>*~`?\! '\"',.;:$@#])/ig,
+                    nameRes = nameExp.exec( $scope.toCopy.gcTemplateName);
+
+                if ( $scope.validPrefix && !nameRes && $scope.toCopy.gcTemplateName !== '' ) {
+                    dfxGcTemplates.copy($scope, $scope.toCopy).then(function( data ) {
+                        if ( data.data.data.type === 'error' ) {
+                            dfxMessaging.showWarning( data.data.data.message );
+                        } else {
+                            dfxMessaging.showMessage('GC Template ' + $scope.toCopy.gcTemplateName + ' has been successfully copied');
+                            $mdDialog.hide();
+                        }
+                    });
+                } else {
+                    dfxMessaging.showWarning('Invalid GC Template Name');
+                }
+            }
+
+            $scope.closeDialog = function() {
+                $mdDialog.hide();
+            }
+        }
+    };
+
+    $scope.copyAll = function($event) {
+        var parentEl = angular.element(document.body);
+
+        $mdDialog.show({
+            parent: parentEl,
+            targetEvent: $event,
+            clickOutsideToClose: true,
+            scope: $scope.$new(),
+            templateUrl: 'studioviews/copy_gc_templates_all_dialog.html',
+            controller: DialogController
+        });
+
+        function DialogController($scope, $mdDialog) {
+            $scope.toCopy = {
+                "applicationName":       $scope.app_name,
+                "applicationNameTarget": $scope.app_name,
+                "platform":              $scope.gc_templates_selected[0].platform
+            }
+            $scope.validPrefix = true;
+
+            $scope.copyAllComponents = function() {
+                var gc_templates_selected_names = $scope.gc_templates_selected.map(function(element) {
+                    return element.name;
+                });
+                $scope.toCopy.gcTemplateNames = gc_templates_selected_names;
+                dfxGcTemplates.copyAll($scope, $scope.toCopy).then(function( data ) {
+                    if ( data.data.data.type === 'error' ) {
+                        dfxMessaging.showWarning('Certain GC Templates already exist in target application');
+                    } else {
+                        dfxMessaging.showMessage('GC Templates were successfully copied');
+                        $mdDialog.hide();
+                    }
+                });
+            }
+
+            $scope.closeDialog = function() {
+                $mdDialog.hide();
+            }
+        }
+    };
+
+    $scope.update = function() {
+        dfxGcTemplates.update( $scope, $scope.current_gc_template ).then(function( data ) {
+            dfxMessaging.showMessage(data.data);
+            $scope.getAll();
+            $scope.closeSidenav();
+        });
+    };
+
+    $scope.openTemplateDesigner = function(gc_template) {
+        window.localStorage.removeItem('pagePreviewName');
+        $window.open( '/studio/gctemplates/' + gc_template.platform + '/' + $scope.app_name + '/' + gc_template.name + '/index.html', '_blank' );
+    };
+
+    $scope.confirmDelete = function(ev, gc_template) {
+        var confirm = $mdDialog.confirm()
+            .title('Are you sure you want to remove this GC Template?')
+            .textContent('GC Template will be removed from the repository.')
+            .ariaLabel('remove service')
+            .targetEvent(ev)
+            .cancel('Cancel')
+            .ok('OK');
+        $mdDialog.show(confirm).then(function() {
+            dfxGcTemplates.remove($scope, gc_template.name, $scope.app_name, gc_template.platform).then(function( data ) {
+                if ( data.status && data.status === 200 ) {
+                    dfxMessaging.showMessage("Template " + gc_template.name + " was successfully deleted!");
+                    $scope.getAll();
+                } else {
+                    dfxMessaging.showWarning(data.data);
+                }
+            });
+        }, function() {
+        });
+    };
+
+    $scope.confirmDeleteAll = function(ev) {
+        var confirm = $mdDialog.confirm()
+            .title('Are you sure you want to remove these GC Templates?')
+            .textContent('GC Templates will be removed from the repository.')
+            .ariaLabel('remove service')
+            .targetEvent(ev)
+            .cancel('Cancel')
+            .ok('OK');
+        $mdDialog.show(confirm).then(function() {
+            var gc_templates_selected_names = $scope.gc_templates_selected.map(function(element) {
+                return element.name;
+            });
+            dfxGcTemplates.removeAll($scope, gc_templates_selected_names, $scope.app_name, $scope.gc_templates_selected[0].platform).then(function( data ) {
+                if ( data.status && data.status === 200 ) {
+                    dfxMessaging.showMessage("Templates were successfully deleted!");
+                    $scope.getAll();
+                } else {
+                    dfxMessaging.showWarning(data.data);
+                }
+            });
+        }, function() {
+        });
+    };
+
+    $scope.closeSidenav = function() {
+        var sideNavInstance = $mdSidenav('side_nav_gc_template');
+        sideNavInstance.toggle();
+    }
+
+    // Mass grid selection - START
+    $scope.gc_templates_selected = [];
+    $scope.toggleSelection = function(gc_template) {
+        DfxStudioAppUtil.toggleSelection($scope, gc_template, 'gc_templates_selected');
+    };
+    $scope.toggleAll = function() {
+        DfxStudioAppUtil.toggleAll($scope, $scope.gc_templates, 'gc_templates_selected', $scope.is_all_gc_templates_selected);
+    };
+    $scope.isSelected = function(gc_template) {
+        return DfxStudioAppUtil.isSelected($scope, gc_template, 'gc_templates_selected');
+    };
+    // Mass grid selection - END
 }]);
 
 dfxStudioApp.controller("dfx_studio_page_controller", [ '$scope', '$routeParams', '$mdDialog', '$location', '$window', 'dfxMessaging', 'dfxPages', function($scope, $routeParams, $mdDialog, $location, $window, dfxMessaging, dfxPages) {
@@ -4418,7 +4700,6 @@ dfxStudioApp.controller("dfx_studio_page_category_controller", [ '$scope', '$rou
             });
         } else if ( newName === $scope.scopeCategory.name ) {
             dfxMessaging.showWarning('Category with such name already exists');
-
         } else {
             dfxMessaging.showWarning('Not valid category name');
         }
@@ -6491,7 +6772,6 @@ dfxStudioApp.controller("dfx_studio_api_so_category_controller", [ '$scope', '$r
             });
         } else if ( newName === $scope.scopeCategory.name ) {
             dfxMessaging.showWarning('Category with such name already exists');
-
         } else {
             dfxMessaging.showWarning('Not valid category name');
         }
