@@ -3707,29 +3707,38 @@ dfxStudioApp.directive('dropzone', ['dfxApplications','$timeout', '$mdDialog', '
     }
 }]);
 
-dfxStudioApp.controller("dfx_studio_deployment_controller", [ '$scope', '$mdDialog', 'dfxDeployment', 'dfxMessaging', '$filter', '$timeout', '$location', function($scope, $mdDialog, dfxDeployment, dfxMessaging, $filter, $timeout, $location) {
+dfxStudioApp.controller("dfx_studio_deployment_controller", [ '$scope', '$mdDialog', 'dfxDeployment', 'dfxApplications', 'dfxMessaging', '$filter', '$timeout', '$location', function($scope, $mdDialog, dfxDeployment, dfxApplications, dfxMessaging, $filter, $timeout, $location) {
     $scope.description = {value : ""};
     $scope.builds = {'web': [], 'mobile': []};
     $scope.application_version = "1.0";
     $scope.build_number = {};
 
-    /*$timeout(function(){
-        for(var i =0; i < $scope.applications.length; i++){
-            if($scope.applications[i].name === $scope.app_name){
-                $scope.application_version = $scope.applications[i].version ;
-            }
-        }
-    },0);*/
 
     $scope.platform = 0;
     $scope.building_status = 'pending...';
     $scope.new_build = {};
     $scope.host_port = $('body').attr('deploymenturl') ;
+    $scope.env_vars = [];
 
-    //dfxDeployment.getAppBuilds($scope.app_name).then(function(data){
-    //    $scope.platform = data.platform;
-    //    $scope.compiler = data.compiler ;
-    //});
+
+    $scope.getAppEnvVariables = function(app){
+        dfxDeployment.getGeneratedEnvironment({'app':app}).then(function(response) {
+            response.content.map(function(cont){
+                cont.data = JSON.stringify(cont.data,null,4);
+                cont.waitingMessage = false;
+            })
+            $scope.env_vars = response.content;
+        });
+    }
+
+
+    $scope.showDeployments = function (build, platform){
+        build.displayDeployments = true;
+    }
+
+    $scope.hideDeployments = function (build, platform){
+        delete build.displayDeployments;
+    }
 
     $scope.getAppBuilds = function(platform){
         dfxDeployment.getAppBuilds($scope.app_name, platform).then(function(data){
@@ -3737,6 +3746,7 @@ dfxStudioApp.controller("dfx_studio_deployment_controller", [ '$scope', '$mdDial
             var max = 0;
             for(var i = 0; i < $scope.builds[platform].length; i++){
                 $scope.builds[platform][i].logs = [];
+                $scope.builds[platform][i].link = $scope.host_port + '/deploy/' + $scope.tenant_id + '/' + $scope.app_name + '/' + platform + '/' + $scope.builds[platform][i].app_version + '.' + $scope.builds[platform][i].build_number + '/login.html';
                 $scope.builds[platform][i].tenant_id = $scope.$parent.$parent.tenant_id;
                 if(parseInt($scope.builds[platform][i].build_number) > max){
                     max = parseInt($scope.builds[platform][i].build_number);
@@ -3768,10 +3778,34 @@ dfxStudioApp.controller("dfx_studio_deployment_controller", [ '$scope', '$mdDial
 
     $scope.getAppBuilds('web');
     $scope.getAppBuilds('mobile');
+    $scope.getAppEnvVariables($scope.app_name);
+
+
+    $scope.deployBuild = function(build, platform, env){
+        env.waitingMessage = true;
+        var body = {
+            applicationName:        $scope.app_name,
+            platform:               platform,
+            applicationVersion:     build.app_version,
+            buildNumber:            build.build_number,
+            tenantId:               $scope.tenant_id,
+            deploymentVersion :     env
+        };
+        dfxDeployment.deployBuild(body).then(function(data){
+            env.waitingMessage = false;
+            dfxMessaging.showMessage('Build has been successfully deployed on deployment server');
+            build.deploymentVersion = env.name;
+            build.link = $scope.host_port + '/deploy/' + $scope.tenant_id + '/' + $scope.app_name + '/' + platform + '/' + build.app_version + '.' + build.build_number + '/login.html';
+        },function (err) {
+            env.waitingMessage = false;
+            dfxMessaging.showWarning('Build has been failed');
+        });
+    };
 
     $scope.doRebuild = function(build, platform) {
         for(var i =0; i < $scope.builds[platform].length; i++){
             if($scope.builds[platform][i].build_number === build.build_number && $scope.builds[platform][i].app_version === build.app_version){
+                $scope.builds[platform][i].displayDeployments = false;
                 $scope.builds[platform][i].status = "pending..." ;
             }
         }
@@ -3898,6 +3932,7 @@ dfxStudioApp.controller("dfx_studio_deployment_controller", [ '$scope', '$mdDial
                 $scope.new_build = {
                     application:        $scope.app_name,
                     platform:           platform,
+                    deploymentVersion:  null,
                     app_version:        $scope.application_version,
                     build_number:       "" +  $scope.build_number[platform],
                     build:              ($scope.application_version + '.' + $scope.build_number),
@@ -3906,6 +3941,7 @@ dfxStudioApp.controller("dfx_studio_deployment_controller", [ '$scope', '$mdDial
                     release_notes:      "",
                     build_date:          $filter('date')(new Date(), 'EEE MMM dd yyyy HH:mm:ss') + ' GMT' + $filter('date')(new Date(), 'Z'),
                     displayLog:          false,
+                    displayDeployments:  false,
                     logs:               [],
                     status:             'pending...'
                 }
@@ -4023,9 +4059,30 @@ dfxStudioApp.controller("dfx_studio_deployment_controller", [ '$scope', '$mdDial
     }
 
     $scope.getDeployedQRCode = function(build) {
-        dfxDeployment.getMobileApp(build).then( function(response) {
-            console.log(response.data.referrer);
+        $mdDialog.show({
+            scope: $scope.$new(),
+            controller: DialogController,
+            templateUrl: 'studioviews/build_qr_code.html',
+            parent: angular.element(document.body),
+            clickOutsideToClose:true
         });
+
+        dfxApplications.getGeneral(build.application).then(function(app){
+            var phoneGapId = app.phonegap.applicationId;
+            dfxDeployment.getMobileAppInfo( {application:phoneGapId} ).then(function( res ){
+                $scope.qrCodeData = JSON.parse( res.data ).install_url;
+            });
+        })
+
+
+        function DialogController($scope, $mdDialog) {
+            $scope.hide = function() {
+                $mdDialog.hide();
+            };
+            $scope.cancel = function() {
+                $mdDialog.cancel();
+            };
+        }
     };
 
     $scope.navToCloud = function(ev) {

@@ -861,6 +861,7 @@ dfxStudioApi.factory('dfxDeployment', [ '$http', '$q', function($http, $q) {
                 buildDescription:   data.description,
                 buildReleaseNotes:  data.release_notes,
                 buildDate:          data.build_date,
+                deploymentVersion : data.deploymentVersion,
                 error:              data.error
             }
         }).then(function successCallback(response) {
@@ -945,6 +946,29 @@ dfxStudioApi.factory('dfxDeployment', [ '$http', '$q', function($http, $q) {
             params: { platform: 'android', appId: build.phoneGapAppId }
         }).then(function successCallback(response) {
             deferred.resolve( response.data );
+        });
+        return deferred.promise;
+    }
+
+    api_build.getMobileAppInfo = function(build) {
+        var deferred = $q.defer();
+        $http({
+            method: 'GET',
+            url: '/studio/phonegap/getApp',
+            params: { appId: build.application }
+        }).then(function successCallback(response) {
+            deferred.resolve( response.data );
+        });
+        return deferred.promise;
+    }
+
+    api_build.getGeneratedEnvironment = function(o){
+        var deferred = $q.defer();
+        $http({
+            method: 'GET',
+            url: '/studio/application/getEnv/' + o.app
+        }).then(function successCallback(response) {
+            deferred.resolve( response.data.data );
         });
         return deferred.promise;
     }
