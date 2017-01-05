@@ -1,0 +1,62 @@
+div#dfx_src_widget_editor(ng-controller="dfx_gc_template_editor_controller", layout="column", flex, style="height:100%;", data-view-platform="#{gc_template.platform}" data-gctemplate-type="#{gc_template.type}")
+    div#dfx-ve-header
+        img(src="/images/df_logo_blanc_1029x223.png", style="width: 90px;margin-top: -3px;margin-left:10px;")
+        div(style="color: #fff;font-size: 13px;font-style: italic;display: inline-block;") - GC Template Editor
+        div.pull-right(style="color: #fff;font-size: 13px;line-height:20px;display: inline-block;margin-top:2px;margin-right:20px;padding-left:5px; padding-right:5px; background:#2196F3;border-radius:3px") {{gc_template_name}}
+    div#dfx-ve-toolbar
+        md-toolbar.dfx-ve-toolbar
+            div.dfx-ve-toolbar-tools.md-toolbar-tools
+                span(style="width: 85px;height: 45px;padding-top: 5px;")
+                    md-menu#dfx-ve-menu-view-mode(md-offset="0 36")
+                        label(md-menu-origin, style="font-size:12px;background: #4CD5F3;margin-left: 10px;padding: 4px 8px;color:#1f1f1f;margin-top:4px;margin-right:10px;cursor:pointer", ng-click="$mdOpenMenu($event)")
+                            span(style="margin-right:5px;font-weight:700") {{design_view_mode}}
+                        md-menu-content#dfx-ve-toolbarmenu(width="4")
+                            md-menu-item
+                                md-button(ng-click="changeViewMode('design')")
+                                    ng-md-icon(icon="brush")
+                                    span(style="padding-left:10px") Design
+                            md-menu-item
+                                md-button(ng-click="changeViewMode('source')")
+                                    ng-md-icon(icon="developer_mode")
+                                    span(style="padding-left:10px") Source
+                span.flex
+                    span(style="font-size: 12px;margin-left: 1px;background: #4a4a4a;line-height: 48px;color: #fff;padding: 0 8px;border-left: 1px #6b6a6a solid;border-right: 1px #6b6a6a solid;", class="pull-right")
+                        span(style="margin-right:5px") Actions:
+                        img(src="/images/vb/icons/action_save.png", class="dfx-ve-toolbar-icon", ng-click="saveGcTemplate($event)", title="Save")
+                        img(src="/images/vb/icons/action_exit.png", class="dfx-ve-toolbar-icon", ng-click="exitViewEditor($event)", title="Exit the editor")
+                    label.pull-right(style="font-size:12px;background:#8731AB;padding: 2px 4px;color:#fff;margin-top:4px;margin-right:10px;border-radius:8px;cursor:pointer", ng-if="view_platform=='mobile'", ng-click="changeDeviceOrientation()") {{design_device_orientation}}
+                    md-menu.pull-right(style="margin-top:-3px", ng-if="view_platform=='mobile'")
+                        label(md-menu-origin, style="font-size:12px;background:#14BD39;padding: 2px 4px;color:#fff;margin-top:4px;margin-right:10px;border-radius:8px;cursor:pointer", ng-click="$mdOpenMenu($event)") {{design_selected_device.label}}
+                        md-menu-content(width="6")
+                            md-menu-item(ng-repeat="device in design_devices")
+                                md-button(ng-click="changeDevice($index)") {{device.name}}
+                div#dfx-ve-property-title(ng-show="design_visible")
+                    md-button#dfx-ve-toggle-property.dfx-ve-toolbar-button(aria-label="properties", ng-click="toggleRight()")
+                        i#dfx-ve-toggle-property-icon.fa.fa-angle-double-right
+                    div#dfx-ve-property-title-text
+                        a(href="#") Properties
+                        div#dfx-ve-property-title-selected-gc(style="display:none")
+                            span(style="margin-left:5px;margin-right:5px") >
+                            a#dfx-ve-property-title-selected-gc-text(href="#", ng-click="reloadPropertyPanel()") Gc
+                        div#dfx-ve-property-title-selected-renderer(style="display:none")
+                            span(style="margin-left:5px;margin-right:5px") >
+                            a#dfx-ve-property-title-selected-renderer-text(href="#") Renderer
+    div(layout="column", flex, ng-show="!script_visible && !style_visible && !source_visible", style="height:100%")
+        section(layout="row", flex="100")
+            md-content#dfx-ve-main-content(flex="100", layout="column")
+                div#dfx-ve-platform(layout="column", flex="100", dfx-ve-platform)
+                    section(style="height:100%;", layout="column", class="dfx-core-gc-panel md-whiteframe-1dp")
+                        md-toolbar(class="gc-toolbar dfx-core-gc-toolbar md-altTheme-theme _md-toolbar-transitions")
+                            div(style="min-height:48px;", layout="row", flex="100")
+                                div(flex="100", layout="column", layout-align="center start")
+                                    span {{gc_template_name}}
+                        md-content(flex="100", layout="column", aria-hidden="false")
+                            div(layout="row", layout-wrap="", flex="100")
+                                div(id="dfx_visual_editor_workspace_default", dfx-ve-workspace, style="overflow:auto; flex-wrap:wrap;", flex="100", layout="row", layout-align="start start" class="dfx_visual_editor_droppable")                                
+            md-sidenav#dfx-ve-sidenav-right.md-sidenav-right.md-whiteframe-z2(md-component-id="right", md-is-locked-open="$mdMedia('gt-md')", ng-show="property_visible")
+                md-content#dfx-ve-sidenav-right-content(show-gt-md)
+                    div#dfx_visual_editor_property(ng-show="gc_selected!=null")
+                        a#dfx_visual_editor_property_title
+                        div#dfx_visual_editor_property_panel
+    pre#dfx_src_editor(style="border-radius: 0;display: none;").
+        #{gc_template.attributes}

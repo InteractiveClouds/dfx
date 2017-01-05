@@ -45,3 +45,5 @@ localSettings.
 run_dev.js
 run_dep.js
 dfx_dep_starter.js
+run_dep.js
+run_dev.js
