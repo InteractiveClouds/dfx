@@ -70,7 +70,7 @@
                                             <div ng-if="!value" class="dfx-studio-grid-table-column-data-item">
                                                 <span ng-click="editEntityVal($event, root_key)" class="dfx-studio-grid-table-column-data-item-value" ng-class="{'empty-var': !root_key}">{{ root_key || 'enter value' }}</span>
                                                 <md-input-container style="display: none">
-                                                    <input ng-model="root_key" ng-keyup="saveEntityVal($event, entity_path)" ng-blur="blurEntityVal($event)">
+                                                    <input ng-model="root_key" ng-keyup="saveEntityVal($event, entity_path)" ng-blur="blurEntityVal($event)" aria-label="Environment value">
                                                 </md-input-container>
                                             </div>
                                             
@@ -79,7 +79,7 @@
                                             </div>
                                             
                                             <ul ng-if="value" class="{{key + '_row'}}">
-                                                <li ng-repeat="(key, value) in value track by $index" ng-init="root_key = root_key[key]; entity_path = entity_path + '.' +key" ng-include="'environment-content-{{$index}}'" aria-label="{{root_key}} {{entity_path}}"></li>
+                                                <li ng-repeat="(key, value) in value track by $index" ng-init="root_key = root_key[key]; entity_path = entity_path + '.' + key" ng-include="'environment-content-{{$index}}'" aria-label="{{root_key}}"></li>
                                             </ul>
                                         </script>
                                         <ul><li ng-repeat="(key, value) in env_vars_list" ng-init="root_key = environment.data[key]; entity_path = '[' + evn_index + '].data.' + key" ng-include="'environment-content-{{$index}}'" aria-label="{{root_key}} {{entity_path}}"></li></ul>
