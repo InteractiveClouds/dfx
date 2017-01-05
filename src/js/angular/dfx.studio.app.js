@@ -2564,8 +2564,19 @@ dfxStudioApp.controller("dfx_studio_devops_controller", [ '$scope', '$q', '$mdDi
     };
 
     $scope.checkValueType = function(v){
-        console.log('v, typeof v', v, typeof v);
-        return !v ? true : false;
+        return v && typeof v == 'object' ? true : false;
+    }
+
+    $scope.createEntityPath = function (entity_path, key){
+        var ent = eval("$scope.environments_list" + entity_path),
+            path = '';
+
+        if(typeof ent === 'object') {
+            if(Array.isArray(ent)) path = entity_path + '['+key+']';
+            if(!Array.isArray(ent)) path = entity_path + '.'+key;
+        }
+
+        return path;
     }
 
     $scope.editEntityVal = function(ev, val){

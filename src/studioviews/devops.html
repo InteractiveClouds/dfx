@@ -74,15 +74,19 @@
                                                 </md-input-container>
                                             </div>
                                             
-                                            <div ng-if="value" class="dfx-studio-grid-table-column-data-item">
+                                            <div ng-if="value && checkValueType(value)" class="dfx-studio-grid-table-column-data-item">
                                                 <span style="display:block;height:20px"></span>
                                             </div>
                                             
-                                            <ul ng-if="value" class="{{key + '_row'}}">
-                                                <li ng-repeat="(key, value) in value track by $index" ng-init="root_key = root_key[key]; entity_path = entity_path + '.' + key" ng-include="'environment-content-{{$index}}'" aria-label="{{root_key}}"></li>
+                                            <ul ng-if="value && checkValueType(value)" class="{{key + '_row'}}">
+                                                <li ng-repeat="(key, value) in value track by $index" 
+                                                    ng-init="root_key = root_key[key]; entity_path = createEntityPath(entity_path, key)" 
+                                                    ng-include="'environment-content-{{$index}}'" aria-label="{{root_key}}"></li>
                                             </ul>
                                         </script>
-                                        <ul><li ng-repeat="(key, value) in env_vars_list" ng-init="root_key = environment.data[key]; entity_path = '[' + evn_index + '].data.' + key" ng-include="'environment-content-{{$index}}'" aria-label="{{root_key}} {{entity_path}}"></li></ul>
+                                        <ul><li ng-repeat="(key, value) in env_vars_list" 
+                                                ng-init="root_key = environment.data[key]; entity_path = '[' + evn_index + '].data.' + key" 
+                                                ng-include="'environment-content-{{$index}}'" aria-label="{{root_key}} {{entity_path}}"></li></ul>
                                     </div>
                                 </div>
                             </div>
