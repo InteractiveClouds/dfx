@@ -2,7 +2,7 @@
   "template": 		{ "value": "default" },
   "name":         { "value": "pnlPanel1" },
   "controller":   { "value": "wTestController" },
-  "form":         { "value": "wTestForm" },
+  "form":         { "value": "" },
   "repeat_in":    { "value": "" },
   "repeat_title": { "value": false },
   "classes":      { "value": "" },
