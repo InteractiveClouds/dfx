@@ -674,7 +674,7 @@ dfxStudioApi.factory('dfxApplications', [ '$http', '$q', function($http, $q) {
     }
 
     api_applications.saveDictionary = function(appname, data){
-        var deferred = $q.defer();
+        var deferred = $q.defer();        
         $http({
             url: '/studio/data_dictionary/put/' + appname,
             method: "POST",

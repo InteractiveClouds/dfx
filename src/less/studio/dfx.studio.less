@@ -683,10 +683,9 @@ md-content.menu-structure {
 md-content.menu-structure ul {
   padding: 0px;
   list-style: none;
-}
-md-content.menu-structure.collapsible ul {
-  padding-left: 16px;
-  padding-right: 16px;
+  margin-bottom: 0px;
+  /*padding-left: 16px;*/
+  /*padding-right: 16px;*/
   ul {
     padding-left: 16px;
     padding-right: 0px;
@@ -694,11 +693,11 @@ md-content.menu-structure.collapsible ul {
   li {
     position: relative;
     z-index: 0;
-    &>span{
+    .dfx-menu-structure-trigger-box {
       position: absolute;
       z-index: 1;
       top: 0px;
-      left: -16px;
+      left: -14px;
       i.dfx-menu-structure-trigger {
         font-size: 18px;
         color: #3b7fba;
@@ -711,16 +710,17 @@ md-content.menu-structure.collapsible ul {
         }
       }
     }
-    a {
+    a, span {
+      color: #337ab7;
       padding: 0px 2px;
     }
   }
 }
 md-content.menu-structure ul ul {
-  padding-left: 20px;
+  /*padding-left: 20px;*/
 }
 md-content.menu-structure ul li a {
-  padding: 0px 10px;
+  padding: 0px 2px;
   text-decoration: none;
   display: block;
   cursor: pointer;
@@ -731,16 +731,6 @@ md-content.menu-structure ul li a:hover {
 md-content.menu-structure ul li.active > a {
   font-weight: 700;
   background:#ECECEC;
-}
-#dfx-studio-environments-definition md-input-container .md-errors-spacer {
-    min-height: 0;
-}
-* {
-  outline: none !important;
-}
-.dfx-envs-structure-trigger.collapsed {
-  -webkit-transform: rotate(-90deg);
-  transform: rotate(-90deg);
 }
 
 /*Tree editor*/
@@ -760,12 +750,32 @@ md-content.menu-structure ul li.active > a {
     }
     .dfx-studio-toolbar-title {
       min-height:36px;
-      background:rgba(128,128,128,0.46);
+      background:#c3c3c3;
       .md-toolbar-tools {
         height:36px;
         max-height:36px;
+        justify-content: space-between;
         h3 {
           font-size:16px;
+          display:inline-block;
+          white-space:nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          margin: 0;
+        }
+        md-menu-bar {
+          padding: 0px;
+          button {
+            height:auto;
+            padding:0;
+            background:transparent;
+            icon {
+              font-size: 16px;
+            }
+          }
+          md-menu {
+            display: flex;
+          }
         }
       }
     }
@@ -788,8 +798,6 @@ md-content.menu-structure ul li.active > a {
         width: auto;
         min-width: 0px;
         margin:auto 7px;
-        cursor:pointer;
-        outline: none;
         background-color: transparent !important;
         .md-ripple-container {
           background-color: transparent !important;
@@ -799,6 +807,85 @@ md-content.menu-structure ul li.active > a {
         }
         &[disabled] {
           color: #c3c3c3;
+        }
+      }
+    }
+  }
+  &.dfx-studio-tree-panels-one-tree {
+    section:first-child {
+      width: 29.5%;
+    }
+    section:last-child {
+      width: 69.5%;
+    }
+  }
+}
+button.dfx-studio-toolbat-options-button {
+  font-size: 12px;
+  line-height:0px;
+  md-icon {
+    font-size: 16px; 
+    margin-right:8px;
+  }
+}
+
+/* DFX grid table */
+.dfx-studio-grid-table {
+  display: flex;
+  flex-direction: row;
+  border-top: 36px solid #c3c3c3;
+  .dfx-studio-grid-table-names {
+    width: 200px;
+    min-width: 200px;
+    margin-top: -36px;
+  }
+  .dfx-studio-grid-table-columns {
+    display: flex;
+    flex-direction: row;
+    margin-top: -36px;
+    overflow: auto;
+    .dfx-studio-grid-table-column {
+      width: 200px;
+      min-width: 200px;
+      &:nth-child(odd) {
+        background: #efefef;
+        .dfx-studio-toolbar-title {
+          background: #b7b7b7;
+        }
+      }
+      .dfx-studio-grid-table-column-data {
+        padding: 5px 0px;
+        ul {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+          li {
+
+          }
+        }
+        .dfx-studio-grid-table-column-data-item {
+          padding: 0 5px;
+          .dfx-studio-grid-table-column-data-item-value {
+            &.empty-var {
+              color: grey;
+              font-style: italic;
+            }  
+          }
+          md-input-container {
+            padding: 0px;
+            margin: 0;
+            input {
+              height: 20px;      
+            }
+            &.md-input-focused {
+              .md-input {
+                /*border-width: 0 0  */
+              }
+            }
+            .md-errors-spacer {
+              min-height: 0;
+            }
+          }
         }
       }
     }
@@ -967,4 +1054,7 @@ md-input-container.md-input-has-value label.md-placeholder {
 button.md-button md-icon.fa.dfx-studio-flex-icon {
     display: -webkit-inline-flex;
     display: inline-flex;
+}
+* {
+  outline: none !important;
 }
