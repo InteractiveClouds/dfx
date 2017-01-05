@@ -2387,14 +2387,15 @@ dfxStudioApp.controller("dfx_studio_devops_controller", [ '$scope', '$q', '$mdDi
     $scope.environments_list = [];
     $scope.environment_data = { "name": "" };
     $scope.not_valid_environment_name = false;
-    $scope.env_vars_list = [];
+    $scope.env_vars_list;
+    $scope.dd_variables_loaded = false;
 
     $scope.getAppEnvironments = function(data, envs_init){
+        if(envs_init) $scope.dd_variables_loaded = false;
         dfxApplications.getEnvironmentsList( data ).then(function(response){
             $scope.environments_list = response.data.data;
-
-            if(!envs_init) $scope.generateAppEnvironments();
-            $scope.getAppEnvVars(app_data, 'envs_init');
+            if(!envs_init) $scope.generateAppEnvironments();            
+            $scope.getAppEnvVars(envs_init);
         });
     }
 
@@ -2443,8 +2444,7 @@ dfxStudioApp.controller("dfx_studio_devops_controller", [ '$scope', '$q', '$mdDi
 
     $scope.saveAppEnvironments = function(){
         $scope.saveAllEnvironments().then(function(){
-            dfxMessaging.showMessage('Environments has been successfully saved and generated');
-            $scope.getAppEnvVars(app_data, 'envs_init');
+            $scope.generateAppEnvironments();
         });
     }
 
@@ -2496,15 +2496,6 @@ dfxStudioApp.controller("dfx_studio_devops_controller", [ '$scope', '$q', '$mdDi
                 $scope.saveEnvironment = function( name ){
                     $scope.validateEnvironmentName(name);
                     if(!$scope.not_valid_environment_name){
-                        var data = {};
-                        for (var i = 0; i < $scope.env_vars_list.length; i++) {
-                            if(angular.equals({}, $scope.env_vars_list[i].data) || $scope.env_vars_list[i].data === []) {
-                                data[$scope.env_vars_list[i].name] = '';
-                            } else {
-                                data[$scope.env_vars_list[i].name] = $scope.env_vars_list[i].data;
-                                if(!data[$scope.env_vars_list[i].name].description) data[$scope.env_vars_list[i].name].description = 'Item description';
-                            }
-                        };
                         if(environment){
                             if($scope.environment_mode === 'Edit'){
                                 var data = {                        
@@ -2525,7 +2516,7 @@ dfxStudioApp.controller("dfx_studio_devops_controller", [ '$scope', '$q', '$mdDi
                             var data = {
                                 "app_name": $scope.app_name,
                                 "name": name,
-                                "data": data
+                                "data": $scope.env_vars_list
                             }
                             $scope.addEnvironment(data);
                         }
@@ -2563,8 +2554,16 @@ dfxStudioApp.controller("dfx_studio_devops_controller", [ '$scope', '$q', '$mdDi
         })
     };
 
-    $scope.checkValueType = function(v){
-        return v && typeof v == 'object' ? true : false;
+    $scope.checkValueType = function(v, type){
+        var res;
+
+        if(type && type === 'simple') {
+            res = (typeof v == 'object') ? false : true;
+        }else{
+            res = (typeof v == 'object') ? true : false;
+        }
+       
+        return res;
     }
 
     $scope.createEntityPath = function (entity_path, key){
@@ -2587,12 +2586,13 @@ dfxStudioApp.controller("dfx_studio_devops_controller", [ '$scope', '$q', '$mdDi
     $scope.saveEntityVal = function(ev, entity_path){
         if(ev.which === 13) {
             var env_val_input = $(ev.target),
-                env_var_value = env_val_input.val();
+                env_var_value = env_val_input.val(),
+                env_var_model = env_val_input.parent().siblings('input');
 
             env_val_input.parent().hide();
             env_val_input.parent().siblings('input').val(env_var_value);
+            angular.element(env_var_model).data('$ngModelController').$setViewValue(env_var_value);
             env_val_input.parent().siblings('span').text(env_var_value).show();
-            console.log('entity_path', entity_path);
             eval("$scope.environments_list" + entity_path + " = env_var_value ;");
         }
 
@@ -2603,7 +2603,6 @@ dfxStudioApp.controller("dfx_studio_devops_controller", [ '$scope', '$q', '$mdDi
             env_val_input.parent().siblings('input').val();
             env_val_input.parent().siblings('span').show();
         }
-        console.log('$scope.environments_list', $scope.environments_list);
     }
 
     $scope.blurEntityVal = function(ev){
@@ -2636,13 +2635,14 @@ dfxStudioApp.controller("dfx_studio_devops_controller", [ '$scope', '$q', '$mdDi
         }, 0);
     }
 
-    $scope.getAppEnvVars = function(data, envs_init){        
+    $scope.getAppEnvVars = function(envs_init){
         dfxApplications.getDataDictionary('app_data_dictionary', $scope.app_name ).then(function(response){
-            if(response.data.data.content) $scope.env_vars_list = response.data.data.content.ENV;            
+            if(response.data.data.content) $scope.env_vars_list = response.data.data.content.ENV;    
+            $scope.dd_variables_loaded = true;
             $scope.checkMenuRootPadding();
         });
     }
-    $scope.getAppEnvVars(app_data, 'envs_init');
+    $scope.getAppEnvVars('envs_init');
 
     $scope.updateAllEnvironments = function(new_var_name, old_var_name){
         var all_envs = $scope.environments_list.length,
@@ -6990,16 +6990,16 @@ dfxStudioApp.controller("dfx_studio_data_dictionary_controller", [ '$scope', '$t
             // console.log('env_value, dd_env_o[env_key]', env_value, dd_env_o[env_key]);
         });
         angular.forEach(dd_env_o, function (dd_value, dd_key){
-            console.log('dd_value / dd_key', dd_value, ' / ', dd_key);
+            // console.log('dd_value / dd_key', dd_value, ' / ', dd_key);
             if(dd_value && typeof dd_value === 'object') {
                 if(Array.isArray(dd_value)) {
-                    console.log('ARRAY V / K', dd_value, ' / ', dd_key);
+                    // console.log('ARRAY V / K', dd_value, ' / ', dd_key);
                     angular.forEach(dd_value, function (dd_arr_val, dd_arr_key){
-                        // console.log('dd_arr_val, dd_arr_key', dd_arr_val, dd_arr_key);
-                        if(!angular.equals(dd_arr_val, env_o[dd_key][dd_arr_key])) env_o[dd_key][dd_arr_key] = dd_arr_val;
+                        // console.log('dd_arr_val, dd_arr_key, env_o[dd_key][dd_arr_key]', dd_arr_val, dd_arr_key, env_o[dd_key][dd_arr_key]);
+                        // if(!angular.equals(dd_arr_val, env_o[dd_key][dd_arr_key])) env_o[dd_key][dd_arr_key] = dd_arr_val;
                         // console.log('env_o[dd_key][dd_arr_key]', env_o[dd_key][dd_arr_key]);
                         // console.log('env_o[dd_arr_key], dd_arr_val', env_o[dd_arr_key], dd_arr_val);
-                        // $scope.cleanChangeProps(env_o[dd_key], dd_env_o[dd_key]);
+                        // $scope.cleanChangeProps(env_o[dd_key][dd_arr_key], dd_arr_val);
                     });
                 } else {
                     $scope.cleanChangeProps(env_o[dd_key], dd_env_o[dd_key]);
@@ -7043,14 +7043,14 @@ dfxStudioApp.controller("dfx_studio_data_dictionary_controller", [ '$scope', '$t
             },
             to_generation;
 
-        console.log('$scope.dd_content.ENV', $scope.dd_content.ENV);
+        // console.log('$scope.dd_content.ENV', $scope.dd_content.ENV);
         dfxApplications.getEnvironmentsList({'app_name': $scope.app_name}).then(function(response){
             $scope.dd_environmens = response.data.data;
-            console.log('dd_environmens', $scope.dd_environmens);
+            // console.log('dd_environmens', $scope.dd_environmens);
 
             if($scope.dd_environmens.length>0){
                 $scope.mergeEnvironments().then(function(){
-                    console.log('merged environmens', $scope.dd_environmens);
+                    // console.log('merged environmens', $scope.dd_environmens);
 
                     to_generation = angular.copy($scope.dd_environmens);
 
