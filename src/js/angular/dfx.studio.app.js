@@ -4329,33 +4329,6 @@ dfxStudioApp.controller("dfx_studio_deployment_controller", [ '$scope', '$mdDial
         });
     };
 
-    $scope.deployBuild = function(build, platform){
-        setWaitingMessageValue(build, true);
-        var body = {
-            applicationName:        $scope.app_name,
-            platform:               platform,
-            applicationVersion:     build.app_version,
-            buildNumber:            build.build_number,
-            tenantId:               $scope.tenant_id
-        };
-        dfxDeployment.deployBuild(body).then(function(data){
-            setWaitingMessageValue(build, false);
-            dfxMessaging.showMessage('Build has been successfully deployed on deployment server');
-            $scope.getAppBuilds(platform);
-        },function (err) {
-            setWaitingMessageValue(build, false);
-            dfxMessaging.showWarning('The build deployment failed');
-        });
-    };
-
-    function setWaitingMessageValue(build, value) {
-        $scope.builds[build.platform].forEach(function(b, index){
-            if (build._id === b._id) {
-                $scope.builds[build.platform][index].waitingMessage = value;
-            }
-        });
-    }
-
     $scope.getDeployedQRCode = function(build) {
         $mdDialog.show({
             scope: $scope.$new(),
