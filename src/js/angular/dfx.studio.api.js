@@ -2584,6 +2584,17 @@ dfxStudioApi.factory('dfxApiServiceObjects', [ '$http', '$q', function($http, $q
         return deferred.promise;
     }
 
+    api_service_objects.getEnvVariables = function(appName) {
+           var deferred = $q.defer();
+            $http({
+                method: 'GET',
+                    url: '/studio/application/getEnv/' + appName
+            }).then(function successCallback(response) {
+                deferred.resolve( response.data.data );
+            });
+        return deferred.promise;
+    }
+
     return api_service_objects;
 }]);
 
