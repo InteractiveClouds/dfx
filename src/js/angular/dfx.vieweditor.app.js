@@ -1485,6 +1485,11 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
                     dfxMessaging.showMessage( 'The template ' + gc_template.name + ' has been created' );
                     $scope.gc_templates.push(gc_template);
                     $scope.loadGcTemplatesByType();
+
+                    // if templates panel is open - refresh panel
+                    if ($scope.gc_templates_to_drag_drop) {
+                        $scope.cleanGcTemplatesToDragDrop();
+                    }
                 }, function(res) {
                     dfxMessaging.showWarning(res.data.error.message);
                 });
@@ -4336,7 +4341,7 @@ dfxViewEditorApp.directive('dfxVeListEditor', ['$mdDialog', '$timeout', '$http',
             }
             scope.setHtmlValue = function() {
                 switch(scope.htmlType){
-                    case 'custom_dynamic_item_template': 
+                    case 'custom_dynamic_item_template':
                         scope.attributes.customTemplate.value.template = scope.htmlEditor.getValue();
                         break;
                     default:
@@ -4409,7 +4414,7 @@ dfxViewEditorApp.directive('dfxVeListEditor', ['$mdDialog', '$timeout', '$http',
                 } else {
                     scope.attributes.customTemplate.value.template = '';
                     scope.attributes.customTemplate.value.enabled = false;
-                    scope.fillPropertiesNames(gcJsonSample.value);    
+                    scope.fillPropertiesNames(gcJsonSample.value);
                     delete scope.attributes.customTemplate.status;
                 }
                 sampleGet = dfxSampleJsonEditor.get();
