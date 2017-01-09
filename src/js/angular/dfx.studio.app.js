@@ -5959,6 +5959,15 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
         };
     });
 
+        // Get Env variables
+    $scope.env_vars = ['none'];
+    $scope.env_var = 'none';
+    dfxApiServiceObjects.getEnvVariables( $scope.app_name).then( function( data ) {
+            data.content.forEach(function(item){
+                    $scope.env_vars.push(item.name);
+                })
+    });
+
     dfxApiServiceObjects.getCategories( $scope, $scope.app_name ).then( function( data ) {
         $scope.apiSoCategories = data.data.querycats;
     });
@@ -6443,6 +6452,7 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
                 if (tenant.data.data.databaseTokens) {
                     var str = "curl -i ";
                         str += "-H 'Content-Type:application/json' ";
+                        str += "-H 'DFX_ENV_VAR:" + $scope.env_var + "' ";
                         str += "-H 'Authorization:Basic " + btoa($('body').attr('data-tenantid') + ":" + Object.keys(tenant.data.data.databaseTokens)[0]) + "==' ";
                         str += "-d '{}' ";
                         str += window.location.origin + '/api/' + $scope.app_name + '/apiRoute/' + serviceItem.name;
@@ -6450,6 +6460,7 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
 
                     var str = "curl -i ";
                     str += "-H 'Content-Type:application/json' ";
+                    str += "-H 'DFX_ENV_VAR:" + $scope.env_var + "' ";
                     str += "-H 'Authorization:Basic " + btoa($('body').attr('data-tenantid') + ":" + Object.keys(tenant.data.data.databaseTokens)[0]) + "==' ";
                     str += "-d '" + JSON.stringify(queryString) + "' ";
                     str += window.location.origin + '/api/' + $scope.app_name + '/apiRoute/' + serviceItem.name;
@@ -6460,6 +6471,7 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
                     $scope.postmanUrl = window.location.origin + '/api/' + $scope.app_name + '/apiRoute/' + serviceItem.name;
                     $scope.postmanUsername = $('body').attr('data-tenantid');
                     $scope.postmanPassword = Object.keys(tenant.data.data.databaseTokens)[0];
+                    $scope.postmanHeader = angular.copy($scope.env_var);
                 } else {
                     $scope.curlItemContent = "Can't get tenant token from server";
                 }
@@ -6857,6 +6869,7 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
         simulateService.typeRequest = $scope.scopeService.data.settings.typerequest.replace('HTTP_', '');
         simulateService.urlRandom = $scope.scopeService.data.settings.urlrandom;
         simulateService.reqbody = $scope.scopeService.data.settings.postrequestbody;
+        simulateService.env = $scope.env_var;
         if ( $scope.scopeService.data.parameters && $scope.scopeService.data.parameters.length > 0 ) { simulateService.data = $scope.scopeService.data.parameters; }
         if ( $scope.scopeService.data.precode && $scope.scopeService.data.precode.length > 0 ) { simulateService.precode = $scope.scopeService.data.precode; }
         if ( $scope.scopeService.data.postcode && $scope.scopeService.data.postcode.length > 0 ) { simulateService.postcode = $scope.scopeService.data.postcode; }
@@ -6905,7 +6918,7 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
         //     scope.script_editor.focus();
         //     executedMirror.refresh();
         // }, 0);
-        sidenav.find("#executedResult").css( "height", sidenavHeight-245 );
+        sidenav.find("#executedResult").css( "height", sidenavHeight-290 );
         var container = document.getElementById('executedResult'),
             options = { mode: 'code', modes: ['tree','form','code','text','view'], history: true }
         $timeout(function(){
