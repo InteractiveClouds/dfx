@@ -16,9 +16,9 @@ exports.run = function (cfg, opts) {
                 db.get(DB_TENANTS_PREFIX + tenant.id,'applications').then(function( apps ){
                     return Q.all(apps.map(function ( app ) {
                         var source_script = (app.script != null) ? app.script :
-                            'dfxApplication.controller(\'' + app.name+ 'ApplicationController'\', [ \'$scope\', function ($scope) {\n\t\n}]);';
+                            'dfxApplication.controller(\'' + app.name+ 'ApplicationController\', [ \'$scope\', function ($scope) {\n\t\n}]);';
                         var source_scriptMobile = (app.scriptMobile != null) ? app.scriptMobile :
-                            'dfxApplication.controller(\'' + app.name+ 'ApplicationController'\', [ \'$scope\', function ($scope) {\n\t\n}]);';
+                            'dfxApplication.controller(\'' + app.name+ 'ApplicationController\', [ \'$scope\', function ($scope) {\n\t\n}]);';
                         /* update collection*/
                         return db.update(
                             DB_TENANTS_PREFIX + tenant.id,
