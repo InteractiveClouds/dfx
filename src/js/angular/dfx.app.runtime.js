@@ -63,6 +63,10 @@ dfxAppRuntime.controller('dfx_app_controller', [ '$scope', '$rootScope', 'dfxAut
 	$rootScope.fullscreen = false;
     $scope.app_user = $user;
 
+    //$('#dfx_view_preview_container').parent().css('width', '372px');
+    //$('#dfx_view_preview_container').parent().css('height', '663px');
+    //$('#dfx_view_preview_container').parent().css('margin', '109px 50px 109px 50px');
+
     $scope.design_devices = [
         {
             'name':     'iphone5',
@@ -482,12 +486,18 @@ dfxAppRuntime.controller('dfx_view_controller', [ '$scope', '$rootScope', '$comp
 
     $scope.refreshDevice = function() {
         if ($scope.design_device_orientation=='Portrait') {
-            $('#dfx_view_preview_container').css('width', $scope.design_selected_device.portrait['width']);
-            $('#dfx_view_preview_container').css('height', $scope.design_selected_device.portrait['height']);
-            $('#dfx_view_preview_container').css('padding-top', $scope.design_selected_device.portrait['padding-top']);
-            $('#dfx_view_preview_container').css('padding-left', $scope.design_selected_device.portrait['padding-left']);
-            $('#dfx_view_preview_container').css('padding-right', $scope.design_selected_device.portrait['padding-right']);
-            $('#dfx_view_preview_container').css('padding-bottom', $scope.design_selected_device.portrait['padding-bottom']);
+            //$('#dfx_view_preview_container').css('width', $scope.design_selected_device.portrait['width']);
+            //$('#dfx_view_preview_container').css('height', $scope.design_selected_device.portrait['height']);
+            //$('#dfx_view_preview_container').css('padding-top', $scope.design_selected_device.portrait['padding-top']);
+            //$('#dfx_view_preview_container').css('padding-left', $scope.design_selected_device.portrait['padding-left']);
+            //$('#dfx_view_preview_container').css('padding-right', $scope.design_selected_device.portrait['padding-right']);
+            //$('#dfx_view_preview_container').css('padding-bottom', $scope.design_selected_device.portrait['padding-bottom']);
+            //$('#dfx_view_preview_main_container').css( 'background', 'url(/images/' + $scope.design_selected_device.portrait['image'] + ')' );
+
+            $('#dfx_view_preview_container').css('height', '100%');
+            $('#dfx_view_preview_container').parent().css('width', '372px');
+            $('#dfx_view_preview_container').parent().css('height', '663px');
+            $('#dfx_view_preview_container').parent().css('margin', '109px 50px 109px 50px');
             $('#dfx_view_preview_main_container').css( 'background', 'url(/images/' + $scope.design_selected_device.portrait['image'] + ')' );
         } else {
             $('#dfx_view_preview_container').css('width', $scope.design_selected_device.landscape['width']);

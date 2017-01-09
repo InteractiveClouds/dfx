@@ -388,12 +388,12 @@ var exports = (function () {
                 src + 'js/angular/dfx.pageeditor.app.js',
                 src + 'js/angular/dfx.studio.api.js',
                 src + 'js/angular/dfx.studio.app.js',
-                src + 'js/angular/dfx.studio.app.util.js',
+                //src + 'js/angular/dfx.studio.app.util.js',
                 src + 'js/angular/dfx.studio.landing.js',
-                src + 'js/angular/dfx.vieweditor.app.js',
-                src + 'js/angular/dfx.vieweditor.app.settings.js',
-                src + 'js/angular/dfx.vieweditor.app.gctemplates.js',
-                src + 'js/angular/dfx.vieweditor.app.undo.js'
+                src + 'js/angular/dfx.vieweditor.app.js'
+                //src + 'js/angular/dfx.vieweditor.app.settings.js',
+                //src + 'js/angular/dfx.vieweditor.app.gctemplates.js',
+                //src + 'js/angular/dfx.vieweditor.app.undo.js'
             ],
             dest : pub + 'js/preview/dfx.js'
         },
@@ -460,12 +460,12 @@ var exports = (function () {
                 src + 'js/angular/dfx.pageeditor.app.js',
                 src + 'js/angular/dfx.studio.api.js',
                 src + 'js/angular/dfx.studio.app.js',
-                src + 'js/angular/dfx.studio.app.util.js',
+                //src + 'js/angular/dfx.studio.app.util.js',
                 src + 'js/angular/dfx.studio.landing.js',
-                src + 'js/angular/dfx.vieweditor.app.js',
-                src + 'js/angular/dfx.vieweditor.app.settings.js',
-                src + 'js/angular/dfx.vieweditor.app.gctemplates.js',
-                src + 'js/angular/dfx.vieweditor.app.undo.js'
+                src + 'js/angular/dfx.vieweditor.app.js'
+                //src + 'js/angular/dfx.vieweditor.app.settings.js',
+                //src + 'js/angular/dfx.vieweditor.app.gctemplates.js',
+                //src + 'js/angular/dfx.vieweditor.app.undo.js'
             ],
             dest : build + 'js/runtime_web/script.js'
         },
@@ -483,12 +483,12 @@ var exports = (function () {
                 src + 'js/angular/dfx.pageeditor.app.js',
                 src + 'js/angular/dfx.studio.api.js',
                 src + 'js/angular/dfx.studio.app.js',
-                src + 'js/angular/dfx.studio.app.util.js',
+                //src + 'js/angular/dfx.studio.app.util.js',
                 src + 'js/angular/dfx.studio.landing.js',
-                src + 'js/angular/dfx.vieweditor.app.js',
-                src + 'js/angular/dfx.vieweditor.app.settings.js',
-                src + 'js/angular/dfx.vieweditor.app.gctemplates.js',
-                src + 'js/angular/dfx.vieweditor.app.undo.js'
+                src + 'js/angular/dfx.vieweditor.app.js'
+                //src + 'js/angular/dfx.vieweditor.app.settings.js',
+                //src + 'js/angular/dfx.vieweditor.app.gctemplates.js',
+                //src + 'js/angular/dfx.vieweditor.app.undo.js'
             ],
             dest : build + 'js/runtime_web/dfx.js'
         },
@@ -546,21 +546,21 @@ var exports = (function () {
                 src + 'js/vendor/angular-nvd3.js',
                 './node_modules/ng-knob/dist/ng-knob.min.js',
                 src + 'js/vendor/jquery-sparkline.js',
+                src + 'js/angular/dfx.gcc.js',
                 src + 'js/commons/dfx.directives.js',
                 src + 'js/vendor/jquery.dreamface-1.0.js',
                 src + 'js/angular/dfx.app.runtime.js',
                 src + 'js/angular/dfx.app.services.js',
-                src + 'js/angular/dfx.gcc.js',
                 //src + 'js/angular/dfx.gcontrols.js',
                 src + 'js/angular/dfx.pageeditor.app.js',
                 src + 'js/angular/dfx.studio.api.js',
                 src + 'js/angular/dfx.studio.app.js',
-                src + 'js/angular/dfx.studio.app.util.js',
+                //src + 'js/angular/dfx.studio.app.util.js',
                 src + 'js/angular/dfx.studio.landing.js',
-                src + 'js/angular/dfx.vieweditor.app.js',
-                src + 'js/angular/dfx.vieweditor.app.settings.js',
-                src + 'js/angular/dfx.vieweditor.app.gctemplates.js',
-                src + 'js/angular/dfx.vieweditor.app.undo.js'
+                src + 'js/angular/dfx.vieweditor.app.js'
+                //src + 'js/angular/dfx.vieweditor.app.settings.js',
+                //src + 'js/angular/dfx.vieweditor.app.gctemplates.js',
+                //src + 'js/angular/dfx.vieweditor.app.undo.js'
             ],
             dest : build + 'js/runtime_mobile/script.js'
         },
@@ -578,12 +578,12 @@ var exports = (function () {
                 src + 'js/angular/dfx.pageeditor.app.js',
                 src + 'js/angular/dfx.studio.api.js',
                 src + 'js/angular/dfx.studio.app.js',
-                src + 'js/angular/dfx.studio.app.util.js',
+                //src + 'js/angular/dfx.studio.app.util.js',
                 src + 'js/angular/dfx.studio.landing.js',
-                src + 'js/angular/dfx.vieweditor.app.js',
-                src + 'js/angular/dfx.vieweditor.app.settings.js',
-                src + 'js/angular/dfx.vieweditor.app.gctemplates.js',
-                src + 'js/angular/dfx.vieweditor.app.undo.js'
+                src + 'js/angular/dfx.vieweditor.app.js'
+                //src + 'js/angular/dfx.vieweditor.app.settings.js',
+                //src + 'js/angular/dfx.vieweditor.app.gctemplates.js',
+                //src + 'js/angular/dfx.vieweditor.app.undo.js'
             ],
             dest : build + 'js/runtime_mobile/dfx.js'
         }
