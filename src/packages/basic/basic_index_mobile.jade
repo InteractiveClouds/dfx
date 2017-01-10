@@ -30,7 +30,7 @@ html(ng-app="dfxAppRuntime")
 			- } else if ( resource_item.type == 'CSS' ) {
 				link(rel="stylesheet", type="text/css", href="#{resource_item.path}", media="screen")
 			- }
-	body(layout="row", ng-controller="dfx_app_controller", dfx-app="#{appname}")
+	body(layout="row", ng-controller="dfx_app_controller", dfx-app="#{appname}", dfx-tenant="#{tenantid}", dfx-platform="#{platform}")
 		div(ng-controller="dfx_page_template_controller", style="width:100%", layout="column", flex)
 			div#pageheader(layout="row", ng-show="selected_template.layout.header.display=='true'", style="min-height:{{selected_template.layout.header.height}}", class="animated", dfx-include-page-template="header")
 				div(layout,layout-align="{{selected_template.layout.header.halignment}} {{selected_template.layout.header.valignment}}", flex="100", style="height:{{selected_template.layout.header.height}};{{selected_template.layout.header.style}}")

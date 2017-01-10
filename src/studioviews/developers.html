@@ -1,5 +1,5 @@
 <div layout="row" class="layout-align-end">
-    <md-button class="md-raised" ng-click="initNewUser()">
+    <md-button aria-label="Studio button" class="md-raised" ng-click="initNewUser()">
         <md-icon class="fa fa-plus" style="width:14px;height:14px;"></md-icon>
         Developer
     </md-button>
@@ -27,8 +27,8 @@
                     <td><span ng-repeat="role in user.roles.list track by $index">{{role}}<span ng-if="$index !== user.roles.list.length-1">, </span>
                             </span></td>
                     <td>
-                        <md-button ng-click="editCurrentUser(user)" class="dfx-studio-table-button"><md-icon class="fa fa-edit"></md-icon></md-button>
-                        <md-button class="dfx-studio-table-button" ng-click="confirmUserDelete($event, user.login)" ng-disabled="user.login==='admin'|| user.type==='openid'"><md-icon class="fa fa-trash"></md-icon></md-button>
+                        <md-button aria-label="Studio button" ng-click="editCurrentUser(user)" class="dfx-studio-table-button"><md-icon class="fa fa-edit"></md-icon></md-button>
+                        <md-button aria-label="Studio button" class="dfx-studio-table-button" ng-click="confirmUserDelete($event, user.login)" ng-disabled="user.login==='admin'|| user.type==='openid'"><md-icon class="fa fa-trash"></md-icon></md-button>
                     </td>
                 </tr>
                 </tbody>

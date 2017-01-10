@@ -31,7 +31,7 @@
                                 <div class="datasource-type">{{route.data.settings.typerequest.slice(5)}}</div>
                                 <div class="datasource-service">{{route.name}}</div>
                                 <div class="datasource-select">
-                                    <md-button ng-if="serviceModeBtn !== 'addServices'" ng-click="chooseRoute(route)" class="md-raised">Select</md-button>
+                                    <md-button aria-label="Studio button" ng-if="serviceModeBtn !== 'addServices'" ng-click="chooseRoute(route)" class="md-raised">Select</md-button>
                                     <md-checkbox ng-if="serviceModeBtn === 'addServices'" ng-model="serviceItem[$index]" class="md-primary service-checkbox" style="margin-bottom:0px;" aria-label="checked-service-item"></md-checkbox>
                                 </div>
                             </div><!-- /.api-datasource-labels -->
@@ -80,7 +80,7 @@
                                             <div class="restdata datasource-service">{{route.name}}</div>
                                             <div class="restdata datasource-summary">{{route.summary}}</div>
                                             <div class="restdata datasource-select">
-                                                <md-button ng-if="serviceModeBtn !== 'addServices'" ng-click="chooseRoute(route)" class="md-raised">Select</md-button>
+                                                <md-button aria-label="Studio button" ng-if="serviceModeBtn !== 'addServices'" ng-click="chooseRoute(route)" class="md-raised">Select</md-button>
                                                 <md-checkbox ng-if="serviceModeBtn === 'addServices'" ng-model="checkedServiceItem" class="md-primary service-checkbox" style="margin-bottom:0px;" aria-label="checked-service-item"></md-checkbox>
                                             </div>
                                         </div><!-- /.api-datasource-labels -->
@@ -111,9 +111,9 @@
             </md-card>
         </md-dialog-content>
         <md-dialog-actions layout="row">
-            <md-button ng-if="serviceModeBtn !== 'addServices'" class="md-primary" ng-click="closeCatalog($event)" style="margin: 0 8px;">Cancel</md-button>
-            <md-button ng-if="serviceModeBtn === 'addServices'" class="md-primary" type="submit" style="margin: 0 8px;">Add Services</md-button>
-            <md-button ng-if="serviceModeBtn === 'addServices'" class="md-primary" ng-click="closeCatalog($event)" style="margin: 0 8px;">Cancel</md-button>
+            <md-button aria-label="Studio button" ng-if="serviceModeBtn !== 'addServices'" class="md-primary" ng-click="closeCatalog($event)" style="margin: 0 8px;">Cancel</md-button>
+            <md-button aria-label="Studio button" ng-if="serviceModeBtn === 'addServices'" class="md-primary" type="submit" style="margin: 0 8px;">Add Services</md-button>
+            <md-button aria-label="Studio button" ng-if="serviceModeBtn === 'addServices'" class="md-primary" ng-click="closeCatalog($event)" style="margin: 0 8px;">Cancel</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog>

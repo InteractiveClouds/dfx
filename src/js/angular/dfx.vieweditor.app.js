@@ -36,7 +36,7 @@ dfxViewEditorApp.controller("dfx_main_controller", [ '$scope', '$rootScope', '$q
             });
         }
         return deferred.promise;
-    }
+    };
 
     $scope.loadView = function() {
         return '/studio/widget/editui/' + $scope.application_name + '/' + $scope.view_name + '/' + $scope.view_platform;
@@ -220,8 +220,7 @@ dfxViewEditorApp.controller("dfx_main_controller", [ '$scope', '$rootScope', '$q
 
 }]);
 
-dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScope', '$compile', '$timeout', '$mdDialog', '$mdToast', '$mdSidenav', '$log', '$mdMedia', '$window', '$http', '$location', '$interval', 'dfxMessaging', 'dfxViews', 'dfxRendering', function($scope, $rootScope, $compile, $timeout, $mdDialog, $mdToast, $mdSidenav, $log, $mdMedia, $window, $http, $location, $interval, dfxMessaging, dfxViews, dfxRendering) {
-
+dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScope', '$compile', '$timeout', '$mdDialog', '$mdToast', '$mdSidenav', '$log', '$mdMedia', '$window', '$http', '$location', '$interval', 'dfxMessaging', 'dfxViews', 'dfxRendering', 'dfxGcTemplates', function($scope, $rootScope, $compile, $timeout, $mdDialog, $mdToast, $mdSidenav, $log, $mdMedia, $window, $http, $location, $interval, dfxMessaging, dfxViews, dfxRendering, dfxGcTemplates) {
     $scope.palette_visible = true;
     $scope.property_visible = true;
     $scope.design_visible = true;
@@ -976,6 +975,9 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     $scope.togglePanel = function(panel_id) {
         DfxViewEditorSettings.togglePanel(panel_id);
     };
+    $scope.showGcTemplatesPanel = function() {
+        DfxViewEditorSettings.showGcTemplatesPanel();
+    };
     $scope.detachOrAttachPanel = function(panel_id) {
         DfxViewEditorSettings.detachOrAttachPanel(panel_id);
     };
@@ -1054,8 +1056,17 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
 
     for (var cat in $scope.palette) {
         for (var gc in $scope.palette[cat]) {
-            item_fragment = '<li class="dfx_visual_editor_draggable dfx_visual_editor_gc_cat_item_draggable" gc-cat="' + cat + '" gc-type="' + gc + '" gc-flex="' + $scope.palette[cat][gc].flex + '">' + '<img class="dfx-ve-palette-icon" src="/images/vb/icons/' + cat + '_' + gc + '.png" title="' + gc + '"/></li>';
+            // Add GC to GC Palette
+            item_fragment = '<li class="dfx_visual_editor_draggable dfx_visual_editor_gc_cat_item_draggable dfx-ve-palette-icon-li" gc-cat="' + cat + '" gc-type="' + gc + '" gc-flex="' + $scope.palette[cat][gc].flex + '" style="position:relative;">' +
+                '<img id="dfx_ve_palette_icon_' + gc + '" class="dfx-ve-palette-icon" src="/images/vb/icons/' + cat + '_' + gc + '.png" title="' + gc + '" gc-cat="' + cat + '" gc-type="' + gc + '"/>' +
+                '</li>';
             $('ul[gc-cat=' + cat + ']').append(item_fragment);
+
+            // Add GC to GC Template popup menu
+            item_fragment = '<li class="dfx-ve-palette-icon-li" gc-cat="' + cat + '" gc-type="' + gc + '" gc-flex="' + $scope.palette[cat][gc].flex + '" style="position:relative;padding:2px;">' +
+                '<img id="dfx_ve_gc_template_icon_' + gc + '" class="dfx-ve-palette-icon" src="/images/vb/icons/' + cat + '_' + gc + '.png" title="' + gc + '" gc-cat="' + cat + '" gc-type="' + gc + '"/>' +
+                '</li>';
+            $('ul[gc-template-cat=' + cat + ']').append(item_fragment);
         }
     }
 
@@ -1285,7 +1296,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     };
 
     // Render GControls
-    $scope.renderGraphicalControl = function( component ) {
+    $scope.renderGraphicalControl = function( component, callback, is_rendering_gc_template ) {
         $scope.gc_instances[component.id] = component;
         var gc_instance = {};
         var flex_container_attr = (component.flex=='true' || (component.attributes!=null && component.attributes.flex!=null)) ? ' flex="{{attributes.flex.value}}"' : '';
@@ -1294,7 +1305,14 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
             component.attributes && (!component.attributes.autoHeight || component.attributes.autoHeight.value != true)) ?
                 ' layout="column" ' : '';
 
-        gc_instance.fragment = $compile('<div id="' + component.id + '" dfx-gc-web-base dfx-gc-web-' + component.type + ' dfx-gc-design gc-type="' + component.type + '" gc-role="control"' + flex_container_attr + gc_layout + '></div>')($scope);
+        var dfx_gc_design_directive = is_rendering_gc_template ? ' dfx-gc-design="rendering_gc_template" ' : ' dfx-gc-design ';
+
+        var gc_html_template = '<div id="' + component.id + '" dfx-gc-web-base dfx-gc-web-' + component.type +
+            dfx_gc_design_directive + ' gc-type="' + component.type + '" gc-role="control"' + flex_container_attr + gc_layout + '></div>';
+
+        gc_instance.fragment = $compile(gc_html_template)($scope, function(clonedElement) {
+            if (callback) callback(clonedElement); // sometimes, especially when doing reloadPropertyPanel(), must wait until compilation is completed
+        });
         gc_instance.id = component.id;
 
         return gc_instance;
@@ -1314,6 +1332,8 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
         $('#dfx-ve-property-title-selected-gc').css('display', 'inline-block');
         $('#dfx-ve-property-title-selected-gc-text').text(component.attributes.name.value);
         $('#dfx-ve-property-title-selected-gc-text').attr('component-id', component.id);
+
+        $scope.loadGcTemplatesByType();
     };
 
     $scope.reloadPropertyPanel = function() {
@@ -1429,10 +1449,223 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     };
     // Functions implementing Cut/Copy/Paste in view editor - END
 
+    // Functions to work with GC Templates - START
+    $scope.saveComponentAsTemplate = function(event) {
+        $(event.srcElement).animateCss('pulse');
+
+        var prepareAttributes = function(gc_template, gc_selected) {
+            gc_template.attributes = gc_selected.attributes;
+            delete gc_template.attributes.name; // remove because it's always overridden anyway
+            gc_template.attributes.template = gc_template.attributes.template || {};
+            gc_template.attributes.template.value = gc_template.attributes.template.value || 'default';
+
+            Object.keys(gc_template.attributes).forEach(function(key, index) {
+                gc_template.attributes[key].locked = false;
+            });
+        };
+
+        $mdDialog.show({
+            controller: DialogController,
+            templateUrl: '/gcontrols/web/template_save.html',
+            parent: angular.element(document.body),
+            targetEvent: event
+        })
+        .then(function(gc_template) {
+            var gc_selected = angular.copy($scope.gc_selected);
+            DfxVisualBuilder.removeNotOverriddenAttributes(gc_selected.attributes, gc_selected.type);
+
+            gc_template.type = gc_selected.type;
+            gc_template.application = $scope.application_name;
+            gc_template.platform = $scope.view_platform;
+
+            prepareAttributes(gc_template, gc_selected);
+
+            dfxGcTemplates.create( $scope, gc_template )
+                .then(function() {
+                    dfxMessaging.showMessage( 'The template ' + gc_template.name + ' has been created' );
+                    $scope.gc_templates.push(gc_template);
+                    $scope.loadGcTemplatesByType();
+                }, function(res) {
+                    dfxMessaging.showWarning(res.data.error.message);
+                });
+        }, function() {
+            // do nothing
+        });
+
+        function DialogController($scope, $mdDialog) {
+            $scope.template = {"name": "", "description": ""};
+            $scope.saveTemplateConfirm = function(answer) {
+                $mdDialog.hide($scope.template);
+            };
+
+            $scope.saveTemplateCancel = function() {
+                $mdDialog.cancel();
+            };
+        }
+    };
+
+    $scope.loadGcTemplates = function() {
+        dfxGcTemplates.getAllByPlatform( $scope, $scope.application_name, $scope.view_platform ).then(function( data ) {
+            $scope.gc_templates = data || [];
+
+            $timeout(function() {
+                var icon_type_prefix = 'dfx_ve_gc_template_icon_',
+                    icon_type_prefix_length = icon_type_prefix.length;
+
+                var gc_templates_types = $scope.gc_templates.map(function(item) {
+                    return item.type;
+                });
+                var gc_templates_unique_types = gc_templates_types.filter(function(item, pos) {
+                    return gc_templates_types.indexOf(item) == pos;
+                });
+
+                // add event listeners for gc types that have existing gc templates
+                for (var i = 0; i < gc_templates_unique_types.length; i++) {
+                    var $dfx_ve_gc_template_icon = $('#' + icon_type_prefix + gc_templates_unique_types[i]);
+
+                    var gc_type = gc_templates_unique_types[i];
+                    var gc_cat = $dfx_ve_gc_template_icon.attr('gc-cat');
+
+                    var createGcTemplateListener = function(gc_type, gc_cat) {
+                        $dfx_ve_gc_template_icon.on('click', function() {
+                            $scope.getGcTemplatesToDragDrop(gc_type, gc_cat);
+                        });
+                    };
+                    createGcTemplateListener(gc_type, gc_cat);
+                }
+
+                // add event listeners if not in gc_templates_unique_types, type "no templates" and hide searching
+                var gc_all_types = $('[id^="' + icon_type_prefix + '"]');
+                for (var i = 0; i < gc_all_types.length; i++) {
+                    var dfx_ve_gc_template_icon_id = $(gc_all_types[i]).attr('id');
+                    var type_name = dfx_ve_gc_template_icon_id.substring(icon_type_prefix_length);
+
+                    if ( gc_templates_unique_types.indexOf(type_name) == -1 ) {
+                        var $dfx_ve_gc_template_icon = $('#' + dfx_ve_gc_template_icon_id);
+
+                        $dfx_ve_gc_template_icon.on('click', function() {
+                            $scope.cleanGcTemplatesToDragDrop();
+                        });
+                    }
+                }
+            }, 0);
+        });
+    };
+
+    var makeGcTemplatesDraggable = function(gc_type, gc_cat) {
+        $timeout(function() {
+            $('.dfx-ve-gc-template-draggable-instance').draggable({
+                appendTo:          "body",
+                cursorAt:          {top: 5, left: 17},
+                cursor:            "move",
+                helper: function (event) {
+                    var helper_fragment = '<img style="width:36px;height:34px;" src="/images/vb/icons/' + gc_cat + '_' + gc_type + '_drag.png"/>';
+                    return helper_fragment;
+                },
+                connectToSortable: ".dfx_visual_editor_droppable"
+            });
+        }, 0);
+    };
+    $scope.getGcTemplatesToDragDrop = function(gc_type, gc_cat) {
+        var addGcTemplatesToFloatingPanel = function() {
+            $timeout(function() {
+                $scope.gc_templates_to_drag_drop = [];
+                for (var i = 0; i < $scope.gc_templates.length; i++) {
+                    if ($scope.gc_templates[i].type == gc_type) {
+                        $scope.gc_templates_to_drag_drop.push( $scope.gc_templates[i] );
+                    }
+                }
+                $scope.gc_templates_to_drag_drop_filtered = $scope.gc_templates_to_drag_drop;
+                $scope.gc_template_filter = '';
+                makeGcTemplatesDraggable(gc_type, gc_cat);
+            }, 0);
+        };
+
+        addGcTemplatesToFloatingPanel();
+    };
+
+    $scope.cleanGcTemplatesToDragDrop = function() {
+        $timeout(function() {
+            $scope.gc_templates_to_drag_drop = [];
+            $scope.gc_templates_to_drag_drop_filtered = [];
+            $scope.gc_template_filter = '';
+        }, 0);
+    };
+
+    $scope.loadGcTemplatesByType = function() {
+        $scope.gc_templates_by_type = {};
+        dfxGcTemplates.getByType( $scope, $scope.application_name, $scope.gc_selected.type, $scope.view_platform )
+            .then( function(gc_templates) {
+                gc_templates = gc_templates || {};
+                gc_templates.unshift({ 'name': 'default' });
+                $scope.gc_templates_by_type = gc_templates;
+            });
+    };
+
+    $scope.reinitComponentWithTemplate = function(template_name, gc_id) {
+        var component_id = gc_id || $scope.gc_selected.id;
+        var view_definition = DfxVisualBuilder.movingComponentHelper.getViewDefinition();
+        var gc_component_definition = DfxVisualBuilder.getComponentDefinition(component_id, view_definition.definition);
+        gc_component_definition.attributes.template = {'value': template_name, 'status': 'overridden'};
+
+        var reload_property_panel = gc_id ? false : true;
+        var gc_element = $('#' + component_id);
+        var gc_element_scope = angular.element(gc_element).scope();
+        gc_element_scope.reinitAttributes(gc_component_definition, reload_property_panel);
+    };
+
+    $scope.loadGcTemplateLockingMenu = function($event) {
+        DfxViewEditorGcTemplates.loadGcTemplateLockingMenu($event, $scope, $compile);
+    };
+    $scope.closeGcTemplateLockingMenu = function() {
+        DfxViewEditorGcTemplates.closeGcTemplateLockingMenu($scope);
+    };
+    $scope.displayAllGcTemplateAttributes = function() {
+        DfxViewEditorGcTemplates.displayAllGcTemplateAttributes($scope);
+    };
+    $scope.displayLockedGcTemplateAttributes = function() {
+        DfxViewEditorGcTemplates.displayLockedGcTemplateAttributes($scope);
+    };
+    $scope.displayUnlockedGcTemplateAttributes = function() {
+        DfxViewEditorGcTemplates.displayUnlockedGcTemplateAttributes($scope);
+    };
+    $scope.isGcAttributeVisible = function(is_locked) {
+        return DfxViewEditorGcTemplates.isGcAttributeVisible(is_locked, $scope);
+    };
+    $scope.isGcSpecialAttributeVisible = function() {
+        return DfxViewEditorGcTemplates.isGcSpecialAttributeVisible($scope);
+    };
+
+    $scope.openGcTemplateEditor = function(gc_template_name) {
+        window.localStorage.removeItem('pagePreviewName');
+
+        var application_name = $('#dfx-view-editor-body').attr('data-application');
+        var view_platform = $('#dfx-view-editor-body').attr('data-platform');
+
+        $window.open( '/studio/gctemplates/' + view_platform + '/' + application_name + '/' + gc_template_name + '/index.html', '_blank' );
+    };
+
+    $scope.filterGcTemplates = function() {
+        if ($scope.gc_templates_to_drag_drop) {
+            $scope.gc_templates_to_drag_drop_filtered = $scope.gc_templates_to_drag_drop.filter(function(gc_template) {
+                return gc_template.name.indexOf($scope.gc_template_filter) > -1
+                    || gc_template.description.indexOf($scope.gc_template_filter) > -1;
+            });
+        }
+        if ($scope.gc_templates_to_drag_drop_filtered.length > 0) {
+            var gc_type = $scope.gc_templates_to_drag_drop_filtered[0].type;
+            var $dfx_ve_gc_template_icon = $('#dfx_ve_gc_template_icon_' + gc_type);
+            var gc_cat = $dfx_ve_gc_template_icon.attr('gc-cat');
+            makeGcTemplatesDraggable(gc_type, gc_cat);
+        }
+    };
+    // Functions to work with GC Templates - END
+
     DfxVisualBuilder.init();
+    $scope.loadGcTemplates();
 }]);
 
-dfxViewEditorApp.directive('dfxGcWebDroppable', [ '$timeout', function($timeout) {
+dfxViewEditorApp.directive('dfxGcWebDroppable', [ '$timeout', '$rootScope', function($timeout, $rootScope) {
     return {
         restrict: 'A',
         controller: function($scope, $element, $attrs) {
@@ -1450,14 +1683,23 @@ dfxViewEditorApp.directive('dfxGcWebDroppable', [ '$timeout', function($timeout)
                     beforeStop: function (event, ui) {
                         var gc_id,
                             gc_type = $(ui.item).attr('gc-type'),
-                            gc_flex = $(ui.item).attr('gc-flex');
+                            gc_flex = $(ui.item).attr('gc-flex'),
+                            gc_template_name = $(ui.item).attr('gc-template-name');
                         if ($(ui.item).hasClass('dfx_visual_editor_gc_cat_item_draggable')) {
                             // Add a new component
                             gc_id  = Math.floor(Math.random() * 100000);
                             var view_editor = document.querySelector('#dfx_src_widget_editor');
                             var view_editor_scope = angular.element(view_editor).scope();
-                            var gc = view_editor_scope.renderGraphicalControl({id: gc_id, type: gc_type, flex: gc_flex, just_dropped: true});
+                            var gc = view_editor_scope.renderGraphicalControl({id: gc_id, type: gc_type, flex: gc_flex});
                             $(ui.item).replaceWith(gc.fragment);
+
+                            if (gc_template_name) {
+                                // Wait until dfxGcWebBase.initAttributes() completes its reading from DB in getGCDefaultAttributes()
+                                var unregister = $rootScope.$on(gc_id + '_attributes_loaded', function(event, attributes) {
+                                    view_editor_scope.reinitComponentWithTemplate(gc_template_name, gc_id);
+                                    unregister();
+                                });
+                            }
                         } else {
                             // Move component
                             gc_id = $(ui.item).attr('id');
@@ -1775,8 +2017,8 @@ dfxViewEditorApp.directive('dfxVeCssStyle', ['$timeout', '$compile', function($t
             return '/gcontrols/web/css_style.html';
         },
         link: function(scope, element, attrs) {
-            scope.attributes.style.status = "overridden";
             scope.showCssStyles = function(ev) {
+                scope.attributes.style.status = "overridden"; // must be here, no need to override before clicking on the picker
                 var dfxCssStyleDialog = '<div class="dfx-ve-dialog"></div>';
                 $('body').append(dfxCssStyleDialog);
                 $('.dfx-ve-dialog').load('/gcontrols/web/css_styles_tree.html', function(response,status,xhr){
@@ -4898,139 +5140,6 @@ var helpDialogScript = function (options) {
         $('#dfx_visual_editor_help_close').click();
     }
 };
-
-var DfxViewEditorUndo = (function() {
-    var api = {};
-
-    var getAttibutesChainValue = function(path, obj) {
-        var schema = obj,
-            pList = path.split('.');
-
-        for (var i = 0; i < pList.length; i++) {
-            var elem = pList[i];
-            if (!schema[elem] && schema[elem] !== '' && schema[elem] !== false) {
-                schema[elem] = {};
-            }
-            schema = schema[elem];
-        }
-        if (schema !== null && typeof schema === 'object' && schema.hasOwnProperty('value')) {
-            return schema.value;
-        } else {
-            return schema;
-        }
-    };
-    var setAttributesChainValue = function(path, obj, value) {
-        var schema = obj,
-            pList = path.split('.'),
-            last_path_segment = '';
-
-        if (pList.length > 1) {
-            for (var i = 0; i < pList.length-1; i++) {
-                var elem = pList[i];
-                if (!schema[elem] && schema[elem] !== '' && schema[elem] !== false) {
-                    schema[elem] = {};
-                }
-                schema = schema[elem];
-            }
-            last_path_segment = pList[pList.length-1];
-        } else {
-            last_path_segment = path;
-        }
-        if (typeof schema[last_path_segment] === 'object' && schema[last_path_segment].hasOwnProperty('value')) {
-            schema[last_path_segment].value = value;
-        } else {
-            schema[last_path_segment] = value;
-        }
-    };
-    var removeAttributesPrefixFromPath = function(path) {
-        if (path && path.indexOf('attributes') == 0) {
-            return path.substring(path.indexOf('.') + 1);
-        } else {
-            return path;
-        }
-    };
-    var cleanDefaultValues = function(attribute, old_attribute_value) {
-        if (!old_attribute_value || (Array.isArray(old_attribute_value) && old_attribute_value.length == 0)) {
-            delete attribute.status;
-        }
-    };
-    var setAttributesGroup = function(gc_attributes, old_attributes_group) {
-        var attributes_names = Object.keys(old_attributes_group);
-
-        for (var i = 0; i < attributes_names.length; i++) {
-            var attrbute_name = attributes_names[i];
-            var old_attribute_value = old_attributes_group[attrbute_name];
-
-            if (typeof gc_attributes[attrbute_name] === 'object' && gc_attributes[attrbute_name].hasOwnProperty('value')) {
-                cleanDefaultValues(gc_attributes[attrbute_name], old_attribute_value);
-
-                gc_attributes[attrbute_name].value = angular.copy(old_attribute_value);
-            } else {
-                //TODO: no such cases right now, if happens, need to adjust and call cleanDefaultValues()
-                gc_attributes[attrbute_name] = angular.copy(old_attribute_value);
-            }
-        }
-    };
-
-    api.setCalledFromPicker = function(scope) {
-        scope.dfx_undo_called_from_picker = true;
-    };
-    api.cacheAttributeOldValue = function(options, scope) {
-        var attribute_name = options.name,
-            attribute_value = options.value;
-
-        // Called from picker using $.focus() and must be ignored
-        if (scope.dfx_undo_called_from_picker) {
-            scope.dfx_undo_called_from_picker = false;
-            return;
-        };
-
-        if (attribute_value || attribute_value == '') {
-            scope.dfx_attribute_old_value = angular.copy( attribute_value );
-        } else {
-            scope.dfx_attribute_old_value = angular.copy( getAttibutesChainValue(attribute_name, scope.gc_selected.attributes) );
-        }
-    };
-    api.cacheAttributeNewValue = function(options, scope) {
-        var attribute_name,
-            attribute_new_value;
-
-        if (options.group) {
-            attribute_name = 'undo_group_' + scope.gc_selected.id;
-            attribute_new_value = options.value;
-        } else {
-            attribute_name = removeAttributesPrefixFromPath(options);
-            attribute_new_value = getAttibutesChainValue(attribute_name, scope.gc_selected.attributes);
-        }
-
-        var attribute_old_value = scope.hasOwnProperty('dfx_attribute_old_value') ?  scope.dfx_attribute_old_value : '';
-
-        if (attribute_new_value !== attribute_old_value) {
-            scope.dfx_view_editor_actions_stack = scope.dfx_view_editor_actions_stack || [];
-            scope.dfx_view_editor_actions_stack.unshift({
-                component_id: scope.gc_selected.id,
-                attribute_name: attribute_name,
-                attribute_old_value: angular.copy(attribute_old_value)
-            });
-        }
-    };
-    api.viewEditorUndo = function(event, scope) {
-        $(event.srcElement).animateCss('pulse');
-
-        if (scope.dfx_view_editor_actions_stack && scope.dfx_view_editor_actions_stack.length > 0) {
-            var action_for_undo = scope.dfx_view_editor_actions_stack.shift();
-            var gc_for_undo = scope.gc_instances[ action_for_undo.component_id ];
-
-            if (action_for_undo.attribute_name.indexOf('undo_group_') == 0) {
-                setAttributesGroup(gc_for_undo.attributes, action_for_undo.attribute_old_value);
-            } else {
-                setAttributesChainValue(action_for_undo.attribute_name, gc_for_undo.attributes, action_for_undo.attribute_old_value);
-            }
-        }
-    };
-
-    return api;
-}());
 
 dfxViewEditorApp.directive('dfxVeCtrlS', [ '$document', function ($document) {
 	return {

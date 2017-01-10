@@ -4,7 +4,7 @@
             Contact our team
         </h4>
         <div layout="row">
-            <md-button type="submit" class="md-primary" ng-disabled="supportForm.$invalid || contact_msg.value ===''|| show_form==false">Send</md-button>
+            <md-button aria-label="Studio button" type="submit" class="md-primary" ng-disabled="supportForm.$invalid || contact_msg.value ===''|| show_form==false">Send</md-button>
         </div>
     </div>
     <div class="layout-row layout-padding" flex="100">
@@ -31,6 +31,6 @@
 <div ng-if="show_form == false" style="padding: 20px;" id="support-scope-id">
     <span style="padding-left: 10px;">Thank you. Your message has been sent to our customer service department. You will be contacted shortly by our team.</span>
     <div layout="row" style="padding-left: 0; margin-top: 20px;">
-        <md-button ng-click="refreshForm()" class="md-raised">Send another message</md-button>
+        <md-button aria-label="Studio button" ng-click="refreshForm()" class="md-raised">Send another message</md-button>
     </div>
 </div>

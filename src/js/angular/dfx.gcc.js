@@ -1,32 +1,34 @@
 var dfxGCC = angular.module('dfxGCC',['ngMaterial', 'ngMdIcons', 'ngMessages', 'ngSanitize', 'ngAnimate', 'nvd3', 'ngQuill', 'jkAngularCarousel', 'ui.knob', 'mdPickers']);
 
-dfxGCC.directive('dfxGccWebBase', ['$rootScope', '$http', '$compile', '$injector', '$mdToast', '$q', '$location', function($rootScope, $http, $compile, $injector, $mdToast, $q, $location) {
+dfxGCC.directive('dfxGccWebBase', ['$rootScope', '$http', '$compile', '$injector', '$mdToast', '$q', '$location', 'dfxGcTemplates', function($rootScope, $http, $compile, $injector, $mdToast, $q, $location, dfxGcTemplates) {
     return {
         controller: function($element) {
             var base = this;
 
-            var storeGcTemplate = function (gc_type, gc_template) {
+            var storeGcDefaultTemplate = function (gc_type, gc_template) {
                 sessionStorage.setItem('dfx_' + gc_type, JSON.stringify(gc_template));
             };
 
-            var mergeWithOverriddenAttributes = function (default_attributes, updated_attributes) {
+            var mergeWithOverriddenAttributes = function (default_attributes, updated_attributes, is_default_template) {
                 for (var updated_attribute in updated_attributes) {
                     if (updated_attributes.hasOwnProperty(updated_attribute)) {
                         if (updated_attribute != 'value' && updated_attribute != 'status' &&
                             (default_attributes[updated_attribute] || default_attributes[updated_attribute] === ''))
                         {
-
                             if ( Array.isArray(updated_attributes[updated_attribute]) ) {
                                 default_attributes[updated_attribute] = updated_attributes[updated_attribute];// this is an array, without 'value'
                             } else {
                                 if (updated_attributes[updated_attribute] !== null && typeof updated_attributes[updated_attribute] === 'object') {
-                                    mergeWithOverriddenAttributes(default_attributes[updated_attribute], updated_attributes[updated_attribute]);
+                                    mergeWithOverriddenAttributes(default_attributes[updated_attribute], updated_attributes[updated_attribute], is_default_template);
                                 }
 
                                 if (updated_attribute) {
                                     if (updated_attributes[updated_attribute] !== null && typeof updated_attributes[updated_attribute] === 'object') {
-                                        default_attributes[updated_attribute].status = 'overridden';
+                                        if (is_default_template) default_attributes[updated_attribute].status = 'overridden';
                                         default_attributes[updated_attribute].value  = updated_attributes[updated_attribute].value;
+                                        if (updated_attributes[updated_attribute].hasOwnProperty('locked')) {
+                                            default_attributes[updated_attribute].locked = updated_attributes[updated_attribute].locked;
+                                        }
                                     } else {
                                         default_attributes[updated_attribute] = updated_attributes[updated_attribute];//attribute is not object, ex: style = ""
                                     }
@@ -34,6 +36,30 @@ dfxGCC.directive('dfxGccWebBase', ['$rootScope', '$http', '$compile', '$injector
                             }
                         }
                     }
+                }
+            };
+            var mergeWithGcTemplates = function (component_template, component_default_attributes, app_scope) {
+                if (component_template && component_template.value !== 'default') {
+                    var application_name = sessionStorage.dfx_appname || app_scope.application_name || app_scope.app_name || app_scope.app_user.application;
+                    var view_platform = app_scope.view_platform || app_scope.platform;
+                    var tenant_id = app_scope.tenant_id || sessionStorage.dfx_tenantid;
+
+                    return dfxGcTemplates.getOne( app_scope, application_name, component_template.value, view_platform, tenant_id ).then( function(gc_template) {
+                        if (!gc_template) { return $q.resolve('template not found'); }
+
+                        var template_definition = gc_template.attributes;
+                        if (template_definition.template && template_definition.template.value !== 'default') {
+                            return mergeWithGcTemplates(template_definition.template, component_default_attributes, app_scope)
+                                .then(function() {
+                                    mergeWithOverriddenAttributes(component_default_attributes, template_definition, false);
+                                });
+                        } else {
+                            mergeWithOverriddenAttributes(component_default_attributes, template_definition, false);
+                            return $q.resolve('no more templates');
+                        }
+                    });
+                } else {
+                    return $q.resolve('no templates');
                 }
             };
 
@@ -49,30 +75,39 @@ dfxGCC.directive('dfxGccWebBase', ['$rootScope', '$http', '$compile', '$injector
                 var app_body = angular.element(document.querySelector('body'));
                 var app_scope = angular.element(app_body).scope();
                 return app_scope.getGCDefaultAttributes( type ).then( function(default_attributes) {
-                    var isExistingAttributes = (component.attributes==null) ? false : true;
+                    var is_existing_attributes = (component.attributes==null) ? false : true;
                     var component_default_attributes = angular.copy(default_attributes);
 
-                    storeGcTemplate(type, default_attributes);
+                    storeGcDefaultTemplate(type, default_attributes);
 
-                    if (isExistingAttributes) {
-                        mergeWithOverriddenAttributes(component_default_attributes, component.attributes);
-                    }
-                    component.attributes = component_default_attributes;
+                    if (! is_existing_attributes) { // just dropped component, without gc template
+                        component.attributes = component_default_attributes;
 
-                    if (isExistingAttributes && component.attributes.children!=null) {
-                        component.children =  component.attributes.children.slice(0);
-                        delete component.attributes.children;
-                        base.initChildIDs(component.children);
-                    } else {
-                        if (component.children==null) {
-                            component.children =  [];
+                        if (component.children == null) {
+                            component.children = [];
                         }
-                    }
-                    if (!isExistingAttributes) {
                         scope.$parent.setComponent(component);
+
+                        $rootScope.$emit(attrs.id + '_attributes_loaded', component.attributes);
+                        base.initExistingComponent(scope, element, component, attrs);
+                    } else {
+                        return mergeWithGcTemplates(component.attributes.template, component_default_attributes, app_scope)
+                            .then(function() {
+                                mergeWithOverriddenAttributes(component_default_attributes, component.attributes, true);
+                                component.attributes = component_default_attributes;
+
+                                if (component.attributes.children != null) {
+                                    component.children =  component.attributes.children.slice(0);
+                                    delete component.attributes.children;
+                                    base.initChildIDs(component.children);
+                                } else if (component.children == null) {
+                                    component.children = [];
+                                }
+
+                                $rootScope.$emit(attrs.id + '_attributes_loaded', component.attributes);
+                                base.initExistingComponent(scope, element, component, attrs);
+                            });
                     }
-                    $rootScope.$emit(attrs.id + '_attributes_loaded', component.attributes);
-                    base.initExistingComponent(scope, element, component, attrs);
                 });
             };
 

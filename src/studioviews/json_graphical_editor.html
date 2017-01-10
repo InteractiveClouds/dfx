@@ -23,7 +23,7 @@
                                     </md-select>
                                 </md-input-container>
                             </div>
-                            <md-button class="md-raised" ng-click="dictionary.addNewItem()" style="color:#676B6E; min-height:33px;height:33px;min-width:70px;" ng-disabled="dictionary.keyName === ''">
+                            <md-button aria-label="Studio button" class="md-raised" ng-click="dictionary.addNewItem()" style="color:#676B6E; min-height:33px;height:33px;min-width:70px;" ng-disabled="dictionary.keyName === ''">
                                 <md-icon class="fa fa-plus" style="width:14px;height:14px;color:#676B6E;margin-top:-3px;"></md-icon>
                                 Item
                             </md-button>
@@ -86,7 +86,7 @@
                                 </li>
                             </ul>
                             <!--<div ng-if="dictionary.selectedItem.displayValue === true" class="md-actions">
-                                <md-button ng-click="" class="md-raised md-button md-altTheme-theme md-ink-ripple">Update</md-button>
+                                <md-button aria-label="Studio button" ng-click="" class="md-raised md-button md-altTheme-theme md-ink-ripple">Update</md-button>
                             </div>-->
                         </div>
                         <div ng-if="dictionary.selectedItem.displayValue === false" id="dd_editor_code_mirror_parent" style="border:1px solid #dddddd; padding: 0;"></div>
@@ -96,8 +96,8 @@
             <div class="second-dialog-box"></div>
         </md-dialog-content>
         <div class="md-actions">
-            <md-button ng-click="dictionary.closeDialog()" class="md-primary">Close</md-button>
-            <md-button ng-click="dictionary.saveDictionary()" class="md-primary">Save</md-button>
+            <md-button aria-label="Studio button" ng-click="dictionary.closeDialog()" class="md-primary">Close</md-button>
+            <md-button aria-label="Studio button" ng-click="dictionary.saveDictionary()" class="md-primary">Save</md-button>
         </div>
     </form>
 </md-dialog>
