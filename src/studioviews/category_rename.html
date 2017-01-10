@@ -4,7 +4,7 @@
             <div class="md-toolbar-tools">
                 <h5>New Category Name:</h5>
                 <span flex></span>
-                <md-button class="md-icon-button" ng-click="closeDialog()">
+                <md-button aria-label="Studio button" class="md-icon-button" ng-click="closeDialog()">
                     <md-icon class="fa fa-lg fa-times dfx-studio-flex-icon" aria-label="Close dialog"></md-icon>
                 </md-button>
             </div>
@@ -19,8 +19,8 @@
         </md-dialog-content>
         <md-dialog-actions layout="row">
             <span flex></span>
-            <md-button class="md-primary" type="submit">OK</md-button>
-            <md-button class="md-primary" ng-click="closeDialog()">Cancel</md-button>
+            <md-button aria-label="Studio button" class="md-primary" type="submit">OK</md-button>
+            <md-button aria-label="Studio button" class="md-primary" ng-click="closeDialog()">Cancel</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog>

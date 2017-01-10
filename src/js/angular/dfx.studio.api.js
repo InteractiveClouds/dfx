@@ -557,6 +557,28 @@ dfxStudioApi.factory('dfxApplications', [ '$http', '$q', function($http, $q) {
         return deferred.promise;
     }
 
+    api_applications.saveScript = function (app, platform){
+        var deferred = $q.defer();
+        var doc = {
+            url: '/studio/application/update/'+ app.name,
+            method: "POST",
+            data: {
+                "title": app.title,
+                "logo": app.logo
+            }
+        };
+        if (platform=='web') {
+            doc.data.script = app.script;
+        } else {
+            doc.data.scriptMobile = app.scriptMobile;
+        }
+        $http(doc).then(function successCallback(response) {
+            deferred.resolve( response );
+        });
+
+        return deferred.promise;
+    }
+
     api_applications.saveLoginPage = function (obj){
         var deferred = $q.defer();
         $http({
@@ -674,7 +696,7 @@ dfxStudioApi.factory('dfxApplications', [ '$http', '$q', function($http, $q) {
     }
 
     api_applications.saveDictionary = function(appname, data){
-        var deferred = $q.defer();
+        var deferred = $q.defer();        
         $http({
             url: '/studio/data_dictionary/put/' + appname,
             method: "POST",
@@ -700,6 +722,17 @@ dfxStudioApi.factory('dfxApplications', [ '$http', '$q', function($http, $q) {
         var deferred = $q.defer();
         $http({
             url: '/studio/data_dictionary/list/' + appname,
+            method: "GET"
+        }).then(function successCallback(response) {
+            deferred.resolve(response);
+        });
+        return deferred.promise;
+    }
+
+    api_applications.getDataDictionary = function(name, appname){
+        var deferred = $q.defer();
+        $http({
+            url: '/studio/data_dictionary/get/' + name + '/' + appname,
             method: "GET"
         }).then(function successCallback(response) {
             deferred.resolve(response);
@@ -818,6 +851,146 @@ dfxStudioApi.factory('dfxApplications', [ '$http', '$q', function($http, $q) {
         return deferred.promise;
     }
 
+    api_applications.generateEnvironments = function (data){
+        var deferred = $q.defer();
+
+        $http({
+            url: '/studio/environments/generate',
+            method: "POST",
+            data: data
+        }).then(function successCallback(response) {
+            deferred.resolve( response );
+        });
+
+        return deferred.promise;
+    }
+
+    api_applications.getGeneratedEnvironment = function (data){
+        var deferred = $q.defer();
+
+        $http({
+            url: '/studio/environments/getGeneratedEnvironment',
+            method: "POST",
+            data: data
+        }).then(function successCallback(response) {
+            deferred.resolve( response );
+        });
+
+        return deferred.promise;
+    }
+
+    api_applications.getEnvironmentsList = function (data){
+        var deferred = $q.defer();
+
+        $http({
+            url: '/studio/environments/getAll',
+            method: "POST",
+            data: data
+        }).then(function successCallback(response) {
+            deferred.resolve( response );
+        });
+
+        return deferred.promise;
+    }
+
+    api_applications.addEnvironment = function (data){
+        var deferred = $q.defer();
+
+        $http({
+            url: '/studio/environments/add',
+            method: "POST",
+            data: data
+        }).then(function successCallback(response) {
+            deferred.resolve( response );
+        });
+
+        return deferred.promise;
+    }
+
+    api_applications.editEnvironment = function (data){
+        var deferred = $q.defer();
+
+        $http({
+            url: '/studio/environments/edit',
+            method: "POST",
+            data: data
+        }).then(function successCallback(response) {
+            deferred.resolve( response );
+        });
+
+        return deferred.promise;
+    }
+
+    api_applications.deleteEnvironment = function(data){
+        var deferred = $q.defer();
+        
+        $http({
+            url: '/studio/environments/delete',
+            method: "POST",
+            data: data
+        }).then(function successCallback(response) {
+            deferred.resolve(response);
+        });
+
+        return deferred.promise;
+    }
+
+    api_applications.getEnvironmentVariablesList = function (data){
+        var deferred = $q.defer();
+
+        $http({
+            url: '/studio/environment_variables/getAll',
+            method: "POST",
+            data: data
+        }).then(function successCallback(response) {
+            deferred.resolve( response );
+        });
+
+        return deferred.promise;
+    }
+
+    api_applications.addEnvironmentVariable = function (data){
+        var deferred = $q.defer();
+
+        $http({
+            url: '/studio/environment_variables/add',
+            method: "POST",
+            data: data
+        }).then(function successCallback(response) {
+            deferred.resolve( response );
+        });
+
+        return deferred.promise;
+    }
+
+    api_applications.editEnvironmentVariable = function (data){
+        var deferred = $q.defer();
+
+        $http({
+            url: '/studio/environment_variables/edit',
+            method: "POST",
+            data: data
+        }).then(function successCallback(response) {
+            deferred.resolve( response );
+        });
+
+        return deferred.promise;
+    }
+
+    api_applications.deleteEnvironmentVariable = function(data){
+        var deferred = $q.defer();
+        
+        $http({
+            url: '/studio/environment_variables/delete',
+            method: "POST",
+            data: data
+        }).then(function successCallback(response) {
+            deferred.resolve(response);
+        });
+
+        return deferred.promise;
+    }
+
     return api_applications;
 }]);
 
@@ -861,6 +1034,7 @@ dfxStudioApi.factory('dfxDeployment', [ '$http', '$q', function($http, $q) {
                 buildDescription:   data.description,
                 buildReleaseNotes:  data.release_notes,
                 buildDate:          data.build_date,
+                deploymentVersion : data.deploymentVersion,
                 error:              data.error
             }
         }).then(function successCallback(response) {
@@ -945,6 +1119,29 @@ dfxStudioApi.factory('dfxDeployment', [ '$http', '$q', function($http, $q) {
             params: { platform: 'android', appId: build.phoneGapAppId }
         }).then(function successCallback(response) {
             deferred.resolve( response.data );
+        });
+        return deferred.promise;
+    }
+
+    api_build.getMobileAppInfo = function(build) {
+        var deferred = $q.defer();
+        $http({
+            method: 'GET',
+            url: '/studio/phonegap/getApp',
+            params: { appId: build.application }
+        }).then(function successCallback(response) {
+            deferred.resolve( response.data );
+        });
+        return deferred.promise;
+    }
+
+    api_build.getGeneratedEnvironment = function(o){
+        var deferred = $q.defer();
+        $http({
+            method: 'GET',
+            url: '/studio/application/getEnv/' + o.app
+        }).then(function successCallback(response) {
+            deferred.resolve( response.data.data );
         });
         return deferred.promise;
     }
@@ -2384,6 +2581,17 @@ dfxStudioApi.factory('dfxApiServiceObjects', [ '$http', '$q', function($http, $q
             deferred.reject( err );
         });
 
+        return deferred.promise;
+    }
+
+    api_service_objects.getEnvVariables = function(appName) {
+           var deferred = $q.defer();
+            $http({
+                method: 'GET',
+                    url: '/studio/application/getEnv/' + appName
+            }).then(function successCallback(response) {
+                deferred.resolve( response.data.data );
+            });
         return deferred.promise;
     }
 
