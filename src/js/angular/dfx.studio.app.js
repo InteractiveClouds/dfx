@@ -2385,9 +2385,13 @@ dfxStudioApp.controller("dfx_studio_general_settings_controller", [ '$scope','df
 
 dfxStudioApp.controller("dfx_studio_devops_controller", [ '$scope', '$q', '$mdDialog', '$timeout', 'dfxApplications', 'dfxMessaging', function($scope, $q, $mdDialog, $timeout, dfxApplications, dfxMessaging) {
     var parentScope = $scope.$parent,
-        app_data = { "app_name": $scope.app_name };
-    parentScope.devops = $scope;
+        app_data = { "app_name": $scope.app_name },
+        default_env = {
+            "name": "development",
+            "data": {}
+        };
 
+    parentScope.devops = $scope;
     $scope.environments_list = [];
     $scope.environment_data = { "name": "" };
     $scope.not_valid_environment_name = false;
@@ -2398,7 +2402,21 @@ dfxStudioApp.controller("dfx_studio_devops_controller", [ '$scope', '$q', '$mdDi
         if(envs_init) $scope.dd_variables_loaded = false;
         dfxApplications.getEnvironmentsList( data ).then(function(response){
             $scope.environments_list = response.data.data;
-            if(!envs_init) $scope.generateAppEnvironments();
+            if($scope.environments_list.length===0) {
+                $scope.environments_list.push(default_env);
+                var data = 
+                    {
+                        "app_name": $scope.app_name,
+                        "name": 'development',
+                        "data": {}
+                    }
+                dfxApplications.addEnvironment(data).then(function(){
+                    if(!envs_init) $scope.generateAppEnvironments();    
+                });
+            }else{
+                if(!envs_init) $scope.generateAppEnvironments();    
+            }
+            
             $scope.getAppEnvVars(envs_init);
         });
     }
