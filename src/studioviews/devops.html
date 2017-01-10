@@ -48,13 +48,13 @@
                                                                 Copy
                                                             </md-button>
                                                         </md-menu-item>
-                                                        <md-menu-item ng-if="environment.name !== 'development'">
+                                                        <md-menu-item>
                                                             <md-button ng-click="openEnvironmentDialog($index, environment)" class="dfx-studio-toolbat-options-button" aria-label="Studio button">
                                                                 <md-icon class="fa fa-retweet dfx-studio-flex-icon"></md-icon>
                                                                 Rename
                                                             </md-button>
                                                         </md-menu-item>
-                                                        <md-menu-item ng-if="environment.name !== 'development'">
+                                                        <md-menu-item ng-if="environments_list.length > 1">
                                                             <md-button ng-click="confirmEnvironmentRemove($event, environment._id)" class="dfx-studio-toolbat-options-button" aria-label="Studio button">
                                                                 <md-icon class="fa fa-trash dfx-studio-flex-icon"></md-icon>
                                                                 Delete
