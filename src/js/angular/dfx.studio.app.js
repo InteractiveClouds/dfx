@@ -5656,7 +5656,7 @@ dfxStudioApp.controller("dfx_studio_user_definition_controller", [ '$scope', '$r
 
             if (data[ props[i] ].type == 'subdocument') {
                 sub_tree += '<input style="display:none" type="checkbox" />' +
-                    '<span><i class="fa fa-angle-down dfx-menu-structure-trigger" ng-click="toggleMenuItem($event)"></i></span>'+
+                    '<span class="dfx-menu-structure-trigger-box"><i class="fa fa-angle-down dfx-menu-structure-trigger" ng-click="toggleMenuItem($event)"></i></span>'+
                     '<a href="javascript:void(0)" ng-click="editUserDefinitionNode(' + current_path + ', \'' + props[i] + '\',' + is_root_level + ', \'' + current_path + '\', $event)">' + props[i] + '</a>';
 
                 sub_tree += buildTree(data[ props[i]].structure, current_path + '.structure', false);

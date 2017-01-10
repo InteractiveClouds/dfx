@@ -52,7 +52,7 @@
                                 <li class="col-md-12">
                                     <span class="col-md-4" style="margin-top: 10px;">Type:</span>
                                     <md-input-container style="margin-top: 0px;padding:0" class="col-md-8">
-                                        <md-select ng-model="user_definition.current_node.type" ng-disabled="user_definition.current_node.type == 'subdocument' || user_definition.current_node.mandatory == 'true'">
+                                        <md-select ng-model="user_definition.current_node.type" ng-disabled="user_definition.current_node.type == 'subdocument' || user_definition.current_node.mandatory == 'true'" aria-label="Studio select">
                                             <md-option ng-if="user_definition.current_node.type == 'subdocument'" value="subdocument">Object</md-option>
                                             <md-option value="boolean">Boolean</md-option>
                                             <md-option value="numeric">Numeric</md-option>
