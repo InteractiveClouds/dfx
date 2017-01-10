@@ -1,9 +1,11 @@
 <div layout="row" class="col-md-12" layout-align="start end" style="min-height:48px;">
     <span class="col-md-12">
-        <md-button ng-if="javascript.resources_javascript_selected.length > 0" ng-click="javascript.confirmResourceDeleteAll($event)" class="md-raised md-warn">
-            <span class="fa fa-trash-o"></span>
-            Delete
-        </md-button>
+        <div layout="row" class="layout-align-end">
+            <md-button ng-if="javascript.resources_javascript_selected.length > 0" ng-click="javascript.confirmResourceDeleteAll($event)" class="md-raised md-warn">
+                <span class="fa fa-trash-o"></span>
+                Delete
+            </md-button>
+        </div>
     </span>
 </div>
 <table class="datatable" style="width:100%;">
