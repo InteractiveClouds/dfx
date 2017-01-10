@@ -1,69 +1,78 @@
 <md-tabs md-dynamic-height md-border-bottom>
     <md-tab label="User Object Definition">
-        <md-content class="md-padding" ng-controller="dfx_studio_user_definition_controller">
-            <div style="display:flex;flex-direction:row;flex-wrap:wrap;justify-content:space-between;">
-                <section class="md-whiteframe-1dp" style="width:49.5%;border-radius:4px;overflow:hidden;">
-                    <md-toolbar style="min-height:36px;background:rgba(128,128,128,0.46);">
-                        <div class="md-toolbar-tools" style="height:36px;max-height:36px">
-                            <h3 style="font-size:16px;">Structure</h3>
+        <md-content class="md-padding" ng-controller="dfx_studio_user_definition_controller" style="padding-bottom:0">
+            <div class="dfx-studio-tree-editor" id="dfx-studio-user-definition-panels">
+                <section class="md-whiteframe-1dp dfx-tree-editor-two-sections">
+                    <md-toolbar class="dfx-studio-toolbar-title">
+                        <div class="md-toolbar-tools">
+                            <h3>Structure</h3>
                         </div>
                     </md-toolbar>
-                    <md-toolbar style="min-height:30px;background:#ECECEC;font-size:14px;display:flex;flex-direction:row;align-items:center;padding:0 9px;">
-                        <a href="" class="fa fa-plus" ng-click="loadUserDefinitionCreationMenu($event)" style="color:#676B6E;text-decoration:none;margin:auto 7px;" title="Add Property"></a>
-                        <a href="" class="fa fa-minus" ng-click="confirmDelete($event)" style="color:#676B6E;text-decoration:none;margin:auto 7px;" title="Remove Property"></a>
+                    <md-toolbar class="dfx-studio-toolbar-buttons">
+                        <md-menu-bar style="padding:0px">
+                            <md-menu style="vertical-align:middle">
+                                <md-button aria-label="Studio button" class="fa dfx-studio-toolbar-button fa-plus" ng-click="$mdOpenMenu()"></md-button>
+                                <md-menu-content width="3">
+                                    <md-menu-item>
+                                        <md-button style="font-size: 12px;line-height:0px" ng-click="addUserDefinitionObject()" class="dfx-studio-table-button" aria-label="Studio button">
+                                            Create Object
+                                        </md-button>
+                                    </md-menu-item>
+                                    <md-menu-item>
+                                        <md-button style="font-size: 12px;line-height:0px" ng-click="addUserDefinitionProperty()" class="dfx-studio-table-button" aria-label="Studio button">
+                                            Create Property
+                                        </md-button>
+                                    </md-menu-item>                                                 
+                                </md-menu-content>
+                            </md-menu>
+                        </md-menu-bar>
+                        <md-button aria-label="Studio button" class="fa dfx-studio-toolbar-button fa-minus" ng-click="confirmDelete($event)"></md-button>
                     </md-toolbar>
 
-                    <md-content layout-padding flex style="">
-                        <div class="dfx-studio-explorer-treeview hover">
-                            <ul id="dfx_studio_user_definition_tree"></ul>
-                        </div>
-                    </md-content>
+                    <md-content id="dfx_studio_user_definition_tree" class="menu-structure" layout-padding flex></md-content>
                 </section>
 
-                <section ng-if="operation==='update_user_definition'" class="md-whiteframe-1dp" style="width:49.5%;overflow:hidden;">
-                    <md-toolbar style="min-height:36px;background:rgba(128,128,128,0.46);">
-                        <div class="md-toolbar-tools" style="height:36px;max-height:36px">
-                            <h3 style="font-size:16px;">Properties</h3>
+                <section ng-if="operation==='update_user_definition'" class="md-whiteframe-1dp dfx-tree-editor-two-sections">
+                    <md-toolbar class="dfx-studio-toolbar-title">
+                        <div class="md-toolbar-tools">
+                            <h3>Properties</h3>
                         </div>
                     </md-toolbar>
-
                     <md-content layout-padding flex style="">
                         <div class="dfx-ve-property-treeview hover clearfix" style="padding:8px 16px 12px 12px;margin:0 -8px;">
-                            <div ng-if="user_definition.current_node" class="dfx-ve-property-picker-content" style="margin:0;padding:0">
-                                <div class="col-md-12" style="margin-bottom: 5px;">
+                            <ul ng-if="user_definition.current_node" class="dfx-ve-property-picker-content" style="margin:0;padding:0">
+                                <li class="col-md-12">
                                     <span class="col-md-4">Name:</span>
                                     <input class="col-md-8" type="text" ng-model="user_definition.current_node_name" ng-disabled="user_definition.current_node.mandatory == 'true'" />
-                                </div>
-                                <div ng-if="user_definition.current_node.type != 'subdocument'" style="margin-bottom: 5px;" class="col-md-12">
+                                </li>
+                                <li ng-if="user_definition.current_node.type != 'subdocument'" class="col-md-12">
                                     <span class="col-md-4">Title:</span>
                                     <input class="col-md-8" type="text" ng-model="user_definition.current_node.title" ng-disabled="user_definition.current_node.mandatory == 'true'" />
-                                </div>
-                                <div class="col-md-12" class="col-md-12">
+                                </li>
+                                <li class="col-md-12">
                                     <span class="col-md-4" style="margin-top: 10px;">Type:</span>
-                                    <md-input-container style="margin-top: 0px;" class="col-md-8">
-                                        <md-select ng-model="user_definition.current_node.type" ng-disabled="user_definition.current_node.type == 'subdocument' || user_definition.current_node.mandatory == 'true'">
+                                    <md-input-container style="margin-top: 0px;padding:0" class="col-md-8">
+                                        <md-select ng-model="user_definition.current_node.type" ng-disabled="user_definition.current_node.type == 'subdocument' || user_definition.current_node.mandatory == 'true'" aria-label="Studio select">
                                             <md-option ng-if="user_definition.current_node.type == 'subdocument'" value="subdocument">Object</md-option>
                                             <md-option value="boolean">Boolean</md-option>
                                             <md-option value="numeric">Numeric</md-option>
                                             <md-option value="string">String</md-option>
                                         </md-select>
                                     </md-input-container>
-                                </div>
-                                <div ng-if="user_definition.current_node.type != 'subdocument' && user_definition.current_node.mandatory != 'true'" class="col-md-12" style="margin-bottom: 5px;">
+                                </li>
+                                <li ng-if="user_definition.current_node.type != 'subdocument' && user_definition.current_node.mandatory != 'true'" class="col-md-12">
                                     <span class="col-md-4">Default:</span>
                                     <input class="col-md-8" type="text" ng-model="user_definition.current_node.defaults" />
-                                </div>
-                                <div ng-if="user_definition.current_node_root_level == true" class="col-md-12" style="margin-bottom: 5px;">
+                                </li>
+                                <li ng-if="user_definition.current_node_root_level == true" class="col-md-12">
                                     <span class="col-md-4">Send to Client:</span>
-                                    <span class="col-md-8">
-                                        <md-checkbox style="margin:-2px 0 0 -15px;" class="md-primary" aria-label="md-checkbox"
-                                                     ng-model="user_definition.current_node.pass"
-                                                     ng-true-value="'true'"
-                                                     ng-false-value="'false'">
-                                        </md-checkbox>
-                                    </span>
-                                </div>
-                            </div>
+                                    <md-checkbox style="margin:0" class="md-primary" aria-label="md-checkbox"
+                                                 ng-model="user_definition.current_node.pass"
+                                                 ng-true-value="'true'"
+                                                 ng-false-value="'false'">
+                                    </md-checkbox>
+                                </li>
+                            </ul>
                         </div>
                     </md-content>
                 </section>

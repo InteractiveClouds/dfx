@@ -5,23 +5,27 @@
 				<h2>Options editor</h2>
 			</div>
 		</md-toolbar>
-		<md-dialog-content id="{{component_id}}_md_dialog" layout="column" style="max-width:880px;max-height:810px;width:880px;height:400px;margin:0px;">
+		<md-dialog-content id="{{component_id}}_md_dialog" layout="column" style="max-width:880px;max-height:810px;width:880px;height:400px;margin:0px;padding:8px 8px 2px 8px;">
 			<md-radio-group ng-model="attributes.optionsType.value" ng-change="setOptionsType(attributes.optionsType.value)" class="dfx-ve-options-editor-radio-group">
 			  <md-radio-button class="dfx-ve-options-editor-radio-button md-primary" value="static" aria-label="Static options">Static options</md-radio-button>
 			  <md-radio-button class="dfx-ve-options-editor-radio-button md-primary" value="dynamic" aria-label="Dynamic options">Dynamic options</md-radio-button>
 			</md-radio-group>
-			<div ng-show="attributes.optionsType.value === 'static'" style="display:flex;flex-direction:row;flex-wrap:wrap;justify-content:space-between;padding:8px;">
-				<section id="{{component_id}}_menu_structure" class="md-whiteframe-1dp" style="width:49.5%;border-radius:4px;overflow:hidden;">
-					<md-toolbar style="min-height:36px;background:rgba(128,128,128,0.46);">
-						<div class="md-toolbar-tools" style="height:36px;max-height:36px">
-							<h3 style="font-size:16px;">Options list</h3>
+			<div ng-show="attributes.optionsType.value === 'static'" class="dfx-studio-tree-editor dfx-ve-menu-editor">
+				<section id="{{component_id}}_menu_structure" class="md-whiteframe-1dp dfx-tree-editor-two-sections">
+					<md-toolbar class="dfx-studio-toolbar-title">
+						<div class="md-toolbar-tools">
+							<h3>Options list</h3>
 						</div>
 					</md-toolbar>
-					<md-toolbar style="min-height:30px;background:#ECECEC;font-size:14px;display:flex;flex-direction:row;align-items:center;padding:0 9px;">
-						<a href="#" class="fa fa-plus" ng-click="addItem()" style="color:#676B6E;text-decoration:none;margin:auto 7px;" title="Add item"></a>
-						<a href="#" class="fa fa-minus" ng-click="removeItem()" style="color:#676B6E;text-decoration:none;margin:auto 7px;" title="Remove item"></a>
-						<a href="#" class="fa fa-arrow-up" ng-click="moveItemUp()" style="color:#676B6E;text-decoration:none;margin:auto 7px;" title="Move up item"></a>
-						<a href="#" class="fa fa-arrow-down" ng-click="moveItemDown()" style="color:#676B6E;text-decoration:none;margin:auto 7px;" title="Move down item"></a>
+					<md-toolbar class="dfx-studio-toolbar-buttons">
+						<div class="layout-row flex-100"  layout-align="space-between center">
+                            <div>
+								<md-button aria-label="Studio button" class="fa dfx-studio-toolbar-button fa-plus" ng-click="addItem()"></md-button>
+								<md-button aria-label="Studio button" class="fa dfx-studio-toolbar-button fa-minus" ng-click="removeItem()"></md-button>
+								<md-button aria-label="Studio button" class="fa dfx-studio-toolbar-button fa-arrow-up" ng-click="moveItemUp()"></md-button>
+								<md-button aria-label="Studio button" class="fa dfx-studio-toolbar-button fa-arrow-down" ng-click="moveItemDown()"></md-button>
+							</div>
+						</div>
 					</md-toolbar>
 		      		<md-content class="menu-structure options-editor" layout-padding flex>
 						<ul>
@@ -31,10 +35,10 @@
 						</ul>
 		      </md-content>
 				</section>
-				<section id="{{component_id}}_static_properties" class="md-whiteframe-1dp" style="width:49.5%;border-radius:4px;overflow:hidden;">
-					<md-toolbar style="min-height:36px;background:rgba(128,128,128,0.46);">
-						<div class="md-toolbar-tools" style="height:36px;max-height:36px">
-							<h3 style="font-size:16px;">Option item properties</h3>
+				<section id="{{component_id}}_static_properties" class="md-whiteframe-1dp dfx-tree-editor-two-sections">
+					<md-toolbar class="dfx-studio-toolbar-title">
+						<div class="md-toolbar-tools">
+							<h3>Option item properties</h3>
 						</div>
 					</md-toolbar>
 					<md-content layout-padding flex style="height: 100%">
@@ -57,11 +61,11 @@
 					</md-content>
 				</section>
 			</div>
-			<div ng-show="attributes.optionsType.value === 'dynamic'" style="padding:8px;">
+			<div ng-show="attributes.optionsType.value === 'dynamic'" class="dfx-studio-tree-editor dfx-ve-menu-editor">
 				<section id="{{component_id}}_dynamic_properties" class="md-whiteframe-1dp" style="border-radius:4px;overflow:hidden;">
-					<md-toolbar style="min-height:36px;background:rgba(128,128,128,0.46);">
-						<div class="md-toolbar-tools" style="height:36px;max-height:36px">
-							<h3 style="font-size:16px;">Choose variables from scope</h3>
+					<md-toolbar class="dfx-studio-toolbar-title">
+						<div class="md-toolbar-tools">
+							<h3>Choose variables from scope</h3>
 						</div>
 					</md-toolbar>
 					<md-content layout-padding flex style="">

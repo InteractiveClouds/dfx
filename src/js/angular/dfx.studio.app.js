@@ -5617,23 +5617,24 @@ dfxStudioApp.controller("dfx_studio_user_definition_controller", [ '$scope', '$r
     }
 
     var buildTree = function(data, path, is_root_level) {
-        var sub_tree = '<ul class="dfx-studio-explorer-treeview-content">';
+        var sub_tree = '<ul style="padding-left:16px">';
 
         var props = Object.keys(data);
         for (var i = 0; i < props.length; i++) {
             if (props[i].indexOf('current_node') == 0) continue;
 
-            sub_tree += '<li>';
+            sub_tree += '<li class="menu-tree-item">';
 
             var current_path = path + '.' + props[i];
 
             if (data[ props[i] ].type == 'subdocument') {
-                sub_tree += '<input class="dfx-studio-explorer-treeview-button" type="checkbox" />' +
-                    '<label ng-click="editUserDefinitionNode(' + current_path + ', \'' + props[i] + '\',' + is_root_level + ', \'' + current_path + '\')">' + props[i] + '</label>';
+                sub_tree += '<input style="display:none" type="checkbox" />' +
+                    '<span class="dfx-menu-structure-trigger-box"><i class="fa fa-angle-down dfx-menu-structure-trigger" ng-click="toggleMenuItem($event)"></i></span>'+
+                    '<a href="javascript:void(0)" ng-click="editUserDefinitionNode(' + current_path + ', \'' + props[i] + '\',' + is_root_level + ', \'' + current_path + '\', $event)">' + props[i] + '</a>';
 
                 sub_tree += buildTree(data[ props[i]].structure, current_path + '.structure', false);
             } else {
-                sub_tree += '<label ng-click="editUserDefinitionNode(' + current_path + ', \'' + props[i] + '\',' + is_root_level + ', \'' + current_path + '\')">' + props[i] + '</label>';
+                sub_tree += '<a href="javascript:void(0)" ng-click="editUserDefinitionNode(' + current_path + ', \'' + props[i] + '\',' + is_root_level + ', \'' + current_path + '\', $event)">' + props[i] + '</a>';
             }
 
             sub_tree += '</li>';
@@ -5662,15 +5663,29 @@ dfxStudioApp.controller("dfx_studio_user_definition_controller", [ '$scope', '$r
         $scope.user_definition = data;
         $scope.operation = 'update_user_definition';//to show properties area from the beginning
         addTree(data);
+
+        var bodyHeight = parseFloat($("body").css('height'));
+        $('#dfx-studio-user-definition-panels').height(bodyHeight - 290);
     });
 
-    $scope.editUserDefinitionNode = function(prop, prop_name, is_root_level, path_to_prop) {
+    $scope.editUserDefinitionNode = function(prop, prop_name, is_root_level, path_to_prop, ev) {
         $scope.operation = 'update_user_definition';
         $scope.user_definition.current_node = prop;
         $scope.user_definition.current_node_name = prop_name;
         $scope.user_definition.current_node_path = path_to_prop;
         $scope.user_definition.current_node_root_level = is_root_level;
+        
+        $('#dfx_studio_user_definition_tree li').removeClass('active');
+        $(ev.target).parent('li').addClass('active');
     };
+
+    $scope.toggleMenuItem = function(ev){
+        var entity_trigger = $(ev.target),
+            entity_container = entity_trigger.parent().siblings('ul');
+
+        entity_trigger.hasClass('collapsed') ? entity_trigger.removeClass('collapsed') : entity_trigger.addClass('collapsed');
+        entity_container.slideToggle();
+    }
 
     $scope.unselectUserDefinitionNode = function() {
         $scope.operation = 'update_user_definition';

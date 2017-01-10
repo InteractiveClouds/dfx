@@ -881,32 +881,6 @@ md-menu button small {
     border-radius: 50%;
     text-align: center;
 }
-md-content.menu-structure.options-editor, md-content.tree-structure.options-editor, md-content.tree-structure {
-    max-height: 260px;
-    overflow-y: auto;
-}
-md-content.menu-structure ul, md-content.tree-structure ul, md-content.actions-structure ul {
-  padding: 0px;
-  list-style: none;
-}
-md-content.menu-structure ul ul, md-content.tree-structure ul ul, md-content.actions-structure ul ul {
-    padding-left: 20px;
-}
-md-content.menu-structure ul li a, md-content.tree-structure ul li a, md-content.actions-structure ul li a {
-    padding: 0px 10px;
-    text-decoration: none;
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-md-content.menu-structure ul li a:hover, md-content.tree-structure ul li a:hover, md-content.actions-structure ul li a:hover {
-    background:rgba(236,236,236,0.5);
-}
-md-content.menu-structure ul li.active > a, md-content.tree-structure ul li.active > a, md-content.actions-structure ul li.active > a {
-    font-weight: 700;
-    background:#ECECEC;
-}
 
 /* Toolbar */
 .gc-icon-bar {
