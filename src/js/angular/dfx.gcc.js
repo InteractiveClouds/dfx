@@ -183,15 +183,6 @@ dfxGCC.directive('dfxGccWebBase', ['$rootScope', '$http', '$compile', '$injector
                     scope[scope_variable_name] = newValue;
                 });
             };
-
-            this.changeWidth = function(scope) {
-                var component = angular.element(document.querySelectorAll('[id="' + scope.component_id + '"]'));//for repeatable panels
-                var parent_column_orientation = $('#' + scope.component_id).parent().attr('layout');
-                if (parent_column_orientation == 'column') {
-                    component.css('width', scope.attributes.flex.value + '%');
-                }
-            };
-
         }
     }
 }]);
@@ -249,8 +240,17 @@ dfxGCC.directive('dfxGccWebPanel', ['$timeout', '$compile', function($timeout, $
                 }
 
                 scope.changeWidth = function(){
-                    if ( !scope.attributes.repeat_title.value ) {
-                        basectrl.changeWidth(scope);
+                    if ( !scope.attributes.repeat_title.value ||
+                        (!scope.attributes.repeat_in.value && scope.attributes.repeat_title.value) )
+                    {
+                        var component = angular.element(document.querySelectorAll('[id="' + scope.component_id + '"]'));//for repeatable panels
+                        var parent_column_orientation = $('#' + scope.component_id).parent().attr('layout');
+                        if (parent_column_orientation == 'column') {
+                            component.css('width', scope.attributes.flex.value + '%');
+                        } else {
+                            component.removeClass('flex-100');
+                            component.addClass('flex' + '-' + scope.attributes.flex.value);
+                        }
                     }
                 };
                 scope.changeWidth();
