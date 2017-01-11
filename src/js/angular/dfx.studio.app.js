@@ -2411,7 +2411,10 @@ dfxStudioApp.controller("dfx_studio_devops_controller", [ '$scope', '$q', '$mdDi
                         "data": {}
                     }
                 dfxApplications.addEnvironment(data).then(function(){
-                    if(!envs_init) $scope.generateAppEnvironments();    
+                    if(!envs_init) $scope.generateAppEnvironments(); 
+                    dfxApplications.getEnvironmentsList( data ).then(function(response){
+                        $scope.environments_list = response.data.data;
+                    });   
                 });
             }else{
                 if(!envs_init) $scope.generateAppEnvironments();    
