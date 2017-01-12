@@ -2236,8 +2236,6 @@ dfxStudioApp.controller("dfx_studio_general_settings_controller", [ '$scope','df
         dfxApplications.getGeneral($scope.app_name).then(function(general){
             $scope.general.creationDate = general.creationDate;
             $scope.general.security = general.security || $scope.security;
-            console.log("HERE");
-            console.log($scope.general);
         });
     };
 
@@ -2541,7 +2539,7 @@ dfxStudioApp.controller("dfx_studio_devops_controller", [ '$scope', '$q', '$mdDi
                             var data = {
                                 "app_name": $scope.app_name,
                                 "name": name,
-                                "data": $scope.env_vars_list
+                                "data": $scope.env_vars_list ? $scope.env_vars_list : {}
                             }
                             $scope.addEnvironment(data);
                         }
@@ -4044,7 +4042,7 @@ dfxStudioApp.controller("dfx_studio_deployment_controller", [ '$scope', '$mdDial
         dfxDeployment.getGeneratedEnvironment({'app':app}).then(function(response) {
             response.content.map(function(cont){
                 cont.data = JSON.stringify(cont.data,null,4);
-                cont.waitingMessage = false;
+                //cont.waitingMessage = false;
             })
             $scope.env_vars = response.content;
         });
@@ -4065,6 +4063,7 @@ dfxStudioApp.controller("dfx_studio_deployment_controller", [ '$scope', '$mdDial
             var max = 0;
             for(var i = 0; i < $scope.builds[platform].length; i++){
                 $scope.builds[platform][i].logs = [];
+                //$scope.builds[platform][i].waitingMessage = false;
                 $scope.builds[platform][i].link = $scope.host_port + '/deploy/' + $scope.tenant_id + '/' + $scope.app_name + '/' + platform + '/' + $scope.builds[platform][i].app_version + '.' + $scope.builds[platform][i].build_number + '/login.html';
                 $scope.builds[platform][i].tenant_id = $scope.$parent.$parent.tenant_id;
                 if(parseInt($scope.builds[platform][i].build_number) > max){
@@ -4101,7 +4100,22 @@ dfxStudioApp.controller("dfx_studio_deployment_controller", [ '$scope', '$mdDial
 
 
     $scope.deployBuild = function(build, platform, env){
-        env.waitingMessage = true;
+        var buildIndex = $scope.builds[platform].findIndex(function(b){
+            return b._id === build._id;
+        });
+        var envIndex = $scope.env_vars.findIndex(function(e){
+            return e.name === env.name;
+        });
+
+        $scope.builds[platform][buildIndex].waitingMessage = true;
+        $scope.env_vars[envIndex].waitingMessage = true;
+
+        if (platform === 'mobile'){
+            $scope.builds[platform].map(function(b){
+                return delete b.deploymentVersion;
+            })
+        }
+
         var body = {
             applicationName:        $scope.app_name,
             platform:               platform,
@@ -4111,15 +4125,25 @@ dfxStudioApp.controller("dfx_studio_deployment_controller", [ '$scope', '$mdDial
             deploymentVersion :     env
         };
         dfxDeployment.deployBuild(body).then(function(data){
-            env.waitingMessage = false;
+            delete $scope.builds[platform][buildIndex].waitingMessage;
+            delete $scope.env_vars[envIndex].waitingMessage;
             dfxMessaging.showMessage('Build has been successfully deployed on deployment server');
             build.deploymentVersion = env.name;
             build.link = $scope.host_port + '/deploy/' + $scope.tenant_id + '/' + $scope.app_name + '/' + platform + '/' + build.app_version + '.' + build.build_number + '/login.html';
         },function (err) {
-            env.waitingMessage = false;
+            delete $scope.builds[platform][buildIndex].waitingMessage;
+            delete $scope.env_vars[envIndex].waitingMessage;;
             dfxMessaging.showWarning('Build has been failed');
         });
     };
+
+    $scope.toggleBuildItem = function(ev, index, platform){
+        var entity_trigger = $(ev.target),
+            entity_container = $("#" + index + "_build_" + platform);
+
+        entity_trigger.hasClass('collapsed') ? entity_trigger.removeClass('collapsed') : entity_trigger.addClass('collapsed');
+        entity_container.slideToggle();
+    }
 
     $scope.doRebuild = function(build, platform) {
         for(var i =0; i < $scope.builds[platform].length; i++){

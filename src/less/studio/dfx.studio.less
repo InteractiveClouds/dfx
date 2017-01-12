@@ -716,6 +716,23 @@ md-content.menu-structure ul {
     }
   }
 }
+
+.dfx-menu-structure-trigger {
+  font-size: 18px;
+  color: #3b7fba;
+  transition: all .5s;
+  outline: 0;
+  cursor: pointer;
+  &.collapsed {
+    -webkit-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+  }
+}
+
+.dfx_animated_table_row {
+  transition: all .5s;
+}
+
 md-content.menu-structure ul ul {
   /*padding-left: 20px;*/
 }
@@ -739,17 +756,21 @@ md-content.menu-structure ul li.active > a {
   flex-direction:row;
   flex-wrap:wrap;
   justify-content:space-between;
+  height: 100%;
   ul {
     list-style: none;
   }
   &>section {
     display: flex;
     flex-direction: column;
-    width:49.5%;
+    width: 100%;
     border-radius:4px;
     overflow:hidden;
     md-content.menu-structure {
       max-height: 100%;
+    }
+    &.dfx-tree-editor-two-sections {
+      width:49.5%;
     }
     .dfx-studio-toolbar-title {
       min-height:36px;
