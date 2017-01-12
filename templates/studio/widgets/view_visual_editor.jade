@@ -278,7 +278,7 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", dfx-ve-ctr
                             li(ng-repeat="gc_template in gc_templates_to_drag_drop_filtered", style="padding: 5px;")
                                 div.dfx-ve-gc-template-draggable-instance.dfx_visual_editor_draggable.dfx_visual_editor_gc_cat_item_draggable(gc-type="{{gc_template.type}}", gc-template-name="{{gc_template.name}}", title="{{gc_template.description ? gc_template.description : gc_template.name}}")
                                     i(class="fa fa-arrows")
-                                    {{gc_template.name}}
+                                    | {{gc_template.name}}
                                 i(class="fa fa-edit", ng-click="openGcTemplateEditor(gc_template.name)", style="cursor:pointer;")
                                 div(style="color:gray;") {{gc_template.description ? gc_template.description : gc_template.name}}
     pre#dfx_src_editor(style="border-radius: 0;display: none;").
