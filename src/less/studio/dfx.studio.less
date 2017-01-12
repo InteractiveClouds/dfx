@@ -739,17 +739,21 @@ md-content.menu-structure ul li.active > a {
   flex-direction:row;
   flex-wrap:wrap;
   justify-content:space-between;
+  height: 100%;
   ul {
     list-style: none;
   }
   &>section {
     display: flex;
     flex-direction: column;
-    width:49.5%;
+    width: 100%;
     border-radius:4px;
     overflow:hidden;
     md-content.menu-structure {
       max-height: 100%;
+    }
+    &.dfx-tree-editor-two-sections {
+      width:49.5%;
     }
     .dfx-studio-toolbar-title {
       min-height:36px;
