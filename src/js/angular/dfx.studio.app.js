@@ -2385,9 +2385,13 @@ dfxStudioApp.controller("dfx_studio_general_settings_controller", [ '$scope','df
 
 dfxStudioApp.controller("dfx_studio_devops_controller", [ '$scope', '$q', '$mdDialog', '$timeout', 'dfxApplications', 'dfxMessaging', function($scope, $q, $mdDialog, $timeout, dfxApplications, dfxMessaging) {
     var parentScope = $scope.$parent,
-        app_data = { "app_name": $scope.app_name };
-    parentScope.devops = $scope;
+        app_data = { "app_name": $scope.app_name },
+        default_env = {
+            "name": "development",
+            "data": {}
+        };
 
+    parentScope.devops = $scope;
     $scope.environments_list = [];
     $scope.environment_data = { "name": "" };
     $scope.not_valid_environment_name = false;
@@ -2398,7 +2402,24 @@ dfxStudioApp.controller("dfx_studio_devops_controller", [ '$scope', '$q', '$mdDi
         if(envs_init) $scope.dd_variables_loaded = false;
         dfxApplications.getEnvironmentsList( data ).then(function(response){
             $scope.environments_list = response.data.data;
-            if(!envs_init) $scope.generateAppEnvironments();
+            if($scope.environments_list.length===0) {
+                $scope.environments_list.push(default_env);
+                var data = 
+                    {
+                        "app_name": $scope.app_name,
+                        "name": 'development',
+                        "data": {}
+                    }
+                dfxApplications.addEnvironment(data).then(function(){
+                    if(!envs_init) $scope.generateAppEnvironments(); 
+                    dfxApplications.getEnvironmentsList( data ).then(function(response){
+                        $scope.environments_list = response.data.data;
+                    });   
+                });
+            }else{
+                if(!envs_init) $scope.generateAppEnvironments();    
+            }
+            
             $scope.getAppEnvVars(envs_init);
         });
     }
@@ -4329,33 +4350,6 @@ dfxStudioApp.controller("dfx_studio_deployment_controller", [ '$scope', '$mdDial
         });
     };
 
-    $scope.deployBuild = function(build, platform){
-        setWaitingMessageValue(build, true);
-        var body = {
-            applicationName:        $scope.app_name,
-            platform:               platform,
-            applicationVersion:     build.app_version,
-            buildNumber:            build.build_number,
-            tenantId:               $scope.tenant_id
-        };
-        dfxDeployment.deployBuild(body).then(function(data){
-            setWaitingMessageValue(build, false);
-            dfxMessaging.showMessage('Build has been successfully deployed on deployment server');
-            $scope.getAppBuilds(platform);
-        },function (err) {
-            setWaitingMessageValue(build, false);
-            dfxMessaging.showWarning('The build deployment failed');
-        });
-    };
-
-    function setWaitingMessageValue(build, value) {
-        $scope.builds[build.platform].forEach(function(b, index){
-            if (build._id === b._id) {
-                $scope.builds[build.platform][index].waitingMessage = value;
-            }
-        });
-    }
-
     $scope.getDeployedQRCode = function(build) {
         $mdDialog.show({
             scope: $scope.$new(),
@@ -6001,6 +5995,15 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
         };
     });
 
+        // Get Env variables
+    $scope.env_vars = ['none'];
+    $scope.env_var = 'none';
+    dfxApiServiceObjects.getEnvVariables( $scope.app_name).then( function( data ) {
+            data.content.forEach(function(item){
+                    $scope.env_vars.push(item.name);
+                })
+    });
+
     dfxApiServiceObjects.getCategories( $scope, $scope.app_name ).then( function( data ) {
         $scope.apiSoCategories = data.data.querycats;
     });
@@ -6485,6 +6488,7 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
                 if (tenant.data.data.databaseTokens) {
                     var str = "curl -i ";
                         str += "-H 'Content-Type:application/json' ";
+                        str += "-H 'DFX_ENV_VAR:" + $scope.env_var + "' ";
                         str += "-H 'Authorization:Basic " + btoa($('body').attr('data-tenantid') + ":" + Object.keys(tenant.data.data.databaseTokens)[0]) + "==' ";
                         str += "-d '{}' ";
                         str += window.location.origin + '/api/' + $scope.app_name + '/apiRoute/' + serviceItem.name;
@@ -6492,6 +6496,7 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
 
                     var str = "curl -i ";
                     str += "-H 'Content-Type:application/json' ";
+                    str += "-H 'DFX_ENV_VAR:" + $scope.env_var + "' ";
                     str += "-H 'Authorization:Basic " + btoa($('body').attr('data-tenantid') + ":" + Object.keys(tenant.data.data.databaseTokens)[0]) + "==' ";
                     str += "-d '" + JSON.stringify(queryString) + "' ";
                     str += window.location.origin + '/api/' + $scope.app_name + '/apiRoute/' + serviceItem.name;
@@ -6502,6 +6507,7 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
                     $scope.postmanUrl = window.location.origin + '/api/' + $scope.app_name + '/apiRoute/' + serviceItem.name;
                     $scope.postmanUsername = $('body').attr('data-tenantid');
                     $scope.postmanPassword = Object.keys(tenant.data.data.databaseTokens)[0];
+                    $scope.postmanHeader = angular.copy($scope.env_var);
                 } else {
                     $scope.curlItemContent = "Can't get tenant token from server";
                 }
@@ -6899,6 +6905,7 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
         simulateService.typeRequest = $scope.scopeService.data.settings.typerequest.replace('HTTP_', '');
         simulateService.urlRandom = $scope.scopeService.data.settings.urlrandom;
         simulateService.reqbody = $scope.scopeService.data.settings.postrequestbody;
+        simulateService.env = $scope.env_var;
         if ( $scope.scopeService.data.parameters && $scope.scopeService.data.parameters.length > 0 ) { simulateService.data = $scope.scopeService.data.parameters; }
         if ( $scope.scopeService.data.precode && $scope.scopeService.data.precode.length > 0 ) { simulateService.precode = $scope.scopeService.data.precode; }
         if ( $scope.scopeService.data.postcode && $scope.scopeService.data.postcode.length > 0 ) { simulateService.postcode = $scope.scopeService.data.postcode; }
@@ -6947,7 +6954,7 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
         //     scope.script_editor.focus();
         //     executedMirror.refresh();
         // }, 0);
-        sidenav.find("#executedResult").css( "height", sidenavHeight-245 );
+        sidenav.find("#executedResult").css( "height", sidenavHeight-290 );
         var container = document.getElementById('executedResult'),
             options = { mode: 'code', modes: ['tree','form','code','text','view'], history: true }
         $timeout(function(){

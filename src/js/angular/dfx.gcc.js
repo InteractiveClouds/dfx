@@ -183,15 +183,6 @@ dfxGCC.directive('dfxGccWebBase', ['$rootScope', '$http', '$compile', '$injector
                     scope[scope_variable_name] = newValue;
                 });
             };
-
-            this.changeWidth = function(scope) {
-                var component = angular.element(document.querySelectorAll('[id="' + scope.component_id + '"]'));//for repeatable panels
-                var parent_column_orientation = $('#' + scope.component_id).parent().attr('layout');
-                if (parent_column_orientation == 'column') {
-                    component.css('width', scope.attributes.flex.value + '%');
-                }
-            };
-
         }
     }
 }]);
@@ -247,13 +238,6 @@ dfxGCC.directive('dfxGccWebPanel', ['$timeout', '$compile', function($timeout, $
                         collapse_container.slideToggle();
                     }
                 }
-
-                scope.changeWidth = function(){
-                    if ( !scope.attributes.repeat_title.value ) {
-                        basectrl.changeWidth(scope);
-                    }
-                };
-                scope.changeWidth();
 
                 /* Repeatable Panel adaptation to parent layout orientation - START */
                 var adaptRepeatableToParentOrientation = function() {
@@ -719,15 +703,15 @@ dfxGCC.directive('dfxGccWebDatepicker', ['$mdpDatePicker', '$mdpTimePicker', '$c
                 scope.dfxAddLabel = function(){
                     var dfxDatetimeLabel = '<label class="dfx-core-gc-datetime-label">{{' + scope.attributes.label.value + '}}</label>';
                     $(element).find('label.dfx-core-gc-datetime-label').replaceWith(dfxDatetimeLabel).promise().done(function(){
-                        $compile($(element).find('label.dfx-core-gc-datetime-label'))(scope);                                
+                        $compile($(element).find('label.dfx-core-gc-datetime-label'))(scope);
                     });
                 }
 
                 var findLabelinterval = setInterval(function() {
                     if ($('#' + component.id).find('label.dfx-core-gc-datetime-label').length === 0) return;
                     clearInterval(findLabelinterval);
-                    scope.dfxAddLabel();                    
-                }, 10);              
+                    scope.dfxAddLabel();
+                }, 10);
 
                 $(element).css('width', scope.attributes.flex.value + '%');
             });
@@ -2489,7 +2473,7 @@ dfxGCC.directive('dfxGccWebPiechart', ['$timeout', '$filter', function($timeout,
                         top: 20,
                         right: 20,
                         bottom: 50,
-                        left: 55
+                        left: 0
                     },
                     x: function(d){return d.key;},
                     y: function(d){return d.y;},
@@ -2502,7 +2486,7 @@ dfxGCC.directive('dfxGccWebPiechart', ['$timeout', '$filter', function($timeout,
                             top: 5,
                             right: 5,
                             bottom: 5,
-                            left: 0
+                            left: -30
                         }
                     }
                 },
@@ -2589,7 +2573,7 @@ dfxGCC.directive('dfxGccWebDonutchart', ['$timeout', '$filter', function($timeou
                         top: 20,
                         right: 20,
                         bottom: 50,
-                        left: 55
+                        left: 0
                     },
                     x: function(d){return d.key;},
                     y: function(d){return d.y;},
@@ -4483,18 +4467,6 @@ dfxGCC.directive('dfxGccWebTabs', ['$timeout', '$compile', function($timeout, $c
                     }
                 });
 
-                scope.changeWidth = function() {
-                    var component = $('#' + scope.component_id);
-                    var parent_column_orientation = component.parent().attr('layout');
-                    if (parent_column_orientation == 'column') {
-                        component.css('width', scope.attributes.flex.value + '%');
-                    } else {
-                        component.removeClass('flex-100');
-                        component.addClass('flex' + '-' + scope.attributes.flex.value);
-                    }
-                };
-                scope.changeWidth();
-
                 scope.collapsePanelContent = function(ev, dfxIndex){
                     var toggle_btn_id = ev.target.id,
                         toggle_btn = $(element).find('#'+toggle_btn_id),
@@ -4711,18 +4683,6 @@ dfxGCC.directive('dfxGccWebWizard', ['$mdDialog', '$timeout', '$compile', functi
                     collapse_container.slideToggle();
                 }
 
-                scope.changeWidth = function() {
-                    var component = $('#' + scope.component_id);
-                    var parent_column_orientation = component.parent().attr('layout');
-                    if (parent_column_orientation == 'column') {
-                        component.css('width', scope.attributes.flex.value + '%');
-                    } else {
-                        component.removeClass('flex-100');
-                        component.addClass('flex' + '-' + scope.attributes.flex.value);
-                    }
-                };
-                scope.changeWidth();
-
                 if (!scope.attributes.autoHeight || scope.attributes.autoHeight.value != true) {
                     $timeout(function () {
                         var $md_tab_content_wrapper = $('#' + scope.component_id + ' > div > div > md-content > form > md-tabs > md-tabs-content-wrapper');
@@ -4863,10 +4823,10 @@ dfxGCC.directive('dfxGccWebDatatable', ['$timeout', '$mdDialog', '$filter', '$ht
                     scope.dfxSortDatatable = function(col){
                         if(col.isAscending === 'true') {
                             col.isAscending = 'false';
-                            scope.sortedBy.value = '-' + col.value;                            
+                            scope.sortedBy.value = '-' + col.value;
                         }else{
                             col.isAscending = 'true';
-                            scope.sortedBy.value = col.value;                            
+                            scope.sortedBy.value = col.value;
                         }
                     }
 

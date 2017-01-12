@@ -3,21 +3,23 @@
         <div layout="row">
             <md-content class="md-padding flex-100" layout="column">
                 <div layout="row" class="col-md-12" layout-align="center end" style="min-height:48px;">
-                    <span class="col-md-8">
-                        <md-button ng-if="gc_templates_selected.length > 0" ng-click="copyAll($event)" class="md-raised md-primary">
-                            <span class="fa fa-copy"></span>
-                            Copy
-                        </md-button>
-                        <md-button ng-if="gc_templates_selected.length > 0" ng-click="confirmDeleteAll($event)" class="md-raised md-warn">
-                            <span class="fa fa-trash-o"></span>
-                            Delete
-                        </md-button>
-                    </span>
                     <span class="col-md-1" style="padding:3px;">Platform:</span>
                     <md-select ng-model="gc_templates_platform" class="col-md-3" style="padding:0;margin:0;">
                         <md-option value="web" selected>Web</md-option>
                         <md-option value="mobile">Mobile</md-option>
                     </md-select>
+                    <span class="col-md-8">
+                        <div layout="row" class="layout-align-end">
+                            <md-button ng-if="gc_templates_selected.length > 0" ng-click="copyAll($event)" class="md-raised md-default">
+                                <span class="fa fa-copy"></span>
+                                Copy
+                            </md-button>
+                            <md-button ng-if="gc_templates_selected.length > 0" ng-click="confirmDeleteAll($event)" class="md-raised md-warn">
+                                <span class="fa fa-trash-o"></span>
+                                Delete
+                            </md-button>
+                        </div>
+                    </span>
                 </div>
                 <md-card style="flex-grow:3;overflow:hidden;">
                     <md-card-content style="padding:0;">

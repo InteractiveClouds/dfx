@@ -54,7 +54,7 @@
                                                                 Rename
                                                             </md-button>
                                                         </md-menu-item>
-                                                        <md-menu-item>
+                                                        <md-menu-item ng-if="environments_list.length > 1">
                                                             <md-button ng-click="confirmEnvironmentRemove($event, environment._id)" class="dfx-studio-toolbat-options-button" aria-label="Studio button">
                                                                 <md-icon class="fa fa-trash dfx-studio-flex-icon"></md-icon>
                                                                 Delete
