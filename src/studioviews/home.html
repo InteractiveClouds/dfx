@@ -15,14 +15,14 @@
     </div>
 	<div layout="row" layout-align="start start" style="flex-wrap:wrap;">
 		<div ng-repeat="app in platform_stats.apps" class="dfx-studio-app-card">
-			<md-card>
+			<md-card ng-if="app.name !=='Shared Catalog'">
 		        <md-card-title>
 		          <md-card-title-text>
 		            <div class="md-headline">
 		            	<span class="dfx-studio-app-name" ng-click="navigateToApp(app.name)" ng-style="app.name !=='Shared Catalog'? {cursor: 'pointer'}:{cursor:'default'}">{{app.name}}</span>
-		            	<a class="pull-right" ng-click="loadActivity('{{app.name}}')">
+		            	<!--a class="pull-right" ng-click="loadActivity('{{app.name}}')">
 		            		<span class="fa fa-slack"></span>
-		            	</a>
+		            	</a-->
 		            </div>
 		            <div class="md-subhead">{{app.title}}</div>
 		          </md-card-title-text>
@@ -36,7 +36,7 @@
 		          </div>
 		        </md-card-content>
 		    </md-card>
-		</div>	
+		</div>
 	</div>
 	<h2 class="md-title" ng-show="display_activity_panel">Activity for sample</h2>
 	<div ng-show="display_activity_panel">
@@ -49,7 +49,7 @@
 		        </md-card-title>
 		        <md-card-content layout="row" layout-align="space-between">
 		          <div class="md-media-xl card-media">
-		          	
+
 		          </div>
 		        </md-card-content>
 		    </md-card>
