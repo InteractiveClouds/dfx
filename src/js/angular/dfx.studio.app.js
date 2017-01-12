@@ -2541,7 +2541,7 @@ dfxStudioApp.controller("dfx_studio_devops_controller", [ '$scope', '$q', '$mdDi
                             var data = {
                                 "app_name": $scope.app_name,
                                 "name": name,
-                                "data": $scope.env_vars_list
+                                "data": $scope.env_vars_list ? $scope.env_vars_list : {}
                             }
                             $scope.addEnvironment(data);
                         }
