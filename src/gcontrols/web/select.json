@@ -1,11 +1,11 @@
 {
   "template":             { "value": "default" },
   "name":                 { "value": "sltSelect1" },
-  "binding":              { "value": "" },  
+  "binding":              { "value": "" },
   "bindingType":          { "value": "noBinding" },
   "label":                { "value": "'Select option'" },
   "optionsType":          { "value": "static" },
-  "options":              { "source": "", "display": "", "value": "" },    
+  "options":              { "source": "", "display": "", "value": "" },
   "staticOptions":        { "value": [{"display":"'yes'", "value":"true"}, {"display":"'no'", "value": "false"}] },
   "currentItem":          { "value": "", "display": "" },
   "display":              { "value": "true" },
@@ -29,5 +29,6 @@
   "onmouseenter":         { "value": "" },
   "onmousemove":          { "value": "" },
   "onmouseleave":         { "value": "" },
-  "onmouseup":            { "value": "" }
+  "onmouseup":            { "value": "" },
+  "onmousedown":          { "value": "" }
 }
