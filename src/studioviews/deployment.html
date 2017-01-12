@@ -32,8 +32,7 @@
                     <tbody ng-repeat="build in builds.web track by $index">
                         <tr>
                             <td>
-                                <span ng-show="!build.displayDeployments"><md-button ng-click="showDeployments(build, 'web')" class="dfx-studio-table-button"><md-tooltip>Show deployments</md-tooltip><md-icon class="fa fa-plus" style="color:#158194;"></md-icon></md-button></span>
-                                <span ng-show="build.displayDeployments"><md-button ng-click="hideDeployments(build, 'web')" class="dfx-studio-table-button"><md-tooltip>Hide deployments</md-tooltip><md-icon class="fa fa-minus" style="color:#158194;"></md-icon></md-button></span>
+                                <i class="fa fa-angle-down dfx-menu-structure-trigger collapsed" ng-click="toggleBuildItem($event, $index, 'web')" role="button" tabindex="0"></i>
                             </td>
                             <td>{{build.app_version + '.' + build.build_number}}</td>
                             <td>{{build.build_date || (build.requestDate | date: 'EEE MMM dd yyyy HH:mm:ss') + ' GMT' + (build.requestDate | date: 'Z')}}</td>
@@ -46,7 +45,7 @@
                                 <span><md-button ng-click="confirmDelete($event, build, 'web', $index)" class="dfx-studio-table-button" aria-label="Studio button"><md-tooltip>Delete this build</md-tooltip><md-icon class="fa fa-lg fa-trash-o" style="color:#F50057;"></md-icon></md-button></span>
                             </td>
                         </tr>
-                        <tr ng-show="build.displayDeployments === true">
+                        <tr id="{{$index}}_build_web" style="display:none;" class="dfx_animated_table_row">
                             <td></td>
                             <td colspan="4">
                                 <table class="datatable" class="layout-row" style="width: 100%;">
@@ -62,9 +61,9 @@
                                         <td>{{variable.name}}</td>
                                         <td><pre>{{variable.data}}</pre></td>
                                         <td>
-                                            <span ng-if="variable.waitingMessage"><md-icon class="fa fa-spinner fa-pulse" style="font-size: 24px; color:#300000;"></md-icon></span>
+                                            <span ng-if="variable.waitingMessage && build.waitingMessage"><md-icon class="fa fa-spinner fa-pulse" style="font-size: 24px; color:#300000;"></md-icon></span>
                                             <span ng-if="build.status==='success' && !build.waitingMessage"><md-button ng-click="deployBuild(build, 'web', variable)" class="dfx-studio-table-button" aria-label="Studio button"><md-tooltip>Deploy on Local Cloud</md-tooltip><md-icon class="fa fa-lg fa-cloud-upload" style="color:#158194;"></md-icon></md-button></span>
-                                            <span ng-if="build.deploymentVersion===variable.name"><a target="_blank" ng-href={{build.link}} class="dfx-studio-table-button"><md-tooltip>Run the application</md-tooltip><md-icon class="fa fa-lg fa-play" style="color:#158194;"></md-icon></a></span>
+                                            <span ng-if="build.deploymentVersion===variable.name && build.status==='success'"><a target="_blank" ng-href={{build.link}} class="dfx-studio-table-button"><md-tooltip>Run the application</md-tooltip><md-icon class="fa fa-lg fa-play" style="color:#158194;"></md-icon></a></span>
                                             <span ng-if="build.status==='success'"><a class="dfx-studio-table-button md-button" href="/studio/build/download?path=/{{build.tenant_id + '/' + build.platform + '/' + build.application + '_' + build.app_version + '.' + build.build_number + '/' + build.application + '_' + build.app_version + '.' + build.build_number + '.zip'}}" ng-click="getBuildFile()"><md-tooltip>Download a zip</md-tooltip><md-icon class="fa fa-download" style="color:#158194;"></md-icon></a></span>
                                         </td>
                                     </tr>
@@ -120,8 +119,7 @@
                     <tbody ng-repeat="build in builds.mobile track by $index">
                         <tr>
                             <td>
-                                <span ng-show="!build.displayDeployments"><md-button ng-click="showDeployments(build, 'mobile')" class="dfx-studio-table-button" aria-label="Studio button"><md-tooltip>Show deployments</md-tooltip><md-icon class="fa fa-plus" style="color:#158194;"></md-icon></md-button></span>
-                                <span ng-show="build.displayDeployments"><md-button ng-click="hideDeployments(build, 'mobile')" class="dfx-studio-table-button" aria-label="Studio button"><md-tooltip>Hide deployments</md-tooltip><md-icon class="fa fa-minus" style="color:#158194;"></md-icon></md-button></span>
+                                <i class="fa fa-angle-down dfx-menu-structure-trigger collapsed" ng-click="toggleBuildItem($event, $index, 'mobile')" role="button" tabindex="0"></i>
                             </td>
                             <td>{{build.app_version + '.' + build.build_number}}</td>
                             <td>{{build.build_date || (build.requestDate | date: 'EEE MMM dd yyyy HH:mm:ss') + ' GMT' + (build.requestDate | date: 'Z')}}</td>
@@ -134,7 +132,7 @@
                                 <span><md-button ng-click="confirmDelete($event, build, 'mobile', $index)" class="dfx-studio-table-button" aria-label="Studio button"><md-tooltip>Delete this build</md-tooltip><md-icon class="fa fa-lg fa-trash-o" style="color:#F50057;"></md-icon></md-button></span>
                             </td>
                         </tr>
-                        <tr ng-show="build.displayDeployments === true">
+                        <tr id="{{$index}}_build_mobile" style="display:none;" class="dfx_animated_table_row">
                             <td></td>
                             <td colspan="4">
                                 <table class="datatable" class="layout-row" style="width: 100%;">
@@ -150,7 +148,7 @@
                                         <td>{{variable.name}}</td>
                                         <td><pre>{{variable.data}}</pre></td>
                                         <td>
-                                            <span ng-if="variable.waitingMessage"><md-icon class="fa fa-spinner fa-pulse" style="font-size: 24px; color:#300000;"></md-icon></span>
+                                            <span ng-if="variable.waitingMessage && build.waitingMessage"><md-icon class="fa fa-spinner fa-pulse" style="font-size: 24px; color:#300000;"></md-icon></span>
                                             <span ng-if="build.status==='success' && !build.waitingMessage"><md-button ng-click="deployBuild(build, 'mobile', variable)" class="dfx-studio-table-button" aria-label="Studio button"><md-tooltip>Deploy on Phonegap Build</md-tooltip><md-icon class="fa fa-lg fa-cloud-upload" style="color:#158194;"></md-icon></md-button></span>
                                             <span ng-if="build.deploymentVersion===variable.name"><a ng-click="getDeployedQRCode(build)" class="dfx-studio-table-button"><md-tooltip>Install the App</md-tooltip><md-icon class="fa fa-lg fa-qrcode" style="color:#158194;cursor: pointer;"></md-icon></a></span>
                                             <span ng-if="build.status==='success'"><a class="dfx-studio-table-button md-button" href="/studio/build/download?path=/{{build.tenant_id + '/' + build.platform + '/' + build.application + '_' + build.app_version + '.' + build.build_number + '/' + build.application + '_' + build.app_version + '.' + build.build_number + '.zip'}}" ng-click="getBuildFile()"><md-tooltip>Download a zip</md-tooltip><md-icon class="fa fa-download" style="color:#158194;"></md-icon></a></span>
