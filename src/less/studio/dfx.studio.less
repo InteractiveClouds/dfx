@@ -716,6 +716,23 @@ md-content.menu-structure ul {
     }
   }
 }
+
+.dfx-menu-structure-trigger {
+  font-size: 18px;
+  color: #3b7fba;
+  transition: all .5s;
+  outline: 0;
+  cursor: pointer;
+  &.collapsed {
+    -webkit-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+  }
+}
+
+.dfx_animated_table_row {
+  transition: all .5s;
+}
+
 md-content.menu-structure ul ul {
   /*padding-left: 20px;*/
 }
