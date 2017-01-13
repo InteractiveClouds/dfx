@@ -215,10 +215,10 @@ dfxGCC.directive('dfxGccWebPanel', ['$timeout', '$compile', function($timeout, $
 
                 scope.collapsePanelContent = function(ev, dfxIndex){
                     var toggle_btn_id = ev.target.id,
-                        toggle_btn = $('#'+toggle_btn_id),
+                        toggle_btn = $(element).find('#'+toggle_btn_id),
                         collapse_cont_id = toggle_btn_id.replace('toggling_', '');
                     if(!is_rep_title && !is_rep_panel){
-                        var collapse_container = $('#'+collapse_cont_id);
+                        var collapse_container = $(element).find('#'+collapse_cont_id);
                         if(collapse_container.hasClass('ng-hide')) collapse_container.css('display', 'none').removeClass('ng-hide');
                         toggle_btn.toggleClass('dfx-expanded');
                         collapse_container.slideToggle();
@@ -226,13 +226,13 @@ dfxGCC.directive('dfxGccWebPanel', ['$timeout', '$compile', function($timeout, $
                     if(!is_rep_title && is_rep_panel && scope.dfx_rep_panels>0){
                         toggle_btn.toggleClass('dfx-expanded');
                         for (var i = 0; i < scope.dfx_rep_panels; i++) {
-                            var item_collapse_cont = $('#'+collapse_cont_id+'_'+i);
+                            var item_collapse_cont = $(element).find('#'+collapse_cont_id+'_'+i);
                             if(item_collapse_cont.hasClass('ng-hide')) item_collapse_cont.css('display', 'none').removeClass('ng-hide');
                             toggle_btn.hasClass('dfx-expanded') ? item_collapse_cont.slideDown() : item_collapse_cont.slideUp();
                         }
                     }
                     if(is_rep_title && dfxIndex >=0 ){
-                        var collapse_container = $('#'+collapse_cont_id);
+                        var collapse_container = $(element).find('#'+collapse_cont_id);
                         if(collapse_container.hasClass('ng-hide')) collapse_container.css('display', 'none').removeClass('ng-hide');
                         toggle_btn.toggleClass('dfx-expanded');
                         collapse_container.slideToggle();
