@@ -232,9 +232,9 @@
 		{
 			"name": "Html data",
 			"value": [
-				{"data": "<img ng-src='https://material.angularjs.org/latest/img/100-0.jpeg' class='md-avatar' alt='Janet Perkins' /><div class='md-list-item-text' layout='column'><h3>Janet Perkins</h3></div>"},
-				{"data": "<img ng-src='https://material.angularjs.org/latest/img/100-1.jpeg' class='md-avatar' alt='Mary Johnson' /><div class='md-list-item-text' layout='column'><h3>Mary Johnson</h3></div>"},
-				{"data": "<img ng-src='https://material.angularjs.org/latest/img/100-2.jpeg' class='md-avatar' alt='Peter Carlsson' /><div class='md-list-item-text' layout='column'><h3>Peter Carlsson</h3></div>"}
+				{"data": "<img src='https://material.angularjs.org/latest/img/100-0.jpeg' class='md-avatar' alt='Janet Perkins' /><div class='md-list-item-text' layout='column'><h3>Janet Perkins</h3></div>"},
+				{"data": "<img src='https://material.angularjs.org/latest/img/100-1.jpeg' class='md-avatar' alt='Mary Johnson' /><div class='md-list-item-text' layout='column'><h3>Mary Johnson</h3></div>"},
+				{"data": "<img src='https://material.angularjs.org/latest/img/100-2.jpeg' class='md-avatar' alt='Peter Carlsson' /><div class='md-list-item-text' layout='column'><h3>Peter Carlsson</h3></div>"}
 			]
 		},
 		{
