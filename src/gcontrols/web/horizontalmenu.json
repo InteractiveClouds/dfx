@@ -5,7 +5,7 @@
     "dynamicPresent":   { "value": false },
     "dynamic":          { "value": "" },
     "menuItems":        {
-        "value": 
+        "value":
             [
                 {
                     "label": "'Home'",
@@ -16,8 +16,8 @@
                     "display": "true",
                     "disabled": "false",
                     "onclick": "",
-                    "menuItems": { "value": [] 
-                }			
+                    "menuItems": { "value": []
+                }
             }
         ]
     },
@@ -41,7 +41,6 @@
     "static":           { "value": "" },
     "dynamic":          { "value": "" },
     "layoutType":       { "value": "none" },
-    "flex":             { "value": 100 },
     "style":            { "value": "" },
     "classes":          { "value": "" },
     "dynamicClasses":   { "value": "" },
