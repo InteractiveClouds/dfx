@@ -6243,8 +6243,9 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
     }
 
     $scope.cloneService = function( service ) {
-        //var cloned = JSON.parse(JSON.stringify(service));
         var cloned = angular.copy( service );
+
+        console.log($scope.api_so.apiRoutes);
 
         $mdDialog.show({
             scope: $scope,
@@ -6280,9 +6281,10 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
                 $scope.cloneServiceDo = function() {
                     cloned.name = $scope.clonedServiceName;
                     cloned.data.settings.url = $scope.clonedServiceUrl;
-                    delete cloned.data.uuid;
+                    cloned.data.uuid = new Date().getTime();
                     $scope.api_so.apiRoutes.push( cloned );
                     $mdDialog.hide();
+                    console.log($scope.api_so.apiRoutes);
                 }
             }
         })
