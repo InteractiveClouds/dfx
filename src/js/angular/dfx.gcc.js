@@ -246,12 +246,38 @@ dfxGCC.directive('dfxGccWebPanel', ['$timeout', '$compile', function($timeout, $
 
                         if (parent_orientation == 'row' ) {
                             var number_of_panels = scope.$parent_scope[scope.attributes.repeat_in.value].length,
-                                total_width = scope.attributes.flex.value * number_of_panels,
-                                min_total_width = total_width > 100 ? 100 : total_width,
-                                each_rep_panel_width = total_width > 100 ? scope.attributes.flex.value : 100/number_of_panels;
+                                total_width = scope.attributes.flex.value * number_of_panels;
 
-                            if(each_rep_panel_width>30 && each_rep_panel_width<35) each_rep_panel_width = 33;
-                            if(each_rep_panel_width>65 && each_rep_panel_width<70) each_rep_panel_width = 66;
+                            var getMinTotalWidth = function() {
+                                var min_total_width = 0;
+                                if (total_width > 100) {
+                                    for (var i = 0; i < number_of_panels; i++) {
+                                        var new_total_width = min_total_width + scope.attributes.flex.value;
+                                        if (new_total_width > 100) {
+                                            break;
+                                        } else {
+                                            min_total_width = new_total_width;
+                                        }
+                                    }
+                                } else {
+                                    min_total_width = total_width;
+                                }
+                                return min_total_width;
+                            };
+                            var min_total_width = getMinTotalWidth();
+
+                            var getEachRepPanelWidth = function() {
+                                var each_rep_panel_width = total_width > 100 ? scope.attributes.flex.value : 100/number_of_panels;
+                                if (total_width > 100) {
+                                    each_rep_panel_width = scope.attributes.flex.value * 100 / min_total_width;
+                                } else {
+                                    each_rep_panel_width = 100 / number_of_panels;
+                                }
+                                if (each_rep_panel_width > 30 && each_rep_panel_width < 35) each_rep_panel_width = 33;
+                                if (each_rep_panel_width > 65 && each_rep_panel_width < 70) each_rep_panel_width = 66;
+                                return each_rep_panel_width;
+                            };
+                            var each_rep_panel_width = getEachRepPanelWidth();
 
                             $timeout(function() {
                                 $(element).addClass('layout-row flex-' + min_total_width);
