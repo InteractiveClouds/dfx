@@ -6304,7 +6304,7 @@ dfxStudioApp.controller("dfx_studio_api_so_controller", [ '$rootScope', '$scope'
                 $scope.cloneServiceDo = function() {
                     cloned.name = $scope.clonedServiceName;
                     cloned.data.settings.url = $scope.clonedServiceUrl;
-                    delete cloned.data.uuid;
+                    cloned.data.uuid = new Date().getTime();
                     $scope.api_so.apiRoutes.push( cloned );
                     $mdDialog.hide();
                 }
