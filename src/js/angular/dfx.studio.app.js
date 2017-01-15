@@ -4130,6 +4130,7 @@ dfxStudioApp.controller("dfx_studio_deployment_controller", [ '$scope', '$mdDial
             dfxMessaging.showMessage('Build has been successfully deployed on deployment server');
             build.deploymentVersion = env.name;
             build.link = $scope.host_port + '/deploy/' + $scope.tenant_id + '/' + $scope.app_name + '/' + platform + '/' + build.app_version + '.' + build.build_number + '/login.html';
+            $scope.showInstallButton = true;
         },function (err) {
             delete $scope.builds[platform][buildIndex].waitingMessage;
             delete $scope.env_vars[envIndex].waitingMessage;;
@@ -4374,7 +4375,7 @@ dfxStudioApp.controller("dfx_studio_deployment_controller", [ '$scope', '$mdDial
         });
     };
 
-    $scope.getDeployedQRCode = function(build) {
+    $scope.getDeployedQRCode = function() {
         $mdDialog.show({
             scope: $scope.$new(),
             controller: DialogController,
@@ -4383,11 +4384,15 @@ dfxStudioApp.controller("dfx_studio_deployment_controller", [ '$scope', '$mdDial
             clickOutsideToClose:true
         });
 
-        dfxApplications.getGeneral(build.application).then(function(app){
+        dfxApplications.getGeneral($scope.app_name).then(function(app){
             var phoneGapId = app.phonegap.applicationId;
             dfxDeployment.getMobileAppInfo( {application:phoneGapId} ).then(function( res ){
-                $scope.qrCodeData = JSON.parse( res.data ).install_url;
-            });
+                $scope.qrCodeData = JSON.parse(res.data).install_url;
+            },function(e){
+                 $scope.showInstallButton = false;
+                 $scope.grCodeDataMessage = "Seems current application was deleted from PhoneGap";
+                 $("qrcode").hide();
+            })
         })
 
 
@@ -4400,6 +4405,20 @@ dfxStudioApp.controller("dfx_studio_deployment_controller", [ '$scope', '$mdDial
             };
         }
     };
+
+    $scope.showInstallButton = false;
+    dfxApplications.getGeneral($scope.app_name).then(function(app){
+        var phoneGapId = app.phonegap.applicationId;
+        if (phoneGapId) {
+           $scope.showInstallButton = true;
+        }
+        //dfxDeployment.getMobileAppInfo( {application:phoneGapId} ).then(function( res ){
+        //    $scope.qrCodeData = JSON.parse(res.data).install_url;
+        //    if ($scope.qrCodeData) {
+        //         $scope.showInstallButton = true;
+        //    }
+        //});
+    })
 
     $scope.navToCloud = function(ev) {
         $location.path( "/platform/cloud" );

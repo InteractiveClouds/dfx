@@ -1119,6 +1119,8 @@ dfxStudioApi.factory('dfxDeployment', [ '$http', '$q', function($http, $q) {
             params: { platform: 'android', appId: build.phoneGapAppId }
         }).then(function successCallback(response) {
             deferred.resolve( response.data );
+        },function failCallback(response) {
+            deferred.reject( response );
         });
         return deferred.promise;
     }
@@ -1131,6 +1133,8 @@ dfxStudioApi.factory('dfxDeployment', [ '$http', '$q', function($http, $q) {
             params: { appId: build.application }
         }).then(function successCallback(response) {
             deferred.resolve( response.data );
+        },function(response){
+            deferred.reject(response.error);
         });
         return deferred.promise;
     }
