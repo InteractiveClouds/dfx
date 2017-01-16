@@ -101,6 +101,11 @@
                     <md-icon class="fa fa-cloud" style="margin-left:10px;width:14px;height:14px;"></md-icon>
                     Deploy
                 </md-button>
+                <md-button ng-show="showInstallButton === true" aria-label="Studio button" class="md-raised" ng-click="getDeployedQRCode()">
+                    <md-tooltip>Install the App</md-tooltip>
+                    <md-icon class="fa fa-lg fa-qrcode" style="margin-left:10px;width:14px;height:14px;"></md-icon>
+                    Install
+                </md-button>
             </span>
         </div>
         <md-card class="md-altTheme-theme" style="width:100%;overflow:hidden; margin:0;">
@@ -150,7 +155,6 @@
                                         <td>
                                             <span ng-if="variable.waitingMessage && build.waitingMessage"><md-icon class="fa fa-spinner fa-pulse" style="font-size: 24px; color:#300000;"></md-icon></span>
                                             <span ng-if="build.status==='success' && !build.waitingMessage"><md-button ng-click="deployBuild(build, 'mobile', variable)" class="dfx-studio-table-button" aria-label="Studio button"><md-tooltip>Deploy on Phonegap Build</md-tooltip><md-icon class="fa fa-lg fa-cloud-upload" style="color:#158194;"></md-icon></md-button></span>
-                                            <span ng-if="build.deploymentVersion===variable.name"><a ng-click="getDeployedQRCode(build)" class="dfx-studio-table-button"><md-tooltip>Install the App</md-tooltip><md-icon class="fa fa-lg fa-qrcode" style="color:#158194;cursor: pointer;"></md-icon></a></span>
                                             <span ng-if="build.status==='success'"><a class="dfx-studio-table-button md-button" href="/studio/build/download?path=/{{build.tenant_id + '/' + build.platform + '/' + build.application + '_' + build.app_version + '.' + build.build_number + '/' + build.application + '_' + build.app_version + '.' + build.build_number + '.zip'}}" ng-click="getBuildFile()"><md-tooltip>Download a zip</md-tooltip><md-icon class="fa fa-download" style="color:#158194;"></md-icon></a></span>
                                         </td>
                                     </tr>
