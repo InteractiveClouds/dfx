@@ -245,6 +245,8 @@ dfxGCC.directive('dfxGccWebPanel', ['$timeout', '$compile', function($timeout, $
                         var parent_orientation = $(element).parent().attr('layout');
 
                         if (parent_orientation == 'row' ) {
+                            if (!scope.$parent_scope[scope.attributes.repeat_in.value]) { return; }
+
                             var number_of_panels = scope.$parent_scope[scope.attributes.repeat_in.value].length,
                                 total_width = scope.attributes.flex.value * number_of_panels;
 
@@ -306,6 +308,12 @@ dfxGCC.directive('dfxGccWebPanel', ['$timeout', '$compile', function($timeout, $
                     }
                 };
                 adaptRepeatableToParentOrientation();
+
+                scope.$watch('$parent_scope[attributes.repeat_in.value]', function(newValue, oldValue) {
+                    if (newValue) {
+                        adaptRepeatableToParentOrientation();
+                    }
+                }, true);
                 /* Repeatable Panel adaptation to parent layout orientation - END */
 
                 var titleString = '';
