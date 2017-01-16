@@ -24,7 +24,7 @@ html(ng-app="dfxAppRuntime")
                         if (parts.length == 2) return parts.pop().split(";").shift();
                     }
 
-                    if (!getCookie(dfx_app_token)) {
+                    if (!getCookie('dfx_app_token')) {
                         window.location.replace("login.html");
                     }
 

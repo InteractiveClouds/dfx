@@ -4375,7 +4375,10 @@ dfxStudioApp.controller("dfx_studio_deployment_controller", [ '$scope', '$mdDial
         });
     };
 
+
+
     $scope.getDeployedQRCode = function() {
+        delete $scope.grCodeDataMessage;
         $mdDialog.show({
             scope: $scope.$new(),
             controller: DialogController,
@@ -4398,9 +4401,11 @@ dfxStudioApp.controller("dfx_studio_deployment_controller", [ '$scope', '$mdDial
 
         function DialogController($scope, $mdDialog) {
             $scope.hide = function() {
+                delete $scope.grCodeDataMessage;
                 $mdDialog.hide();
             };
             $scope.cancel = function() {
+                delete $scope.grCodeDataMessage;
                 $mdDialog.cancel();
             };
         }
