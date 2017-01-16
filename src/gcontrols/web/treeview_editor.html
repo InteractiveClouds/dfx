@@ -29,7 +29,7 @@
                     </md-toolbar>
                     <md-content class="tree-structure menu-structure" layout-padding flex>
                         <script type="text/ng-template" id="treeView">
-                            <span ng-if="node.children.length>0">
+                            <span ng-if="node.children.length>0" class="dfx-menu-structure-trigger-box">
                                 <i class="fa fa-angle-down dfx-menu-structure-trigger" ng-click="toggleTreeItem($event)"></i>
                             </span>
                             <a href="#" ng-click="selectTreeItem($event, node)">{{(node.name | checkExpression) || 'no-label'}}</a>
