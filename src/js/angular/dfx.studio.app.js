@@ -4129,7 +4129,7 @@ dfxStudioApp.controller("dfx_studio_deployment_controller", [ '$scope', '$mdDial
             delete $scope.env_vars[envIndex].waitingMessage;
             dfxMessaging.showMessage('Build has been successfully deployed on deployment server');
             build.deploymentVersion = env.name;
-            build.link = $scope.host_port + '/deploy/' + $scope.tenant_id + '/' + $scope.app_name + '/' + platform + '/' + build.app_version + '.' + build.build_number + '/login.html';
+            build.link = $scope.host_port + '/deploy/' + $scope.tenant_id + '/' + $scope.app_name + '/' + platform + '/' + build.app_version + '.' + build.build_number + '/index.html';
             $scope.showInstallButton = true;
         },function (err) {
             delete $scope.builds[platform][buildIndex].waitingMessage;
