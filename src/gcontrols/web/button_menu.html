@@ -14,7 +14,7 @@
                 </div>
             </md-button>
             <button ng-click="$mdOpenMenu();" class="gc-btn-group-last md-raised md-primary {{attributes.classes.value}} md-altTheme-theme md-button {{$eval(attributes.waiting.value) ? 'dfx-core-button-wait' : ''}}" style="{{attributes.style.value}}" ng-class="$eval(attributes.dynamicClasses.value)" ng-disabled="$eval(attributes.disabled.value) || $eval(attributes.waiting.autoDisabled)" aria-label="GC Button menu trigger">
-                <md-icon class="fa fa-caret-down" style="color:inherit"></md-icon>
+                <md-icon class="fa fa-caret-down dfx-core-gc-button-icon" style="color:inherit"></md-icon>
             </button>
         </div>
         <md-menu-content width="4"></md-menu-content>
