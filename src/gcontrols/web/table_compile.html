@@ -27,9 +27,9 @@
                     <th ng-if="ATTR-EXP{{(attributes.checkOption.value !== 'none') ? 'true' : 'false'}}ATTR-ENDEXP" class="dt_checkbox"><md-checkbox class="md-primary"
                         ng-disabled="ATTR-EXP{{(attributes.disabled.value || attributes.checkOption.value ==='single') ? 'true' : 'false'}}ATTR-ENDEXP" aria-label="Select Row" ng-click="toggleSelectRows()" ng-checked="isSelectedRows()"></md-checkbox></th>
                     <th ng-repeat="col in ATTR-STATIC{{columns.value}} track by $index">
-                        <a href="javascript:void(0)" ng-click="dfxSortDatatable(col)" class="dfx-core-gc-table-header {{col.headerAlign}}">
+                        <a href="javascript:void(0)" ng-click="dfxSortDatatable(col)" class="dfx-core-gc-table-header {{col.headerAlign}}" ng-style="{'cursor': col.value !== '' ? 'pointer' : 'default'}">
                             <span>{{$eval(col.header)}}</span>
-                            <span ng-if="sortedBy.value === col.value || sortedBy.value === '-' + col.value" aria-label="{{col.isAscending}}">
+                            <span ng-if="col.value !== '' && (sortedBy.value === col.value || sortedBy.value === '-' + col.value)" aria-label="{{col.isAscending}}">
                                 <md-icon ng-if="col.isAscending === 'true'" style="padding-top: 5px" class="fa fa-arrow-down"></md-icon>
                                 <md-icon ng-if="col.isAscending === 'false'" style="padding-top: 5px" class="fa fa-arrow-up"></md-icon>
                             </span>

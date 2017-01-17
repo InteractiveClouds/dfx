@@ -4764,12 +4764,14 @@ dfxGCC.directive('dfxGccWebDatatable', ['$timeout', '$mdDialog', '$filter', '$ht
                     }
 
                     scope.dfxSortDatatable = function(col){
-                        if(col.isAscending === 'true') {
-                            col.isAscending = 'false';
-                            scope.sortedBy.value = '-' + col.value;
-                        }else{
-                            col.isAscending = 'true';
-                            scope.sortedBy.value = col.value;
+                        if(col.value !== ''){
+                            if(col.isAscending === 'true') {
+                                col.isAscending = 'false';
+                                scope.sortedBy.value = '-' + col.value;
+                            }else{
+                                col.isAscending = 'true';
+                                scope.sortedBy.value = col.value;
+                            }
                         }
                     }
 
