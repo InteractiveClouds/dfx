@@ -1256,6 +1256,16 @@ dfxGCC.directive('dfxGccWebToolbar', function($sce, $compile, $timeout) {
                                         tempPropObject.itemClick = dfxMenuItem.state.value ? 'changeState('+"'"+tempPropObject.itemIndex+"'"+', $event, '+"'"+side+"'"+', '+"'"+optionsType+"'"+');unfocusButton($event);'+dfxMenuItem.onclick : 'unfocusButton($event);'+dfxMenuItem.onclick;
                                     }
                                 }
+                            }else{
+                                tempPropObject.notState =  true;
+                                tempPropObject.isState =   false;
+                                tempPropObject.ifFaIcon =  dfxMenuItem.icon.value !=='' && dfxMenuItem.icon.type === 'fa-icon' ? true : false;
+                                tempPropObject.ifSvgIcon = dfxMenuItem.icon.value !=='' && dfxMenuItem.icon.type === 'svg-icon' ? true : false;
+                                if ( dfxMenuItem.menuItems.value.length > 0 ) {
+                                    tempPropObject.itemClick = '$mdOpenMenu();'+dfxMenuItem.onclick;
+                                } else {
+                                    tempPropObject.itemClick = 'unfocusButton($event);'+dfxMenuItem.onclick;
+                                }
                             }
                         } else if (  toolbarType==='buttons' ) {
                             scope.waitableItem = { "value": false };
