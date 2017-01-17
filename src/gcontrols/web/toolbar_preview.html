@@ -32,7 +32,7 @@
             </div>
 
             <!--Title-->
-            <div flex="{{($eval(attributes.toolbar.leftMenu.visible.value) || $eval(attributes.toolbar.rightMenu.visible.value)) ? attributes.toolbar.title.flexWidth.value : 100}}" layout="column" layout-align="center {{attributes.toolbar.title.alignment.value}}" ng-if="$eval(attributes.toolbar.title.visible.value)" style="{{attributes.toolbar.title.style.value}}" class="{{attributes.toolbar.title.classes.value}} layout-align-center layout-column" ng-class="['flex-' + ( ($eval(attributes.toolbar.leftMenu.visible.value) || $eval(attributes.toolbar.rightMenu.visible.value)) ? attributes.toolbar.title.flexWidth.value : 100 ), attributes.toolbar.title.isHtml.value ? 'toolbar_html_title' : '', $eval(attributes.toolbar.title.dynamicClasses.value)]">
+            <div flex="{{($eval(attributes.toolbar.leftMenu.visible.value) || $eval(attributes.toolbar.rightMenu.visible.value)) ? attributes.toolbar.title.flexWidth.value : 100}}" layout="column" ng-if="$eval(attributes.toolbar.title.visible.value)" style="{{attributes.toolbar.title.style.value}}" class="dfx-core-gc-toolbar-title {{attributes.toolbar.title.classes.value}} layout-column" ng-class="['flex-' + ( ($eval(attributes.toolbar.leftMenu.visible.value) || $eval(attributes.toolbar.rightMenu.visible.value)) ? attributes.toolbar.title.flexWidth.value : 100 ), attributes.toolbar.title.isHtml.value ? 'toolbar_html_title' : '', $eval(attributes.toolbar.title.dynamicClasses.value), 'layout-align-center-' + attributes.toolbar.title.alignment.value]">
                 <div ng-if="attributes.toolbar.title.isHtml.value === false">
                     <span ng-bind="$eval(attributes.toolbar.title.value)"></span>
                 </div>
