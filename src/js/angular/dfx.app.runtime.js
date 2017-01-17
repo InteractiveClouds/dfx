@@ -567,7 +567,7 @@ dfxAppRuntime.directive('dfxPageTemplate', ['$compile', '$mdSidenav', '$timeout'
             tpl_snippet += '<div layout="column" flex="{{col.width}}" data-row="{{$parent.$index}}" data-column="{{$index}}" ng-repeat="col in row.columns">';
             tpl_snippet += '<div layout="column" flex="' + flex_view + '" ng-repeat="view in col.views">';
 
-            tpl_snippet += '<div id="wrapper" dfx-view-wrapper="view.name" dfx-view-wrapper-id="view.id" flex="100" layout="column">';
+            tpl_snippet += '<div id="wrapper" dfx-view-wrapper="view.name" dfx-view-wrapper-id="view.id" layout="column" style="height:1500px;">';
             tpl_snippet += '</div>';
             tpl_snippet += '</div>';
             tpl_snippet += '</div>';

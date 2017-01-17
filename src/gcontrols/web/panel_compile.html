@@ -52,7 +52,7 @@ FRAG-IF{{attributes.repeat_in.value == ''}}
         ATTR-IF{{ng-mouseleave="attributes.onmouseleave.value"}}
         ATTR-IF{{ng-mouseup="attributes.onmouseup.value"}}>
         <div ng-if="attributes.toolbar.visible.value"><div dfx-gcc-web-toolbar></div></div>
-        <md-content id="{{component_id}}_content" flex="100" ng-hide="attributes.toolbar.collapsed.value" style="attributes.bodyStyle.value" dfx-sidenav-and-bottomsheet="{{component_id}}" layout="column">
+        <md-content id="{{component_id}}_content" flex="100" ng-hide="attributes.toolbar.collapsed.value" style="ATTR-EXP{{(!attributes.autoHeight || attributes.autoHeight.value != true) ? 'height:1500px;' : ''}}ATTR-ENDEXP attributes.bodyStyle.value" dfx-sidenav-and-bottomsheet="{{component_id}}" layout="column">
 			LAYOUT-RENDERING{{0}}
         </md-content>
     </section>
