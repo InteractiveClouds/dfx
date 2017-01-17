@@ -39,8 +39,8 @@
         </div>
 
         <!--Title-->
-        <div flex="{{(attributes.toolbar.leftMenu.visible.value!=='false' || attributes.toolbar.rightMenu.visible.value!=='false') ? attributes.toolbar.title.flexWidth.value : 100}}" layout="column" layout-align="center {{attributes.toolbar.title.alignment.value}}" ng-if="$eval(attributes.toolbar.title.visible.value)" style="{{attributes.toolbar.title.style.value}}" class="{{attributes.toolbar.title.classes.value}} layout-align-center layout-column" ng-class="['flex-' + ( (attributes.toolbar.leftMenu.visible.value!=='false' || attributes.toolbar.rightMenu.visible.value!=='false') ? attributes.toolbar.title.flexWidth.value : 100), attributes.toolbar.title.isHtml.value ? 'toolbar_html_title' : '']">
-            <div ng-if="attributes.toolbar.title.isHtml.value === false" layout="column" layout-align="center">
+        <div flex="{{(attributes.toolbar.leftMenu.visible.value!=='false' || attributes.toolbar.rightMenu.visible.value!=='false') ? attributes.toolbar.title.flexWidth.value : 100}}" layout="column" ng-if="$eval(attributes.toolbar.title.visible.value)" style="{{attributes.toolbar.title.style.value}}" class="dfx-core-gc-toolbar-title {{attributes.toolbar.title.classes.value}} layout-column" ng-class="['flex-' + ( (attributes.toolbar.leftMenu.visible.value!=='false' || attributes.toolbar.rightMenu.visible.value!=='false') ? attributes.toolbar.title.flexWidth.value : 100), attributes.toolbar.title.isHtml.value ? 'toolbar_html_title' : '', 'layout-align-center-' + attributes.toolbar.title.alignment.value]">
+            <div ng-if="attributes.toolbar.title.isHtml.value === false">
                 <span>{{attributes.toolbar.title.value | checkExpression}}</span>
             </div>
             <div ng-if="attributes.toolbar.title.isHtml.value" id="{{component_id}}_toolbar_bindingHtml" ng-bind-html="snippetTrustAsHtml(attributes.toolbar.title.content.value)" aria-label="{{component_id}}_toolbar_bindingHtml">

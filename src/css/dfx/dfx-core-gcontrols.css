@@ -17,6 +17,15 @@ md-menu-bar.dfx_toolbar_menubar {
     display: flex;
     padding: 0px;
 }
+.dfx-core-gc-toolbar-title.layout-align-center-start {
+    text-align: left;
+}
+.dfx-core-gc-toolbar-title.layout-align-center-center {
+    text-align: center;
+}
+.dfx-core-gc-toolbar-title.layout-align-center-end {
+    text-align: right;
+}
 .toolbar_html_title {
     color: #000000;
 }
