@@ -185,7 +185,7 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", dfx-ve-ctr
                     md-tab(ng-repeat="card in view_cards", md-on-select="setWorkspaceSize()", label="{{card.name}}")
                         md-content.dfx-ve-main-content-tab-content(style="padding:10px;background-color:#efefef;", layout="row", layout-align="center start")
                             div#dfx-ve-platform(layout="column", style="height:100%;", dfx-ve-platform)
-                                div(id="dfx_visual_editor_workspace_{{card.name}}", dfx-card="{{card.name}}", dfx-ve-workspace, style="overflow:auto", flex="100", layout="column")
+                                div(id="dfx_visual_editor_workspace_{{card.name}}", dfx-card="{{card.name}}", dfx-ve-workspace, style="overflow:auto;height:1500px;", flex="100", layout="column")
                 div.dfx-ve-ruler-vertical.dfx-ve-ruler.dfx-ve-hidden-element
                 div.dfx-ve-ruler-horizontal.dfx-ve-ruler.dfx-ve-hidden-element
             md-sidenav#dfx-ve-sidenav-right.md-sidenav-right.md-whiteframe-z2(md-component-id="right", md-is-locked-open="$mdMedia('gt-md')", style="overflow-y: hidden;", ng-show="property_visible")
