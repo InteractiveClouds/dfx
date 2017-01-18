@@ -245,6 +245,8 @@ dfxGCC.directive('dfxGccWebPanel', ['$timeout', '$compile', function($timeout, $
                         var parent_orientation = $(element).parent().attr('layout');
 
                         if (parent_orientation == 'row' ) {
+                            if (!scope.$parent_scope[scope.attributes.repeat_in.value]) { return; }
+
                             var number_of_panels = scope.$parent_scope[scope.attributes.repeat_in.value].length,
                                 total_width = scope.attributes.flex.value * number_of_panels;
 
@@ -306,6 +308,12 @@ dfxGCC.directive('dfxGccWebPanel', ['$timeout', '$compile', function($timeout, $
                     }
                 };
                 adaptRepeatableToParentOrientation();
+
+                scope.$watch('$parent_scope[attributes.repeat_in.value]', function(newValue, oldValue) {
+                    if (newValue) {
+                        adaptRepeatableToParentOrientation();
+                    }
+                }, true);
                 /* Repeatable Panel adaptation to parent layout orientation - END */
 
                 var titleString = '';
@@ -1247,6 +1255,16 @@ dfxGCC.directive('dfxGccWebToolbar', function($sce, $compile, $timeout) {
                                     } else {
                                         tempPropObject.itemClick = dfxMenuItem.state.value ? 'changeState('+"'"+tempPropObject.itemIndex+"'"+', $event, '+"'"+side+"'"+', '+"'"+optionsType+"'"+');unfocusButton($event);'+dfxMenuItem.onclick : 'unfocusButton($event);'+dfxMenuItem.onclick;
                                     }
+                                }
+                            }else{
+                                tempPropObject.notState =  true;
+                                tempPropObject.isState =   false;
+                                tempPropObject.ifFaIcon =  dfxMenuItem.icon.value !=='' && dfxMenuItem.icon.type === 'fa-icon' ? true : false;
+                                tempPropObject.ifSvgIcon = dfxMenuItem.icon.value !=='' && dfxMenuItem.icon.type === 'svg-icon' ? true : false;
+                                if ( dfxMenuItem.menuItems.value.length > 0 ) {
+                                    tempPropObject.itemClick = '$mdOpenMenu();'+dfxMenuItem.onclick;
+                                } else {
+                                    tempPropObject.itemClick = 'unfocusButton($event);'+dfxMenuItem.onclick;
                                 }
                             }
                         } else if (  toolbarType==='buttons' ) {
@@ -4756,12 +4774,14 @@ dfxGCC.directive('dfxGccWebDatatable', ['$timeout', '$mdDialog', '$filter', '$ht
                     }
 
                     scope.dfxSortDatatable = function(col){
-                        if(col.isAscending === 'true') {
-                            col.isAscending = 'false';
-                            scope.sortedBy.value = '-' + col.value;
-                        }else{
-                            col.isAscending = 'true';
-                            scope.sortedBy.value = col.value;
+                        if(col.value !== ''){
+                            if(col.isAscending === 'true') {
+                                col.isAscending = 'false';
+                                scope.sortedBy.value = '-' + col.value;
+                            }else{
+                                col.isAscending = 'true';
+                                scope.sortedBy.value = col.value;
+                            }
                         }
                     }
 

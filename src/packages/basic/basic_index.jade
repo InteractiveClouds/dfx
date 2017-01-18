@@ -10,7 +10,17 @@ html(ng-app="dfxAppRuntime")
         script(src="js/web/runtime_web/script.js")
         script(src="js/web/app.js")
         script(src="js/web/runtime_web/dfx.js")
-
+        script.
+            $( document ).ready(function() {
+                function getCookie(name) {
+                    var value = "; " + document.cookie;
+                    var parts = value.split("; " + name + "=");
+                    if (parts.length == 2) return parts.pop().split(";").shift();
+                }
+                if (!getCookie('dfx_app_token')){
+                    window.location.replace("login.html");
+                }
+            })
         if (loadGoogleMap)
             script(src='https://maps.googleapis.com/maps/api/js?key=#{googleMapAPIKey}')
         each resource_item in resources

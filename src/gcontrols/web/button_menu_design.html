@@ -1,7 +1,7 @@
 <md-menu-bar class="dfx-core-gc-button-menubar">
 	<md-menu md-position-mode="target-{{positionModeSide}} target" md-offset="{{positionOffsetLeft}}px 52px">
   		<div class="gc-btn-group">
-			<button ng-click="$eval(attributes.onclick.value)" class="gc-btn-group-first md-raised md-primary {{attributes.classes.value}} md-altTheme-theme md-button glyph" style="{{attributes.style.value}}" aria-label="GC Button">
+			<button ng-click="$eval(attributes.onclick.value)" class="gc-btn-group-first dfx-core-gc-button md-raised md-primary {{attributes.classes.value}} md-altTheme-theme md-button glyph" style="{{attributes.style.value}}" aria-label="GC Button">
 				<div ng-if="attributes.waiting.value !== 'true' && attributes.icon.type ==='fa-icon'" ng-style="{'display':'flex','flex-direction': attributes.icon.position === 'right' ? 'row-reverse' : 'row', 'justify-content': 'center', 'align-items':'center'}">
 					<md-icon ng-if="attributes.icon.value != ''" class="dfx-core-gc-button-icon fa {{$eval(attributes.icon.value) || 'fa-home'}} {{attributes.icon.class}}" style="font-size: {{attributes.icon.size}}px; height: {{attributes.icon.size}}px; width: {{attributes.icon.size}}px; color: inherit; {{attributes.icon.style}}"></md-icon>
 					<span ng-if="attributes.label.value!==''" class="dfx-gc-core-button-label">{{attributes.label.value | checkExpression}}</span>
