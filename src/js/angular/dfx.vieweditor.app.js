@@ -780,6 +780,8 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     };
 
     $scope.openPreview = function(event) {
+        // delete dfx_app_token cookie
+        document.cookie = 'dfx_app_token=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
         $(event.srcElement).animateCss('pulse');
 
 		var editor = $('#dfx_src_editor.CodeMirror')[0].CodeMirror;
