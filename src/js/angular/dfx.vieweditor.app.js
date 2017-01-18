@@ -488,7 +488,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
             controller: DialogController
         });
         function DialogController($scope, $mdDialog) {
-            $scope.dependencies = ['$rootScope','$scope', 'dfxApiServices', 'dfxDialog', 'dfxSidenav', 'dfxBottomSheet', 'dfxChangeCard'];
+            $scope.dependencies = ['$rootScope','$scope', 'dfxApiServices', 'dfxDialog', 'dfxSidenav', 'dfxBottomSheet', 'dfxChangeCard', 'dfxPubSub'];
             $scope.selectedDependencies = [];
             $scope.additionalDependencies = [];
 
@@ -519,7 +519,6 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
                         }
                     }
                 }
-                console.log($scope.selectedDependencies);
             }
 
             $scope.dependencyExists = function(item, list) {
@@ -2601,7 +2600,7 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                             scope.arrayElement = scope.menuItems.value;
                             scope.gcMenuItems = $("md-content.menu-structure").find('li');
                             $("md-content.menu-structure > ul > li:first-child").addClass('active');
-                            scope.parentMenuItem = $("md-content.menu-structure").find('li.active');                            
+                            scope.parentMenuItem = $("md-content.menu-structure").find('li.active');
                         }, 0);
                     },
                     controller: function(){
@@ -2652,7 +2651,7 @@ dfxViewEditorApp.directive('dfxVeMenuEditor', [ '$mdDialog', '$mdToast', '$http'
                         scope.checkMenuRootPadding = function() {
                             $timeout(function() {
                                 var root_togglers = $('.menu-structure > ul > li > span').length;
-                                
+
                                 root_togglers>0 ? $('.menu-structure > ul').css('padding-left', '16px') : $('.menu-structure > ul').css('padding-left', '0px');
                             }, 0);
                         }
@@ -3514,7 +3513,7 @@ dfxViewEditorApp.directive('dfxVeTreeEditor', [ '$mdDialog', '$mdToast', '$http'
                         scope.checkMenuRootPadding = function() {
                             $timeout(function() {
                                 var root_togglers = $('.menu-structure > ul > li > span').length;
-                                
+
                                 root_togglers>0 ? $('.menu-structure > ul').css('padding-left', '16px') : $('.menu-structure > ul').css('padding-left', '0px');
                             }, 0);
                         }

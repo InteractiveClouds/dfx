@@ -381,6 +381,111 @@ dfxPageEditorApp.controller("dfx_page_editor_controller", [ '$scope', '$rootScop
         }, 0);
     };
 
+    $scope.configureDependenciesScript = function(ev) {
+        $(ev.srcElement).animateCss('pulse');
+        var parentEl = angular.element(document.body);
+        $mdDialog.show({
+            parent: parentEl,
+            targetEvent: ev,
+            template:
+            '<md-dialog aria-label="List dialog">' +
+            '   <md-toolbar>' +
+            '       <div class="md-toolbar-tools">' +
+            '           <h2>Dependency Injection</h2>' +
+            '       </div>' +
+            '   </md-toolbar>' +
+            '   <md-dialog-content style="width:500px;min-height:400px;padding:20px">'+
+            '           <div ng-repeat="dependency in dependencies">'+
+            '               <md-checkbox ng-checked="dependencyExists(dependency, selectedDependencies)" ng-click="toggleDependency(dependency, selectedDependencies)">' +
+            '                   {{dependency}}' +
+            '               </md-checkbox>' +
+            '           </div>'+
+            '   </md-dialog-content>' +
+            '   <md-dialog-actions>' +
+            '       <md-button ng-click="saveConfigureDependenciesScriptDialog()" class="md-primary">' +
+            '           Save' +
+            '       </md-button>' +
+            '       <md-button ng-click="closeConfigureDependenciesScriptDialog()" class="md-primary">' +
+            '           Cancel' +
+            '       </md-button>' +
+            '   </md-dialog-actions>' +
+            '</md-dialog>',
+            locals: {
+                dependencies: $scope.dependencies
+            },
+            controller: DialogController
+        });
+        function DialogController($scope, $mdDialog) {
+            $scope.dependencies = ['$rootScope','$scope', 'dfxApiServices', 'dfxDialog', 'dfxSidenav', 'dfxBottomSheet', 'dfxChangeCard', 'dfxPubSub'];
+            $scope.selectedDependencies = [];
+            $scope.additionalDependencies = [];
+
+            var regexDependencies = /(controller(.*?)\[)(.*)(?=function)/;
+            var regexDependenciesArgs = /(function(.*?))(.*)(?=\{)/;
+            var editor_script = $('#dfx_pe_script_editor.CodeMirror')[0].CodeMirror;
+            var text_script = editor_script.getValue();
+
+            var m;
+
+            if ((m = regexDependencies.exec(text_script)) !== null) {
+                if (m.index === regexDependencies.lastIndex) {
+                    regexDependencies.lastIndex++;
+                }
+                var arr_dependencies = m[3].split(',');
+                for (dependency in arr_dependencies) {
+                    if (isNaN(dependency)) { continue; }
+                    if (arr_dependencies[dependency].trim() != '') {
+                        var current_dependency =
+                            arr_dependencies[dependency].substring(
+                                arr_dependencies[dependency].indexOf('\'')+1,
+                                arr_dependencies[dependency].length-1
+                            ).trim();
+                        if ($scope.dependencies.indexOf(current_dependency)>-1) {
+                            $scope.selectedDependencies.push( current_dependency );
+                        } else {
+                            $scope.additionalDependencies.push( current_dependency );
+                        }
+                    }
+                }
+            }
+
+            $scope.dependencyExists = function(item, list) {
+                return list.indexOf(item) > -1;
+            };
+
+            $scope.toggleDependency = function(item, list) {
+                var idx = list.indexOf(item);
+                if (idx > -1) {
+                    list.splice(idx, 1);
+                }
+                else {
+                    list.push(item);
+                }
+            };
+
+            $scope.saveConfigureDependenciesScriptDialog = function() {
+                var text_dependencies = '';
+                var text_dependencies_args = '';
+                $scope.selectedDependencies = $scope.selectedDependencies.concat($scope.additionalDependencies);
+                for (var i=0; i<$scope.selectedDependencies.length; i++) {
+                    text_dependencies += '\'' + $scope.selectedDependencies[i] + '\', ';
+                    text_dependencies_args += $scope.selectedDependencies[i] + ', ';
+                }
+                text_dependencies_args = text_dependencies_args.substr( 0, text_dependencies_args.length-2 );
+                var new_script = text_script.replace(regexDependencies, m[1 ] + text_dependencies);
+
+                new_script = new_script.replace( regexDependenciesArgs, 'function ( ' + text_dependencies_args + ' ) ' );
+
+                editor_script.setValue(new_script);
+                $mdDialog.hide();
+            }
+
+            $scope.closeConfigureDependenciesScriptDialog = function() {
+                $mdDialog.hide();
+            }
+        }
+    };
+
     $scope.loadPageTemplates();
     $scope.loadPageDefinition();
 }]);
