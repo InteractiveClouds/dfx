@@ -147,8 +147,8 @@ dfxStudioApp.controller("dfx_studio_controller", [ '$scope', '$rootScope', '$mdD
     $scope.tenant_id = $('#dfx-studio-main-body').attr( 'data-tenantid' );
     $scope.studio_explorer_visible = true;
     $scope.dfx_version_major   = '3';
-    $scope.dfx_version_minor   = '1';
-    $scope.dfx_version_release = '2';
+    $scope.dfx_version_minor   = '2';
+    $scope.dfx_version_release = '0';
 
     $scope.initStudio = function() {
         return '/studio/home';
