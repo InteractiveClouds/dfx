@@ -4064,7 +4064,7 @@ dfxStudioApp.controller("dfx_studio_deployment_controller", [ '$scope', '$mdDial
             for(var i = 0; i < $scope.builds[platform].length; i++){
                 $scope.builds[platform][i].logs = [];
                 //$scope.builds[platform][i].waitingMessage = false;
-                $scope.builds[platform][i].link = $scope.host_port + '/deploy/' + $scope.tenant_id + '/' + $scope.app_name + '/' + platform + '/' + $scope.builds[platform][i].app_version + '.' + $scope.builds[platform][i].build_number + '/login.html';
+                $scope.builds[platform][i].link = $scope.host_port + '/deploy/' + $scope.tenant_id + '/' + $scope.app_name + '/' + platform + '/' + $scope.builds[platform][i].app_version + '.' + $scope.builds[platform][i].build_number + '/index.html';
                 $scope.builds[platform][i].tenant_id = $scope.$parent.$parent.tenant_id;
                 if(parseInt($scope.builds[platform][i].build_number) > max){
                     max = parseInt($scope.builds[platform][i].build_number);
@@ -4083,8 +4083,7 @@ dfxStudioApp.controller("dfx_studio_deployment_controller", [ '$scope', '$mdDial
                     for(var i =0; i < $scope.builds[platform].length; i++){
                         if(($scope.builds[platform][i].app_version + '.' + $scope.builds[platform][i].build_number) === key){
                             $scope.builds[platform][i].is_deployed = true;
-                            var endpoint = $("md-select[ng-model='general.security']").find('span div').text() || 'login.html';
-                            $scope.builds[platform][i].link = $scope.host_port + "/deploy/" + $scope.tenant_id + '/' + $scope.app_name + '/' + platform + '/' + key + "/" + endpoint ;
+                            $scope.builds[platform][i].link = $scope.host_port + "/deploy/" + $scope.tenant_id + '/' + $scope.app_name + '/' + platform + '/' + key + "/index.html" ;
                         }
                     }
                 }

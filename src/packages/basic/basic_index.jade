@@ -13,11 +13,11 @@ html(ng-app="dfxAppRuntime")
         script.
             $( document ).ready(function() {
                 function getCookie(name) {
-                    var value = "; " + document.cookie;
-                    var parts = value.split("; " + name + "=");
-                    if (parts.length == 2) return parts.pop().split(";").shift();
+                        var value = "; " + document.cookie;
+                        var parts = value.split("; " + name + "=");
+                        if (parts.length == 2) return parts.pop().split(";").shift();
                 }
-                if (!getCookie('dfx_app_token')){
+                if (($('body').attr('dfx-app-security') !== 'public') && (!getCookie('dfx_app_token'))) {
                     window.location.replace("login.html");
                 }
             })
@@ -29,7 +29,7 @@ html(ng-app="dfxAppRuntime")
             - } else if ( resource_item.type == 'CSS' ) {
             link(rel="stylesheet", type="text/css", href="#{resource_item.path}", media="screen")
             - }
-    body(layout="row", ng-controller="dfx_app_controller", dfx-app="#{appname}")
+    body(layout="row", ng-controller="dfx_app_controller", dfx-app="#{appname}", dfx-app-security="#{appSecurity}")
         div(layout="row" flex style="height:100%" ng-controller="#{appname}ApplicationController")
             div(ng-controller="dfx_page_template_controller", style="width:100%", layout="column", flex)
                 div#pagefsbtn.dfx-core-web-fullscreen-btn.fa.fa-compress(ng-show='fullscreen', ng-click='toggleFullScreen()')
