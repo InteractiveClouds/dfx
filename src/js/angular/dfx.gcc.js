@@ -1,6 +1,6 @@
 var dfxGCC = angular.module('dfxGCC',['ngMaterial', 'ngMdIcons', 'ngMessages', 'ngSanitize', 'ngAnimate', 'nvd3', 'ngQuill', 'jkAngularCarousel', 'ui.knob', 'mdPickers']);
 
-dfxGCC.directive('dfxGccWebBase', ['$rootScope', '$routeParams', '$http', '$compile', '$injector', '$mdToast', '$q', '$location', 'dfxGcTemplates', function($rootScope, $routeParams, $http, $compile, $injector, $mdToast, $q, $location, dfxGcTemplates) {
+dfxGCC.directive('dfxGccWebBase', ['$rootScope', '$http', '$compile', '$injector', '$mdToast', '$q', '$location', 'dfxGcTemplates', function($rootScope, $http, $compile, $injector, $mdToast, $q, $location, dfxGcTemplates) {
     return {
         controller: function($element) {
             var base = this;
