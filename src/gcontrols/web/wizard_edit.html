@@ -23,7 +23,7 @@
                 <li class="col-md-12">
                     <span class="col-md-6" style="padding: 3px 0 0 5px">Stretching:<dfx-gc-template-locking attr_name="stretching"></dfx-gc-template-locking></span>
                     <md-input-container class="col-md-6" style="padding: 0 0 10px">
-                        <md-select aria-label="stretching" ng-model="attributes.stretching.value" ng-change="overrideAttribute('stretching');cacheAttributeOldValue({'value':'{{attributes.stretching.value}}'});cacheAttributeNewValue('stretching');">
+                        <md-select aria-label="stretching" ng-model="attributes.stretching.value" ng-change="overrideAttribute('stretching');adjustGcDesign('stretching');cacheAttributeOldValue({'value':'{{attributes.stretching.value}}'});cacheAttributeNewValue('stretching');">
                             <md-option ng-repeat="str in ['never', 'always']" ng-value="str">{{str}}</md-option>
                         </md-select>
                     </md-input-container>
@@ -90,13 +90,13 @@
                 <li class="col-md-12">
                     <span class="col-md-6">Auto Height:<dfx-gc-template-locking attr_name="autoHeight"></dfx-gc-template-locking></span>
                     <div class="col-md-6" layout="row">
-						<md-checkbox ng-model="attributes.autoHeight.value" class="md-primary" ng-change="overrideAttribute('autoHeight')" ng-focus="cacheAttributeOldValue({'name':'autoHeight'})" ng-blur="cacheAttributeNewValue('autoHeight')" aria-label="attributes.autoHeight.value"/>
+						<md-checkbox ng-model="attributes.autoHeight.value" class="md-primary" ng-change="overrideAttribute('autoHeight');adjustGcDesign('autoHeight');" ng-focus="cacheAttributeOldValue({'name':'autoHeight'})" ng-blur="cacheAttributeNewValue('autoHeight')" aria-label="attributes.autoHeight.value"/>
                     </div>
                 </li>
                 <li class="col-md-12">
                     <span class="col-md-6">Select step:<dfx-gc-template-locking attr_name="stepIndex"></dfx-gc-template-locking></span>
                     <md-input-container class="col-md-6" style="padding: 0 0 10px">
-                        <md-select aria-label="Input type:" ng-model="attributes.stepIndex.value" ng-change="overrideAttribute('stepIndex');cacheAttributeOldValue({'value':'{{attributes.stepIndex.value}}'});cacheAttributeNewValue('stepIndex');">
+                        <md-select aria-label="Input type:" ng-model="attributes.stepIndex.value" ng-change="overrideAttribute('stepIndex');adjustGcDesign('stepIndex');cacheAttributeOldValue({'value':'{{attributes.stepIndex.value}}'});cacheAttributeNewValue('stepIndex');">
                             <md-option ng-repeat="step in attributes.steps.value track by $index" value="{{$index}}">{{step.label}}</md-option>
                         </md-select>
                     </md-input-container>
