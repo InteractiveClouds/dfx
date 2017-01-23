@@ -34,17 +34,17 @@
                         <!--td ng-repeat="col in attributes.columns" class="{{col.classes}}" ng-class="{{col.dynamicClasses}}" style="{{col.style}}">{{row[col.value]}}</td-->
                         <td ng-repeat="col in attributes.columns.value" width="{{col.flex}}%">
                             <span ng-switch on="col.renderer.name">
-                                <span ng-switch-when="statictext" id="{{component_id}}_column_layout_{{$parent.$index}}_{{$index}}" dfx-gc-renderer-design="statictext" component-id="{{component_id}}" column-id="{{$index}}" class="dfx-core-gc-table-column {{col.columnAlign}}">
+                                <span ng-switch-when="statictext" id="{{component_id}}_column_layout_{{$parent.$index}}_{{$index}}" dfx-gc-renderer-design="statictext" component-id="{{component_id}}" column-id="{{$index}}" class="dfx-core-gc-table-column {{col.columnAlign}} {{component_id}}_renderer_column_{{$index}}">
                                 </span>
-                                <span ng-switch-when="html" id="{{component_id}}_column_layout_{{$parent.$index}}_{{$index}}" dfx-gc-renderer-design="html" component-id="{{component_id}}" column-id="{{$index}}" class="dfx-core-gc-table-column {{col.columnAlign}}">
+                                <span ng-switch-when="html" id="{{component_id}}_column_layout_{{$parent.$index}}_{{$index}}" dfx-gc-renderer-design="html" component-id="{{component_id}}" column-id="{{$index}}" class="dfx-core-gc-table-column {{col.columnAlign}} {{component_id}}_renderer_column_{{$index}}">
                                 </span>
-                                <span ng-switch-when="button" id="{{component_id}}_column_layout_{{$parent.$index}}_{{$index}}" dfx-gc-renderer-design="button" component-id="{{component_id}}" column-id="{{$index}}" class="dfx-core-gc-table-column {{col.columnAlign}}">
+                                <span ng-switch-when="button" id="{{component_id}}_column_layout_{{$parent.$index}}_{{$index}}" dfx-gc-renderer-design="button" component-id="{{component_id}}" column-id="{{$index}}" class="dfx-core-gc-table-column {{col.columnAlign}} {{component_id}}_renderer_column_{{$index}}">
                                 </span>
-                                <span ng-switch-when="fab" id="{{component_id}}_column_layout_{{$parent.$index}}_{{$index}}" dfx-gc-renderer-design="fab" component-id="{{component_id}}" column-id="{{$index}}" class="dfx-core-gc-table-column {{col.columnAlign}}">
+                                <span ng-switch-when="fab" id="{{component_id}}_column_layout_{{$parent.$index}}_{{$index}}" dfx-gc-renderer-design="fab" component-id="{{component_id}}" column-id="{{$index}}" class="dfx-core-gc-table-column {{col.columnAlign}} {{component_id}}_renderer_column_{{$index}}">
                                 </span>
-                                <span ng-switch-when="image" id="{{component_id}}_column_layout_{{$parent.$index}}_{{$index}}" dfx-gc-renderer-design="image" component-id="{{component_id}}" column-id="{{$index}}" class="dfx-core-gc-table-column {{col.columnAlign}}">
+                                <span ng-switch-when="image" id="{{component_id}}_column_layout_{{$parent.$index}}_{{$index}}" dfx-gc-renderer-design="image" component-id="{{component_id}}" column-id="{{$index}}" class="dfx-core-gc-table-column {{col.columnAlign}} {{component_id}}_renderer_column_{{$index}}">
                                 </span>
-                                <span ng-switch-when="rating" id="{{component_id}}_column_layout_{{$parent.$index}}_{{$index}}" dfx-gc-renderer-design="rating" component-id="{{component_id}}" column-id="{{$index}}" class="dfx-core-gc-table-column {{col.columnAlign}}">
+                                <span ng-switch-when="rating" id="{{component_id}}_column_layout_{{$parent.$index}}_{{$index}}" dfx-gc-renderer-design="rating" component-id="{{component_id}}" column-id="{{$index}}" class="dfx-core-gc-table-column {{col.columnAlign}} {{component_id}}_renderer_column_{{$index}}">
                                 </span>
                             </span>
                         </td>
