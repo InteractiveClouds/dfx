@@ -398,7 +398,12 @@ dfxAppServices.factory('dfxApiServices', [ 'dfxApiServiceObjects',  function( df
         var tenantId = parse ? parse[1] : window.localStorage.getItem('dfx_tenantid') || getCookie('X_DREAMFACE-TENANT') || window.sessionStorage.getItem('dfx_tenantid') ;
         var appname  = parse ? parse[2] : window.localStorage.getItem('dfx_appname') || getCookie('app_name') || window.sessionStorage.getItem('dfx_appname');
         var token = getCookie('dfx_app_token');
-        var url = '/app/' + appname +'/apiRoute/' + tenantId;
+        var server = window.sessionStorage.dfx_server || window.location.origin;
+        if (server) {
+            var url = server + '/app/' + appname + '/apiRoute/' + tenantId;
+        } else {
+            var url = '/app/' + appname + '/apiRoute/' + tenantId;
+        }
 
         if (cache) req_data.cache = cache;
         return requestAPIRoute({
@@ -424,7 +429,12 @@ dfxAppServices.factory('dfxApiServices', [ 'dfxApiServiceObjects',  function( df
         var tenantId = parse ? parse[1] : window.localStorage.getItem('dfx_tenantid') || getCookie('X_DREAMFACE-TENANT') || window.sessionStorage.getItem('dfx_tenantid') ;
         var appname  = parse ? parse[2] : window.localStorage.getItem('dfx_appname') || getCookie('app_name') || window.sessionStorage.getItem('dfx_appname');
         var token = getCookie('dfx_app_token');
-        var url = '/app/' + appname +'/apiRoute/' + tenantId;
+        var server = window.sessionStorage.dfx_server || window.location.origin;
+        if (server) {
+            var url = server + '/app/' + appname + '/apiRoute/' + tenantId;
+        } else {
+            var url = '/app/' + appname + '/apiRoute/' + tenantId;
+        }
 
         return requestAPIRoute({
             url:url,
