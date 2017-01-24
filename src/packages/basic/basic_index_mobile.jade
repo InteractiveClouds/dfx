@@ -17,16 +17,6 @@ html(ng-app="dfxAppRuntime")
                 try {
                     $.support.cors = true;
                     $.mobile.allowCrossDomainPages = true;
-
-                    function getCookie(name) {
-                        var value = "; " + document.cookie;
-                        var parts = value.split("; " + name + "=");
-                        if (parts.length == 2) return parts.pop().split(";").shift();
-                    }
-                    if (($('body').attr('dfx-app-security') !== 'public') && (!getCookie('dfx_app_token'))) {
-                        window.location.replace("login.html");
-                    }
-
                 } catch (e) {
                     alert('catch failed');
                 }

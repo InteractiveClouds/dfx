@@ -14,8 +14,9 @@
                                      layout="{{col.orientation.value}}"
                                      layout-align="{{col.orientation.value ==='row' ? col.halignment.value + ' ' + col.valignment.value : col.valignment.value + ' ' + col.halignment.value}}"
                                      gc-container="layout_{{$parent.$parent.$index}}_row_{{$parent.$index}}_column_{{$index}}" gc-parent="{{component_id}}"
-                                     style="overflow:auto;{{col.style.value}};flex-wrap:{{col.orientation.value ==='row' ? 'wrap' : 'nowrap'}}"
-                                     class="ui-placeholder dfx_visual_editor_droppable" ng-class="col.classes.value" dfx-gc-web-droppable>
+                                     class="ui-placeholder dfx_visual_editor_droppable gc-role-internal"
+                                     style="overflow:auto;{{col.style.value}};height:550px;flex-wrap:{{col.orientation.value ==='row' ? 'wrap' : 'nowrap'}}"
+                                     ng-class="col.classes.value" dfx-gc-web-droppable>
                                 </div>
                             </div>
                         </div>
