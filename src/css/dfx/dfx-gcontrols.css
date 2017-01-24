@@ -533,8 +533,8 @@ md-radio-button > div.md-label{
 }
 
 /* Datatable */
-.dt_toolbar {    
-    padding: 0 24px;    
+.dt_toolbar {
+    padding: 0 24px;
     box-sizing: border-box;
 }
 .dt_toolbar, .dt_title_block {
@@ -547,7 +547,7 @@ md-radio-button > div.md-label{
 }
 .dt_title_block {
     min-height: 83px;
-    flex-grow: 1;    
+    flex-grow: 1;
 }
 .dt_title {
     font-size: 20px;
@@ -556,7 +556,7 @@ md-radio-button > div.md-label{
     margin-right: 24px;
 }
 .dt_filter_block {
-    margin-left: auto !important;  
+    margin-left: auto !important;
     padding-right: 24px;
     min-width: 200px;
 }
@@ -727,8 +727,8 @@ form > md-tabs > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper{
     padding:8px 8px 2px 8px;
 }
 .expression-inner {
-    display: flex; 
-    flex-direction: column; 
+    display: flex;
+    flex-direction: column;
     align-items: stretch;
     margin-bottom:8px;
 }
@@ -758,7 +758,7 @@ textarea.expression-textarea, textarea.expression-textarea:focus {
     color: #ffffff;
     padding: 7px 16px;
 }
-.expression-variables > section ul.scope-variables { 
+.expression-variables > section ul.scope-variables {
     padding:0;
     margin:0 0 0 8px;
     list-style:none;
@@ -797,7 +797,7 @@ textarea.expression-textarea, textarea.expression-textarea:focus {
 }
 .second-dialog-inner {
     position:relative;
-    z-index:0;      
+    z-index:0;
     height: 100%;
     background:white;
     border-radius:4px;
@@ -827,7 +827,7 @@ textarea.expression-textarea, textarea.expression-textarea:focus {
 .second-dialog-inner .menu-icon-item md-icon {
     margin-top:2px;
     height: 17px;
-    width: 20px;    
+    width: 20px;
 }
 .second-dialog-inner .md-actions {
     position:absolute;
@@ -856,12 +856,12 @@ md-menu-item .md-button md-icon {
 }
 md-menu-item button small {
   font-size: 12px;
-  color: white;  
-  line-height: 15px;  
-  padding: 5px; 
-  display: flex;  
-  justify-content: center;  
-  align-self: center;  
+  color: white;
+  line-height: 15px;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-self: center;
   width: 24px;
   height: 24px;
   margin: 0 0 0 8px;
@@ -880,32 +880,6 @@ md-menu button small {
     background: #707070;
     border-radius: 50%;
     text-align: center;
-}
-md-content.menu-structure.options-editor, md-content.tree-structure.options-editor, md-content.tree-structure {
-    max-height: 260px;
-    overflow-y: auto;
-}
-md-content.menu-structure ul, md-content.tree-structure ul, md-content.actions-structure ul {
-  padding: 0px;
-  list-style: none;
-}
-md-content.menu-structure ul ul, md-content.tree-structure ul ul, md-content.actions-structure ul ul {
-    padding-left: 20px;
-}
-md-content.menu-structure ul li a, md-content.tree-structure ul li a, md-content.actions-structure ul li a {
-    padding: 0px 10px;
-    text-decoration: none;
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-md-content.menu-structure ul li a:hover, md-content.tree-structure ul li a:hover, md-content.actions-structure ul li a:hover {
-    background:rgba(236,236,236,0.5);
-}
-md-content.menu-structure ul li.active > a, md-content.tree-structure ul li.active > a, md-content.actions-structure ul li.active > a {
-    font-weight: 700;
-    background:#ECECEC;
 }
 
 /* Toolbar */
@@ -927,7 +901,7 @@ md-fab-actions[aria-hidden="true"] {
     opacity: 0 !important;
 }
 
-#dfx-view-editor-body .md-select-menu-container { 
+#dfx-view-editor-body .md-select-menu-container {
     min-width: auto !important;
     margin: 0 0 0 20px;
 }
@@ -1023,7 +997,7 @@ md-tooltip.md-show div.md-content {
 .gc-btn-group button.gc-btn-group-last md-icon {
     color:inherit;
 }
-.gc-btn-group button.gc-btn-group-last:not(.dfx-core-button-wait):hover:before { 
+.gc-btn-group button.gc-btn-group-last:not(.dfx-core-button-wait):hover:before {
     background: rgba(0,0,0,0.1);
     /*background-color:#025aa5!important*/
 }
@@ -1137,6 +1111,9 @@ button[dfx-je-class="dfx-je-button"][dfx-icon="keyboard_arrow_right"]{
     outline: none !important;
 }
 div[gc-role="control"] {
+    max-height: 100% !important;
+}
+.gc-role-internal {
     max-height: 100% !important;
 }
 ng-md-icon {

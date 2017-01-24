@@ -1,80 +1,108 @@
 <div layout="column" layout-padding>
-	<h2 class="md-title">Release Notes for DreamFace</h2>
-	<h3 class="md-subhead">Version {{dfx_version_major}}.{{dfx_version_minor}}{{dfx_version_release}}</h3>
-	<md-content>
-		<p class="md-body-2">In this topic:</p>
-		<ul>
-			<li>What's New?</li>
-			<li>What's coming?</li>
-			<li>Known issues</li>
-		</ul>
-		<p class="md-body-2">What's New?</p>
-		<p class="md-body-1">This version contains major fixes. The list is displayed below:</p>
-		<ul>
-			<li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-660'>DREAM-660</a>] -         GC Slider: Is not accepting quotes system, always want to see ‘number’.
-			</li>
-			<li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-693'>DREAM-693</a>] -         View error: js console error
-			</li>
-			<li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-711'>DREAM-711</a>] -         Create a new view, enter the name, etc. and hit ENTER (with the keyboard) … It doesn’t work… we agreed that all forms should have a default action
-			</li>
-			<li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-712'>DREAM-712</a>] -         Undo system to fix
-			</li>
-			<li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-713'>DREAM-713</a>] -         Icons to take actions in API Service Object (after you list the API’s) do not show… icons are there but style is not ok
-			</li>
-			<li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-720'>DREAM-720</a>] -         vPolicies TypeError: scope.dfxCollapsible.value.push is not a function
-			</li>
-			<li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-729'>DREAM-729</a>] -         Bluemix Router: cancel subscription code for old server&#39;s tenants
-			</li>
-			<li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-736'>DREAM-736</a>] -         GC Carousel fixes
-			</li>
-			<li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-737'>DREAM-737</a>] -         GC List
-			</li>
-			<li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-740'>DREAM-740</a>] -         Datatable&#39;s Column Fix
-			</li>
-			<li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-741'>DREAM-741</a>] -         Repeatable Panels Fix
-			</li>
-			<li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-771'>DREAM-771</a>] -         Input GC event not working
-			</li>
-			<li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-772'>DREAM-772</a>] -         CSS problems on DatePicker GC
-			</li>
-			<li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-773'>DREAM-773</a>] -         Disable/enable does not work on checkbox GC
-			</li>
-			<li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-782'>DREAM-782</a>] -         Cannot compile view with GC Tab containing more than 2 tabs
-			</li>
-		</ul>
-		<p class="md-body-1">New features:</p>
-		<ul>
-			<li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-732'>DREAM-732</a>] -         Application Package (download an app package from the build page)
-			</li>
-			<li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-764'>DREAM-764</a>] -         GC Treeview Samples Improvements
-			</li>
-			<li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-765'>DREAM-765</a>] -         GC Input Samples Improvements
-			</li>
-			<li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-766'>DREAM-766</a>] -         GC Datepicker Samples Improvements
-			</li>
-			<li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-767'>DREAM-767</a>] -         GC Select Samples Improvements
-			</li>
-		</ul>
-		<p class="md-body-1">Enhancements:</p>
-		<ul>
-			<li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-700'>DREAM-700</a>] -         Add new login/header/footer template for Mobile app
-			</li>
-			<li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-726'>DREAM-726</a>] -         Review GC default JSON (ex: button adds default unnecessary nodes)
-			</li>
-			<li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-727'>DREAM-727</a>] -         Review all studio screens and fix UI issues (messages, icons, Enter key, bad colors, broken links, etc.)
-			</li>
-			<li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-728'>DREAM-728</a>] -         Change thumbnails in Samples
-			</li>
-			<li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-730'>DREAM-730</a>] -         DreamFace.io update to take new compiled version of Views
-			</li>
-			<li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-733'>DREAM-733</a>] -         Use CTRL-S to save the current view in View Editor
-			</li>
-			<li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-734'>DREAM-734</a>] -         Browser Support warning page
-			</li>
-			<li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-745'>DREAM-745</a>] -         Study Router code and Move/Copy Router to Bluemix/DFX Server
-			</li>
-			<li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-748'>DREAM-748</a>] -         How to deploy a Sample View documentation
-			</li>
-		</ul>
-	</md-content>
+    <h2 class="md-title">Release Notes for DreamFace</h2>
+    <h3 class="md-subhead">Version {{dfx_version_major}}.{{dfx_version_minor}}{{dfx_version_release}}</h3>
+    <md-content>
+        <p class="md-body-2">In this topic:</p>
+        <ul>
+            <li>What's New?</li>
+            <li>What's coming?</li>
+            <li>Known issues</li>
+        </ul>
+        <p class="md-body-2">What's New?</p>
+        <p class="md-body-1">This version contains major fixes. The list is displayed below:</p>
+        <ul>
+            <li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-916'>DREAM-916</a>] -         Repeatable panel in a column with layout row displays as column
+            </li>
+            <li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-918'>DREAM-918</a>] -         Datatable Sorting System Fix
+            </li>
+            <li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-740'>DREAM-740</a>] -         Datatable&#39;s Column Fix
+            </li>
+            <li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-800'>DREAM-800</a>] -         Textarea/Radio Sample Elements Display
+            </li>
+            <li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-801'>DREAM-801</a>] -         Slider Sample Buttons Fix
+            </li>
+            <li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-803'>DREAM-803</a>] -         Progress bar Sample Preview Fix
+            </li>
+            <li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-804'>DREAM-804</a>] -         Rating Sample Preview Fix
+            </li>
+            <li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-805'>DREAM-805</a>] -         Chips Sample Preview Fix
+            </li>
+            <li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-809'>DREAM-809</a>] -         Mobile Preview Drawing Fix
+            </li>
+            <li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-810'>DREAM-810</a>] -         Toolbar Icon bar Fix
+            </li>
+            <li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-812'>DREAM-812</a>] -         Page Routing Errors Fix
+            </li>
+            <li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-816'>DREAM-816</a>] -         Button Using &#39;% Sizing&#39; Fix
+            </li>
+            <li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-826'>DREAM-826</a>] -         GC Sample Layout Properties Fix
+            </li>
+            <li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-829'>DREAM-829</a>] -         Dialog Box Text Width Fix
+            </li>
+            <li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-843'>DREAM-843</a>] -         Review the Bluemix User Security
+            </li>
+            <li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-844'>DREAM-844</a>] -         Panel Auto Height does not work
+            </li>
+            <li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-846'>DREAM-846</a>] -         App Icon Fix
+            </li>
+            <li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-854'>DREAM-854</a>] -         Navigate to the same Page or an unexisting page breaks UI-routing
+            </li>
+            <li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-855'>DREAM-855</a>] -         Error Page Refactoring
+            </li>
+            <li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-857'>DREAM-857</a>] -         Default template for mobile apps must be basic_mobile
+            </li>
+            <li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-861'>DREAM-861</a>] -         Review DFX platform install script
+            </li>
+            <li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-869'>DREAM-869</a>] -         Unable to access Manage Dependencies and Code Assistant from the View Editor
+            </li>
+            <li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-871'>DREAM-871</a>] -         Testing view for the first time
+            </li>
+            <li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-872'>DREAM-872</a>] -         DT without binding problem
+            </li>
+            <li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-873'>DREAM-873</a>] -          Refactoring of Rebuild Cache Function
+            </li>
+            <li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-883'>DREAM-883</a>] -         GC StaticText: CSS style is not applied at runtime
+            </li>
+            <li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-885'>DREAM-885</a>] -         Repeatable Panels: Multiple problems
+            </li>
+            <li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-892'>DREAM-892</a>] -         GC Tabs header disappear when entering form elements
+            </li>
+        </ul>
+        <p class="md-body-1">New features:</p>
+        <ul>
+            <li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-776'>DREAM-776</a>] -         Deployment: define environment variables using data dictionary structure
+            </li>
+            <li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-840'>DREAM-840</a>] -         Environment Definition Enhancements
+            </li>
+        </ul>
+        <p class="md-body-1">Enhancements:</p>
+        <ul>
+            <li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-836'>DREAM-836</a>] -         Form Entry Sample
+            </li>
+            <li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-880'>DREAM-880</a>] -         GC List Item Template
+            </li>
+            <li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-890'>DREAM-890</a>] -         Import/Export partial or complete application
+            </li>
+            <li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-891'>DREAM-891</a>] -         GC Datatable: align columns
+            </li>
+            <li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-896'>DREAM-896</a>] -         GC Panel with Form property
+            </li>
+            <li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-897'>DREAM-897</a>] -         Pub/Sub within Page vs within App
+            </li>
+            <li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-898'>DREAM-898</a>] -         Re-check Bluemix deployment
+            </li>
+            <li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-915'>DREAM-915</a>] -         Improve AuthRequest  for runtime applications
+            </li>
+            <li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-917'>DREAM-917</a>] -         Decouple Application Controller in 2 for Mobile and Web
+            </li>
+            <li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-925'>DREAM-925</a>] -         Consistency between Studio List &amp; Trees
+            </li>
+            <li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-926'>DREAM-926</a>] -         Graphical Controls Reference review/completion
+            </li>
+            <li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-927'>DREAM-927</a>] -         DreamFace Developer&#39;s guide review/completion
+            </li>
+            <li>[<a href='https://interactive-clouds.atlassian.net/browse/DREAM-928'>DREAM-928</a>] -         DreamFace Installation guide
+            </li>
+        </ul>
+    </md-content>
 </div>

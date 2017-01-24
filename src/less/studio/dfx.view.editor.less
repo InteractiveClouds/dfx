@@ -187,6 +187,11 @@ md-toast.md-error-toast-theme div {
   width: 400px;
 }
 
+.dfx-ve-property-title-level-1-text {
+  display: inline-block;
+  width: 33%;
+}
+
 .dfx-ve-property-title-level-2 {
   width: 410px!important;
   border-left: 1px #6b6a6a solid;
@@ -571,6 +576,25 @@ div[gc-type="panel"] > .dfx-ve-gc-handle-duplicate {
   margin-right: 0px;
   margin-top: 0px;
 }
+.dfx-ve-gc-handle-template {
+  left: 0;
+  bottom: 0;
+  position: absolute;
+  z-index: 10;
+  width: 24px;
+  height: 24px;
+  margin-left: -5px;
+  margin-bottom: -5px;
+  border-radius: 50%;
+  background: #e1e1e1;
+  color: #7B7B7B;
+  display:none;
+}
+div[gc-type="panel"] > .dfx-ve-gc-handle-template {
+  margin-left: 0px;
+  margin-bottom: 0px;
+}
+
 .dfx-ve-gc-handle > i {
   font-size: 14px;
   padding: 4px 5px;
@@ -582,6 +606,11 @@ div[gc-type="panel"] > .dfx-ve-gc-handle-duplicate {
 }
 
 .dfx-ve-gc-handle-duplicate > i {
+  font-size: 14px;
+  padding: 4px 6px;
+}
+
+.dfx-ve-gc-handle-template > i {
   font-size: 14px;
   padding: 4px 6px;
 }
@@ -602,6 +631,10 @@ div[gc-type="panel"] > .dfx-ve-gc-handle-duplicate {
 }
 
 .dfx-ve-gc-handle-container:hover > .dfx-ve-gc-handle-remove {
+  display: block !important;
+}
+
+.dfx-ve-gc-handle-container:hover > .dfx-ve-gc-handle-template {
   display: block !important;
 }
 
@@ -1176,6 +1209,104 @@ md-content#dfx-ve-main-content > md-tabs {
   }
 }
 
+/*view editor workspace ruler*/
+#dfx-ve-main-content-ruler {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0 9px;
+    background-color: #ccc;
+    color: #777;
+    font-size: 9pt;
+    height: 27px;
+    line-height: 27px;
+}
+
+/*view editor settings menu*/
+.dfx-ve-hidden-element {
+    display: none!important;
+}
+
+.dfx-ve-floating-panel-header {
+    font-weight: bold;
+    padding: 10px;
+    border: 1px #6b6a6a solid;
+    background: #4a4a4a;
+    color: #fff;
+    cursor: move;
+}
+
+.dfx-ve-floating-panel {
+    position: fixed!important;
+    width: 400px;
+    height: 300px;
+    top: 90px;
+    z-index: 2!important;
+}
+
+.dfx-ve-floating-palette-panel {
+    left: 20px;
+    right: auto;
+}
+
+.dfx-ve-floating-property-panel {
+    left: auto;
+    right: 20px;
+}
+
+.dfx-ve-floating-gc-templates-panel {
+    left: auto;
+    right: 20px;
+}
+
+.dfx-ve-floating-collapsed-panel {
+    height: auto;
+    bottom: auto!important;
+}
+
+.dfx-ve-floating-panel-collapser {
+    position: absolute;
+    top: 10px;
+    right: 30px;
+    cursor: pointer;
+}
+
+.dfx-ve-floating-panel-closer {
+    position: absolute;
+    top: 9px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.dfx-ve-floating-panel-detacher {
+    position: absolute;
+    top: 10px;
+    right: 50px;
+    cursor: pointer;
+}
+
+.dfx-ve-ruler {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1!important;
+}
+
+.dfx-ve-ruler-vertical {
+    width: 20px;
+    height: 100%;
+    background: url('/images/dfx_ruler_vertical.png') no-repeat 0 58px;
+}
+
+.dfx-ve-ruler-horizontal {
+    width: 100%;
+    height: 20px;
+    left: -1px;
+    top: 58px;
+    background: url('/images/dfx_ruler_horizontal.png') no-repeat 0 0;
+}
+
 /*view editor tabs gc*/
 md-tabs[dfx-gc-tabs-design] > md-tabs-content-wrapper {
   top: 0 !important;
@@ -1217,7 +1348,7 @@ md-radio-group.dfx-ve-options-editor-radio-group {
   margin-left: 16px;
   md-radio-button.dfx-ve-options-editor-radio-button {
     display: inline-block;
-    margin: 20px 16px 16px 0px;
+    margin: 12px 16px 20px 0px;
     text-transform: uppercase;
     &>div.md-container {
       margin-top: 1px;
@@ -1227,7 +1358,7 @@ md-radio-group.dfx-ve-options-editor-radio-group {
 
 /* Menu Editor Dialog Radiobuttons */
 md-radio-group.dfx-ve-menu-editor-radio-group {
-  margin-left: 8px;
+  margin-left: 16px;
   md-radio-button.dfx-ve-menu-editor-radio-button {
     display: inline-block;
     margin: 12px 16px 20px 0px;
@@ -1297,4 +1428,130 @@ md-radio-group.dfx-ve-menu-editor-radio-group {
     width:0px;
     height:0px;
   }
+}
+
+/* DFX container with multiple options */
+div.dfx-ve-multiple-options-container {
+  padding-left:0px;
+  display: flex;
+  align-items: center;
+  height: 24px;
+  padding-left: 0px;
+  padding-right: 0px;
+  md-checkbox {
+    margin: 0px;
+  }
+}
+
+/* DFX edit button */
+.dfx-ve-content-edit-button {
+  font-size:12px;
+  color:#223957;
+  text-decoration: none !important;
+  span {
+    display: flex;
+    align-items: center;
+    md-icon {
+      font-size:14px;
+      color:inherit;
+      margin-bottom: 0px;
+    }
+  }
+}
+
+/* GC Templates */
+.dfx-ve-gc-template-draggable-instance {
+  color: #fff;
+  font-size: 13px;
+  line-height:20px;
+  display: inline-block;
+  vertical-align: middle;
+  min-width: 140px;
+  width: 140px;
+  margin-top:8px;
+  margin-right:10px;
+  padding:5px!important;
+  border: 1px solid gray;
+  z-index: 10;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: move;
+}
+
+.dfx-ve-gc-template-draggable-instance i {
+    margin-right:5px;
+    color: gray!important;
+}
+
+.dfx-ve-gc-templates-handle {
+  left: auto;
+  right: 16px;
+  top: 0;
+  position: absolute;
+  z-index: 10;
+  width: 20px;
+  height: 20px;
+  margin-left: -5px;
+  margin-top: -5px;
+  border-radius: 50%;
+  background: #e1e1e1;
+  color: #7B7B7B;
+  display:none;
+}
+.dfx-ve-palette-icon-li:hover .dfx-ve-gc-templates-handle {
+  display: block;
+}
+
+.dfx-ve-gc-templates-locking-menuicon {
+	cursor: pointer;
+	margin-left: 10px;
+}
+.dfx-ve-gc-templates-locking-popmenu {
+	position: absolute;
+  z-index: 2000;
+  width: 150px;
+  min-height: 100px;
+  padding: 5px;
+  cursor: pointer;
+  background: #ffffff;
+  a, button {
+    color: #323232;
+    line-height: 16px;
+    padding-top: 0px!important;
+  }
+  md-icon {
+    text-align: center;
+    height: 15px;
+    min-height: 15px;
+  }
+}
+
+/* GC Templates pop menu */
+.dfx-ve-palette-gc-templates-pop-menu {
+    top: -10px;
+    left: -9px;
+    position: relative;
+    color: #fff;
+    border-right: 1px solid #6b6a6a;
+    height: 100%;
+    overflow-y: auto;
+}
+
+#dfx-ve-sidenav-gc-templates-content {
+    background: #383838;
+    height: 100%;
+    overflow-y: visible;
+}
+
+#dfx-ve-gc-template-draggable-instances {
+    color: #fff;
+    height: 100%;
+    overflow-y: auto;
+}
+
+/* GC Charts pop menu */
+.dfx-ve-gc-charts-pop-menu {
+    margin-left:-15px;
+    margin-right:24px;
 }

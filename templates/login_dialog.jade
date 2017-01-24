@@ -66,11 +66,10 @@ html
                                     label Password
                                     input.text2-font-family#password(type="password", autofocus=(userid ? true : undefined), name="password" style="font-size:18px;")
                             div.layout-row.layout-align-space-between-center
-                                div
+                                div(ng-show="false")
                                     md-checkbox.md-primary.text2-font-family(style="margin:0;font-size:13px;color:#383838") Stay Signed In
-                                div
+                                div(ng-show="false")
                                     a.text2-font-family(href="#" style="font-size:13px;color:#1BC2E8;") Forgot Password?
                             div.layout-row.layout-align-end-center(style="margin-top:10px;")
                                 div
                                     button.md-button(id="sign-in-button" onclick="consoleLogin()" style="background: #383838;color: white;width:130px;margin:10px 0 0 0;") Sign in
-

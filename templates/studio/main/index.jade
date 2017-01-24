@@ -164,11 +164,29 @@ html
                                                                     li
                                                                         a(href="", ng-click="loadStudioView(application.name + '/configuration/users')") Users and Roles
                                                                     li
+                                                                        a(href="", ng-click="loadStudioView(application.name + '/configuration/data_dictionary')") Data Dictionary
+                                                                    li
                                                                         a(href="", ng-click="loadStudioView(application.name + '/configuration/personalization')") Personalization
                                                             li
                                                                 input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="root-components-{{$index}}")
                                                                 label(for="root-components-{{$index}}") Develop
                                                                 ul.dfx-studio-explorer-treeview-content
+                                                                    li
+                                                                        input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="app-scripts-{{$index}}")
+                                                                        label(for="app-scripts-{{$index}}") Application
+                                                                        ul.dfx-studio-explorer-treeview-content
+                                                                            li
+                                                                                input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="app-scripts-web-{{$index}}")
+                                                                                label(for="app-scripts-web-{{$index}}") Desktop
+                                                                                ul.dfx-studio-explorer-treeview-content
+                                                                                    li
+                                                                                        a(href="", ng-click="loadStudioView(application.name + '/scripts/web/controller')") Controller
+                                                                            li
+                                                                                input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="app-scripts-mobile-{{$index}}")
+                                                                                label(for="app-scripts-mobile-{{$index}}") Mobile
+                                                                                ul.dfx-studio-explorer-treeview-content
+                                                                                    li
+                                                                                        a(href="", ng-click="loadStudioView(application.name + '/scripts/mobile/controller')") Controller
                                                                     li
                                                                         input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="root-pages-{{$index}}")
                                                                         label.dfx-studio-explorer-treeview-menuicon-label(for="root-pages-{{$index}}") Pages
@@ -383,7 +401,7 @@ html
                                                                 ul.dfx-studio-explorer-treeview-content
                                                                     li
                                                                         a(href="", ng-click="loadStudioView(application.name + '/configuration/deployment')") Builds & Deployment
-                                            li
+                                            li(ng-show="false")
                                                 input.dfx-studio-explorer-treeview-button(type="checkbox", checked, id="shared-cat")
                                                 label(for="shared-cat") Shared Catalog
                                                 ul.dfx-studio-explorer-treeview-content

@@ -69,6 +69,9 @@ html(ng-app="dfx_preview_app")
                     - var dyn_res = dyn_fn({ "widget": wclass.definition, "wid": "abc", "appname": appname, "tenantid": tenantid})
                     | !{dyn_res}
                 - } else if (wclass.definition.wtype=='visual') {
-                    div#dfx_view_preview_main_container(ng-controller="#{widgetname}Controller", layout="row", layout-align="center start", style="height:100%;")
+                    div#dfx_view_preview_main_container(ng-if="platform=='web'", ng-controller="#{widgetname}Controller", layout="row", layout-align="center start", style="height:100%;")
                         div#dfx_view_preview_container.animated(dfx-view-preview-compiled="#{widgetname}", dfx-ve-platform="#{platform}", ng-controller="dfx_view_controller", dfx-view-card="default", style="height:100%;")
+                    div#dfx_view_preview_main_container(ng-if="platform=='mobile'", ng-controller="#{widgetname}Controller", layout="row", layout-align="center start", style="height:100%;")
+                        div(style="overflow:hidden;")
+                            div#dfx_view_preview_container.animated(dfx-view-preview-compiled="#{widgetname}", dfx-ve-platform="#{platform}", ng-controller="dfx_view_controller", dfx-view-card="default", style="height:100%;")
                 - }

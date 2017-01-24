@@ -16,10 +16,14 @@
                 <tr>
                     <th ng-if="attributes.checkOption.value !== 'none'" class="dt_checkbox"><md-checkbox class="md-primary" aria-label="Select Row" ng-click="toggleSelectRows()" ng-checked="isSelectedRows()"></md-checkbox></th>
                     <th ng-repeat="col in attributes.columns.value track by $index">
-                        <a ng-click="changeIndexAndSortDir($index)" href="#" style="text-decoration: none;">
-                            <span ng-if="attributes.sortedBy.value === col.value && col.isNumeric ==='true'"><md-icon ng-if="attributes.columns.value[$index].isAscending === 'false'" style="padding-top: 5px" class="fa fa-arrow-down"></md-icon><md-icon ng-if="attributes.columns.value[$index].isAscending === 'true'" style="padding-top: 5px" class="fa fa-arrow-up"></md-icon></span>
+                        <a href="javascript:void(0)" ng-click="changeIndexAndSortDir($index)" class="dfx-core-gc-table-header {{col.headerAlign}}">
                             <span>{{col.header | checkExpression}}</span>
-                            <span ng-if="attributes.sortedBy.value === col.value && col.isNumeric ==='false'"><md-icon ng-if="attributes.columns.value[$index].isAscending === 'false'" style="padding-top: 5px" class="fa fa-arrow-down"></md-icon><md-icon ng-if="attributes.columns.value[$index].isAscending === 'true'" style="padding-top: 5px" class="fa fa-arrow-up"></md-icon></span>
+                            <span ng-if="attributes.sortedBy.value === col.value">
+                                <md-icon ng-if="attributes.columns.value[$index].isAscending === 'false'" class="fa fa-arrow-down">
+                                </md-icon>
+                                <md-icon ng-if="attributes.columns.value[$index].isAscending === 'true'" class="fa fa-arrow-up">
+                                </md-icon>
+                            </span>
                         </a>
                     </th>
                 </tr>
@@ -30,17 +34,17 @@
                         <!--td ng-repeat="col in attributes.columns" class="{{col.classes}}" ng-class="{{col.dynamicClasses}}" style="{{col.style}}">{{row[col.value]}}</td-->
                         <td ng-repeat="col in attributes.columns.value" width="{{col.flex}}%">
                             <span ng-switch on="col.renderer.name">
-                                <span ng-switch-when="statictext" id="{{component_id}}_column_layout_{{$parent.$index}}_{{$index}}" dfx-gc-renderer-design="statictext" component-id="{{component_id}}" column-id="{{$index}}">
+                                <span ng-switch-when="statictext" id="{{component_id}}_column_layout_{{$parent.$index}}_{{$index}}" dfx-gc-renderer-design="statictext" component-id="{{component_id}}" column-id="{{$index}}" class="dfx-core-gc-table-column {{col.columnAlign}} {{component_id}}_renderer_column_{{$index}}">
                                 </span>
-                                <span ng-switch-when="html" id="{{component_id}}_column_layout_{{$parent.$index}}_{{$index}}" dfx-gc-renderer-design="html" component-id="{{component_id}}" column-id="{{$index}}">
+                                <span ng-switch-when="html" id="{{component_id}}_column_layout_{{$parent.$index}}_{{$index}}" dfx-gc-renderer-design="html" component-id="{{component_id}}" column-id="{{$index}}" class="dfx-core-gc-table-column {{col.columnAlign}} {{component_id}}_renderer_column_{{$index}}">
                                 </span>
-                                <span ng-switch-when="button" id="{{component_id}}_column_layout_{{$parent.$index}}_{{$index}}" dfx-gc-renderer-design="button" component-id="{{component_id}}" column-id="{{$index}}">
+                                <span ng-switch-when="button" id="{{component_id}}_column_layout_{{$parent.$index}}_{{$index}}" dfx-gc-renderer-design="button" component-id="{{component_id}}" column-id="{{$index}}" class="dfx-core-gc-table-column {{col.columnAlign}} {{component_id}}_renderer_column_{{$index}}">
                                 </span>
-                                <span ng-switch-when="fab" id="{{component_id}}_column_layout_{{$parent.$index}}_{{$index}}" dfx-gc-renderer-design="fab" component-id="{{component_id}}" column-id="{{$index}}">
+                                <span ng-switch-when="fab" id="{{component_id}}_column_layout_{{$parent.$index}}_{{$index}}" dfx-gc-renderer-design="fab" component-id="{{component_id}}" column-id="{{$index}}" class="dfx-core-gc-table-column {{col.columnAlign}} {{component_id}}_renderer_column_{{$index}}">
                                 </span>
-                                <span ng-switch-when="image" id="{{component_id}}_column_layout_{{$parent.$index}}_{{$index}}" dfx-gc-renderer-design="image" component-id="{{component_id}}" column-id="{{$index}}">
+                                <span ng-switch-when="image" id="{{component_id}}_column_layout_{{$parent.$index}}_{{$index}}" dfx-gc-renderer-design="image" component-id="{{component_id}}" column-id="{{$index}}" class="dfx-core-gc-table-column {{col.columnAlign}} {{component_id}}_renderer_column_{{$index}}">
                                 </span>
-                                <span ng-switch-when="rating" id="{{component_id}}_column_layout_{{$parent.$index}}_{{$index}}" dfx-gc-renderer-design="rating" component-id="{{component_id}}" column-id="{{$index}}">
+                                <span ng-switch-when="rating" id="{{component_id}}_column_layout_{{$parent.$index}}_{{$index}}" dfx-gc-renderer-design="rating" component-id="{{component_id}}" column-id="{{$index}}" class="dfx-core-gc-table-column {{col.columnAlign}} {{component_id}}_renderer_column_{{$index}}">
                                 </span>
                             </span>
                         </td>

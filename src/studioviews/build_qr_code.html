@@ -1,0 +1,19 @@
+<md-dialog aria-label="get_qr_code"  ng-cloak>
+    <form ng-submit="hide()">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h5>Install on mobile device:</h5>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content layout-row layout-padding">
+                <qrcode data="{{qrCodeData}}" size="200"></qrcode>
+                <h2 style="color:red;">{{grCodeDataMessage}}</h2>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button class="md-primary" ng-click="cancel()">Cancel</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

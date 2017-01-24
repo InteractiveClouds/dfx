@@ -26,12 +26,21 @@
                         <input ng-model="general.creationDate" disabled>
                     </md-input-container>
                 </div>
+                <div layout="row" class="layout-padding" style="padding-bottom: 0">
+                    <md-input-container class="input-select-aligned margin-select" style="width:15%;margin-right:14px;">
+                        <label>Application endpoint:</label>
+                        <md-select ng-model="general.security" aria-label="{{general.security}}">
+                            <md-option value="public">index.html</md-option>
+                            <md-option value="protected">login.html</md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
                 <div layout="row" class="layout-padding" style="padding-top: 0">
                     <img ng-src="{{selected_logo_image}}" style="height: 150px; width: auto;">
                 </div>
                 <div layout="row" layout-align ="space-between center" style="margin-top: 15px;">
                     <button type="submit" class="md-raised md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-floppy-o" style="color: #757575"></span><span style="padding-left:5px">Save</span></button>
-                    <md-button button ng-click="confirmAppDelete()" class="md-raised md-warn md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-trash-o" style="color: #ffffff"></span><span style="padding-left:5px">Delete the Application</span></md-button>
+                    <md-button aria-label="Studio button" button ng-click="confirmAppDelete()" class="md-raised md-warn md-button md-altTheme-theme md-ink-ripple"><span class="fa fa-lg fa-trash-o" style="color: #ffffff"></span><span style="padding-left:5px">Delete the Application</span></md-button>
                 </div>
             </form>
         </md-content>

@@ -1,42 +1,41 @@
 doctype html
 html(ng-app="dfxAppRuntime")
-	head
-		meta(http-equiv="content-type", content="text/HTML;charset=UTF-8")
-		meta(name="viewport", content="width=device-width,initial-scale=1")
-		title #{apptitle}
+    head
+        meta(http-equiv="content-type", content="text/HTML;charset=UTF-8")
+        meta(name="viewport", content="width=device-width,initial-scale=1")
+        title #{apptitle}
 
-		link(rel="stylesheet", type="text/css", href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,700', rel='stylesheet'")
-		link(rel="stylesheet", type="text/css", href="css/mobile/runtime_mobile/dfx.min.css", media="screen")
-		link(rel="stylesheet", type="text/css", href="css/mobile/app.css", media="screen")
+        link(rel="stylesheet", type="text/css", href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,700', rel='stylesheet'")
+        link(rel="stylesheet", type="text/css", href="css/mobile/runtime_mobile/dfx.min.css", media="screen")
+        link(rel="stylesheet", type="text/css", href="css/mobile/app.css", media="screen")
 
-		script(src="js/mobile/runtime_mobile/script.js")
-		script(src="js/mobile/app.js")
-		script(src="js/mobile/runtime_mobile/dfx.js")
-
-		script.
-			$( document ).bind( "mobileinit", function() {
-				try {
-					$.support.cors = true;
-					$.mobile.allowCrossDomainPages = true;
-				} catch (e) {
-					alert('cratch failed');
-				}
-			});
-		if (loadGoogleMap)
-			script(src='https://maps.googleapis.com/maps/api/js?key=#{googleMapAPIKey}')
-		each resource_item in resources
-			- if ( resource_item.type == 'JavaScript' ) {
-				script(src="#{resource_item.path}")
-			- } else if ( resource_item.type == 'CSS' ) {
-				link(rel="stylesheet", type="text/css", href="#{resource_item.path}", media="screen")
-			- }
-	body(layout="row", ng-controller="dfx_app_controller", dfx-app="#{appname}")
-		div(ng-controller="dfx_page_template_controller", style="width:100%", layout="column", flex)
-			div#pageheader(layout="row", ng-show="selected_template.layout.header.display=='true'", style="min-height:{{selected_template.layout.header.height}}", class="animated", dfx-include-page-template="header")
-				div(layout,layout-align="{{selected_template.layout.header.halignment}} {{selected_template.layout.header.valignment}}", flex="100", style="height:{{selected_template.layout.header.height}};{{selected_template.layout.header.style}}")
-			div#pagesection(layout="row", flex, layout-fill, style="overflow:auto;")
-				div(id="pageleft", ng-show="selected_template.layout.left.display=='true'", layout, layout-align="{{selected_template.layout.left.halignment}} {{selected_template.layout.left.valignment}}", style="width:{{selected_template.layout.left.width}};{{selected_template.layout.left.style}}", class="{{selected_template.layout.left.whiteframe}} animated", dfx-include-page-template="left")
-				div.ng-view(style="width:100%;{{selected_template.layout.body.style}}", layout="column", flex)
-				div(id="pageright", ng-show="selected_template.layout.right.display=='true'", layout, layout-align="{{selected_template.layout.right.halignment}} {{selected_template.layout.right.valignment}}", style="width:{{selected_template.layout.right.width}};{{selected_template.layout.right.style}}", class="{{selected_template.layout.right.whiteframe}} animated", dfx-include-page-template="right")
-			div#pagefooter(layout="row", ng-show="selected_template.layout.footer.display==\'true\'", style="min-height:{{selected_template.layout.footer.height}}", class="animated", dfx-include-page-template="footer")
-				div(layout, layout-align="{{selected_template.layout.footer.halignment}} {{selected_template.layout.header.valignment}}", flex="100", style="height:{{selected_template.layout.footer.height}};{{selected_template.layout.footer.style}}")
+        script(src="js/mobile/runtime_mobile/script.js")
+        script(src="js/mobile/app.js")
+        script(src="js/mobile/runtime_mobile/dfx.js")
+        script.
+            $(document).bind("mobileinit", function () {
+                try {
+                    $.support.cors = true;
+                    $.mobile.allowCrossDomainPages = true;
+                } catch (e) {
+                    alert('catch failed');
+                }
+            });
+        if (loadGoogleMap)
+            script(src='https://maps.googleapis.com/maps/api/js?key=#{googleMapAPIKey}')
+        each resource_item in resources
+            - if ( resource_item.type == 'JavaScript' ) {
+            script(src="#{resource_item.path}")
+            - } else if ( resource_item.type == 'CSS' ) {
+            link(rel="stylesheet", type="text/css", href="#{resource_item.path}", media="screen")
+            - }
+    body(layout="row", ng-controller="dfx_app_controller", dfx-app="#{appname}", dfx-tenant="#{tenantid}", dfx-platform="#{platform}", dfx-app-security="#{appSecurity}")
+        div(ng-controller="dfx_page_template_controller", style="width:100%", layout="column", flex)
+            div#pageheader(layout="row", ng-show="selected_template.layout.header.display=='true'", style="min-height:{{selected_template.layout.header.height}}", class="animated", dfx-include-page-template="header")
+                div(layout,layout-align="{{selected_template.layout.header.halignment}} {{selected_template.layout.header.valignment}}", flex="100", style="height:{{selected_template.layout.header.height}};{{selected_template.layout.header.style}}")
+            div#pagesection(layout="row", flex, layout-fill, style="overflow:auto;")
+                div(id="pageleft", ng-show="selected_template.layout.left.display=='true'", layout, layout-align="{{selected_template.layout.left.halignment}} {{selected_template.layout.left.valignment}}", style="width:{{selected_template.layout.left.width}};{{selected_template.layout.left.style}}", class="{{selected_template.layout.left.whiteframe}} animated", dfx-include-page-template="left")
+                div.ng-view(style="width:100%;{{selected_template.layout.body.style}}", layout="column", flex)
+                div(id="pageright", ng-show="selected_template.layout.right.display=='true'", layout, layout-align="{{selected_template.layout.right.halignment}} {{selected_template.layout.right.valignment}}", style="width:{{selected_template.layout.right.width}};{{selected_template.layout.right.style}}", class="{{selected_template.layout.right.whiteframe}} animated", dfx-include-page-template="right")
+            div#pagefooter(layout="row", ng-show="selected_template.layout.footer.display==\'true\'", style = "min-height:{{selected_template.layout.footer.height}}", class="animated", dfx-include-page-template="footer")
+                div(layout, layout-align="{{selected_template.layout.footer.halignment}} {{selected_template.layout.header.valignment}}", flex="100", style="height:{{selected_template.layout.footer.height}};{{selected_template.layout.footer.style}}")

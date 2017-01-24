@@ -7,44 +7,44 @@
             <span class="col-md-6"><md-checkbox style="margin: 0" class="md-primary" ng-model="attributes.toolbar.visible.value" ng-change="overrideAttribute('toolbar')"></md-checkbox></span>
         </li>-->
         <li class="col-md-12">
-            <span class="col-md-6">Toolbar Visible:</span>
+            <span class="col-md-6">Toolbar Visible:<dfx-gc-template-locking attr_name="toolbar.visible"></dfx-gc-template-locking></span>
             <div class="col-md-6" layout="row">
-                <input class="col-md-12" type="text" ng-model="attributes.toolbar.visible.value" style="margin-left:-15px;" ng-change="overrideAttribute('toolbar.visible')" ng-focus="cacheAttributeOldValue({'name':'toolbar.visible'})" ng-blur="cacheAttributeNewValue('toolbar.visible')"/>
+                <input class="col-md-12" type="text" ng-model="attributes.toolbar.visible.value" ng-model-options="{ debounce: 500 }" style="margin-left:-15px;" ng-change="overrideAttribute('toolbar.visible');checkToolbarMenus(attributes.toolbar.visible.value);" ng-focus="cacheAttributeOldValue({'name':'toolbar.visible'})" ng-blur="cacheAttributeNewValue('toolbar.visible')"/>
                 <dfx-ve-expression-editor></dfx-ve-expression-editor>
             </div>
         </li>
         <li class="col-md-12" ng-if="attributes.autoHeight.value">
-            <span class="col-md-6">Collapsible:</span>
+            <span class="col-md-6">Collapsible:<dfx-gc-template-locking attr_name="toolbar.collapsible"></dfx-gc-template-locking></span>
             <div class="col-md-6" layout="row">
                 <input class="col-md-12" type="text" ng-model="attributes.toolbar.collapsible.value" style="margin-left:-15px;" ng-change="overrideAttribute('toolbar.collapsible')" ng-focus="cacheAttributeOldValue({'name':'toolbar.collapsible'})" ng-blur="cacheAttributeNewValue('toolbar.collapsible')"/>
                 <dfx-ve-expression-editor></dfx-ve-expression-editor>
             </div>
         </li>
         <li class="col-md-12" ng-if="attributes.autoHeight.value">
-            <span class="col-md-6">Collapsed:</span>
+            <span class="col-md-6">Collapsed:<dfx-gc-template-locking attr_name="toolbar.collapsed"></dfx-gc-template-locking></span>
             <div class="col-md-6" layout="row">
                 <input class="col-md-12" type="text" ng-model="attributes.toolbar.collapsed.value" style="margin-left:-15px;" ng-change="overrideAttribute('toolbar.collapsed');checkPanelBody();" ng-focus="cacheAttributeOldValue({'name':'toolbar.collapsed'})" ng-blur="cacheAttributeNewValue('toolbar.collapsed')"/>
                 <dfx-ve-expression-editor></dfx-ve-expression-editor>
             </div>
         </li>
         <li class="col-md-12">
-            <span class="col-md-6">Style:</span>
+            <span class="col-md-6">Style:<dfx-gc-template-locking attr_name="toolbar.style"></dfx-gc-template-locking></span>
             <div class="col-md-6" layout="row">
                 <input class="col-md-12" type="text" ng-model="attributes.toolbar.style.value" style="margin-left:-15px; padding-left: 6px" ng-change="overrideAttribute('toolbar.style')" ng-focus="cacheAttributeOldValue({'name':'toolbar.style'})" ng-blur="cacheAttributeNewValue('toolbar.style')"/>
                 <dfx-ve-css-style></dfx-ve-css-style>
             </div>
         </li>
         <li class="col-md-12">
-            <span class="col-md-6">Class:</span>
+            <span class="col-md-6">Class:<dfx-gc-template-locking attr_name="toolbar.classes"></dfx-gc-template-locking></span>
             <input class="col-md-6" type="text" ng-model="attributes.toolbar.classes.value" style="padding-left: 6px" ng-change="overrideAttribute('toolbar.classes')" ng-focus="cacheAttributeOldValue({'name':'toolbar.classes'})" ng-blur="cacheAttributeNewValue('toolbar.classes')"/>
         </li>
         <li class="col-md-12">
-            <span class="col-md-6">Dynamic Class:</span>
+            <span class="col-md-6">Dynamic Class:<dfx-gc-template-locking attr_name="toolbar.dynamicClasses"></dfx-gc-template-locking></span>
             <input class="col-md-6" type="text" ng-model="attributes.toolbar.dynamicClasses.value" style="padding-left: 6px" ng-change="overrideAttribute('toolbar.dynamicClasses')" ng-focus="cacheAttributeOldValue({'name':'toolbar.dynamicClasses'})" ng-blur="cacheAttributeNewValue('toolbar.dynamicClasses')"/>
         </li>
         <li class="col-md-12" ng-if="attributes.collapseStyle">
             <input class="dfx-ve-property-treeview-button" type="checkbox" checked aria-label="collapser" id="collapser" />
-            <label for="collapser" class="dfx-ve-property-title-level-1"><span>Collapsible Styling</span></label>
+            <label for="collapser" class="dfx-ve-property-title-level-1"><span>Collapsible Styling<dfx-gc-template-locking attr_name="collapseStyle"></dfx-gc-template-locking></span></label>
             <ul class="dfx-ve-property-treeview-content">
                 <li class="col-md-12">
                     <span class="col-md-4">Style:</span>
@@ -62,7 +62,7 @@
         </li>
         <li class="col-md-12">
             <input class="dfx-ve-property-treeview-button" type="checkbox" aria-label="item-21" id="item-21" />
-            <label for="item-21" class="dfx-ve-property-title-level-1"><span>Left Menu</span></label>
+            <label for="item-21" class="dfx-ve-property-title-level-1"><span>Left Menu<dfx-gc-template-locking attr_name="toolbar.leftMenu"></dfx-gc-template-locking></span></label>
             <ul class="dfx-ve-property-treeview-content">
                 <li class="col-md-12">
                     <span class="col-md-12">
@@ -290,7 +290,7 @@
 
         <li class="col-md-12">
             <input class="dfx-ve-property-treeview-button" type="checkbox" aria-label="item-22" id="item-22" />
-            <label for="item-22" class="dfx-ve-property-title-level-1"><span>Title</span></label>
+            <label for="item-22" class="dfx-ve-property-title-level-1"><span>Title<dfx-gc-template-locking attr_name="toolbar.title"></dfx-gc-template-locking></span></label>
             <ul class="dfx-ve-property-treeview-content">
                 <li class="col-md-12">
                     <span class="col-md-12">
@@ -374,7 +374,7 @@
         </li>
         <li class="col-md-12">
             <input class="dfx-ve-property-treeview-button" type="checkbox" aria-label="item-23" id="item-23" />
-            <label for="item-23" class="dfx-ve-property-title-level-1"><span>Right Menu</span></label>
+            <label for="item-23" class="dfx-ve-property-title-level-1"><span>Right Menu<dfx-gc-template-locking attr_name="toolbar.rightMenu"></dfx-gc-template-locking></span></label>
             <ul class="dfx-ve-property-treeview-content">
                 <li class="col-md-12">
                     <span class="col-md-12">

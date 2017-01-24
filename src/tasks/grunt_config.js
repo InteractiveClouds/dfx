@@ -69,6 +69,20 @@ var exports = (function () {
             dest:   pub + 'studioviews/',
             filter: 'isFile'
         },
+		commons: {
+            expand: true,
+            cwd:    src + 'commons/views',
+            src:    ['*'],
+            dest:   pub + 'commons/views',
+            filter: 'isFile'
+        },
+		commons_build:{
+            expand: true,
+            cwd:    src + 'commons/views',
+            src:    ['*'],
+            dest:   build + 'commons/views/',
+            filter: 'isFile'
+        },
         fonts:             {
             expand: true,
             cwd:    src + 'fonts/',
@@ -161,6 +175,23 @@ var exports = (function () {
             src : [
                 './node_modules/angular-material/angular-material.css',
                 './node_modules/codemirror/lib/codemirror.css',
+                './node_modules/codemirror/theme/3024-day.css',
+                './node_modules/codemirror/theme/3024-dark.css',
+                './node_modules/codemirror/theme/abcdef.css',
+                './node_modules/codemirror/theme/ambiance.css',
+                './node_modules/codemirror/theme/blackboard.css',
+                './node_modules/codemirror/theme/dracula.css',
+                './node_modules/codemirror/theme/eclipse.css',
+                './node_modules/codemirror/theme/erlang-dark.css',
+                './node_modules/codemirror/theme/icecoder.css',
+                './node_modules/codemirror/theme/material.css',
+                './node_modules/codemirror/theme/monokai.css',
+                './node_modules/codemirror/theme/neo.css',
+                './node_modules/codemirror/theme/rubyblue.css',
+                './node_modules/codemirror/theme/solarized.css',
+                './node_modules/codemirror/addon/dialog/dialog.css',
+                './node_modules/codemirror/addon/hint/show-hint.css',
+                './node_modules/codemirror/addon/fold/foldgutter.css',
                 './node_modules/codemirror/theme/abcdef.css',
                 './node_modules/codemirror/addon/dialog/dialog.css',
                 './node_modules/codemirror/addon/hint/show-hint.css',
@@ -184,6 +215,7 @@ var exports = (function () {
             },
             src : [
                 './node_modules/angular-material/angular-material.css',
+                './node_modules/dfx_mdPickers/dist/mdPickers.css',
                 './node_modules/angular-jk-carousel/dist/jk-carousel.css',
                 './node_modules/quill/dist/quill.base.css',
                 './node_modules/quill/dist/quill.snow.css',
@@ -241,6 +273,8 @@ var exports = (function () {
                 './node_modules/angular-material-icons/angular-material-icons.js',
                 './node_modules/angular-jk-carousel/dist/jk-carousel.js',
                 './node_modules/ns-popover/src/nsPopover.js',
+                './node_modules/moment/min/moment.min.js',
+                './node_modules/dfx_mdPickers/dist/mdPickers.js',
                 './node_modules/quill/dist/quill.js',
                 './node_modules/ng-quill/src/ng-quill.js',
                 './node_modules/svg-morpheus/source/js/svg-morpheus.js',
@@ -282,8 +316,13 @@ var exports = (function () {
                 src + 'js/angular/dfx.pageeditor.app.js',
                 src + 'js/angular/dfx.studio.api.js',
                 src + 'js/angular/dfx.studio.app.js',
+                src + 'js/angular/dfx.studio.app.util.js',
                 src + 'js/angular/dfx.studio.landing.js',
                 src + 'js/angular/dfx.vieweditor.app.js',
+                src + 'js/angular/dfx.gctemplateeditor.app.js',
+                src + 'js/angular/dfx.vieweditor.app.settings.js',
+                src + 'js/angular/dfx.vieweditor.app.gctemplates.js',
+                src + 'js/angular/dfx.vieweditor.app.undo.js',
                 src + 'js/vendor/qrcode.js',
                 src + 'js/vendor/jquery.knob.js',
                 src + 'js/vendor/dropzone.js',
@@ -305,6 +344,7 @@ var exports = (function () {
             },
             src : [
                 './node_modules/angular-material/angular-material.css',
+                './node_modules/dfx_mdPickers/dist/mdPickers.css',
                 './node_modules/angular-jk-carousel/dist/jk-carousel.css',
                 './node_modules/angular-material-icons/angular-material-icons.css',
                 './node_modules/quill/dist/quill.base.css',
@@ -336,6 +376,8 @@ var exports = (function () {
                 './node_modules/angular-material/angular-material.js',
                 './node_modules/angular-jk-carousel/dist/jk-carousel.js',
                 './node_modules/ns-popover/src/nsPopover.js',
+                './node_modules/moment/min/moment.min.js',
+                './node_modules/dfx_mdPickers/dist/mdPickers.js',
                 './node_modules/quill/dist/quill.js',
                 './node_modules/ng-quill/src/ng-quill.js',
                 './node_modules/svg-morpheus/source/js/svg-morpheus.js',
@@ -363,8 +405,12 @@ var exports = (function () {
                 src + 'js/angular/dfx.pageeditor.app.js',
                 src + 'js/angular/dfx.studio.api.js',
                 src + 'js/angular/dfx.studio.app.js',
+                src + 'js/angular/dfx.studio.app.util.js',
                 src + 'js/angular/dfx.studio.landing.js',
-                src + 'js/angular/dfx.vieweditor.app.js'
+                src + 'js/angular/dfx.vieweditor.app.js',
+                src + 'js/angular/dfx.vieweditor.app.settings.js',
+                src + 'js/angular/dfx.vieweditor.app.gctemplates.js',
+                src + 'js/angular/dfx.vieweditor.app.undo.js'
             ],
             dest : pub + 'js/preview/dfx.js'
         },
@@ -374,6 +420,7 @@ var exports = (function () {
             },
             src : [
                 './node_modules/angular-material/angular-material.css',
+                './node_modules/dfx_mdPickers/dist/mdPickers.css',
                 './node_modules/angular-jk-carousel/dist/jk-carousel.css',
                 './node_modules/angular-material-icons/angular-material-icons.css',
                 './node_modules/quill/dist/quill.base.css',
@@ -400,6 +447,8 @@ var exports = (function () {
                 './node_modules/angular-material/angular-material.js',
                 './node_modules/angular-jk-carousel/dist/jk-carousel.js',
                 './node_modules/ns-popover/src/nsPopover.js',
+                './node_modules/moment/min/moment.min.js',
+                './node_modules/dfx_mdPickers/dist/mdPickers.js',
                 './node_modules/quill/dist/quill.js',
                 './node_modules/ng-quill/src/ng-quill.js',
                 './node_modules/svg-morpheus/source/js/svg-morpheus.js',
@@ -428,8 +477,12 @@ var exports = (function () {
                 src + 'js/angular/dfx.pageeditor.app.js',
                 src + 'js/angular/dfx.studio.api.js',
                 src + 'js/angular/dfx.studio.app.js',
+                src + 'js/angular/dfx.studio.app.util.js',
                 src + 'js/angular/dfx.studio.landing.js',
-                src + 'js/angular/dfx.vieweditor.app.js'
+                src + 'js/angular/dfx.vieweditor.app.js',
+                src + 'js/angular/dfx.vieweditor.app.settings.js',
+                src + 'js/angular/dfx.vieweditor.app.gctemplates.js',
+                src + 'js/angular/dfx.vieweditor.app.undo.js'
             ],
             dest : build + 'js/runtime_web/script.js'
         },
@@ -447,8 +500,12 @@ var exports = (function () {
                 src + 'js/angular/dfx.pageeditor.app.js',
                 src + 'js/angular/dfx.studio.api.js',
                 src + 'js/angular/dfx.studio.app.js',
+                src + 'js/angular/dfx.studio.app.util.js',
                 src + 'js/angular/dfx.studio.landing.js',
-                src + 'js/angular/dfx.vieweditor.app.js'
+                src + 'js/angular/dfx.vieweditor.app.js',
+                src + 'js/angular/dfx.vieweditor.app.settings.js',
+                src + 'js/angular/dfx.vieweditor.app.gctemplates.js',
+                src + 'js/angular/dfx.vieweditor.app.undo.js'
             ],
             dest : build + 'js/runtime_web/dfx.js'
         },
@@ -458,6 +515,7 @@ var exports = (function () {
             },
             src : [
                 './node_modules/angular-material/angular-material.css',
+                './node_modules/dfx_mdPickers/dist/mdPickers.css',
                 './node_modules/angular-jk-carousel/dist/jk-carousel.css',
                 './node_modules/angular-material-icons/angular-material-icons.css',
                 './node_modules/quill/dist/quill.base.css',
@@ -484,6 +542,8 @@ var exports = (function () {
                 './node_modules/angular-material/angular-material.js',
                 './node_modules/angular-jk-carousel/dist/jk-carousel.js',
                 './node_modules/ns-popover/src/nsPopover.js',
+                './node_modules/moment/min/moment.min.js',
+                './node_modules/dfx_mdPickers/dist/mdPickers.js',
                 './node_modules/quill/dist/quill.js',
                 './node_modules/ng-quill/src/ng-quill.js',
                 './node_modules/svg-morpheus/source/js/svg-morpheus.js',
@@ -512,8 +572,12 @@ var exports = (function () {
                 src + 'js/angular/dfx.pageeditor.app.js',
                 src + 'js/angular/dfx.studio.api.js',
                 src + 'js/angular/dfx.studio.app.js',
+                src + 'js/angular/dfx.studio.app.util.js',
                 src + 'js/angular/dfx.studio.landing.js',
-                src + 'js/angular/dfx.vieweditor.app.js'
+                src + 'js/angular/dfx.vieweditor.app.js',
+                src + 'js/angular/dfx.vieweditor.app.settings.js',
+                src + 'js/angular/dfx.vieweditor.app.gctemplates.js',
+                src + 'js/angular/dfx.vieweditor.app.undo.js'
             ],
             dest : build + 'js/runtime_mobile/script.js'
         },
@@ -531,8 +595,12 @@ var exports = (function () {
                 src + 'js/angular/dfx.pageeditor.app.js',
                 src + 'js/angular/dfx.studio.api.js',
                 src + 'js/angular/dfx.studio.app.js',
+                src + 'js/angular/dfx.studio.app.util.js',
                 src + 'js/angular/dfx.studio.landing.js',
-                src + 'js/angular/dfx.vieweditor.app.js'
+                src + 'js/angular/dfx.vieweditor.app.js',
+                src + 'js/angular/dfx.vieweditor.app.settings.js',
+                src + 'js/angular/dfx.vieweditor.app.gctemplates.js',
+                src + 'js/angular/dfx.vieweditor.app.undo.js'
             ],
             dest : build + 'js/runtime_mobile/dfx.js'
         }

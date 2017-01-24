@@ -1,0 +1,66 @@
+<md-content ng-controller="dfx_studio_gc_template_controller">
+    <div ng-hide="assets.hide_areas">
+        <div layout="row">
+            <md-content class="md-padding flex-100" layout="column">
+                <div layout="row" class="col-md-12" layout-align="center end" style="min-height:48px;">
+                    <span class="col-md-1" style="padding:3px;">Platform:</span>
+                    <md-select ng-model="gc_templates_platform" class="col-md-3" style="padding:0;margin:0;">
+                        <md-option value="web" selected>Web</md-option>
+                        <md-option value="mobile">Mobile</md-option>
+                    </md-select>
+                    <span class="col-md-8">
+                        <div layout="row" class="layout-align-end">
+                            <md-button ng-if="gc_templates_selected.length > 0" ng-click="copyAll($event)" class="md-raised md-default">
+                                <span class="fa fa-copy"></span>
+                                Copy
+                            </md-button>
+                            <md-button ng-if="gc_templates_selected.length > 0" ng-click="confirmDeleteAll($event)" class="md-raised md-warn">
+                                <span class="fa fa-trash-o"></span>
+                                Delete
+                            </md-button>
+                        </div>
+                    </span>
+                </div>
+                <md-card style="flex-grow:3;overflow:hidden;">
+                    <md-card-content style="padding:0;">
+                        <table class="datatable" style="width:100%;">
+                            <thead>
+                                <tr style="border-bottom:1px solid #C7C7C7;">
+                                    <th>
+                                        <md-checkbox ng-model="is_all_gc_templates_selected" ng-click="toggleAll()" style="margin: 0; padding: 0; min-width: 20px"></md-checkbox>
+                                    </th>
+                                    <th width="20%">Name</th>
+                                    <th width="20%">Type</th>
+                                    <th width="50%">Description</th>
+                                    <th width="15%">Actions</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div id="scope-source-table" style="padding:0;overflow-y:auto;">
+                            <table class="datatable" style="width:100%;">
+                                <tbody>
+                                    <tr ng-repeat="gc_template in gc_templates | filter:gc_templates_platform track by $index" style="cursor:pointer;">
+                                        <td>
+                                            <md-checkbox ng-checked="isSelected(gc_template)" ng-click="toggleSelection(gc_template)" style="margin: 0; padding: 0; min-width: 20px"></md-checkbox>
+                                        </td>
+                                        <td width="20%">{{gc_template.name}}</td>
+                                        <td width="20%">{{gc_template.type}}</td>
+                                        <td width="50%">{{gc_template.description}}</td>
+                                        <td width="15%">
+                                            <div layout="row" layout-align="space-between center">
+                                                <md-button ng-click="openTemplateDesigner(gc_template)" ng-disabled="gc_template.name ==='default'" style="margin: 0; padding: 0; min-width: 20px" title="Edit"><md-icon class="fa fa-edit" style="font-size:20px; padding-top: 3px;"></md-icon></md-button>
+                                                <md-button ng-click="edit(gc_template)" ng-disabled="gc_template.name ==='default'" style="margin: 0; padding: 0; min-width: 20px" title="Information"><md-icon class="fa fa-info" style="font-size:20px; padding-top: 3px;"></md-icon></md-button>
+                                                <md-button ng-click="copy($event, gc_template)" ng-disabled="gc_template.name ==='default'" style="margin: 0; padding: 0; min-width: 20px" title="Copy"><md-icon class="fa fa-copy" style="font-size:20px; padding-top: 2px;"></md-icon></md-button>
+                                                <md-button ng-click="confirmDelete($event, gc_template)" ng-disabled="gc_template.name ==='default'" style="margin: 0; padding: 0; min-width: 20px" title="Remove"><md-icon class="fa fa-trash" style="font-size:20px;"></md-icon></md-button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </md-card-content>
+                </md-card>
+            </md-content>
+        </div>
+    </div>
+</md-content>

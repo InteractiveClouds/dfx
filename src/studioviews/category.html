@@ -6,7 +6,7 @@
         > {{category}}
     </h4>
     <div layout="row">
-        <md-button ng-click="addEntity(category, cat_platform)" class="md-primary">+
+        <md-button aria-label="Studio button" ng-click="addEntity(category, cat_platform)" class="md-primary">+
             <span ng-if="entity === 'pages'">Page</span>
             <span ng-if="entity === 'views'">View</span>
             <span ng-if="entity === 'apiServices'">API Service Object</span>

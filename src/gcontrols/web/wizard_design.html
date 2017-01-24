@@ -1,5 +1,5 @@
-<div class="layout-row layout-align-center-center" flex="100">
-    <div style="height:100%;{{attributes.style.value}}" ng-class="[attributes.classes.value, attributes.whiteframe.value]" flex="100" layout="column">
+<div class="layout-row layout-align-center-center" flex="100" style="height:1500px">
+    <div style="height:1500px;{{attributes.style.value}}" ng-class="[attributes.classes.value, attributes.whiteframe.value]" flex="100" layout="column">
         <dfx-gc-toolbar-design></dfx-gc-toolbar-design>
         <md-content id="{{component_id}}_content" flex="100" style="{{attributes.bodyStyle.value}}" ng-hide="attributes.toolbar.collapsed.designValue" layout="column">
             <md-tabs md-no-ink-bar="{{attributes.inkBar.value==='disabled' ? 'true': 'false'}}" md-center-tabs="{{attributes.centerSteps.value===true ? 'true': 'false'}}"
@@ -11,10 +11,12 @@
                             <div ng-repeat="row in step.layout.rows track by $index" id="{{component_id}}_layout_{{$parent.$index}}_row_{{$index}}" layout="row" layout-wrap
                                 flex="{{(!attributes.autoHeight || attributes.autoHeight.value != true) ? row.height.value : 'none'}}">
                                 <div ng-repeat="col in row.cols track by $index" id="{{component_id}}_layout_{{$parent.$parent.$index}}_row_{{$parent.$index}}_column_{{$index}}" flex="{{col.width.value}}"
-                                     layout="{{col.orientation.value}}" layout-align="{{col.halignment.value}} {{col.valignment.value}}"
+                                     layout="{{col.orientation.value}}"
+                                     layout-align="{{col.orientation.value ==='row' ? col.halignment.value + ' ' + col.valignment.value : col.valignment.value + ' ' + col.halignment.value}}"
                                      gc-container="layout_{{$parent.$parent.$index}}_row_{{$parent.$index}}_column_{{$index}}" gc-parent="{{component_id}}"
+                                     class="ui-placeholder dfx_visual_editor_droppable gc-role-internal"
                                      style="overflow:auto;{{col.style.value}};flex-wrap:{{col.orientation.value ==='row' ? 'wrap' : 'nowrap'}}"
-                                     class="ui-placeholder dfx_visual_editor_droppable" ng-class="col.classes.value" dfx-gc-web-droppable>
+                                     ng-class="col.classes.value" dfx-gc-web-droppable>
                                 </div>
                             </div>
                         </div>

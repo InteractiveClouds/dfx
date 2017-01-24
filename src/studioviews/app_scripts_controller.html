@@ -1,0 +1,22 @@
+<div id="dfx_app_script_editor" ng-cloak layout="column" dfx-studio-ctrl-s="saveScript()" flex style="height:100%;">
+    <div id="dfx-as-toolbar">
+        <md-toolbar class="dfx-as-toolbar">
+            <div class="dfx-as-toolbar-tools md-toolbar-tools">
+                <span style="margin-left:10px">{{app_name}} > {{(platform=='web') ? 'Desktop' : 'Mobile' }} > Application Controller</span>
+                <span style="font-size: 12px;margin-left: 20px;background: #4a4a4a;line-height: 48px;color: #fff;padding: 0 8px;border-left: 1px #6b6a6a solid;border-right: 1px #6b6a6a solid;">
+                    <span style="margin-right:5px">Script:</span>
+                    <img src="/images/vb/icons/script_dependencies.png" class="dfx-as-toolbar-icon" ng-click="configureDependenciesScript($event)" title="Configure Dependencies" />
+                </span>
+                <span flex></span>
+                <span style="font-size: 12px;margin-left: 1px;background: #4a4a4a;line-height: 48px;color: #fff;padding: 0 8px;border-left: 1px #6b6a6a solid;border-right: 1px #6b6a6a solid;" class="pull-right">
+                    <span style="margin-right:5px">Actions:</span>
+                    <img src="/images/vb/icons/action_save.png" class="dfx-as-toolbar-icon" ng-click="saveScript()" title="Save" />
+                </span>
+            </div>
+        </md-toolbar>
+    </div>
+    <div layout="column" flex style="height:100%">
+        <pre id="dfx_as_script_editor" style="border-radius: 0;">
+        </pre>
+    </div>
+</div>

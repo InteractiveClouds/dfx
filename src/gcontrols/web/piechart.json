@@ -7,7 +7,7 @@
 	"chartType":			{ "value": "pieChart" },
 	"display": 				{ "value": "true" },
 	"options": {
-  	"labelSunbeamLayout": "true",
+  		"labelSunbeamLayout": "true",
 		"labelThreshold": 0.01,
 		"donutLabelsOutside": "false",
 		"showLabels": "true",
@@ -16,6 +16,7 @@
 		"growOnHover": "true"
 	},
 	"dynamicOptions": { "value": "" },
+	"optionsType":    { "value": "static" },
 	"style": 					{ "value": "" },
 	"classes": 				{ "value": "" },
 	"dynamicClasses": { "value": "" },

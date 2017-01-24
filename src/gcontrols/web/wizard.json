@@ -224,7 +224,7 @@
                   "width":          { "value": 100 },
                   "classes":        { "value": "" },
                   "dynamicClasses": { "value": "" },
-                  "style":          { "value": "" },
+                  "style":          { "value": "height:500px;" },
                   "orientation":    { "value": "row" },
                   "halignment":     { "value": "start" },
                   "valignment":     { "value": "start" }
@@ -258,7 +258,7 @@
                   "width":          { "value": 100 },
                   "classes":        { "value": "" },
                   "dynamicClasses": { "value": "" },
-                  "style":          { "value": "" },
+                  "style":          { "value": "height:500px;" },
                   "orientation":    { "value": "row" },
                   "halignment":     { "value": "start" },
                   "valignment":     { "value": "start" }

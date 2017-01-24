@@ -57,6 +57,7 @@ dfxAppRuntime.controller('dfx_login_controller', [ '$scope', '$rootScope', funct
 dfxAppRuntime.controller('dfx_app_controller', [ '$scope', '$rootScope', 'dfxAuthRequest', '$q', '$http', '$compile', 'dfxPages', function( $scope, $rootScope, dfxAuthRequest, $q, $http, $compile, dfxPages) {
     $scope.app_name = $('body').attr('dfx-app');
     $scope.platform = $('body').attr('dfx-platform');
+    $scope.tenant_id = $('body').attr('dfx-tenant');
     $scope.gc_types = {};
     $rootScope.page_name = 'Home';
 	$rootScope.fullscreen = false;
@@ -73,7 +74,10 @@ dfxAppRuntime.controller('dfx_app_controller', [ '$scope', '$rootScope', 'dfxAut
                 'padding-top': '110px',
                 'padding-left': '30px',
                 'padding-right': '30px',
-                'padding-bottom': '120px'
+                'padding-bottom': '120px',
+                'wrapper-width': '318px',
+                'wrapper-height': '565px',
+                'margin': '109px 50px 109px 50px'
             },
             'landscape': {
                 'image':  'iphone_5_landscape_320x568.png',
@@ -82,7 +86,10 @@ dfxAppRuntime.controller('dfx_app_controller', [ '$scope', '$rootScope', 'dfxAut
                 'padding-top': '30px',
                 'padding-left': '110px',
                 'padding-right': '120px',
-                'padding-bottom': '30px'
+                'padding-bottom': '30px',
+                'wrapper-width': '565px',
+                'wrapper-height': '318px',
+                'margin': '29px 130px 30px 118px'
             }
         },
         {
@@ -95,7 +102,10 @@ dfxAppRuntime.controller('dfx_app_controller', [ '$scope', '$rootScope', 'dfxAut
                 'padding-top': '109px',
                 'padding-left': '31px',
                 'padding-right': '30px',
-                'padding-bottom': '109px'
+                'padding-bottom': '109px',
+                'wrapper-width': '372px',
+                'wrapper-height': '663px',
+                'margin': '109px 50px 109px 50px'
             },
             'landscape': {
                 'image':  'iphone_6_landscape_375x667.png',
@@ -104,7 +114,10 @@ dfxAppRuntime.controller('dfx_app_controller', [ '$scope', '$rootScope', 'dfxAut
                 'padding-top': '30px',
                 'padding-left': '109px',
                 'padding-right': '108px',
-                'padding-bottom': '30px'
+                'padding-bottom': '30px',
+                'wrapper-width': '663px',
+                'wrapper-height': '372px',
+                'margin': '30px 109px 30px 109px'
             }
         },
         {
@@ -117,7 +130,10 @@ dfxAppRuntime.controller('dfx_app_controller', [ '$scope', '$rootScope', 'dfxAut
                 'padding-top': '103px',
                 'padding-left': '31px',
                 'padding-right': '30px',
-                'padding-bottom': '120px'
+                'padding-bottom': '120px',
+                'wrapper-width': '412px',
+                'wrapper-height': '733px',
+                'margin': '102px 48px 109px 50px'
             },
             'landscape': {
                 'image':  'iphone_6plus_landscape_414x736.png',
@@ -126,7 +142,10 @@ dfxAppRuntime.controller('dfx_app_controller', [ '$scope', '$rootScope', 'dfxAut
                 'padding-top': '30px',
                 'padding-left': '103px',
                 'padding-right': '120px',
-                'padding-bottom': '30px'
+                'padding-bottom': '30px',
+                'wrapper-width': '733px',
+                'wrapper-height': '412px',
+                'margin': '29px 67px 39px 50px'
             }
         }
     ];
@@ -159,23 +178,23 @@ dfxAppRuntime.controller('dfx_app_controller', [ '$scope', '$rootScope', 'dfxAut
 
     $scope.refreshDevice = function() {
         var dfx_ve_platform = $('div[dfx-ve-platform]');
+        var dfx_view_preview_main_container = $('#dfx_view_preview_main_container');
         if ($scope.design_device_orientation=='Portrait') {
-            dfx_ve_platform.css('width', $scope.design_selected_device.portrait['width']);
-            dfx_ve_platform.css('height', $scope.design_selected_device.portrait['height']);
-            dfx_ve_platform.css('padding-top', $scope.design_selected_device.portrait['padding-top']);
-            dfx_ve_platform.css('padding-left', $scope.design_selected_device.portrait['padding-left']);
-            dfx_ve_platform.css('padding-right', $scope.design_selected_device.portrait['padding-right']);
-            dfx_ve_platform.css('padding-bottom', $scope.design_selected_device.portrait['padding-bottom']);
-            dfx_ve_platform.css( 'background', 'url(/images/' + $scope.design_selected_device.portrait['image'] + ') no-repeat' );
+            dfx_ve_platform.css('height', '100%');
+            dfx_ve_platform.parent().css('width', $scope.design_selected_device.portrait['wrapper-width']);
+            dfx_ve_platform.parent().css('height', $scope.design_selected_device.portrait['wrapper-height']);
+            dfx_ve_platform.parent().css('margin', $scope.design_selected_device.portrait['margin']);
+            dfx_view_preview_main_container.css( 'background', 'url(/images/' + $scope.design_selected_device.portrait['image'] + ')' );
         } else {
-            dfx_ve_platform.css('width', $scope.design_selected_device.landscape['width']);
-            dfx_ve_platform.css('height', $scope.design_selected_device.landscape['height']);
-            dfx_ve_platform.css('padding-top', $scope.design_selected_device.landscape['padding-top']);
-            dfx_ve_platform.css('padding-left', $scope.design_selected_device.landscape['padding-left']);
-            dfx_ve_platform.css('padding-right', $scope.design_selected_device.landscape['padding-right']);
-            dfx_ve_platform.css('padding-bottom', $scope.design_selected_device.landscape['padding-bottom']);
-            dfx_ve_platform.css( 'background', 'url(/images/' + $scope.design_selected_device.landscape['image'] + ') no-repeat' );
+            dfx_ve_platform.css('height', '100%');
+            dfx_ve_platform.parent().css('width', $scope.design_selected_device.landscape['wrapper-width']);
+            dfx_ve_platform.parent().css('height', $scope.design_selected_device.landscape['wrapper-height']);
+            dfx_ve_platform.parent().css('margin', $scope.design_selected_device.landscape['margin']);
+            dfx_view_preview_main_container.css( 'background', 'url(/images/' + $scope.design_selected_device.landscape['image'] + ')' );
         }
+        dfx_view_preview_main_container.css( 'background-position-x', 'center' );
+        dfx_view_preview_main_container.css( 'background-repeat', 'no-repeat' );
+        dfx_view_preview_main_container.css( 'height', '' );
     };
 
     $scope.changeDevice = function(index) {
@@ -220,12 +239,15 @@ dfxAppRuntime.controller('dfx_page_template_controller', [ '$scope', '$rootScope
 		}
 	};
 
-	$scope.routeToPage = function(page_name, ev) {
-		$('#pagebody').addClass('animated slideOutLeft').one('animationend', function(eventOne) {
-			$rootScope.page_name = page_name;
-			$location.url('/'+$rootScope.page_name);
-			$scope.$apply();
-		});
+	$scope.routeToPage = function(page_name) {
+		/* check if user is not trying to go on the same page, then apply animation and route to targeted page */
+		if (page_name != $rootScope.page_name) {
+			$('#pagebody').addClass('animated slideOutLeft').one('animationend', function(eventOne) {
+				$rootScope.page_name = page_name;
+				$location.url('/'+$rootScope.page_name);
+				$scope.$apply();
+			});
+		}
     };
 
 	/* Toggle Fullscreen - remove/restore template elements with animation */
@@ -339,7 +361,16 @@ dfxAppRuntime.controller('dfx_page_controller', [ '$scope', '$rootScope', 'dfxAu
 					var snippet = '<div layout="column" flex dfx-page-template="' + request.data.template + '"></div>';
 	                angular.element(document.getElementById('dfx_page_content')).append($compile(snippet)($scope));
 				}
-            });
+            }, function errorCallback(response) {
+				$scope.selected_page = {};
+				$http({
+	                method: 'GET',
+	                url: '/commons/views/ui-route-error.html'
+	            }).then(function successCallback(request) {
+					var snippet = request.data;
+					angular.element(document.getElementById('dfx_page_content')).append($compile(snippet)($scope));
+	            });
+			});
         }
     };
 
@@ -465,22 +496,21 @@ dfxAppRuntime.controller('dfx_view_controller', [ '$scope', '$rootScope', '$comp
 
     $scope.refreshDevice = function() {
         if ($scope.design_device_orientation=='Portrait') {
-            $('#dfx_view_preview_container').css('width', $scope.design_selected_device.portrait['width']);
-            $('#dfx_view_preview_container').css('height', $scope.design_selected_device.portrait['height']);
-            $('#dfx_view_preview_container').css('padding-top', $scope.design_selected_device.portrait['padding-top']);
-            $('#dfx_view_preview_container').css('padding-left', $scope.design_selected_device.portrait['padding-left']);
-            $('#dfx_view_preview_container').css('padding-right', $scope.design_selected_device.portrait['padding-right']);
-            $('#dfx_view_preview_container').css('padding-bottom', $scope.design_selected_device.portrait['padding-bottom']);
-            $('#dfx_view_preview_container').css( 'background', 'url(/images/' + $scope.design_selected_device.portrait['image'] + ') no-repeat' );
+            $('#dfx_view_preview_container').css('height', '100%');
+            $('#dfx_view_preview_container').parent().css('width', $scope.design_selected_device.portrait['wrapper-width']);
+            $('#dfx_view_preview_container').parent().css('height', $scope.design_selected_device.portrait['wrapper-height']);
+            $('#dfx_view_preview_container').parent().css('margin', $scope.design_selected_device.portrait['margin']);
+            $('#dfx_view_preview_main_container').css( 'background', 'url(/images/' + $scope.design_selected_device.portrait['image'] + ')' );
         } else {
-            $('#dfx_view_preview_container').css('width', $scope.design_selected_device.landscape['width']);
-            $('#dfx_view_preview_container').css('height', $scope.design_selected_device.landscape['height']);
-            $('#dfx_view_preview_container').css('padding-top', $scope.design_selected_device.landscape['padding-top']);
-            $('#dfx_view_preview_container').css('padding-left', $scope.design_selected_device.landscape['padding-left']);
-            $('#dfx_view_preview_container').css('padding-right', $scope.design_selected_device.landscape['padding-right']);
-            $('#dfx_view_preview_container').css('padding-bottom', $scope.design_selected_device.landscape['padding-bottom']);
-            $('#dfx_view_preview_container').css( 'background', 'url(/images/' + $scope.design_selected_device.landscape['image'] + ') no-repeat' );
+            $('#dfx_view_preview_container').css('height', '100%');
+            $('#dfx_view_preview_container').parent().css('width', $scope.design_selected_device.landscape['wrapper-width']);
+            $('#dfx_view_preview_container').parent().css('height', $scope.design_selected_device.landscape['wrapper-height']);
+            $('#dfx_view_preview_container').parent().css('margin', $scope.design_selected_device.landscape['margin']);
+            $('#dfx_view_preview_main_container').css( 'background', 'url(/images/' + $scope.design_selected_device.landscape['image'] + ')' );
         }
+        $('#dfx_view_preview_main_container').css( 'background-position-x', 'center' );
+        $('#dfx_view_preview_main_container').css( 'background-repeat', 'no-repeat' );
+        $('#dfx_view_preview_main_container').css( 'height', '' );
     };
 
     $scope.changeDevice = function(index) {
@@ -492,8 +522,6 @@ dfxAppRuntime.controller('dfx_view_controller', [ '$scope', '$rootScope', '$comp
         $scope.design_device_orientation = ($scope.design_device_orientation=='Portrait') ? 'Landscape' : 'Portrait';
         $scope.refreshDevice();
     };
-
-
 }]);
 
 dfxAppRuntime.directive( 'dfxIncludePageTemplate', function($compile) {
@@ -536,10 +564,10 @@ dfxAppRuntime.directive('dfxPageTemplate', ['$compile', '$mdSidenav', '$timeout'
             tpl_snippet += '<div ng-controller="' + $scope.selected_page.name + 'PageController" layout="column" style="background:inherit;overflow:auto;" flex id="pagebody" dfx-flex="' + flex_row + '" dfx-flex-view="' + flex_view + '">';
 
             tpl_snippet += '<div layout="row" flex="' + flex_row + '" style="" ng-repeat="row in selected_page.layout.rows">';
-            tpl_snippet += '<div layout="column" flex="{{col.width}}" data-row="{{$parent.$index}}" data-column="{{$index}}" ng-repeat="col in row.columns" style="padding:5px">';
+            tpl_snippet += '<div layout="column" flex="{{col.width}}" data-row="{{$parent.$index}}" data-column="{{$index}}" ng-repeat="col in row.columns">';
             tpl_snippet += '<div layout="column" flex="' + flex_view + '" ng-repeat="view in col.views">';
 
-            tpl_snippet += '<div id="wrapper" dfx-view-wrapper="view.name" dfx-view-wrapper-id="view.id" flex="100" layout="column">';
+            tpl_snippet += '<div id="wrapper" dfx-view-wrapper="view.name" dfx-view-wrapper-id="view.id" layout="column" style="height:1500px;">';
             tpl_snippet += '</div>';
             tpl_snippet += '</div>';
             tpl_snippet += '</div>';
