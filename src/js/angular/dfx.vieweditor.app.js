@@ -1022,7 +1022,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
             'fab': {'default_name':'fbFab', 'flex':'false'},
             'iconbar': {'default_name':'iconBar', 'flex':'false'},
             'treemenu': {'default_name':'trMenu', 'flex':'false'},
-            'horizontalmenu': {'default_name':'hrztMenu', 'flex':'true'}
+            'horizontalmenu': {'default_name':'hrztMenu', 'flex':'false'}
         },
         'selection': {
             'radio': {'default_name':'rdRadio', 'flex':'false'},
@@ -1299,6 +1299,8 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     // Render GControls
     $scope.renderGraphicalControl = function( component, callback, is_rendering_gc_template ) {
         $scope.gc_instances[component.id] = component;
+        if(component.type === 'horizontalmenu' && component.flex === 'true') component.flex = 'false';
+
         var gc_instance = {};
         var flex_container_attr = (component.flex=='true' || (component.attributes!=null && component.attributes.flex!=null)) ? ' flex="{{attributes.flex.value}}"' : '';
 
