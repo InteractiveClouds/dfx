@@ -1362,6 +1362,8 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
         $mdDialog.show(confirm).then(function() {
             var parent_id = $('#'+component_id).closest('[gc-parent]').attr('gc-parent');
             if (parent_id) {
+                DfxViewEditorUndo.cacheRemovedComponent(component_id, parent_id, $scope);
+
                 delete $scope.gc_instances[component_id];
                 DfxVisualBuilder.removeComponentConfirmed(component_id, $scope.view_card_selected);
             } else {
@@ -1400,7 +1402,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
         DfxViewEditorUndo.cacheAttributeNewValue(attribute_name, $scope);
     };
     $scope.viewEditorUndo = function(event) {
-        DfxViewEditorUndo.viewEditorUndo(event, $scope);
+        DfxViewEditorUndo.viewEditorUndo(event, $scope, dfxMessaging);
     };
     // Functions implementing UNDO in view editor - END
 
