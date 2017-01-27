@@ -935,7 +935,8 @@ button.dfx-core-gc-rating-button {
 
 /* GC Tabs */
 div[dfx-gcc-web-tabs] > div > md-content > div > md-tabs > md-tabs-content-wrapper {
-    overflow: auto!important;
+    /*overflow: auto!important;*/
+    /*overflow: hidden!important;*/
 }
 
 /* Animation */
