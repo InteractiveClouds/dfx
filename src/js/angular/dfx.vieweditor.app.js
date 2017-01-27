@@ -417,7 +417,6 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
             m;
 
         $scope.scopeVars = [];
-        
         while ((m = re.exec(str)) !== null) {
             if (m.index === re.lastIndex) {
                 re.lastIndex++;
@@ -427,10 +426,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
             }
         }
         $scope.scopeVars.sort();
-        console.log('$scope.scopeVars', $scope.scopeVars);
-        }, 0);
     }
-    console.log('dfx_view_editor_controller');    
 
     $scope.refreshDevice = function() {
         var dfx_ve_platform = $('div[dfx-ve-platform]');
@@ -1294,6 +1290,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
                   in: 'fadeIn',
                   out: 'slideOutLeft'
                 }
+                $scope.collectScriptVariables();
             }, 1000);
         }
     };
