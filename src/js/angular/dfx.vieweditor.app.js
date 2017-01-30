@@ -319,6 +319,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     };
     $scope.changeViewMode = function (view_mode) {
         if (view_mode=='design') {
+            $scope.collectScriptVariables();
             $scope.design_view_mode = 'Design';
             $scope.showDesign();
         } else if (view_mode=='script') {
@@ -409,6 +410,23 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
 
         editor.refresh();
     };
+
+    $scope.collectScriptVariables = function(){
+        var re = /(\$scope\.)(\w*)/g,
+            str = $('#dfx_script_editor.CodeMirror')[0].CodeMirror.getValue(),
+            m;
+
+        $scope.scopeVars = [];
+        while ((m = re.exec(str)) !== null) {
+            if (m.index === re.lastIndex) {
+                re.lastIndex++;
+            }
+            if ($scope.scopeVars.indexOf(m[2]) == -1) {
+                $scope.scopeVars.push(m[2]);
+            }
+        }
+        $scope.scopeVars.sort();
+    }
 
     $scope.refreshDevice = function() {
         var dfx_ve_platform = $('div[dfx-ve-platform]');
@@ -1272,6 +1290,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
                   in: 'fadeIn',
                   out: 'slideOutLeft'
                 }
+                $scope.collectScriptVariables();
             }, 1000);
         }
     };
@@ -2370,20 +2389,7 @@ dfxViewEditorApp.directive('dfxVeExpressionEditor', [ '$mdDialog', function($mdD
         templateUrl: function( el, attrs ) {
             return '/gcontrols/web/label_picker.html';
         },
-        link: function(scope, element, attrs) {
-            var re = /(\$scope\.)(\w*)/g;
-            var str = $('#dfx_script_editor.CodeMirror')[0].CodeMirror.getValue();
-            var m;
-            scope.scopeVars = [];
-            while ((m = re.exec(str)) !== null) {
-                if (m.index === re.lastIndex) {
-                    re.lastIndex++;
-                }
-                if (scope.scopeVars.indexOf(m[2]) == -1) {
-                    scope.scopeVars.push(m[2]);
-                }
-            }
-            scope.scopeVars.sort();
+        link: function(scope, element, attrs) {            
             scope.showExpressionEditor = function(ev) {
                 $mdDialog.show({
                     scope: scope.$new(),
