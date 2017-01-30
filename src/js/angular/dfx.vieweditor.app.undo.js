@@ -113,17 +113,55 @@ var DfxViewEditorUndo = (function() {
             });
         }
     };
-    api.viewEditorUndo = function(event, scope) {
+
+    var getComponentDefinition = function(component_id, scope) {
+        var view_definition = DfxVisualBuilder.movingComponentHelper.getViewDefinition();
+        var component_definition = DfxVisualBuilder.getComponentDefinition(component_id, view_definition.definition);
+        component_definition.attributes = angular.copy( scope.gc_instances[component_id].attributes );// if comp attributes changed and not saved, it's only in scope at the moment of cut/copy
+        return component_definition;
+    };
+    var addComponentToStack = function(component_definition, parent_id, scope, card) {
+        scope.dfx_view_editor_actions_stack = scope.dfx_view_editor_actions_stack || [];
+        scope.dfx_view_editor_actions_stack.unshift({
+            is_component: true,
+            component_definition: component_definition,
+            parent_id: parent_id,
+            card: card || scope.view_card_selected
+        });
+    };
+    var addComponentBackToEditor = function(component_data, scope, dfxMessaging) {
+        var parent_component = scope.gc_instances[component_data.parent_id];
+        if (parent_component) {
+            DfxVisualBuilder.pasteComponent(component_data.component_definition, parent_component, component_data.card, true);
+        } else {
+            dfxMessaging.showWarning('To put back component ' + component_data.component_definition.attributes.name.value +
+                ' open card ' + component_data.card);
+
+            addComponentToStack(component_data.component_definition, component_data.parent_id, scope, component_data.card);
+        }
+    };
+
+    api.cacheRemovedComponent = function(component_id, parent_id, scope) {
+        var component_definition = getComponentDefinition(component_id, scope);
+        addComponentToStack(component_definition, parent_id, scope);
+    };
+
+    api.viewEditorUndo = function(event, scope, dfxMessaging) {
         $(event.srcElement).animateCss('pulse');
 
         if (scope.dfx_view_editor_actions_stack && scope.dfx_view_editor_actions_stack.length > 0) {
             var action_for_undo = scope.dfx_view_editor_actions_stack.shift();
-            var gc_for_undo = scope.gc_instances[ action_for_undo.component_id ];
 
-            if (action_for_undo.attribute_name.indexOf('undo_group_') == 0) {
-                setAttributesGroup(gc_for_undo.attributes, action_for_undo.attribute_old_value);
+            if (action_for_undo.is_component) {
+                addComponentBackToEditor(action_for_undo, scope, dfxMessaging);
             } else {
-                setAttributesChainValue(action_for_undo.attribute_name, gc_for_undo.attributes, action_for_undo.attribute_old_value);
+                var gc_for_undo = scope.gc_instances[ action_for_undo.component_id ];
+
+                if (action_for_undo.attribute_name.indexOf('undo_group_') == 0) {
+                    setAttributesGroup(gc_for_undo.attributes, action_for_undo.attribute_old_value);
+                } else {
+                    setAttributesChainValue(action_for_undo.attribute_name, gc_for_undo.attributes, action_for_undo.attribute_old_value);
+                }
             }
         }
     };
