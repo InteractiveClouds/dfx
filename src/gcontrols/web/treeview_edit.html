@@ -116,8 +116,12 @@
                             </div>
                         </li>
                         <li class="col-md-12">
-                            <span class="col-md-4">Icon Color:<dfx-gc-template-locking attr_name="color"></dfx-gc-template-locking></span>
-                            <input class="col-md-8" type="text" ng-model="attributes.color.value" ng-change="overrideAttribute('color')" ng-focus="cacheAttributeOldValue({'name':'color'})" ng-blur="cacheAttributeNewValue('color')"/>
+                            <span class="col-md-4">Icon Color:
+                                <dfx-gc-template-locking attr_name="color"></dfx-gc-template-locking>
+                            </span>
+                            <div class="col-md-8 dfx-ve-property-treeview-color-picker" layout="row" style="padding:0;">
+                                <dfx-ve-color-picker name="icon-color" class="col-md-11" ng-model="attributes.color.value" ng-change="overrideAttribute('color')" ng-focus="cacheAttributeOldValue({'name':'color'})" ng-blur="cacheAttributeNewValue('color')"></dfx-ve-color-picker>
+                            </div>
                         </li>    
                         <li class="col-md-12">
                             <span class="col-md-4">Label style:</span>
