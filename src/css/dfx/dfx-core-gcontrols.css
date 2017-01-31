@@ -632,15 +632,17 @@ md-chips-wrap.md-readonly {
     padding: 16px;
 }
 .dfx-core-gc-treeview ul {
-    padding: 0 0 0 20px;
+    padding: 0px !important;
     margin: 0;
 }
 .dfx-core-gc-treeview li {
+    padding: 0 0 0 20px !important;
     list-style: none;
 }
 .dfx-core-gc-treeview li a {
     display: inline-block;
     padding: 3px 0;
+    text-decoration: none !important;
 }
 .dfx-core-gc-treeview .node-trigger {
     width: 20px;

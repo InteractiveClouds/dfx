@@ -3485,6 +3485,7 @@ dfxViewEditorApp.directive('dfxVeTreeEditor', [ '$mdDialog', '$mdToast', '$http'
                             scope.gcTreeItems = $("md-content.tree-structure").find('li');
                             $("md-content.tree-structure > ul > li:first-child").addClass('active');
                             scope.parentTreeItem = $("md-content.tree-structure").find('li.active');
+                            scope.checkMenuRootPadding();
                         }, 0);
                     },
                     controller: function(){
