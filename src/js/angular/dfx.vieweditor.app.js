@@ -2282,7 +2282,7 @@ dfxViewEditorApp.directive('dfxVeColorPicker', ['$timeout', function($timeout) {
                 });
                 $scope.setColor = function() {
                     var inputColor = $("input#"+element_id).val();
-                    if (inputColor) {
+                    if (inputColor && inputColor.indexOf('#') > 0) {
                         $("#"+element_id).spectrum("set", inputColor);
                     }
                 }
