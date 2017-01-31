@@ -935,11 +935,6 @@ button.dfx-core-gc-rating-button {
     margin: 31px 0 0;
 }
 
-/* GC Tabs */
-div[dfx-gcc-web-tabs] > div > md-content > div > md-tabs > md-tabs-content-wrapper {
-    overflow: auto!important;
-}
-
 /* Animation */
 @charset "UTF-8";
 
