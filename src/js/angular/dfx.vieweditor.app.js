@@ -319,6 +319,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     };
     $scope.changeViewMode = function (view_mode) {
         if (view_mode=='design') {
+            $scope.collectScriptVariables();
             $scope.design_view_mode = 'Design';
             $scope.showDesign();
         } else if (view_mode=='script') {
@@ -409,6 +410,23 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
 
         editor.refresh();
     };
+
+    $scope.collectScriptVariables = function(){
+        var re = /(\$scope\.)(\w*)/g,
+            str = $('#dfx_script_editor.CodeMirror')[0].CodeMirror.getValue(),
+            m;
+
+        $scope.scopeVars = [];
+        while ((m = re.exec(str)) !== null) {
+            if (m.index === re.lastIndex) {
+                re.lastIndex++;
+            }
+            if ($scope.scopeVars.indexOf(m[2]) == -1) {
+                $scope.scopeVars.push(m[2]);
+            }
+        }
+        $scope.scopeVars.sort();
+    }
 
     $scope.refreshDevice = function() {
         var dfx_ve_platform = $('div[dfx-ve-platform]');
@@ -1022,7 +1040,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
             'fab': {'default_name':'fbFab', 'flex':'false'},
             'iconbar': {'default_name':'iconBar', 'flex':'false'},
             'treemenu': {'default_name':'trMenu', 'flex':'false'},
-            'horizontalmenu': {'default_name':'hrztMenu', 'flex':'true'}
+            'horizontalmenu': {'default_name':'hrztMenu', 'flex':'false'}
         },
         'selection': {
             'radio': {'default_name':'rdRadio', 'flex':'false'},
@@ -1272,6 +1290,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
                   in: 'fadeIn',
                   out: 'slideOutLeft'
                 }
+                $scope.collectScriptVariables();
             }, 1000);
         }
     };
@@ -1299,6 +1318,8 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     // Render GControls
     $scope.renderGraphicalControl = function( component, callback, is_rendering_gc_template ) {
         $scope.gc_instances[component.id] = component;
+        if(component.type === 'horizontalmenu' && component.flex === 'true') component.flex = 'false';
+
         var gc_instance = {};
         var flex_container_attr = (component.flex=='true' || (component.attributes!=null && component.attributes.flex!=null)) ? ' flex="{{attributes.flex.value}}"' : '';
 
@@ -1362,6 +1383,8 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
         $mdDialog.show(confirm).then(function() {
             var parent_id = $('#'+component_id).closest('[gc-parent]').attr('gc-parent');
             if (parent_id) {
+                DfxViewEditorUndo.cacheRemovedComponent(component_id, parent_id, $scope);
+
                 delete $scope.gc_instances[component_id];
                 DfxVisualBuilder.removeComponentConfirmed(component_id, $scope.view_card_selected);
             } else {
@@ -1400,7 +1423,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
         DfxViewEditorUndo.cacheAttributeNewValue(attribute_name, $scope);
     };
     $scope.viewEditorUndo = function(event) {
-        DfxViewEditorUndo.viewEditorUndo(event, $scope);
+        DfxViewEditorUndo.viewEditorUndo(event, $scope, dfxMessaging);
     };
     // Functions implementing UNDO in view editor - END
 
@@ -2366,20 +2389,7 @@ dfxViewEditorApp.directive('dfxVeExpressionEditor', [ '$mdDialog', function($mdD
         templateUrl: function( el, attrs ) {
             return '/gcontrols/web/label_picker.html';
         },
-        link: function(scope, element, attrs) {
-            var re = /(\$scope\.)(\w*)/g;
-            var str = $('#dfx_script_editor.CodeMirror')[0].CodeMirror.getValue();
-            var m;
-            scope.scopeVars = [];
-            while ((m = re.exec(str)) !== null) {
-                if (m.index === re.lastIndex) {
-                    re.lastIndex++;
-                }
-                if (scope.scopeVars.indexOf(m[2]) == -1) {
-                    scope.scopeVars.push(m[2]);
-                }
-            }
-            scope.scopeVars.sort();
+        link: function(scope, element, attrs) {            
             scope.showExpressionEditor = function(ev) {
                 $mdDialog.show({
                     scope: scope.$new(),

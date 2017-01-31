@@ -404,7 +404,7 @@ button[disabled="disabled"].dfx-core-gc-button.md-button md-icon, button[disable
     height:300px;
 }
 /* Tree menu */
-div[dfx-gcc-web-treemenu] {
+div[dfx-gcc-web-treemenu], div[dfx-gc-web-horizontalmenu], div[dfx-gcc-web-horizontalmenu] {
     width: 100%;
 }
 .dfx-core-gc-treemenu {
