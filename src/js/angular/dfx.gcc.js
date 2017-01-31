@@ -3256,6 +3256,21 @@ dfxGCC.directive('dfxGccWebFab', ['$timeout', function($timeout) {
 						$('body md-tooltip').remove();
 					}
 					scope.hideTooltip();
+
+                    scope.checkActionItems = function(){
+                        var dfxFabActionItems = $(element).find('.md-fab-action-item');
+                        
+                        angular.forEach(dfxFabActionItems, function(el, index){
+                            var el_styles = $(el).attr('style');
+
+                            if(el_styles.indexOf('translateX(0px)') > -1 || el_styles.indexOf('translateY(0px)') > -1){
+                                $(el).removeAttr('style');
+                            }
+                        });
+                    }
+                    $timeout(function() {
+                        scope.checkActionItems();
+                    }, 0);  
 				});
 			}
 		}
