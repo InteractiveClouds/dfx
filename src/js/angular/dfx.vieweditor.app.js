@@ -2282,7 +2282,7 @@ dfxViewEditorApp.directive('dfxVeColorPicker', ['$timeout', function($timeout) {
                 });
                 $scope.setColor = function() {
                     var inputColor = $("input#"+element_id).val();
-                    if (inputColor) {
+                    if (inputColor && inputColor.indexOf('#') > 0) {
                         $("#"+element_id).spectrum("set", inputColor);
                     }
                 }
@@ -3445,7 +3445,7 @@ dfxViewEditorApp.directive('dfxVeMenuExpression', [ '$timeout', '$compile', func
     }
 }]);
 
-dfxViewEditorApp.directive('dfxVeTreeEditor', [ '$mdDialog', '$mdToast', '$http', '$timeout', function($mdDialog, $mdToast, $http, $timeout) {
+dfxViewEditorApp.directive('dfxVeTreeEditor', [ '$mdDialog', '$mdToast', '$http', '$timeout', '$compile','$q', function($mdDialog, $mdToast, $http, $timeout, $compile, $q) {
     return {
         restrict: 'E',
         transclude: true,
@@ -3454,6 +3454,10 @@ dfxViewEditorApp.directive('dfxVeTreeEditor', [ '$mdDialog', '$mdToast', '$http'
             return '/gcontrols/web/treeview_picker.html';
         },
         link: function(scope, element, attrs) {
+            scope.gcJsonSample = {};
+            scope.gcSamplesArray = {};
+            scope.scriptSampleName = '';
+            scope.scriptSampleNameValid = {"value": false};
             scope.showTreeEditor = function(ev) {
                 scope.attributes.static.status = "overridden";
                 $mdDialog.show({
@@ -3481,6 +3485,7 @@ dfxViewEditorApp.directive('dfxVeTreeEditor', [ '$mdDialog', '$mdToast', '$http'
                             scope.gcTreeItems = $("md-content.tree-structure").find('li');
                             $("md-content.tree-structure > ul > li:first-child").addClass('active');
                             scope.parentTreeItem = $("md-content.tree-structure").find('li.active');
+                            scope.checkMenuRootPadding();
                         }, 0);
                     },
                     controller: function(){
@@ -3681,6 +3686,95 @@ dfxViewEditorApp.directive('dfxVeTreeEditor', [ '$mdDialog', '$mdToast', '$http'
                                 }, 0);
                             }
                             scope.checkMenuRootPadding();
+                        }                        
+                        scope.focusSamples = function(){$timeout(function(){$("#samples-btn").focus();},100);}
+                        scope.runJsonEditor = function(model){
+                            scope.dfxSampleJsonEditor = null;
+                            var container = document.getElementById('dfx-ve-sample-json'),
+                                options = { mode: 'code', modes: ['tree','form','code','text','view'], history: true };
+                            $timeout(function(){scope.dfxSampleJsonEditor = new JSONEditor(container, options, model);}, 0);
+                        }
+                        scope.checkNames = function( propName ){
+                            switch (propName) {
+                                case 'name': scope.attributes.label.value = "name"; break;
+                                case 'children': scope.attributes.repeatable_property.value = "children"; break;
+                            }
+                        }
+                        scope.checkItemNames = function( item ) {
+                            if(item.hasOwnProperty('name')){scope.checkNames('name');}
+                            if(item.hasOwnProperty('children')){scope.checkNames('children');}
+                        }
+                        scope.fillPropertiesNames = function(sampleJson){for(var i = 0; i<sampleJson.length; i++){scope.checkItemNames(sampleJson[i]);};}
+                        scope.showSamples = function(){
+                            scope.samplesLoaded = $http.get('/gcontrols/web/gcs_json_samples.json').then(function(res){
+                                scope.gcSamplesArray = res.data['treeview'];
+                                scope.gcJsonSample = scope.gcSamplesArray[0];
+                            });
+                            $q.all([scope.samplesLoaded]).then(function(){
+                                $('body').append('<div class="dfx-ve-dialog"></div>');
+                                $('.dfx-ve-dialog').load('/gcontrols/web/gcs_json_samples.html', function(){
+                                    $compile($('.dfx-ve-dialog').contents())(scope);
+                                    $('.sp-container').remove();
+                                    $('.dfx-ve-content-dialog').addClass('active');
+                                    $('#dfx-ve-gc-samples-dialog').keyup(function(e) {
+                                        if(e.which === 13) {
+                                            var activeTagName = document.activeElement.tagName;
+                                            if(activeTagName!=='TEXTAREA' && activeTagName!=='BUTTON') $('#dfx-copy-sample-btn').click();
+                                        }
+                                        if(e.which === 27) scope.closeSamples();
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                    });
+                                    $timeout(function(){
+                                        scope.runJsonEditor(scope.gcSamplesArray[0].value);
+                                        $(".dfx-ve-content-categories li").eq(0).find('span').addClass('active');
+                                        scope.scriptSampleName!=='' ? $("#dfx-copy-sample-btn").focus() : $("#dfx-json-sample-name").focus();
+                                    }, 250);
+                                });
+                            });
+                        }
+                        scope.selectSample = function(ev, sample) {
+                            scope.gcJsonSample = sample;
+                            scope.dfxSampleJsonEditor ? scope.dfxSampleJsonEditor.set(sample.value) : scope.runJsonEditor(sample.value);
+                            $(".dfx-ve-content-categories span").removeClass('active');
+                            $(ev.target).addClass('active');
+                            scope.scriptSampleName!=='' ? $("#dfx-copy-sample-btn").focus() : $("#dfx-json-sample-name").focus();
+                        }
+                        scope.addSampleToScript = function(){
+                            scope.fillPropertiesNames(scope.gcJsonSample.value);
+                            var sampleGet = scope.dfxSampleJsonEditor.get(),
+                                sampleStringified = JSON.stringify(sampleGet, null, '\t'),
+                                sampleStringified = sampleStringified.split("\n").join("\n\t"),
+                                scriptEditor = $('#dfx_script_editor.CodeMirror')[0].CodeMirror;
+                            $q.all([ scope.fillPropertiesNames, scope.checkItemNames, scope.checkNames ]).then(function(){
+                                scope.attributes.dynamic.value = scope.scriptSampleName;
+                                scope.attributes.label.status = "overridden";
+                                scope.attributes.repeatable_property.status = "overridden";
+                                scope.closeSamples();
+                                scope.closeDialog();
+                                $timeout(function(){
+                                    scope.changeViewMode('script');
+                                    scriptEditor.focus();
+                                    scriptEditor.setCursor({line: 4, ch: 0});
+                                    var sampleToAdd = "\t$scope." + scope.scriptSampleName + " = " + sampleStringified + ";\n";
+                                    scriptEditor.replaceSelection(sampleToAdd);
+                                    scope.changeViewMode('design');
+                                    $mdToast.show(
+                                        $mdToast.simple()
+                                        .textContent('JSON Sample "'+scope.gcJsonSample.name+'" has been added to the Script.')
+                                        .theme('success-toast')
+                                        .position('top right')
+                                        .hideDelay(3000)
+                                    );
+                                    scope.closeDialog();
+                                }, 250);
+                            });
+                        }
+                        scope.closeSamples = function() {
+                            $('.dfx-ve-content-dialog').removeClass('active');
+                            angular.element($('.dfx-ve-dialog')).remove();
+                            $('.sp-container').remove();
+                            if($('#dfx-ve-menu-editor-dialog').length > 0) $('#dfx-ve-menu-editor-dialog').focus();
                         }
                         scope.closeDialog = function() {
                             $mdDialog.hide();

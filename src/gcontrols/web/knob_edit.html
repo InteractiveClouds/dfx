@@ -91,7 +91,7 @@
 				</li>
 				<li class="col-md-12">
 					<span class="col-md-4">Display Input:<dfx-gc-template-locking attr_name="staticArray"></dfx-gc-template-locking></span>
-					<span class="col-md-8"><md-checkbox style="margin: 0" class="md-primary" ng-model="attributes.options.value.displayInput" ng-change="overrideAttribute('options.value.displayInput')" ng-focus="cacheAttributeOldValue({'name':'options.value.displayInput'})" ng-blur="cacheAttributeNewValue('name')" aria-label="options"></md-checkbox></span>
+					<span class="col-md-8"><md-checkbox style="margin: 0" class="md-primary" ng-model="attributes.options.value.displayInput" ng-change="overrideAttribute('options.value.displayInput')" ng-focus="cacheAttributeOldValue({'name':'options.value.displayInput'})" ng-blur="cacheAttributeNewValue('options.value.displayInput')" aria-label="options"></md-checkbox></span>
 				</li>
 				<li class="col-md-12">
 					<span class="col-md-4">Display Previous:<dfx-gc-template-locking attr_name="staticArray"></dfx-gc-template-locking></span>
@@ -145,7 +145,7 @@
 						<li class="col-md-12">
 							<span class="col-md-4">Bar Color:</span>
 							<div class="col-md-8 dfx-ve-property-treeview-color-picker" layout="row" style="padding:0;">
-								<dfx-ve-color-picker name="bar-color" class="col-md-11" ng-model="attributes.options.value.barColor"></dfx-ve-color-picker>
+								<dfx-ve-color-picker name="bar-color" class="col-md-11" ng-model="attributes.options.value.barColor" ng-change="overrideAttribute('options')" ng-focus="cacheAttributeOldValue({'name':'options.value.barColor'})" ng-blur="cacheAttributeNewValue('options.value.barColor')"></dfx-ve-color-picker>
 							</div>
 						</li>
 						<li class="col-md-12">
@@ -159,13 +159,13 @@
 						<li class="col-md-12">
 							<span class="col-md-4">Track Color:</span>
 							<div class="col-md-8 dfx-ve-property-treeview-color-picker" layout="row" style="padding:0;">
-								<dfx-ve-color-picker name="track-color" class="col-md-11" ng-model="attributes.options.value.trackColor"></dfx-ve-color-picker>
+								<dfx-ve-color-picker name="track-color" class="col-md-11" ng-model="attributes.options.value.trackColor" ng-change="overrideAttribute('options')" ng-focus="cacheAttributeOldValue({'name':'options.value.trackColor'})" ng-blur="cacheAttributeNewValue('options.value.trackColor')"></dfx-ve-color-picker>
 							</div>
 						</li>
 						<li class="col-md-12">
 							<span class="col-md-4">Previous Bar Color:</span>
 							<div class="col-md-8 dfx-ve-property-treeview-color-picker" layout="row" style="padding:0;">
-								<dfx-ve-color-picker name="prev-bar-color" class="col-md-11" ng-model="attributes.options.value.prevBarColor"></dfx-ve-color-picker>
+								<dfx-ve-color-picker name="prev-bar-color" class="col-md-11" ng-model="attributes.options.value.prevBarColor" ng-change="overrideAttribute('options')" ng-focus="cacheAttributeOldValue({'name':'options.value.prevBarColor'})" ng-blur="cacheAttributeNewValue('options.value.prevBarColor')"></dfx-ve-color-picker>
 							</div>
 						</li>
 						<li class="col-md-12">
@@ -175,13 +175,13 @@
 						<li class="col-md-12">
 							<span class="col-md-4">Text Color:</span>
 							<div class="col-md-8 dfx-ve-property-treeview-color-picker" layout="row" style="padding:0;">
-								<dfx-ve-color-picker name="text-color" class="col-md-11" ng-model="attributes.options.value.textColor"></dfx-ve-color-picker>
+								<dfx-ve-color-picker name="text-color" class="col-md-11" ng-model="attributes.options.value.textColor" ng-change="overrideAttribute('options')" ng-focus="cacheAttributeOldValue({'name':'options.value.textColor'})" ng-blur="cacheAttributeNewValue('options.value.textColor')"></dfx-ve-color-picker>
 							</div>
 						</li>
 						<li class="col-md-12">
 							<span class="col-md-4">Background Color:</span>
 							<div class="col-md-8 dfx-ve-property-treeview-color-picker" layout="row" style="padding:0;">
-								<dfx-ve-color-picker name="bg-color" class="col-md-11" ng-model="attributes.options.value.bgColor"></dfx-ve-color-picker>
+								<dfx-ve-color-picker name="bg-color" class="col-md-11" ng-model="attributes.options.value.bgColor" ng-change="overrideAttribute('options')" ng-focus="cacheAttributeOldValue({'name':'options.value.bgColor'})" ng-blur="cacheAttributeNewValue('options.value.bgColor')"></dfx-ve-color-picker>
 							</div>
 						</li>
 						<li class="col-md-12">
@@ -212,7 +212,7 @@
 						<li class="col-md-12">
 							<span class="col-md-4">Color:</span>
 							<div class="col-md-8 dfx-ve-property-treeview-color-picker" layout="row" style="padding:0;">
-								<dfx-ve-color-picker name="" class="col-md-11" ng-model="attributes.options.value.skin.color"></dfx-ve-color-picker>
+								<dfx-ve-color-picker name="" class="col-md-11" ng-model="attributes.options.value.skin.color" ng-change="overrideAttribute('options')" ng-focus="cacheAttributeOldValue({'name':'options.value.skin.color'})" ng-blur="cacheAttributeNewValue('options.value.skin.color')"></dfx-ve-color-picker>
 							</div>
 						</li>
 						<li class="col-md-12">
@@ -258,7 +258,7 @@
 						<li class="col-md-12">
 							<span class="col-md-4">Color:</span>
 							<div class="col-md-8 dfx-ve-property-treeview-color-picker" layout="row" style="padding:0;">
-								<dfx-ve-color-picker name="sub-text-color" class="col-md-11" ng-model="attributes.options.value.subText.color"></dfx-ve-color-picker>
+								<dfx-ve-color-picker name="sub-text-color" class="col-md-11" ng-model="attributes.options.value.subText.color" ng-change="overrideAttribute('options')" ng-focus="cacheAttributeOldValue({'name':'options.value.subText.color'})" ng-blur="cacheAttributeNewValue('options.value.subText.color')"></dfx-ve-color-picker>
 							</div>
 						</li>
 						<li class="col-md-12">
@@ -286,7 +286,7 @@
 						<li class="col-md-12">
 							<span class="col-md-4">Color:</span>
 							<div class="col-md-8 dfx-ve-property-treeview-color-picker" layout="row" style="padding:0;">
-								<dfx-ve-color-picker name="" class="col-md-11" ng-model="attributes.options.value.scale.color"></dfx-ve-color-picker>
+								<dfx-ve-color-picker name="scale-color" class="col-md-11" ng-model="attributes.options.value.scale.color" ng-change="overrideAttribute('options')" ng-focus="cacheAttributeOldValue({'name':'options.value.scale.color'})" ng-blur="cacheAttributeNewValue('options.value.scale.color')"></dfx-ve-color-picker>
 							</div>
 						</li>
 						<li class="col-md-12">
