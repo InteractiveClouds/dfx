@@ -809,11 +809,13 @@ DfxVisualBuilder.reindexLayoutChildComponents = function (removed_row_index, rem
 /** 
  * Pastes a component to the selected container
  */
-DfxVisualBuilder.pasteComponent = function (component_to_paste_definition, current_selected_component, card) {
+DfxVisualBuilder.pasteComponent = function (component_to_paste_definition, current_selected_component, card, do_not_reset_ids) {
     var container_definition = DfxVisualBuilder.movingComponentHelper.getTargetContainerDefinition(component_to_paste_definition, current_selected_component);
 
     if (container_definition) {
-        DfxVisualBuilder.movingComponentHelper.setComponentsNewIdsAndNames(component_to_paste_definition, card, DfxVisualBuilder.movingComponentHelper.getViewDefinition());
+        if (! do_not_reset_ids) {
+            DfxVisualBuilder.movingComponentHelper.setComponentsNewIdsAndNames(component_to_paste_definition, card, DfxVisualBuilder.movingComponentHelper.getViewDefinition());
+        }
 
         DfxVisualBuilder.movingComponentHelper.addComponentToDefinition(component_to_paste_definition, container_definition, card, true);
 
