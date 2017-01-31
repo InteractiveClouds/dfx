@@ -3262,10 +3262,13 @@ dfxGCC.directive('dfxGccWebFab', ['$timeout', function($timeout) {
                         
                         angular.forEach(dfxFabActionItems, function(el, index){
                             var el_styles = $(el).attr('style');
-
-                            if(el_styles.indexOf('translateX(0px)') > -1 || el_styles.indexOf('translateY(0px)') > -1){
-                                $(el).removeAttr('style');
-                            }
+                            
+                            if(el_styles && 
+                                (
+                                    el_styles.indexOf('translateX(0px)') > -1 || 
+                                    el_styles.indexOf('translateY(0px)') > -1
+                                )
+                            ) $(el).removeAttr('style');
                         });
                     }
                     $timeout(function() {
