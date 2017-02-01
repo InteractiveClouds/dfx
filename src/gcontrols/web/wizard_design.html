@@ -2,13 +2,13 @@
     <div style="height:1500px;{{attributes.style.value}}" ng-class="[attributes.classes.value, attributes.whiteframe.value]" flex="100" layout="column">
         <dfx-gc-toolbar-design></dfx-gc-toolbar-design>
         <md-content id="{{component_id}}_content" flex="100" style="{{attributes.bodyStyle.value}}" ng-hide="attributes.toolbar.collapsed.designValue" layout="column">
-            <md-tabs md-no-ink-bar="{{attributes.inkBar.value==='disabled' ? 'true': 'false'}}" md-center-tabs="{{attributes.centerSteps.value===true ? 'true': 'false'}}"
+            <md-tabs style="{{(!attributes.autoHeight || attributes.autoHeight.value != true) ? 'height:1500px' : ''}}" md-no-ink-bar="{{attributes.inkBar.value==='disabled' ? 'true': 'false'}}" md-center-tabs="{{attributes.centerSteps.value===true ? 'true': 'false'}}"
                      md-dynamic-height md-border-bottom md-selected="attributes.stepIndex.value" md-align-tabs="{{attributes.stepAlign.value}}" md-stretch-tabs="{{attributes.stretching.value}}"
                      flex="100" layout="column" dfx-gc-wizard-design>
-                <md-tab ng-repeat="step in attributes.steps.value track by $index" label="{{step.label | checkExpression}}">
-                    <md-content flex="100" layout="row" style="{{step.style.value}}" ng-class="step.classes.value">
-                        <div flex="100" id="{{component_id}}_step_{{$index}}" layout="column">
-                            <div ng-repeat="row in step.layout.rows track by $index" id="{{component_id}}_layout_{{$parent.$index}}_row_{{$index}}" layout="row" layout-wrap
+                <md-tab style="{{(!attributes.autoHeight || attributes.autoHeight.value != true) ? 'height:1500px' : ''}}" ng-repeat="step in attributes.steps.value track by $index" label="{{step.label | checkExpression}}">
+                    <md-content style="{{(!attributes.autoHeight || attributes.autoHeight.value != true) ? 'height:1500px;' + step.style.value : step.style.value}}" flex="100" layout="row" layout-padding ng-class="step.classes.value">
+                        <div style="{{(!attributes.autoHeight || attributes.autoHeight.value != true) ? 'height:1500px' : ''}}" flex="100" id="{{component_id}}_step_{{$index}}" layout="column">
+                            <div style="{{(!attributes.autoHeight || attributes.autoHeight.value != true) ? 'height:1500px' : ''}}" ng-repeat="row in step.layout.rows track by $index" id="{{component_id}}_layout_{{$parent.$index}}_row_{{$index}}" layout="row" layout-wrap
                                 flex="{{(!attributes.autoHeight || attributes.autoHeight.value != true) ? row.height.value : 'none'}}">
                                 <div ng-repeat="col in row.cols track by $index" id="{{component_id}}_layout_{{$parent.$parent.$index}}_row_{{$parent.$index}}_column_{{$index}}" flex="{{col.width.value}}"
                                      layout="{{col.orientation.value}}"
