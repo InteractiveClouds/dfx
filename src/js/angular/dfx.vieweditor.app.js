@@ -578,7 +578,8 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
 
     $scope.unselectComponent = function() {
         if ($scope.gc_selected != null) {
-            $('#'+$scope.gc_selected.id).css('border', '0px');
+            // $('#'+$scope.gc_selected.id).css('border', '0px');
+            $('#'+$scope.gc_selected.id).removeClass('dfx-ve-gc-selected');
             $scope.gc_selected = null;
         }
     };
@@ -1344,10 +1345,11 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     $scope.loadPropertyPanel = function( component_id ) {
         var component = $scope.gc_instances[ component_id ];
         if ($scope.gc_selected != null) {
-            $('#'+$scope.gc_selected.id).css('border', '0px');
+            // $('#'+$scope.gc_selected.id).css('border', '0px');
+            $('#'+$scope.gc_selected.id).removeClass('dfx-ve-gc-selected');
         }
         $scope.gc_selected = $scope.gc_instances[component_id];
-        $('#'+$scope.gc_selected.id).css('border', '2px #000 solid');
+        $('#'+$scope.gc_selected.id).addClass('dfx-ve-gc-selected');
 
         // Destroy GC Property Panel scope and clean up DOM bindings
         var gc_property_panel_scope = angular.element( $('#dfx_visual_editor_property_panel').children('div') ).scope();
