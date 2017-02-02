@@ -527,13 +527,15 @@ md-dialog .dfx-ve-property-treeview label:before {
   top: 0;
   position: absolute;
   z-index: 10;
-  width: 24px;
-  height: 24px;
-  margin-left: -5px;
-  margin-top: -5px;
-  border-radius: 50%;
-  background: #e1e1e1;
-  color: #7B7B7B;
+  width: 20px;
+  height: 20px;
+  margin-left: 0px;
+  margin-top: 0px;
+  border-radius: 0 0 50% 0;
+  background: #383838;
+  color: #ffffff;
+  text-align: center;
+  text-decoration: none !important;
   display:none;
 }
 div[gc-type="panel"] > .dfx-ve-gc-handle {
@@ -545,13 +547,15 @@ div[gc-type="panel"] > .dfx-ve-gc-handle {
   bottom: 0;
   position: absolute;
   z-index: 10;
-  width: 24px;
-  height: 24px;
-  margin-right: -5px;
-  margin-bottom: -5px;
-  border-radius: 50%;
-  background: #e1e1e1;
-  color: #7B7B7B;
+  width: 20px;
+  height: 20px;
+  margin-right: 0px;
+  margin-bottom: 0px;
+  border-radius: 50% 0 0 0;
+  background: #383838;
+  color: #ffffff;
+  text-align: center;
+  text-decoration: none !important;
   display:none;
 }
 div[gc-type="panel"] > .dfx-ve-gc-handle-remove {
@@ -563,13 +567,15 @@ div[gc-type="panel"] > .dfx-ve-gc-handle-remove {
   top: 0;
   position: absolute;
   z-index: 10;
-  width: 24px;
-  height: 24px;
-  margin-right: -5px;
-  margin-top: -5px;
-  border-radius: 50%;
-  background: #e1e1e1;
-  color: #7B7B7B;
+  width: 20px;
+  height: 20px;
+  margin-right: 0px;
+  margin-top: 0px;
+  border-radius: 0 0 0 50%;
+  background: #383838;
+  color: #ffffff;
+  text-align: center;
+  text-decoration: none !important;
   display:none;
 }
 div[gc-type="panel"] > .dfx-ve-gc-handle-duplicate {
@@ -581,13 +587,15 @@ div[gc-type="panel"] > .dfx-ve-gc-handle-duplicate {
   bottom: 0;
   position: absolute;
   z-index: 10;
-  width: 24px;
-  height: 24px;
-  margin-left: -5px;
-  margin-bottom: -5px;
-  border-radius: 50%;
-  background: #e1e1e1;
-  color: #7B7B7B;
+  width: 20px;
+  height: 20px;
+  margin-left: 0px;
+  margin-bottom: 0px;
+  border-radius: 0 50% 0 0;
+  background: #383838;
+  color: #ffffff;
+  text-align: center;
+  text-decoration: none !important;
   display:none;
 }
 div[gc-type="panel"] > .dfx-ve-gc-handle-template {
@@ -597,22 +605,22 @@ div[gc-type="panel"] > .dfx-ve-gc-handle-template {
 
 .dfx-ve-gc-handle > i {
   font-size: 14px;
-  padding: 4px 5px;
+  padding: 0;
 }
 
 .dfx-ve-gc-handle-remove > i {
   font-size: 14px;
-  padding: 4px 6px;
+  padding: 0;
 }
 
 .dfx-ve-gc-handle-duplicate > i {
   font-size: 14px;
-  padding: 4px 6px;
+  padding: 0;
 }
 
 .dfx-ve-gc-handle-template > i {
   font-size: 14px;
-  padding: 4px 6px;
+  padding: 0;
 }
 
 .dfx-ve-gc-handle-container {
@@ -626,21 +634,31 @@ div[gc-type="panel"] > .dfx-ve-gc-handle-template {
   flex: none;
 }
 
-.dfx-ve-gc-handle-container:hover > .dfx-ve-gc-handle {
-  display: block !important;
+.dfx-ve-gc-selected { border: 2px solid #000000; }
+.dfx-ve-gc-selected[dfx-gc-web-icon]:hover, 
+.dfx-ve-gc-selected[dfx-gc-web-statictext]:hover, 
+.dfx-ve-gc-selected[dfx-gc-web-html]:hover {
+  min-width: 48px;
+  min-height: 48px;
+}
+.dfx-ve-gc-selected .dfx-ve-gc-handle,
+.dfx-ve-gc-selected .dfx-ve-gc-handle-remove,
+.dfx-ve-gc-selected .dfx-ve-gc-handle-template,
+.dfx-ve-gc-selected .dfx-ve-gc-handle-duplicate {
+  transition: all 0.3s ease;
 }
 
-.dfx-ve-gc-handle-container:hover > .dfx-ve-gc-handle-remove {
-  display: block !important;
-}
+.dfx-ve-gc-handle-container.dfx-ve-gc-selected:hover > .dfx-ve-gc-handle { display: block !important; }
+.dfx-ve-gc-handle:hover { color: white; }
 
-.dfx-ve-gc-handle-container:hover > .dfx-ve-gc-handle-template {
-  display: block !important;
-}
+.dfx-ve-gc-handle-container.dfx-ve-gc-selected:hover > .dfx-ve-gc-handle-remove { display: block !important; }
+.dfx-ve-gc-handle-remove:hover { color: white; }
 
-.dfx-ve-gc-handle-container:hover > .dfx-ve-gc-handle-duplicate {
-  display: block !important;
-}
+.dfx-ve-gc-handle-container.dfx-ve-gc-selected:hover > .dfx-ve-gc-handle-template { display: block !important; }
+.dfx-ve-gc-handle-template:hover { color: white; }
+
+.dfx-ve-gc-handle-container.dfx-ve-gc-selected:hover > .dfx-ve-gc-handle-duplicate { display: block !important; }
+.dfx-ve-gc-handle-duplicate:hover { color: white; }
 
 .dfx-ve-property-treeview-content md-input-container {
   margin: 0;
