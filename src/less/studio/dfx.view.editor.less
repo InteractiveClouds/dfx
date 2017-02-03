@@ -77,6 +77,8 @@ md-toast.md-error-toast-theme div {
 
 #dfx_visual_editor_gc_palette_content {
   padding:0;
+  margin-bottom: -12px;
+  background-color: #383838;
 }
 
 #dfx_visual_editor_gc_palette_content ul {
@@ -635,10 +637,10 @@ div[gc-type="panel"] > .dfx-ve-gc-handle-template {
 }
 
 .dfx-ve-gc-selected { border: 2px solid #000000; }
-.dfx-ve-gc-selected[dfx-gc-web-icon]:hover, 
-.dfx-ve-gc-selected[dfx-gc-web-image]:hover, 
-.dfx-ve-gc-selected[dfx-gc-web-statictext]:hover, 
-.dfx-ve-gc-selected[dfx-gc-web-panel]:hover, 
+.dfx-ve-gc-selected[dfx-gc-web-icon]:hover,
+.dfx-ve-gc-selected[dfx-gc-web-image]:hover,
+.dfx-ve-gc-selected[dfx-gc-web-statictext]:hover,
+.dfx-ve-gc-selected[dfx-gc-web-panel]:hover,
 .dfx-ve-gc-selected[dfx-gc-web-html]:hover {
   min-width: 48px;
   min-height: 48px;
@@ -1257,6 +1259,12 @@ md-content#dfx-ve-main-content > md-tabs {
     cursor: move;
 }
 
+.dfx-ve-floating-panel-header-gc-templates {
+    border: 1px #4CD5F3 solid;
+    background: #4CD5F3;
+    color: #4a4a4a;
+}
+
 .dfx-ve-floating-panel {
     position: fixed!important;
     width: 400px;
@@ -1481,7 +1489,7 @@ div.dfx-ve-multiple-options-container {
 
 /* GC Templates */
 .dfx-ve-gc-template-draggable-instance {
-  color: #fff;
+  color: #4a4a4a;
   font-size: 13px;
   line-height:20px;
   display: inline-block;
@@ -1491,7 +1499,7 @@ div.dfx-ve-multiple-options-container {
   margin-top:8px;
   margin-right:10px;
   padding:5px!important;
-  border: 1px solid gray;
+  border: 1px solid #4a4a4a;
   z-index: 10;
   white-space: nowrap;
   overflow: hidden;
@@ -1501,7 +1509,7 @@ div.dfx-ve-multiple-options-container {
 
 .dfx-ve-gc-template-draggable-instance i {
     margin-right:5px;
-    color: gray!important;
+    color: #4a4a4a!important;
 }
 
 .dfx-ve-gc-templates-handle {
@@ -1528,7 +1536,7 @@ div.dfx-ve-multiple-options-container {
 	margin-left: 10px;
 }
 .dfx-ve-gc-templates-locking-popmenu {
-	position: absolute;
+  position: absolute;
   z-index: 2000;
   width: 150px;
   min-height: 100px;
@@ -1559,13 +1567,14 @@ div.dfx-ve-multiple-options-container {
 }
 
 #dfx-ve-sidenav-gc-templates-content {
-    background: #383838;
+    background: #DCDCDC;
     height: 100%;
     overflow-y: visible;
+    margin-bottom: -20px;
 }
 
 #dfx-ve-gc-template-draggable-instances {
-    color: #fff;
+    color: #4a4a4a;
     height: 100%;
     overflow-y: auto;
 }

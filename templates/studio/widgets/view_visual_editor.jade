@@ -227,11 +227,11 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", dfx-ve-ctr
                         a#dfx_visual_editor_property_title
                         div#dfx_visual_editor_property_panel
             md-sidenav#dfx-ve-sidenav-gc-templates.md-sidenav-left.md-whiteframe-z2(class = "dfx-ve-hidden-element", md-component-id="left", md-is-locked-open="$mdMedia('gt-md')", style="overflow-y: hidden;")
-                div#dfx-ve-sidenav-gc-templates-header(class = "dfx-ve-floating-panel-header") GC Templates
+                div#dfx-ve-sidenav-gc-templates-header(class = "dfx-ve-floating-panel-header dfx-ve-floating-panel-header-gc-templates") GC Templates
                 div.dfx-ve-floating-panel-collapser(ng-click="minimizeOrMaximizePanel('dfx-ve-sidenav-gc-templates')")
-                    md-icon#dfx-ve-sidenav-gc-templates-collapser(class="fa fa-minus-square-o", style="color: #fff;")
+                    md-icon#dfx-ve-sidenav-gc-templates-collapser(class="fa fa-minus-square-o", style="color: #4a4a4a;")
                 div.dfx-ve-floating-panel-closer(ng-click="closePanel('dfx-ve-sidenav-gc-templates')")
-                    md-icon(class="fa fa-close", style="color: #fff;", aria-label="Close Panel")
+                    md-icon(class="fa fa-close", style="color: #4a4a4a;", aria-label="Close Panel")
                 md-content#dfx-ve-sidenav-gc-templates-content(layout-padding show-gt-md)
                     div#dfx_visual_editor_gc_palette_content.dfx-ve-palette-treeview.hover.dfx-ve-palette-gc-templates-pop-menu
                         ul(style="border-top: 1px #6b6a6a solid")
@@ -272,7 +272,7 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", dfx-ve-ctr
                                 ul.dfx-ve-palette-treeview-content(gc-template-cat="layout", style="margin-bottom:5px")
                     div#dfx-ve-gc-template-draggable-instances
                         div(style="margin-bottom:10px;")
-                            input(type="text", ng-model="gc_template_filter", ng-change="filterGcTemplates()", placeholder="Filter GC Template", style="border: 1px solid #6b6a6a;color:#fff;background: 0 0;width:100%;")
+                            input(type="text", ng-model="gc_template_filter", ng-change="filterGcTemplates()", placeholder="Filter GC Template", style="border: 1px solid #4a4a4a;color:#4a4a4a;background: 0 0;width:100%;")
                         div(ng-if="gc_templates_to_drag_drop_filtered.length == 0 && gc_template_filter == ''") This GC does not have created templates.
                         ul(style="padding-left:0;")
                             li(ng-repeat="gc_template in gc_templates_to_drag_drop_filtered", style="padding: 5px;")
@@ -280,7 +280,7 @@ div#dfx_src_widget_editor(ng-controller="dfx_view_editor_controller", dfx-ve-ctr
                                     i(class="fa fa-arrows")
                                     | {{gc_template.name}}
                                 i(class="fa fa-edit", ng-click="openGcTemplateEditor(gc_template.name)", style="cursor:pointer;")
-                                div(style="color:gray;") {{gc_template.description ? gc_template.description : gc_template.name}}
+                                div(style="color:#4a4a4a;") {{gc_template.description ? gc_template.description : gc_template.name}}
     pre#dfx_src_editor(style="border-radius: 0;display: none;").
         #{widget.src}
     pre#dfx_script_editor(style="border-radius: 0;display: none;").
