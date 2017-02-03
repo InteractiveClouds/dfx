@@ -47,67 +47,94 @@
 			<label for="item-2">Styling Attributes</label>
 			<ul class="dfx-ve-property-treeview-content">
                 <li class="col-md-12">
-					<span class="col-md-12">
-						<div layout>
-							<span class="col-md-3" style="margin-top:10px;margin-left:-5px;">Flex Width:<dfx-gc-template-locking attr_name="flex"></dfx-gc-template-locking></span>
-                            <md-slider class="md-primary" flex ng-model="attributes.flex.value" step="5" min="0" max="100" aria-label="Flex width:" ng-change="overrideAttribute('flex');changeWidth();rebuildCarousel();" ng-model-options="{ debounce: 500 }" ng-focus="cacheAttributeOldValue({'name':'flex'})" ng-blur="cacheAttributeNewValue('flex')">
-                            </md-slider>
-                            <div flex="20" layout layout-align="center center">
-                                <input flex type="number" step="5" min="0" max="100" ng-model="attributes.flex.value" aria-label="blue" aria-controls="flex-width" style="margin-left:5px; text-align: center" ng-change="overrideAttribute('flex');changeWidth();rebuildCarousel()" ng-focus="cacheAttributeOldValue({'name':'flex'})" ng-blur="cacheAttributeNewValue('flex')">
+                    <input class="dfx-ve-property-treeview-button" type="checkbox" checked aria-label="container-styling" id="container-styling" />
+                    <label for="container-styling" class="dfx-ve-property-title-level-1"><span>Container Styling<dfx-gc-template-locking attr_name="style,classes,dynamicClasses"></dfx-gc-template-locking></span></label>
+                    <ul class="dfx-ve-property-treeview-content">
+                        <li class="col-md-12">
+                            <span class="col-md-12">
+                                <div layout>
+                                    <span class="col-md-3" style="margin-top:10px;margin-left:-5px;">Flex Width:<dfx-gc-template-locking attr_name="flex"></dfx-gc-template-locking></span>
+                                    <md-slider class="md-primary" flex ng-model="attributes.flex.value" step="5" min="0" max="100" aria-label="Flex width:" ng-change="overrideAttribute('flex');changeWidth();rebuildCarousel();" ng-model-options="{ debounce: 500 }" ng-focus="cacheAttributeOldValue({'name':'flex'})" ng-blur="cacheAttributeNewValue('flex')">
+                                    </md-slider>
+                                    <div flex="20" layout layout-align="center center">
+                                        <input flex type="number" step="5" min="0" max="100" ng-model="attributes.flex.value" aria-label="blue" aria-controls="flex-width" style="margin-left:5px; text-align: center" ng-change="overrideAttribute('flex');changeWidth();rebuildCarousel()" ng-focus="cacheAttributeOldValue({'name':'flex'})" ng-blur="cacheAttributeNewValue('flex')">
+                                    </div>
+                                </div>
+                            </span>
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-4">Style:</span>
+                            <div class="col-md-8" layout="row">
+                                <input class="col-md-12" type="text" ng-model="attributes.style.value" ng-change="overrideAttribute('style')" ng-focus="cacheAttributeOldValue({'name':'style'})" ng-blur="cacheAttributeNewValue('style')" style="margin-left:-15px;"/>
+                                <dfx-ve-css-style></dfx-ve-css-style>
                             </div>
-                        </div>
-	  				</span>
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-4">Class:</span>
+                            <input class="col-md-8" type="text" ng-model="attributes.classes.value" ng-change="overrideAttribute('classes')" ng-focus="cacheAttributeOldValue({'name':'classes'})" ng-blur="cacheAttributeNewValue('classes')"/>
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-4">Dynamic Class:</span>
+                            <input class="col-md-8" type="text" ng-model="attributes.dynamicClasses.value" ng-change="overrideAttribute('dynamicClasses')" ng-focus="cacheAttributeOldValue({'name':'dynamicClasses'})" ng-blur="cacheAttributeNewValue('dynamicClasses')"/>
+                        </li>
+                    </ul>
                 </li>
                 <li class="col-md-12">
-                    <span class="col-md-4">Icon if Opened:<dfx-gc-template-locking attr_name="isOpened"></dfx-gc-template-locking></span>
-                    <div class="col-md-8" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.isOpened.value" ng-change="overrideAttribute('isOpened');ifShowIconTypes(attributes.isOpened.value, 'isOpened')" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue({'name':'isOpened'})" ng-blur="cacheAttributeNewValue('isOpened')"/>
-                        <md-icon ng-click="showFontIcons($event, attributes.isOpened)" dfx-ve-picker-icon dfx-picker-property="icon" class="dfx-ve-picker-icon fa fa-ellipsis-h"></md-icon>
-                    </div>
-                </li>
-                <li class="col-md-12" ng-show="showOpenedIconTypes">
-                    <span class="col-md-4">Icon Type if Opened:<dfx-gc-template-locking attr_name="isOpened.type"></dfx-gc-template-locking></span>
-                    <div class="col-md-8" layout="row" style="padding: 0 0 8px 0">
-                        <md-radio-group ng-model="attributes.isOpened.type">
-                            <md-radio-button value="svg-icon" ngChange="overrideAttribute('isOpened.type')" style="margin: 0;" class="md-primary">SVG Icon</md-radio-button>
-                            <md-radio-button value="fa-icon" ngChange="overrideAttribute('isOpened.type')" style="margin: 0;" class="md-primary">Font Awesome Icon</md-radio-button>
-                        </md-radio-group>
-                    </div>
-                </li>
-                <li class="col-md-12">
-                    <span class="col-md-4">Icon if Closed:<dfx-gc-template-locking attr_name="isClosed"></dfx-gc-template-locking></span>
-                    <div class="col-md-8" layout="row">
-                        <input class="col-md-12" type="text" ng-model="attributes.isClosed.value" ng-change="overrideAttribute('isClosed');ifShowIconTypes(attributes.isClosed.value, 'isClosed')" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue({'name':'isClosed'})" ng-blur="cacheAttributeNewValue('isClosed')"/>
-                        <md-icon ng-click="showFontIcons($event, attributes.isClosed)" dfx-ve-picker-icon dfx-picker-property="icon" class="dfx-ve-picker-icon fa fa-ellipsis-h"></md-icon>
-                    </div>
-                </li>
-                <li class="col-md-12" ng-show="showClosedIconTypes">
-                    <span class="col-md-4">Icon Type if Closed:<dfx-gc-template-locking attr_name="isClosed.type"></dfx-gc-template-locking></span>
-                    <div class="col-md-8" layout="row" style="padding: 0 0 8px 0">
-                        <md-radio-group ng-model="attributes.isClosed.type">
-                            <md-radio-button value="svg-icon" ngChange="overrideAttribute('isClosed.type')" style="margin: 0;" class="md-primary">SVG Icon</md-radio-button>
-                            <md-radio-button value="fa-icon" ngChange="overrideAttribute('isClosed.type')" style="margin: 0;" class="md-primary">Font Awesome Icon</md-radio-button>
-                        </md-radio-group>
-                    </div>
-                </li>
-                <li class="col-md-12">
-                    <span class="col-md-4">Icon Color:<dfx-gc-template-locking attr_name="color"></dfx-gc-template-locking></span>
-                    <input class="col-md-8" type="text" ng-model="attributes.color.value" ng-change="overrideAttribute('color')" ng-focus="cacheAttributeOldValue({'name':'color'})" ng-blur="cacheAttributeNewValue('color')"/>
-                </li>
-				<li class="col-md-12">
-					<span class="col-md-4">Style:<dfx-gc-template-locking attr_name="style"></dfx-gc-template-locking></span>
-					<div class="col-md-8" layout="row">
-						<input class="col-md-12" type="text" ng-model="attributes.style.value" ng-change="overrideAttribute('style')" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue({'name':'style'})" ng-blur="cacheAttributeNewValue('style')"/>
-						<dfx-ve-css-style></dfx-ve-css-style>
-					</div>
-				</li>
-                <li class="col-md-12">
-                    <span class="col-md-4">Class:<dfx-gc-template-locking attr_name="classes"></dfx-gc-template-locking></span>
-                    <input class="col-md-8" type="text" ng-model="attributes.classes.value" ng-change="overrideAttribute('classes')" ng-focus="cacheAttributeOldValue({'name':'classes'})" ng-blur="cacheAttributeNewValue('classes')"/>
-                </li>
-                <li class="col-md-12">
-                    <span class="col-md-4">Dynamic Class:<dfx-gc-template-locking attr_name="dynamicClasses"></dfx-gc-template-locking></span>
-                    <input class="col-md-8" type="text" ng-model="attributes.dynamicClasses.value"  ng-change="overrideAttribute('dynamicClasses')" ng-focus="cacheAttributeOldValue({'name':'dynamicClasses'})" ng-blur="cacheAttributeNewValue('dynamicClasses')"/>
+                    <input class="dfx-ve-property-treeview-button" type="checkbox" checked aria-label="item-styling" id="item-styling" />
+                    <label for="item-styling" class="dfx-ve-property-title-level-1"><span>Item Styling<dfx-gc-template-locking attr_name="itemStyle"></dfx-gc-template-locking></span></label>
+                    <ul class="dfx-ve-property-treeview-content">
+                        <li class="col-md-12">
+                            <span class="col-md-4">Icon if Opened:<dfx-gc-template-locking attr_name="isOpened"></dfx-gc-template-locking></span>
+                            <div class="col-md-8" layout="row">
+                                <input class="col-md-12" type="text" ng-model="attributes.isOpened.value" ng-change="overrideAttribute('isOpened');ifShowIconTypes(attributes.isOpened.value, 'isOpened')" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue({'name':'isOpened'})" ng-blur="cacheAttributeNewValue('isOpened')"/>
+                                <md-icon ng-click="showFontIcons($event, attributes.isOpened)" dfx-ve-picker-icon dfx-picker-property="icon" class="dfx-ve-picker-icon fa fa-ellipsis-h"></md-icon>
+                            </div>
+                        </li>
+                        <li class="col-md-12" ng-show="showOpenedIconTypes">
+                            <span class="col-md-4">Icon Type if Opened:<dfx-gc-template-locking attr_name="isOpened.type"></dfx-gc-template-locking></span>
+                            <div class="col-md-8" layout="row" style="padding: 0 0 8px 0">
+                                <md-radio-group ng-model="attributes.isOpened.type">
+                                    <md-radio-button value="svg-icon" ngChange="overrideAttribute('isOpened.type')" style="margin: 0;" class="md-primary">SVG Icon</md-radio-button>
+                                    <md-radio-button value="fa-icon" ngChange="overrideAttribute('isOpened.type')" style="margin: 0;" class="md-primary">Font Awesome Icon</md-radio-button>
+                                </md-radio-group>
+                            </div>
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-4">Icon if Closed:<dfx-gc-template-locking attr_name="isClosed"></dfx-gc-template-locking></span>
+                            <div class="col-md-8" layout="row">
+                                <input class="col-md-12" type="text" ng-model="attributes.isClosed.value" ng-change="overrideAttribute('isClosed');ifShowIconTypes(attributes.isClosed.value, 'isClosed')" style="margin-left:-15px;" ng-focus="cacheAttributeOldValue({'name':'isClosed'})" ng-blur="cacheAttributeNewValue('isClosed')"/>
+                                <md-icon ng-click="showFontIcons($event, attributes.isClosed)" dfx-ve-picker-icon dfx-picker-property="icon" class="dfx-ve-picker-icon fa fa-ellipsis-h"></md-icon>
+                            </div>
+                        </li>
+                        <li class="col-md-12" ng-show="showClosedIconTypes">
+                            <span class="col-md-4">Icon Type if Closed:<dfx-gc-template-locking attr_name="isClosed.type"></dfx-gc-template-locking></span>
+                            <div class="col-md-8" layout="row" style="padding: 0 0 8px 0">
+                                <md-radio-group ng-model="attributes.isClosed.type">
+                                    <md-radio-button value="svg-icon" ngChange="overrideAttribute('isClosed.type')" style="margin: 0;" class="md-primary">SVG Icon</md-radio-button>
+                                    <md-radio-button value="fa-icon" ngChange="overrideAttribute('isClosed.type')" style="margin: 0;" class="md-primary">Font Awesome Icon</md-radio-button>
+                                </md-radio-group>
+                            </div>
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-4">Icon Color:
+                                <dfx-gc-template-locking attr_name="color"></dfx-gc-template-locking>
+                            </span>
+                            <div class="col-md-8 dfx-ve-property-treeview-color-picker" layout="row" style="padding:0;">
+                                <dfx-ve-color-picker name="icon-color" class="col-md-11" ng-model="attributes.color.value" ng-change="overrideAttribute('color')" ng-focus="cacheAttributeOldValue({'name':'color'})" ng-blur="cacheAttributeNewValue('color')"></dfx-ve-color-picker>
+                            </div>
+                        </li>    
+                        <li class="col-md-12">
+                            <span class="col-md-4">Label style:</span>
+                            <div class="col-md-8" layout="row">
+                                <input class="col-md-12" type="text" ng-model="attributes.itemStyle.label.style" ng-change="overrideAttribute('itemStyle.label.style')" ng-focus="cacheAttributeOldValue({'name':'itemStyle.label.style'})" ng-blur="cacheAttributeNewValue('itemStyle.label.style')" style="margin-left:-15px;"/>
+                                <dfx-ve-css-style></dfx-ve-css-style>
+                            </div>
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-4">Label class:</span>
+                            <input class="col-md-8" type="text" ng-model="attributes.itemStyle.label.class" ng-change="overrideAttribute('itemStyle.label.class')" ng-focus="cacheAttributeOldValue({'name':'itemStyle.label.class'})" ng-blur="cacheAttributeNewValue('itemStyle.label.class')"/>
+                        </li>
+                    </ul>
                 </li>
 			</ul>
 		</li>

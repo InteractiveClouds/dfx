@@ -206,13 +206,13 @@ dfxGCC.directive('dfxGccWebPanel', ['$timeout', '$compile', function($timeout, $
                 scope.attributes.toolbar.rightMenu.equalButtonSize = { "value": false };
                 scope.attributes.toolbar.rightMenu.initialClick = { "value": false };
                 scope.attributes.toolbar.rightMenu.dynamicPresent = { "value": false };
-                scope.dfx_rep_panels;
+                scope.dfx_rep_panels = [];
                 if($(element).parent().attr('id') === 'dfx_view_preview_container'){
                     scope.attributes.isMainPanel.value = true;
                 }
                 var is_rep_title = (scope.attributes.repeat_in.value !=='' && scope.attributes.repeat_title.value) ? true : false,
                     is_rep_panel = scope.attributes.repeat_in.value !=='' ? true : false;
-
+                
                 scope.collapsePanelContent = function(ev, dfxIndex){
                     var toggle_btn_id = ev.target.id,
                         toggle_btn = $(element).find('#'+toggle_btn_id),
@@ -223,9 +223,9 @@ dfxGCC.directive('dfxGccWebPanel', ['$timeout', '$compile', function($timeout, $
                         toggle_btn.toggleClass('dfx-expanded');
                         collapse_container.slideToggle();
                     }
-                    if(!is_rep_title && is_rep_panel && scope.dfx_rep_panels>0){
+                    if(!is_rep_title && is_rep_panel && scope.dfx_rep_panels.length>0){
                         toggle_btn.toggleClass('dfx-expanded');
-                        for (var i = 0; i < scope.dfx_rep_panels; i++) {
+                        for (var i = 0; i < scope.dfx_rep_panels.length; i++) {
                             var item_collapse_cont = $(element).find('#'+collapse_cont_id+'_'+i);
                             if(item_collapse_cont.hasClass('ng-hide')) item_collapse_cont.css('display', 'none').removeClass('ng-hide');
                             toggle_btn.hasClass('dfx-expanded') ? item_collapse_cont.slideDown() : item_collapse_cont.slideUp();
@@ -3256,6 +3256,24 @@ dfxGCC.directive('dfxGccWebFab', ['$timeout', function($timeout) {
 						$('body md-tooltip').remove();
 					}
 					scope.hideTooltip();
+
+                    scope.checkActionItems = function(){
+                        var dfxFabActionItems = $(element).find('.md-fab-action-item');
+                        
+                        angular.forEach(dfxFabActionItems, function(el, index){
+                            var el_styles = $(el).attr('style');
+                            
+                            if(el_styles && 
+                                (
+                                    el_styles.indexOf('translateX(0px)') > -1 || 
+                                    el_styles.indexOf('translateY(0px)') > -1
+                                )
+                            ) $(el).removeAttr('style');
+                        });
+                    }
+                    $timeout(function() {
+                        scope.checkActionItems();
+                    }, 0);  
 				});
 			}
 		}
