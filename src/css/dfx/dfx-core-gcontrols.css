@@ -935,6 +935,17 @@ button.dfx-core-gc-rating-button {
     margin: 31px 0 0;
 }
 
+/* DFX md-tabs */
+/* Those rules helps md-tabs / GC Tabs / GC Wizard to work correctly inside flex system */
+md-tabs,
+md-tabs>md-tabs-content-wrapper,
+md-tabs>md-tabs-content-wrapper>md-tab-content, 
+md-tabs>md-tabs-content-wrapper>md-tab-content>div[md-tabs-template], 
+md-tabs>md-tabs-content-wrapper>md-tab-content>div[md-tabs-template]>md-content,
+md-tabs>md-tabs-content-wrapper>md-tab-content>div[md-tabs-template]>div[ng-form]>md-content>div {
+    height: 100%;
+}
+
 /* Animation */
 @charset "UTF-8";
 
