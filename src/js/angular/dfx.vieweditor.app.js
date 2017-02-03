@@ -1486,6 +1486,8 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
     // Functions implementing Cut/Copy/Paste in view editor - END
 
     // Functions to work with GC Templates - START
+    $scope.icon_type_prefix = 'dfx_ve_gc_template_icon_';
+
     $scope.saveComponentAsTemplate = function(event) {
         $(event.srcElement).animateCss('pulse');
 
@@ -1526,6 +1528,15 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
                     if ($scope.gc_templates_to_drag_drop) {
                         $scope.cleanGcTemplatesToDragDrop();
                     }
+
+                    // remove old listeners and create new one
+                    var $dfx_ve_gc_template_icon = $('#' + $scope.icon_type_prefix + gc_template.type);
+                    var gc_cat = $dfx_ve_gc_template_icon.attr('gc-cat');
+                    $dfx_ve_gc_template_icon.off('click');
+                    $dfx_ve_gc_template_icon.on('click', function() {
+                        $scope.getGcTemplatesToDragDrop(gc_template.type, gc_cat);
+                    });
+
                 }, function(res) {
                     dfxMessaging.showWarning(res.data.error.message);
                 });
@@ -1550,8 +1561,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
             $scope.gc_templates = data || [];
 
             $timeout(function() {
-                var icon_type_prefix = 'dfx_ve_gc_template_icon_',
-                    icon_type_prefix_length = icon_type_prefix.length;
+                var icon_type_prefix_length = $scope.icon_type_prefix.length;
 
                 var gc_templates_types = $scope.gc_templates.map(function(item) {
                     return item.type;
@@ -1562,7 +1572,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
 
                 // add event listeners for gc types that have existing gc templates
                 for (var i = 0; i < gc_templates_unique_types.length; i++) {
-                    var $dfx_ve_gc_template_icon = $('#' + icon_type_prefix + gc_templates_unique_types[i]);
+                    var $dfx_ve_gc_template_icon = $('#' + $scope.icon_type_prefix + gc_templates_unique_types[i]);
 
                     var gc_type = gc_templates_unique_types[i];
                     var gc_cat = $dfx_ve_gc_template_icon.attr('gc-cat');
@@ -1576,7 +1586,7 @@ dfxViewEditorApp.controller("dfx_view_editor_controller", [ '$scope', '$rootScop
                 }
 
                 // add event listeners if not in gc_templates_unique_types, type "no templates" and hide searching
-                var gc_all_types = $('[id^="' + icon_type_prefix + '"]');
+                var gc_all_types = $('[id^="' + $scope.icon_type_prefix + '"]');
                 for (var i = 0; i < gc_all_types.length; i++) {
                     var dfx_ve_gc_template_icon_id = $(gc_all_types[i]).attr('id');
                     var type_name = dfx_ve_gc_template_icon_id.substring(icon_type_prefix_length);
@@ -2391,7 +2401,7 @@ dfxViewEditorApp.directive('dfxVeExpressionEditor', [ '$mdDialog', function($mdD
         templateUrl: function( el, attrs ) {
             return '/gcontrols/web/label_picker.html';
         },
-        link: function(scope, element, attrs) {            
+        link: function(scope, element, attrs) {
             scope.showExpressionEditor = function(ev) {
                 $mdDialog.show({
                     scope: scope.$new(),
@@ -3688,7 +3698,7 @@ dfxViewEditorApp.directive('dfxVeTreeEditor', [ '$mdDialog', '$mdToast', '$http'
                                 }, 0);
                             }
                             scope.checkMenuRootPadding();
-                        }                        
+                        }
                         scope.focusSamples = function(){$timeout(function(){$("#samples-btn").focus();},100);}
                         scope.runJsonEditor = function(model){
                             scope.dfxSampleJsonEditor = null;
