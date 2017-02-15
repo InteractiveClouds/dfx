@@ -51,6 +51,7 @@ var key = process.argv[2];
 
 process.env['NODE_ENV'] = 'development';
 process.env['DFX_DB_JEDI_MODE'] = true;
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 
 out.registerTheme = function( theme_name, theme ) {
