@@ -31,6 +31,7 @@
   "notFlex":        { "value": true },
   "flex":           { "value": 15 },
   "style": 					{ "value": "" },
+  "mainButton":     { "style": "", "class": "" },
   "singleMenu":     { "button": { "style": "", "class": "" }, "icon": { "size": 16, "style": "", "class": "" } },
   "onclick": 				{ "value": "" },
   "ondblclick": 		{ "value": "" },

@@ -173,23 +173,35 @@
                     </ul>
                 </li>
                 <li class="col-md-12">
-                    <input class="dfx-ve-property-treeview-button" type="checkbox" checked aria-label="icon-styles" id="icon-styles" />
-                    <label for="icon-styles" class="dfx-ve-property-title-level-1">
-                        <span>Icon Styling<dfx-gc-template-locking attr_name="icon"></dfx-gc-template-locking></span>
+                    <input class="dfx-ve-property-treeview-button" type="checkbox" checked aria-label="button-styles" id="button-styles" />
+                    <label for="button-styles" class="dfx-ve-property-title-level-1">
+                        <span>Button Styling<dfx-gc-template-locking attr_name="icon"></dfx-gc-template-locking></span>
                     </label>
-                    <ul class="dfx-ve-property-treeview-content">
+                    <ul class="dfx-ve-property-treeview-content">                        
                         <li class="col-md-12">
-                            <span class="col-md-4">Size:</span>
+                            <span class="col-md-4">Button Style:</span>
+                            <div class="col-md-8" layout="row">
+                                <input class="col-md-12" type="text" ng-model="attributes.mainButton.style" ng-change="overrideAttribute('mainButton.style')" ng-focus="cacheAttributeOldValue({'name':'mainButton.style'})" ng-blur="cacheAttributeNewValue('mainButton.style')" style="margin-left:-15px;"/>
+                                <dfx-ve-css-style></dfx-ve-css-style>
+                            </div>
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-4">Button Class:</span>
+                            <input class="col-md-8" type="text" ng-model="attributes.mainButton.class" ng-change="overrideAttribute('mainButton.class')" ng-focus="cacheAttributeOldValue({'name':'mainButton.class'})" ng-blur="cacheAttributeNewValue('mainButton.class')"/>
+                        </li>
+                        <li class="col-md-12">
+                            <span class="col-md-4">Icon Size:</span>
                             <input class="col-md-8" type="number" ng-model="attributes.icon.size" ng-change="overrideAttribute('icon.size')" ng-focus="cacheAttributeOldValue({'name':'icon.size'})" ng-blur="cacheAttributeNewValue('icon.size')"/>
+                        </li>
                         <li class="col-md-12">
-                            <span class="col-md-4">Style:</span>
+                            <span class="col-md-4">Icon Style:</span>
                             <div class="col-md-8" layout="row">
                                 <input class="col-md-12" type="text" ng-model="attributes.icon.style" ng-change="overrideAttribute('icon.style')" ng-focus="cacheAttributeOldValue({'name':'icon.style'})" ng-blur="cacheAttributeNewValue('icon.style')" style="margin-left:-15px;"/>
                                 <dfx-ve-css-style></dfx-ve-css-style>
                             </div>
                         </li>
                         <li class="col-md-12">
-                            <span class="col-md-4">Class:</span>
+                            <span class="col-md-4">Icon Class:</span>
                             <input class="col-md-8" type="text" ng-model="attributes.icon.class" ng-change="overrideAttribute('icon.class')" ng-focus="cacheAttributeOldValue({'name':'icon.class'})" ng-blur="cacheAttributeNewValue('icon.class')"/>
                         </li>
                     </ul>
@@ -197,7 +209,7 @@
                 <li class="col-md-12">
                     <input class="dfx-ve-property-treeview-button" type="checkbox" checked aria-label="item-styles" id="item-styles" />
                     <label for="item-styles" class="dfx-ve-property-title-level-1">
-                        <span>Item Styling<dfx-gc-template-locking attr_name="singleMenu"></dfx-gc-template-locking></span>
+                        <span>Menu Item Styling<dfx-gc-template-locking attr_name="singleMenu"></dfx-gc-template-locking></span>
                     </label>
                     <ul class="dfx-ve-property-treeview-content">
                         <li class="col-md-12">

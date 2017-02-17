@@ -404,7 +404,7 @@ button[disabled="disabled"].dfx-core-gc-button.md-button md-icon, button[disable
     height:300px;
 }
 /* Tree menu */
-div[dfx-gcc-web-treemenu] {
+div[dfx-gcc-web-treemenu], div[dfx-gc-web-horizontalmenu], div[dfx-gcc-web-horizontalmenu] {
     width: 100%;
 }
 .dfx-core-gc-treemenu {
@@ -632,15 +632,17 @@ md-chips-wrap.md-readonly {
     padding: 16px;
 }
 .dfx-core-gc-treeview ul {
-    padding: 0 0 0 20px;
+    padding: 0px !important;
     margin: 0;
 }
 .dfx-core-gc-treeview li {
+    padding: 0 0 0 20px !important;
     list-style: none;
 }
 .dfx-core-gc-treeview li a {
     display: inline-block;
     padding: 3px 0;
+    text-decoration: none !important;
 }
 .dfx-core-gc-treeview .node-trigger {
     width: 20px;
@@ -933,9 +935,15 @@ button.dfx-core-gc-rating-button {
     margin: 31px 0 0;
 }
 
-/* GC Tabs */
-div[dfx-gcc-web-tabs] > div > md-content > div > md-tabs > md-tabs-content-wrapper {
-    overflow: auto!important;
+/* DFX md-tabs */
+/* Those rules helps md-tabs / GC Tabs / GC Wizard to work correctly inside flex system */
+md-tabs,
+md-tabs>md-tabs-content-wrapper,
+md-tabs>md-tabs-content-wrapper>md-tab-content, 
+md-tabs>md-tabs-content-wrapper>md-tab-content>div[md-tabs-template], 
+md-tabs>md-tabs-content-wrapper>md-tab-content>div[md-tabs-template]>md-content,
+md-tabs>md-tabs-content-wrapper>md-tab-content>div[md-tabs-template]>div[ng-form]>md-content>div {
+    height: 100%;
 }
 
 /* Animation */
